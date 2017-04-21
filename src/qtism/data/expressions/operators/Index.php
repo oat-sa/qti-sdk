@@ -23,6 +23,7 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
@@ -40,7 +41,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Index extends Operator
+class Index extends Operator implements Pure
 {
     /**
 	 * The index to lookup.
@@ -95,5 +96,16 @@ class Index extends Operator
     public function getQtiClassName()
     {
         return 'index';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }

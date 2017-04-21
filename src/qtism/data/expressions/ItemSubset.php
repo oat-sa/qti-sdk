@@ -32,12 +32,12 @@ use \InvalidArgumentException;
  * This class defines the concept of a sub-set of the items selected in an assessmentTest.
  * The attributes define criteria that must be matched by all members of the sub-set.
  * It is used to control a number of expressions in outcomeProcessing for returning
- * information about the test as a whole, or abitrary subsets of it.
+ * information about the test as a whole, or arbitrary subsets of it.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ItemSubset extends Expression
+class ItemSubset extends Expression implements Pure
 {
     /**
 	 * From IMS QTI:
@@ -151,5 +151,16 @@ class ItemSubset extends Expression
     public function getQtiClassName()
     {
         return 'itemSubset';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return false; // Dependant on the items of the test
     }
 }

@@ -34,7 +34,7 @@ use qtism\common\utils\Format;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RandomInteger extends Expression
+class RandomInteger extends Expression implements Pure
 {
     /**
      * The min attribute value.
@@ -159,5 +159,16 @@ class RandomInteger extends Expression
     public function getQtiClassName()
     {
         return 'randomInteger';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return false; // random --> false
     }
 }

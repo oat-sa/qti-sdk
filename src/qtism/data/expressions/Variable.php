@@ -61,7 +61,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Variable extends Expression
+class Variable extends Expression implements Pure
 {
     /**
 	 * QTI Identifier of the variable.
@@ -165,5 +165,16 @@ class Variable extends Expression
     public function getQtiClassName()
     {
         return 'variable';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return false; // variable --> impure
     }
 }

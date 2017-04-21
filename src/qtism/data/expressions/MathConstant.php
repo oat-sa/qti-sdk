@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MathConstant extends Expression
+class MathConstant extends Expression implements Pure
 {
     /**
 	 * The name of the math constant.
@@ -84,5 +84,16 @@ class MathConstant extends Expression
     public function getQtiClassName()
     {
         return 'mathConstant';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return true;
     }
 }

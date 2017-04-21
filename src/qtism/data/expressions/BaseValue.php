@@ -35,7 +35,7 @@ use qtism\common\enums\BaseType;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BaseValue extends Expression
+class BaseValue extends Expression implements Pure
 {
     /**
 	 * The baseType of the value.
@@ -118,5 +118,16 @@ class BaseValue extends Expression
     public function getQtiClassName()
     {
         return 'baseValue';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return true;
     }
 }

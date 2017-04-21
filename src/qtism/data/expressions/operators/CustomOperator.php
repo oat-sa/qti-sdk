@@ -25,6 +25,7 @@ namespace qtism\data\expressions\operators;
 use qtism\data\ExternalQtiComponent;
 use qtism\data\IExternal;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use \InvalidArgumentException;
 
 /**
@@ -43,7 +44,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class CustomOperator extends Operator implements IExternal
+class CustomOperator extends Operator implements IExternal, Pure
 {
     /**
      * @var string
@@ -228,5 +229,16 @@ class CustomOperator extends Operator implements IExternal
     public function getQtiClassName()
     {
         return 'customOperator';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @see https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return false; // Too impredictable, for instance calling web service --> impure
     }
 }

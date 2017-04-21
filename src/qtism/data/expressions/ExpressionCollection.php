@@ -31,7 +31,7 @@ use \InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ExpressionCollection extends QtiComponentCollection
+class ExpressionCollection extends QtiComponentCollection implements Pure
 {
     /**
 	 * Check if a given $value is an instance of Expression.
@@ -44,5 +44,22 @@ class ExpressionCollection extends QtiComponentCollection
             $msg = "ExpressionCollection only accepts to store Expression objects, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Checks whether this collection of expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     *@return boolean True if this ExpressionCollection is pure, false otherwise.
+     */
+    public function isPure() {
+
+        foreach ($this as $expr) {
+            if (!$expr->isPure()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

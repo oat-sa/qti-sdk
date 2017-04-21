@@ -23,6 +23,7 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use \InvalidArgumentException;
 
 /**
@@ -37,7 +38,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Substring extends Operator
+class Substring extends Operator implements Pure
 {
     /**
 	 * From IMS QTI:
@@ -97,5 +98,16 @@ class Substring extends Operator
     public function getQtiClassName()
     {
         return 'substring';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }
