@@ -36,7 +36,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Correct extends Expression
+class Correct extends Expression implements Pure
 {
     /**
 	 * The identifier of the response variable you want the correct value.
@@ -89,5 +89,16 @@ class Correct extends Expression
     public function getQtiClassName()
     {
         return 'correct';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return false;
     }
 }

@@ -46,7 +46,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MapResponse extends Expression
+class MapResponse extends Expression implements Pure
 {
     /**
 	 * The QTI identifier of the associated mapping.
@@ -99,5 +99,16 @@ class MapResponse extends Expression
     public function getQtiClassName()
     {
         return 'mapResponse';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return true; // implements map, + and reduce functions, which are all pure functions --> pure
     }
 }

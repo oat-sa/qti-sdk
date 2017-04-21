@@ -24,6 +24,7 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use \InvalidArgumentException;
 
 /**
@@ -38,7 +39,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class StatsOperator extends Operator
+class StatsOperator extends Operator implements Pure
 {
     /**
 	 * The name of the statistics operator to use.
@@ -93,5 +94,16 @@ class StatsOperator extends Operator
     public function getQtiClassName()
     {
         return 'statsOperator';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }
