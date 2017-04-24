@@ -7,6 +7,7 @@
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
             <assessmentItemRef identifier="Q01" href="./Q01/qti.xml" timeDependent="false">
+                <!-- go to Q02 if response is identifier "A" -->
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>A</value>
@@ -18,18 +19,17 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q02 if response is identifier "B" -->
                 <branchRule target="Q02">
                     <match>
                         <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
+                        <baseValue baseType="identifier">A</baseValue>
                     </match>
                 </branchRule>
-                <!-- go to Q03 if response is identifier "A" -->
-                <branchRule target="a">
+                <!-- go to Q03 if response is identifier "B" -->
+                <branchRule target="Q03">
                     <match>
                         <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">A</baseValue>
+                        <baseValue baseType="identifier">B</baseValue>
                     </match>
                 </branchRule>
             </assessmentItemRef>
@@ -72,15 +72,14 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q06 -->
+                <!-- never go to Q06 -->
                 <branchRule target="Q06">
                     <match>
-                        <variable identifier="Q02.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
+                        <baseValue baseType="boolean">True</baseValue>
+                        <baseValue baseType="boolean">False</baseValue>
                     </match>
                 </branchRule>
             </assessmentItemRef>
-
             <assessmentItemRef identifier="Q04" href="./Q04/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>

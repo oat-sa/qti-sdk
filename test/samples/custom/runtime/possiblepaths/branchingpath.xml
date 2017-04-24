@@ -72,11 +72,11 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q06 -->
+                <!-- always go to Q06 -->
                 <branchRule target="Q06">
                     <match>
-                        <baseValue baseType="boolean">true</baseValue>
-                        <baseValue baseType="boolean">true</baseValue>
+                        <baseValue baseType="boolean">True</baseValue>
+                        <baseValue baseType="boolean">True</baseValue>
                     </match>
                 </branchRule>
             </assessmentItemRef>

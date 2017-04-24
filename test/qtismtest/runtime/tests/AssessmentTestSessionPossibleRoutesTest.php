@@ -16,7 +16,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 {
     public function testgetPossibleRoutes()
     {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -370,7 +370,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testGetShortestRoutes()
     {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -405,7 +405,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testGetLongestRoutes()
     {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -464,7 +464,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testgetPossibleRoutesFromCurrentPosition()
     {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -501,7 +501,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testgetShortestRoutesFromCurrentPosition()
     {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -556,7 +556,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testgetLongestRoutesFromCurrentPosition()
     {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -584,5 +584,101 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
         $route->setPosition(0);
         $this->assertEquals($possibleRoutes3, $route->getLongestRoutesFromCurrentPosition($routes));
+    }
+
+    public function testAlwaysTrueorFalseBranches()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[6]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v4.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[6]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath_v3.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[4], $it[5], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5], $it[6]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/multipletruebranching.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 8; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5], $it[7], $it[8]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+    }
+
+    public function testAlwaysTrueOrFalsePres()
+    {
+        /*
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionpath.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[4], $it[5]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionpath.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+        */
     }
 }

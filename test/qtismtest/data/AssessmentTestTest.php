@@ -120,7 +120,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testGetPossiblePaths()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath_v2.xml');
         $test = $doc->getDocumentComponent();
 
         $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
@@ -512,7 +512,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testGetShortestPaths()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath_v2.xml');
         $test = $doc->getDocumentComponent();
 
         $shortest_paths = [];
@@ -553,7 +553,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testGetLongestPaths()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath_v2.xml');
         $test = $doc->getDocumentComponent();
 
         $longest_paths = [];

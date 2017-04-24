@@ -75,8 +75,8 @@
                 <!-- go to Q06 -->
                 <branchRule target="Q03">
                     <match>
-                        <baseValue baseType="boolean">true</baseValue>
-                        <baseValue baseType="boolean">true</baseValue>
+                        <variable identifier="Q02.RESPONSE"/>
+                        <baseValue baseType="identifier">B</baseValue>
                     </match>
                 </branchRule>
             </assessmentItemRef>

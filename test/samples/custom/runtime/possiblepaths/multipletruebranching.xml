@@ -4,6 +4,19 @@
                 xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
                 identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
     <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
+        <!-- always goes to Q04 -->
+        <branchRule target="Q04">
+            <match>
+                <baseValue baseType="boolean">True</baseValue>
+                <baseValue baseType="boolean">True</baseValue>
+            </match>
+        </branchRule>
+        <branchRule target="Q05">
+            <match>
+                <baseValue baseType="boolean">True</baseValue>
+                <baseValue baseType="boolean">True</baseValue>
+            </match>
+        </branchRule>
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
             <assessmentItemRef identifier="Q01" href="./Q01/qti.xml" timeDependent="false">
@@ -18,20 +31,6 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q02 if response is identifier "B" -->
-                <branchRule target="Q02">
-                    <match>
-                        <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
-                    </match>
-                </branchRule>
-                <!-- go to Q03 if response is identifier "A" -->
-                <branchRule target="a">
-                    <match>
-                        <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">A</baseValue>
-                    </match>
-                </branchRule>
             </assessmentItemRef>
             <assessmentItemRef identifier="Q02" href="./Q02/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -45,21 +44,19 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q03 if response is identifier "A" -->
-                <branchRule target="Q03">
-                    <match>
-                        <variable identifier="Q02.RESPONSE"/>
-                        <baseValue baseType="identifier">A</baseValue>
-                    </match>
-                </branchRule>
-                <!-- go to Q04 if response is identifier "B" -->
-                <branchRule target="Q04">
-                    <match>
-                        <variable identifier="Q02.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
-                    </match>
-                </branchRule>
             </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">
+            <!-- never reached item -->
+            <branchRule target="Q05">
+                <match>
+                    <variable identifier="Q03.RESPONSE"/>
+                    <baseValue baseType="identifier">B</baseValue>
+                </match>
+            </branchRule>
             <assessmentItemRef identifier="Q03" href="./Q03/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
@@ -72,15 +69,22 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q06 -->
-                <branchRule target="Q06">
-                    <match>
-                        <variable identifier="Q02.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
-                    </match>
-                </branchRule>
             </assessmentItemRef>
-
+        </assessmentSection>
+        <assessmentSection identifier="S03" title="Section 03" visible="true" required="true">
+            <!-- always goes to Q07 -->
+            <branchRule target="Q07">
+                <match>
+                    <baseValue baseType="boolean">True</baseValue>
+                    <baseValue baseType="boolean">True</baseValue>
+                </match>
+            </branchRule>
+            <branchRule target="Q08">
+                <match>
+                    <baseValue baseType="boolean">True</baseValue>
+                    <baseValue baseType="boolean">True</baseValue>
+                </match>
+            </branchRule>
             <assessmentItemRef identifier="Q04" href="./Q04/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
@@ -95,6 +99,24 @@
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
             </assessmentItemRef>
             <assessmentItemRef identifier="Q05" href="./Q05/qti.xml" timeDependent="false">
+            <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                <correctResponse>
+                    <value>A</value>
+                </correctResponse>
+            </responseDeclaration>
+            <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                <defaultValue>
+                    <value>0</value>
+                </defaultValue>
+            </outcomeDeclaration>
+            <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+        </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP04">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S07" title="Section 07" visible="true" required="true">
+            <assessmentItemRef identifier="Q06" href="./Q06/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>A</value>
@@ -107,7 +129,20 @@
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
             </assessmentItemRef>
-            <assessmentItemRef identifier="Q06" href="./Q06/qti.xml" timeDependent="false">
+            <assessmentItemRef identifier="Q07" href="./Q07/qti.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>A</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q08" href="./Q08/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>A</value>

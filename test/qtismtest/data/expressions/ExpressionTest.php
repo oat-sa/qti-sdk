@@ -10,6 +10,7 @@ namespace qtismtest\data\expressions;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\expressions\ExpressionEngine;
 
 
 class ExpressionTest extends QtiSmTestCase
@@ -17,7 +18,7 @@ class ExpressionTest extends QtiSmTestCase
     public function testIsPure()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath_v2.xml');
         $test = $doc->getDocumentComponent();
 
         $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
@@ -34,5 +35,19 @@ class ExpressionTest extends QtiSmTestCase
             $this->assertEquals(!in_array('Q' . $i, $impures),
                 $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->IsPure());
         }
+    }
+
+    public function testIsPureWithEngine()
+    {
+        // TODO : a bouger dans les tests runtime ?
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath_v2.xml');
+        $test = $doc->getDocumentComponent();
+
+        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $ee = new ExpressionEngine($itemq3->getBranchRules()[0]->getExpression());
+
+        $this->assertEquals(true, $ee->process()->getValue());
     }
 }

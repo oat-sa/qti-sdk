@@ -39,6 +39,7 @@ use \SplObjectStorage;
 use \OutOfBoundsException;
 use \OutOfRangeException;
 use \InvalidArgumentException;
+use qtism\runtime\expressions\ExpressionEngine;
 
 /**
  * The Route class represents a linear route to be taken accross a given
@@ -1378,14 +1379,33 @@ class Route implements Iterator
      * @param $succsItem array of array of string For each AssessmentItem + the start (indexed as 0), a list of the
      * identifiers of the possible successor after the AssessmentItem. Necessary to avoid duplicating branches thus
      * routes. Argument passed by reference.
+     * @param $alwaysTrueBranches array of array BranchRules The List of all BranchRules who are always true already
+     * found. Argument passed by reference.
      * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
      * @param $testparts TestPartCollection The collection of all TestParts in this AssessmentTest.
      * @return array of \qtism\runtime\RouteItemCollection The list of possible routes updated with the new
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
-    private function BranchAnalysis($branch, $component, $routes, &$succsItem, $sections, $testparts)
+    private function BranchAnalysis($branch, $component, $routes, &$succsItem, &$alwaysTrueBranches, $sections, $testparts)
     {
+        // Checking for invariant expressions
+
+        $alwaysTrue = false;
+        $prevItem = null;
+        $targetItem = null;
+
+        if ($branch->getExpression()->IsPure()) {
+
+            $ee = new ExpressionEngine($branch->getExpression());
+
+            if ($ee->process()->getValue()) {
+                $alwaysTrue = true;
+            } else {
+                return $routes;
+            }
+        }
+
         switch ($branch->getTarget()) {
 
             case "EXIT_TEST":
@@ -1518,6 +1538,10 @@ class Route implements Iterator
                 break;
         }
 
+        if ($alwaysTrue) {
+            $alwaysTrueBranches[] = [$branch, $prevItem, $targetItem];
+        }
+
         return $routes;
     }
 
@@ -1539,6 +1563,7 @@ class Route implements Iterator
 
         $testparts = new TestPartCollection();
         $sections = new AssessmentSectionCollection();
+        $alwaysTrueBranches = [];
 
         foreach ($this->getRouteItems() as $ri) {
 
@@ -1583,7 +1608,15 @@ class Route implements Iterator
             if (!in_array($tp, $branchTp)) {
                 if (count($tp->getBranchRules()) > 0) {
                     foreach ($tp->getBranchRules() as $branch) {
-                        $routes = $this->BranchAnalysis($branch, $tp, $routes, $succsItem, $sections, $testparts);
+                        $routes = $this->BranchAnalysis($branch, $tp, $routes, $succsItem, $alwaysTrueBranches,
+                            $sections, $testparts);
+
+                        // Avoid next branches if an AlwaysTrue branch has been found
+
+                        if ((count($alwaysTrueBranches) > 0) and
+                            ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)) {
+                            break;
+                        }
                     }
 
                     $branchTp[] = $tp;
@@ -1598,7 +1631,15 @@ class Route implements Iterator
                 if (!in_array($section, $branchSect)) {
                     if (count($section->getBranchRules()) > 0) {
                         foreach ($section->getBranchRules() as $branch) {
-                            $routes = $this->BranchAnalysis($branch, $section, $routes, $succsItem, $sections, $testparts);
+                            $routes = $this->BranchAnalysis($branch, $section, $routes, $succsItem, $alwaysTrueBranches,
+                                $sections, $testparts);
+
+                            // Avoid next branches if an AlwaysTrue branch has been found
+
+                            if ((count($alwaysTrueBranches) > 0) and
+                                ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)) {
+                                break;
+                            }
                         }
 
                         $branchSect[] = $section;
@@ -1610,7 +1651,47 @@ class Route implements Iterator
 
             if (count($ri->getBranchRules()) > 0) {
                 foreach ($ri->getBranchRules() as $branch) {
-                    $routes = $this->BranchAnalysis($branch, $ri->getAssessmentItemRef(), $routes, $succsItem, $sections, $testparts);
+                    $routes = $this->BranchAnalysis($branch, $ri->getAssessmentItemRef(), $routes, $succsItem,
+                        $alwaysTrueBranches, $sections, $testparts);
+
+                    // Avoid next branches if an AlwaysTrue branch has been found
+
+                    if ((count($alwaysTrueBranches) > 0) and
+                        ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Removing paths due to always true branches
+
+        foreach ($alwaysTrueBranches as $branchData) {
+
+            for ($i = 0; $i < count($routes); $i++) {
+
+                $removeRoute = false;
+                $prevItemFound = false;
+
+                foreach ($routes[$i] as $routeItem) {
+
+                    if ($routeItem->getAssessmentItemRef()->getIdentifier() == $branchData[1]->getIdentifier()) {
+                        $prevItemFound = true;
+                    }
+                    else if ($routeItem->getAssessmentItemRef()->getIdentifier() == $branchData[2]->getIdentifier()) {
+                        $prevItemFound = false;
+                    }
+                    else if ($prevItemFound) {
+                        $removeRoute = true;
+                        break;
+                    }
+                }
+
+                if ($removeRoute) {
+
+                    unset($routes[$i]);
+                    $routes = array_values($routes);
+                    $i--;
                 }
             }
         }
