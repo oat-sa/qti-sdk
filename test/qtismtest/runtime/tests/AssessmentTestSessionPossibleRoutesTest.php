@@ -649,7 +649,6 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testAlwaysTrueOrFalsePres()
     {
-        /*
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionpath.xml');
         $route = $session->getRoute();
         $it = [];
@@ -664,7 +663,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
         $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionpath_v2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -673,12 +672,57 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         }
 
         $possibleRoutes = [];
-        $possibleRoutes[] = new RouteItemCollection($it);
-        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6]]);
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5]]);
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
 
         $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
-        */
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionsonsections.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 5; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[5]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/preconditionsonsections2.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 5; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+
+        // Unreachable item (always FALSE precondition) with a branch : the branch should not be taken
+
+        /*
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingunreachable.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 7; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);;
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[4], $it[7]]);
+
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));*/
     }
 }

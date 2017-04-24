@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\rules\PreConditionCollection;
 use qtism\data\TestPartCollection;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\data\SubmissionMode;
@@ -1546,6 +1547,92 @@ class Route implements Iterator
     }
 
     /**
+     * @TODO DOC DOC DOC
+     * @param $preconditions
+     */
+
+    public function analysePreConditions($preconditions, &$routes, $items) {
+
+        $alwaysFalse = true;
+
+        foreach($preconditions as $pre) {
+
+            if ($pre->getExpression()->IsPure()) {
+
+                $ee = new ExpressionEngine($pre->getExpression());
+
+                if ($ee->process()->getValue()) {
+                    // Always true, so nothing changes
+                    return $routes;
+
+                }
+            } else {
+                $alwaysFalse = false;
+            }
+        }
+
+        if ($alwaysFalse) {
+
+            // Removing each instance of the never reached AssessmentItemRef
+
+            for ($h = 0; $h < count($routes); $h++) {
+
+                $routeitems = new AssessmentItemRefCollection();
+
+                foreach ($routes[$h] as $routeitem) {
+                    $routeitems->attach($routeitem->getAssessmentItemRef());
+                }
+
+                if (!array_diff($items, $routeitems->getArrayCopy())) {
+
+                    $newRoute = new RouteItemCollection($routes[$h]->getArrayCopy());
+                    $routes[$h] = new RouteItemCollection();
+
+                    for ($i = 0; $i < count($newRoute); $i++) {
+
+                        if (in_array($newRoute[$i]->getAssessmentItemRef(), $items)) {
+                            $newRoute->remove($newRoute[$i]);
+                        }
+                    }
+
+                    foreach ($newRoute as $routeitem) {
+                        $routes[$h][] = $routeitem;
+                    }
+                }
+            }
+
+            // Removing the item(s) in each route where they are
+
+        } else {
+            foreach ($routes as $route) {
+
+                $routeitems = new AssessmentItemRefCollection();
+
+                foreach ($route as $routeitem) {
+                    $routeitems->attach($routeitem->getAssessmentItemRef());
+                }
+
+                if (!array_diff($items, $routeitems->getArrayCopy())) {
+                    $newRoute = new RouteItemCollection();
+
+                    foreach ($routeitems as $item) {
+
+                        if (!in_array($item, $items)) {
+                            $newRoute->attach($this->getRouteItemsByAssessmentItemRef($item->getIdentifier())[0]);
+                        }
+                    }
+
+                    if (($newRoute != null) and (!in_array($newRoute, $routes))) {
+                        $routes[] = $newRoute;
+                    }
+                }
+            }
+        }
+
+        return $routes;
+    }
+
+    /**
      * Returns an array with all possible routes for an AssessmentTest.
      *
      * Create the list with all possible routes that a candidate can take through this Route.
@@ -1678,7 +1765,8 @@ class Route implements Iterator
                     if ($routeItem->getAssessmentItemRef()->getIdentifier() == $branchData[1]->getIdentifier()) {
                         $prevItemFound = true;
                     }
-                    else if ($routeItem->getAssessmentItemRef()->getIdentifier() == $branchData[2]->getIdentifier()) {
+                    else if (($branchData[2] != null) and
+                        ($routeItem->getAssessmentItemRef()->getIdentifier() == $branchData[2]->getIdentifier())) {
                         $prevItemFound = false;
                     }
                     else if ($prevItemFound) {
@@ -1710,33 +1798,7 @@ class Route implements Iterator
 
                     $preTp[] = $ri->getTestPart();
                     $tpItems = $ri->getTestPart()->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
-
-                    // for each existing, duplicate it and remove the current item
-                    // (because it may not exist with the precondition)                    
-
-                    foreach ($routes as $route) {
-
-                        $routeitems = new AssessmentItemRefCollection();
-
-                        foreach ($route as $routeitem) {
-                            $routeitems->attach($routeitem->getAssessmentItemRef());
-                        }
-
-                        if (!array_diff($tpItems, $routeitems->getArrayCopy())) {
-                            $newRoute = new RouteItemCollection();
-
-                            foreach ($routeitems as $item) {
-
-                                if (!in_array($item, $tpItems)) {
-                                    $newRoute->attach($this->getRouteItemsByAssessmentItemRef($item->getIdentifier())[0]);
-                                }
-                            }
-
-                            if (($newRoute != null) and (!in_array($newRoute, $routes))) {
-                                $routes[] = $newRoute;
-                            }
-                        }
-                    }
+                    $routes = $this->analysePreConditions($ri->getTestPart()->getPreConditions(), $routes, $tpItems);
                 }
             }
 
@@ -1755,33 +1817,7 @@ class Route implements Iterator
                             $preCount -= count($section->getPreConditions());
                             $preSect[] = $section;
                             $sectItems = $section->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
-
-                            // for each existing, duplicate it and remove the current item
-                            // (because it may not exist with the precondition)
-
-                            foreach ($routes as $route) {
-
-                                $routeitems = new AssessmentItemRefCollection();
-
-                                foreach ($route as $routeitem) {
-                                    $routeitems->attach($routeitem->getAssessmentItemRef());
-                                }
-
-                                if (!array_diff($sectItems, $routeitems->getArrayCopy())) {
-                                    $newRoute = new RouteItemCollection();
-
-                                    foreach ($routeitems as $item) {
-
-                                        if (!in_array($item, $sectItems)) {
-                                            $newRoute->attach($this->getRouteItemsByAssessmentItemRef($item->getIdentifier())[0]);
-                                        }
-                                    }
-
-                                    if (($newRoute != null) and (!in_array($newRoute, $routes))) {
-                                        $routes[] = $newRoute;
-                                    }
-                                }
-                            }
+                            $routes = $this->analysePreConditions($section->getPreConditions(), $routes, $sectItems);
                         }
                     }
                 }
@@ -1789,23 +1825,13 @@ class Route implements Iterator
 
                 if ($preCount > 0) {
 
-                    foreach ($routes as $route) {
-                        if (in_array($ri, $route->getArrayCopy())) {
+                    $preConditions = new PreConditionCollection();
 
-                            $newRoute = new RouteItemCollection();
-
-                            foreach ($route as $item) {
-
-                                if ($item != $ri) {
-                                    $newRoute->attach($item);
-                                }
-                            }
-
-                            if (($newRoute != null) and (!in_array($newRoute, $routes))) {
-                                $routes[] = $newRoute;
-                            }
-                        }
+                    for ($i = 0; $i < $preCount; $i++) {
+                        $preConditions[] = $ri->getPreConditions()[$i];
                     }
+
+                    $routes = $this->analysePreConditions($preConditions, $routes, [$ri->getAssessmentItemRef()]);
                 }
             }
         }
