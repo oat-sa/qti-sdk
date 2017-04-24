@@ -24,6 +24,7 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use \InvalidArgumentException;
 
 /**
@@ -71,7 +72,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MathOperator extends Operator
+class MathOperator extends Operator implements Pure
 {
     /**
 	 * The name of the mathematical function.
@@ -125,5 +126,16 @@ class MathOperator extends Operator
     public function getQtiClassName()
     {
         return 'mathOperator';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }

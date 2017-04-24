@@ -23,6 +23,7 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -40,7 +41,7 @@ use qtism\data\expressions\ExpressionCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IntegerToFloat extends Operator
+class IntegerToFloat extends Operator implements Pure
 {
     /**
      * Create a new IntegerToFloat object.
@@ -58,5 +59,16 @@ class IntegerToFloat extends Operator
     public function getQtiClassName()
     {
         return 'integerToFloat';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }

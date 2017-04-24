@@ -25,6 +25,7 @@ namespace qtism\data\expressions\operators;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use \InvalidArgumentException;
 
 /**
@@ -43,7 +44,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Repeat extends Operator
+class Repeat extends Operator implements Pure
 {
     /**
 	 * A number of repetitions or a variable reference.
@@ -97,5 +98,16 @@ class Repeat extends Operator
     public function getQtiClassName()
     {
         return 'repeat';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }

@@ -23,6 +23,7 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -35,7 +36,7 @@ use qtism\data\expressions\ExpressionCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IsNull extends Operator
+class IsNull extends Operator implements Pure
 {
     /**
      * Create a new IsNull object.
@@ -53,5 +54,16 @@ class IsNull extends Operator
     public function getQtiClassName()
     {
         return 'isNull';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }
