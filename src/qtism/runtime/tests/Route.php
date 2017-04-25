@@ -939,6 +939,39 @@ class Route implements Iterator
     }
 
     /**
+     * TODO DOC + TEST
+     *
+     * @return boolean
+     * @throws \OutOfBoundsException If the Route is empty.
+     */
+    public function isFirstOfSection($section)
+    {
+        $count = $this->count();
+        if ($count === 0) {
+            $msg = "Cannot determine if the current RouteItem is the first of an AssessmentSection
+             when the Route is empty.";
+            throw new OutOfBoundsException($msg);
+        }
+
+        if (($section == null) || (!in_array($this->current()->getAssessmentItemRef(),
+                $section->getSectionParts()->getArrayCopy()))) {
+            $msg = "RouteItem not in section given as parameter.";
+            throw new OutOfBoundsException($msg);
+        }
+
+        $previousPosition = $this->getPosition() - 1;
+        if ($previousPosition === -1) {
+            // This is the very first RouteItem of the whole Route.
+            return true;
+        } elseif (!in_array($this->getRouteItemAt($previousPosition)->getAssessmentItemRef(),
+            $section->getSectionParts()->getArrayCopy())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Get the previous RouteItem in the route.
      *
      * @return \qtism\runtime\tests\RouteItem The previous RouteItem in the Route.
@@ -1547,6 +1580,33 @@ class Route implements Iterator
     }
 
     /**
+     * TODO DOC DOC DOC
+     * @param $preconditions
+     * @return bool$
+     *
+     */
+
+    public static function checkIfAlwaysFalse($preconditions) {
+
+        foreach ($preconditions as $pre) {
+
+            if ($pre->getExpression()->IsPure()) {
+
+                $ee = new ExpressionEngine($pre->getExpression());
+
+                if ($ee->process()->getValue()) {
+                    // Always true, so never false
+                    return false;
+                }
+            } else { // Variable, so not always false
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @TODO DOC DOC DOC
      * @param $preconditions
      */
@@ -1651,6 +1711,7 @@ class Route implements Iterator
         $testparts = new TestPartCollection();
         $sections = new AssessmentSectionCollection();
         $alwaysTrueBranches = [];
+        $unreachableItems = [];
 
         foreach ($this->getRouteItems() as $ri) {
 
@@ -1679,6 +1740,76 @@ class Route implements Iterator
                 $succsItem[$this->getRouteItemAt($i)->getAssessmentItemRef()->getIdentifier()][] = $this->getRouteItemAt($i + 1)->getAssessmentItemRef();
             } else {
                 $succsItem[$this->getRouteItemAt($i)->getAssessmentItemRef()->getIdentifier()][] = null;
+            }
+        }
+
+        // First, finding if there are always false preconditions, from which branches must not be considered
+
+        $preTp = [];
+        $preSect = [];
+
+        foreach ($this->getRouteItems() as $ri) {
+
+            // Handling testparts
+
+            if (count($ri->getTestPart()->getPreConditions()) > 0) {
+                if (!in_array($ri->getTestPart(), $preTp)) {
+
+                    $preTp[] = $ri->getTestPart();
+
+                    if (Route::checkIfAlwaysFalse($ri->getTestPart()->getPreConditions())) {
+                        foreach ($ri->getTestPart()->getComponentsByClassName("assessmentItemRef") as $item) {
+                            if (!in_array($item, $unreachableItems)) {
+                                $unreachableItems[] = $item;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (count($ri->getPreConditions()) > 0) {
+
+                $preCount = count($ri->getPreConditions());
+
+                // Handling sections
+
+                $sect = $ri->getAssessmentSections();
+
+                foreach ($sect as $section) {
+                    if (count($section->getPreConditions()) > 0) {
+                        if (!in_array($section, $preSect)) {
+
+                            $preCount -= count($section->getPreConditions());
+                            $preSect[] = $section;
+
+                            if (Route::checkIfAlwaysFalse($section->getPreConditions())) {
+                                foreach ($section->getComponentsByClassName("assessmentItemRef") as $item) {
+                                    if (!in_array($item, $unreachableItems)) {
+                                        $unreachableItems[] = $item;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // Handling assessmentItem
+
+                if ($preCount > 0) {
+
+                    $preConditions = new PreConditionCollection();
+
+                    for ($i = 0; $i < $preCount; $i++) {
+                        $preConditions[] = $ri->getPreConditions()[$i];
+                    }
+
+                    // $routes = $this->analysePreConditions($preConditions, $routes, [$ri->getAssessmentItemRef()]);
+
+                    if (Route::checkIfAlwaysFalse($preConditions)) {
+                        if (!in_array($ri->getAssessmentItemRef(), $unreachableItems)) {
+                            $unreachableItems[] = $ri->getAssessmentItemRef();
+                        }
+                    }
+                }
             }
         }
 

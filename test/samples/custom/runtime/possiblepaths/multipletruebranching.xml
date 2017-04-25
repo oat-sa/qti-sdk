@@ -3,7 +3,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
                 identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP01">
         <!-- always goes to Q04 -->
         <branchRule target="Q04">
             <match>

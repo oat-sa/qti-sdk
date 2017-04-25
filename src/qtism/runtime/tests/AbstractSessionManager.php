@@ -224,6 +224,20 @@ abstract class AbstractSessionManager
             $route->appendRoute($finalRoute);
         }
 
+        for($i = 0; $i < count($route->getAllRouteItems()); $i++) {
+            $route->setPosition($i);
+
+            if ($route->isFirstOfTestPart()) {
+                $route->getRouteItemAt($i)->addPreConditions($route->getRouteItemAt($i)->getTestPart()->getPreConditions());
+            }
+
+            if ($route->isLastOfTestPart()) {
+                $route->getRouteItemAt($i)->addBranchRules($route->getRouteItemAt($i)->getTestPart()->getBranchRules());
+            }
+        }
+
+        $route->setPosition(0);
+
         return $route;
     }
 }

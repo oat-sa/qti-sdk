@@ -459,6 +459,13 @@ class RouteTest extends QtiSmRouteTestCase
         
         $firstRouteItem = $route->isFirstOfTestPart();
     }
+
+    public function testIsFirstOfSectionOnEmptyRoute()
+    {
+        $route = new Route();
+        $this->expectException(OutOfBoundsException::class);
+        $firstRouteItem = $route->isFirstOfSection(null);
+    }
     
     public function testIsInTestPartNoSuchPosition() 
     {

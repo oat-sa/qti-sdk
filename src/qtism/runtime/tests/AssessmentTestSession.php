@@ -2383,6 +2383,102 @@ class AssessmentTestSession extends State
             }
 
             // Preconditions on target?
+
+            /*
+
+            if ($ignorePreConditions === false && $route->valid() === true && $this->mustApplyPreConditions() === true &&
+                ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0) {
+
+                $preCount = count($route->current()->getPreConditions());
+                $candidateFalseSections = [];
+
+                // TestPart
+
+                if (($route->isFirstOfTestPart()) && (count($route->current()->getTestPart()->getPreConditions()) > 0)) {
+
+                    $tpConditions = $route->current()->getTestPart()->getPreConditions();
+                    $preCount -= count($tpConditions);
+                    $skipTP = true;
+
+                    for ($i = 0; $i < count($tpConditions); $i++) {
+                        $engine = new ExpressionEngine($tpConditions[$i]->getExpression(), $this);
+                        $condition = $engine->process();
+
+                        if ($condition !== null && $condition->getValue() === true) {
+                            $skipTP = false;
+                            break;
+                        }
+                    }
+
+                    if ($skipTP) {
+                        $this->moveNextTestPart();
+                        $preCount = 0;
+                    }
+                }
+
+                // AssessmentSections
+
+                if ($preCount > 0) { // Skip this part, if already moved to next testpart
+                    foreach ($route->current()->getAssessmentSections() as $section) {
+                        if (($route->isFirstOfSection($section)) && (count($section->getPreConditions()) > 0)) {
+                            $sectConditions = $section->getPreConditions();
+                            $preCount -= count($section->getPreConditions());
+                            $skipSect = true;
+
+                            for ($i = 0; $i < count($sectConditions); $i++) {
+                                $engine = new ExpressionEngine($sectConditions[$i]->getExpression(), $this);
+                                $condition = $engine->process();
+
+                                if ($condition !== null && $condition->getValue() === true) {
+                                    $skipSect = false;
+                                    break;
+                                }
+                            }
+
+                            if ($skipSect) {
+                                $candidateFalseSections[] = $section;
+                                $preCount = 0;
+                            }
+                        }
+                    }
+                }
+
+                // Moving to the next RouteItem where no parent AssessmentSection is in candidateFalseSections
+
+                while (($route->valid() === true) and (count($candidateFalseSections) > 0))
+                {
+                    $gotonext = false;
+
+                    foreach ($route->current()->getAssessmentSections() as $section) {
+                        if (in_array($section, $candidateFalseSections)) {
+                            $gotonext = true;
+                            break;
+                        }
+                    }
+
+                    if ($gotonext) {
+                        $route->next();
+                    } else {
+                        break;
+                    }
+                }
+
+                // AssessmentItemRef
+
+                for ($i = 0; $i < $preCount; $i++) {
+                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+                    $condition = $engine->process();
+
+                    if ($condition !== null && $condition->getValue() === true) {
+                        // The item must be presented.
+                        $stop = true;
+                        break;
+                    }
+                }
+            } else {
+                $stop = true;
+            }
+*/
             if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
 
                 for ($i = 0; $i < count($preConditions); $i++) {

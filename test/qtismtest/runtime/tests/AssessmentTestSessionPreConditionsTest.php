@@ -155,4 +155,53 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         
         $this->assertFalse($testSession->isRunning());
     }
+
+    public function testPreConditionOnSectionsandTest() {
+
+        // TODO : ???
+
+        /*
+         * No AssessmentItemSession object bound to 'Q05.0'.
+        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentItemSessionStore.php:111
+        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentTestSession.php:1500
+        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentTestSession.php:2968
+        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentTestSession.php:916
+        /home/tom/GitClones/qti-sdk/test/qtismtest/runtime/tests/AssessmentTestSessionPreConditionsTest.php:172
+         *
+         */
+
+        /*
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $session->beginTestSession();
+        $session->beginAttempt();
+        $responses = new State();
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('B')));
+        $session->endAttempt($responses);
+        $session->moveNext();
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals("Q05", $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        /*
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $session->beginTestSession();
+        $session->beginAttempt();
+        $responses = new State();
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')));
+        $session->endAttempt($responses);
+        $session->moveNext();
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals("Q03", $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());*/
+    }
 }
