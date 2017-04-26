@@ -40,7 +40,7 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP02">
         <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">
             <assessmentSection identifier="S03" title="Section 03" visible="true" required="true">
                 <branchRule target="Q05">
@@ -65,7 +65,7 @@
             </assessmentSection>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP03">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP03">
         <assessmentSection identifier="S04" title="Section 04" visible="true" required="true">
             <assessmentItemRef identifier="Q04" href="./Q04/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">

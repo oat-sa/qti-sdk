@@ -8,15 +8,9 @@
 
 namespace qtismtest\runtime\tests;
 
-use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\BranchRuleTargetException;
 use qtism\runtime\tests\RouteItemCollection;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
-use qtism\runtime\common\State;
-use qtism\runtime\common\ResponseVariable;
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-use qtism\common\datatypes\QtiIdentifier;
 
 class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSessionTestCase
 {
@@ -162,8 +156,6 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
     public function testPossibleRoutesWitPreOnSectionsAndTPs()
     {
-        // TODO TODO DOTO
-
         // Case with testParts and sections
 
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
@@ -183,7 +175,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
 
-        //$this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre3.xml');
         $route = $session->getRoute();
@@ -201,7 +193,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2]]);
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4]]);
 
-        //$this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
     public function testPossibleRoutesWitPreOnSubSections()
@@ -348,7 +340,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
         $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingexitsession.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingexitsection.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -719,30 +711,27 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
         // Unreachable item (always FALSE precondition) with a branch : the branch should not be taken
 
-        /*
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingunreachable.xml');
         $route = $session->getRoute();
         $it = [];
 
         for ($i = 1; $i <= 7; $i++) {
-            $it[$i] = $route->getRouteItemAt($i - 1);;
+            $it[$i] = $route->getRouteItemAt($i - 1);
         }
 
         $possibleRoutes = [];
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[4], $it[7]]);
-
-        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));*/
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes());
     }
 
     public function testAssigningPresFromTest()
     {
-        // TODO : move this into appropriate test class
+        // Testing some changes in the createRoute() from the AbstractSessionManager
 
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
         $route = $session->getRoute();
         $route->setPosition(4);
         $this->assertEquals(1, count($route->current()->getPreConditions()));
-
 
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingtestparts.xml');
         $route = $session->getRoute();

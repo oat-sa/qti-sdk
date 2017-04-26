@@ -40,7 +40,7 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP02">
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S15" title="Section 15" visible="true" required="true">
             <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">

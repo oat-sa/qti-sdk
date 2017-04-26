@@ -8,6 +8,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\AssessmentTestSessionState;
 
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase {
 	
@@ -158,20 +159,6 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
     public function testPreConditionOnSectionsandTest() {
 
-        // TODO : ???
-
-        /*
-         * No AssessmentItemSession object bound to 'Q05.0'.
-        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentItemSessionStore.php:111
-        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentTestSession.php:1500
-        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentTestSession.php:2968
-        /home/tom/GitClones/qti-sdk/src/qtism/runtime/tests/AssessmentTestSession.php:916
-        /home/tom/GitClones/qti-sdk/test/qtismtest/runtime/tests/AssessmentTestSessionPreConditionsTest.php:172
-         *
-         */
-
-        /*
-
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
         $session->beginTestSession();
         $session->beginAttempt();
@@ -184,7 +171,6 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $session->moveNext();
         $this->assertEquals("Q05", $session->getCurrentAssessmentItemRef()->getIdentifier());
 
-        /*
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
         $session->beginTestSession();
         $session->beginAttempt();
@@ -202,6 +188,36 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $session->beginAttempt();
         $session->endAttempt(new State());
         $session->moveNext();
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());*/
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $session->beginTestSession();
+        $session->beginAttempt();
+        $responses = new State();
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')));
+        $session->endAttempt($responses);
+        $session->moveNext();
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals("Q03", $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        // Some double precondition on sections
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingunreachable.xml');
+        $session->beginTestSession();
+        $session->beginAttempt();
+        $responses = new State();
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')));
+        $session->endAttempt($responses);
+        $session->moveNext();
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals("Q04", $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals("Q07", $session->getCurrentAssessmentItemRef()->getIdentifier());
     }
 }

@@ -68,7 +68,7 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP02">
         <preCondition>
             <match>
                 <variable identifier="Q01.RESPONSE"/>

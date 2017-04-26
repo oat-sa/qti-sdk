@@ -66,7 +66,7 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP06">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP06">
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S04" title="Section 04" visible="true" required="true">
             <assessmentItemRef identifier="Q04" href="./Q04/qti.xml" timeDependent="false">

@@ -939,13 +939,18 @@ class Route implements Iterator
     }
 
     /**
-     * TODO DOC + TEST
+     * Whether the current RouteItem is the first of the current AssessmentSection set as parameter.
+     *
+     * @section \qtism\runtime\tests\AssessmentSection The AssessmentSection we need to check if this RouteItem
+     * is first or not.
      *
      * @return boolean
      * @throws \OutOfBoundsException If the Route is empty.
      */
     public function isFirstOfSection($section)
     {
+        // @TODO TEST
+
         $count = $this->count();
         if ($count === 0) {
             $msg = "Cannot determine if the current RouteItem is the first of an AssessmentSection
@@ -1580,10 +1585,13 @@ class Route implements Iterator
     }
 
     /**
-     * TODO DOC DOC DOC
-     * @param $preconditions
-     * @return bool$
+     * Checks if a PreCondition makes it's owner never reachable.
      *
+     * Loops through all preconditions : if they're all pure expression that are always false,
+     * returns true, otherwise return false.
+     *
+     * @param $preconditions qtism\data\rules\PreConditionCollection The PreConditions to check.
+     * @return bool True if the PreCondition is always false, false otherwise
      */
 
     public static function checkIfAlwaysFalse($preconditions) {
@@ -1607,11 +1615,14 @@ class Route implements Iterator
     }
 
     /**
-     * @TODO DOC DOC DOC
-     * @param $preconditions
+     * @param $preconditions qtism\data\rules\PreConditionCollection The PreConditions to check.
+     * @param $routes array of \qtism\runtime\RouteItemCollection The list of possible routes already known.
+     * @param $items array of qtism\data\AssessmentItemRef The items that are skipped if the precondition is false.
+     * @return array of \qtism\runtime\RouteItemCollection The list of possible routes updated with the new
+     * possibilities (or not) given by the precondition.
      */
 
-    public function analysePreConditions($preconditions, &$routes, $items) {
+    public function analysePreConditions($preconditions, $routes, $items) {
 
         $alwaysFalse = true;
 
@@ -1750,26 +1761,29 @@ class Route implements Iterator
 
         foreach ($this->getRouteItems() as $ri) {
 
-            // Handling testparts
+            if (count($ri->getPreConditions()) > 0) {
 
-            if (count($ri->getTestPart()->getPreConditions()) > 0) {
-                if (!in_array($ri->getTestPart(), $preTp)) {
+                $preCount = count($ri->getPreConditions());
 
-                    $preTp[] = $ri->getTestPart();
+                // Handling testparts
 
-                    if (Route::checkIfAlwaysFalse($ri->getTestPart()->getPreConditions())) {
-                        foreach ($ri->getTestPart()->getComponentsByClassName("assessmentItemRef") as $item) {
-                            if (!in_array($item, $unreachableItems)) {
-                                $unreachableItems[] = $item;
+                if (count($ri->getTestPart()->getPreConditions()) > 0) {
+
+                    $preCount -= count($ri->getTestPart()->getPreConditions());
+
+                    if (!in_array($ri->getTestPart(), $preTp)) {
+
+                        $preTp[] = $ri->getTestPart();
+
+                        if (Route::checkIfAlwaysFalse($ri->getTestPart()->getPreConditions())) {
+                            foreach ($ri->getTestPart()->getComponentsByClassName("assessmentItemRef") as $item) {
+                                if (!in_array($item, $unreachableItems)) {
+                                    $unreachableItems[] = $item;
+                                }
                             }
                         }
                     }
                 }
-            }
-
-            if (count($ri->getPreConditions()) > 0) {
-
-                $preCount = count($ri->getPreConditions());
 
                 // Handling sections
 
@@ -1777,9 +1791,11 @@ class Route implements Iterator
 
                 foreach ($sect as $section) {
                     if (count($section->getPreConditions()) > 0) {
+
+                        $preCount -= count($section->getPreConditions());
+
                         if (!in_array($section, $preSect)) {
 
-                            $preCount -= count($section->getPreConditions());
                             $preSect[] = $section;
 
                             if (Route::checkIfAlwaysFalse($section->getPreConditions())) {
@@ -1792,6 +1808,7 @@ class Route implements Iterator
                         }
                     }
                 }
+
                 // Handling assessmentItem
 
                 if ($preCount > 0) {
@@ -1801,8 +1818,6 @@ class Route implements Iterator
                     for ($i = 0; $i < $preCount; $i++) {
                         $preConditions[] = $ri->getPreConditions()[$i];
                     }
-
-                    // $routes = $this->analysePreConditions($preConditions, $routes, [$ri->getAssessmentItemRef()]);
 
                     if (Route::checkIfAlwaysFalse($preConditions)) {
                         if (!in_array($ri->getAssessmentItemRef(), $unreachableItems)) {
@@ -1819,64 +1834,70 @@ class Route implements Iterator
         $branchSect = [];
 
         foreach ($this->getRouteItems() as $ri) {
-            // Handling testparts
 
-            $tp = $ri->getTestPart();
+            if (!in_array($ri->getAssessmentItemRef(), $unreachableItems)) {
+                // Handling testparts
 
-            if (!in_array($tp, $branchTp)) {
-                if (count($tp->getBranchRules()) > 0) {
-                    foreach ($tp->getBranchRules() as $branch) {
-                        $routes = $this->BranchAnalysis($branch, $tp, $routes, $succsItem, $alwaysTrueBranches,
-                            $sections, $testparts);
+                $tp = $ri->getTestPart();
 
-                        // Avoid next branches if an AlwaysTrue branch has been found
-
-                        if ((count($alwaysTrueBranches) > 0) and
-                            ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)) {
-                            break;
-                        }
-                    }
-
-                    $branchTp[] = $tp;
-                }
-            }
-
-            // Handling sections
-
-            $sects = $ri->getAssessmentSections();
-
-            foreach ($sects as $section) {
-                if (!in_array($section, $branchSect)) {
-                    if (count($section->getBranchRules()) > 0) {
-                        foreach ($section->getBranchRules() as $branch) {
-                            $routes = $this->BranchAnalysis($branch, $section, $routes, $succsItem, $alwaysTrueBranches,
+                if (!in_array($tp, $branchTp)) {
+                    if (count($tp->getBranchRules()) > 0) {
+                        foreach ($tp->getBranchRules() as $branch) {
+                            $routes = $this->BranchAnalysis($branch, $tp, $routes, $succsItem, $alwaysTrueBranches,
                                 $sections, $testparts);
 
                             // Avoid next branches if an AlwaysTrue branch has been found
 
                             if ((count($alwaysTrueBranches) > 0) and
-                                ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)) {
+                                ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)
+                            ) {
                                 break;
                             }
                         }
 
-                        $branchSect[] = $section;
+                        $branchTp[] = $tp;
                     }
                 }
-            }
 
-            // Handling assessmentItem            
+                // Handling sections
 
-            if (count($ri->getBranchRules()) > 0) {
-                foreach ($ri->getBranchRules() as $branch) {
-                    $routes = $this->BranchAnalysis($branch, $ri->getAssessmentItemRef(), $routes, $succsItem,
-                        $alwaysTrueBranches, $sections, $testparts);
+                $sects = $ri->getAssessmentSections();
 
-                    // Avoid next branches if an AlwaysTrue branch has been found
+                foreach ($sects as $section) {
+                    if (!in_array($section, $branchSect)) {
+                        if (count($section->getBranchRules()) > 0) {
+                            foreach ($section->getBranchRules() as $branch) {
+                                $routes = $this->BranchAnalysis($branch, $section, $routes, $succsItem, $alwaysTrueBranches,
+                                    $sections, $testparts);
 
-                    if ((count($alwaysTrueBranches) > 0) and
-                        ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)) {
-                        break;
+                                // Avoid next branches if an AlwaysTrue branch has been found
+
+                                if ((count($alwaysTrueBranches) > 0) and
+                                    ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)
+                                ) {
+                                    break;
+                                }
+                            }
+
+                            $branchSect[] = $section;
+                        }
+                    }
+                }
+
+                // Handling assessmentItem
+
+                if (count($ri->getBranchRules()) > 0) {
+                    foreach ($ri->getBranchRules() as $branch) {
+                        $routes = $this->BranchAnalysis($branch, $ri->getAssessmentItemRef(), $routes, $succsItem,
+                            $alwaysTrueBranches, $sections, $testparts);
+
+                        // Avoid next branches if an AlwaysTrue branch has been found
+
+                        if ((count($alwaysTrueBranches) > 0) and
+                            ($alwaysTrueBranches[count($alwaysTrueBranches) - 1][0] == $branch)
+                        ) {
+                            break;
+                        }
                     }
                 }
             }
@@ -1922,20 +1943,23 @@ class Route implements Iterator
 
         foreach ($this->getRouteItems() as $ri) {
 
-            // Handling testparts
-
-            if (count($ri->getTestPart()->getPreConditions()) > 0) {
-                if (!in_array($ri->getTestPart(), $preTp)) {
-
-                    $preTp[] = $ri->getTestPart();
-                    $tpItems = $ri->getTestPart()->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
-                    $routes = $this->analysePreConditions($ri->getTestPart()->getPreConditions(), $routes, $tpItems);
-                }
-            }
-
             if (count($ri->getPreConditions()) > 0) {
 
                 $preCount = count($ri->getPreConditions());
+
+                // Handling testparts
+
+                if (count($ri->getTestPart()->getPreConditions()) > 0) {
+
+                    $preCount -= count($ri->getTestPart()->getPreConditions());
+
+                    if (!in_array($ri->getTestPart(), $preTp)) {
+
+                        $preTp[] = $ri->getTestPart();
+                        $tpItems = $ri->getTestPart()->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                        $routes = $this->analysePreConditions($ri->getTestPart()->getPreConditions(), $routes, $tpItems);
+                    }
+                }
 
                 // Handling sections
 
@@ -1943,9 +1967,10 @@ class Route implements Iterator
 
                 foreach ($sect as $section) {
                     if (count($section->getPreConditions()) > 0) {
-                        if (!in_array($section, $preSect)) {
 
-                            $preCount -= count($section->getPreConditions());
+                        $preCount -= count($section->getPreConditions());
+
+                        if (!in_array($section, $preSect)) {
                             $preSect[] = $section;
                             $sectItems = $section->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
                             $routes = $this->analysePreConditions($section->getPreConditions(), $routes, $sectItems);

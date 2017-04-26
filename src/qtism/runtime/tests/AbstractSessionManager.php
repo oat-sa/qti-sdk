@@ -203,7 +203,10 @@ abstract class AbstractSessionManager
 
                             // Do the same as for branch rules for pre conditions, except that they must be
                             // attached on the first item of the route.
-                            $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
+
+                            foreach ($route->getAllRouteItems() as $routeItem) {
+                                $routeItem->addPreConditions($current->getPreConditions());
+                            }
                         }
 
                         array_push($routeStack, $route);
@@ -225,11 +228,9 @@ abstract class AbstractSessionManager
         }
 
         for($i = 0; $i < count($route->getAllRouteItems()); $i++) {
-            $route->setPosition($i);
 
-            if ($route->isFirstOfTestPart()) {
-                $route->getRouteItemAt($i)->addPreConditions($route->getRouteItemAt($i)->getTestPart()->getPreConditions());
-            }
+            $route->setPosition($i);
+            $route->getRouteItemAt($i)->addPreConditions($route->getRouteItemAt($i)->getTestPart()->getPreConditions());
 
             if ($route->isLastOfTestPart()) {
                 $route->getRouteItemAt($i)->addBranchRules($route->getRouteItemAt($i)->getTestPart()->getBranchRules());

@@ -457,7 +457,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branchingexitsession.xml');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingexitsection.xml');
         $test = $doc->getDocumentComponent();
 
         $it = [];

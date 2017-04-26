@@ -41,7 +41,7 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP02">
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">
             <!-- go to S05 if response of Q03 is identifier "B" -->
@@ -96,7 +96,7 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
-    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP04">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP04">
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S07" title="Section 07" visible="true" required="true">
             <assessmentItemRef identifier="Q06" href="./Q06/qti.xml" timeDependent="false">

@@ -2335,31 +2335,27 @@ class AssessmentTestSession extends State
             $msg = "Cannot move to the next position while the state of the test session is INITIAL or CLOSED.";
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
-
         // If the submitted responses are the one of the last
         // item of the test part, apply deffered response submission.
         if ($this->getRoute()->isLastOfTestPart() === true && $this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
-
             // The testPart is complete so deffered response submission must take place.
             $this->defferedResponseSubmission();
         }
-
         $route = $this->getRoute();
+
         $stop = false;
+        $goToNextItem = true;
 
         while ($route->valid() === true && $stop === false) {
 
             // Branchings?
             if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && $this->mustApplyBranchRules() === true) {
-
                 $branchRules = $route->current()->getBranchRules();
                 for ($i = 0; $i < count($branchRules); $i++) {
                     $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
                     $condition = $engine->process();
                     if ($condition !== null && $condition->getValue() === true) {
-
                         $target = $branchRules[$i]->getTarget();
-
                         if ($target === 'EXIT_TEST') {
                             $this->endTestSession();
                         } elseif ($target === 'EXIT_TESTPART') {
@@ -2369,43 +2365,37 @@ class AssessmentTestSession extends State
                         } else {
                             $route->branch($branchRules[$i]->getTarget());
                         }
-
                         break;
                     }
                 }
-
                 if ($i >= count($branchRules)) {
                     // No branch rule returned true. Simple move next.
                     $route->next();
                 }
-            } else {
+            } else if ($goToNextItem){
                 $route->next();
             }
 
+            $goToNextItem = true;
+
             // Preconditions on target?
 
-            /*
-
-            if ($ignorePreConditions === false && $route->valid() === true && $this->mustApplyPreConditions() === true &&
-                ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0) {
-
+            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true)
+            {
                 $preCount = count($route->current()->getPreConditions());
                 $candidateFalseSections = [];
 
                 // TestPart
-
                 if (($route->isFirstOfTestPart()) && (count($route->current()->getTestPart()->getPreConditions()) > 0)) {
-
                     $tpConditions = $route->current()->getTestPart()->getPreConditions();
                     $preCount -= count($tpConditions);
                     $skipTP = true;
-
                     for ($i = 0; $i < count($tpConditions); $i++) {
                         $engine = new ExpressionEngine($tpConditions[$i]->getExpression(), $this);
                         $condition = $engine->process();
-
                         if ($condition !== null && $condition->getValue() === true) {
                             $skipTP = false;
+                            $stop = true;
                             break;
                         }
                     }
@@ -2413,28 +2403,25 @@ class AssessmentTestSession extends State
                     if ($skipTP) {
                         $this->moveNextTestPart();
                         $preCount = 0;
+                        $goToNextItem = false;
                     }
                 }
-
                 // AssessmentSections
-
                 if ($preCount > 0) { // Skip this part, if already moved to next testpart
                     foreach ($route->current()->getAssessmentSections() as $section) {
                         if (($route->isFirstOfSection($section)) && (count($section->getPreConditions()) > 0)) {
                             $sectConditions = $section->getPreConditions();
                             $preCount -= count($section->getPreConditions());
                             $skipSect = true;
-
                             for ($i = 0; $i < count($sectConditions); $i++) {
                                 $engine = new ExpressionEngine($sectConditions[$i]->getExpression(), $this);
                                 $condition = $engine->process();
-
                                 if ($condition !== null && $condition->getValue() === true) {
                                     $skipSect = false;
+                                    $stop = true;
                                     break;
                                 }
                             }
-
                             if ($skipSect) {
                                 $candidateFalseSections[] = $section;
                                 $preCount = 0;
@@ -2444,31 +2431,27 @@ class AssessmentTestSession extends State
                 }
 
                 // Moving to the next RouteItem where no parent AssessmentSection is in candidateFalseSections
-
                 while (($route->valid() === true) and (count($candidateFalseSections) > 0))
                 {
                     $gotonext = false;
-
                     foreach ($route->current()->getAssessmentSections() as $section) {
                         if (in_array($section, $candidateFalseSections)) {
                             $gotonext = true;
                             break;
                         }
                     }
-
                     if ($gotonext) {
                         $route->next();
                     } else {
+                        $goToNextItem = false;
                         break;
                     }
                 }
 
                 // AssessmentItemRef
-
                 for ($i = 0; $i < $preCount; $i++) {
                     $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
                     $condition = $engine->process();
-
                     if ($condition !== null && $condition->getValue() === true) {
                         // The item must be presented.
                         $stop = true;
@@ -2478,13 +2461,12 @@ class AssessmentTestSession extends State
             } else {
                 $stop = true;
             }
-*/
-            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
 
+            /*
+            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
                 for ($i = 0; $i < count($preConditions); $i++) {
                     $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
                     $condition = $engine->process();
-
                     if ($condition !== null && $condition->getValue() === true) {
                         // The item must be presented.
                         $stop = true;
@@ -2493,8 +2475,8 @@ class AssessmentTestSession extends State
                 }
             } else {
                 $stop = true;
-            }
-            
+            }*/
+
             // After a first iteration, we will not performed branching again, as they are executed
             // as soon as we leave an item. Chains of branch rules are not expected.
             $ignoreBranchings = true;
