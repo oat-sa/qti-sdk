@@ -2462,21 +2462,6 @@ class AssessmentTestSession extends State
                 $stop = true;
             }
 
-            /*
-            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
-                for ($i = 0; $i < count($preConditions); $i++) {
-                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
-                    $condition = $engine->process();
-                    if ($condition !== null && $condition->getValue() === true) {
-                        // The item must be presented.
-                        $stop = true;
-                        break;
-                    }
-                }
-            } else {
-                $stop = true;
-            }*/
-
             // After a first iteration, we will not performed branching again, as they are executed
             // as soon as we leave an item. Chains of branch rules are not expected.
             $ignoreBranchings = true;

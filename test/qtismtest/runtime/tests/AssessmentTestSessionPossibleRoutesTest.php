@@ -11,6 +11,7 @@ namespace qtismtest\runtime\tests;
 use qtism\runtime\tests\BranchRuleTargetException;
 use qtism\runtime\tests\RouteItemCollection;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
+use \OutOfBoundsException;
 
 class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSessionTestCase
 {
@@ -722,6 +723,18 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $possibleRoutes = [];
         $possibleRoutes[] = new RouteItemCollection([$it[1], $it[3], $it[4], $it[7]]);
         $this->assertEquals($possibleRoutes, $route->getPossibleRoutes());
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingunreachable2.xml');
+        $route = $session->getRoute();
+        $it = [];
+
+        for ($i = 1; $i <= 6; $i++) {
+            $it[$i] = $route->getRouteItemAt($i - 1);
+        }
+
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection([$it[4], $it[6]]);
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes());
     }
 
     public function testAssigningPresFromTest()
@@ -737,5 +750,21 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $route = $session->getRoute();
         $route->setPosition(1);
         $this->assertEquals(1, count($route->current()->getBranchRules()));
+    }
+
+    public function testIsFirstOfSectionOnEmptyRoute2()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $route = $session->getRoute();
+        $this->expectException(OutOfBoundsException::class);
+        $firstRouteItem = $route->isFirstOfSection(null);
+    }
+
+    public function testIsFirstOfSectionOnEmptyRoute3()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $route = $session->getRoute();
+        $this->expectException(OutOfBoundsException::class);
+        $firstRouteItem = $route->isFirstOfSection($session->getAssessmentTest()->getComponentByIdentifier("S02"));
     }
 }
