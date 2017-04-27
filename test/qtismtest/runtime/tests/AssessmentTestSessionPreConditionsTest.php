@@ -219,5 +219,12 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $session->endAttempt(new State());
         $session->moveNext();
         $this->assertEquals("Q07", $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpresubsections.xml');
+        $session->beginTestSession();
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals("Q04", $session->getCurrentAssessmentItemRef()->getIdentifier());
     }
 }

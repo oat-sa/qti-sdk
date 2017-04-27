@@ -767,4 +767,12 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $this->expectException(OutOfBoundsException::class);
         $firstRouteItem = $route->isFirstOfSection($session->getAssessmentTest()->getComponentByIdentifier("S02"));
     }
+
+    public function testIsFirstOfSectionOnEmptyRoute4()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $route = $session->getRoute();
+        $this->AssertEquals(true,
+            $route->isFirstOfSection($session->getAssessmentTest()->getComponentByIdentifier("S01")));
+    }
 }

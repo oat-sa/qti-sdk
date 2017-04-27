@@ -959,7 +959,7 @@ class Route implements Iterator
         }
 
         if (($section == null) || (!in_array($this->current()->getAssessmentItemRef(),
-                $section->getSectionParts()->getArrayCopy()))) {
+                $section->getComponentsByClassName("assessmentItemRef")->getArrayCopy()))) {
             $msg = "RouteItem not in section given as parameter.";
             throw new OutOfBoundsException($msg);
         }
