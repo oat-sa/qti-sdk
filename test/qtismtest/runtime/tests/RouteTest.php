@@ -3,7 +3,6 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmRouteTestCase;
 use qtism\data\AssessmentTest;
-use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\runtime\tests\RouteItem;
@@ -14,7 +13,6 @@ use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\ExtendedTestPart;
 use qtism\data\ExtendedAssessmentTest;
-use qtism\data\AssessmentItem;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TestPart;
 use qtism\runtime\tests\Route;

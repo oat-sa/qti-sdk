@@ -949,8 +949,6 @@ class Route implements Iterator
      */
     public function isFirstOfSection($section)
     {
-        // @TODO TEST
-
         $count = $this->count();
         if ($count === 0) {
             $msg = "Cannot determine if the current RouteItem is the first of an AssessmentSection

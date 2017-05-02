@@ -570,9 +570,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $possibleRoutes3 = [];
 
         $possibleRoutes[] = new RouteItemCollection(([$it[2], $it[3], $it[4], $it[5]]));
-
         $possibleRoutes2[] = new RouteItemCollection(([$it[5]]));
-
         $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
 
         $routes = $route->getPossibleRoutes();
@@ -699,7 +697,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
         $it = [];
 
         for ($i = 1; $i <= 5; $i++) {
-            $it[$i] = $route->getRouteItemAt($i - 1);;
+            $it[$i] = $route->getRouteItemAt($i - 1);
         }
 
         $possibleRoutes = [];
