@@ -177,4 +177,15 @@ class Variable extends Expression implements Pure
     {
         return false; // variable --> impure
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "[identifier=\"" . $this->identifier . "\"]()";
+    }
 }

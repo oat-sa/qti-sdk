@@ -133,4 +133,16 @@ class RandomFloat extends Expression implements Pure
     {
         return false; // Random --> impure
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "[min=" . $this->min . ", max=" . $this->max . ", step=" .
+            $this->step . "\"]()";
+    }
 }

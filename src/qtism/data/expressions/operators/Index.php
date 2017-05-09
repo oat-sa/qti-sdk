@@ -108,4 +108,29 @@ class Index extends Operator implements Pure
     {
         return $this->getExpressions()->isPure();
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "[n=" . $this->n->toQtiPL() . "](";
+        $start = true;
+
+        foreach ($this->getExpressions() as $expr) {
+
+            if ($start) {
+                $start = false;
+            } else {
+                $qtipl .= ", ";
+            }
+
+            $qtipl .= $expr->toQtiPL();
+        }
+
+        return $qtipl . ")";
+    }
 }

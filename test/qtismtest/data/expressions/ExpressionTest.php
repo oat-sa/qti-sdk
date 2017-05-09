@@ -35,4 +35,27 @@ class ExpressionTest extends QtiSmTestCase
                 $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->IsPure());
         }
     }
+
+    public function testQtiPL()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $test = $doc->getDocumentComponent();
+
+        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+
+        $this->assertEquals("match(1, 1)", $itemq3->getBranchRules()[0]->getExpression()->toQtiPL());
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
+        $test = $doc->getDocumentComponent();
+
+        $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q2');
+
+        $this->assertEquals("match(anyN[min=3, max=4](1, 1, 1, 1), 1)",
+            $itemq2->getBranchRules()[0]->getExpression()->toQtiPL());
+
+        // TODO : test with empty expression
+        // TODO : CustomOperator, what do to with $externalComponent
+    }
 }

@@ -130,4 +130,37 @@ class BaseValue extends Expression implements Pure
     {
         return true;
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        switch ($this->baseType) {
+
+            case 0: // IDENTIFIER
+                return "'" . $this->value . "'";
+
+            case 1: // BOOLEAN
+                return ucfirst($this->value);
+
+            case 2: // INTEGER
+                return $this->value;
+
+            case 3: // FLOAT
+                return $this->value;
+
+            case 4: // STRING
+                return "\"" . $this->value . "\"";
+
+            case 10: // URI
+                return "`" . $this->value . "`";
+
+            default:
+                return strtolower(BaseType::getNameByConstant($this->baseType)) . "(" . $this->getValue() . ")";
+        }
+    }
 }

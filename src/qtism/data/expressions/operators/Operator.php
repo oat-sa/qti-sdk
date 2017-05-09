@@ -23,6 +23,7 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
+use qtism\data\expressions\QtiPLisable;
 use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\ExpressionCollection;
@@ -35,7 +36,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Operator extends Expression
+abstract class Operator extends Expression implements QtiPLisable
 {
     /**
      * The minimal number of operands the operator can take.
@@ -232,5 +233,32 @@ abstract class Operator extends Expression
         }
 
         $this->acceptedBaseTypes = $acceptedBaseTypes;
+    }
+
+
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "(";
+        $start = true;
+
+        foreach ($this->getExpressions() as $expr) {
+
+            if ($start) {
+                $start = false;
+            } else {
+                $qtipl .= ", ";
+            }
+
+            $qtipl .= $expr->toQtiPL();
+        }
+
+        return $qtipl . ")";
     }
 }
