@@ -111,4 +111,14 @@ class MapResponse extends Expression implements Pure
     {
         return false; // dependant on identifier
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "[identifier=\"" . $this->identifier . "\"]()";
+    }
 }

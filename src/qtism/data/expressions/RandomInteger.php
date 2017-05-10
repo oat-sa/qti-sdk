@@ -186,6 +186,6 @@ class RandomInteger extends Expression implements Pure
             $qtipl .= ", step=" . $this->step;
         }
 
-        return $qtipl . "\"]()";
+        return $qtipl . "]()";
     }
 }

@@ -241,4 +241,35 @@ class CustomOperator extends Operator implements IExternal, Pure
     {
         return false; // Too impredictable, for instance calling web service --> impure
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     * Only the class attribute is handled within the attributes.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName();
+
+        if ($this->getClass() != "") {
+            $qtipl .= "[class=\"" . $this->getClass() . "\"]";
+        }
+
+        $qtipl .= "(";
+        $start = true;
+
+        foreach ($this->getExpressions() as $expr) {
+
+            if ($start) {
+                $start = false;
+            } else {
+                $qtipl .= ", ";
+            }
+
+            $qtipl .= $expr->toQtiPL();
+        }
+
+        return $qtipl . ")";
+    }
 }

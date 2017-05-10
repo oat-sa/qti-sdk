@@ -147,7 +147,7 @@ class MathOperator extends Operator implements Pure
 
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[name=" . $this->name->toQtiPL() . "](";
+        $qtipl = $this->getQtiClassName() . "[name=\"" . MathFunctions::getNameByConstant($this->name) . "\"](";
         $start = true;
 
         foreach ($this->getExpressions() as $expr) {

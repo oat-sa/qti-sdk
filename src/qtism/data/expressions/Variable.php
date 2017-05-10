@@ -183,9 +183,10 @@ class Variable extends Expression implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        return $this->getQtiClassName() . "[identifier=\"" . $this->identifier . "\"]()";
+        $qtipl = $this->getQtiClassName() . "[identifier=\"" . $this->getIdentifier() . "\"";
+        $qtipl .= ($this->weightIdentifier != "") ? ", weightIdentifier=\"" . $this->getWeightIdentifier() .  "\"" : "";
+        return $qtipl . "]()";
     }
 }

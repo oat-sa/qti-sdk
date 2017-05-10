@@ -112,20 +112,11 @@ class StatsOperator extends Operator implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[name=" . $this->name->toQtiPL() . "](";
-        $start = true;
+        $qtipl = $this->getQtiClassName() . "[name=\"" . Statistics::getNameByConstant($this->name) . "\"](";
 
-        foreach ($this->getExpressions() as $expr) {
-
-            if ($start) {
-                $start = false;
-            } else {
-                $qtipl .= ", ";
-            }
-
+        foreach ($this->getExpressions() as $expr) { // Just one child expression expected
             $qtipl .= $expr->toQtiPL();
         }
 

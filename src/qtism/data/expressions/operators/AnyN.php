@@ -159,10 +159,9 @@ class AnyN extends Operator implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[min=" . $this->min->toQtiPL() . ", max=" . $this->max->toQtiPL() . "](";
+        $qtipl = $this->getQtiClassName() . "[min=" . $this->min . ", max=" . $this->max . "](";
         $start = true;
 
         foreach ($this->getExpressions() as $expr) {

@@ -147,21 +147,12 @@ class Inside extends Operator implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[shape=" . $this->shape->toQtiPL() . ", coords=" .
-            $this->coords->toQtiPL() . "](";
-        $start = true;
+        $qtipl = $this->getQtiClassName() . "[shape=\"" . QtiShape::getNameByConstant($this->shape) . "\", coords=" .
+            $this->coords . "](";
 
-        foreach ($this->getExpressions() as $expr) {
-
-            if ($start) {
-                $start = false;
-            } else {
-                $qtipl .= ", ";
-            }
-
+        foreach ($this->getExpressions() as $expr) { // Just one child expression expected
             $qtipl .= $expr->toQtiPL();
         }
 

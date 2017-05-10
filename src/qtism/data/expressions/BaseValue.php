@@ -136,7 +136,6 @@ class BaseValue extends Expression implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
         switch ($this->baseType) {
@@ -145,7 +144,7 @@ class BaseValue extends Expression implements Pure
                 return "'" . $this->value . "'";
 
             case 1: // BOOLEAN
-                return ucfirst($this->value);
+                return strtolower(var_export($this->value, true));
 
             case 2: // INTEGER
                 return $this->value;

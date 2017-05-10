@@ -104,7 +104,6 @@ class DefaultVal extends Expression implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
         return $this->getQtiClassName() . "[identifier=\"" . $this->identifier . "\"]()";

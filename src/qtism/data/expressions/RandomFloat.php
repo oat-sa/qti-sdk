@@ -142,7 +142,6 @@ class RandomFloat extends Expression implements Pure
 
     public function toQtiPL()
     {
-        return $this->getQtiClassName() . "[min=" . $this->min . ", max=" . $this->max . ", step=" .
-            $this->step . "\"]()";
+        return $this->getQtiClassName() . "[min=" . $this->min . ", max=" . $this->max . "]()";
     }
 }

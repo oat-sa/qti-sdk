@@ -116,10 +116,9 @@ class Repeat extends Operator implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[numberRepeats=" . $this->getNumberRepeats()->toQtiPL() . "](";
+        $qtipl = $this->getQtiClassName() . "[numberRepeats=" . $this->getNumberRepeats() . "](";
         $start = true;
 
         foreach ($this->getExpressions() as $expr) {

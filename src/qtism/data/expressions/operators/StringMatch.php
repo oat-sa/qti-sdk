@@ -155,11 +155,10 @@ class StringMatch extends Operator implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[caseSensitive=" . $this->caseSensitive->toQtiPL();
-        $qtipl .= ($this->substring) ? ", substring=True" : "";
+        $qtipl = $this->getQtiClassName() . "[caseSensitive=" . strtolower(var_export($this->caseSensitive, true));
+        $qtipl .= ($this->substring) ? ", substring=true" : "";
 
         $qtipl.= "](";
         $start = true;

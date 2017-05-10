@@ -188,4 +188,38 @@ class TestVariables extends ItemSubset
     {
         return 'testVariables';
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        $attributes = [];
+
+        if ($this->getSectionIdentifier() != "") {
+            $attributes[] = "sectionIdentifier=\"" . $this->getSectionIdentifier() . "\"";
+        }
+
+        if ($this->getIncludeCategories() != "") {
+            $attributes[] = "includeCategory=\"" . $this->getIncludeCategories() . "\"";
+        }
+
+        if ($this->getExcludeCategories() != "") {
+            $attributes[] = "excludeCategory=\"" . $this->getExcludeCategories() . "\"";
+        }
+
+        $attributes[] = "variableIdentifier=\"" . $this->getVariableIdentifier() . "\"";
+
+        if ($this->baseType != -1) {
+            $attributes[] = "baseType=\"" . BaseType::getNameByConstant($this->baseType) . "\"";
+        }
+
+        if ($this->getWeightIdentifier() != "") {
+            $attributes[] = "weightIdentifier=\"" . $this->getWeightIdentifier() . "\"";
+        }
+
+        return $this->getQtiClassName() . "[" . join(", ", $attributes) . "]()";
+    }
 }

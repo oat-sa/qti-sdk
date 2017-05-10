@@ -43,19 +43,71 @@ class ExpressionTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
-
-        $this->assertEquals("match(1, 1)", $itemq3->getBranchRules()[0]->getExpression()->toQtiPL());
+        $this->assertEquals("true == true", $itemq3->getBranchRules()[0]->getExpression()->toQtiPL());
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
         $test = $doc->getDocumentComponent();
 
-        $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q2');
+        // Getting the right branchingexpressionsQtiPL answers
 
-        $this->assertEquals("match(anyN[min=3, max=4](1, 1, 1, 1), 1)",
-            $itemq2->getBranchRules()[0]->getExpression()->toQtiPL());
+        $handle = fopen(self::samplesDir() . 'custom/tests/branchingexpressionsQtiPL.txt', "r");
+        $qtiPLExpressions = [];
+        $maxTest = 56;
+
+        if ($handle) {
+
+            $lineNumber = 1;
+
+            while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
+                $qtiPLExpressions["Q" . $lineNumber] = trim(substr($line, strpos($line, "@") + 1));
+                $lineNumber++;
+            }
+
+            fclose($handle);
+        }
+
+        for ($i = 1; $i < $maxTest; $i++) {
+            $this->assertEquals($qtiPLExpressions["Q" . $i],
+                $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->toQtiPL());
+        }
+
+        /*
+        for ($i = 1; $i < 56; $i++) {
+            var_dump($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->toQtiPL());
+        }*/
 
         // TODO : test with empty expression
         // TODO : CustomOperator, what do to with $externalComponent
+    }
+
+    public function testcoverageforQtiPL()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/coverageforQtiPL.xml');
+        $test = $doc->getDocumentComponent();
+
+        // Getting the right coverageforQtiPL answers
+
+        $handle = fopen(self::samplesDir() . 'custom/tests/coverageforQtiPLanswers.txt', "r");
+        $qtiPLExpressions = [];
+        $maxTest = 30 + 1;
+
+        if ($handle) {
+
+            $lineNumber = 1;
+
+            while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
+                $qtiPLExpressions["Q" . $lineNumber] = trim(substr($line, strpos($line, "@") + 1));
+                $lineNumber++;
+            }
+
+            fclose($handle);
+        }
+
+        for ($i = 1; $i < $maxTest; $i++) {
+            $this->assertEquals($qtiPLExpressions["Q" . $i],
+                $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->toQtiPL());
+        }
     }
 }

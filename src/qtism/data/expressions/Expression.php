@@ -40,7 +40,7 @@ use qtism\data\QtiComponent;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Expression extends QtiComponent implements QtiPLisable
+abstract class Expression extends QtiComponent
 {
     private static $expressionClassNames = array('and', 'anyN', 'baseValue', 'containerSize', 'contains', 'correct', 'customOperator', 'default',
             'delete', 'divide', 'durationGTE', 'durationLT', 'equal', 'equalRounded', 'fieldValue', 'gcd', 'lcm', 'repeat', 'gt', 'gte', 'index',
@@ -74,7 +74,6 @@ abstract class Expression extends QtiComponent implements QtiPLisable
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
         return $this->getQtiClassName() . "()";

@@ -114,20 +114,11 @@ class Index extends Operator implements Pure
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[n=" . $this->n->toQtiPL() . "](";
-        $start = true;
+        $qtipl = $this->getQtiClassName() . "[n=" . $this->n . "](";
 
-        foreach ($this->getExpressions() as $expr) {
-
-            if ($start) {
-                $start = false;
-            } else {
-                $qtipl .= ", ";
-            }
-
+        foreach ($this->getExpressions() as $expr) { // Just one child expression expected
             $qtipl .= $expr->toQtiPL();
         }
 

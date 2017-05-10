@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
+            <assessmentItemRef identifier="Q1" href="./Q1/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <and>
+                            <baseValue baseType="uri">http://www.jerome-the-king.com</baseValue>
+                            <baseValue baseType="float">4.85</baseValue>
+                        </and>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q2" href="./Q2/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <correct identifier="Q1" />
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q3" href="./Q3/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <numberCorrect sectionIdentifier="S01"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q4" href="./Q4/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <numberIncorrect sectionIdentifier="S01" includeCategory="cat"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q5" href="./Q5/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <numberIncorrect sectionIdentifier="S01" includeCategory="cat" excludeCategory="cat"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q6" href="./Q6/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <numberIncorrect excludeCategory="cat"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q7" href="./Q7/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <outcomeMaximum excludeCategory="cat" outcomeIdentifier="S01"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q8" href="./Q8/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <outcomeMaximum outcomeIdentifier="S01" weightIdentifier="Q04"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q9" href="./Q9/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <outcomeMinimum excludeCategory="cat" outcomeIdentifier="S01"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q10" href="./Q10/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <outcomeMinimum outcomeIdentifier="S01" weightIdentifier="Q04"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q11" href="./Q11/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <outcomeMaximum outcomeIdentifier="S01" sectionIdentifier="S01" includeCategory="cat"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q12" href="./Q12/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <outcomeMinimum outcomeIdentifier="S01" sectionIdentifier="S01" includeCategory="cat"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q13" href="./Q13/qti.xml"><!-- randominteger -->
+                <branchRule target="Q1">
+                    <match>
+                        <randomInteger min="-2" max="3" step="2"/>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q14" href="./Q14/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <variable identifier="Q02" weightIdentifier="Q03" />
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q15" href="./Q15/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <testVariables variableIdentifier="Q01" weightIdentifier="Q02" includeCategory="cat"
+                                       sectionIdentifier="S01" excludeCategory="cat"/>
+                        <testVariables variableIdentifier="Q01" baseType="duration" />
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q16" href="./Q16/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <customOperator class="CustomOperator.php">
+                            <baseValue baseType="boolean">true</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                        </customOperator>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q17" href="./Q17/qti.xml"><!-- sum -->
+                <branchRule target="Q1">
+                    <match>
+                        <sum>
+                            <baseValue baseType="integer">3</baseValue>
+                            <baseValue baseType="integer">2</baseValue>
+                        </sum>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q18" href="./Q18/qti.xml"><!-- sum -->
+                <branchRule target="Q1">
+                    <match>
+                        <sum>
+                            <baseValue baseType="integer">3</baseValue>
+                            <baseValue baseType="integer">2</baseValue>
+                            <baseValue baseType="integer">3</baseValue>
+                            <baseValue baseType="integer">2</baseValue>
+                        </sum>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q19" href="./Q19/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <equal toleranceMode="exact">
+                            <baseValue baseType="boolean">true</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                        </equal>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q20" href="./Q20/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <equal toleranceMode="absolute" tolerance="-2" includeUpperBound="true" includeLowerBound="false">
+                            <baseValue baseType="boolean">true</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                        </equal>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q21" href="./Q21/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <equal toleranceMode="absolute" tolerance="-2 2" includeUpperBound="false" includeLowerBound="true">
+                            <baseValue baseType="boolean">true</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                        </equal>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q22" href="./Q22/qti.xml"><!-- equalrounded -->
+                <branchRule target="Q1">
+                    <match>
+                        <equalRounded roundingMode="significantFigures" figures="2">
+                            <baseValue baseType="float">3.00001</baseValue>
+                            <baseValue baseType="float">3.000</baseValue>
+                        </equalRounded>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q23" href="./Q23/qti.xml"><!-- equalrounded -->
+                <branchRule target="Q1">
+                    <match>
+                        <equalRounded figures="5" roundingMode="decimalPlaces">
+                            <baseValue baseType="float">3.00001</baseValue>
+                            <baseValue baseType="float">3.000</baseValue>
+                        </equalRounded>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q24" href="./Q24/qti.xml"><!-- mathoperator -->
+                <branchRule target="Q1">
+                    <match>
+                        <mathOperator name="cos">
+                            <baseValue baseType="integer">42</baseValue>
+                            <baseValue baseType="integer">42</baseValue>
+                        </mathOperator>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q25" href="./Q25/qti.xml"><!-- not -->
+                <branchRule target="Q1">
+                    <match>
+                        <not>
+                            <or>
+                                <baseValue baseType="boolean">true</baseValue>
+                                <baseValue baseType="boolean">false</baseValue>
+                            </or>
+                        </not>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q26" href="./Q26/qti.xml"><!-- repeat -->
+                <branchRule target="Q1">
+                    <match>
+                        <repeat numberRepeats="3">
+                            <baseValue baseType="boolean">true</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                        </repeat>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q27" href="./Q27/qti.xml"><!-- roundto -->
+                <branchRule target="Q1">
+                    <match>
+                        <roundTo roundingMode="significantFigures" figures="4">
+                            <baseValue baseType="float">1.1</baseValue>
+                        </roundTo>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q28" href="./Q28/qti.xml"><!-- stringmatch -->
+                <branchRule target="Q1">
+                    <match>
+                        <stringMatch caseSensitive="false" substring="false">
+                            <baseValue baseType="string">true</baseValue>
+                            <baseValue baseType="string">True</baseValue>
+                        </stringMatch>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q29" href="./Q29/qti.xml"><!-- stringmatch -->
+                <branchRule target="Q1">
+                    <match>
+                        <stringMatch caseSensitive="false" substring="true">
+                            <baseValue baseType="string">true</baseValue>
+                            <baseValue baseType="string">True</baseValue>
+                        </stringMatch>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q30" href="./Q30/qti.xml"><!-- substring -->
+                <branchRule target="Q1">
+                    <match>
+                        <substring caseSensitive="false">
+                            <baseValue baseType="string">true</baseValue>
+                            <baseValue baseType="string">True</baseValue>
+                        </substring>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

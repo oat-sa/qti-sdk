@@ -28,6 +28,7 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\ExpressionCollection;
 use \InvalidArgumentException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * A QTI Operator is a composite expression. The expression
@@ -36,8 +37,14 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Operator extends Expression implements QtiPLisable
+abstract class Operator extends Expression
 {
+    private static $operatorClassNames = array('and', 'anyN', 'containerSize', 'contains', 'customOperator',
+        'delete', 'divide', 'durationGTE', 'durationLT', 'equal', 'equalRounded', 'fieldValue', 'gcd',  'gt', 'gte', 'index',
+        'inside', 'integerDivide', 'integerModulus', 'integerToFloat', 'isNull', 'lcm', 'lt', 'lte', 'match',
+        'mathOperator', 'max', 'min', 'member', 'multiple', 'not', 'or', 'ordered', 'patternMatch', 'power', 'product', 'random',
+        'repeat', 'round', 'roundTo', 'statsOperator', 'stringMatch', 'substring', 'subtract', 'sum', 'truncate');
+
     /**
      * The minimal number of operands the operator can take.
      *
@@ -235,30 +242,71 @@ abstract class Operator extends Expression implements QtiPLisable
         $this->acceptedBaseTypes = $acceptedBaseTypes;
     }
 
+    /**
+     * Returns an array of string which are all the class names that
+     * are sub classes of the 'operator' QTI class.
+     *
+     * @return array An array of string values.
+     */
+    public static function getOperatorClassNames()
+    {
+        return self::$operatorClassNames;
+    }
 
+    /**
+     * Gets an eventual sign (+,<,==...) that is used in Qti-PL
+     * when the operator always has two operands.
+     *
+     * @return string or null A string representation of the sign used, or
+     * null if the sign operator isn't used for this operator
+     */
+    public function getSignAsOperator() {
+        return null;
+    }
 
     /**
      * Transforms this expression into a Qti-PL string.
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "(";
-        $start = true;
+        // Classic form
 
-        foreach ($this->getExpressions() as $expr) {
+        if ($this->getSignAsOperator() == null || $this->getExpressions()->count() != 2) {
 
-            if ($start) {
-                $start = false;
-            } else {
-                $qtipl .= ", ";
+            $qtipl = $this->getQtiClassName() . "(";
+            $start = true;
+
+            foreach ($this->getExpressions() as $expr) {
+
+                if ($start) {
+                    $start = false;
+                } else {
+                    $qtipl .= ", ";
+                }
+
+                $qtipl .= $expr->toQtiPL();
             }
 
-            $qtipl .= $expr->toQtiPL();
-        }
+            return $qtipl . ")";
+        } else { // With operator sign form
 
-        return $qtipl . ")";
+            $qtipl = "";
+            $needsparenthesis0 = in_array($this->getExpressions()[0]->getQtiClassName(), Operator::getOperatorClassNames())
+            && $this->getExpressions()[0]->getSignAsOperator() != null &&
+                $this->getExpressions()[0]->getExpressions()->count() == 2;
+            $needsparenthesis1 = in_array($this->getExpressions()[1]->getQtiClassName(), Operator::getOperatorClassNames())
+                && $this->getExpressions()[1]->getSignAsOperator() != null &&
+                $this->getExpressions()[1]->getExpressions->count() == 2;
+
+            $qtipl .= ($needsparenthesis0) ? "(" . $this->getExpressions()[0]->toQtiPL() . ") " :
+                $this->getExpressions()[0]->toQtiPL() . " ";
+            $qtipl .= $this->getSignAsOperator() . " ";
+            $qtipl .= ($needsparenthesis1) ? "(" . $this->getExpressions()[1]->toQtiPL() . ")" :
+                $this->getExpressions()[1]->toQtiPL();
+
+            return $qtipl;
+        }
     }
 }

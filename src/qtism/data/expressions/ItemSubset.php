@@ -163,4 +163,35 @@ class ItemSubset extends Expression implements Pure
     {
         return false; // Dependant on the items of the test
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName();
+        $attributes = [];
+
+        // Dealing with attributes...
+
+        if ($this->sectionIdentifier != "") {
+            $attributes[] = "sectionIdentifier=\"" . $this->sectionIdentifier . "\"";
+        }
+
+        if ($this->includeCategories != "") {
+            $attributes[] = "includeCategory=\"" . $this->includeCategories . "\"";
+        }
+
+        if ($this->excludeCategories != "") {
+            $attributes[] = "excludeCategory=\"" . $this->excludeCategories . "\"";
+        }
+        
+        if (count($attributes) > 0) {
+            $qtipl .= "[" . join(", ", $attributes) . "]";
+        }
+
+        return $qtipl . "()";
+    }
 }

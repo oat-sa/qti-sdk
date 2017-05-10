@@ -111,20 +111,17 @@ class Substring extends Operator implements Pure
         return $this->getExpressions()->isPure();
     }
 
-
-
     /**
      * Transforms this expression into a Qti-PL string.
      *
      *@return string A Qti-PL representation of the expression
      */
-
     public function toQtiPL()
     {
-        $qtipl = $this->getQtiClassName() . "[caseSensitive=" . $this->caseSensitive->toQtiPL();
-        $qtipl .= ($this->caseSensitive) ? "" : "[caseSensitive=False]";
+        $qtipl = $this->getQtiClassName();
+        $qtipl .= ($this->caseSensitive) ? "" : "[caseSensitive=false]";
 
-        $qtipl.= "](";
+        $qtipl.= "(";
         $start = true;
 
         foreach ($this->getExpressions() as $expr) {
