@@ -175,4 +175,17 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
 
         return new QtiComponentCollection($comp);
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->outcomeIf->toQtiPL();
+        $qtipl .= (count($this->outcomeElseIfs) > 0) ? $this->outcomeElseIfs->toQtiPL(): "";
+        $qtipl .= ($this->outcomeElse == null) ? "" : " " . $this->outcomeElse->toQtiPL();
+        return $qtipl;
+    }
 }

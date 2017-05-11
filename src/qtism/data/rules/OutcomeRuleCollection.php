@@ -24,6 +24,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException as InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * A collection of OutcomeRule objects.
@@ -31,7 +32,7 @@ use \InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeRuleCollection extends QtiComponentCollection
+class OutcomeRuleCollection extends QtiComponentCollection implements QtiPLisable
 {
     /**
 	 * Check if a given $value is an instance of OutcomeRule.
@@ -44,5 +45,21 @@ class OutcomeRuleCollection extends QtiComponentCollection
             $msg = "OutcomeRuleCollection only accepts to store OutcomeRule objects, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        $qtipl = "";
+
+        foreach ($this as $condition) {
+            $qtipl .= "\t" . $condition->toQtiPL() . ";\n";
+        }
+
+        return $qtipl;
     }
 }

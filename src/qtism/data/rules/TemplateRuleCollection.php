@@ -26,6 +26,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * A specialized QtiComponentCollection aiming at storing
@@ -34,7 +35,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateRuleCollection extends QtiComponentCollection
+class TemplateRuleCollection extends QtiComponentCollection implements QtiPLisable
 {
     /**
      * Check whether or not $value is an instance of TemplateRule.
@@ -47,5 +48,21 @@ class TemplateRuleCollection extends QtiComponentCollection
             $msg = "A TemplateRuleCollection only accepts to store TemplateRule objects.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Transforms this QtiComponentCollection into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponentCollection
+     */
+    public function toQtiPL()
+    {
+        $qtipl = "";
+
+        foreach ($this as $condition) {
+            $qtipl .= "\t" . $condition->toQtiPL() . ";\n";
+        }
+
+        return $qtipl;
     }
 }

@@ -68,4 +68,14 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
     protected function buildTargetNamespace() {
         $this->setTargetNamespace('http://www.w3.org/2001/XInclude');
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "()";
+    }
 }

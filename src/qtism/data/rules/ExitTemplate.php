@@ -58,4 +58,14 @@ class ExitTemplate extends QtiComponent implements TemplateRule
     {
         return new QtiComponentCollection();
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "()";
+    }
 }

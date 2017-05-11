@@ -26,6 +26,7 @@ namespace qtism\data\rules;
 use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\Expression;
 use qtism\data\QtiComponent;
+use qtism\data\QtiPLisable;
 
 /**
  * From IMS QTI:
@@ -40,7 +41,7 @@ use qtism\data\QtiComponent;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateIf extends QtiComponent
+class TemplateIf extends QtiComponent implements QtiPLisable
 {
     /**
      * The expression to be evaluated.
@@ -127,5 +128,15 @@ class TemplateIf extends QtiComponent
     public function getQtiClassName()
     {
         return 'templateIf';
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        return "if (" . $this->getExpression()->toQtiPL() . ") {\n" . $this->getTemplateRules()->toQtiPL() . "}";
     }
 }

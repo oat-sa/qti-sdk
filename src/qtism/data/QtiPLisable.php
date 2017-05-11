@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,27 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
  */
 
-namespace qtism\data\rules;
-
-use qtism\data\QtiPLisable;
+namespace qtism\data;
 
 /**
- * A QTISM specific class representing a Rule in QTI. This class was created
- * in order to abstract ResponseRule and OutcomeRule QTI classes that are actually
- * exactly the same.
+ * Allows to check if the expression or function is pure or not,
+ * @package qtism\data\expressions
  *
- * Note: This interface acts as a marker interface.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- * @link http://en.wikipedia.org/wiki/Marker_interface_pattern
- *
+ * @author Tom Verhoof <tomv@taotesting.com>
  */
-interface Rule extends QtiPLisable
+interface QtiPLisable
 {
+    /**
+     * Transforms an expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL();
 }

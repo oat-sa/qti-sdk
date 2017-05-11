@@ -170,4 +170,17 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     {
         return 'templateCondition';
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->templateIf->toQtiPL();
+        $qtipl .= (count($this->templateElseIfs) > 0) ? $this->templateElseIfs->toQtiPL(): "";
+        $qtipl .= ($this->templateElse == null) ? "" : " " . $this->templateElse->toQtiPL();
+        return $qtipl;
+    }
 }

@@ -24,6 +24,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * A collection of ResponseRule objects.
@@ -44,5 +45,21 @@ class ResponseRuleCollection extends QtiComponentCollection
             $msg = "ResponseRuleCollection only accepts to store ResponseRule objects, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        $qtipl = "";
+
+        foreach ($this as $condition) {
+            $qtipl .= "\t" . $condition->toQtiPL() . ";\n";
+        }
+
+        return $qtipl;
     }
 }

@@ -25,6 +25,7 @@ namespace qtism\data\rules;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * The ResponseElse class.
@@ -32,7 +33,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseElse extends QtiComponent
+class ResponseElse extends QtiComponent implements QtiPLisable
 {
     /**
 	 * A collection of ResponseRule objects to be evaluated.
@@ -95,5 +96,15 @@ class ResponseElse extends QtiComponent
         $comp = $this->getResponseRules()->getArrayCopy();
 
         return new QtiComponentCollection($comp);
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        return "else {\n" . $this->getResponseRules()->toQtiPL() . "}";
     }
 }

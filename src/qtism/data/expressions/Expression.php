@@ -24,6 +24,7 @@ namespace qtism\data\expressions;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiPLisable;
 
 /**
  * The base class for all QTI expressions.
@@ -40,7 +41,7 @@ use qtism\data\QtiComponent;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Expression extends QtiComponent
+abstract class Expression extends QtiComponent implements QtiPLisable
 {
     private static $expressionClassNames = array('and', 'anyN', 'baseValue', 'containerSize', 'contains', 'correct', 'customOperator', 'default',
             'delete', 'divide', 'durationGTE', 'durationLT', 'equal', 'equalRounded', 'fieldValue', 'gcd', 'lcm', 'repeat', 'gt', 'gte', 'index',
