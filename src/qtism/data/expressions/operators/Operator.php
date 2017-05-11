@@ -23,7 +23,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\QtiPLisable;
 use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\ExpressionCollection;

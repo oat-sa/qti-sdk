@@ -299,6 +299,52 @@
                     </match>
                 </branchRule>
             </assessmentItemRef>
+            <assessmentItemRef identifier="Q31" href="./Q31/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <substring caseSensitive="false">
+                            <baseValue baseType="identifier">Q01.score</baseValue>
+                            <baseValue baseType="string">True</baseValue>
+                        </substring>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q32" href="./Q32/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <default identifier="Q01"></default>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q32" href="./Q32/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <equal tolerance="0" toleranceMode="exact" includeLowerBound="0" includeUpperBound="1">
+                            <baseValue baseType="boolean">true</baseValue>
+                            <baseValue baseType="boolean">false</baseValue>
+                        </equal>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q33" href="./Q33/qti.xml">
+                <branchRule target="Q1">
+                    <or>
+                        <not>
+                            <match>
+                                <variable identifier="step"/>
+                                <baseValue baseType="identifier">step9</baseValue>
+                            </match>
+                        </not>
+                        <equalRounded roundingMode="decimalPlaces" figures="1">
+                            <variable identifier="Q09.SCORE"/>
+                            <baseValue baseType="float">0.0</baseValue>
+                        </equalRounded>
+                    </or>
+                </branchRule>
+            </assessmentItemRef>
         </assessmentSection>
     </testPart>
 </assessmentTest>

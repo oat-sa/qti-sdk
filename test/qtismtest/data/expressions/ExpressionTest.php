@@ -91,7 +91,7 @@ class ExpressionTest extends QtiSmTestCase
 
         $handle = fopen(self::samplesDir() . 'custom/tests/coverageforQtiPLanswers.txt', "r");
         $qtiPLExpressions = [];
-        $maxTest = 30 + 1;
+        $maxTest = 33 + 1;
 
         if ($handle) {
 
