@@ -10,6 +10,7 @@ namespace qtismtest\data\expressions;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 
 
 class ExpressionTest extends QtiSmTestCase
@@ -33,6 +34,78 @@ class ExpressionTest extends QtiSmTestCase
         for ($i = 1; $i < 56; $i++) {
             $this->assertEquals(!in_array('Q' . $i, $impures),
                 $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->IsPure());
+        }
+    }
+
+    public function testQtiPL()
+    {
+        $renderer = new QtiPLRenderer();
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $test = $doc->getDocumentComponent();
+
+        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $this->assertEquals("true == true", $renderer->render($itemq3->getBranchRules()[0]->getExpression()));
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
+        $test = $doc->getDocumentComponent();
+
+        // Getting the right branchingexpressionsQtiPL answers
+
+        $handle = fopen(self::samplesDir() . 'custom/tests/branchingexpressionsQtiPL.txt', "r");
+        $qtiPLExpressions = [];
+        $maxTest = 56;
+
+        if ($handle) {
+
+            $lineNumber = 1;
+
+            while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
+                $qtiPLExpressions["Q" . $lineNumber] = trim(substr($line, strpos($line, "@") + 1));
+                $lineNumber++;
+            }
+
+            fclose($handle);
+        }
+
+        for ($i = 1; $i < $maxTest; $i++) {
+            $this->assertEquals($qtiPLExpressions["Q" . $i],
+                $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()));
+        }
+
+        // TODO : test with empty expression
+        // TODO : CustomOperator, what do to with $externalComponent
+    }
+
+    public function testcoverageforQtiPL()
+    {
+        $renderer = new QtiPLRenderer();
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/coverageforQtiPL.xml');
+        $test = $doc->getDocumentComponent();
+
+        // Getting the right coverageforQtiPL answers
+
+        $handle = fopen(self::samplesDir() . 'custom/tests/coverageforQtiPLanswers.txt', "r");
+        $qtiPLExpressions = [];
+        $maxTest = 33 + 1;
+
+        if ($handle) {
+
+            $lineNumber = 1;
+
+            while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
+                $qtiPLExpressions["Q" . $lineNumber] = trim(substr($line, strpos($line, "@") + 1));
+                $lineNumber++;
+            }
+
+            fclose($handle);
+        }
+
+        for ($i = 1; $i < $maxTest; $i++) {
+            $this->assertEquals($qtiPLExpressions["Q" . $i],
+                $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()));
         }
     }
 }
