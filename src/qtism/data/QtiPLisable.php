@@ -24,7 +24,8 @@
 namespace qtism\data;
 
 /**
- * Allows to check if the expression or function is pure or not,
+ * Allows the transformation of an expression or rule into the
+ * Qti-PL language.
  * @package qtism\data\expressions
  *
  * @author Tom Verhoof <tomv@taotesting.com>
