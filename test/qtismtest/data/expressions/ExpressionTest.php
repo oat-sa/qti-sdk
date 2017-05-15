@@ -73,9 +73,6 @@ class ExpressionTest extends QtiSmTestCase
             $this->assertEquals($qtiPLExpressions["Q" . $i],
                 $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()));
         }
-
-        // TODO : test with empty expression
-        // TODO : CustomOperator, what do to with $externalComponent
     }
 
     public function testcoverageforQtiPL()

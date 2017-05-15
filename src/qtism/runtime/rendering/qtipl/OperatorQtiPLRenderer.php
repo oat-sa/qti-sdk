@@ -45,15 +45,26 @@ class OperatorQtiPLRenderer implements Renderable
     /**
      * @return array
      */
-    private function getSignAsOperaorMap()
+    public function getSignAsOperatorMap()
     {
         $map = [];
+        $map['and'] = "&&";
+        $map['divide'] = "/";
+        $map['gt'] = ">";
+        $map['gte'] = ">=";
+        $map['integerModulus'] = "%";
+        $map['lt'] = "<";
+        $map['lte'] = "<=";
+        $map['not'] = "!";
+        $map['or'] = "||";
+        $map['power'] = "^";
+        $map['product'] = "*";
+        $map['subtract'] = "-";
         $map['match'] = "==";
 
 
         return $map;
     }
-
 
     /**
      * Render a QtiComponent object into another constitution.
@@ -64,7 +75,7 @@ class OperatorQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        if (!array_key_exists($something->getQtiClassName(), $this->getSignAsOperaorMap()) &&
+        if (!array_key_exists($something->getQtiClassName(), $this->getSignAsOperatorMap()) ||
             $something->getExpressions()->count() != 2) {
 
             return (new QtiPLRenderer())->getDefaultRendering($something);
@@ -83,15 +94,15 @@ class OperatorQtiPLRenderer implements Renderable
     {
         $qtipl = "";
         $renderer = new QtiPLRenderer();
-        $needsparenthesis0 = array_key_exists($something->getExpressions()[0]->getQtiClassName(), $this->getSignAsOperaorMap())
+        $needsparenthesis0 = array_key_exists($something->getExpressions()[0]->getQtiClassName(), $this->getSignAsOperatorMap())
             && $something->getExpressions()[0]->getExpressions()->count() == 2;
-        $needsparenthesis1 = array_key_exists($something->getExpressions()[0]->getQtiClassName(), $this->getSignAsOperaorMap())
-            && $something->getExpressions()[1]->getExpressions->count() == 2;
+        $needsparenthesis1 = array_key_exists($something->getExpressions()[1]->getQtiClassName(), $this->getSignAsOperatorMap())
+            && $something->getExpressions()[1]->getExpressions()->count() == 2;
 
         $qtipl .= ($needsparenthesis0) ? $renderer->getOpenChildElement() .
             $renderer->render($something->getExpressions()[0]) . $renderer->getCloseChildElement():
             $renderer->render($something->getExpressions()[0]);
-        $qtipl .= " " . $this->getSignAsOperaorMap()[$something->getQtiClassName()] . " ";
+        $qtipl .= " " . $this->getSignAsOperatorMap()[$something->getQtiClassName()] . " ";
         $qtipl .= ($needsparenthesis1) ? $renderer->getOpenChildElement() .
             $renderer->render($something->getExpressions()[1]) . $renderer->getCloseChildElement():
             $renderer->render($something->getExpressions()[1]);

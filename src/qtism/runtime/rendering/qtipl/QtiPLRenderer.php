@@ -50,13 +50,13 @@ class QtiPLRenderer implements Renderable
      * @var string The element opening to where the attributes are written.
      */
 
-    private $openAttribute = '(';
+    private $openAttribute = '[';
 
     /**
      * @var string The element closing to where the attributes are written.
      */
 
-    private $closeAttribute = ')';
+    private $closeAttribute = ']';
 
     /**
      * Creates a new QtiPLRenderer object.
@@ -76,6 +76,51 @@ class QtiPLRenderer implements Renderable
     {
         switch($something->getQtiClassName()) {
 
+            case "anyN":
+                return (new AnyNQtiPLRenderer())->render($something);
+
+            case "baseValue":
+                return (new BaseValueQtiPLRenderer())->render($something);
+
+            case "correct":
+                return (new CorrectQtiPLRenderer())->render($something);
+
+            case "equalRounded":
+                return (new EqualRoundedQtiPLRenderer())->render($something);
+
+            case "fieldValue":
+                return (new FieldValueQtiPLRenderer())->render($something);
+
+            case "index":
+                return (new IndexQtiPLRenderer())->render($something);
+
+            case "inside":
+                return (new InsideQtiPLRenderer())->render($something);
+
+            case "numberCorrect":
+                return (new ItemSubsetQtiPLRenderer())->render($something);
+
+            case "not":
+                return (new NotQtiPLRenderer())->render($something);
+
+            case "mathOperator":
+                return (new MathOperatorQtiPLRenderer())->render($something);
+
+            case "patternMatch":
+                return (new PatternMatchQtiPLRenderer())->render($something);
+
+            case "repeat":
+                return (new RepeatQtiPLRenderer())->render($something);
+
+            case "roundTo":
+                return (new RoundToQtiPLRenderer())->render($something);
+
+            case "statsOperator":
+                return (new StatsOperatorQtiPLRenderer())->render($something);
+
+            case "stringMatch":
+                return (new StringMatchQtiPLRenderer())->render($something);
+
             default:
                 if (in_array($something->getQtiClassName(), OperatorQtiPLRenderer::getOperatorClassNames())) {
                     return (new OperatorQtiPLRenderer())->render($something);
@@ -90,7 +135,7 @@ class QtiPLRenderer implements Renderable
      * @return
      */
     public function getDefaultRendering($something) {
-        return $something->getQtiClassName() . $this->writeChildElements();
+        return $something->getQtiClassName() . $this->writeChildElements($something->getExpressions());
     }
 
     /**
