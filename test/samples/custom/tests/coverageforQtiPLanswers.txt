@@ -31,3 +31,6 @@
 31@substring[caseSensitive=false]('Q01.score', "True") == true
 32@equal[tolerance="0", includeLowerBound=false, includeUpperBound=false](true, false) == true
 33@!(variable[identifier="step"]() == 'step9') || equalRounded[roundingMode="decimalPlaces", figures=1](variable[identifier="Q09.SCORE"](), 0)
+34@true == (`http://www.jerome-the-king.com` && 4.85)
+35@equal(numberPresented(), numberResponded()) == true
+36@equal(numberPresented(), numberSelected()) == true

@@ -345,6 +345,39 @@
                     </or>
                 </branchRule>
             </assessmentItemRef>
+            <assessmentItemRef identifier="Q34" href="./Q1/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <baseValue baseType="boolean">true</baseValue>
+                        <and>
+                            <baseValue baseType="uri">http://www.jerome-the-king.com</baseValue>
+                            <baseValue baseType="float">4.85</baseValue>
+                        </and>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q35" href="./Q35/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <equal toleranceMode="exact">
+                            <numberPresented />
+                            <numberResponded />
+                        </equal>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q36" href="./Q36/qti.xml">
+                <branchRule target="Q1">
+                    <match>
+                        <equal toleranceMode="exact">
+                            <numberPresented />
+                            <numberSelected />
+                        </equal>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
         </assessmentSection>
     </testPart>
 </assessmentTest>
