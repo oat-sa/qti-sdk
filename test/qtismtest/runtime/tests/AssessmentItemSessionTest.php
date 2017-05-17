@@ -31,6 +31,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this->assertFalse($itemSession->isPresented());
         $this->assertFalse($itemSession->isCorrect());
         $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
         $this->assertTrue($itemSession->isSelected());
         
         $itemSession->beginItemSession();
@@ -39,6 +40,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this->assertFalse($itemSession->isPresented());
         $this->assertFalse($itemSession->isCorrect());
         $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
         $this->assertTrue($itemSession->isSelected());
         $this->assertTrue($itemSession->isAttemptable());
         
@@ -102,6 +104,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $resp = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'));
         $itemSession->endAttempt(new State(array($resp)));
         $this->assertTrue($itemSession->isResponded());
+        $this->assertTrue($itemSession->isResponded(false));
         
         // The ItemSessionControl for this session was not specified, it is then
         // the default one, with default values. Because maxAttempts is not specified,
@@ -538,6 +541,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endAttempt($responses);
         
         $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
         
         // Respond with an empty string.
         $itemSession->beginAttempt();
@@ -545,6 +549,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endAttempt($responses);
         
         $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
         
         // Respond with a non-empty string.
         $itemSession->beginAttempt();
@@ -552,6 +557,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endAttempt($responses);
         
         $this->assertTrue($itemSession->isResponded());
+        $this->assertTrue($itemSession->isResponded(false));
     }
     
     public function testMultipleAttemptsSimultaneousSubmissionMode()
@@ -653,5 +659,6 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->getVariable('RESPONSE')->setDefaultValue(new QtiIdentifier('ChoiceA'));
 
         $this->assertTrue($itemSession->isResponded());
+        $this->assertTrue($itemSession->isResponded(false));
     }
 }
