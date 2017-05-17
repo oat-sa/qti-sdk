@@ -661,4 +661,169 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this->assertTrue($itemSession->isResponded());
         $this->assertTrue($itemSession->isResponded(false));
     }
+    
+    public function testIsRespondedMultipleInteractions1()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_singlechoice_textentry.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSessionControl = $itemSession->getItemSessionControl();
+        $itemSessionControl->setMaxAttempts(0);
+        
+        $itemSession->beginItemSession();
+        
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 1. Just respond nothing.
+        $itemSession->beginAttempt();
+        
+        // Right after beginning the first attempt:
+        // - RESPONSEA has value "ChoiceC" as it is its default value.
+        // - RESPONSEB has a null value.
+        
+        $this->assertEquals('ChoiceC', $itemSession['RESPONSEA']->getValue());
+        $this->assertNull($itemSession['RESPONSEB']);
+        
+        $itemSession->endAttempt(
+            new State()
+        );
+        
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 2. Just respond with an empty string to the textEntryInteraction.
+        // (Note: in QTI, empty strings, empty containers and null are considered equal values).
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSEB', 
+                    Cardinality::SINGLE, 
+                    BaseType::STRING, 
+                    new QtiString('')
+                )
+            ])
+        );
+        
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 3. Just respond to the textEntryInteraction with a non empty string.
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSEB',
+                    Cardinality::SINGLE,
+                    BaseType::STRING, 
+                    new QtiString('Lorem Ipsum')
+                )
+            ])
+        );
+        
+        $this->assertTrue($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 4. Respond to the ChoiceInteraction.
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSEA',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('ChoiceA')
+                )
+            ])
+        );
+        
+        $this->assertTrue($itemSession->isResponded());
+        $this->assertTrue($itemSession->isResponded(false));
+    }
+    
+    public function testIsRespondedMultipleInteractions2()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_multiplechoice_textentry.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSessionControl = $itemSession->getItemSessionControl();
+        $itemSessionControl->setMaxAttempts(0);
+        
+        $itemSession->beginItemSession();
+        
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 1. Just respond nothing.
+        $itemSession->beginAttempt();
+        
+        // Right after beginning the first attempt:
+        // - RESPONSEA has value ["ChoiceC"] as it is its default value.
+        // - RESPONSEB has a null value.
+        
+        $this->assertEquals('ChoiceC', $itemSession['RESPONSEA'][0]->getValue());
+        $this->assertNull($itemSession['RESPONSEB']);
+        
+        $itemSession->endAttempt(
+            new State()
+        );
+        
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 2. Just respond with an empty string to the textEntryInteraction.
+        // (Note: in QTI, empty strings, empty containers and null are considered equal values).
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSEB',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('')
+                )
+            ])
+        );
+        
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 3. Just respond to the textEntryInteraction with a non empty string.
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSEB',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('Lorem Ipsum')
+                )
+            ])
+        );
+        
+        $this->assertTrue($itemSession->isResponded());
+        $this->assertFalse($itemSession->isResponded(false));
+        
+        // Attempt 4. Respond to the ChoiceInteraction.
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSEA',
+                    Cardinality::MULTIPLE,
+                    BaseType::IDENTIFIER,
+                    new MultipleContainer(
+                        BaseType::IDENTIFIER, 
+                        [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')]
+                    )
+                )
+            ])
+        );
+        
+        $this->assertTrue($itemSession->isResponded());
+        $this->assertTrue($itemSession->isResponded(false));
+    }
 }
