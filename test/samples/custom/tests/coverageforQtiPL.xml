@@ -313,14 +313,6 @@
             <assessmentItemRef identifier="Q32" href="./Q32/qti.xml">
                 <branchRule target="Q1">
                     <match>
-                        <default identifier="Q01"></default>
-                        <baseValue baseType="boolean">true</baseValue>
-                    </match>
-                </branchRule>
-            </assessmentItemRef>
-            <assessmentItemRef identifier="Q32" href="./Q32/qti.xml">
-                <branchRule target="Q1">
-                    <match>
                         <equal tolerance="0" toleranceMode="exact" includeLowerBound="0" includeUpperBound="1">
                             <baseValue baseType="boolean">true</baseValue>
                             <baseValue baseType="boolean">false</baseValue>
