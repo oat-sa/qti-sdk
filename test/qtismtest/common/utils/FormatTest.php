@@ -142,7 +142,6 @@ class FormatTest extends QtiSmTestCase {
      */
     public function testSanitizeIdentifier2($dirty)
     {
-        var_dump(Format::sanitizeIdentifier($dirty));
         $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 	
