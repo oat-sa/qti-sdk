@@ -126,6 +126,24 @@ class FormatTest extends QtiSmTestCase {
 	public function testIsXhtmlLength($input, $expected) {
 	    $this->assertSame($expected, Format::isXhtmlLength($input));
 	}
+
+    /**
+     * @dataProvider sanitizeProvider
+     */
+    public function testSanitizeIdentifier($dirty, $clean)
+    {
+        $this->assertEquals($dirty == $clean,  Format::isIdentifier($dirty), false);
+        $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
+        $this->assertEquals($clean, Format::sanitizeIdentifier($dirty), false);
+    }
+
+    /**
+     * @dataProvider sanitizeProvider2
+     */
+    public function testSanitizeIdentifier2($dirty)
+    {
+        $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
+    }
 	
 	public function scale10Provider() {
 	    return array(
@@ -344,4 +362,28 @@ class FormatTest extends QtiSmTestCase {
 	        array(10.0, false)                
 	    );
 	}
+
+    public function sanitizeProvider()
+    {
+        return [
+            ["GoodIdentifier", "GoodIdentifier"],
+            ["abc 123", "abc123"],
+            ["@bc", "bc"],
+            ["2017id", "id"],
+            ["abc@@@", "abc"],
+            ["20i17d", "i17d"],
+            ["20id@@", "id"],
+            ["9bc", "bc"],
+            ["bc@", "bc"]
+        ];
+    }
+
+    public function sanitizeProvider2()
+    {
+        return [
+            [""],
+            ["\""],
+            ["123@"]
+        ];
+    }
 }
