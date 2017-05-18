@@ -99,6 +99,10 @@ class Format
      */
     public static function sanitizeIdentifier($dirtyIdentifier)
     {
+        if (is_array($dirtyIdentifier) || is_object($dirtyIdentifier)) {
+            return Format::generateIdentifier();
+        }
+
         if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
             return $dirtyIdentifier;
         }
