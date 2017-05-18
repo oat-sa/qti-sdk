@@ -142,6 +142,7 @@ class FormatTest extends QtiSmTestCase {
      */
     public function testSanitizeIdentifier2($dirty)
     {
+        var_dump(Format::sanitizeIdentifier($dirty));
         $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 	
@@ -369,6 +370,9 @@ class FormatTest extends QtiSmTestCase {
             ["GoodIdentifier", "GoodIdentifier"],
             ["abc 123", "abc123"],
             ["@bc", "bc"],
+            ["-bc", "bc"],
+            ["---bc", "bc"],
+            ["-bc-", "bc-"],
             ["2017id", "id"],
             ["abc@@@", "abc"],
             ["20i17d", "i17d"],
@@ -383,7 +387,14 @@ class FormatTest extends QtiSmTestCase {
         return [
             [""],
             ["\""],
-            ["123@"]
+            ["123@"],
+            [123],
+            [12.3],
+            [null],
+            [false],
+            [true],
+            [[]],
+            [new \stdClass()]
         ];
     }
 }
