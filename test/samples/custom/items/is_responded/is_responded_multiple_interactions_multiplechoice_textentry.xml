@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="is_responded_multiple_interactions_multiplechoice_textentry" title="Is Responded Multiple Interactions Multiple Choice and Text Entry" adaptive="false" timeDependent="false">
+    <responseDeclaration identifier="RESPONSEA" cardinality="multiple" baseType="identifier">
+        <correctResponse>
+            <value>ChoiceA</value>
+            <value>ChoiceB</value>
+        </correctResponse>
+        <defaultValue>
+            <value>ChoiceC</value>
+        </defaultValue>
+    </responseDeclaration>
+    <responseDeclaration identifier="RESPONSEB" cardinality="single" baseType="string"/>
+    <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+    <itemBody>
+        <div>
+            <p>An item with 2 interactions (ChoiceInteraction/TextEntryInteraction)</p>
+            
+            <choiceInteraction responseIdentifier="RESPONSEA" shuffle="false" maxChoices="3">
+                <prompt>Select a choice</prompt>
+                <simpleChoice identifier="ChoiceA">Choice A</simpleChoice>
+                <simpleChoice identifier="ChoiceB">Choice B</simpleChoice>
+                <simpleChoice identifier="ChoiceC">Choice C</simpleChoice>
+            </choiceInteraction>
+            
+            Enter some text: <textEntryInteraction responseIdentifier="RESPONSEB"/>
+        </div>
+    </itemBody>
+    <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>
