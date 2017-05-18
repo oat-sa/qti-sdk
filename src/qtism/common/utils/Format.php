@@ -83,6 +83,56 @@ class Format
     }
 
     /**
+     * "Sanitizes" an identifier : removes any non-valid character that does not
+     * correspond to the criteria written below, and returns a valid qti identifier.
+     *     IF after sanitizing, the identifier is stil not valid, a random identifier is generated.
+     *
+     *
+     * IMS Global says :
+     * Identifiers can contain the character classes Letter, Digit, Combining which are described in the
+     * Extensible Markup Language (XML) 1.0 (Second Edition). Identifiers should have no more
+     * than 32 characters for compatibility with version 1. They are always compared case-sensitively.
+     *
+     * @param $dirtyIdentifier string The string of the identifier to sanitize.
+     *
+     * @link http://www.w3.org/TR/2000/REC-xml-20001006
+     * @return string A valid  qti-identifier representation of the $identifier set as paramter
+     */
+    public static function sanitizeIdentifier($dirtyIdentifier)
+    {
+        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
+            return $dirtyIdentifier;
+        }
+
+        $cleanIdentifier = preg_replace("/^[^a-zA-Z_]+/u", "", $dirtyIdentifier); // Cleaning start
+        $cleanIdentifier = preg_replace("/[^a-zA-Z0-9_\.-]+/u", "", $cleanIdentifier); // Cleaning content
+
+        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $cleanIdentifier)) {
+            return $cleanIdentifier;
+        } else {
+            return Format::generateIdentifier();
+        }
+    }
+
+    /**
+     * Genererates a pseudo-random identifier, containing 8 characters in CAPS
+     * randomly between A and Z, in a uniform manner.
+     *
+     * @return string The pseudo-random identifier generated
+     */
+
+    private static function generateIdentifier()
+    {
+        $rID = "";
+
+        for ($i = 0; $i < 8; $i++) {
+            $rID .= chr(rand(65, 90));
+        }
+
+        return $rID;
+    }
+
+    /**
      * Get Perl XML Digit regular expression.
      *
      * @return string A perl regular expression.

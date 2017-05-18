@@ -25,6 +25,7 @@ namespace qtismtest\data;
 use qtism\data\storage\xml\XmlDocument;
 use qtismtest\QtiSmTestCase;
 use qtism\data\Utils as DataUtils;
+use qtism\common\utils\Format;
 
 class UtilsTest extends QtiSmTestCase
 {
@@ -146,5 +147,24 @@ class UtilsTest extends QtiSmTestCase
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S98'), $sections));
         $this->assertEquals(null,
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S96'), $sections));
+    }
+
+    public function testSanitizeIdentifier()
+    {
+       $testIdentifiers = ["GoodIdentifier", "abc 123", "@bc", "2017id", "abc@@@", "20i17d", "20id@@", "9bc", "bc@"];
+       $correctIdentifiers = ["GoodIdentifier", "abc123", "bc", "id", "abc", "i17d", "id", "bc", "bc"];
+
+       for ($i = 0; $i < count($testIdentifiers); $i++) {
+           $this->assertEquals($testIdentifiers[$i] == $correctIdentifiers[$i],
+               Format::isIdentifier($testIdentifiers[$i]), false);
+           $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($testIdentifiers[$i]), false));
+           $this->assertEquals($correctIdentifiers[$i], Format::sanitizeIdentifier($testIdentifiers[$i]), false);
+       }
+
+       $unsanitizableIdentifiers = ["", "\"", "123@"];
+
+        for ($i = 0; $i < count($unsanitizableIdentifiers); $i++) {
+            $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($unsanitizableIdentifiers[$i]), false));
+        }
     }
 }
