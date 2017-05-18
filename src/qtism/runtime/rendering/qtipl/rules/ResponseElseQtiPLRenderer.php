@@ -24,9 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\rules;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\common\enums\BaseType;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The ResponseElse's QtiPLRenderer. Transforms the ResponseElse's
@@ -34,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class ResponseElseQtiPLRenderer implements Renderable
+class ResponseElseQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,11 +44,11 @@ class ResponseElseQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $qtipl = " else {\n";
 
         foreach ($something->getResponseRules() as $rules) {
-            $qtipl .= "\t" . $renderer->render($rules) . ";\n";
+            $qtipl .= str_repeat(" ", $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
         }
 
         return $qtipl . "}";

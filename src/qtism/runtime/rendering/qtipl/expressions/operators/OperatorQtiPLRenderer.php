@@ -24,8 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The Operator's generic expression QtiPLRenderer. Transforms the Operator's
@@ -33,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class OperatorQtiPLRenderer implements Renderable
+class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * @var array The list of all existing operators
@@ -96,7 +96,7 @@ class OperatorQtiPLRenderer implements Renderable
      */
     public function getDefaultRendering($something) {
 
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         return $something->getQtiClassName() . $renderer->writeChildElements($something->getExpressions());
     }
 
@@ -111,7 +111,7 @@ class OperatorQtiPLRenderer implements Renderable
     private function renderWithSignAsOperator($something)
     {
         $qtipl = "";
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $needsparenthesis0 = array_key_exists($something->getExpressions()[0]->getQtiClassName(), $this->getSignAsOperatorMap())
             && $something->getExpressions()[0]->getExpressions()->count() == 2;
         $needsparenthesis1 = array_key_exists($something->getExpressions()[1]->getQtiClassName(), $this->getSignAsOperatorMap())

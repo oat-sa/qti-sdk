@@ -24,9 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\rules;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\common\enums\BaseType;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The OutcomeElseIf's QtiPLRenderer. Transforms the OutcomeElseIf's
@@ -34,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class OutcomeElseIfQtiPLRenderer implements Renderable
+class OutcomeElseIfQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,11 +44,11 @@ class OutcomeElseIfQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $qtipl = "elseif (" . $renderer->render($something->getExpression()) . ") {\n";
 
         foreach ($something->getOutcomeRules() as $rules) {
-            $qtipl .= "\t" . $renderer->render($rules) . ";\n";
+            $qtipl .= str_repeat(" ", $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
         }
 
         return $qtipl . "}";

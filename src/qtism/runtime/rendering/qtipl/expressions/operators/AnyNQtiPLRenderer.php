@@ -24,8 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The AnyN operator's QtiPLRenderer. Transforms the AnyN's
@@ -33,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class AnyNQtiPLRenderer implements Renderable
+class AnyNQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -45,7 +45,7 @@ class AnyNQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['min'] = $something->getMin();
         $attributes['max'] = $something->getMax();

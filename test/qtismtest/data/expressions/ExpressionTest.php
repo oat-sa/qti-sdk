@@ -11,6 +11,7 @@ namespace qtismtest\data\expressions;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 
 
 class ExpressionTest extends QtiSmTestCase
@@ -39,7 +40,7 @@ class ExpressionTest extends QtiSmTestCase
 
     public function testQtiPL()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
         $test = $doc->getDocumentComponent();
@@ -77,7 +78,7 @@ class ExpressionTest extends QtiSmTestCase
 
     public function testcoverageforQtiPL()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/coverageforQtiPL.xml');
         $test = $doc->getDocumentComponent();

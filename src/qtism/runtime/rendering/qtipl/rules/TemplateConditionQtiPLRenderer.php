@@ -24,9 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\rules;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\common\enums\BaseType;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The TemplateCondition's QtiPLRenderer. Transforms the TemplateCondition's
@@ -34,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class TemplateConditionQtiPLRenderer implements Renderable
+class TemplateConditionQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,7 +44,7 @@ class TemplateConditionQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $qtipl = $renderer->render($something->getTemplateIf());
 
         foreach ($something->getTemplateElseIfs() as $elseif) {

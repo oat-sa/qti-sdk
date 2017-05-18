@@ -24,9 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\rules;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\common\enums\BaseType;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The SetOutcomeValue's QtiPLRenderer. Transforms the SetOutcomeValue's
@@ -34,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class SetOutcomeValueQtiPLRenderer implements Renderable
+class SetOutcomeValueQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,7 +44,7 @@ class SetOutcomeValueQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['identifier'] = "\"" . $something->getIdentifier() . "\"";
 

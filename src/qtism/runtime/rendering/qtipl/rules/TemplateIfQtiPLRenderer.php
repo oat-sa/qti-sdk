@@ -24,9 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\rules;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\common\enums\BaseType;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The TemplateIf's QtiPLRenderer. Transforms the TemplateIf's
@@ -34,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class TemplateIfQtiPLRenderer implements Renderable
+class TemplateIfQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,11 +44,11 @@ class TemplateIfQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $qtipl = "if " . $renderer->writeChildElement($something->getExpression()) . " {\n";
 
         foreach ($something->getTemplateRules() as $rules) {
-            $qtipl .= "\t" . $renderer->render($rules) . ";\n";
+            $qtipl .= str_repeat(" ", $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
         }
 
         return $qtipl . "}";

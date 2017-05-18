@@ -24,8 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The Not operator's QtiPLRenderer. Transforms the Not's
@@ -33,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class NotQtiPLRenderer implements Renderable
+class NotQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     private $signAsOperator = "!";
@@ -47,8 +47,8 @@ class NotQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
-        $orenderer = new OperatorQtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
+        $orenderer = new OperatorQtiPLRenderer($this->getCRO());
         $needsparenthesis0 = array_key_exists($something->getExpressions()[0]->getQtiClassName(),
                 $orenderer->getSignAsOperatorMap())
             && $something->getExpressions()[0]->getExpressions()->count() == 2;

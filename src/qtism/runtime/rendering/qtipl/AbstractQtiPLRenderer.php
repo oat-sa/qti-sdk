@@ -22,35 +22,51 @@
  *
  */
 
-namespace qtism\runtime\rendering\qtipl\rules;
+namespace qtism\runtime\rendering\qtipl;
 
-use qtism\runtime\rendering\qtipl\QtiPLRenderer;
-use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
+use qtism\runtime\rendering\Renderable;
 
 /**
- * The OutcomeElse's QtiPLRenderer. Transforms the OutcomeElse's
- * expression into QtiPL.
+ *
+ * An abstract representation of the QtiPLRenderer.
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class OutcomeElseQtiPLRenderer extends AbstractQtiPLRenderer
+abstract class AbstractQtiPLRenderer implements Renderable
 {
+
     /**
-     * Render a QtiComponent object into another constitution.
-     *
-     * @param mixed $something Something to render into another consitution.
-     * @return mixed The rendered component into another constitution.
-     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rendering the component.
+     * @TODO
+     * @var ConditionRenderingOptions
      */
-    public function render($something)
+    private $cro;
+
+    /**
+     * Gets the ConditionRenderingOptions of this QtiPLRenderer.
+     *
+     * @return ConditionRenderingOptions
+     */
+    public function getCRO()
     {
-        $renderer = new QtiPLRenderer($this->getCRO());
-        $qtipl = " else {\n";
+        return $this->cro;
+    }
 
-        foreach ($something->getOutcomeRules() as $rules) {
-            $qtipl .= str_repeat(" ", $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
-        }
+    /**
+     * Sets the ConditionRenderingOptions to this QtiPLRenderer.
+     *
+     * @param $cro ConditionRenderingOptions
+     */
+    public function setCRO($cro) {
+        $this->cro = $cro;
+    }
 
-        return $qtipl . "}";
+    /**
+     * Creates a new instance of a QtiPLRenderer.
+     *
+     * @param $cro ConditionRenderingOptions The ConditionRenderingOptions assigned to this QtiPLRenderer.
+     */
+    public function __construct($cro)
+    {
+        $this->setCRO($cro);
     }
 }

@@ -24,9 +24,9 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\common\datatypes\QtiShape;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\common\datatypes\QtiShape;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The Inside operator's QtiPLRenderer. Transforms the Inside's
@@ -34,7 +34,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class InsideQtiPLRenderer implements Renderable
+class InsideQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -46,7 +46,7 @@ class InsideQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['shape'] = "\"" . QtiShape::getNameByConstant($something->getShape()) . "\"";
         $attributes['coords'] = $something->getCoords();

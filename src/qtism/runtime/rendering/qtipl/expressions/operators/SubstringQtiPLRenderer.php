@@ -25,8 +25,8 @@
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
 use qtism\common\enums\BaseType;
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The Substring's QtiPLRenderer. Transforms the Substring's
@@ -34,7 +34,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class SubstringQtiPLRenderer implements Renderable
+class SubstringQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,7 +45,7 @@ class SubstringQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
 
         if (!$something->isCaseSensitive()) {

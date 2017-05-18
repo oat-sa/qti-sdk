@@ -25,8 +25,8 @@
 namespace qtism\runtime\rendering\qtipl\expressions;
 
 use qtism\data\expressions\MathEnumeration;
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The MathConstant's QtiPLRenderer. Transforms the MathConstant's
@@ -34,7 +34,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class MathConstantQtiPLRenderer implements Renderable
+class MathConstantQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -45,7 +45,7 @@ class MathConstantQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['name'] = "\"" . MathEnumeration::getNameByConstant($something->getName()) . "\"";
 

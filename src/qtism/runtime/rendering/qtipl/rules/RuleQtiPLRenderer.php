@@ -24,8 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\rules;
 
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The Rule's generic expression QtiPLRenderer. Transforms the Rule's
@@ -33,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class RuleQtiPLRenderer implements Renderable
+class RuleQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -45,7 +45,7 @@ class RuleQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         return $something->getQtiClassName() . $renderer->writeChildElement($something->getExpression());
     }
 }

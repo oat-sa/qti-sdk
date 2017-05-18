@@ -24,9 +24,9 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\data\expressions\operators\MathFunctions;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\data\expressions\operators\MathFunctions;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The MathOperator operator's QtiPLRenderer. Transforms the MathOperator's
@@ -34,7 +34,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class MathOperatorQtiPLRenderer implements Renderable
+class MathOperatorQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -46,7 +46,7 @@ class MathOperatorQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['name'] = "\"" . MathFunctions::getNameByConstant($something->getName()) . "\"";
 

@@ -24,9 +24,9 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\data\expressions\operators\Statistics;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The StatsOperator operator's QtiPLRenderer. Transforms the StatsOperator's
@@ -34,7 +34,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class StatsOperatorQtiPLRenderer implements Renderable
+class StatsOperatorQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -46,7 +46,7 @@ class StatsOperatorQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['name'] = "\"" . Statistics::getNameByConstant($something->getName()) . "\"";
 

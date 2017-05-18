@@ -24,8 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The FieldValue operator's QtiPLRenderer. Transforms the FieldValue's
@@ -33,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class FieldValueQtiPLRenderer implements Renderable
+class FieldValueQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -45,7 +45,7 @@ class FieldValueQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
         $attributes['fieldIdentifier'] = $something->getFieldIdentifier();
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

@@ -24,8 +24,8 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions;
 
-use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The OutcomeMinimum's QtiPLRenderer. Transforms the OutcomeMinimum's
@@ -33,7 +33,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class OutcomeMinimumQtiPLRenderer implements Renderable
+class OutcomeMinimumQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * Render a QtiComponent object into another constitution.
@@ -44,7 +44,7 @@ class OutcomeMinimumQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
 
         if ($something->getSectionIdentifier() != "") {

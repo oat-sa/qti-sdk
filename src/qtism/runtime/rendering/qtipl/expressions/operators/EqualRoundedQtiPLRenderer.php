@@ -24,9 +24,9 @@
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\data\expressions\operators\RoundingMode;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\data\expressions\operators\RoundingMode;
+use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
 
 /**
  * The EqualRounded operator's QtiPLRenderer. Transforms the EqualRounded's
@@ -34,7 +34,7 @@ use qtism\runtime\rendering\qtipl\QtiPLRenderer;
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  */
-class EqualRoundedQtiPLRenderer implements Renderable
+class EqualRoundedQtiPLRenderer extends AbstractQtiPLRenderer
 {
 
     /**
@@ -46,7 +46,7 @@ class EqualRoundedQtiPLRenderer implements Renderable
      */
     public function render($something)
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
 
         if ($something->getRoundingMode() != RoundingMode::SIGNIFICANT_FIGURES) {

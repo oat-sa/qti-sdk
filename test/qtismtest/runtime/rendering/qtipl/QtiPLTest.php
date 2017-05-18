@@ -5,13 +5,14 @@ namespace qtismtest\data\state;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 
 
 class QtiPLTest extends QtiSmTestCase
 {
     public function testPreCondition()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
@@ -22,7 +23,7 @@ class QtiPLTest extends QtiSmTestCase
 
     public function testBranchRule()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
@@ -33,7 +34,7 @@ class QtiPLTest extends QtiSmTestCase
 
     public function testXInclude()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml');
         $test = $doc->getDocumentComponent();
@@ -44,18 +45,18 @@ class QtiPLTest extends QtiSmTestCase
 
     public function testResponseRules()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
             "if (isNull(variable[identifier=\"response-X\"]())) {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 } elseif (variable[identifier=\"response-X\"]() == correct[identifier=\"response-X\"]()) {
-	setOutcomeValue[identifier=\"score-X\"](variable[identifier=\"maxscore-X\"]());
+    setOutcomeValue[identifier=\"score-X\"](variable[identifier=\"maxscore-X\"]());
 } else {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 }",
             $renderer->render($test->getComponentsByClassName("responseCondition")[0]));
 
@@ -65,7 +66,7 @@ class QtiPLTest extends QtiSmTestCase
 
         $this->assertEquals(
             "if (isNull(variable[identifier=\"response-X\"]())) {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 }",
             $renderer->render($test->getComponentsByClassName("responseCondition")[0]));
 
@@ -75,13 +76,13 @@ class QtiPLTest extends QtiSmTestCase
 
         $this->assertEquals(
             "if (isNull(variable[identifier=\"response-X\"]())) {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 } elseif (variable[identifier=\"response-X\"]() == correct[identifier=\"response-X\"]()) {
-	setOutcomeValue[identifier=\"score-X\"](variable[identifier=\"maxscore-X\"]());
+    setOutcomeValue[identifier=\"score-X\"](variable[identifier=\"maxscore-X\"]());
 } elseif (variable[identifier=\"response-Y\"]() == correct[identifier=\"response-Y\"]()) {
-	setOutcomeValue[identifier=\"score-Y\"](variable[identifier=\"maxscore-Y\"]());
+    setOutcomeValue[identifier=\"score-Y\"](variable[identifier=\"maxscore-Y\"]());
 } else {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 }",
             $renderer->render($test->getComponentsByClassName("responseCondition")[0]));
 
@@ -91,33 +92,33 @@ class QtiPLTest extends QtiSmTestCase
 
         $this->assertEquals(
             "if (isNull(variable[identifier=\"response-X\"]())) {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 } elseif (variable[identifier=\"response-X\"]() == correct[identifier=\"response-X\"]()) {
-	lookupOutcomeValue[identifier=\"score-X\"](true == true);
+    lookupOutcomeValue[identifier=\"score-X\"](true == true);
 } elseif (variable[identifier=\"response-Y\"]() == correct[identifier=\"response-Y\"]()) {
-	exitResponse();
+    exitResponse();
 } else {
-	setOutcomeValue[identifier=\"score-X\"](0);
+    setOutcomeValue[identifier=\"score-X\"](0);
 }",
             $renderer->render($test->getComponentsByClassName("responseCondition")[0]));
     }
 
     public function testTemplateRules()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/templateruleforQtiPL1.xml');
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
             "if (true) {
-	exitTemplate();
+    exitTemplate();
 } elseif (false) {
-	setTemplateValue[identifier=\"Q01\"](\"Template\");
+    setTemplateValue[identifier=\"Q01\"](\"Template\");
 } elseif (true) {
-	setCorrectResponse[identifier=\"Q01\"](true);
+    setCorrectResponse[identifier=\"Q01\"](true);
 } else {
-	templateConstraint(3);
+    templateConstraint(3);
 }",
             $renderer->render($test->getComponentsByClassName("templateCondition")[0]));
 
@@ -127,27 +128,27 @@ class QtiPLTest extends QtiSmTestCase
 
         $this->assertEquals(
             "if (true) {
-	setDefaultValue[identifier=\"Q01\"](true);
+    setDefaultValue[identifier=\"Q01\"](true);
 }",
             $renderer->render($test->getComponentsByClassName("templateCondition")[0]));
     }
 
     public function testOutcomeRules()
     {
-        $renderer = new QtiPLRenderer();
+        $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
             "if (true) {
-	exitTest();
+    exitTest();
 } elseif (false) {
-	exitTest();
+    exitTest();
 } elseif (true) {
-	exitTest();
+    exitTest();
 } else {
-	setOutcomeValue[identifier=\"Q01\"](false);
+    setOutcomeValue[identifier=\"Q01\"](false);
 }",
             $renderer->render($test->getComponentsByClassName("outcomeCondition")[0]));
 
@@ -157,7 +158,38 @@ class QtiPLTest extends QtiSmTestCase
 
         $this->assertEquals(
             "if (true) {
-	exitTest();
+    exitTest();
+}",
+            $renderer->render($test->getComponentsByClassName("outcomeCondition")[0]));
+    }
+
+    public function testParametrableIndentation()
+    {
+        $renderer = new QtiPLRenderer(new ConditionRenderingOptions(8));
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
+        $test = $doc->getDocumentComponent();
+
+        $this->assertEquals(
+            "if (true) {
+        exitTest();
+} elseif (false) {
+        exitTest();
+} elseif (true) {
+        exitTest();
+} else {
+        setOutcomeValue[identifier=\"Q01\"](false);
+}",
+            $renderer->render($test->getComponentsByClassName("outcomeCondition")[0]));
+
+        $renderer = new QtiPLRenderer(new ConditionRenderingOptions(-8));
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
+        $test = $doc->getDocumentComponent();
+
+        $this->assertEquals(
+            "if (true) {
+exitTest();
 }",
             $renderer->render($test->getComponentsByClassName("outcomeCondition")[0]));
     }
