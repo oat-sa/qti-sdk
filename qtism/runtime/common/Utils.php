@@ -43,8 +43,6 @@ use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 use \RuntimeException;
 
-// @todo write an isNull method that applies on both scalar and container values.
-
 class Utils {
 	
 	/**
@@ -370,4 +368,18 @@ class Utils {
 	    
 	    return $v;
 	}
+    
+    /**
+     * Whether or not a QtiDatatype is considered to be null.
+     * 
+     * As per the QTI specification, the NULL value, empty strings and empty containers
+     * are always treated as NULL values.
+     * 
+     * @param \qtism\common\datatypes\QtiDatatype $value
+     * @return boolean
+     */
+    static public function isNull(QtiDatatype $value = null)
+    {
+        return is_null($value) === true || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
+    }
 }

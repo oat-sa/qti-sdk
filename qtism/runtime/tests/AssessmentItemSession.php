@@ -26,6 +26,7 @@ namespace qtism\runtime\tests;
 
 use qtism\data\processing\ResponseProcessing;
 use qtism\runtime\common\Container;
+use qtism\runtime\common\Utils;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\IAssessmentItem;
@@ -979,46 +980,43 @@ class AssessmentItemSession extends State {
 	    return $this->getState() !== AssessmentItemSessionState::NOT_SELECTED;
 	}
 	
-	/**
-	 * Whether the item of the session has been attempted (at least once) and for which at least one response was given.
-	 * 
-	 * @return boolean
-	 */
-	public function isResponded() {
-	    
-	    if ($this->isPresented() === false) {
-	        return false;
-	    }
-	    
-	    $excludedResponseVariables = array('numAttempts', 'duration');
-	    foreach ($this->getKeys() as $k) {
-	        $var = $this->getVariable($k);
-	        
-	        if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
-	            
-	            $currentValue = $var->getValue();
-	            $currentDefaultValue = $var->getDefaultValue();
-	            
-	            if ($currentValue === null) {
-	                if ($currentValue !== $currentDefaultValue) {
-	                    return true;
-	                }
-	            }
-	            else if ($currentValue instanceof Container && $currentValue->isNull() === true) {
-	                if ($currentDefaultValue !== null && $currentDefaultValue->isNull() === false) {
-	                    return true;
-	                }
-	            }
-	            else {
-	                if ($currentValue->equals($currentDefaultValue) === false) {
-	                    return true;
-	                }
-	            }
-	        }
-	    }
-	    
-	    return false;
-	}
+	    /**
+     * Is the Item Session Partially/Fully responded
+     * 
+     * Whether the item of the session has been attempted (at least once) and for which responses were given.
+     *
+     * @param boolean $partially (optional) Whether or not consider partially responded sessions as responded.
+     * @return boolean
+     */
+    public function isResponded($partially = true)
+    {
+        if ($this->isPresented() === false) {
+            return false;
+        }
+        
+        $excludedResponseVariables = array('numAttempts', 'duration');
+        foreach ($this->getKeys() as $k) {
+            $var = $this->getVariable($k);
+            
+            if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
+                
+                $value = $var->getValue();
+                $defaultValue = $var->getDefaultValue();
+                
+                if (Utils::isNull($value) === true) {
+                    if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
+                        return (($partially) ? true : false);
+                    }
+                } else {
+                    if ($value->equals($defaultValue) === (($partially) ? false : true)) {
+                        return (($partially) ? true : false);
+                    }
+                }
+            }
+        }
+        
+        return (($partially) ? false : true);
+    }
 	
 	/**
 	 * Whether a new attempt is possible for this AssessmentItemSession.
