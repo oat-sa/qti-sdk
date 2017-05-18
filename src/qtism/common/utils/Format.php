@@ -85,8 +85,7 @@ class Format
     /**
      * "Sanitizes" an identifier : removes any non-valid character that does not
      * correspond to the criteria written below, and returns a valid qti identifier.
-     *     IF after sanitizing, the identifier is stil not valid, a random identifier is generated.
-     *
+     * If after sanitizing, the identifier is stil not valid, a random identifier is generated.
      *
      * IMS Global says :
      * Identifiers can contain the character classes Letter, Digit, Combining which are described in the
@@ -120,7 +119,6 @@ class Format
      *
      * @return string The pseudo-random identifier generated
      */
-
     private static function generateIdentifier()
     {
         $rID = "";
