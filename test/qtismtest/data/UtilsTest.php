@@ -149,22 +149,47 @@ class UtilsTest extends QtiSmTestCase
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S96'), $sections));
     }
 
-    public function testSanitizeIdentifier()
+    /**
+     * @dataProvider sanitizeProvider
+     */
+
+    public function testSanitizeIdentifier($dirty, $clean)
     {
-       $testIdentifiers = ["GoodIdentifier", "abc 123", "@bc", "2017id", "abc@@@", "20i17d", "20id@@", "9bc", "bc@"];
-       $correctIdentifiers = ["GoodIdentifier", "abc123", "bc", "id", "abc", "i17d", "id", "bc", "bc"];
+        $this->assertEquals($dirty == $clean,  Format::isIdentifier($dirty), false);
+        $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
+        $this->assertEquals($clean, Format::sanitizeIdentifier($dirty), false);
+    }
 
-       for ($i = 0; $i < count($testIdentifiers); $i++) {
-           $this->assertEquals($testIdentifiers[$i] == $correctIdentifiers[$i],
-               Format::isIdentifier($testIdentifiers[$i]), false);
-           $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($testIdentifiers[$i]), false));
-           $this->assertEquals($correctIdentifiers[$i], Format::sanitizeIdentifier($testIdentifiers[$i]), false);
-       }
+    /**
+     * @dataProvider sanitizeProvider2
+     */
 
-       $unsanitizableIdentifiers = ["", "\"", "123@"];
+    public function testSanitizeIdentifier2($dirty)
+    {
+        $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
+    }
 
-        for ($i = 0; $i < count($unsanitizableIdentifiers); $i++) {
-            $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($unsanitizableIdentifiers[$i]), false));
-        }
+    public function sanitizeProvider()
+    {
+        return [
+            ["GoodIdentifier", "GoodIdentifier"],
+            ["abc 123", "abc123"],
+            ["@bc", "bc"],
+            ["2017id", "id"],
+            ["abc@@@", "abc"],
+            ["20i17d", "i17d"],
+            ["20id@@", "id"],
+            ["9bc", "bc"],
+            ["bc@", "bc"]
+        ];
+    }
+
+    public function sanitizeProvider2()
+    {
+        return [
+            [""],
+            ["\""],
+            ["123@"]
+        ];
     }
 }
