@@ -98,4 +98,14 @@ class DefaultVal extends Expression implements Pure
     {
         return false; // we can change the default value of a variable during runtime
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "[identifier=\"" . $this->identifier . "\"]()";
+    }
 }

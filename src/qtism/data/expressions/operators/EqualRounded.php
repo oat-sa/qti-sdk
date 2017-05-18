@@ -148,4 +148,38 @@ class EqualRounded extends Operator implements Pure
     {
         return $this->getExpressions()->isPure();
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName();
+        $attributes = [];
+        $start = true;
+
+        // Dealing with attributes...
+
+        if ($this->roundingMode != RoundingMode::SIGNIFICANT_FIGURES) {
+            $attributes[] = "roundingMode=\"" . RoundingMode::getNameByConstant($this->roundingMode) . "\"";
+        }
+
+        $attributes[] = "figures=" . $this->getFigures();
+        $qtipl .= "[" . join(", ", $attributes) . "](";
+
+        foreach ($this->getExpressions() as $expr) {
+
+            if ($start) {
+                $start = false;
+            } else {
+                $qtipl .= ", ";
+            }
+
+            $qtipl .= $expr->toQtiPL();
+        }
+
+        return $qtipl . ")";
+    }
 }

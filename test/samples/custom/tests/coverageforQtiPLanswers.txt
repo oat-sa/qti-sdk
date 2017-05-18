@@ -1,0 +1,33 @@
+1@(`http://www.jerome-the-king.com` && 4.85) == true
+2@correct[identifier="Q1"]() == true
+3@numberCorrect[sectionIdentifier="S01"]() == true
+4@numberIncorrect[sectionIdentifier="S01", includeCategory="cat"]() == true
+5@numberIncorrect[sectionIdentifier="S01", includeCategory="cat", excludeCategory="cat"]() == true
+6@numberIncorrect[excludeCategory="cat"]() == true
+7@outcomeMaximum[excludeCategory="cat", outcomeIdentifier="S01"]() == true
+8@outcomeMaximum[outcomeIdentifier="S01", weightIdentifier="Q04"]() == true
+9@outcomeMinimum[excludeCategory="cat", outcomeIdentifier="S01"]() == true
+10@outcomeMinimum[outcomeIdentifier="S01", weightIdentifier="Q04"]() == true
+11@outcomeMaximum[sectionIdentifier="S01", includeCategory="cat", outcomeIdentifier="S01"]() == true
+12@outcomeMinimum[sectionIdentifier="S01", includeCategory="cat", outcomeIdentifier="S01"]() == true
+13@randomInteger[min=-2, max=3, step=2]() == true
+14@variable[identifier="Q02", weightIdentifier="Q03"]() == true
+15@testVariables[sectionIdentifier="S01", includeCategory="cat", excludeCategory="cat", variableIdentifier="Q01", weightIdentifier="Q02"]() == testVariables[variableIdentifier="Q01", baseType="duration"]()
+16@customOperator[class="CustomOperator.php"](true, false, false) == true
+17@(3 + 2) == true
+18@sum(3, 2, 3, 2) == true
+19@equal(true, false) == true
+20@equal[toleranceMode="absolute", tolerance="-2", includeLowerBound="false"](true, false) == true
+21@equal[toleranceMode="absolute", tolerance="-2;2", includeUpperBound="false"](true, false) == true
+22@equalRounded[figures=2](3.00001, 3) == true
+23@equalRounded[roundingMode="decimalPlaces", figures=5](3.00001, 3) == true
+24@mathOperator[name="cos"](42, 42) == true
+25@!(true || false) == true
+26@repeat[numberRepeats=3](true, false) == true
+27@roundTo[figures=4](1.1) == true
+28@stringMatch[caseSensitive=false]("true", "True") == true
+29@stringMatch[caseSensitive=false, substring=true]("true", "True") == true
+30@substring[caseSensitive=false]("true", "True") == true
+31@substring[caseSensitive=false]('Q01.score', "True") == true
+32@equal[tolerance="0", includeLowerBound="false", includeUpperBound="false"](true, false) == true
+33@!(variable[identifier="step"]() == 'step9') || equalRounded[roundingMode="decimalPlaces", figures=1](variable[identifier="Q09.SCORE"](), 0)

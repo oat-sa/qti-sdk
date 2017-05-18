@@ -22,6 +22,7 @@
 
 namespace qtism\data\rules;
 
+use qtism\data\QtiPLisable;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use qtism\data\expressions\Expression;
@@ -39,7 +40,7 @@ use qtism\data\expressions\Expression;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PreCondition extends QtiComponent
+class PreCondition extends QtiComponent implements QtiPLisable
 {
     /**
 	 * The expression that will make the Precondition return true or false.
@@ -93,5 +94,15 @@ class PreCondition extends QtiComponent
     public function getComponents()
     {
         return new QtiComponentCollection(array($this->getExpression()));
+    }
+
+    /**
+     * Transforms this preCondition into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the preCondition
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "(" . $this->getExpression()->toQtiPL() . ")";
     }
 }

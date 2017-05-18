@@ -24,6 +24,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * A collection of ResponseElseIf objects.
@@ -31,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseElseIfCollection extends QtiComponentCollection
+class ResponseElseIfCollection extends QtiComponentCollection implements QtiPLisable
 {
     /**
 	 * Check if a given $value is an instance of ResponseElseIf.
@@ -44,5 +45,21 @@ class ResponseElseIfCollection extends QtiComponentCollection
             $msg = "ResponseElseIfCollection only accepts to store ResponseElseIf objects, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Transforms this QtiComponentCollection into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponentCollection
+     */
+    public function toQtiPL()
+    {
+        $qtipl = "";
+
+        foreach ($this as $condition) {
+            $qtipl .=  " " . $condition->toQtiPL();
+        }
+
+        return $qtipl;
     }
 }

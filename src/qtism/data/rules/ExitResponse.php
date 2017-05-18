@@ -62,4 +62,14 @@ class ExitResponse extends QtiComponent implements ResponseRule
     {
         return new QtiComponentCollection();
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "()";
+    }
 }

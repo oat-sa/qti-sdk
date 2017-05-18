@@ -66,4 +66,34 @@ class Not extends Operator implements Pure
     {
         return $this->getExpressions()->isPure();
     }
+
+    /**
+     * Gets an eventual sign (+,<,==...) that is used in Qti-PL
+     * when the operator always has two operands.
+     *
+     * @return string or null A string representation of the sign used, or
+     * null if the sign operator isn't used for this operator
+     */
+    public function getSignAsOperator() {
+        return "!";
+    }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        // Syntax of not is special, so it's exceptionally implementeed here
+
+        if (in_array($this->getExpressions()[0]->getQtiClassName(), Operator::getOperatorClassNames())
+            && $this->getExpressions()[0]->getSignAsOperator() != null &&
+            $this->getExpressions()[0]->getExpressions()->count() == 2) {
+
+            return $this->getSignAsOperator() . "(" . $this->getExpressions()[0]->toQtiPL() . ")";
+        } else {
+            return $this->getSignAsOperator() . $this->getExpressions()[0]->toQtiPL();
+        }
+    }
 }

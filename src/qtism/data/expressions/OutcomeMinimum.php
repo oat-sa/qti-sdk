@@ -133,4 +133,34 @@ class OutcomeMinimum extends ItemSubset
     {
         return 'outcomeMinimum';
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        $attributes = [];
+
+        if ($this->getSectionIdentifier() != "") {
+            $attributes[] = "sectionIdentifier=\"" . $this->getSectionIdentifier() . "\"";
+        }
+
+        if ($this->getIncludeCategories() != "") {
+            $attributes[] = "includeCategory=\"" . $this->getIncludeCategories() . "\"";
+        }
+
+        if ($this->getExcludeCategories() != "") {
+            $attributes[] = "excludeCategory=\"" . $this->getExcludeCategories() . "\"";
+        }
+
+        $attributes[] = "outcomeIdentifier=\"" . $this->getOutcomeIdentifier() . "\"";
+
+        if ($this->getWeightIdentifier() != "") {
+            $attributes[] = "weightIdentifier=\"" . $this->getWeightIdentifier() . "\"";
+        }
+
+        return $this->getQtiClassName() . "[" . join(", ", $attributes) . "]()";
+    }
 }

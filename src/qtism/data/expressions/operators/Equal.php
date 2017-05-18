@@ -249,4 +249,56 @@ class Equal extends Operator implements Pure
     {
         return $this->getExpressions()->isPure();
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName();
+        $attributes = [];
+        $start = true;
+
+        // Dealing with attributes...
+
+        if ($this->toleranceMode != ToleranceMode::EXACT) {
+            $attributes[] = "toleranceMode=\"" . ToleranceMode::getNameByConstant($this->toleranceMode) . "\"";
+        }
+
+        if (isset($this->tolerance) && count($this->tolerance) > 0) {
+            $tolerance = "tolerance=\"" . $this->getTolerance()[0];
+            $tolerance .= (count($this->getTolerance()) > 1) ? ";" . $this->getTolerance()[1] : "";
+            $tolerance .= "\"";
+            $attributes[] = $tolerance;
+        }
+
+        if (!$this->includeLowerBound) {
+            $attributes[] = "includeLowerBound=\"false\"";
+        }
+
+        if (!$this->includeUpperBound) {
+            $attributes[] = "includeUpperBound=\"false\"";
+        }
+
+        if (count($attributes) > 0) {
+            $qtipl .= "[" . join(", ", $attributes) . "]";
+        }
+
+        $qtipl .= "(";
+
+        foreach ($this->getExpressions() as $expr) {
+
+            if ($start) {
+                $start = false;
+            } else {
+                $qtipl .= ", ";
+            }
+
+            $qtipl .= $expr->toQtiPL();
+        }
+
+        return $qtipl . ")";
+    }
 }

@@ -138,4 +138,29 @@ class MathOperator extends Operator implements Pure
     {
         return $this->getExpressions()->isPure();
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "[name=\"" . MathFunctions::getNameByConstant($this->name) . "\"](";
+        $start = true;
+
+        foreach ($this->getExpressions() as $expr) {
+
+            if ($start) {
+                $start = false;
+            } else {
+                $qtipl .= ", ";
+            }
+
+            $qtipl .= $expr->toQtiPL();
+        }
+
+        return $qtipl . ")";
+    }
 }

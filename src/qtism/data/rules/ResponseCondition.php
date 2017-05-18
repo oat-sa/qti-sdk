@@ -174,4 +174,17 @@ class ResponseCondition extends QtiComponent implements ResponseRule
 
         return new QtiComponentCollection($comp);
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->responseIf->toQtiPL();
+        $qtipl .= (count($this->responseElseIfs) > 0) ? $this->responseElseIfs->toQtiPL(): "";
+        $qtipl .= ($this->responseElse == null) ? "" : " " . $this->responseElse->toQtiPL();
+        return $qtipl;
+    }
 }

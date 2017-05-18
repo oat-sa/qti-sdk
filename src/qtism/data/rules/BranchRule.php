@@ -148,4 +148,15 @@ class BranchRule extends QtiComponent implements Rule
 
         return new QtiComponentCollection($comp);
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "[target=\"" . $this->getTarget() . "\"]";
+        return $qtipl . "(" . $this->expression->toQtiPL() . ")";
+    }
 }

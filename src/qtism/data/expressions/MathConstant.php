@@ -96,4 +96,14 @@ class MathConstant extends Expression implements Pure
     {
         return true;
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "[name=\"" . MathEnumeration::getNameByConstant($this->name) . "\"]()";
+    }
 }

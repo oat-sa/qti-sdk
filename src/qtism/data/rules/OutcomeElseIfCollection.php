@@ -24,6 +24,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * A collection of OutcomeElseIf objects.
@@ -31,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeElseIfCollection extends QtiComponentCollection
+class OutcomeElseIfCollection extends QtiComponentCollection implements QtiPLisable
 {
     /**
 	 * Check if a given $value is an instance of OutcomeElseIf.
@@ -44,5 +45,21 @@ class OutcomeElseIfCollection extends QtiComponentCollection
             $msg = "OutcomeElseIfCollection only accepts to store OutcomeElseIf objects, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Transforms this QtiComponentCollection into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponentCollection
+     */
+    public function toQtiPL()
+    {
+        $qtipl = "";
+
+        foreach ($this as $condition) {
+            $qtipl .=  " " . $condition->toQtiPL();
+        }
+
+        return $qtipl;
     }
 }

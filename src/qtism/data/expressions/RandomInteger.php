@@ -171,4 +171,21 @@ class RandomInteger extends Expression implements Pure
     {
         return false; // random --> false
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "[min=" . $this->min . ", max=" . $this->max;
+
+        if ($this->step != 1) {
+            $qtipl .= ", step=" . $this->step;
+        }
+
+        return $qtipl . "]()";
+    }
 }

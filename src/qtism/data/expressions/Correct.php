@@ -101,4 +101,14 @@ class Correct extends Expression implements Pure
     {
         return false;
     }
+
+    /**
+     * Transforms this expression into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the expression
+     */
+    public function toQtiPL()
+    {
+        return $this->getQtiClassName() . "[identifier=\"" . $this->identifier . "\"]()";
+    }
 }

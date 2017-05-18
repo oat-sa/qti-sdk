@@ -68,4 +68,15 @@ class Product extends Operator implements Pure
     {
         return $this->getExpressions()->isPure();
     }
+
+    /**
+     * Gets an eventual sign (+,<,==...) that is used in Qti-PL
+     * when the operator always has two operands.
+     *
+     * @return string or null A string representation of the sign used, or
+     * null if the sign operator isn't used for this operator
+     */
+    public function getSignAsOperator() {
+        return "*";
+    }
 }

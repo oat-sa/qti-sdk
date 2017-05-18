@@ -581,4 +581,12 @@
             </assessmentItemRef>
         </assessmentSection>
     </testPart>
+    <outcomeProcessing>
+        <outcomeCondition>
+            <outcomeIf>
+                <baseValue baseType="boolean">true</baseValue>
+                <exitTest/>
+            </outcomeIf>
+        </outcomeCondition>
+    </outcomeProcessing>
 </assessmentTest>

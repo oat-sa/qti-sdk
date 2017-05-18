@@ -24,7 +24,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * The OutcomeElse class.
@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeElse extends QtiComponent
+class OutcomeElse extends QtiComponent implements QtiPLisable
 {
     /**
      * A collection of OutcomeRule objects to be evaluated.
@@ -89,5 +89,15 @@ class OutcomeElse extends QtiComponent
         $comp = $this->getOutcomeRules()->getArrayCopy();
 
         return new QtiComponentCollection($comp);
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        return "else {\n" . $this->getOutcomeRules()->toQtiPL() . "}";
     }
 }

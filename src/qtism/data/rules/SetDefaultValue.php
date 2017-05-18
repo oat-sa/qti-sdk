@@ -131,4 +131,15 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
     {
         return new QtiComponentCollection(array($this->getExpression()));
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "[identifier=\"" . $this->getIdentifier() . "\"]";
+        return $qtipl . "(" . $this->expression->toQtiPL() . ")";
+    }
 }

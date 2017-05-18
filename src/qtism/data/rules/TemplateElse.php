@@ -24,6 +24,7 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
+use qtism\data\QtiPLisable;
 
 /**
  * The QTI templateElse class.
@@ -31,7 +32,7 @@ use qtism\data\QtiComponentCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateElse extends QtiComponent
+class TemplateElse extends QtiComponent implements QtiPLisable
 {
     /**
      * The collection of TemplateRule objects to be evaluated.
@@ -86,5 +87,15 @@ class TemplateElse extends QtiComponent
     public function getQtiClassName()
     {
         return 'templateElse';
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        return "else {\n" . $this->getTemplateRules()->toQtiPL() . "}";
     }
 }

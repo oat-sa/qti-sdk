@@ -136,4 +136,15 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 
         return new QtiComponentCollection($comp);
     }
+
+    /**
+     * Transforms this rule into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the rule
+     */
+    public function toQtiPL()
+    {
+        $qtipl = $this->getQtiClassName() . "[identifier=\"" . $this->getIdentifier() . "\"]";
+        return $qtipl . "(" . $this->expression->toQtiPL() . ")";
+    }
 }

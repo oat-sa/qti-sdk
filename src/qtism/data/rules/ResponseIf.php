@@ -25,7 +25,7 @@ namespace qtism\data\rules;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
+use qtism\data\QtiPLisable;
 
 /**
  * From IMS QTI:
@@ -41,7 +41,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseIf extends QtiComponent
+class ResponseIf extends QtiComponent implements QtiPLisable
 {
     /**
 	 * The expression to be evaluated with the If statement.
@@ -132,5 +132,15 @@ class ResponseIf extends QtiComponent
         );
 
         return new QtiComponentCollection($comp);
+    }
+
+    /**
+     * Transforms this QtiComponent into a Qti-PL string.
+     *
+     *@return string A Qti-PL representation of the QtiComponent
+     */
+    public function toQtiPL()
+    {
+        return "if (" . $this->getExpression()->toQtiPL() . ") {\n" . $this->getResponseRules()->toQtiPL() . "}";
     }
 }
