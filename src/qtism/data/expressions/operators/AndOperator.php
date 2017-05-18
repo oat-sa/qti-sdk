@@ -24,6 +24,7 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 
 /**
  * Please note that this class represents the QTI 'and' class.
@@ -41,7 +42,7 @@ use qtism\data\expressions\ExpressionCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AndOperator extends Operator
+class AndOperator extends Operator implements Pure
 {
     /**
      * Create a new And object.
@@ -59,5 +60,16 @@ class AndOperator extends Operator
     public function getQtiClassName()
     {
         return 'and';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }

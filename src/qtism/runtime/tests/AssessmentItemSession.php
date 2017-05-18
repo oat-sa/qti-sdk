@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -900,7 +900,7 @@ class AssessmentItemSession extends State
      * Responses provided when suspending the item session will be taken into account only if the current
      * state is different from MODAL_FEEDBACK.
      *
-     * @param \qtism\runtime\common\State (optiona) A State object containing the responses to be stored in the item session at suspend time.
+     * @param \qtism\runtime\common\State $responses (optional) A State object containing the responses to be stored in the item session at suspend time.
      * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
      */
     public function suspend(State $responses = null)
@@ -1111,11 +1111,14 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether the item of the session has been attempted (at least once) and for which at least one response was given.
+     * Is the Item Session Partially/Fully responded
+     * 
+     * Whether the item of the session has been attempted (at least once) and for which responses were given.
      *
+     * @param boolean $partially (optional) Whether or not consider partially responded sessions as responded.
      * @return boolean
      */
-    public function isResponded()
+    public function isResponded($partially = true)
     {
         if ($this->isPresented() === false) {
             return false;
@@ -1131,18 +1134,18 @@ class AssessmentItemSession extends State
                 $defaultValue = $var->getDefaultValue();
 
                 if (Utils::isNull($value) === true) {
-                    if (Utils::isNull($defaultValue) === false) {
-                        return true;
+                    if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
+                        return (($partially) ? true : false);
                     }
                 } else {
-                    if ($value->equals($defaultValue) === false) {
-                        return true;
+                    if ($value->equals($defaultValue) === (($partially) ? false : true)) {
+                        return (($partially) ? true : false);
                     }
                 }
             }
         }
 
-        return false;
+        return (($partially) ? false : true);
     }
 
     /**
