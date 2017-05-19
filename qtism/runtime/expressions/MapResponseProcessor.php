@@ -106,7 +106,7 @@ class MapResponseProcessor extends ExpressionProcessor
                         }
                     }
 
-                    if(is_null($result)){
+                    if (is_null($result)) {
                         // No relevant mapping found, return mapping default.
                         $result = $mapping->getDefaultValue();
                     }
