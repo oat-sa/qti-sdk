@@ -160,4 +160,30 @@ class TruncateProcessorTest extends QtiSmTestCase {
 			</truncate>
 		');
 	}
+
+    public function Provider() {
+        return [[97.2, 97],
+            [97.5, 97],
+            [97.9, 97],
+            [98.0, 98]
+        ];
+    }
+
+    /**
+     * @dataProvider Provider
+     *
+     * @val float
+     * @val integer
+     */
+
+    public function testForProvider($val, $expected) {
+        $expression = $this->createFakeExpression();
+        $operands = new OperandsCollection();
+        $operands[] = new QtiFloat($val);
+        $processor = new TruncateProcessor($expression, $operands);
+
+        $result = $processor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertEquals($expected, $result->getValue());
+    }
 }

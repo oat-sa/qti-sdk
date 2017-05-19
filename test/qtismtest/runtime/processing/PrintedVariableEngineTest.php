@@ -294,4 +294,40 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         
         unlink($tmp);
     }
+
+    /**
+     *
+     * @dataProvider NewProvider
+     *
+     * @param $expected int
+     * @param $id string
+     * @param $state State
+     */
+
+    public function testForNewProvider($expected, $id, $state)
+    {
+        $printedVariable = new PrintedVariable($id);
+        $printedVariable->setFormat("%d");
+
+        $engine = new PrintedVariableEngine($printedVariable);
+        $engine->setContext($state);
+        $this->assertEquals($expected, $engine->process());
+    }
+
+    public function NewProvider() {
+
+        $state = new State();
+
+        $state->setVariable(new OutcomeVariable('test1', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(97.2)));
+        $state->setVariable(new OutcomeVariable('test2', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(97.5)));
+        $state->setVariable(new OutcomeVariable('test3', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(97.9)));
+        $state->setVariable(new OutcomeVariable('test4', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(98.0)));
+
+
+        return [[97, "test1", $state],
+            [97, "test2", $state],
+            [97, "test3", $state],
+            [98, "test4", $state]
+        ];
+    }
 }
