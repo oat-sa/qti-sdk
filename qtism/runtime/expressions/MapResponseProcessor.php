@@ -99,8 +99,10 @@ class MapResponseProcessor extends ExpressionProcessor
                         
                         if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
                             $result = $mapEntry->getMappedValue();
+                            break;
                         } elseif ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '') {
                             $result = $mapEntry->getMappedValue();
+                            break;
                         }
                     }
 
