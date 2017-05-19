@@ -23,7 +23,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	public function testSimple() {
 		$variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single">
-				<mapping>
+				<mapping defaultValue="3">
 					<mapEntry mapKey="0" mappedValue="1"/>
 					<mapEntry mapKey="1" mappedValue="2"/>
 				</mapping>
@@ -40,7 +40,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf(QtiFloat::class, $result);
 		// The variable has no value so the default mapping value is returned.
-		$this->assertEquals(0, $result->getValue()); 
+		$this->assertEquals(3, $result->getValue()); 
 		
 		$state['response1'] = new QtiInteger(0);
 		$result = $mapResponseProcessor->process();
@@ -55,7 +55,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$state['response1'] = new QtiInteger(240);
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf(QtiFloat::class, $result);
-		$this->assertEquals(0, $result->getValue());
+		$this->assertEquals(3, $result->getValue());
 	}
 	
 	public function testMultipleComplexTyping() {
@@ -429,7 +429,6 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	}
     
     public function testLowerBoundSingleCardinality() {
-        // In case of using a single cardinality variablen lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">
 				<mapping lowerBound="-1" defaultValue="0">
@@ -452,42 +451,10 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(-1.0, $result->getValue());
         
-        // Should go below the lower bound because when using a single cardinality value, the lower bound is ignored (only used with container mapping)...
         $state['RESPONSE'] = new QtiString('incorrect_2');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-2.0, $result->getValue());
-    }
-    
-    public function testLowerBoundIgnoredWithSingleCardinality() {
-        // In case of using a single cardinality variable lower bound is ignored!
-        $variableDeclaration = $this->createComponentFromXml('
-			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">
-				<mapping lowerBound="-1" defaultValue="0">
-					<mapEntry mapKey="incorrect_1" mappedValue="-1"/>
-                    <mapEntry mapKey="incorrect_2" mappedValue="-2"/>
-				</mapping>
-			</responseDeclaration>
-		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
-        // Should just "touch" the lower bound...
-        $state['RESPONSE'] = new QtiString('incorrect_1');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(-1.0, $result->getValue());
-        
-        // Should go below the lower bound because when using a single cardinality value, the lower bound is ignored (only used with container mapping)...
-        $state['RESPONSE'] = new QtiString('incorrect_2');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-2.0, $result->getValue());
     }
     
     public function testLowerBoundWithMultipleCardinality() {
@@ -521,7 +488,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertEquals(-1.0, $result->getValue());
     }
     
-    public function testUpperBoundIgnoredWithSingleCardinality() {
+    public function testUpperBoundSingleCardinality() {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">
@@ -545,11 +512,10 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1.0, $result->getValue());
         
-        // Should go above the upper bound because when using a single cardinality value, the upper bound is ignored (only used with container mapping)...
         $state['RESPONSE'] = new QtiString('correct_2');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(2.0, $result->getValue());
+        $this->assertEquals(1.0, $result->getValue());
     }
     
     public function testUpperBoundWithMultipleCardinality() {
