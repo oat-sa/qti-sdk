@@ -3,10 +3,11 @@
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
-$renderer = new QtiPLRenderer();
+$renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
 $doc = new XmlDocument();
 $doc->load(QtiSmTestCase::samplesDir() . 'custom/tests/branchingexpressions.xml');
 $dom = $doc->getDomDocument();
@@ -81,7 +82,7 @@ echo $newdoc->saveHTML();;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("include")[0]) . "\n\n";
 
-$renderer = new QtiPLRenderer();
+$renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
 $doc = new XmlDocument();
 $doc->load(QtiSmTestCase::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
 $test = $doc->getDocumentComponent();
@@ -130,7 +131,7 @@ echo $newdoc->saveHTML();;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("responseCondition")[0]) . "\n\n";
 
-$renderer = new QtiPLRenderer();
+$renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
 $doc = new XmlDocument();
 $doc->load(QtiSmTestCase::samplesDir() . 'custom/items/templateruleforQtiPL1.xml');
 $test = $doc->getDocumentComponent();
