@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="template_declaration_default" title="Template Declaration Default" adaptive="false" timeDependent="false">
+    <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+        <correctResponse>
+            <value>ChoiceA</value>
+        </correctResponse>
+    </responseDeclaration>
+    <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+        <defaultValue>
+            <value>0</value>
+        </defaultValue>
+    </outcomeDeclaration>
+    <templateDeclaration identifier="WRONGSCORE" cardinality="single" baseType="float">
+        <defaultValue>
+            <value>0</value>
+        </defaultValue>
+    </templateDeclaration>
+    <templateProcessing>
+        <templateCondition>
+            <templateIf>
+                <baseValue baseType="boolean">true</baseValue>
+                <setDefaultValue identifier="Q01">
+                    <baseValue baseType="boolean">true</baseValue>
+                </setDefaultValue>
+            </templateIf>
+        </templateCondition>
+    </templateProcessing>
+    <responseProcessing templateLocation="template_location_rp_invalid.xml"/>
+</assessmentItem>
