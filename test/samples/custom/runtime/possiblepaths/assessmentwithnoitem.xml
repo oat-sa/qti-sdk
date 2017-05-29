@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                identifier="branching-example" title="Branching example" xsi:schemaLocation="http://www.taotesting.com/xsd/qticompact_v1p0.xsd">
+  <testPart identifier="TP01" navigationMode="nonlinear" submissionMode="individual">
+    <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+    <assessmentSection identifier="S01" required="true" fixed="false" title="Section 01" visible="true" keepTogether="true"/>
+  </testPart>
+</assessmentTest>

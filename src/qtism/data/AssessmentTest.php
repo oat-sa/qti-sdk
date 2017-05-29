@@ -637,7 +637,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @return array of array of \qtism\data\AssessmentItemRef | array of \qtism\data\AssessmentItemRefCollection
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
-    public function getPossiblePaths($asArray)
+    public function getPossiblePaths($asArray = false)
     {
         $paths = [];
 
@@ -824,7 +824,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * necessary to check for backward branching.
      * @param $items AssessmentItemRefCollection The collection of all items in this AssessmentTest.
      * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @param $testparts AssessmentTest The collection of all tests in this AssessmentTest.
+     * @param $testparts TestPartCollection The collection of all TestParts in this AssessmentTest.
      * @return array of \qtism\data\AssessmentItemRefCollection The list of possible paths updated with the new
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.
@@ -937,8 +937,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 break;
 
             default:
-
-                // $target = $this->getComponentByIdentifier($branch->getTarget());
 
                 $target = null;
 
