@@ -106,6 +106,8 @@ class PhpDocument extends QtiDocument
                 $bean = new Bean($component, false, self::getBaseImplementation($component));
                 $ctorGetters = $bean->getConstructorGetters();
                 
+                // MAKE THE COMPILATION OPTIMIZATION CONFIGURABLE. DEFAULT REMAINS FALSE.
+                
                 // RETURN ONLY NON-OPTIMIZABLE GETTERS.
                 // Create bean method to return getters/setters for that $bean
                 // that are not optimizable.
