@@ -22,7 +22,11 @@
 
 namespace qtism\data\storage\php;
 
+use qtism\common\beans\Bean;
+
 /**
+ * PHP Storage Utility Class.
+ * 
  * This class provides utility methods dedicated to PHP data storage.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -31,7 +35,7 @@ namespace qtism\data\storage\php;
 class Utils
 {
     /**
-     * Whether a given $value is considered to be scalar.
+     * Whether a given value is considered to be scalar.
      *
      * A value will be considered scalar if it is a PHP scalar
      * value or the null value.
@@ -44,6 +48,8 @@ class Utils
     }
 
     /**
+     * Check for a Variable Reference Name
+     * 
      * Whether a given $string represents a variable reference e.g. '$foobar'.
      *
      * @return boolean
@@ -54,6 +60,8 @@ class Utils
     }
 
     /**
+     * Quote String for PHP Source Code.
+     * 
      * Returns a PHP style double quoted string.
      *
      * @param string $string The string to be quoted (e.g. blabla).

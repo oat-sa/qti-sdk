@@ -336,6 +336,11 @@ class Bean
 
                 if ($this->isPropertyAnnotated($propName) === true && in_array($propName, $registeredProperties) === false) {
                     $properties[] = new BeanProperty($target->getName(), $propName);
+                    
+                    // RETRIEVE DEFAULT PROPERTY VALUE OF THE BEAN PROPERTY (see http://php.net/manual/en/reflectionclass.getdefaultproperties.php, but make it
+                    // recursive in order to get private properties) AND SET IT TO THE BEAN PROPERTY (BeanProperty class to modified in order to consider the default
+                    // value. 
+                    
                     $registeredProperties[] = $propName;
                 }
             }
@@ -432,6 +437,8 @@ class Bean
      */
     protected function isPropertyAnnotated($propertyName)
     {
+        // RETURN OTHER POSSIBLE ANNOTATIONS
+        
         $target = $this->getClass();
         $isAnnotated = false;
 

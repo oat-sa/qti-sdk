@@ -85,7 +85,8 @@ class MapResponseProcessor extends ExpressionProcessor
 
                 // Single cardinality behaviour.
                 if ($variable->isSingle()) {
-
+                    
+                    $result = null;
                     foreach ($mapping->getMapEntries() as $mapEntry) {
 
                         $val = $state[$identifier];
@@ -97,14 +98,27 @@ class MapResponseProcessor extends ExpressionProcessor
                         }
                         
                         if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
-                            return new QtiFloat($mapEntry->getMappedValue());
+                            $result = $mapEntry->getMappedValue();
+                            break;
                         } elseif ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '') {
-                            return new QtiFloat($mapEntry->getMappedValue());
+                            $result = $mapEntry->getMappedValue();
+                            break;
                         }
                     }
 
-                    // No relevant mapping found, return mapping default.
-                    return new QtiFloat($mapping->getDefaultValue());
+                    if (is_null($result)) {
+                        // No relevant mapping found, return mapping default.
+                        $result = $mapping->getDefaultValue();
+                    }
+
+                    // Always compare the result with lower or upper bound.
+                    if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
+                        return new QtiFloat($mapping->getLowerBound());
+                    } elseif ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
+                        return new QtiFloat($mapping->getUpperBound());
+                    } else {
+                        return new QtiFloat($result);
+                    }
                     
                 // Multiple cardinality behaviour.
                 } elseif ($variable->isMultiple()) {

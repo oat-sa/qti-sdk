@@ -105,10 +105,28 @@ class PhpDocument extends QtiDocument
                 // Let's look at the Bean properties and ask for a future exploration.
                 $bean = new Bean($component, false, self::getBaseImplementation($component));
                 $ctorGetters = $bean->getConstructorGetters();
+                
+                // MAKE THE COMPILATION OPTIMIZATION CONFIGURABLE. DEFAULT REMAINS FALSE.
+                
+                // RETURN ONLY NON-OPTIMIZABLE GETTERS.
+                // Create bean method to return getters/setters for that $bean
+                // that are not optimizable.
+                // 
+                // A getter is optimizable if:
+                //
+                // - Case A: the getter is qtism-bean-optinit flagged, has an AbstractCollection range, and has its bean value as an empty AbstractCollection.
+                // - Case B: (Case A failed) the getter is qtism-bean-optinit flagged, has a property default value equal to its bean value. This annotation also consider null as a scalar value.
+                //
+                // OPTIMIZABLE PROPERTIES:
+                // 
+                // - 
+                
                 $bodyGetters = $bean->getGetters(true);
                 $getters = array_reverse(array_merge($bodyGetters->getArrayCopy(), $ctorGetters->getArrayCopy()));
 
                 foreach ($getters as $getter) {
+                    
+                    // REMEMBER THE GETTER NAME SO THAT WE TO WHAT GETTER THE VALUE BELONGS TO.
                     $stack->push(call_user_func(array($component, $getter->getName())));
                 }
             }
@@ -204,7 +222,7 @@ class PhpDocument extends QtiDocument
         } elseif ($object instanceof ResponseProcessing) {
             return "qtism\\data\\processing\\ResponseProcessing";
         } elseif ($object instanceof ExtendedAssessmentSection) {
-            return 'qtism\\data\\ExtendedAssessmentSection';
+            return "qtism\\data\\ExtendedAssessmentSection";
         } elseif ($object instanceof AssessmentSection) {
             return "qtism\\data\\AssessmentSection";
         } else {
