@@ -347,6 +347,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		    
 		    // Other miscellaneous items...
 		    array(self::samplesDir() . 'custom/items/custom_operator_item.xml'),
+            array(self::samplesDir() . 'custom/items/rich_gap_text.xml')
 		);
 	}
 	

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -23,31 +23,31 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\TextOrVariableCollection;
+use qtism\data\content\FlowStaticCollection;
 use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * A simple run of text to be inserted into a gap by the user, may be subject 
+ *
+ * A simple run of text to be inserted into a gap by the user, may be subject
  * to variable value substitution with printedVariable.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
 class GapText extends GapChoice {
-    
+
     /**
-     * The textOrVariable objects composing the GapText.
-     * 
-     * @var TextOrVariableCollection
+     * The flowStaticCollection objects composing the GapText.
+     *
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new GapText object.
-     * 
+     *
      * @param string $identifier The identifier of the GapText.
      * @param integer $matchMax The matchMax attribute.
      * @param string $id The id of the bodyElement.
@@ -57,36 +57,36 @@ class GapText extends GapChoice {
      */
     public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
-        $this->setContent(new TextOrVariableCollection());
+        $this->setContent(new FlowStaticCollection());
     }
-    
+
     /**
-     * Get the textOrVariable objects composing the GapText.
-     * 
-     * @return TextOrVariableCollection
+     * Get the flowStaticCollection objects composing the GapText.
+     *
+     * @return FlowStaticCollection
      */
     public function getComponents() {
         return $this->getContent();
     }
-    
+
     /**
-     * Set the textOrVariable objects composing the GapText.
-     * 
-     * @param TextOrVariableCollection $content
+     * Set the flowStaticCollection objects composing the GapText.
+     *
+     * @param FlowStaticCollection $content
      */
-    public function setContent(TextOrVariableCollection $content) {
+    public function setContent(FlowStaticCollection $content) {
         $this->content = $content;
     }
-    
+
     /**
-     * Get the textOrVariable objects composing the GapText.
-     * 
-     * @return TextOrVariableCollection
+     * Get the flowStaticCollection objects composing the GapText.
+     *
+     * @return FlowStaticCollection
      */
     public function getContent() {
         return $this->content;
     }
-    
+
     public function getQtiClassName() {
         return 'gapText';
     }
