@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd" identifier="i1499679982406188" title="Rich Gap match" label="Rich Gap match" xml:lang="en-US" adaptive="false" timeDependent="false" toolName="TAO" toolVersion="3.2.0-sprint55">
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="directedPair"/>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <div class="grid-row">
+      <div class="col-12">
+        <gapMatchInteraction responseIdentifier="RESPONSE" shuffle="false">
+          <gapText identifier="choice_1" fixed="false" matchMax="1" matchMin="0">
+            <m:math>
+              <m:semantics>
+                <m:mstyle displaystyle="true" scriptlevel="0">
+                  <m:mrow class="MJX-TeXAtom-ORD">
+                    <m:mfrac>
+                      <m:mn>1</m:mn>
+                      <m:mrow>
+                        <m:mn>4</m:mn>
+                        <m:mi>x</m:mi>
+                      </m:mrow>
+                    </m:mfrac>
+                  </m:mrow>
+                </m:mstyle>
+                <m:annotation encoding="latex">\frac{1}{4x}</m:annotation>
+              </m:semantics>
+            </m:math>
+          </gapText>
+          <gapText identifier="choice_2" fixed="false" matchMax="1" matchMin="0">  
+<m:math><m:semantics><m:mstyle displaystyle="true" scriptlevel="0"><m:mrow class="MJX-TeXAtom-ORD"><m:mfrac><m:mn>1</m:mn><m:mrow><m:mn>2</m:mn><m:mi>x</m:mi></m:mrow></m:mfrac></m:mrow></m:mstyle><m:annotation encoding="latex">\frac{1}{2x}</m:annotation></m:semantics></m:math>
+</gapText>
+          <gapText identifier="choice_3" fixed="false" matchMax="1" matchMin="0">
+            <m:math>
+              <m:semantics>
+                <m:mstyle displaystyle="true" scriptlevel="0">
+                  <m:mrow class="MJX-TeXAtom-ORD">
+                    <m:mfrac>
+                      <m:mn>1</m:mn>
+                      <m:mrow>
+                        <m:mn>3</m:mn>
+                        <m:mi>x</m:mi>
+                      </m:mrow>
+                    </m:mfrac>
+                  </m:mrow>
+                </m:mstyle>
+                <m:annotation encoding="latex">\frac{1}{3x}</m:annotation>
+              </m:semantics>
+            </m:math>
+          </gapText>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing formula est: 
+<gap identifier="gap_1" fixed="false" required="false"/>
+</p>
+        </gapMatchInteraction>
+      </div>
+    </div>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+</assessmentItem>
