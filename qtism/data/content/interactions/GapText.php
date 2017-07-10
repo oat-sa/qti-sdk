@@ -38,7 +38,7 @@ use \InvalidArgumentException;
 class GapText extends GapChoice {
 
     /**
-     * The textOrVariable objects composing the GapText.
+     * The flowStaticCollection objects composing the GapText.
      *
      * @var FlowStaticCollection
      * @qtism-bean-property
@@ -61,7 +61,7 @@ class GapText extends GapChoice {
     }
 
     /**
-     * Get the FlowStaticCollection objects composing the GapText.
+     * Get the flowStaticCollection objects composing the GapText.
      *
      * @return FlowStaticCollection
      */
@@ -70,7 +70,7 @@ class GapText extends GapChoice {
     }
 
     /**
-     * Set the FlowStaticCollection objects composing the GapText.
+     * Set the flowStaticCollection objects composing the GapText.
      *
      * @param FlowStaticCollection $content
      */
@@ -79,7 +79,7 @@ class GapText extends GapChoice {
     }
 
     /**
-     * Get the FlowStaticCollection objects composing the GapText.
+     * Get the flowStaticCollection objects composing the GapText.
      *
      * @return FlowStaticCollection
      */
