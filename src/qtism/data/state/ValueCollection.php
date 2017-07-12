@@ -22,8 +22,8 @@
 
 namespace qtism\data\state;
 
-use qtism\common\collections\AbstractCollection;
 use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A collection of Value objects.
@@ -31,7 +31,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ValueCollection extends AbstractCollection
+class ValueCollection extends QtiComponentCollection
 {
     /**
 	 * Check if a given $value is an instance of Value.
