@@ -64,7 +64,6 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
         $outcomeIdentifier = $this->getExpression()->getOutcomeIdentifier();
         // If no weightIdentifier specified, its value is an empty string ('').
         $weightIdentifier = $this->getExpression()->getWeightIdentifier();
-        $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight($weightIdentifier);
         $result = new MultipleContainer(BaseType::FLOAT);
 
         foreach ($itemSubset as $item) {
@@ -82,6 +81,8 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
                if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
 
                     $var = $itemSession->getVariable($id);
+                    $itemRefIdentifier = $itemSession->getAssessmentItem()->getIdentifier();
+                    $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
 
                     // Does this OutcomeVariable contain a value for normalMaximum?
                     if (($normalMaximum = $var->getNormalMaximum()) !== false) {
