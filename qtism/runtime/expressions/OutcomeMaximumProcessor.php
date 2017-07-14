@@ -97,7 +97,7 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
                     } else {
                         // If any of the items in the given subset have no declared maximum
                         // the result is NULL
-                        return NULL;
+                        return null;
                     }
                 } else {
                    // If any item has no SCORE variable, it may be an informational item with no response processing
