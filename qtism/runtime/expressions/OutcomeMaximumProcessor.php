@@ -95,12 +95,13 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
                             $result[] = new QtiFloat(floatval($normalMaximum *= $weight->getValue()));
                         }
                     } else {
-                        // If any of the items in the given subset have no declared maximum
-                        // the result is NULL.
-                        return null;
+                        // If any of the items in the given subset have no declared maximum, possibly an item require human-based scoring)
+                        // we skip to the next item
+                        continue;
                     }
                 } else {
-                    return null;
+                   // If any item has no SCORE variable, it may be an informational item with no response processing
+                   continue;
                 }
             }
         }
