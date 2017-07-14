@@ -100,7 +100,7 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
                         return null;
                     }
                 } else {
-                   return null;
+                    return null;
                 }
             }
         }
