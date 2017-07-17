@@ -619,6 +619,12 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(2.0, $result->getValue());
         
+        // No match, two times, but with the same value. Identical values are considered only one time.
+        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(-2, 2), new QtiPoint(-2, 2)));
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(1.0, $result->getValue());
+        
         // One is not matched, the other is. Should have 2.5.
         $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(-2, 2), new QtiPoint(0, 0)));
         $result = $mapResponseProcessor->process();
@@ -630,5 +636,11 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(3.0, $result->getValue());
+        
+        // Both will match, but because the matching values are identical, it only matches a single time.
+        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(10, 10), new QtiPoint(10, 10)));
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(2.5, $result->getValue());
     }
 }

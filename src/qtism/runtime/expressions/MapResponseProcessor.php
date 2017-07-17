@@ -142,6 +142,7 @@ class MapResponseProcessor extends ExpressionProcessor
                             }
 
                             if (($val instanceof Comparable && $val->equals($mapKey) === true) || ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '')) {
+                                // This check remains only because of string case-sensitivity.
                                 if (in_array($rawMapKey, $mapped, true) === false) {
                                     $result += $mapEntries[$i]->getMappedValue();
                                     $mapped[] = $rawMapKey;
