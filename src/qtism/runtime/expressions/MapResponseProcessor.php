@@ -124,10 +124,9 @@ class MapResponseProcessor extends ExpressionProcessor
                 } elseif ($variable->isMultiple()) {
                     
                     // Make the values in the collection unique values.
-                    
 
                     $result = 0.0;
-                    $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue();
+                    $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue()->distinct();
 
                     $mapped = array(); // already mapped keys.
                     $mapEntries = $mapping->getMapEntries();

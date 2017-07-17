@@ -133,6 +133,7 @@ class MultipleContainerTest extends QtiSmTestCase {
     public function distinctProvider()
     {
         return [
+            [new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER)],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5)])],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)], null), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])]
