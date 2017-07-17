@@ -24,7 +24,7 @@
 
 namespace qtism\data\state;
 
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException as InvalidArgumentException;
 
 /**
@@ -33,7 +33,7 @@ use \InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateDefaultCollection extends AbstractCollection {
+class TemplateDefaultCollection extends QtiComponentCollection {
 	
 	/**
 	 * Check if a given $value is an instance of TemplateDefault.

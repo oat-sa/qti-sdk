@@ -24,8 +24,8 @@
 
 namespace qtism\data\state;
 
-use qtism\common\collections\AbstractCollection;
 use \InvalidArgumentException as InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A collection of InterpolationTableEntry objects.
@@ -33,7 +33,7 @@ use \InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InterpolationTableEntryCollection extends AbstractCollection {
+class InterpolationTableEntryCollection extends QtiComponentCollection {
 	
 	/**
 	 * Check if a given $value is an instance of InterpolationTableEntry.
