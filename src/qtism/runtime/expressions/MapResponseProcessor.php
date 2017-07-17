@@ -122,6 +122,9 @@ class MapResponseProcessor extends ExpressionProcessor
                     
                 // Multiple cardinality behaviour.
                 } elseif ($variable->isMultiple()) {
+                    
+                    // Make the values in the collection unique values.
+                    
 
                     $result = 0.0;
                     $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue();
