@@ -86,7 +86,8 @@ class MapResponseProcessor extends ExpressionProcessor
                 // Single cardinality behaviour.
                 if ($variable->isSingle()) {
 
-                    $result = null;
+                    $result = 0.0;
+                    $mappedCount = 0;
                     foreach ($mapping->getMapEntries() as $mapEntry) {
 
                         $val = $state[$identifier];
@@ -98,15 +99,15 @@ class MapResponseProcessor extends ExpressionProcessor
                         }
                         
                         if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
-                            $result = $mapEntry->getMappedValue();
-                            break;
+                            $result += $mapEntry->getMappedValue();
+                            $mappedCount++;
                         } elseif ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '') {
-                            $result = $mapEntry->getMappedValue();
-                            break;
+                            $result += $mapEntry->getMappedValue();
+                            $mappedCount++;
                         }
                     }
 
-                    if (is_null($result)) {
+                    if ($mappedCount === 0) {
                         // No relevant mapping found, return mapping default.
                         $result = $mapping->getDefaultValue();
                     }
@@ -122,14 +123,17 @@ class MapResponseProcessor extends ExpressionProcessor
                     
                 // Multiple cardinality behaviour.
                 } elseif ($variable->isMultiple()) {
+                    
+                    // Make the values in the collection unique values.
+                    // See QTI 2.1 Spec (mapResponse) expression: "If a container contains multiple instances of the same 
+                    // value then that value is counted once only".
 
                     $result = 0.0;
-                    $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue();
-
-                    $mapped = array(); // already mapped keys.
+                    $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue()->distinct();
                     $mapEntries = $mapping->getMapEntries();
 
                     foreach ($variableValue as $val) {
+                        $mappedCount = 0;
 
                         for ($i = 0; $i < count($mapEntries); $i++) {
 
@@ -140,17 +144,12 @@ class MapResponseProcessor extends ExpressionProcessor
                             }
 
                             if (($val instanceof Comparable && $val->equals($mapKey) === true) || ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '')) {
-                                if (in_array($rawMapKey, $mapped, true) === false) {
-                                    $result += $mapEntries[$i]->getMappedValue();
-                                    $mapped[] = $rawMapKey;
-                                }
-                                // else...
-                                // This value has already been mapped.
-                                break;
+                                $result += $mapEntries[$i]->getMappedValue();
+                                $mappedCount++;
                             }
                         }
 
-                        if ($i >= count($mapEntries)) {
+                        if ($mappedCount === 0) {
                             // No explicit mapping found for source value $val.
                             $result += $mapping->getDefaultValue();
                         }
