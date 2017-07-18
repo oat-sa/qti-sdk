@@ -125,7 +125,7 @@ class Container extends AbstractCollection implements Comparable
      * * If $obj is not an instance of Container, false is returned.
      * * If $obj is [A,B,C] and the container is [C,A,B], true is returned because the order does not matter.
      * * If $obj is [A,B,C] and the container is [B,C,D], false is returned.
-     * * If $obj is [] and the container is [], false is returned.
+     * * If $obj is [] and the container is [], true is returned.
      *
      * @param mixed $obj A value to compare to this one.
      * @return boolean Whether the container is equal to $obj.
@@ -264,5 +264,54 @@ class Container extends AbstractCollection implements Comparable
                 $this[$key] = clone $value;
             }
         }
+    }
+    
+    /**
+     * Get Distinct Container Copy.
+     * 
+     * Provides a copy of the container, with distinct values. In other words,
+     * any duplicated values from the container will not appear in the returned
+     * container.
+     * 
+     * Please note that the container copy is a shallow copy of the original, not
+     * a deep copy.
+     * 
+     * @return \qtism\common\collections\Container
+     */
+    public function distinct()
+    {
+        $container = clone $this;
+        $newDataPlaceHolder = [];
+        
+        foreach ($this->getDataPlaceHolder() as $key => $value) {
+            
+            $found = false;
+            
+            foreach ($newDataPlaceHolder as $newValue) {
+                
+                if (gettype($value) === 'object' && $value instanceof Comparable && $value->equals($newValue)) {
+                    $found = true;
+                    break;
+                } elseif (gettype($newValue) === 'object' && $newValue instanceof Comparable && $newValue->equals($value)) {
+                    $found = true;
+                    break;
+                } else if ($value === $newValue) {
+                    $found = true;
+                    break;
+                }
+            }
+            
+            if ($found === false) {
+                if (is_string($key) === true) {
+                    $newDataPlaceHolder[$key] = $value;
+                } else {
+                    $newDataPlaceHolder[] = $value;
+                }
+            }
+        }
+        
+        $container->setDataPlaceHolder($newDataPlaceHolder);
+        
+        return $container;
     }
 }
