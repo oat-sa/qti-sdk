@@ -320,7 +320,7 @@ abstract class Variable
     }
 
     /**
-	 * Convenience method.
+	 * Has Single Cardinality.
 	 *
 	 * Whether the variable stores a single value.
 	 *
@@ -332,11 +332,11 @@ abstract class Variable
     }
 
     /**
-	 * Convenience method.
+	 * Has Multiple or Ordered Cardinality.
 	 *
-	 * Whether the variable stores multiple values.
+	 * Whether the variable stores multiple values. 
 	 *
-	 * @return boolean
+	 * @return boolean Returns true in case of the cardinality is Multiple or Ordered. Otherwise the method returns false.
 	 */
     public function isMultiple()
     {
@@ -344,7 +344,7 @@ abstract class Variable
     }
 
     /**
-	 * Convenience method.
+	 * Has Ordered Cardinality.
 	 *
 	 * Whether the variable stores orered values.
 	 *
@@ -356,7 +356,7 @@ abstract class Variable
     }
 
     /**
-	 * Convenience method.
+	 * Has Record Cardinality.
 	 *
 	 * whether the variable stores values as in a record.
 	 *

@@ -104,11 +104,39 @@ class MultipleContainerTest extends QtiSmTestCase {
 		$c1 = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(5), new QtiInteger(4), new QtiInteger(3), new QtiInteger(2), new QtiInteger(1)));
 		$c2 = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(6), new QtiInteger(7), new QtiInteger(8), new QtiInteger(5)));
 		$this->assertFalse($c1->equals($c2));
+        $this->assertFalse($c2->equals($c1));
 	}
 	
 	public function testEqualsTwo() {
 	    $c1 = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.75), new QtiFloat(1.65)));
 	    $c2 = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.75), new QtiFloat(1.65)));
 	    $this->assertTrue($c1->equals($c2));
+        $this->assertTrue($c2->equals($c1));
 	}
+    
+    public function testEqualsEmpty() {
+        $c1 = new MultipleContainer(BaseType::FLOAT);
+        $c2 = new MultipleContainer(BaseType::FLOAT);
+        $this->assertTrue($c1->equals($c2));
+        $this->assertTrue($c2->equals($c1));
+    }
+    
+    /**
+     * @dataProvider distinctProvider
+     */
+    public function testDistinct($originalContainer, $expectedContainer) {
+        $distinctContainer = $originalContainer->distinct();
+        $this->assertTrue($distinctContainer->equals($expectedContainer));
+        $this->assertTrue($expectedContainer->equals($distinctContainer));
+    }
+    
+    public function distinctProvider()
+    {
+        return [
+            [new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER)],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5)])],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)], null), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])]
+        ];
+    }
 }
