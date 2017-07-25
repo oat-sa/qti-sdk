@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
 use qtism\data\rules\Selection;
+use qtism\data\storage\xml\Utils;
 use \DOMElement;
 
 /**
@@ -48,6 +49,13 @@ class SelectionMarshaller extends Marshaller {
 		self::setDOMElementAttribute($element, 'select', $component->getSelect());
 		self::setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
 		
+        if (($xml = $component->getXml()) !== null) {
+            $selectionElt = $xml->documentElement->cloneNode(true);
+            
+            Utils::importChildNodes($selectionElt, $element);
+            Utils::importAttributes($selectionElt, $element);
+        }
+        
 		return $element;
 	}
 	
@@ -60,13 +68,21 @@ class SelectionMarshaller extends Marshaller {
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
+        // Retrieve XML content as a string.
+        $frag = $element->ownerDocument->createDocumentFragment();
+        $element = $element->cloneNode(true);
+        $frag->appendChild($element);
+        $xmlString = $frag->ownerDocument->saveXML($frag);
+        
 		// select is a mandatory value, retrieve it first.
 		if (($value = static::getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
-			$object = new Selection($value);
-			
-			if (($value = static::getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
-				$object->setWithReplacement($value);
+            $withReplacement = false;
+            
+            if (($withReplacementValue = static::getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
+				$withReplacement = $withReplacementValue;
 			}
+            
+			$object = new Selection($value, $withReplacement, $xmlString);
 		}
 		else {
 			$msg = "The mandatory attribute 'select' is missing.";

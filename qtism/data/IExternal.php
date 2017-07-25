@@ -26,6 +26,8 @@ namespace qtism\data;
 /**
  * Represents a gateway to external data.
  * 
+ * In case of there is no external data, the implementation may return the null value.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
