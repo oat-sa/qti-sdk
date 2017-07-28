@@ -32,6 +32,8 @@ interface IExternal
 {
     /**
      * Get the external XML content.
+     * 
+     * In case of there is no external data, the implementation may return the null value.
      *
      * @return \DOMDocument
      */

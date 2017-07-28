@@ -24,6 +24,8 @@ namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\IExternal;
+use qtism\data\ExternalQtiComponent;
 use \InvalidArgumentException;
 
 /**
@@ -36,8 +38,19 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Selection extends QtiComponent
+class Selection extends QtiComponent implements IExternal
 {
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $xmlString = '';
+    
+    /**
+     * @var \qtism\data\ExternalQtiComponent
+     */
+    private $externalComponent = null;
+    
     /**
 	 * The number of child elements to be selected.
 	 *
@@ -61,10 +74,15 @@ class Selection extends QtiComponent
 	 * @param boolean $withReplacement Selection (combinations) with or without replacement.
 	 * @throws \InvalidArgumentException If $select is not a valid integer or if $withReplacement is not a valid boolean.
 	 */
-    public function __construct($select, $withReplacement = false)
+    public function __construct($select, $withReplacement = false, $xmlString = '')
     {
         $this->setSelect($select);
         $this->setWithReplacement($withReplacement);
+        
+        if ($xmlString !== '') {
+            $this->setXmlString($xmlString);
+            $this->setExternalComponent(new ExternalQtiComponent($xmlString));
+        }
     }
 
     /**
@@ -103,11 +121,11 @@ class Selection extends QtiComponent
     }
 
     /**
-	 * Set if the selection of items must be with or without replacements.
-	 *
-	 * @param boolean $withReplacement true if it must be with replacements, false otherwise.
-	 * @throws \InvalidArgumentException If $withReplacement is not a boolean.
-	 */
+     * Set if the selection of items must be with or without replacements.
+     *
+     * @param boolean $withReplacement true if it must be with replacements, false otherwise.
+     * @throws \InvalidArgumentException If $withReplacement is not a boolean.
+     */
     public function setWithReplacement($withReplacement)
     {
         if (is_bool($withReplacement)) {
@@ -115,6 +133,65 @@ class Selection extends QtiComponent
         } else {
             $msg = "WithReplacement must be a boolean, '" . gettype($withReplacement) . "' given.";
             throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
+     * Set the xml string content of the selection itself and its content.
+     *
+     * @param string $xmlString
+     */
+    public function setXmlString($xmlString)
+    {
+        $this->xmlString = $xmlString;
+
+        if ($this->externalComponent !== null) {
+            $this->getExternalComponent()->setXmlString($xmlString);
+        }
+    }
+
+    /**
+     * Get the xml string content of the selection itself and its content.
+     *
+     * @return string
+     */
+    public function getXmlString()
+    {
+        return $this->xmlString;
+    }
+    
+    /**
+     * Set the encapsulated external component.
+     *
+     * @param \qtism\data\ExternalQtiComponent $externalComponent
+     */
+    private function setExternalComponent(ExternalQtiComponent $externalComponent)
+    {
+        $this->externalComponent = $externalComponent;
+    }
+
+    /**
+     * Get the encapsulated external component.
+     *
+     * @return \qtism\data\ExternalQtiComponent
+     */
+    private function getExternalComponent()
+    {
+        return $this->externalComponent;
+    }
+    
+    /**
+     * Get the XML content of the selection itself and its content.
+     *
+     * @return \DOMDocument A DOMDocument object representing the selection itself or null if there is no external component.
+     * @throws \RuntimeException If the XML content of the selection and/or its content cannot be transformed into a valid DOMDocument.
+     */
+    public function getXml()
+    {
+        if (($externalComponent = $this->getExternalComponent()) !== null) {
+            return $this->getExternalComponent()->getXml();
+        } else {
+            return null;
         }
     }
 
