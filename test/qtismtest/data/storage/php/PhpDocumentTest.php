@@ -14,9 +14,11 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
-class PhpDocumentTest extends QtiSmTestCase {
+class PhpDocumentTest extends QtiSmTestCase
+{
 	
-    public function testSimpleLoad($path = '') {
+    public function testSimpleLoad($path = '')
+    {
         
         $doc = new PhpDocument();
         if (empty($path) === true) {
@@ -85,7 +87,8 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertEquals(1, count($responseRules));
     }
     
-     public function testSimpleSave() {
+     public function testSimpleSave()
+     {
 
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
@@ -98,7 +101,8 @@ class PhpDocumentTest extends QtiSmTestCase {
         unlink($file);
     }
     
-    public function testCustomOperatorOne() {
+    public function testCustomOperatorOne() 
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_1.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
@@ -121,7 +125,8 @@ class PhpDocumentTest extends QtiSmTestCase {
         unlink($file);
     }
     
-    public function testCustomOperatorTwo() {
+    public function testCustomOperatorTwo()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_2.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
@@ -140,13 +145,51 @@ class PhpDocumentTest extends QtiSmTestCase {
         unlink($file);
     }
     
+    public function testCustomSelection()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/selection/custom_selection.xml');
+        $test = $doc->getDocumentComponent();
+        $phpDoc = new PhpDocument('2.1', $test);
+        
+        $selection = $test->getComponentsByClassName('selection')[0];
+        $this->assertInstanceOf('qtism\data\rules\Selection', $selection);
+        
+        $domSelection = $selection->getXml();
+        $this->assertNotNull($domSelection);
+        
+        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
+        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
+        
+        $file = tempnam('/tmp', 'qsm');
+        $phpDoc->save($file);
+        
+        // Do we have the same result after opening it again?
+        $phpDoc = new PhpDocument();
+        $phpDoc->load($file);
+        
+        $test = $phpDoc->getDocumentComponent();
+        
+        $selection = $test->getComponentsByClassName('selection')[0];
+        $this->assertInstanceOf('qtism\data\rules\Selection', $selection);
+        
+        $domSelection = $selection->getXml();
+        $this->assertNotNull($domSelection);
+        
+        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
+        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
+        
+        unlink($file);
+    }
+    
     /**
      *
      * @dataProvider loadTestSamplesDataProvider
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.
      */
-    public function testLoadTestSamples($testUri, $rootType) {
+    public function testLoadTestSamples($testUri, $rootType)
+    {
         // Basic XML -> PHP transormation + save + load
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load($testUri);
@@ -167,7 +210,8 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertFalse(file_exists($file));
     }
     
-    public function testLoadInteractionMixSaschsen() {
+    public function testLoadInteractionMixSaschsen()
+    {
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml');
     
@@ -185,7 +229,8 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertFalse(file_exists($file));
     }
     
-    public function loadTestSamplesDataProvider() {
+    public function loadTestSamplesDataProvider()
+    {
         return array(
             array(self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
             array(self::samplesDir() . 'ims/tests/arbitrary_weighting_of_item_outcomes/arbitrary_weighting_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
