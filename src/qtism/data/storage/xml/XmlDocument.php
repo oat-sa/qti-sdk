@@ -242,7 +242,7 @@ class XmlDocument extends QtiDocument
 	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
 	 */
-    public function save($uri, $formatOutput = true)
+    public function save($uri, $formatOutput = false)
     {
         $this->saveImplementation($uri, $formatOutput);
     }
