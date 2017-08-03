@@ -119,7 +119,7 @@ class XmlDocument extends QtiDocument {
 	protected function loadImplementation($data, $validate = false, $fromString = false) {
 		try {
 			$this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
-			$this->getDomDocument()->preserveWhiteSpace = false;
+			$this->getDomDocument()->preserveWhiteSpace = true;
 			
 			// disable xml warnings and errors and fetch error information as needed.
 			$oldErrorConfig = libxml_use_internal_errors(true);
