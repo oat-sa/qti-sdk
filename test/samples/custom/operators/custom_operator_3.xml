@@ -5,9 +5,7 @@
 				xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
 				xmlns:qtism="http://qtism.taotesting.com"
 				class="com.taotesting.qtism.customOperator1" definition="http://qtism.taotesting.com/xsd/customOperator1.xsd" qtism:debug="false" qtism:syntax="default">
-	<baseValue baseType="string">
-		<![CDATA[Param1Data]]>
-	</baseValue>
+	<baseValue baseType="string"><![CDATA[Param1Data]]></baseValue>
 	<qtism:config>
 		<qtism:log>true</qtism:log>
 		<qtism:repository>./repo</qtism:repository>

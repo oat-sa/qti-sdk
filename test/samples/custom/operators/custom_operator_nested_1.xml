@@ -8,9 +8,7 @@
 		<baseValue baseType="string">Some data to pass to nestedCustomOperator...</baseValue>
 		<spo:stmt>spo</spo:stmt>
 	</customOperator>
-	<baseValue baseType="string">
-		<![CDATA[Param1Data]]>
-	</baseValue>
+	<baseValue baseType="string"><![CDATA[Param1Data]]></baseValue>
 	<qtism:config>
 		<qtism:log>true</qtism:log>
 		<qtism:repository>./repo</qtism:repository>
