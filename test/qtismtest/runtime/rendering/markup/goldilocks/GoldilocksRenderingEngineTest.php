@@ -306,7 +306,8 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         );
     }
     
-    /*public function testGenerate() {
+    /*
+    public function testGenerate() {
         $renderingMode = GoldilocksRenderingEngine::CONTEXT_STATIC;
         $xmlBasePolicy = GoldilocksRenderingEngine::XMLBASE_IGNORE;
         $stylesheetPolicy = GoldilocksRenderingEngine::STYLESHEET_INLINE;
@@ -322,10 +323,10 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         $engine->setCssClassPolicy($cssClassPolicy);
         
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'ims/items/2_2/graphic_order.xml');
+        $doc->load(self::samplesDir() . 'custom/items/table.xml');
         
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
-        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/graphicOrderInteraction-0.html', $strRendered . "\n");
+        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/table-0.html', $strRendered . "\n");
     }*/
 }
