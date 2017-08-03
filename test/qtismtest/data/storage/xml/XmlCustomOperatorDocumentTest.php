@@ -25,7 +25,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase {
         $this->assertEquals(1, count($expressions));
         $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
-        $this->assertEquals('Param1Data', $expressions[0]->getValue());
+        $this->assertEquals('Param1Data', trim($expressions[0]->getValue()));
     }
     
     public function testWriteNoLax() {
@@ -51,7 +51,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase {
         $this->assertEquals(1, count($expressions));
         $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
-        $this->assertEquals('Param1Data', $expressions[0]->getValue());
+        $this->assertEquals('Param1Data', trim($expressions[0]->getValue()));
     }
     
     public function testWriteQTIOnly() {
@@ -83,7 +83,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase {
         $this->assertEquals(1, count($expressions));
         $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
-        $this->assertEquals('Param1Data', $expressions[0]->getValue());
+        $this->assertEquals('Param1Data', trim($expressions[0]->getValue()));
         
         // Now check the LAX content.
         $laxNodes = $xml->getElementsByTagNameNS('http://qtism.taotesting.com', 'config');
@@ -159,7 +159,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase {
         $baseValue = $expressions[1];
         $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $baseValue);
         $this->assertEquals(BaseType::STRING, $baseValue->getBaseType());
-        $this->assertEquals('Param1Data', $baseValue->getValue());
+        $this->assertEquals('Param1Data', trim($baseValue->getValue()));
     }
     
     public function testWriteNestedLax() {
