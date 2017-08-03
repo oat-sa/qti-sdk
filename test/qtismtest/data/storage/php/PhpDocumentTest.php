@@ -116,7 +116,7 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
         $this->assertEquals('false', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'debug'));
         $this->assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
-        $this->assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qtism="http://qtism.taotesting.com" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" class="com.taotesting.qtism.customOperator1" definition="http://qtism.taotesting.com/xsd/customOperator1.xsd" qtism:debug="false" qtism:syntax="default"><baseValue baseType="string"><![CDATA[Param1Data]]></baseValue></customOperator>', $xml->saveXML($xml->documentElement));
+        $this->assertXmlStringEqualsXmlString('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qtism="http://qtism.taotesting.com" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" class="com.taotesting.qtism.customOperator1" definition="http://qtism.taotesting.com/xsd/customOperator1.xsd" qtism:debug="false" qtism:syntax="default"><baseValue baseType="string"><![CDATA[Param1Data]]></baseValue></customOperator>', $xml->saveXML($xml->documentElement));
         
         unlink($file);
     }
@@ -135,7 +135,7 @@ class PhpDocumentTest extends QtiSmTestCase {
         $customOperator = $phpDoc->getDocumentComponent();
         $xml = $customOperator->getXml();
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
-        $this->assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"><baseValue baseType="string"><![CDATA[Param1Data]]></baseValue></customOperator>', $xml->saveXML($xml->documentElement));
+        $this->assertXmlStringEqualsXmlString('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"><baseValue baseType="string"><![CDATA[Param1Data]]></baseValue></customOperator>', $xml->saveXML($xml->documentElement));
         
         unlink($file);
     }
