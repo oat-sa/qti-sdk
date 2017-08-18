@@ -1010,42 +1010,6 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 	    );
 	}
 	
-	public function testSelectionAndOrdering()
-    {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
-	    $this->assertEquals(50, $assessmentTestSession->getRouteCount());
-	}
-	
-	public function testOrderingBasic()
-    {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_basic.xml');
-	    $this->assertEquals(3, $assessmentTestSession->getRouteCount());
-	}
-	
-	public function testOrderingBasicFixed()
-    {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
-	    $this->assertEquals(5, $assessmentTestSession->getRouteCount());
-	}
-    
-	public function testOrderingVisible()
-    {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
-	    $this->assertEquals(9, $assessmentTestSession->getRouteCount());
-	}
-	
-	public function testOrderingInvisibleDontKeepTogether()
-    {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_invisible_dont_keep_together.xml');
-	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
-	}
-	
-	public function testOrderingInvisibleKeepTogether()
-    {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_invisible_keep_together.xml');
-	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
-	}
-	
 	public function testRouteItemAssessmentSections()
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_assessmentsections.xml');	    
