@@ -40,7 +40,6 @@ class BasicSelection extends AbstractSelection
      * held by the Selection object.
      *
      * @return \qtism\runtime\tests\SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
-     * @throws \qtism\runtime\tests\SelectionException If the select attribute of the Selection exceeds the number of child elements but the withReplacement attribute is set to true.
      */
     public function select()
     {
