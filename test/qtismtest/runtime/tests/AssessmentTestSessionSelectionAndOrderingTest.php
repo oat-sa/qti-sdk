@@ -2,16 +2,6 @@
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
-use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\files\FileSystemFileManager;
-use qtism\runtime\tests\AssessmentTestSessionState;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
-use qtism\runtime\common\ResponseVariable;
-use qtism\runtime\common\State;
-use qtism\runtime\tests\SessionManager;
-use qtism\runtime\tests\AssessmentTestSession;
-use qtism\data\storage\xml\XmlCompactDocument;
 
 class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmAssessmentTestSessionTestCase
 {    
