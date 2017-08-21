@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -40,7 +40,6 @@ class BasicSelection extends AbstractSelection
      * held by the Selection object.
      *
      * @return \qtism\runtime\tests\SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
-     * @throws \qtism\runtime\tests\SelectionException If the select attribute of the Selection exceeds the number of child elements but the withReplacement attribute is set to true.
      */
     public function select()
     {
@@ -58,10 +57,10 @@ class BasicSelection extends AbstractSelection
             $withReplacement = $selection->isWithReplacement();
 
             if ($select > $childCount && $withReplacement !== true) {
-                $assessmentSectionIdentifier = $assessmentSection->getIdentifier();
-                $msg = "The number of children to select (${select}) cannot exceed the number ";
-                $msg.= "of child elements defined (${childCount}) in assessmentSection '${assessmentSectionIdentifier}'.";
-                throw new SelectionException($msg, SelectionException::LOGIC_ERROR);
+                // In case of the requested selection is greater than the actual
+                // selectable elements, the requested selection is lowered down
+                // to number of children elements.
+                $select = $childCount;
             }
 
             // Map used to count the amount of selection by Route.
