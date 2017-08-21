@@ -15,10 +15,16 @@ use qtism\data\storage\xml\XmlCompactDocument;
 
 class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmAssessmentTestSessionTestCase
 {    
-    public function testSelectionAndOrdering()
+    public function testSelectionAndOrderingWithReplacement()
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering_with_replacement.xml');
 	    $this->assertEquals(50, $assessmentTestSession->getRouteCount());
+	}
+    
+    public function testSelectionAndOrderingOverflow()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering_overflow.xml');
+	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
 	}
     
     public function testOrderingBasic()
