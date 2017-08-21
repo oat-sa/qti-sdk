@@ -57,7 +57,7 @@ class BasicSelection extends AbstractSelection
             $withReplacement = $selection->isWithReplacement();
 
             if ($select > $childCount && $withReplacement !== true) {
-                // In case of the requested selection is greather than the actual
+                // In case of the requested selection is greater than the actual
                 // selectable elements, the requested selection is lowered down
                 // to number of children elements.
                 $select = $childCount;
