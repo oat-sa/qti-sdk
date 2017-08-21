@@ -31,6 +31,7 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmAssessmentTestS
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_ordering/ordering_basic_fixed.xml');
 	    $this->assertEquals(5, $assessmentTestSession->getRouteCount());
+        $this->assertEquals('Q2', $assessmentTestSession->getRoute()->getRouteItemAt(1)->getAssessmentItemRef()->getIdentifier());
 	}
     
 	public function testOrderingVisible()
