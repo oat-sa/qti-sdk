@@ -35,7 +35,7 @@ interface IExternal
      * 
      * In case of there is no external data, the implementation may return the null value.
      *
-     * @return \DOMDocument
+     * @return \qtism\common\dom\SerializableDomDocument
      */
     public function getXml();
 }
