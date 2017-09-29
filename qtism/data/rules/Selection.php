@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -182,7 +182,7 @@ class Selection extends QtiComponent implements IExternal {
     /**
      * Get the XML content of the selection itself and its content.
      *
-     * @return \DOMDocument A DOMDocument object representing the selection itself or null if there is no external component.
+     * @return \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object representing the selection itself or null if there is no external component.
      * @throws \RuntimeException If the XML content of the selection and/or its content cannot be transformed into a valid DOMDocument.
      */
     public function getXml()
