@@ -171,7 +171,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Get the XML content of the custom operator itself and its content.
      *
-     * @return \DOMDocument A DOMDocument object representing the custom operator itself.
+     * @return \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object representing the custom operator itself.
      * @throws \RuntimeException If the XML content of the custom operator and/or its content cannot be transformed into a valid DOMDocument.
      */
     public function getXml()
