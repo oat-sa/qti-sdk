@@ -251,4 +251,12 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc = new PhpDocument();
         $phpDoc->loadFromString('<?php $zorglub = "zorg";');
     }
+    
+    public function testLoadNoData()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        $phpDoc = new PhpDocument();
+        $phpDoc->load('somewhere/in/antoine.php');
+    }
 }
