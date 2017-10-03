@@ -209,6 +209,8 @@ class PhpDocument extends QtiDocument {
             throw new PhpStorageException($msg);
         }
 
+        $obstart = @ob_start();
+
         try {
             require($url);
             
@@ -219,11 +221,15 @@ class PhpDocument extends QtiDocument {
                 $msg = "The PHP document located at '${url}' could not be loaded properly.";
                 throw new PhpStorageException($msg);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg, 0, $e);
+        } finally {
+            if ($obstart) {
+                @ob_end_clean();
+            }
         }
+        
     }
 
     /**
@@ -234,6 +240,8 @@ class PhpDocument extends QtiDocument {
      */
     public function loadFromString($data)
     {
+        $obstart = @ob_start();
+        
         try {
             if (empty($data)) {
                 throw new Exception('Unable to find valid data to load.');
@@ -254,6 +262,10 @@ class PhpDocument extends QtiDocument {
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
             throw new PhpStorageException($msg, 0, $e);
+        } finally {
+            if ($obstart) {
+                @ob_end_clean();
+            }
         }
     }
 
