@@ -212,7 +212,7 @@ class PhpDocument extends QtiDocument {
         $obstart = @ob_start();
 
         try {
-            $evaluation = @require($url);
+            $evaluation = @include($url);
             
             // $evaluation check is required for PHP 5.X.
             if ($evaluation !== false && isset($rootcomponent)) {
