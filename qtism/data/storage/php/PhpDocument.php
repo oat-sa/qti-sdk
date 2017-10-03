@@ -211,8 +211,14 @@ class PhpDocument extends QtiDocument {
 
         try {
             require($url);
-            $this->setDocumentComponent($rootcomponent);
-            $this->setUrl($url);
+            
+            if (isset($rootcomponent)) {
+                $this->setDocumentComponent($rootcomponent);
+                $this->setUrl($url);
+            } else {
+                $msg = "The PHP document located at '${url}' could not be loaded properly.";
+                throw new PhpStorageException($msg);
+            }
         }
         catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
@@ -238,7 +244,13 @@ class PhpDocument extends QtiDocument {
             } else {
                 eval($data);
             }
-            $this->setDocumentComponent($rootcomponent);
+            
+            if (isset($rootcomponent)) {
+                $this->setDocumentComponent($rootcomponent);
+            } else {
+                $msg = "The PHP string could not be loaded properly.";
+                throw new PhpStorageException($msg);
+            }
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
             throw new PhpStorageException($msg, 0, $e);

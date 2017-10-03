@@ -6,61 +6,64 @@ use qtism\data\storage\xml\XmlDocument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class PhpDocumentTest extends QtiSmTestCase {
-	
-    public function testSimpleLoad() {
-        
+class PhpDocumentTest extends QtiSmTestCase
+{
+    public function testSimpleLoad()
+    {
         $doc = new PhpDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.php');
-        
+
         $assessmentTest = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest);
-        
+
         $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
     }
     
-    public function testSimpleLoadFromString() {
+    public function testSimpleLoadFromString()
+    {
         $doc = new PhpDocument();
         $doc->loadFromString(file_get_contents(self::samplesDir() . 'custom/php/php_storage_simple.php'));
-        
+
         $assessmentTest = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest);
-        
+
         $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
     }
     
-     public function testSimpleSave() {
-
+     public function testSimpleSave()
+     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
-        
+
         unlink($file);
     }
     
-    public function testSimpleSaveToString() {
+    public function testSimpleSaveToString()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
         $phpStr = $phpDoc->saveToString();
-        
+
         $phpDoc->loadFromString($phpStr);
         $this->assertEquals('php_storage_simple', $phpDoc->getDocumentComponent()->getIdentifier());
     }
     
-    public function testCustomOperatorOne() {
+    public function testCustomOperatorOne()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_1.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
-        
+
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
-        
+
         $phpDoc = new PhpDocument();
         $phpDoc->load($file);
-        
+
         $customOperator = $phpDoc->getDocumentComponent();
         $xml = $customOperator->getXml();
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
@@ -71,28 +74,29 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qtism="http://qtism.taotesting.com" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" class="com.taotesting.qtism.customOperator1" definition="http://qtism.taotesting.com/xsd/customOperator1.xsd" qtism:debug="false" qtism:syntax="default">
     <baseValue baseType="string"><![CDATA[Param1Data]]></baseValue>
 </customOperator>', $xml->saveXML($xml->documentElement));
-        
+
         unlink($file);
     }
     
-    public function testCustomOperatorTwo() {
+    public function testCustomOperatorTwo()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_2.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
-        
+
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
-        
+
         $phpDoc = new PhpDocument();
         $phpDoc->load($file);
-        
+
         $customOperator = $phpDoc->getDocumentComponent();
         $xml = $customOperator->getXml();
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
         $this->assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd">
     <baseValue baseType="string"><![CDATA[Param1Data]]></baseValue>
 </customOperator>', $xml->saveXML($xml->documentElement));
-        
+
         unlink($file);
     }
     
@@ -102,23 +106,24 @@ class PhpDocumentTest extends QtiSmTestCase {
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.
      */
-    public function testLoadTestSamples($testUri, $rootType) {
+    public function testLoadTestSamples($testUri, $rootType)
+    {
         // Basic XML -> PHP transormation + save + load
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load($testUri);
-    
+
         $phpDoc = new PhpDocument();
         $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
-    
+
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
-    
+
         $phpDoc = new PhpDocument();
         $phpDoc->load($file);
-    
+
         $this->assertInstanceOf($rootType, $phpDoc->getDocumentComponent());
         $this->assertEquals($file, $phpDoc->getUrl());
-    
+
         unlink($file);
         $this->assertFalse(file_exists($file));
     }
@@ -129,46 +134,49 @@ class PhpDocumentTest extends QtiSmTestCase {
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.
      */
-    public function testLoadTestSamplesFromString($testUri, $rootType) {
+    public function testLoadTestSamplesFromString($testUri, $rootType)
+    {
         // Basic XML -> PHP transormation + saveTotring + loadFromString
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->loadFromString(file_get_contents($testUri));
-    
+
         $phpDoc = new PhpDocument();
         $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
-    
+
         $file = tempnam('/tmp', 'qsm');
         file_put_contents($file, $phpDoc->saveToString());
-    
+
         $phpDoc = new PhpDocument();
         $phpDoc->loadFromString(file_get_contents($file));
-    
+
         $this->assertInstanceOf($rootType, $phpDoc->getDocumentComponent());
         $this->assertNull($phpDoc->getUrl());
-    
+
         unlink($file);
         $this->assertFalse(file_exists($file));
     }
     
-    public function testLoadInteractionMixSaschsen() {
+    public function testLoadInteractionMixSaschsen()
+    {
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml');
-    
+
         $phpDoc = new PhpDocument();
         $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
-    
+
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
-    
+
         $phpDoc = new PhpDocument();
         $phpDoc->load($file);
-    
+
         $this->assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getDocumentComponent()->getIdentifier());
         unlink($file);
         $this->assertFalse(file_exists($file));
     }
     
-    public function loadTestSamplesDataProvider() {
+    public function loadTestSamplesDataProvider()
+    {
         return array(
             array(self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
             array(self::samplesDir() . 'ims/tests/arbitrary_weighting_of_item_outcomes/arbitrary_weighting_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
@@ -226,5 +234,29 @@ class PhpDocumentTest extends QtiSmTestCase {
             array(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
             array(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', 'qtism\\data\\AssessmentItem')
         );
+    }
+    
+    public function testLoadBadData()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        $phpDoc = new PhpDocument();
+        $phpDoc->load(self::samplesDir() . 'custom/php/baddata.php');
+    }
+    
+    public function testLoadFromStringBadData()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        $phpDoc = new PhpDocument();
+        $phpDoc->loadFromString('<?php $zorglub = "zorg";');
+    }
+    
+    public function testLoadNoData()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        $phpDoc = new PhpDocument();
+        $phpDoc->load('somewhere/in/antoine.php');
     }
 }
