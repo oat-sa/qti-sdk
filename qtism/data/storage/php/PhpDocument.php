@@ -212,9 +212,10 @@ class PhpDocument extends QtiDocument {
         $obstart = @ob_start();
 
         try {
-            require($url);
+            $evaluation = @require($url);
             
-            if (isset($rootcomponent)) {
+            // $evaluation check is required for PHP 5.X.
+            if ($evaluation !== false && isset($rootcomponent)) {
                 $this->setDocumentComponent($rootcomponent);
                 $this->setUrl($url);
             } else {
@@ -224,6 +225,10 @@ class PhpDocument extends QtiDocument {
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg, 0, $e);
+        } catch (\ParseError $e) {
+            // For PHP 7.X
+            $msg = "A PHP Parsing error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
+            throw new PhpStorageException($msg);
         } finally {
             if ($obstart) {
                 @ob_end_clean();
@@ -247,13 +252,15 @@ class PhpDocument extends QtiDocument {
                 throw new Exception('Unable to find valid data to load.');
             }
             $data = trim($data);
+            $evaluation = null;
             if (substr($data,0,5)==='<?php') {
-                eval('?>' . $data);
+                $evaluation = @eval('?>' . $data);
             } else {
-                eval($data);
+                $evaluation = @eval($data);
             }
             
-            if (isset($rootcomponent)) {
+            // $evaluation check is required for PHP 5.X.
+            if ($evaluation !== false && isset($rootcomponent)) {
                 $this->setDocumentComponent($rootcomponent);
             } else {
                 $msg = "The PHP string could not be loaded properly.";
@@ -262,6 +269,10 @@ class PhpDocument extends QtiDocument {
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
             throw new PhpStorageException($msg, 0, $e);
+        } catch (\ParseError $e) {
+            // For PHP 7.X
+            $msg = "A PHP Parsing Error occurred while executing the PHP source code representing the document.";
+            throw new PhpStorageException($msg);
         } finally {
             if ($obstart) {
                 @ob_end_clean();
