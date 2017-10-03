@@ -259,4 +259,31 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc = new PhpDocument();
         $phpDoc->load('somewhere/in/antoine.php');
     }
+    
+    public function testCleanOutput()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        // Make sure that no output is present after this invalid data load.
+        $phpDoc = new PhpDocument();
+        $phpDoc->load(self::samplesDir() . 'custom/php/baddata2.php');
+    }
+    
+    public function testCleanOutputFromString()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        // Make sure that no output is present after this invalid data load.
+        $phpDoc = new PhpDocument();
+        $phpDoc->loadFromString('<?php echo "FALZOUILLE";');
+    }
+    
+    public function testCleanOutputFromString2()
+    {
+        $this->setExpectedException('qtism\\data\\storage\\php\\PhpStorageException');
+        
+        // Make sure that no output is present after this invalid data load.
+        $phpDoc = new PhpDocument();
+        $phpDoc->loadFromString('FALZOUILLE');
+    }
 }
