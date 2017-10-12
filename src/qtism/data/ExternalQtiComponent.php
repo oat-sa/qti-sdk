@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +22,7 @@
 
 namespace qtism\data;
 
-use \DOMDocument;
+use qtism\common\dom\SerializableDomDocument;
 use \RuntimeException;
 
 /**
@@ -65,7 +65,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
      * Returns the XML representation of the external component as
      * a DOMDocument object.
      *
-     * @return \DOMDocument A DOMDocument object representing the content of the external component.
+     * @return \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object representing the content of the external component.
      * @throws \RuntimeException If the root element of the XML representation is not from the target namespace or the XML could not be parsed.
      */
     public function getXml()
@@ -73,7 +73,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
         // Build the DOMDocument object only on demand.
         if ($this->xml === null) {
 
-            $xml = new DOMDocument('1.0', 'UTF-8');
+            $xml = new SerializableDomDocument('1.0', 'UTF-8');
             if (@$xml->loadXML($this->getXmlString()) === false) {
                 $msg = "The XML content '" . $this->getXmlString() . "' of the '" . $this->getQtiClassName() . "' external component could not be parsed correctly.";
                 throw new RuntimeException($msg);
@@ -93,9 +93,9 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     /**
      * Set the XML representation of the external component.
      *
-     * @param \DOMDocument $xml An XML Document
+     * @param \qtism\common\dom\SerializableDomDocument $xml An XML Document
      */
-    protected function setXml(DOMDocument $xml)
+    protected function setXml(SerializableDomDocument $xml)
     {
         $this->xml = $xml;
     }
