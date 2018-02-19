@@ -2,7 +2,7 @@
 	"name": "qtism/qtism",
 	"description": "OAT QTI Software Module Library",
 	"type": "library",
-	"version": "0.13.2",
+	"version": "0.13.3",
 	"authors": [
 		{
 			"name": "Open Assessment Technologies S.A.",
@@ -22,7 +22,7 @@
 	"keywords" : ["QTI", "IMS", "OAT", "TAO", "CBA", "Computer-Based Assessment", "Computer-Aided Assessment", "Computer-Assisted Assessment"],
 	"homepage" : "http://www.taotesting.com",
 	"license" : [
-		"GPL-2.0"
+		"GPL-2.0-only"
 	],
 	"require" : {
 		"php" : ">=5.3.0",
