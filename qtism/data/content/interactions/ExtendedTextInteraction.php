@@ -247,11 +247,11 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
      * is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @param integer A strictly positive (> 0) integer or -1.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     * @param  $expectedLength integer A non negative (>= 0) integer or -1.
+     * @throws InvalidArgumentException If $expectedLength is not non negative integer nor -1.
      */
     public function setExpectedLength($expectedLength) {
-        if (is_int($expectedLength) && ($expectedLength > 0 || $expectedLength === -1)) {
+        if (is_int($expectedLength) && ($expectedLength >= 0 || $expectedLength === -1)) {
             $this->expectedLength = $expectedLength;
         }
         else {
@@ -264,7 +264,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return A strictly positive (> 0) integer or -1 if undefined.
+     * @return integer A non negative integer (>= 0) or -1 if undefined.
      */
     public function getExpectedLength() {
         return $this->expectedLength;
@@ -417,11 +417,11 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate as to the expected number of lines of input required. If
      * $expectedLines is -1, it means that no value is defined for the expectedLines attribute.
      * 
-     * @param integer $expectedLines A strictly positive (> 0) integer or -1.
-     * @throws InvalidArgumentException If $expectedLines is not a strictly positive integer nor -1.
+     * @param integer $expectedLines A non negative integer integer or -1.
+     * @throws InvalidArgumentException If $expectedLines is not a non negative integer nor -1.
      */
     public function setExpectedLines($expectedLines) {
-        if (is_int($expectedLines) && ($expectedLines > 0 || $expectedLines === -1)) {
+        if (is_int($expectedLines) && ($expectedLines >= 0 || $expectedLines === -1)) {
             $this->expectedLines = $expectedLines;
         }
         else {
@@ -434,7 +434,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Get the hint to the candidate as to the expected number of lines of input required. If
      * the returned value is -1, it means that no value is defined for the expectedLines attribute.
      * 
-     * @return integer A strictly positive (> 0) integer or -1.
+     * @return integer A non negative integer (>= 0) integer or -1.
      */
     public function getExpectedLines() {
         return $this->expectedLines;
