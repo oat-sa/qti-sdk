@@ -195,12 +195,12 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
      * is -1, it means that no value is defined for the expectedLength attribute.
-     * 
-     * @param integer A strictly positive (> 0) integer or -1.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     *
+     * @param integer $expectedLength A non negative (>= 0) integer or -1.
+     * @throws InvalidArgumentException If $expectedLength is not a non negative integer nor -1.
      */
     public function setExpectedLength($expectedLength) {
-        if (is_int($expectedLength) && ($expectedLength > 0 || $expectedLength === -1)) {
+        if (is_int($expectedLength) && ($expectedLength >= 0 || $expectedLength === -1)) {
             $this->expectedLength = $expectedLength;
         }
         else {
