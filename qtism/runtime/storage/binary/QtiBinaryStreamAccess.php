@@ -166,7 +166,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
         catch (InvalidArgumentException $e) {
-            $msg = "Datatype mismatch for variable '${varId}'.";
+            $msg = "Datatype mismatch for variable '" . $variable->getIdentifier() . "'.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
     }
