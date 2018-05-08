@@ -11,7 +11,6 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
-use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
@@ -173,6 +172,20 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $returnValue[] = array(new ResponseVariable('VAR', Cardinality::RECORD), "\x00" . "\x00" . pack('S', 3) . "\x00" . pack('S', 4) . 'key1' . "\x02" . pack('l', 1337) . "\x01" . pack('S', 4) . 'key2' . "\x00" . pack('S', 4) . 'key3' . "\x04" . pack('S', 7) . 'String!', new RecordContainer(array('key1' => new QtiInteger(1337), 'key2' => null, 'key3' => new QtiString('String!'))));
         
         return $returnValue;
+    }
+
+    public function testReadVariableValueError()
+    {
+        // 'XYZ' is not a valid duration datatype.
+        $binary = "\x00" . "\x01" . pack('S', 3) . 'XYZ';
+        $variable = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::DURATION);
+
+        $stream = new MemoryStream($binary);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+
+        $this->setExpectedException(QtiBinaryStreamAccessException::class, "Datatype mismatch for variable 'VAR'");
+        $access->readVariableValue($variable);
     }
     
     /**
