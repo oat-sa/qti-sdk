@@ -29,6 +29,7 @@ use qtism\data\content\RubricBlockRefCollection;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiComponent;
 use \DOMElement;
+use qtism\data\AssessmentSection;
 
 /**
  * Marshalling implementation for the ExtendedAssessmentSection class.
@@ -63,7 +64,8 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller {
      * @param QtiComponentCollection $children
      * @return QtiComponent
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
+    {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);
         
