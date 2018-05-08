@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use \InvalidArgumentException;
 
 /**
@@ -69,7 +69,7 @@ class GapImg extends GapChoice {
      * 
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $matchMax, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($identifier, $matchMax, QtiObject $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
         $this->setObject($object);
         $this->setObjectLabel('');  
@@ -116,7 +116,7 @@ class GapImg extends GapChoice {
      * 
      * @param Object $object An Object object.
      */
-    public function setObject(Object $object) {
+    public function setObject(QtiObject $object) {
         $this->object = $object;
     }
     

@@ -38,7 +38,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Object extends BodyElement implements FlowStatic, InlineStatic {
+class QtiObject extends BodyElement implements FlowStatic, InlineStatic {
 	
     /**
      * The base URI of the AtomicBlock.

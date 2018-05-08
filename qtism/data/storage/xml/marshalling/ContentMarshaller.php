@@ -51,7 +51,7 @@ use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\ItemBody;
 use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Dl;
 use qtism\data\content\xhtml\lists\Ol;
@@ -141,7 +141,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof DlElement) {
             return $component->getContent()->getArrayCopy();
         }
-        else if ($component instanceof Object) {
+        else if ($component instanceof QtiObject) {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof Div) {
@@ -325,6 +325,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
         
+            if (class_exists($fqClass) === true) {
+                return $fqClass;
+            }
+
+            $fqClass = $l . "\\Qti" . $class;
+
             if (class_exists($fqClass) === true) {
                 return $fqClass;
             }

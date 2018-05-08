@@ -3,7 +3,7 @@
 use qtism\data\content\FlowStaticCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\content\interactions\HotspotInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\interactions\HotspotChoiceCollection;
@@ -23,7 +23,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $choice2 = new HotspotChoice('hotspotchoice2', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(118, 184, 8)));
         $choice3 = new HotspotChoice('hotspotchoice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(150, 235, 8)));
         
-        $object = new Object('./img/img.png', 'image/png');
+        $object = new QtiObject('./img/img.png', 'image/png');
 	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
 	    $hotspotInteraction->setPrompt($prompt);
         

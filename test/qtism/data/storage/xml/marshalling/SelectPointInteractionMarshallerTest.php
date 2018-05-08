@@ -4,7 +4,7 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\interactions\SelectPointInteraction;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -13,7 +13,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 	    
-	    $object = new Object('./myimg.png', 'image/png');
+	    $object = new QtiObject('./myimg.png', 'image/png');
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object, 1);

@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\common\datatypes\QtiPoint;
 use \InvalidArgumentException;
 
@@ -109,7 +109,7 @@ class PositionObjectInteraction extends Interaction {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
     }
@@ -210,7 +210,7 @@ class PositionObjectInteraction extends Interaction {
      * 
      * @param Object $object An image as an Object object.
      */
-    public function setObject(Object $object) {
+    public function setObject(QtiObject $object) {
         $this->object = $object;
     }
     

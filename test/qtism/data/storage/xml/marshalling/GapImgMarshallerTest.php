@@ -1,6 +1,6 @@
 <?php
 
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\interactions\GapImg;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -8,7 +8,7 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 class GapImgMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
-	    $object = new Object('http://imagine.us/myimg.png', "image/png");
+	    $object = new QtiObject('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
 	    
 	    $marshaller = $this->getMarshallerFactory()->createMarshaller($gapImg);

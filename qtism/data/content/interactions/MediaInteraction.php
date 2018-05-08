@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use \InvalidArgumentException;
 
 /**
@@ -110,7 +110,7 @@ class MediaInteraction extends BlockInteraction {
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      */
-    public function __construct($responseIdentifier, $autostart, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, $autostart, QtiObject $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setAutostart($autostart);
         $this->setObject($object);
@@ -239,7 +239,7 @@ class MediaInteraction extends BlockInteraction {
      * 
      * @param Object $object
      */
-    public function setObject(Object $object) {
+    public function setObject(QtiObject $object) {
         $this->object = $object;
     }
     
