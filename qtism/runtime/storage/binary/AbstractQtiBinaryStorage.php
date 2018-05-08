@@ -137,10 +137,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $access->writeTinyInt($assessmentTestSession->getState());
             
             $route = $assessmentTestSession->getRoute();
-            $access->writeTinyInt($route->getPosition());
+            $access->writeInteger($route->getPosition());
             
             // Persist the Route of the AssessmentTestSession and the related item sessions.
-            $access->writeTinyInt($route->count());
+            $access->writeInteger($route->count());
             
             // persist whether or not to force branching.
             $access->writeBoolean($assessmentTestSession->mustForceBranching());
@@ -231,14 +231,14 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             $version = $access->readTinyInt();
             $assessmentTestSessionState = $access->readTinyInt();
-            $currentPosition = $access->readTinyInt();
+            $currentPosition = ($version <= 8) ? $access->readTinyInt() : $access->readInteger();
             
             // Build the route and the item sessions.
             $route = new Route();
             $lastOccurenceUpdate = new SplObjectStorage();
             $itemSessionStore = new AssessmentItemSessionStore();
             $pendingResponseStore = new PendingResponseStore();
-            $routeCount = $access->readTinyInt();
+            $routeCount = ($version <= 8) ? $access->readTinyInt(): $access->readInteger();
                      
             $forceBranching = ($version >= 6) ? $access->readBoolean() : false;
             $forcePreconditions = ($version >= 6) ? $access->readBoolean() : false;
@@ -338,6 +338,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * @param MemoryStream $stream An open MemoryStream object.
      */
     abstract protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream);
-    
+
+    /**
+     * @param IStream $stream
+     * @return QtiBinaryStreamAccess
+     */
     abstract protected function createBinaryStreamAccess(IStream $stream);
 }
