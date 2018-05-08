@@ -656,7 +656,7 @@ class AssessmentItemSession extends State {
 	    // allowed to submit the item until they have provided valid responses for all
 	    // interactions. When turned off (false) invalid responses may be accepted by the
 	    // system.
-	    if ($this->submissionMode === SubmissionMode::INDIVIDUAL && $this->itemSessionControl->mustValidateResponses() === true) {
+	    /*if ($this->submissionMode === SubmissionMode::INDIVIDUAL && $this->itemSessionControl->mustValidateResponses() === true) {
 	        // Use the correct expression to control if the responses
 	        // are correct.
 	        foreach ($responses as $response) {
@@ -680,7 +680,13 @@ class AssessmentItemSession extends State {
 	                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::RUNTIME_ERROR, $e);
 	            }
 	        }
-	    }
+	    }*/
+
+	    // The code above has been deactivated as it was a total misunderstanding of the specification. Indeed,
+        // a valid response is actually a response that meet the constraints expressed at the interaction level
+        // (e.g. min/max responses), and not the fact that it is correct or not. In order to prevent illegitimate
+        // exceptions being thrown at execution time, this feature is deactivated until a proper implementation
+        // takes place. Please note that the QTI-SDK head version properly implements this feature.
 	    
 	    // Apply the responses (if provided) to the current state and deal with the responseProcessing.
 	    if ($responses !== null) {
