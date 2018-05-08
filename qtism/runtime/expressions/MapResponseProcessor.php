@@ -28,8 +28,6 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\Comparable;
 use qtism\runtime\common\ResponseVariable;
-use qtism\data\expressions\Expression;
-use qtism\data\expressions\MapResponse;
 
 /**
  * The MapResponseProcessor class aims at processing MapResponse Expression objects.
@@ -63,7 +61,7 @@ class MapResponseProcessor extends ExpressionProcessor
 	 * * An ExpressionProcessingException is thrown if the variable is not a ResponseVariable.
 	 * * An ExpressionProcessingException is thrown if the cardinality of the variable is RECORD.
 	 *
-	 * @return a QTI float value.
+	 * @return QtiFloat QTI float value.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()
@@ -129,7 +127,7 @@ class MapResponseProcessor extends ExpressionProcessor
                     // value then that value is counted once only".
 
                     $result = 0.0;
-                    $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue()->distinct();
+                    $variableValue = ($variable->getValue() === null || count($variable->getValue()) === 0) ? array(null) : $variable->getValue()->distinct();
                     $mapEntries = $mapping->getMapEntries();
 
                     foreach ($variableValue as $val) {

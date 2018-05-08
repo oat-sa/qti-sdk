@@ -6,7 +6,7 @@ use qtism\data\content\interactions\AssociableHotspotCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -20,7 +20,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
-	    $object = new Object('myimg.png', 'image/png');
+	    $object = new QtiObject('myimg.png', 'image/png');
 	    
 	    $choice1 = new AssociableHotspot('choice1', 2, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
 	    $choice1->setMatchMin(1);

@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use \InvalidArgumentException;
 
 /**
@@ -103,7 +103,7 @@ class GraphicOrderInteraction extends GraphicInteraction {
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      */
-    public function __construct($responseIdentifier, Object $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, QtiObject $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);    
         $this->setHotspotChoices($hotspotChoices);
     }

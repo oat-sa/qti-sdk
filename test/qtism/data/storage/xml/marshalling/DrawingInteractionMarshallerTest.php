@@ -5,14 +5,14 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\DrawingInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class DrawingInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
-	    $object = new Object('my-canvas.png', 'image/png');
+	    $object = new QtiObject('my-canvas.png', 'image/png');
 	    $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));

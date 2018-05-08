@@ -6,7 +6,7 @@ use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -14,7 +14,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 	    
-	    $object = new Object('myimg.jpg', 'image/jpeg');
+	    $object = new QtiObject('myimg.jpg', 'image/jpeg');
 	    $object->setWidth(400);
 	    $object->setHeight(300);
 	    

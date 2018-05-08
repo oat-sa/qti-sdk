@@ -23,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 use \InvalidArgumentException;
 
 /**
@@ -57,7 +57,7 @@ abstract class GraphicInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);    
     }
@@ -67,7 +67,7 @@ abstract class GraphicInteraction extends BlockInteraction {
      * 
      * @param Object $object An Object object.
      */
-    public function setObject(Object $object) {
+    public function setObject(QtiObject $object) {
         $this->object = $object;
     }
     

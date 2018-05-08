@@ -4,21 +4,21 @@ use qtism\data\content\interactions\PositionObjectInteractionCollection;
 use qtism\data\content\interactions\PositionObjectStage;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\QtiObject;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class PositionObjectStageMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
-	    $interactionObject = new Object('airplane.jpg', 'image/jpeg');
+	    $interactionObject = new QtiObject('airplane.jpg', 'image/jpeg');
 	    $interactionObject->setHeight(16);
 	    $interactionObject->setWidth(16);
 	    
 	    $interaction = new PositionObjectInteraction('RESPONSE', $interactionObject);
 	    $interaction->setCenterPoint(new QtiPoint(8, 8));
 	    
-	    $stageObject = new Object('country.jpg', 'image/jpeg');
+	    $stageObject = new QtiObject('country.jpg', 'image/jpeg');
 	    $positionObjectStage = new PositionObjectStage($stageObject, new PositionObjectInteractionCollection(array($interaction)));
 	    
         $element = $this->getMarshallerFactory()->createMarshaller($positionObjectStage)->marshall($positionObjectStage);

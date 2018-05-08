@@ -136,7 +136,7 @@ class XmlCompactDocument extends XmlDocument {
 	
 	    array_push($trail, array($root, $root));
 	
-	    while (count($trail > 0)) {
+	    while (count($trail) > 0) {
 	        $trailer = array_pop($trail);
 	        $component = $trailer[0];
 	        $previous = $trailer[1];
