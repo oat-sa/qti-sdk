@@ -115,6 +115,6 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(1, count($component->getTestFeedbacks()));
 		$this->assertEquals(1, count($component->getTestParts()));
 		$this->assertEquals(1, count($component->getOutcomeDeclarations()));
-		$this->assertEquals(1, count($component->getOutcomeProcessing()));
+		$this->assertInstanceOf(OutcomeProcessing::class, $component->getOutcomeProcessing());
 	}
 }
