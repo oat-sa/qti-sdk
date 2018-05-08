@@ -121,14 +121,14 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	 * @param QtiComponentCollection|QtiComponent $components A collection of Rule objects.
 	 */
 	public function pushTrail($components) {
-		$i = count($components);
 		$trail = &$this->getTrail();
 		
 		if ($components instanceof QtiComponent) {
 			array_push($trail, $components);
 		}
 		else {
-			// collection
+		    $i = count($components);
+		    // collection
 			while ($i >= 1) {
 				$i--;
 				array_push($trail, $components[$i]);
