@@ -80,7 +80,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * Create a new GraphicGapMatchInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
-     * @param \qtism\data\content\xhtml\Object $object An image as an Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object An image as an ObjectElement object.
      * @param \qtism\data\content\interactions\GapImgCollection $gapImgs A collection of GapImg objects.
      * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.

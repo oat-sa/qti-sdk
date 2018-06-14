@@ -3,7 +3,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\ObjectFlowCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
 use \DOMDocument;
@@ -18,7 +18,7 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	        </object>                
 	    ');
 	    
-	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Object', $object);
+	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\ObjectElement', $object);
 	    $this->assertEquals('flash-movie', $object->getId());
 	    $this->assertEquals('http://mywebsite.com/movie.swf', $object->getData());
 	    $this->assertEquals('application/x-shockwave-flash', $object->getType());
@@ -44,7 +44,7 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	        <object id="flash-movie" data="" type="application/x-shockwave-flash"/>
 	    ');
 	    
-	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Object', $object);
+	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\ObjectElement', $object);
 	    $this->assertEquals('flash-movie', $object->getId());
 	    $this->assertEquals('', $object->getData());
 	    $this->assertEquals('application/x-shockwave-flash', $object->getType());
@@ -53,7 +53,7 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	public function testMarshallSimple() {
 	    $param1 = new Param('movie', 'movie.swf', ParamType::REF);
 	    $param2 = new Param('quality', 'high', ParamType::DATA);
-	    $object = new Object('http://mywebsite.com/movie.swf', 'application/x-shockwave-flash', 'flash-movie');
+	    $object = new ObjectElement('http://mywebsite.com/movie.swf', 'application/x-shockwave-flash', 'flash-movie');
 	    $object->setContent(new ObjectFlowCollection(array($param1, $param2)));
 	    
 	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($object)->marshall($object);
@@ -64,7 +64,7 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	}
 	
 	public function testMarshallNoDataAttributeValue() {
-	    $object = new Object('', 'application/x-shockwave-flash', 'flash-movie');
+	    $object = new ObjectElement('', 'application/x-shockwave-flash', 'flash-movie');
 	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($object)->marshall($object);
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);

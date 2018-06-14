@@ -6,14 +6,14 @@ use qtism\data\ShowHide;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\collections\IdentifierCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\interactions\GapImg;
 use \DOMDocument;
 
 class GapImgMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall21() {
-	    $object = new Object('http://imagine.us/myimg.png', "image/png");
+	    $object = new ObjectElement('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
 	    $gapImg->setShowHide(ShowHide::HIDE);
         $gapImg->setMatchMin(1);
@@ -33,7 +33,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	public function testMarshallNoMatchGroup21() {
 	    // Aims am testing that matchGroup attribute is ignore in
 	    // a QTI 2.1 context.
-	    $object = new Object('http://imagine.us/myimg.png', "image/png");
+	    $object = new ObjectElement('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 0, $object);
 	    $gapImg->setMatchGroup(new IdentifierCollection(array('identifier1')));
 	     
@@ -49,7 +49,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
      * @depends testMarshall21
      */
     public function testMarshallFixed() {
-        $object = new Object('http://imagine.us/myimg.png', "image/png");
+        $object = new ObjectElement('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 0, $object);
         $gapImg->setFixed(true);
 	     
@@ -63,7 +63,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
      * @depends testMarshall21
      */
     public function testMarshallObjectLabel() {
-        $object = new Object('http://imagine.us/myimg.png', "image/png");
+        $object = new ObjectElement('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 0, $object);
         $gapImg->setObjectLabel('My Label');
 	     
@@ -74,7 +74,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
     }
 	
 	public function testMarshall20() {
-	    $object = new Object('http://imagine.us/myimg.png', "image/png");
+	    $object = new ObjectElement('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 2, $object);
 	    $gapImg->setMatchMin(1);
 	    $gapImg->setTemplateIdentifier('XTEMPLATE');
@@ -93,7 +93,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
      * @depends testMarshall20
      */
     public function testMarshallTemplateIdentifier20() {
-        $object = new Object('http://imagine.us/myimg.png', "image/png");
+        $object = new ObjectElement('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 2, $object);
         $gapImg->setTemplateIdentifier('TEMPLATE');
         

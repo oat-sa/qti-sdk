@@ -23,7 +23,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use \InvalidArgumentException;
 
 /**
@@ -93,7 +93,7 @@ class MediaInteraction extends BlockInteraction
      *
      * The media object itself.
      *
-     * @var \qtism\data\content\xhtml\Object
+     * @var \qtism\data\content\xhtml\ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -103,14 +103,14 @@ class MediaInteraction extends BlockInteraction
      *
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
      * @param boolean $autostart Whether the media has to be played immediately after the begining of the attempt.
-     * @param \qtism\data\content\xhtml\Object $object The media object itself.
+     * @param \qtism\data\content\xhtml\ObjectElement $object The media object itself.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $autostart, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, $autostart, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setAutostart($autostart);
@@ -244,9 +244,9 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set the media object itself.
      *
-     * @param \qtism\data\content\xhtml\Object $object
+     * @param \qtism\data\content\xhtml\ObjectElement $object
      */
-    public function setObject(Object $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -254,7 +254,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Get the media object itself.
      *
-     * @return \qtism\data\content\xhtml\Object
+     * @return \qtism\data\content\xhtml\ObjectElement
      */
     public function getObject()
     {

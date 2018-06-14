@@ -22,7 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use \InvalidArgumentException;
 
 /**
@@ -39,7 +39,7 @@ abstract class GraphicInteraction extends BlockInteraction
      * Each graphical interaction has an associated image which is given as an
      * object that must be of an image type, as specified by the type attribute.
      *
-     * @var \qtism\data\content\xhtml\Object
+     * @var \qtism\data\content\xhtml\ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -48,14 +48,14 @@ abstract class GraphicInteraction extends BlockInteraction
      * Create a GraphicInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param \qtism\data\content\xhtml\Object $object The associated image as an Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object The associated image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -64,9 +64,9 @@ abstract class GraphicInteraction extends BlockInteraction
     /**
      * Set the associated image given as an object.
      *
-     * @param \qtism\data\content\xhtml\Object $object An Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object.
      */
-    public function setObject(Object $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -74,7 +74,7 @@ abstract class GraphicInteraction extends BlockInteraction
     /**
      * Get the associated image given as an object.
      *
-     * @return \qtism\data\content\xhtml\Object An Object object.
+     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object.
      */
     public function getObject()
     {

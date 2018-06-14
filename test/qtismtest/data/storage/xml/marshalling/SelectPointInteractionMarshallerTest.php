@@ -6,14 +6,14 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\interactions\SelectPointInteraction;
 use \DOMDocument;
 
 class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall21() {
-	    $object = new Object('./myimg.png', 'image/png');
+	    $object = new ObjectElement('./myimg.png', 'image/png');
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object);
@@ -34,7 +34,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	 */
 	public function testMarshall20() {
 	    // Make sure minChoices is not in the output in a QTI 2.0 context.
-	    $object = new Object('./myimg.png', 'image/png');
+	    $object = new ObjectElement('./myimg.png', 'image/png');
 	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object);
 	    $selectPointInteraction->setMinChoices(1);
         $selectPointInteraction->setMaxChoices(1);

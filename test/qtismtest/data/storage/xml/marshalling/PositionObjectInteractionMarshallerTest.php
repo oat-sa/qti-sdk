@@ -7,7 +7,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\TextRun;
 use qtism\data\content\interactions\Prompt;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use \DOMDocument;
 
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
@@ -15,7 +15,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 	public function testMarshall21()
     {
 	    
-	    $object = new Object('myimg.jpg', 'image/jpeg');
+	    $object = new ObjectElement('myimg.jpg', 'image/jpeg');
 	    $object->setWidth(400);
 	    $object->setHeight(300);
 	    
@@ -40,7 +40,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 	public function testMarshall20()
     {
 	    // Make sure minChoices is not taken into account in a QTI 2.0 context.
-	    $object = new Object('myimg.jpg', 'image/jpeg');
+	    $object = new ObjectElement('myimg.jpg', 'image/jpeg');
 	    $object->setWidth(400);
 	    $object->setHeight(300);
 	     

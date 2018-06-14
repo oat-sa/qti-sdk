@@ -22,7 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
 use \InvalidArgumentException;
@@ -75,14 +75,14 @@ class SelectPointInteraction extends GraphicInteraction
      * Create a new SelectPointInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param \qtism\data\content\xhtml\Object $object The associated image as an Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object The associated image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setMaxChoices(0);

@@ -5,7 +5,7 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\GraphicOrderInteraction;
 use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\content\interactions\HotspotChoice;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 
@@ -18,14 +18,14 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
             "A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given."
         );
         
-        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new Object('http://my-data/data.png', 'image/png'), new HotSpotChoiceCollection());
+        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), new HotSpotChoiceCollection());
     }
     
     public function testTooLargeMinChoices()
     {
         
         $choices = new HotSpotChoiceCollection(array(new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1))), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))));
-        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new Object('http://my-data/data.png', 'image/png'), $choices);
+        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
         
         $this->setExpectedException(
             '\\InvalidArgumentException',
@@ -39,7 +39,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
     {
         
         $choices = new HotSpotChoiceCollection(array(new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1))), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))));
-        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new Object('http://my-data/data.png', 'image/png'), $choices);
+        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
         
         $this->setExpectedException(
             '\\InvalidArgumentException',
@@ -53,7 +53,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
     {
         
         $choices = new HotSpotChoiceCollection(array(new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1))), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))));
-        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new Object('http://my-data/data.png', 'image/png'), $choices);
+        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
         
         $this->setExpectedException(
             '\\InvalidArgumentException',
@@ -67,7 +67,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
     {
         
         $choices = new HotSpotChoiceCollection(array(new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1))), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))));
-        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new Object('http://my-data/data.png', 'image/png'), $choices);
+        $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
         $graphicOrderInteraction->setMinChoices(2);
         
         $this->setExpectedException(

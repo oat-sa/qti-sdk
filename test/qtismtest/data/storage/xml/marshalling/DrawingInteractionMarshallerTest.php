@@ -7,14 +7,14 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\DrawingInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use \DOMDocument;
 
 class DrawingInteractionMarshallerTest extends QtiSmTestCase
 {
 	public function testMarshall()
     {
-	    $object = new Object('my-canvas.png', 'image/png');
+	    $object = new ObjectElement('my-canvas.png', 'image/png');
 	    $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
 	    $drawingInteraction->setXmlBase('/home/jerome');
 	    $prompt = new Prompt();

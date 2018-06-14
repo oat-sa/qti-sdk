@@ -2,7 +2,7 @@
 namespace qtismtest\data\content\xhtml;
 
 use qtismtest\QtiSmTestCase;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 
 class ObjectTest extends QtiSmTestCase
 {
@@ -13,7 +13,7 @@ class ObjectTest extends QtiSmTestCase
             "The 'data' argument must be a URI or an empty string, 'integer' given."
         );
         
-        new Object(999, 'image/png');
+        new ObjectElement(999, 'image/png');
     }
     
     public function testCreateWrongType()
@@ -23,7 +23,7 @@ class ObjectTest extends QtiSmTestCase
             "The 'type' argument must be a non-empty string, 'integer' given."
         );
         
-        new Object('./my-image.png', 999);
+        new ObjectElement('./my-image.png', 999);
     }
     
     public function testSetWidthWrongType()
@@ -33,7 +33,7 @@ class ObjectTest extends QtiSmTestCase
             "The 'width' argument must be an integer, 'double' given."
         );
         
-        $object = new Object('./my-image.png', 'image/png');
+        $object = new ObjectElement('./my-image.png', 'image/png');
         $object->setWidth(999.999);
     }
     
@@ -44,7 +44,7 @@ class ObjectTest extends QtiSmTestCase
             "The 'height' argument must be an integer, 'double' given."
         );
         
-        $object = new Object('./my-image.png', 'image/png');
+        $object = new ObjectElement('./my-image.png', 'image/png');
         $object->setHeight(999.999);
     }
 }

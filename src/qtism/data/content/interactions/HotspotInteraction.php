@@ -22,7 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
 use \InvalidArgumentException;
@@ -88,7 +88,7 @@ class HotspotInteraction extends GraphicInteraction
      * Create a new HotspotInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param \qtism\data\content\xhtml\Object $object The associated image given as an Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object The associated image given as an ObjectElement object.
      * @param \qtism\data\content\interactions\HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -96,7 +96,7 @@ class HotspotInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($responseIdentifier, Object $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setHotspotChoices($hotspotChoices);

@@ -3,7 +3,7 @@ namespace qtismtest\data\content\interactions;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\MediaInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 
 class MediaInteractionTest extends QtiSmTestCase
 {
@@ -14,7 +14,7 @@ class MediaInteractionTest extends QtiSmTestCase
             "The 'autostart' argument must be a boolean value, 'integer' given."
         );
         
-        $mediaInteraction = new MediaInteraction('RESPONSE', 999, new Object('http://myobject.com/video.mpg', 'video/mpeg'));
+        $mediaInteraction = new MediaInteraction('RESPONSE', 999, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
     }
     
     public function testSetMinPlaysWrongType()
@@ -24,7 +24,7 @@ class MediaInteractionTest extends QtiSmTestCase
             "The 'minPlays' argument must be a positive (>= 0) integer, 'boolean' given."
         );
         
-        $mediaInteraction = new MediaInteraction('RESPONSE', true, new Object('http://myobject.com/video.mpg', 'video/mpeg'));
+        $mediaInteraction = new MediaInteraction('RESPONSE', true, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
         $mediaInteraction->setMinPlays(true);
     }
     
@@ -35,7 +35,7 @@ class MediaInteractionTest extends QtiSmTestCase
             "The 'maxPlays' argument must be a positive (>= 0) integer, 'boolean' given."
         );
         
-        $mediaInteraction = new MediaInteraction('RESPONSE', true, new Object('http://myobject.com/video.mpg', 'video/mpeg'));
+        $mediaInteraction = new MediaInteraction('RESPONSE', true, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
         $mediaInteraction->setMaxPlays(true);
     }
     
@@ -46,13 +46,13 @@ class MediaInteractionTest extends QtiSmTestCase
             "The 'loop' argument must be a boolean value, 'integer' given."
         );
         
-        $mediaInteraction = new MediaInteraction('RESPONSE', true, new Object('http://myobject.com/video.mpg', 'video/mpeg'));
+        $mediaInteraction = new MediaInteraction('RESPONSE', true, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
         $mediaInteraction->setLoop(999);
     }
     
     public function testHasMinMAxPlays()
     {
-        $mediaInteraction = new MediaInteraction('RESPONSE', true, new Object('http://myobject.com/video.mpg', 'video/mpeg'));
+        $mediaInteraction = new MediaInteraction('RESPONSE', true, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
         $mediaInteraction->setMinPlays(1);
         $mediaInteraction->setMaxPlays(1);
         

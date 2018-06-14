@@ -277,7 +277,7 @@ class PhpDocumentTest extends QtiSmTestCase
             array(self::samplesDir() . 'rendering/textentryinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
             array(self::samplesDir() . 'rendering/uploadinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
             array(self::samplesDir() . 'rendering/itemfeedback_1.xml', 'qtism\\data\\AssessmentItem'),
-            array(self::samplesDir() . 'rendering/empty_object.xml', 'qtism\\data\\content\\xhtml\\Object'),
+            array(self::samplesDir() . 'rendering/empty_object.xml', 'qtism\\data\\content\\xhtml\\ObjectElement'),
             array(self::samplesDir() . 'rendering/empty_rubricblock.xml', 'qtism\\data\\content\\RubricBlock'),
             array(self::samplesDir() . 'rendering/rubricblock_1.xml', 'qtism\\data\\content\\RubricBlock'),
             array(self::samplesDir() . 'rendering/rubricblock_2.xml', 'qtism\\data\\content\\RubricBlock'),

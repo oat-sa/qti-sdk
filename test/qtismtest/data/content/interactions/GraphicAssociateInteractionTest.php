@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\content\interactions\AssociableHotspotCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
 
@@ -20,7 +20,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
         
         new GraphicAssociateInteraction(
             'RESPONSE',
-            new Object('image.png', 'image/png'),
+            new ObjectElement('image.png', 'image/png'),
             new AssociableHotspotCollection()
         );
     }
@@ -34,7 +34,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
         
         $interaction = new GraphicAssociateInteraction(
             'RESPONSE',
-            new Object('image.png', 'image/png'),
+            new ObjectElement('image.png', 'image/png'),
             new AssociableHotspotCollection([
                 new AssociableHotspot('hotspot1', 1, QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))
             ])
@@ -52,7 +52,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
         
         $interaction = new GraphicAssociateInteraction(
             'RESPONSE',
-            new Object('image.png', 'image/png'),
+            new ObjectElement('image.png', 'image/png'),
             new AssociableHotspotCollection([
                 new AssociableHotspot('hotspot1', 1, QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))
             ])
@@ -71,7 +71,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
         
         $interaction = new GraphicAssociateInteraction(
             'RESPONSE',
-            new Object('image.png', 'image/png'),
+            new ObjectElement('image.png', 'image/png'),
             new AssociableHotspotCollection([
                 new AssociableHotspot('hotspot1', 1, QtiShape::RECT, new QtiCoords(QtiShape::RECT, array(0, 0, 1, 1)))
             ])

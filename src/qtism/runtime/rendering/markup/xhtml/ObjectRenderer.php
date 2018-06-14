@@ -27,7 +27,7 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * Object renderer.
+ * ObjectElement renderer.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
