@@ -44,7 +44,7 @@ class OutcomeVariableTest extends QtiSmTestCase
 		$this->assertEquals(BaseType::INTEGER, $variable->getBaseType());
 		$this->assertEquals(Cardinality::SINGLE, $variable->getCardinality());
 		$this->assertTrue(null === $variable->getValue());
-		$this->assertEquals(0, count($variable->getViews()));
+        $this->assertNull($variable->getViews());
 		$this->assertFalse($variable->getNormalMaximum());
 		$this->assertFalse($variable->getNormalMinimum());
 		$this->assertFalse($variable->getMasteryValue());

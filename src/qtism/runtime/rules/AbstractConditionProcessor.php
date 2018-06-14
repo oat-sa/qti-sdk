@@ -101,12 +101,12 @@ abstract class AbstractConditionProcessor extends RuleProcessor
 	 */
     public function pushTrail($components)
     {
-        $i = count($components);
         $trail = &$this->getTrail();
 
         if ($components instanceof QtiComponent) {
             array_push($trail, $components);
         } else {
+            $i = count($components);
             // collection
             while ($i >= 1) {
                 $i--;
