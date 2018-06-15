@@ -22,6 +22,7 @@
 
 namespace qtism\data\content\xhtml;
 
+use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\BodyElement;
@@ -37,9 +38,9 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Object extends BodyElement implements FlowStatic, InlineStatic
+class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
 {
-    use \qtism\data\content\FlowTrait;
+    use FlowTrait;
 
     /**
      * The content elements of the object.
@@ -84,7 +85,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     private $height = -1;
 
     /**
-     * Create a new Object object.
+     * Create a new ObjectElement object.
      *
      * @param string $data The URI for locating the data of the object.
      * @param string $type The mime-type of the object.
@@ -243,7 +244,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * Set the components composing the Object.
+     * Set the components composing the ObjectElement.
      *
      * @param \qtism\data\content\ObjectFlowCollection $content
      */
@@ -253,7 +254,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * Get the components composing the Object.
+     * Get the components composing the ObjectElement.
      *
      * @return \qtism\data\content\ObjectFlowCollection
      */

@@ -48,7 +48,7 @@ use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\ItemBody;
 use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Dl;
 use qtism\data\content\xhtml\lists\Ol;
@@ -159,7 +159,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof DlElement) {
             return $component->getContent()->getArrayCopy();
-        } elseif ($component instanceof Object) {
+        } elseif ($component instanceof ObjectElement) {
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof Div) {
             return $component->getContent()->getArrayCopy();

@@ -24,7 +24,7 @@ namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\Block;
 use \InvalidArgumentException;
 
@@ -42,7 +42,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * The image to be used as a stage onto which individual positionObjectInteractions
      * allow the candidate to place their objects.
      *
-     * @var \qtism\data\content\xhtml\Object
+     * @var \qtism\data\content\xhtml\ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -58,10 +58,10 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Set the image to be used as a stage.
      *
-     * @param \qtism\data\content\xhtml\Object $object An Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object.
      * @qtism-bean-property
      */
-    public function setObject(Object $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -69,7 +69,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Get the image to be used as a stage.
      *
-     * @return \qtism\data\content\xhtml\Object An Object object.
+     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object.
      * @qtism-bean-property
      */
     public function getObject()
@@ -80,10 +80,10 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Create a new PositionObjectStage object.
      *
-     * @param \qtism\data\content\xhtml\Object $object The image to be used as a stage.
+     * @param \qtism\data\content\xhtml\ObjectElement $object The image to be used as a stage.
      * @param \qtism\data\content\interactions\PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
      */
-    public function __construct(Object $object, PositionObjectInteractionCollection $positionObjectInteractions)
+    public function __construct(ObjectElement $object, PositionObjectInteractionCollection $positionObjectInteractions)
     {
         $this->setObject($object);
         $this->setPositionObjectInteractions($positionObjectInteractions);

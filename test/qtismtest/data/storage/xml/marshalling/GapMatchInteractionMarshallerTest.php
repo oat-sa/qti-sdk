@@ -10,7 +10,7 @@ use qtism\data\content\interactions\GapMatchInteraction;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\BlockStaticCollection;
 use qtism\data\content\interactions\GapImg;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\TextRun;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\interactions\GapText;
@@ -23,7 +23,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 	    $gapText = new GapText('gapText1', 1);
 	    $gapText->setContent(new TextOrVariableCollection(array(new TextRun('This is gapText1'))));
 	    
-	    $object = new Object("./myimg.png", "image/png");
+	    $object = new ObjectElement("./myimg.png", "image/png");
 	    $gapImg = new GapImg('gapImg1', 1, $object);
 	    
 	    $gap1 = new Gap('G1');

@@ -132,10 +132,7 @@ class Container extends AbstractCollection implements Comparable
      */
     public function equals($obj)
     {
-        $countA = count($obj);
-        $countB = count($this);
-
-        if (gettype($obj) === 'object' && $obj instanceof static && $countA === $countB) {
+        if (gettype($obj) === 'object' && $obj instanceof static && count($obj) === count($this)) {
             foreach (array_keys($this->getDataPlaceHolder()) as $key) {
                 $t = $this[$key];
                 $occurencesA = $this->occurences($t);

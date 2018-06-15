@@ -10,7 +10,7 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\content\interactions\GapImgCollection;
 use qtism\data\content\interactions\GapImg;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -23,13 +23,13 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
-	    $object = new Object('myimg.png', 'image/png');
+	    $object = new ObjectElement('myimg.png', 'image/png');
 	    
-	    $img1 = new Object('img1.png', 'image/png');
+	    $img1 = new ObjectElement('img1.png', 'image/png');
 	    $gapImg1 = new GapImg('gapImg1', 1, $img1);
-	    $img2 = new Object('img2.png', 'image/png');
+	    $img2 = new ObjectElement('img2.png', 'image/png');
 	    $gapImg2 = new GapImg('gapImg2', 1, $img2);
-	    $img3 = new Object('img3.png', 'image/png');
+	    $img3 = new ObjectElement('img3.png', 'image/png');
 	    $gapImg3 = new GapImg('gapImg3', 1, $img3);
 	    $gapImgs = new GapImgCollection(array($gapImg1, $gapImg2, $gapImg3));
 	    

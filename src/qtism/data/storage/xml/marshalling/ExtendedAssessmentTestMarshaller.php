@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\AssessmentTest;
 use qtism\data\TestFeedbackRefCollection;
 use qtism\data\ExtendedAssessmentTest;
 use qtism\data\QtiComponent;
@@ -54,7 +55,7 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
     /**
 	 * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
 	 */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
     {
         $baseComponent = parent::unmarshall($element);
         $component = ExtendedAssessmentTest::createFromAssessmentTest($baseComponent);

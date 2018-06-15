@@ -22,7 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
@@ -46,7 +46,7 @@ class DrawingInteraction extends BlockInteraction
      * place is given as an object which must be of an image type, as
      * specified by the type attribute.
      *
-     * @var \qtism\data\content\xhtml\Object
+     * @var \qtism\data\content\xhtml\ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -62,7 +62,7 @@ class DrawingInteraction extends BlockInteraction
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -71,9 +71,9 @@ class DrawingInteraction extends BlockInteraction
     /**
      * Set the image that acts as a canvas for drawing.
      *
-     * @param \qtism\data\content\xhtml\Object $object An Object object representing an image.
+     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object representing an image.
      */
-    public function setObject(Object $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -81,7 +81,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * Get the image that acts as a canvas for drawing.
      *
-     * @return \qtism\data\content\xhtml\Object An Object object representing an image.
+     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object representing an image.
      */
     public function getObject()
     {

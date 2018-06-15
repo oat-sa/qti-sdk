@@ -5,7 +5,7 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\content\FlowStaticCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\content\interactions\HotspotInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\interactions\HotspotChoiceCollection;
@@ -23,7 +23,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $choice2 = new HotspotChoice('hotspotchoice2', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(118, 184, 8)));
         $choice3 = new HotspotChoice('hotspotchoice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(150, 235, 8)));
         
-        $object = new Object('./img/img.png', 'image/png');
+        $object = new ObjectElement('./img/img.png', 'image/png');
 	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
         $hotspotInteraction->setMaxChoices(1);
 	    $hotspotInteraction->setPrompt($prompt);
@@ -45,7 +45,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $choice2 = new HotspotChoice('hotspotchoice2', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(118, 184, 8)));
         $choice3 = new HotspotChoice('hotspotchoice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(150, 235, 8)));
         
-        $object = new Object('./img/img.png', 'image/png');
+        $object = new ObjectElement('./img/img.png', 'image/png');
         $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
         $hotspotInteraction->setMaxChoices(1);
         $hotspotInteraction->setPrompt($prompt);
@@ -67,7 +67,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
 	    // minChoices must be ignored.
 	    $choice1 = new HotspotChoice('hotspotchoice1', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(77, 115, 8)));
 	    
-	    $object = new Object('./img/img.png', 'image/png');
+	    $object = new ObjectElement('./img/img.png', 'image/png');
 	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, new HotspotChoiceCollection(array($choice1)));
         $hotspotInteraction->setMaxChoices(1);
 	    $hotspotInteraction->setMinChoices(1);

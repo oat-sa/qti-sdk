@@ -7,14 +7,14 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\MediaInteraction;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use \DOMDocument;
 
 class MediaInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 	    
-	    $object = new Object('my-video.mp4', 'video/mp4');
+	    $object = new ObjectElement('my-video.mp4', 'video/mp4');
 	    $object->setWidth(400);
 	    $object->setHeight(300);
 	    

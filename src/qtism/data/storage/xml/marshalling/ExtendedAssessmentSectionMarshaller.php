@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\AssessmentSection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\content\RubricBlockRefCollection;
 use qtism\data\ExtendedAssessmentSection;
@@ -54,7 +55,7 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
     /**
      * @see \qtism\data\storage\xml\marshalling\AssessmentSectionMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
     {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);

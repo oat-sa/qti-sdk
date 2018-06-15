@@ -23,7 +23,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\Object;
+use qtism\data\content\xhtml\ObjectElement;
 use \InvalidArgumentException;
 
 /**
@@ -48,9 +48,9 @@ class GapImg extends GapChoice
     private $objectLabel = '';
 
     /**
-     * The image as an Object object.
+     * The image as an ObjectElement object.
      *
-     * @var Object
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -60,14 +60,14 @@ class GapImg extends GapChoice
      *
      * @param string $identifier The identifier of the response associated to the GapImg object.
      * @param integer $matchMax The maximum number of choice association.
-     * @param Object $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $matchMax, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($identifier, $matchMax, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -113,19 +113,19 @@ class GapImg extends GapChoice
     }
 
     /**
-     * Set the Object representing the GapImg's image.
+     * Set the ObjectElement representing the GapImg's image.
      *
-     * @param \qtism\data\content\xhtml\Object $object An Object object.
+     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object.
      */
-    public function setObject(Object $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
 
     /**
-     * Get the Object representing the GapImg's image.
+     * Get the ObjectElement representing the GapImg's image.
      *
-     * @return \qtism\data\content\xhtml\Object An Object object.
+     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object.
      */
     public function getObject()
     {
