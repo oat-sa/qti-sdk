@@ -309,10 +309,10 @@ class ItemResult extends QtiComponent
     /**
      * Set the candidate comment
      *
-     * @param null $candidateComment
+     * @param QtiString $candidateComment
      * @return $this
      */
-    public function setCandidateComment($candidateComment=null)
+    public function setCandidateComment(QtiString $candidateComment=null)
     {
         $this->candidateComment = $candidateComment;
         return $this;

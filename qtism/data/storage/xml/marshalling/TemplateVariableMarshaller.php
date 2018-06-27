@@ -24,30 +24,48 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiUri;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\QtiComponent;
-use qtism\data\results\SessionIdentifier;
+use qtism\data\results\ResultTemplateVariable;
+use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
 
 /**
- * Class SessionIdentifierMarshaller
+ * Class TemplateVariableMarshaller
  *
  * The marshaller to manage serialization between QTI component and DOM Element
  *
  * @package qtism\data\storage\xml\marshalling
  */
-class SessionIdentifierMarshaller extends Marshaller
+class TemplateVariableMarshaller extends Marshaller
 {
     /**
      * Marshall a QtiComponent object into its QTI-XML equivalent.
      *
-     * @param QtiComponent|SessionIdentifier $component A QtiComponent object to marshall.
+     * @param QtiComponent|ResultTemplateVariable $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
-        $element->setAttribute('sourceID', $component->getSourceID());
         $element->setAttribute('identifier', $component->getIdentifier());
+        $element->setAttribute('cardinality', Cardinality::getNameByConstant($component->getCardinality()));
+
+        if ($component->hasBaseType()) {
+            $element->setAttribute('baseType', BaseType::getNameByConstant($component->getBaseType()));
+        }
+
+        if ($component->hasValues()) {
+            /** @var Value $value */
+            foreach ($component->getValues() as $value) {
+                $valueElement= $this->getMarshallerFactory()
+                    ->createMarshaller($value)
+                    ->marshall($value);
+                $element->appendChild($valueElement);
+            }
+        }
 
         return $element;
     }
@@ -61,16 +79,35 @@ class SessionIdentifierMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (!$element->hasAttribute('sourceID')) {
-            throw new UnmarshallingException('SessionIdentifier element must have sourceID attribute', $element);
-        }
         if (!$element->hasAttribute('identifier')) {
-            throw new UnmarshallingException('SessionIdentifier element must have identifier attribute', $element);
+            throw new UnmarshallingException('TemplateVariable element must have identifier attribute', $element);
         }
-        return new SessionIdentifier(
-            new QtiUri($element->getAttribute('sourceID')),
-            new QtiIdentifier($element->getAttribute('identifier'))
-        );
+
+        if (!$element->hasAttribute('cardinality')) {
+            throw new UnmarshallingException('TemplateVariable element must have cardinality attribute', $element);
+        }
+
+        $identifier = new QtiIdentifier($element->getAttribute('identifier'));
+        $cardinality = Cardinality::getConstantByName($element->getAttribute('cardinality'));
+
+        $baseType = $element->hasAttribute('baseType')
+            ? BaseType::getConstantByName($element->getAttribute('baseType'))
+            : null;
+
+        $valuesElements = self::getChildElementsByTagName($element, 'value');
+        if (!empty($valuesElements)) {
+            $values = [];
+            foreach ($valuesElements as $valuesElement) {
+                $values[] = $this->getMarshallerFactory()
+                    ->createMarshaller($valuesElement)
+                    ->unmarshall($valuesElement);
+            }
+            $valueCollection = new ValueCollection($values);
+        } else {
+            $valueCollection = null;
+        }
+
+        return new ResultTemplateVariable($identifier, $cardinality, $baseType, $valueCollection);
     }
 
     /**
@@ -84,7 +121,7 @@ class SessionIdentifierMarshaller extends Marshaller
      */
     public function getExpectedQtiClassName()
     {
-        return 'sessionIdentifier';
+         return 'templateVariable';
     }
 
 }

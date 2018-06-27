@@ -24,6 +24,7 @@ namespace qtism\data\results;
 
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiUri;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -41,7 +42,7 @@ class SessionIdentifier extends QtiComponent
      * A unique identifier of the system which added this identifier to the result.
      *
      * Multiplicity [1]
-     * @var QtiString
+     * @var QtiUri
      */
     protected $sourceID;
 
@@ -60,10 +61,10 @@ class SessionIdentifier extends QtiComponent
      *
      * XML representation of the session created by the delivery system
      *
-     * @param QtiString $sourceID
+     * @param QtiUri $sourceID
      * @param QtiIdentifier $identifier
      */
-    public function __construct(QtiString $sourceID, QtiIdentifier $identifier)
+    public function __construct(QtiUri $sourceID, QtiIdentifier $identifier)
     {
         $this->setSourceID($sourceID);
         $this->setIdentifier($identifier);
@@ -92,7 +93,7 @@ class SessionIdentifier extends QtiComponent
     /**
      * Get the source id of the session identifier
      *
-     * @return QtiString
+     * @return QtiUri
      */
     public function getSourceID()
     {
@@ -102,10 +103,10 @@ class SessionIdentifier extends QtiComponent
     /**
      * Set the source id of the session identifier
      *
-     * @param QtiString $sourceID
+     * @param QtiUri $sourceID
      * @return $this
      */
-    public function setSourceID(QtiString $sourceID)
+    public function setSourceID(QtiUri $sourceID)
     {
         $this->sourceID = $sourceID;
         return $this;

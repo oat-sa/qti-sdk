@@ -23,7 +23,6 @@
 namespace qtism\data\results;
 
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiInteger;
 use qtism\data\QtiComponentCollection;
 use qtism\data\state\CorrectResponse;
 
@@ -42,7 +41,7 @@ class ResultResponseVariable extends ItemVariable
      * When shuffling is in effect, the sequence of choices should be reported as a sequence of choice identifiers using this attribute.
      *
      * Multiplicity [0,1]
-     * @var QtiInteger
+     * @var QtiIdentifier
      */
     protected $choiceSequence=null;
 
@@ -73,7 +72,7 @@ class ResultResponseVariable extends ItemVariable
      * @param CandidateResponse $candidateResponse
      * @param null $baseType
      * @param CorrectResponse|null $correctResponse
-     * @param QtiInteger|null $choiceSequence
+     * @param QtiIdentifier|null $choiceSequence
      */
     public function __construct(
         QtiIdentifier $identifier,
@@ -81,7 +80,7 @@ class ResultResponseVariable extends ItemVariable
         CandidateResponse $candidateResponse,
         $baseType=null,
         CorrectResponse $correctResponse=null,
-        QtiInteger $choiceSequence=null
+        QtiIdentifier $choiceSequence=null
     ) {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setCandidateResponse($candidateResponse);
@@ -170,7 +169,7 @@ class ResultResponseVariable extends ItemVariable
     /**
      * Get the choice sequence
      *
-     * @return QtiInteger
+     * @return QtiIdentifier
      */
     public function getChoiceSequence()
     {
@@ -180,10 +179,10 @@ class ResultResponseVariable extends ItemVariable
     /**
      * Set the choice sequence
      *
-     * @param QtiInteger $choiceSequence
+     * @param QtiIdentifier $choiceSequence
      * @return $this
      */
-    public function setChoiceSequence(QtiInteger $choiceSequence=null)
+    public function setChoiceSequence(QtiIdentifier $choiceSequence=null)
     {
         $this->choiceSequence = $choiceSequence;
         return $this;

@@ -23,31 +23,44 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use oat\dtms\DateTime;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiUri;
 use qtism\data\QtiComponent;
-use qtism\data\results\SessionIdentifier;
+use qtism\data\results\ItemVariableCollection;
+use qtism\data\results\TestResult;
 
 /**
- * Class SessionIdentifierMarshaller
+ * Class TestResultMarshaller
  *
  * The marshaller to manage serialization between QTI component and DOM Element
  *
  * @package qtism\data\storage\xml\marshalling
  */
-class SessionIdentifierMarshaller extends Marshaller
+class TestResultMarshaller extends Marshaller
 {
     /**
      * Marshall a QtiComponent object into its QTI-XML equivalent.
      *
-     * @param QtiComponent|SessionIdentifier $component A QtiComponent object to marshall.
+     * @param QtiComponent|TestResult $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
-        $element->setAttribute('sourceID', $component->getSourceID());
+
         $element->setAttribute('identifier', $component->getIdentifier());
+
+        $datestamp = $component->getDatestamp()->format(DateTime::ISO8601);
+        $element->setAttribute('datestamp', $datestamp);
+
+        if ($component->hasItemVariables()) {
+            foreach ($component->getItemVariables() as $variable) {
+                $element->appendChild($this->getMarshallerFactory()
+                    ->createMarshaller($variable)
+                    ->marshall($variable));
+            }
+        }
 
         return $element;
     }
@@ -61,16 +74,36 @@ class SessionIdentifierMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (!$element->hasAttribute('sourceID')) {
-            throw new UnmarshallingException('SessionIdentifier element must have sourceID attribute', $element);
-        }
         if (!$element->hasAttribute('identifier')) {
-            throw new UnmarshallingException('SessionIdentifier element must have identifier attribute', $element);
+            throw new UnmarshallingException('TestResult element must have identifier attribute', $element);
         }
-        return new SessionIdentifier(
-            new QtiUri($element->getAttribute('sourceID')),
-            new QtiIdentifier($element->getAttribute('identifier'))
+
+        if (!$element->hasAttribute('datestamp')) {
+            throw new UnmarshallingException('TestResult element must have datestamp attribute', $element);
+        }
+
+        $identifier = new QtiIdentifier($element->getAttribute('identifier'));
+        $datestamp = new DateTime($element->getAttribute('datestamp'));
+
+        $variableElements = array_merge(
+            self::getChildElementsByTagName($element, 'responseVariable'),
+            self::getChildElementsByTagName($element, 'outcomeVariable'),
+            self::getChildElementsByTagName($element, 'templateVariable')
         );
+
+        if (!empty($variableElements)) {
+            $variables = [];
+            foreach ($variableElements as $variableElement) {
+                $variables[] = $this->getMarshallerFactory()
+                    ->createMarshaller($variableElement)
+                    ->unmarshall($variableElement);
+            }
+            $variableCollection = new ItemVariableCollection($variables);
+        } else {
+            $variableCollection = null;
+        }
+
+        return new TestResult($identifier, $datestamp, $variableCollection);
     }
 
     /**
@@ -84,7 +117,7 @@ class SessionIdentifierMarshaller extends Marshaller
      */
     public function getExpectedQtiClassName()
     {
-        return 'sessionIdentifier';
+        return 'testResult';
     }
 
 }
