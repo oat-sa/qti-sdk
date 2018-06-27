@@ -1,12 +1,26 @@
 <?php
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ * @author Moyon Camille, <camille@taotesting.com>
+ * @license GPLv2
+ */
 
-use qtism\data\content\TextRun;
-use qtism\data\content\BlockCollection;
-use qtism\data\content\ItemBody;
-use qtism\data\content\FlowCollection;
-use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\InlineCollection;
-use qtism\data\content\xhtml\text\H1;
+use qtism\data\results\AssessmentResult;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -14,47 +28,91 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
 {
 	public function testUnmarshall()
     {
-        $itemBody = $this->createComponentFromXml('
-            <itemBody id="my-body">
-                <h1>Super Item</h1>
-                <div>This is some stimulus.</div>   
-            </itemBody>
-        ');
-        
-        $this->assertInstanceOf('qtism\\data\\content\\ItemBody', $itemBody);
-        $this->assertEquals('my-body', $itemBody->getId());
-        $itemBodyContent = $itemBody->getContent();
-        $this->assertEquals(2, count($itemBodyContent));
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H1', $itemBodyContent[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $itemBodyContent[1]);
-        
-        $h1 = $itemBodyContent[0];
-        $h1Content = $h1->getContent();
-        $this->assertEquals(1, count($h1Content));
-        $this->assertEquals('Super Item', $h1Content[0]->getContent());
-        
-        $div = $itemBodyContent[1];
-        $divContent = $div->getContent();
-        $this->assertEquals(1, count($divContent));
-        $this->assertEquals('This is some stimulus.', $divContent[0]->getContent());
+
 	}
 	
-	
-	public function testMarshall() {
-       
-	    $h1 = new H1();
-	    $h1->setContent(new InlineCollection(array(new TextRun('Super Item'))));
-	    
-	    $div = new Div();
-	    $div->setContent(new FlowCollection(array(new TextRun('This is some stimulus.'))));
-	    
-	    $itemBody = new ItemBody('my-body');
-	    $itemBody->setContent(new BlockCollection(array($h1, $div)));
-	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($itemBody)->marshall($itemBody);
-	    
-	    $dom = new DOMDocument('1.0', 'UTF-8');
-	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<itemBody id="my-body"><h1>Super Item</h1><div>This is some stimulus.</div></itemBody>', $dom->saveXML($element));
-	}
+	public function testValidMinimalXml()
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>
+            <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
+                <context />
+            </assessmentResult>
+        ';
+        $dom = new DOMDocument();
+        $dom->loadXML($xml);
+
+        $this->assertTrue($dom->schemaValidate($this->getXsd()));
+    }
+
+    public function testValidMaximalXml()
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>
+            <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
+                <context sourcedId="fixture-sourcedId">
+                    <sessionIdentifier sourceID="sessionIdentifier1-sourceID" identifier="sessionIdentifier1-id"/>
+                    <sessionIdentifier sourceID="sessionIdentifier2-sourceID" identifier="sessionIdentifier2-id"/>
+                </context>
+                <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
+                    <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
+                        <correctResponse>
+                            <value>fixture-value1</value>
+                            <value>fixture-value2</value>
+                        </correctResponse>
+                        <candidateResponse>
+                            <value fieldIdentifier="value-id-1">fixture-value1</value>
+                            <value fieldIdentifier="value-id-2">fixture-value2</value>
+                            <value fieldIdentifier="value-id-3">fixture-value3</value>
+                        </candidateResponse>
+                    </responseVariable>
+                    <templateVariable cardinality="single" identifier="fixture-identifier" baseType="string">
+                        <value>fixture-value1</value>
+                        <value>fixture-value2</value>
+                        <value>fixture-value3</value>
+                    </templateVariable>
+                    <outcomeVariable 
+                        cardinality="single" 
+                        identifier="fixture-identifier" 
+                        baseType="string" 
+                        view="candidate"
+                        interpretation="fixture-interpretation"
+                        longInterpretation="http://fixture-interpretation"
+                        normalMinimum="2"
+                        normalMaximum="3"
+                        masteryValue="4"
+                        >
+                        <value>fixture-value1</value>
+                        <value>fixture-value2</value>
+                        <value>fixture-value3</value>
+                    </outcomeVariable>
+                    <candidateComment>comment-fixture</candidateComment>
+                </itemResult>
+            </assessmentResult>
+        ';
+        $dom = new DOMDocument();
+        $dom->loadXML($xml);
+
+        $this->assertTrue($dom->schemaValidate($this->getXsd()));
+
+        $assessmentResult = $this->createComponentFromXml($xml);
+        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+    }
+
+	protected function getXsd()
+    {
+        return
+            __DIR__ . DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR .
+            'qtism' . DIRECTORY_SEPARATOR .
+            'data' . DIRECTORY_SEPARATOR .
+            'storage' . DIRECTORY_SEPARATOR .
+            'xml' . DIRECTORY_SEPARATOR .
+            'schemes' . DIRECTORY_SEPARATOR .
+            'qtiv2p2' . DIRECTORY_SEPARATOR .
+            'imsqti_result_v2p2.xsd';
+    }
 }

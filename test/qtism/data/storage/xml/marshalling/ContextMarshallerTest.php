@@ -25,6 +25,7 @@ use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\results\SessionIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiUri;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -75,8 +76,8 @@ class ContextMarshallerTest extends QtiSmTestCase
         $component = new Context(
             new QtiIdentifier($sourcedId),
             new SessionIdentifierCollection(array(
-                new SessionIdentifier(new QtiString('sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')),
-                new SessionIdentifier(new QtiString('sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')),
+                new SessionIdentifier(new QtiUri('sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')),
+                new SessionIdentifier(new QtiUri('sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')),
             ))
         );
 

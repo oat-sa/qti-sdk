@@ -21,7 +21,7 @@
  */
 
 use qtism\data\results\SessionIdentifier;
-use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIdentifier;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -37,7 +37,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(SessionIdentifier::class, $sessionIdentifier);
 
-        $this->assertInstanceOf(QtiString::class, $sessionIdentifier->getSourceID());
+        $this->assertInstanceOf(QtiUri::class, $sessionIdentifier->getSourceID());
         $this->assertEquals('fixture-sourceID', $sessionIdentifier->getSourceID()->getValue());
         $this->assertEquals('fixture-sourceID', $sessionIdentifier->getSourceID());
 
@@ -50,7 +50,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
     {
         $sourceID = 'fixture-sourceID';
         $id = 'fixture-id';
-        $component = new SessionIdentifier(new QtiString($sourceID), new QtiIdentifier($id));
+        $component = new SessionIdentifier(new QtiUri($sourceID), new QtiIdentifier($id));
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
@@ -65,9 +65,39 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
     {
         $sourceID = 'fixture-sourceID';
         $id = 'fixture-id';
-        $component = new SessionIdentifier(new QtiString($sourceID), new QtiIdentifier($id));
-        
+        $component = new SessionIdentifier(new QtiUri($sourceID), new QtiIdentifier($id));
+
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
+    }
+
+    /**
+     * @expectedException \qtism\data\storage\xml\marshalling\UnmarshallingException
+     */
+    public function testWrongSessionIdentifierIdentifier()
+    {
+        $xml = '<sessionIdentifier identifier="fixture-id"/>';
+        $element = QtiSmTestCase::createDOMElement($xml);
+        $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @expectedException \qtism\data\storage\xml\marshalling\UnmarshallingException
+     */
+    public function testWrongSessionIdentifierSourceID()
+    {
+        $xml = '<sessionIdentifier sourceID="fixture-sourceID"/>';
+        $element = QtiSmTestCase::createDOMElement($xml);
+        $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @expectedException \qtism\data\storage\xml\marshalling\UnmarshallingException
+     */
+    public function testEmptySessionIdentifier()
+    {
+        $xml = '<sessionIdentifier/>';
+        $element = QtiSmTestCase::createDOMElement($xml);
+        $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 }
