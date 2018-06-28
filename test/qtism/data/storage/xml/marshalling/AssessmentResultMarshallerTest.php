@@ -20,38 +20,75 @@
  * @license GPLv2
  */
 
+use oat\dtms\DateTime;
 use qtism\data\results\AssessmentResult;
+use qtism\data\results\Context;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiUri;
+use qtism\data\results\SessionIdentifier;
+use qtism\data\results\SessionIdentifierCollection;
+use qtism\data\results\TestResult;
+use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
+use qtism\data\results\ItemResultCollection;
+use qtism\data\results\ResultResponseVariable;
+use qtism\data\results\ResultTemplateVariable;
+use qtism\data\results\ResultOutcomeVariable;
+use qtism\data\results\ItemResult;
+use qtism\data\results\CandidateResponse;
+use qtism\data\results\ItemVariableCollection;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class AssessmentResultMarshallerTest extends QtiSmTestCase
 {
-	public function testUnmarshall()
-    {
-
-	}
-	
-	public function testValidMinimalXml()
+    public function testValidMinimalXml()
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
                 <context />
             </assessmentResult>
         ';
-        $dom = new DOMDocument();
-        $dom->loadXML($xml);
 
-        $this->assertTrue($dom->schemaValidate($this->getXsd()));
+        /** @var AssessmentResult $assessmentResult */
+        $assessmentResult = $this->createComponentFromXml($xml);
+        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+
+        $context = $assessmentResult->getContext();
+        $this->assertFalse($context->hasSourcedId());
+        $this->assertFalse($context->hasSessionIdentifiers());
+
+        $this->assertFalse($assessmentResult->hasTestResult());
+        $this->assertEquals(null, $assessmentResult->getTestResult());
+        $this->assertFalse($assessmentResult->hasItemResults());
+        $this->assertEquals(null, $assessmentResult->getItemResults());
     }
 
-    public function testValidMaximalXml()
+    public function testUnmarshall()
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
                 <context sourcedId="fixture-sourcedId">
-                    <sessionIdentifier sourceID="sessionIdentifier1-sourceID" identifier="sessionIdentifier1-id"/>
-                    <sessionIdentifier sourceID="sessionIdentifier2-sourceID" identifier="sessionIdentifier2-id"/>
+                    <sessionIdentifier sourceID="http://sessionIdentifier1-sourceID" identifier="sessionIdentifier1-id"/>
+                    <sessionIdentifier sourceID="http://sessionIdentifier2-sourceID" identifier="sessionIdentifier2-id"/>
                 </context>
+                <testResult identifier="fixture-test-identifier" datestamp="2018-06-27T09:41:45.529">
+                    <responseVariable identifier="response-identifier" cardinality="single">
+                        <correctResponse>
+                            <value>fixture-test-value1</value>
+                            <value>fixture-test-value2</value>
+                        </correctResponse>
+                        <candidateResponse>
+                            <value fieldIdentifier="test-id-1">fixture-test-value1</value>
+                            <value fieldIdentifier="test-id-2">fixture-test-value2</value>
+                            <value fieldIdentifier="test-id-3">fixture-test-value3</value>
+                        </candidateResponse>
+                    </responseVariable>
+                    <templateVariable identifier="response-identifier" cardinality="single">
+                        <value>test1</value>
+                        <value>test2</value>
+                    </templateVariable>
+                </testResult>
                 <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
                     <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
                         <correctResponse>
@@ -86,33 +123,183 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                     </outcomeVariable>
                     <candidateComment>comment-fixture</candidateComment>
                 </itemResult>
+                <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
+                    <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
+                        <correctResponse>
+                            <value>fixture-value1</value>
+                            <value>fixture-value2</value>
+                        </correctResponse>
+                        <candidateResponse>
+                            <value fieldIdentifier="value-id-1">fixture-value1</value>
+                            <value fieldIdentifier="value-id-2">fixture-value2</value>
+                            <value fieldIdentifier="value-id-3">fixture-value3</value>
+                        </candidateResponse>
+                    </responseVariable>
+                    <outcomeVariable 
+                        cardinality="single" 
+                        identifier="fixture-identifier" 
+                        baseType="string" 
+                        view="candidate"
+                        interpretation="fixture-interpretation"
+                        longInterpretation="http://fixture-interpretation"
+                        normalMinimum="2"
+                        normalMaximum="3"
+                        masteryValue="4"
+                        >
+                        <value>fixture-value1</value>
+                        <value>fixture-value2</value>
+                        <value>fixture-value3</value>
+                    </outcomeVariable>
+                </itemResult>
             </assessmentResult>
         ';
-        $dom = new DOMDocument();
-        $dom->loadXML($xml);
+        
+        /** @var AssessmentResult $assessmentResult */
+        $assessmentResult = $this->createComponentFromXml($xml);
+        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
-        $this->assertTrue($dom->schemaValidate($this->getXsd()));
+        $context = $assessmentResult->getContext();
+        $this->assertEquals('fixture-sourcedId', $context->getSourcedId());
+        $this->assertEquals(2, $context->getSessionIdentifiers()->count());
+
+        $this->assertTrue($assessmentResult->hasTestResult());
+        $this->assertEquals(2, $assessmentResult->getTestResult()->getItemVariables()->count());
+
+        $this->assertTrue($assessmentResult->hasItemResults());
+        $this->assertEquals(2, $assessmentResult->getItemResults()->count());
+        $this->assertEquals(3, $assessmentResult->getItemResults()[0]->getItemVariables()->count());
+        $this->assertTrue($assessmentResult->getItemResults()[0]->hasCandidateComment());
+        $this->assertEquals(2, $assessmentResult->getItemResults()[1]->getItemVariables()->count());
+        $this->assertFalse($assessmentResult->getItemResults()[1]->hasCandidateComment());
+
 
         $assessmentResult = $this->createComponentFromXml($xml);
         $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
     }
 
-	protected function getXsd()
+    public function testMarshall()
     {
-        return
-            __DIR__ . DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR .
-            'qtism' . DIRECTORY_SEPARATOR .
-            'data' . DIRECTORY_SEPARATOR .
-            'storage' . DIRECTORY_SEPARATOR .
-            'xml' . DIRECTORY_SEPARATOR .
-            'schemes' . DIRECTORY_SEPARATOR .
-            'qtiv2p2' . DIRECTORY_SEPARATOR .
-            'imsqti_result_v2p2.xsd';
+        $component = new AssessmentResult(
+            new Context(
+                new QtiIdentifier('fixture-sourcedId'),
+                new SessionIdentifierCollection(array(
+                    new SessionIdentifier(
+                        new QtiUri('http://sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')
+                    ),
+                    new SessionIdentifier(
+                        new QtiUri('http://sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')
+                    )
+                ))
+            ),
+            new TestResult(
+                new QtiIdentifier('fixture-identifier'),
+                new DateTime('2018-06-27T09:41:45.529'),
+                new ItemVariableCollection(array(
+                    new ResultResponseVariable(
+                        new QtiIdentifier('response-identifier'),
+                        0,
+                        new CandidateResponse(new ValueCollection(array(
+                            new Value('fixture-test-value1')
+                        )))
+                    ),
+                    new ResultTemplateVariable(
+                        new QtiIdentifier('fixture-identifier'),
+                        0,
+                        4,
+                        new ValueCollection(array(
+                            new Value('fixture-test-value1'),
+                            new Value('fixture-test-value2')
+                        ))
+                    )
+                ))
+            ),
+            new ItemResultCollection(array(
+                new ItemResult(
+                    new QtiIdentifier('fixture-identifier'),
+                    new DateTime('2018-06-27T09:41:45.529'),
+                    1,
+                    new ItemVariableCollection(array(
+                        new ResultResponseVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            new CandidateResponse(new ValueCollection(array(
+                                new Value('fixture-test-value1')
+                            )))
+                        ),
+                        new ResultTemplateVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            4,
+                            new ValueCollection(array(
+                                    new Value('fixture-test-value1'),
+                                    new Value('fixture-test-value2')
+                                )
+                            )),
+                        new ResultOutcomeVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            4,
+                            new ValueCollection(array(
+                                    new Value('fixture-test-value1'),
+                                    new Value('fixture-test-value2')
+                                )
+                            ))
+                    ))
+                ),
+                new ItemResult(
+                    new QtiIdentifier('fixture-identifier'),
+                    new DateTime('2018-06-27T09:41:45.529'),
+                    1,
+                    new ItemVariableCollection(array(
+                        new ResultResponseVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            new CandidateResponse(new ValueCollection(array(
+                                new Value('fixture-test-value1')
+                            )))
+                        ),
+                        new ResultOutcomeVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            4,
+                            new ValueCollection(array(
+                                    new Value('fixture-test-value1'),
+                                    new Value('fixture-test-value2')
+                                )
+                            ))
+                    ))
+                )
+            ))
+        );
+
+        /** @var DOMElement $element */
+        $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
+
+        $this->assertInstanceOf(DOMElement::class, $element);
+
+        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+
+        $this->assertEquals(1, $element->getElementsByTagName('context')->length);
+        $this->assertEquals(1, $element->getElementsByTagName('testResult')->length);
+        $this->assertEquals(2, $element->getElementsByTagName('itemResult')->length);
     }
+
+    public function testUnmarshallMinimal()
+    {
+        $component = new AssessmentResult(
+            new Context()
+        );
+
+        /** @var DOMElement $element */
+        $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
+
+        $this->assertInstanceOf(DOMElement::class, $element);
+
+        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+
+        $this->assertEquals(1, $element->getElementsByTagName('context')->length);
+        $this->assertEquals(0, $element->getElementsByTagName('testResult')->length);
+        $this->assertEquals(0, $element->getElementsByTagName('itemResult')->length);
+    }
+
 }
