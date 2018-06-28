@@ -14,13 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
-
 
 namespace qtism\data\storage\xml;
 
@@ -34,27 +33,49 @@ use \SplStack;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Utils {
-	
-	/**
-	 * Get the XML schema to use for a given QTI version.
-	 *
-	 * @return string A filename pointing at an XML Schema file.
-	 */
-	public static function getSchemaLocation($version = '2.1') {
-		$dS = DIRECTORY_SEPARATOR;
-	
-		if ($version === '2.1') {
-			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1' . $dS . 'imsqti_v2p1.xsd';
-		} elseif ($version === '2.2') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2' . $dS . 'imsqti_v2p2.xsd';
-        }
-		else {
-			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
-		}
-		
-		return $filename;
-	}
+class Utils 
+{
+    /**
+     * Get schema location e.g. XSD file regarding the given version
+     *
+     * if $document is provided, the DomDocument namespace is used to find related XSD
+     *
+     * @param string $version
+     * @param DOMDocument|null $document
+     * @return string
+     */
+     public static function getSchemaLocation($version = '2.1', DOMDocument $document=null)
+     {
+         $schemesFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'schemes' . DIRECTORY_SEPARATOR;
+         $filename = '';
+
+         if (!is_null($document)) {
+             $namespace = $document->lookupNamespaceURI(null);
+             switch ($namespace) {
+                 case 'http://www.imsglobal.org/xsd/imsqti_result_v2p1':
+                     $filename = $schemesFolder . 'qtiv2p1' . DIRECTORY_SEPARATOR . 'imsqti_result_v2p1.xsd';
+                     break;
+                 case 'http://www.imsglobal.org/xsd/imsqti_result_v2p2':
+                     $filename = $schemesFolder . 'qtiv2p2' . DIRECTORY_SEPARATOR . 'imsqti_result_v2p2.xsd';
+                     break;
+             }
+         }
+
+         if ($filename == '') {
+             switch ($version) {
+                 case '2.1':
+                     $filename = $schemesFolder . 'qtiv2p1' . DIRECTORY_SEPARATOR . 'imsqti_v2p1.xsd';
+                     break;
+                 case '2.2':
+                     $filename = $schemesFolder . 'qtiv2p2' . DIRECTORY_SEPARATOR . 'imsqti_v2p2.xsd';
+                     break;
+                 default:
+                     $filename = $schemesFolder . DIRECTORY_SEPARATOR . 'imsqti_v2p0.xsd';
+             }
+         }
+         
+         return $filename;
+     }
 	
 	/**
 	 * Infer the QTI version of a given DOMDocument.
@@ -62,37 +83,46 @@ class Utils {
 	 * @param DOMDocument $document A DOMDocument object.
 	 * @return string|boolean A QTI version (e.g. '2.1') or false if it could not be infered.
 	 */
-	public static function inferQTIVersion(DOMDocument $document) {
+	public static function inferQTIVersion(DOMDocument $document) 
+    {
 		$root = $document->documentElement;
+		
 		if (empty($root)) {
 			return false;
 		}
-		else {
-			switch (trim($root->lookupNamespaceURI(null))) {
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
-                    return '2.1';
-                break;
+		
+        switch (trim($root->lookupNamespaceURI(null))) {
+            case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
+                return '2.1';
+            break;
 
-                case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
-                    return '2.1';		    
-                break;
-                
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p2':
-                    return '2.2';
-                break;
-                
-                case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p2':
-                    return '2.2';
-                break;
+            case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
+                return '2.1';		    
+            break;
 
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
-                    return '2.0';
-                break;
+            case 'http://www.imsglobal.org/xsd/imsqti_result_v2p1':
+                return '2.1';
+            break;
+            
+            case 'http://www.imsglobal.org/xsd/imsqti_v2p2':
+                return '2.2';
+            break;
+            
+            case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p2':
+                return '2.2';
+            break;
 
-                default:
-                    return false;
-                break;
-			}
+            case 'http://www.imsglobal.org/xsd/imsqti_result_v2p2':
+                return '2.2';
+            break;
+
+            case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
+                return '2.0';
+            break;
+
+            default:
+                return false;
+            break;
 		}
 	}
 	
