@@ -2406,4 +2406,44 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
         $this->assertFalse($assessmentTestSession->getCandidateState());
     }
+
+    public function testVisitNonAdaptiveTestPartButAdaptiveTestPartsExist()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/nonadaptive_adaptive.xml');
+
+        // No item sessions at all should be selected at this time.
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q01'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q02'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q03'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+
+        $assessmentTestSession->beginTestSession();
+
+        // Only item session from testPart 'P01' should be selected at this time.
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q01'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q02'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q03'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+
+        $assessmentTestSession->moveNext();
+        $assessmentTestSession->moveNext();
+
+        // Enter testPart 'P02'...
+        $assessmentTestSession->moveNext();
+        // At that moment, only the very first item session from testPart 'P02' because it is an adaptive test part.
+        $this->assertEquals('Q04', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+
+        $assessmentTestSession->moveNext();
+        // Q05 is not selected because of the branch rules.
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertEquals('Q06', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+    }
 }

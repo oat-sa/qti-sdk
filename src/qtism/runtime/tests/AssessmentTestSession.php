@@ -2145,11 +2145,13 @@ class AssessmentTestSession extends State
                 while ($route->valid() && $route->isFirstOfTestPart() === false) {
                     $route->previous();
                 }
-                
-                do {
+
+                $currentTestPart = $route->current()->getTestPart();
+
+                while ($route->valid() && $route->current()->getTestPart()->getIdentifier() === $currentTestPart->getIdentifier()) {
                     $this->initializeAssessmentItemSession($route->current());
                     $route->next();
-                } while ($route->valid() && $route->isLastOfTestPart() === false);
+                }
             }
 
             $route->setPosition($oldPosition);
