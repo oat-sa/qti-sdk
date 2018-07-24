@@ -177,6 +177,53 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
     }
 
+    public function testUnmarshallWithoutTestResult()
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>
+            <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
+                <context />
+                <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
+                    <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
+                        <correctResponse>
+                            <value>fixture-value1</value>
+                            <value>fixture-value2</value>
+                        </correctResponse>
+                        <candidateResponse>
+                            <value fieldIdentifier="value-id-1">fixture-value1</value>
+                            <value fieldIdentifier="value-id-2">fixture-value2</value>
+                            <value fieldIdentifier="value-id-3">fixture-value3</value>
+                        </candidateResponse>
+                    </responseVariable>
+                </itemResult>
+                <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
+                    <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
+                        <correctResponse>
+                            <value>fixture-value1</value>
+                            <value>fixture-value2</value>
+                        </correctResponse>
+                        <candidateResponse>
+                            <value fieldIdentifier="value-id-1">fixture-value1</value>
+                            <value fieldIdentifier="value-id-2">fixture-value2</value>
+                            <value fieldIdentifier="value-id-3">fixture-value3</value>
+                        </candidateResponse>
+                    </responseVariable>
+                </itemResult>
+            </assessmentResult>
+        ';
+
+        /** @var AssessmentResult $assessmentResult */
+        $assessmentResult = $this->createComponentFromXml($xml);
+        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+
+        $this->assertFalse($assessmentResult->hasTestResult());
+
+        $this->assertTrue($assessmentResult->hasItemResults());
+        $this->assertEquals(2, $assessmentResult->getItemResults()->count());
+
+        $assessmentResult = $this->createComponentFromXml($xml);
+        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+    }
+
     public function testMarshall()
     {
         $component = new AssessmentResult(

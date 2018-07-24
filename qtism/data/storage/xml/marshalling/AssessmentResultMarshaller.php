@@ -92,7 +92,7 @@ class AssessmentResultMarshaller extends Marshaller
             }
 
             $itemResultElements = $element->getElementsByTagName('itemResult');
-            if ($testResultElements->length > 0) {
+            if ($itemResultElements->length > 0) {
                 $itemResults = [];
                 foreach($itemResultElements as $itemResultElement) {
                     $itemResults[] = $this->getMarshallerFactory()
