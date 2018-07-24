@@ -2446,4 +2446,45 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals('Q06', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
     }
+
+    public function testVisitAdaptiveTestPartButNonAdaptiveTestPartsExist()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/adaptive_nonadaptive.xml');
+
+        // No item sessions at all should be selected at this time.
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q01'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q02'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q03'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+
+        $assessmentTestSession->beginTestSession();
+
+        // Only item session 'Q01' from testPart 'P01' should be selected at this time because it is adaptive.
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q01'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q02'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q03'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+
+        // Because of the branchRule, Q02 will be skipped.
+        $assessmentTestSession->moveNext();
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q01'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q02'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q03'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+
+        // Now, by moving to Q04, the rest of item sessions will be selected.
+        $assessmentTestSession->moveNext();
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q01'));
+        $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q02'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q03'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q05'));
+        $this->assertNotFalse($assessmentTestSession->getAssessmentItemSessions('Q06'));
+    }
 }
