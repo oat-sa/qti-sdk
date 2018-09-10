@@ -99,7 +99,7 @@ class InterpolationTableEntry extends QtiComponent
 	 */
     public function setSourceValue($sourceValue)
     {
-        if (is_float($sourceValue)) {
+        if (is_float($sourceValue) || is_double($sourceValue) {
             $this->sourceValue = $sourceValue;
         } else {
             $msg = "SourceValue must be a float value, '" . gettype($sourceValue) . "' given.";
