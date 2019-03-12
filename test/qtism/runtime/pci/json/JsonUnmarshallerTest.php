@@ -82,7 +82,16 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $unmarshaller = self::createUnmarshaller();
         $this->assertTrue($expectedContainer->equals($unmarshaller->unmarshall($json)));
     }
-    
+
+    /**
+     * @expectedException  \qtism\runtime\pci\json\UnmarshallingException
+     */
+    public function testUnmarshallListException() {
+        $json = '{ "list" : { "boolean": false } }';
+        $unmarshaller = self::createUnmarshaller();
+        $unmarshaller->unmarshall($json);
+    }
+
     /**
      * @dataProvider unmarshallRecordProvider
      * 
@@ -215,7 +224,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), null, new QtiBoolean(false)));
         $json = '{ "list" : { "boolean": [true, null, false] } }';
         $returnValue[] = array($container, $json);
-        
+
         return $returnValue;
     }
     
