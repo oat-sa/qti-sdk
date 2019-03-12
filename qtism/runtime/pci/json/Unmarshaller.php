@@ -155,7 +155,7 @@ class Unmarshaller {
                 $msg = "No baseType provided for list.";
                 throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
             }
-            
+
             $baseType = BaseType::getConstantByName($keys[0]);
             
             if ($baseType === false) {
@@ -165,7 +165,12 @@ class Unmarshaller {
             }
             
             $returnValue = new MultipleContainer($baseType);
-            
+
+            if (!is_array($json['list'][$keys[0]])) {
+                $msg = "list is not an array";
+                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
+            }
+
             // This is a list.
             foreach ($json['list'][$keys[0]] as $v) {
                 try {
