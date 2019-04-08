@@ -276,6 +276,15 @@ class RouteTest extends QtiSmRouteTestCase {
         $route->next();
         $this->assertFalse($route->valid());
     }
+
+    /**
+     * @expectedException OutOfBoundsException
+     */
+    public function testCurrentException() {
+        $route = self::buildSimpleRoute();
+        $route->setPosition(3);
+        $route->current();
+    }
     
     public function testGetNext() {
         $route = self::buildSimpleRoute();
