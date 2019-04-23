@@ -45,6 +45,7 @@ class BeanMethod
      *
      * @param mixed $class Name of the class or instance of this class containing the method.
      * @param string $name Name of the method.
+     * @throws BeanException
      */
     public function __construct($class, $name)
     {

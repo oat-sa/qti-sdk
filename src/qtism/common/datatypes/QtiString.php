@@ -37,6 +37,7 @@ class QtiString extends QtiScalar
     /**
      * Checks whether or not $value is a valid string.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)
@@ -51,7 +52,7 @@ class QtiString extends QtiScalar
      * Get the baseType of the value. This method systematically returns
      * the BaseType::STRING value.
      *
-     * @return A value from the BaseType enumeration.
+     * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -62,7 +63,7 @@ class QtiString extends QtiScalar
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return A value from the Cardinality enumeration.
+     * @return integer A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -76,6 +77,7 @@ class QtiString extends QtiScalar
      * values are equals. If the current QtiString is an empty string, and $obj
      * is NULL, the values are considered equal.
      *
+     * @param mixed $obj
      * @return boolean
      */
     public function equals($obj)

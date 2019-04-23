@@ -37,6 +37,7 @@ class BeanParameterCollection extends AbstractCollection
     /**
      * Checks whether $value is an instance of BeanParameter.
      *
+     * @param mixed $value A given value.
      * @throws \InvalidArgumentException If $value is not an instance of BeanParameter.
      */
     protected function checkType($value)

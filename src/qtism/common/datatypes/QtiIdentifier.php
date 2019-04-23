@@ -37,6 +37,7 @@ class QtiIdentifier extends QtiString
     /**
      * Checks whether or not $value is a string value.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not a string value.
      */
     protected function checkType($value)

@@ -36,6 +36,7 @@ class BeanPropertyCollection extends AbstractCollection
     /**
      * Checks if the given $value is an instance of BeanProperty.
      *
+     * @param mixed $value A given value.
      * @throws \InvalidArgumentException If $value is not an instance of BeanProperty.
      */
     protected function checkType($value)

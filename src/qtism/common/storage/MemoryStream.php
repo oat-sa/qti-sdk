@@ -172,6 +172,7 @@ class MemoryStream implements IStream
     /**
      * Read $length bytes from the MemoryStream.
      *
+     * @param integer $length The number of bytes to read.
      * @throws \qtism\common\storage\MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
      * @return string The read value or an empty string if length = 0.
      */
@@ -179,7 +180,7 @@ class MemoryStream implements IStream
     {
         if ($this->isOpen() === false) {
             $msg = "Cannot read from a closed MemoryStream.";
-            throw new MemoryStreamAccess($msg, $this, MemoryStreamException::NOT_OPEN);
+            throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
         
         if ($length === 0) {
@@ -209,7 +210,9 @@ class MemoryStream implements IStream
     /**
      * Write some $data in the stream.
      *
+     * @throws MemoryStreamException
      * @param string $data
+     * @return integer The amount of written bytes.
      */
     public function write($data)
     {

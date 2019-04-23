@@ -37,6 +37,7 @@ class QtiUri extends QtiString
     /**
      * Checks whether or not $value is a string.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)
@@ -51,7 +52,7 @@ class QtiUri extends QtiString
      * Get the baseType of the value. This method systematically returns
      * the BaseType::URI value.
      *
-     * @return A value from the BaseType enumeration.
+     * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -62,13 +63,20 @@ class QtiUri extends QtiString
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return A value from the Cardinality enumeration.
+     * @return integer A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
     }
 
+    /**
+     * QtiUri to string
+     *
+     * Returns the QtiUri as a string.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getValue();

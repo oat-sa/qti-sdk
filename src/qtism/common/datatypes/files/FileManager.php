@@ -45,7 +45,7 @@ interface FileManager
      * @param string $path The path to the file containing the data of the returned File object.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
-     * @return \qtism\common\datatypes\File
+     * @return \qtism\common\datatypes\QtiFile
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function createFromFile($path, $mimeType, $filename = '');
@@ -57,7 +57,7 @@ interface FileManager
      * @param string $data A binary string representing the data.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
-     * @return \qtism\common\datatypes\File
+     * @return \qtism\common\datatypes\QtiFile
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function createFromData($data, $mimeType, $filename = '');
@@ -73,7 +73,7 @@ interface FileManager
     /**
      * Delete a given AbstractPersistentFile from its storage.
      *
-     * @param \qtism\common\datatypes\File $file A persistent file to be deleted gracefully.
+     * @param \qtism\common\datatypes\QtiFile $file A persistent file to be deleted gracefully.
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function delete(QtiFile $file);

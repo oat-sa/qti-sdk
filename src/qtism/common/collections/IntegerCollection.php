@@ -36,6 +36,7 @@ class IntegerCollection extends AbstractCollection
     /**
      * Check if $value is a valid integer.
      *
+     * @param mixed $value A given value.
      * @throws \InvalidArgumentException If $value is not a valid integer.
      */
     protected function checkType($value)

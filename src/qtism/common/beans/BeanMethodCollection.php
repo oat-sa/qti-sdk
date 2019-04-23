@@ -36,6 +36,7 @@ class BeanMethodCollection extends AbstractCollection
     /**
      * Checks whether $value is an instance of BeanMethod.
      *
+     * @param mixed $value A given value.
      * @throws \InvalidArgumentException If $value is not an instance of BeanMethod.
      */
     protected function checkType($value)

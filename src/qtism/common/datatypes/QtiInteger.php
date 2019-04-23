@@ -44,6 +44,7 @@ class QtiInteger extends QtiScalar
      * with the QTI Integer datatype. Will check the range to make sure
      * its contained into [-2147483648,2147483647].
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an integer value compliant with the QTI Integer datatype.
      */
     protected function checkType($value)

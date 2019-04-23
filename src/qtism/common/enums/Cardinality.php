@@ -92,7 +92,7 @@ class Cardinality implements Enumeration
     /**
      * Get a constant value from its name.
      *
-     * @param unknown_type $name The name of the constant, as per QTI spec.
+     * @param string $name The name of the constant, as per QTI spec.
      * @return integer|boolean The constant value or false if not found.
      */
     public static function getConstantByName($name)

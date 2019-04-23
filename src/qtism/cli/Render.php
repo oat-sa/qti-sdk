@@ -231,7 +231,8 @@ class Render extends Cli
      * Run the rendering behaviour related to the "Goldilocks" flavour.
      * 
      * @param \qtism\data\storage\xml\XmlDocument $doc the QTI XML document to be rendered.
-     * @param \qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine $renderer
+     * @param \qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine $renderer An instance of GoldilocksRenderingEngine
+     * @return string The rendered data as a string.
      */
     private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer)
     {

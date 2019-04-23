@@ -114,7 +114,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * Whether the given $point is inside the coordinates.
      *
-     * @param Point $point A Point object.
+     * @param QtiPoint $point A QtiPoint object.
      * @return boolean
      */
     public function inside(QtiPoint $point)
@@ -183,7 +183,8 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Whether or not $obj is equals to $this. Two Coords objects are
      * considered to be equal if they have the same coordinates and shape.
      *
-     * return boolean
+     * @param mixed $obj
+     * @return boolean
      */
     public function equals($obj)
     {

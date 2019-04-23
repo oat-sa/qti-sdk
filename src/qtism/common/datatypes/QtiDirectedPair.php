@@ -40,6 +40,7 @@ class QtiDirectedPair extends QtiPair
 	 * Whether or not $obj is equal to $this. Two DirectedPair objects
 	 * are considered to be equal if their first and second values are the same.
 	 *
+     * @param mixed $obj
 	 * @return boolean
 	 */
     public function equals($obj)
@@ -55,7 +56,7 @@ class QtiDirectedPair extends QtiPair
 	 * Get the baseType of the value. This method systematically returns the
 	 * BaseType::DIRECTED_PAIR value.
 	 *
-	 * @return A value from the BaseType enumeration.
+	 * @return integer A value from the BaseType enumeration.
 	 */
     public function getBaseType()
     {

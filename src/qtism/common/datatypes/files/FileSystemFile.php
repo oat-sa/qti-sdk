@@ -388,6 +388,13 @@ class FileSystemFile implements QtiFile
         return $this->getPath();
     }
 
+    /**
+     * File as a string
+     *
+     * Returns the file name.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getFilename();
