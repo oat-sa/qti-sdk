@@ -55,7 +55,7 @@ class RandomFloat extends Expression implements Pure
 	 *
 	 * @param number|string $min A variableRef or a float value.
 	 * @param number|string $max A variableRef or a float value.
-	 * @throws \InvalmidArgumentException If $min or $max are not valid numerics/variableRefs.
+	 * @throws \InvalidArgumentException If $min or $max are not valid numerics/variableRefs.
 	 */
     public function __construct($min, $max)
     {

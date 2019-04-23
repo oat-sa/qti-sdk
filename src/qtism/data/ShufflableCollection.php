@@ -36,6 +36,7 @@ class ShufflableCollection extends AbstractCollection
     /**
 	 * Check if $value is a Shufflable object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a Shufflable object.
 	 */
     protected function checkType($value)

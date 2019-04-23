@@ -37,6 +37,7 @@ class InlineCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of Inline.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an Inline object.
      */
     protected function checkType($value)

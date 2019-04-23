@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\php\marshalling;
 
+use qtism\common\storage\StreamAccessException;
 use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;

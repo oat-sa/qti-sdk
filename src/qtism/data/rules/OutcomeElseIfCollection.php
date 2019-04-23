@@ -36,6 +36,7 @@ class OutcomeElseIfCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of OutcomeElseIf.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of OutcomeElseIf.
 	 */
     protected function checkType($value)

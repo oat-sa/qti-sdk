@@ -22,6 +22,7 @@
 
 namespace qtism\data\content\xhtml\presentation;
 
+use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\BlockStatic;

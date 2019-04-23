@@ -90,7 +90,7 @@ class ItemSubset extends Expression implements Pure
         if (Format::isIdentifier($sectionIdentifier) || empty($sectionIdentifier)) {
             $this->sectionIdentifier = $sectionIdentifier;
         } else {
-            $msg = "'${sectionIndentifier}' is not a valid QTI Identifier.";
+            $msg = "'${sectionIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

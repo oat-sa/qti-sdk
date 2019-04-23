@@ -48,6 +48,7 @@ class Q extends SimpleInline
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
+     * @param string $cite
      * @throws \InvalidArgumentException If any of the arguments above is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '')
@@ -78,7 +79,7 @@ class Q extends SimpleInline
             $this->cite = $cite;
         } else {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
-            throw new InvalidArgumentException($msg);
+            throw new \InvalidArgumentException($msg);
         }
     }
 

@@ -93,7 +93,7 @@ class RandomInteger extends Expression implements Pure
 	 */
     public function setMin($min)
     {
-        if (is_int($min) || Format::isVariableRef($max)) {
+        if (is_int($min) || Format::isVariableRef($min)) {
             $this->min = $min;
         } else {
             $msg = "'Min' must be an integer, '" . gettype($min) . "' given.";

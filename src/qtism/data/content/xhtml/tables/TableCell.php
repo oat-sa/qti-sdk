@@ -118,7 +118,7 @@ abstract class TableCell extends BodyElement
     /**
      * Specify the th element each td element is related to.
      *
-     * @param \qtism\common\collections\IdentifierCollection $collection A collection of QTI identifiers.
+     * @param \qtism\common\collections\IdentifierCollection $headers A collection of QTI identifiers.
      */
     public function setHeaders(IdentifierCollection $headers)
     {
@@ -184,7 +184,7 @@ abstract class TableCell extends BodyElement
     /**
      * Set the value of the abbr attribute.
      *
-     * @param string $attr A string or an empty string if no abbr is defined.
+     * @param string $abbr A string or an empty string if no abbr is defined.
      * @throws \InvalidArgumentException If $bbr is not a string.
      */
     public function setAbbr($abbr)

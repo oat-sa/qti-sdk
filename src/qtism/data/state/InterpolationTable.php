@@ -53,7 +53,7 @@ class InterpolationTable extends LookupTable
 	 * Create a new instance of InterpolationTable.
 	 *
 	 * @param \qtism\data\state\InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
-	 * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
+	 * @param mixed $defaultValue The default outcome value to be used when no matching table entry is found.
 	 * @throws \InvalidArgumentException If $interpolationTableEntries is an empty collection.
 	 */
     public function __construct(InterpolationTableEntryCollection $interpolationTableEntries, $defaultValue = null)

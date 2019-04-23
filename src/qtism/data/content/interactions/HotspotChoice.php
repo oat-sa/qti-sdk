@@ -41,7 +41,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var \qtism\common\datatypes\Shape
+     * @var \qtism\common\datatypes\QtiShape
      * @qtism-bean-property
      */
     private $shape;
@@ -51,7 +51,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * The size and position of the hotspot, interpreted in conjunction with the shape.
      *
-     * @var \qtism\common\datatypes\Coords
+     * @var \qtism\common\datatypes\QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -73,7 +73,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @param string $identifier The identifier of the choice.
      * @param integer $shape A value from the Shape enumeration
-     * @param \qtism\common\datatypes\Coords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
+     * @param \qtism\common\datatypes\QtiCoords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
@@ -105,7 +105,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Get the shape of the associableHotspot.
      *
-     * @return Shape A Shape object.
+     * @return QtiShape A Shape object.
      */
     public function getShape()
     {
@@ -115,7 +115,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Set the coords of the associableHotspot.
      *
-     * @param \qtism\common\datatypes\Coords $coords A Coords object.
+     * @param \qtism\common\datatypes\QtiCoords $coords A QtiCoords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -125,7 +125,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Get the coords of the associableHotspot.
      *
-     * @return \qtism\common\datatypes\Coords A Coords object.
+     * @return \qtism\common\datatypes\QtiCoords A QtiCoords object.
      */
     public function getCoords()
     {

@@ -36,6 +36,7 @@ class Utils
      * A value will be considered scalar if it is a PHP scalar
      * value or the null value.
      *
+     * @param mixed $value
      * @return boolean
      */
     public static function isScalar($value)
@@ -46,6 +47,7 @@ class Utils
     /**
      * Whether a given $string represents a variable reference e.g. '$foobar'.
      *
+     * @param string $string
      * @return boolean
      */
     public static function isVariableReference($string)

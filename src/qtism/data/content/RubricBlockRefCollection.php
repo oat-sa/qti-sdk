@@ -37,6 +37,7 @@ class RubricBlockRefCollection extends QtiIdentifiableCollection
     /**
      * Checks whether $value is an instance of RubricBlockRef.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of RubricBlockRef.
      */
     protected function checkType($value)

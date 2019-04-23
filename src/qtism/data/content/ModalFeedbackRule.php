@@ -73,8 +73,10 @@ class ModalFeedbackRule extends QtiComponent
     /**
      * Create a new ModalFeedbackRef object.
      *
-     * @param string $identifier A QTI identifier.
-     * @param string $href A URI locating the external modalFeedback content definition.
+     * @param string $outcomeIdentifier A QTI identifier.
+     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param string $identifier The identifier value.
+     * @param string $title (optional) An optional title.
      * @throws \InvalidArgumentException If any argument is invalid.
      */
     public function __construct($outcomeIdentifier, $showHide, $identifier, $title = '')

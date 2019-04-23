@@ -50,6 +50,7 @@ class LocalFileResolver extends FileResolver
 	 *
 	 * @param string $url A URL to be resolved.
 	 * @throws \qtism\common\ResolutionException If $url cannot be resolved.
+     * @return string href
 	 */
     public function resolve($url)
     {

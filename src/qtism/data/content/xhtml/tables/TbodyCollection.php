@@ -37,6 +37,7 @@ class TbodyCollection extends QtiComponentCollection
     /**
      * Check if $value is an instance of Tbody.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException if $value is not an instance of Tbody.
      */
     protected function checkType($value)

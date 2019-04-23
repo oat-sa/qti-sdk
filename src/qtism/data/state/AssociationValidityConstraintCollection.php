@@ -36,6 +36,7 @@ class AssociationValidityConstraintCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of AssociationValidityConstraint.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of AssociationValidityConstraint.
 	 */
     protected function checkType($value)

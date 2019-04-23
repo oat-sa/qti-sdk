@@ -55,7 +55,7 @@ class DrawingInteraction extends BlockInteraction
      * Create a new DrawingInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param Object $object The image that acts as a canvas for drawing.
+     * @param ObjectElement $object The image that acts as a canvas for drawing.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.

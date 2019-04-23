@@ -177,7 +177,7 @@ class ResponseProcessing extends QtiComponent
 	 * Set the optional response processing template location. An empty string ('') indicates
 	 * there is no template location description.
 	 *
-	 * @param string $templateLocaton The URI of the template location.
+	 * @param string $templateLocation The URI of the template location.
 	 * @throws \InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
 	 */
     public function setTemplateLocation($templateLocation)

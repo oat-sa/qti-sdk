@@ -35,6 +35,7 @@ class TestPartCollection extends QtiIdentifiableCollection
     /**
 	 * Check if $value is a TestPart object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a TestPart object.
 	 */
     protected function checkType($value)

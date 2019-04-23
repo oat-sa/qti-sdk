@@ -36,6 +36,7 @@ class BlockStaticCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of BlockStatic.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of BlockStatic.
      */
     protected function checkType($value)

@@ -163,7 +163,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Get the minimum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no minChoice is indicated.
      *
-     * @return A strictly negative or positive integer.
+     * @return integer A strictly negative or positive integer.
      */
     public function getMinChoices()
     {
@@ -225,7 +225,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {

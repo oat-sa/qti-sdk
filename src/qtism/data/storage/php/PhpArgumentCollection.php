@@ -36,6 +36,7 @@ class PhpArgumentCollection extends AbstractCollection
     /**
      * Checks wether $value is an instance of PhpArgumentCollection.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of PhpArgumentCollection.
      */
     protected function checkType($value)

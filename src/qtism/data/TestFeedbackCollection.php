@@ -35,6 +35,7 @@ class TestFeedbackCollection extends QtiComponentCollection
     /**
 	 * Check if $value is a TestFeedback object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a TestFeedback object.
 	 */
     protected function checkType($value)

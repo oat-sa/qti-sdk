@@ -36,6 +36,7 @@ class ExpressionCollection extends QtiComponentCollection implements Pure
     /**
 	 * Check if a given $value is an instance of Expression.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of Expression.
 	 */
     protected function checkType($value)

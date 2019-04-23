@@ -63,6 +63,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * Whether a QtiIdentifiable object with 'identifier' = $offset is in
 	 * the collection.
 	 *
+     * @param mixed $offset
 	 * @return boolean
 	 * @throws \OutOfRangeException If the request $offset is not a string or is empty.
 	 */
@@ -81,6 +82,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
     /**
 	 * Retrieve a QtiIdentifiable object from the collection.
 	 *
+     * @param mixed $offset
 	 * @return \qtism\data\QtiIdentifiable|null The requested QtiIdentifiable object or null if no object with 'identifier' = $offset is found.
 	 * @throws \OutOfRangeException If the request $offset is not a string or is empty.
 	 */
@@ -147,6 +149,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * Remove a QTIIdentifiable object from the collection that has its
 	 * 'identifier' attribute equals to $offset.
 	 *
+     * @param mixed $offset
 	 * @throws \OutOfRangeException If $offset is not a string.
 	 */
     public function offsetUnset($offset)

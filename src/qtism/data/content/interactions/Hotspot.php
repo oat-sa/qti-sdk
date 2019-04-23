@@ -54,14 +54,14 @@ interface Hotspot
     /**
 	 * Set the coords of the hotspot.
 	 *
-	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\QtiCoords $coords A Coords object.
 	 */
     public function setCoords(QtiCoords $coords);
 
     /**
 	 * Get the coords of the hotspot.
 	 *
-	 * @return \qtism\common\datatypes\Coords A Coords object.
+	 * @return \qtism\common\datatypes\QtiCoords A Coords object.
 	 */
     public function getCoords();
 
@@ -76,7 +76,7 @@ interface Hotspot
     /**
 	 * Get the alternative text for this hotspot.
 	 *
-	 * @return A string with a maximum of 256 characters.
+	 * @return string A string with a maximum of 256 characters.
 	 */
     public function getHotspotLabel();
 

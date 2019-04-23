@@ -37,6 +37,7 @@ class SimpleAssociableChoiceCollection extends QtiComponentCollection
     /**
      * Check if $value is an instance of SimpleAssociableChoice.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of SimpleAssociableChoice.
      */
     protected function checkType($value)
