@@ -23,6 +23,7 @@
 namespace qtism\runtime\processing;
 
 use qtism\data\storage\php\PhpDocument;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\RuleEngine;
@@ -150,9 +151,32 @@ class ResponseProcessingEngine extends AbstractEngine
      * * ExpressionProcessingException: If an Expression within a ResponseRule produces an error.
      * * ResponseProcessingException: If there is a problem with the response processing template processing bound to the ResponseProcessing.
      *
-     * @throws \qtism\runtime\common\ProcessingException
+     * @throws PhpStorageException
      */
     public function process()
+    {
+        $rules = $this->getResponseProcessingRules();
+
+        try {
+            foreach ($rules as $rule) {
+                $engine = new RuleEngine($rule, $this->getContext());
+                $engine->process();
+                $this->trace($rule->getQtiClassName() . ' executed');
+            }
+        } catch (RuleProcessingException $e) {
+            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
+                throw $e;
+            } else {
+                $this->trace('Termination of response processing.');
+            }
+        }
+    }
+
+    /**
+     * @return array
+     * @throws PhpStorageException
+     */
+    public function getResponseProcessingRules()
     {
         // @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.
         $responseProcessing = $this->getComponent();
@@ -194,18 +218,6 @@ class ResponseProcessingEngine extends AbstractEngine
             $this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
         }
 
-        try {
-            foreach ($rules as $rule) {
-                $engine = new RuleEngine($rule, $this->getContext());
-                $engine->process();
-                $this->trace($rule->getQtiClassName() . ' executed');
-            }
-        } catch (RuleProcessingException $e) {
-            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
-                throw $e;
-            } else {
-                $this->trace('Termination of response processing.');
-            }
-        }
+        return (array)$rules;
     }
 }
