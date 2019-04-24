@@ -50,7 +50,7 @@ class TruncateProcessor extends OperatorProcessor
     /**
 	 * Process the Truncate operator.
 	 *
-	 * @return integer|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
+	 * @return QtiInteger|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

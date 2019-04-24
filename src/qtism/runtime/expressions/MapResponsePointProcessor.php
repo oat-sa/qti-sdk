@@ -59,7 +59,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
 	 * * The targeted variable has no areaMapping.
 	 * * The target variable has the RECORD cardinality.
 	 *
-	 * @return float A transformed float value according to the areaMapping of the target variable.
+	 * @return QtiFloat A transformed float value according to the areaMapping of the target variable.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

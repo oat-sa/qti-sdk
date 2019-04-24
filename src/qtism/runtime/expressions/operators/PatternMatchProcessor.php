@@ -52,7 +52,7 @@ class PatternMatchProcessor extends OperatorProcessor
     /**
 	 * Process the PatternMatch.
 	 *
-	 * @return boolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
+	 * @return QtiBoolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

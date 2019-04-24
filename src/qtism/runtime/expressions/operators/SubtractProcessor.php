@@ -47,7 +47,7 @@ class SubtractProcessor extends OperatorProcessor
     /**
 	 * Process the Subtract operator.
 	 *
-	 * @return float|integer|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
+	 * @return QtiFloat|QtiInteger|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

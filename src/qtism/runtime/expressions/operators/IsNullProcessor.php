@@ -46,7 +46,7 @@ class IsNullProcessor extends OperatorProcessor
     /**
 	 * Process the IsNullExpression object from the QTI Data Model.
 	 *
-	 * @return boolean Whether the sub-expression is considered to be NULL.
+	 * @return QtiBoolean Whether the sub-expression is considered to be NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If something goes wrong.
 	 */
     public function process()

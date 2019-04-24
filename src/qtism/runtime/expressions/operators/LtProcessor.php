@@ -46,7 +46,7 @@ class LtProcessor extends OperatorProcessor
     /**
 	 * Process the Lt operator.
 	 *
-	 * @return boolean|null Whether the first sub-expression is numerically less than the second or NULL if either sub-expression is NULL.
+	 * @return QtiBoolean|null Whether the first sub-expression is numerically less than the second or NULL if either sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

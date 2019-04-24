@@ -45,7 +45,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
     /**
 	 * Process the IntegerToFloat operator.
 	 *
-	 * @return float|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
+	 * @return QtiFloat|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

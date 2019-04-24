@@ -54,7 +54,7 @@ class DurationLTProcessor extends OperatorProcessor
     /**
 	 * Process the DurationLT operator.
 	 *
-	 * @return boolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
+	 * @return QtiBoolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

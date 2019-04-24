@@ -36,6 +36,7 @@ class OutcomeVariableCollection extends VariableCollection
     /**
 	 * Check if $value is a valid OutcomeVariable object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a OutcomeVariable object.
 	 */
     protected function checkType($value)

@@ -106,11 +106,12 @@ class PrintedVariableEngine extends AbstractEngine
      * * If the value to format is an OrderedContainer, and no 'index' attribue value is given, the whole container is displayed.
      * * If no specific precision is given for a float display, the precision will be by default 6.
      *
-     * @return \qtism\data\content\TextRun A processed PrintedVariable as a TextRun object or the NULL value if the variable's value is NULL.
+     * @return string A processed PrintedVariable as a string or the NULL value if the variable's value is NULL.
      * @throws \qtism\runtime\processing\PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
      */
     public function process()
     {
+        /** @var PrintedVariable $printedVariable */
         $printedVariable = $this->getComponent();
         $identifier = $printedVariable->getIdentifier();
         $state = $this->getContext();
@@ -219,6 +220,7 @@ class PrintedVariableEngine extends AbstractEngine
      */
     private function processValue($baseType, $value)
     {
+        /** @var PrintedVariable $printedVariable */
         $printedVariable = $this->getComponent();
 
         if ($value === null) {

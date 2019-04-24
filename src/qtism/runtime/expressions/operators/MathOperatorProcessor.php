@@ -80,7 +80,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
 	 * Process the MathOperator operator.
 	 *
-	 * @return float|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
+	 * @return QtiFloat|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
 	 */
     public function process()
     {
@@ -114,7 +114,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processSin()
     {
@@ -125,7 +125,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processCos()
     {
@@ -136,7 +136,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processTan()
     {
@@ -147,7 +147,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processSec()
     {
@@ -158,7 +158,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processCsc()
     {
@@ -169,7 +169,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float|null
+	 * @return \qtism\common\datatypes\QtiFloat|null
 	 */
     protected function processCot()
     {
@@ -180,7 +180,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processAsin()
     {
@@ -191,7 +191,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processAcos()
     {
@@ -202,7 +202,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processAtan()
     {
@@ -214,7 +214,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
 	 *
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processAtan2()
     {
@@ -236,7 +236,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processAsec()
     {
@@ -252,7 +252,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processAcsc()
     {
@@ -268,7 +268,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processAcot()
     {
@@ -284,7 +284,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processSinh()
     {
@@ -295,7 +295,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processCosh()
     {
@@ -306,7 +306,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return \qtism\common\datatypes\Float
+	 * @return \qtism\common\datatypes\QtiFloat
 	 */
     protected function processTanh()
     {
@@ -317,7 +317,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processSech()
     {
@@ -333,7 +333,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processCsch()
     {
@@ -349,7 +349,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processCoth()
     {
@@ -367,7 +367,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processLog()
     {
@@ -385,7 +385,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processLn()
     {
@@ -403,7 +403,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processExp()
     {
@@ -423,7 +423,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processAbs()
     {
@@ -460,7 +460,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float|\qtism\common\datatypes\Integer
+	 * @return null|\qtism\common\datatypes\QtiFloat|\qtism\common\datatypes\QtiInteger
 	 */
     protected function processFloor()
     {
@@ -480,7 +480,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float|\qtism\common\datatypes\Integer
+	 * @return null|\qtism\common\datatypes\QtiFloat|\qtism\common\datatypes\QtiInteger
 	 */
     protected function processCeil()
     {
@@ -500,7 +500,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processToDegrees()
     {
@@ -520,7 +520,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|\qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processToRadians()
     {

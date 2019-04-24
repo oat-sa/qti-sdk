@@ -38,6 +38,7 @@ class ResponseVariableCollection extends VariableCollection
     /**
 	 * Check if $value is a valid ResponseVariable object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a ResponseVariable object.
 	 */
     protected function checkType($value)

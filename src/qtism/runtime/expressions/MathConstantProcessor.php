@@ -43,7 +43,7 @@ class MathConstantProcessor extends ExpressionProcessor
     /**
 	 * Process the MathConstant Expression.
 	 *
-	 * @return float A float value (e or pi).
+	 * @return QtiFloat A float value (e or pi).
 	 */
     public function process()
     {

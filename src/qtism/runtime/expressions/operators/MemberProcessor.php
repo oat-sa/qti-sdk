@@ -51,7 +51,7 @@ class MemberProcessor extends OperatorProcessor
     /**
 	 * Process the Member operator.
 	 *
-	 * @return boolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
+	 * @return QtiBoolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

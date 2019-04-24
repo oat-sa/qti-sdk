@@ -108,6 +108,7 @@ class TemplateProcessingEngine extends AbstractEngine
     public function process()
     {
         $context = $this->getContext();
+        /** @var TemplateProcessing $templateProcessing */
         $templateProcessing = $this->getComponent();
         $trialCount = 0;
         

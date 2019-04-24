@@ -115,7 +115,7 @@ class OutcomeVariable extends Variable
     /**
      * Set the normal maximum.
      *
-     * @param floatboolean $normalMaximum The normal maximum or false if not defined.
+     * @param float|boolean $normalMaximum The normal maximum or false if not defined.
      * @throws \InvalidArgumentException If $normalMaximum is not false nor a floating point value.
      */
     public function setNormalMaximum($normalMaximum)

@@ -48,6 +48,7 @@ class ProductProcessor extends OperatorProcessor
     /**
 	 * Process the Product operator.
 	 *
+     * @return QtiInteger|QtiFloat
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If invalid operands are given.
 	 */
     public function process()

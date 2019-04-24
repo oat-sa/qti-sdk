@@ -45,7 +45,7 @@ class ContainerSizeProcessor extends OperatorProcessor
     /**
 	 * Process the current expression.
 	 *
-	 * @return integer|null The size of the container or null if it contains NULL.
+	 * @return QtiInteger|null The size of the container or null if it contains NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

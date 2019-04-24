@@ -38,6 +38,7 @@ class VariableCollection extends AbstractCollection
     /**
 	 * Check if $value is a valid Variable object.
 	 *
+     * @param mixed $value
 	 * @throws InvalidArgumentException If $value is not a Variable object.
 	 */
     protected function checkType($value)

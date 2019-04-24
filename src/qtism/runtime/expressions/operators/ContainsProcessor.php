@@ -48,7 +48,7 @@ class ContainsProcessor extends OperatorProcessor
     /**
 	 * Returns the logical negation of the sub-expressions.
 	 *
-	 * @return boolean
+	 * @return QtiBoolean
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

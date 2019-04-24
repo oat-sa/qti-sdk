@@ -47,7 +47,7 @@ class PowerProcessor extends OperatorProcessor
     /**
 	 * Process the Power operator.
 	 *
-	 * @return float|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
+	 * @return QtiFloat|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()
