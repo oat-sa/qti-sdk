@@ -197,6 +197,6 @@ class ResponseProcessingEngine extends AbstractEngine {
 			$this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
 		}
 
-		return (array) $rules;
+		return $rules;
 	}
 }
