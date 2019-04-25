@@ -31,7 +31,6 @@ use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\State;
 use qtism\runtime\common\AbstractEngine;
-use qtism\data\storage\StorageException;
 use \InvalidArgumentException;
 
 class ResponseProcessingEngine extends AbstractEngine {
@@ -146,18 +145,29 @@ class ResponseProcessingEngine extends AbstractEngine {
 	 * @throws ProcessingException
 	 */
 	public function process() {
+		$rules = $this->getResponseProcessingRules();
+		
+		foreach ($rules as $rule) {
+			$engine = new RuleEngine($rule, $this->getContext());
+			$engine->process();
+			$this->trace($rule->getQtiClassName() . ' executed');
+		}
+	}
+
+	public function getResponseProcessingRules()
+	{
 		// @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.
 		$responseProcessing = $this->getComponent();
 		$template = $responseProcessing->getTemplate();
 		$templateLocation = $responseProcessing->getTemplateLocation();
-		
+
 		if (count($responseProcessing->getResponseRules()) > 0) {
 			// Always prefer the embedded rules.
 			$rules = $responseProcessing->getResponseRules();
 		}
 		else {
 			$finalTemplateFile = '';
-			
+
 			if (empty($template) === false) {
 				// try to locate the template file thanks to the given mapping.
 				$mapping = $this->getTemplateMapping();
@@ -165,7 +175,7 @@ class ResponseProcessingEngine extends AbstractEngine {
 					$finalTemplateFile = $mapping[$template];
 				}
 			}
-			
+
 			if (empty($finalTemplateFile) === true && empty($templateLocation) === false) {
 				// The template could not be resolved using the mapping.
 				// Try to use template location.
@@ -173,12 +183,12 @@ class ResponseProcessingEngine extends AbstractEngine {
 					$finalTemplateFile = $templateLocation;
 				}
 			}
-			
+
 			if (empty($finalTemplateFile) === true) {
 				$msg = "The template file could not be found: template='${template}', templateLocation='${templateLocation}'.";
 				throw new ResponseProcessingException($msg, $this, ResponseProcessingException::TEMPLATE_NOT_FOUND);
 			}
-			
+
 			// Open the file and retrieve the rules.
 			$this->trace("loading response processing template '${finalTemplateFile}'");
 			$php = new PhpDocument();
@@ -186,11 +196,7 @@ class ResponseProcessingEngine extends AbstractEngine {
 			$rules = $php->getDocumentComponent()->getResponseRules();
 			$this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
 		}
-		
-		foreach ($rules as $rule) {
-			$engine = new RuleEngine($rule, $this->getContext());
-			$engine->process();
-			$this->trace($rule->getQtiClassName() . ' executed');
-		}
+
+		return $rules;
 	}
 }
