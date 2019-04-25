@@ -103,8 +103,7 @@ abstract class AbstractStorage
      * Get the AssessmentTest object.
      * 
      * Get the AssessmentTest object the AssessmentTestSession Storage Service is specialized in.
-     * 
-     * @param \qtism\data\AssessmentTest $test
+     *
      */
     protected function getAssessmentTest()
     {

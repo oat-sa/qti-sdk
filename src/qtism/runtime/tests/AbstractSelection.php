@@ -23,7 +23,6 @@
 
 namespace qtism\runtime\tests;
 
-use qtism\data\rules\Selection;
 use qtism\data\AssessmentSection;
 
 /**

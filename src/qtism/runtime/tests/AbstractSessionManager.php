@@ -109,7 +109,7 @@ abstract class AbstractSessionManager
     /**
      * Contains the logic of instantiating the appropriate AssessmentTestSession implementation.
      *
-     * @param \qtism\data\AssessmentTest $assessmentTest
+     * @param \qtism\data\AssessmentTest $test
      * @param \qtism\runtime\tests\Route $route
      * @param integer $config (optional) The configuration of the AssessmentTestSession object.
      * @return \qtism\runtime\tests\AssessmentTestSession A freshly instantiated AssessmentTestSession.

@@ -137,7 +137,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     }
     
     /**
-     * @see \qtism\runtime\storage\binary\AbstractStorage::exists()
+     * @see \qtism\runtime\storage\common\AbstractStorage::exists()
      */
     public function exists($sessionId)
     {
@@ -146,7 +146,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     }
     
     /**
-     * @see \qtism\runtime\storage\binary\AbstractStorage::delete()
+     * @see \qtism\runtime\storage\common\AbstractStorage::delete()
      */
     public function delete(AssessmentTestSession $assessmentTestSession)
     {
