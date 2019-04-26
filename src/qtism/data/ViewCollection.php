@@ -36,6 +36,7 @@ class ViewCollection extends IntegerCollection
     /**
 	 * Check if $value is a valid View enumeration value.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a valid View enumeration value.
 	 */
     protected function checkType($value)

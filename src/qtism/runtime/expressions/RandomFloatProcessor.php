@@ -44,7 +44,7 @@ class RandomFloatProcessor extends ExpressionProcessor
 	 *
 	 * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
 	 *
-	 * @return float A Random float value.
+	 * @return QtiFloat A Random float value.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

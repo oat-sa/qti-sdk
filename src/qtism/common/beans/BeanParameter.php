@@ -61,7 +61,7 @@ class BeanParameter
     /**
      * Set the wrapped ReflectionParameter object.
      *
-     * @param \qtism\common\beans\ReflectionParameter $parameter A ReflectionParameter object.
+     * @param \ReflectionParameter $parameter A ReflectionParameter object.
      */
     protected function setParameter(ReflectionParameter $parameter)
     {
@@ -71,7 +71,7 @@ class BeanParameter
     /**
      * Get the wrapped ReflectionParameter object.
      *
-     * @return \qtism\common\beans\ReflectionParameter A ReflectionParameter object.
+     * @return \ReflectionParameter A ReflectionParameter object.
      */
     public function getParameter()
     {

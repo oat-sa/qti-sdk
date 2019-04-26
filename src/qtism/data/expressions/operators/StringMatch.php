@@ -65,7 +65,7 @@ class StringMatch extends Operator implements Pure
     /**
 	 * Create a new instance of StringMatch.
 	 *
-	 * @param \qtism\data\expression\ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param boolean $caseSensitive Whether or not the match to be carried out case sensitively.
 	 * @param boolean $substring Deprecated argument, use the substring operator instead.
 	 * @throws \InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.

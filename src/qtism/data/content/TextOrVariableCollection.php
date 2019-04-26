@@ -36,6 +36,7 @@ class TextOrVariableCollection extends QtiComponentCollection
     /**
      * Check if $value is an instance of TextOrVariable.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of TextOrVariable.
      */
     protected function checkType($value)

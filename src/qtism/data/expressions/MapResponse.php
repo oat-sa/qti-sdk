@@ -23,7 +23,6 @@
 namespace qtism\data\expressions;
 
 use qtism\common\utils\Format;
-use qtism\common\enums\Cardinality;
 use \InvalidArgumentException;
 
 /**
@@ -79,7 +78,7 @@ class MapResponse extends Expression implements Pure
             $this->identifier = $identifier;
         } else {
             $msg = "${identifier} is not a valid QTI Identifier.";
-            throw new InvalidArgumentException($identifier);
+            throw new InvalidArgumentException($msg);
         }
     }
 

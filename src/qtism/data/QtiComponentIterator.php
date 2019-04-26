@@ -124,6 +124,7 @@ class QtiComponentIterator implements Iterator
 	 * Create a new QtiComponentIterator object.
 	 *
 	 * @param \qtism\data\QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
+     * @param array $classes
 	 */
     public function __construct(QtiComponent $rootComponent, array $classes = array())
     {
@@ -136,7 +137,7 @@ class QtiComponentIterator implements Iterator
 	 * Set the root QtiComponent. In other words, the QtiComponent which
 	 * contains the QtiComponent objects to be traversed.
 	 *
-	 * @param \qtism\data\QtiComponent $component
+	 * @param \qtism\data\QtiComponent $rootComponent
 	 */
     protected function setRootComponent(QtiComponent $rootComponent)
     {
@@ -251,6 +252,7 @@ class QtiComponentIterator implements Iterator
 	 * the iterator.
 	 *
 	 * @param \qtism\data\QtiComponent $component
+     * @return boolean
 	 */
     protected function isTraversed(QtiComponent $component)
     {

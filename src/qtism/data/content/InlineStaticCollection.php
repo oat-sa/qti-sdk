@@ -40,6 +40,7 @@ class InlineStaticCollection extends QtiComponentCollection
      * Throws an InvalidArgumentException if $value is not an instance of
      * InlineStatic.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException.
      */
     protected function checkType($value)

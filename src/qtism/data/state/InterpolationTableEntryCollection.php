@@ -36,6 +36,7 @@ class InterpolationTableEntryCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of InterpolationTableEntry.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of InterpolationTableEntry.
 	 */
     protected function checkType($value)

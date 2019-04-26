@@ -53,7 +53,7 @@ class Utils
 	 */
     public static function stringToDatatype($string, $baseType)
     {
-    if (in_array($baseType, BaseType::asArray(), true)) {
+        if (in_array($baseType, BaseType::asArray(), true)) {
             $value = null;
 
             switch ($baseType) {
@@ -182,7 +182,7 @@ class Utils
 	 * @param int $shape A value from the Shape enumeration.
 	 * @throws \InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
 	 * @throws \UnexpectedValueException If $string cannot be converted to a Coords object.
-	 * @return \qtism\common\datatypes\Coords A Coords object.
+	 * @return \qtism\common\datatypes\QtiCoords A Coords object.
 	 */
     public static function stringToCoords($string, $shape)
     {

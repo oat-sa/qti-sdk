@@ -46,7 +46,7 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
     /**
 	 * Process the related NumberSelected expression.
 	 *
-	 * @return integer The number of items in the given sub-set that have been selected for presentation to the candidate.
+	 * @return QtiInteger The number of items in the given sub-set that have been selected for presentation to the candidate.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

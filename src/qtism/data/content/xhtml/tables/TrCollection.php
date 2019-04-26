@@ -37,6 +37,7 @@ class TrCollection extends QtiComponentCollection
     /**
      * Check if $value is an instanceof Tr.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instanceof Tr.
      */
     protected function checkType($value)

@@ -66,7 +66,7 @@ class AssociationValidityConstraint extends QtiComponent
      * If the $patternMask attribute is provided, it represent a constraint to be applied on all string 
      * values contained by the variable described in the $responseÏdentifier variable.
 	 *
-     * @param string $responseIdentifier The identifier on which the validity constraint applies to.
+     * @param string $identifier The identifier on which the validity constraint applies to.
      * @param integer $minConstraint The minimum number of times $identifier may be found in a Response Variable.
      * @param integer $maxConstraint The maximum number of times $identifier may be found in a Response Variable.
      * @throws \InvalidArgumentException If one or more of the arguments above are invalid.

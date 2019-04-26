@@ -152,7 +152,7 @@ class QtiPair implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * The BaseType::PAIR value.
      *
-     * @return A value from the BaseType enumeration.
+     * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -163,7 +163,7 @@ class QtiPair implements QtiDatatype
      * Get the Cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return A value from the Cardinality enumeration.
+     * @return integer A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

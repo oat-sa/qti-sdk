@@ -90,7 +90,7 @@ class BeanProperty
     /**
      * Get the wrapped ReflectionProperty.
      *
-     * @return \qtism\common\beans\ReflectionProperty A ReflectionProperty object.
+     * @return \ReflectionProperty A ReflectionProperty object.
      */
     public function getProperty()
     {

@@ -23,7 +23,6 @@
 namespace qtism\data\content\xhtml\presentation;
 
 use qtism\data\content\SimpleInline;
-use \InvalidArgumentException;
 
 /**
  * The b XHTML class.

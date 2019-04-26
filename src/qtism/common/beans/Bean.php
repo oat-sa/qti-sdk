@@ -56,6 +56,7 @@ class Bean
      * @param boolean $strict Whether the given $object must be a strict Bean.
      * @param string $asInstanceOf The name of the class that should be used for reflection.
      * @throws InvalidArgumentException If $object is not an object.
+     * @throws BeanException
      */
     public function __construct($object, $strict = false, $asInstanceOf = '')
     {
@@ -103,7 +104,7 @@ class Bean
     /**
      * Get the getter related to the property with name $propertyName.
      *
-     * @param string|qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty object the getter is related to.
+     * @param string|\qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty object the getter is related to.
      * @return \qtism\common\beans\BeanMethod A BeanMethod object.
      * @throws \qtism\common\beans\BeanException If no such valid bean property or getter exists for the bean.
      * @throws \InvalidArgumentException If $property is not a string nor a Bean
@@ -140,7 +141,7 @@ class Bean
      * * Its visibility is public.
      * * A valid bean property exists for $propertyName.
      *
-     * @param string|qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty the getter is related to.
+     * @param string|\qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty the getter is related to.
      * @return false|string False if not found or the final chosen name for the getter.
      * @throws \InvalidArgumentException If $property is not a string nor a BeanProperty object.
      */
@@ -350,6 +351,7 @@ class Bean
      * Get the bean getters related to the parameters of the bean's constructor.
      *
      * @return \qtism\common\beans\BeanMethodCollection A collection of BeanMethod objects.
+     * @throws BeanException
      */
     public function getConstructorGetters()
     {
@@ -366,6 +368,7 @@ class Bean
      * Get the bean setters related to the parameters of the bean's constructor.
      *
      * @return \qtism\common\beans\BeanMethodCollection A collection of BeanMethod objects.
+     * @throws BeanException
      */
     public function getConstructorSetters()
     {

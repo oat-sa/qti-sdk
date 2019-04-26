@@ -36,6 +36,7 @@ class BranchRuleCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of BranchRule.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of BranchRule.
 	 */
     protected function checkType($value)

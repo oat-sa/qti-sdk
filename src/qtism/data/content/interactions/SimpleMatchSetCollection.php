@@ -36,6 +36,7 @@ class SimpleMatchSetCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of SimpleMatchSet.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of SimpleMatchSet.
      */
     protected function checkType($value)

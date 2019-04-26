@@ -46,7 +46,7 @@ class InsideProcessor extends OperatorProcessor
     /**
 	 * Process the Inside operator.
 	 *
-	 * @return boolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
+	 * @return QtiBoolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

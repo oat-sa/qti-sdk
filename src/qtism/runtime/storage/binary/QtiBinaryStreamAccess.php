@@ -32,7 +32,6 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\files\FileManager;
-use qtism\data\state\Value;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
@@ -40,15 +39,12 @@ use qtism\data\AssessmentSectionCollection;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\BranchRuleCollection;
-use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
-use qtism\data\state\OutcomeDeclaration;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\PendingResponses;
-use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -64,7 +60,6 @@ use qtism\common\storage\IStream;
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use \InvalidArgumentException;
-use \Exception;
 use \OutOfBoundsException;
 
 /**
@@ -363,7 +358,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a Point from the current binary stream.
      *
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
-     * @return \qtism\common\datatypes\Point A Point object.
+     * @return \qtism\common\datatypes\QtiPoint A QtiPoint object.
      */
     public function readPoint()
     {
@@ -378,7 +373,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Point in the current binary stream.
      *
-     * @param \qtism\common\datatypes\Point $point A Point object.
+     * @param \qtism\common\datatypes\QtiPoint $point A QtiPoint object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writePoint(QtiPoint $point)
@@ -396,7 +391,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a Pair from the current binary stream.
      *
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
-     * @return \qtism\common\datatypes\Pair A Pair object.
+     * @return \qtism\common\datatypes\QtiPair A QtiPair object.
      */
     public function readPair()
     {
@@ -411,7 +406,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Pair in the current binary stream.
      *
-     * @param \qtism\common\datatypes\Pair $pair A Pair object.
+     * @param \qtism\common\datatypes\QtiPair $pair A Pair object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writePair(QtiPair $pair)
@@ -429,7 +424,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a DirectedPair from the current binary stream.
      *
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
-     * @return \qtism\common\datatypes\DirectedPair A DirectedPair object.
+     * @return \qtism\common\datatypes\QtiDirectedPair A DirectedPair object.
      */
     public function readDirectedPair()
     {
@@ -444,7 +439,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a DirectedPair in the current binary stream.
      *
-     * @param \qtism\common\datatypes\DirectedPair $directedPair A DirectedPair object.
+     * @param \qtism\common\datatypes\QtiDirectedPair $directedPair A DirectedPair object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeDirectedPair(QtiDirectedPair $directedPair)
@@ -570,7 +565,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a Duration from the current binary stream.
      *
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
-     * @return \qtism\common\datatypes\Duration A Duration object.
+     * @return \qtism\common\datatypes\QtiDuration A QtiDuration object.
      */
     public function readDuration()
     {
@@ -585,7 +580,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Duration in the current binary stream.
      *
-     * @param \qtism\common\datatypes\Duration $duration A Duration object.
+     * @param \qtism\common\datatypes\QtiDuration $duration A QtiDuration object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeDuration(QtiDuration $duration)
@@ -633,6 +628,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read an intOrIdentifier from the current binary stream.
      *
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      * @return integer|string An integer or a string depending on the nature of the intOrIdentifier datatype.
      */
     public function readIntOrIdentifier()
@@ -677,6 +673,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param \qtism\runtime\tests\AbstractSessionManager $manager
      * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @return AssessmentItemSession
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker)
@@ -1083,6 +1080,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a QtiFile object from the current binary stream.
      * 
      * @return \qtism\common\datatypes\QtiFile
+     * @throws QtiBinaryStreamAccessException
      */
     public function readFile()
     {
@@ -1099,6 +1097,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read the path from the current binary stream.
      * 
      * @return array An array of integer values representing flow positions.
+     * @throws QtiBinaryStreamAccessException
      */
     public function readPath() {
         try {
@@ -1120,6 +1119,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Write the path in the current binary stream.
      * 
      * @param array $path An array of integer values representing flow positions.
+     * @throws QtiBinaryStreamAccessException
      */
     public function writePath(array $path) {
         try {

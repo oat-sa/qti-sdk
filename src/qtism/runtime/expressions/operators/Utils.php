@@ -185,7 +185,8 @@ class Utils
     /**
 	 * Add an appropriate delimiter (/) to a regular expression that has no delimiters. This
 	 * method is multi-byte safe safe.
-	 *
+     *
+     * @param string $string
 	 * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
 	 */
     static public function pregAddDelimiter($string)
@@ -320,7 +321,8 @@ class Utils
     
     /**
      * Prepare an XSD Regular Expression pattern into a PCRE compliant one.
-     * 
+     *
+     * @param string $pattern
      * @return string
      */
     static public function prepareXsdPatternForPcre($pattern)

@@ -38,6 +38,7 @@ class QtiIntOrIdentifier extends QtiScalar
      * Checks whether or not $value is a valid integer or string to be
      * used as the intrinsic value of this object.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not compliant with the QTI IntOrIdentifier datatype.
      */
     protected function checkType($value)

@@ -35,6 +35,7 @@ class SectionPartCollection extends QtiIdentifiableCollection
     /**
 	 * Check if $value is a SectionPart object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a SectionPart object.
 	 */
     protected function checkType($value)

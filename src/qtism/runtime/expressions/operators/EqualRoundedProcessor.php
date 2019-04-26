@@ -63,7 +63,7 @@ class EqualRoundedProcessor extends OperatorProcessor
     /**
 	 * Process the EqualRounded operator.
 	 *
-	 * @return boolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
+	 * @return QtiBoolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

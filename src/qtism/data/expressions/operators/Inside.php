@@ -57,7 +57,7 @@ class Inside extends Operator implements Pure
 	 *
 	 * The size and position of the area, interpreted in conjunction with the shape.
 	 *
-	 * @var \qtism\common\datatypes\Coords
+	 * @var \qtism\common\datatypes\QtiCoords
 	 * @qtism-bean-property
 	 */
     private $coords;
@@ -67,7 +67,7 @@ class Inside extends Operator implements Pure
 	 *
 	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param int $shape A value from the Shape enumeration
-	 * @param \qtism\common\datatypes\Coords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
+	 * @param \qtism\common\datatypes\QtiCoords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
 	 * @throws \InvalidArgumentException If the $expressions count exceeds 1 or if $shape is not a value from the Shape enumeration.
 	 */
     public function __construct(ExpressionCollection $expressions, $shape, QtiCoords $coords)
@@ -106,7 +106,7 @@ class Inside extends Operator implements Pure
     /**
 	 * Set the coordinates.
 	 *
-	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\QtiCoords $coords A Coords object.
 	 */
     public function setCoords(QtiCoords $coords)
     {
@@ -116,7 +116,7 @@ class Inside extends Operator implements Pure
     /**
 	 * Get the coordinates
 	 *
-	 * @return \qtism\common\datatypes\Coords A Coords object.
+	 * @return \qtism\common\datatypes\QtiCoords A Coords object.
 	 */
     public function getCoords()
     {

@@ -37,6 +37,7 @@ class BlockCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of lock.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an Block object.
      */
     protected function checkType($value)

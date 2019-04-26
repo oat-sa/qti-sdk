@@ -200,7 +200,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
      * is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @param integer A strictly positive (> 0) integer or -1.
+     * @param integer $expectedLength A strictly positive (> 0) integer or -1.
      * @throws \InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
      */
     public function setExpectedLength($expectedLength)
@@ -217,7 +217,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return A strictly positive (> 0) integer or -1 if undefined.
+     * @return integer A strictly positive (> 0) integer or -1 if undefined.
      */
     public function getExpectedLength()
     {
@@ -312,7 +312,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     }
 
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {

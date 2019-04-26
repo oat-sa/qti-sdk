@@ -37,6 +37,7 @@ class FlowCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of Flow.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not a Flow object.
      */
     protected function checkType($value)

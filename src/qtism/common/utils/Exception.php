@@ -45,6 +45,7 @@ class Exception
      * 
      * @param \Exception $e A PHP Exception object.
      * @param true $withClassName Whether to show the Exception class name.
+     * @return string
      */
     static public function formatMessage(\Exception $e, $withClassName = true) 
     {

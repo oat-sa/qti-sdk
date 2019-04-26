@@ -66,7 +66,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var Shape
+     * @var QtiShape
      * @qtism-bean-property
      */
     private $shape;
@@ -76,7 +76,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * The size and position of the hotspot, interpreted in conjunction with the shape.
      *
-     * @var Coords
+     * @var QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -117,7 +117,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgument If one of the constructor's argument is invalid.
+     * @throws \InvalidArgumentException If one of the constructor's argument is invalid.
      */
     public function __construct($identifier, $matchMax, $shape, QtiCoords $coords, $id = '', $class = '', $lang = '', $label = '')
     {

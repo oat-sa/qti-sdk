@@ -46,7 +46,7 @@ class NumberPresentedProcessor extends ItemSubsetProcessor
     /**
 	 * Process the related NumberPresented expression.
 	 *
-	 * @return integer The number of items in the given item sub-set that have been attempted (at least once).
+	 * @return QtiInteger The number of items in the given item sub-set that have been attempted (at least once).
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

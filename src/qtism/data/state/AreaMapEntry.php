@@ -52,7 +52,7 @@ class AreaMapEntry extends QtiComponent
      * The size and position of the area, interpreted in conjunction
      * with the shape.
      *
-     * @var \qtism\common\datatypes\Coords
+     * @var \qtism\common\datatypes\QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -71,7 +71,7 @@ class AreaMapEntry extends QtiComponent
      * Create a new AreaMapEntry object.
      *
      * @param int $shape A value from the Shape enumeration.
-     * @param \qtism\common\datatypes\Coords $coords A Coords object.
+     * @param \qtism\common\datatypes\QtiCoords $coords A Coords object.
      * @param float $mappedValue A mapped value.
      * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration or if $mappedValue is not a float.
      */
@@ -112,7 +112,7 @@ class AreaMapEntry extends QtiComponent
      * Set the size and position of the area, in conjunction with the
      * shape.
      *
-     * @param \qtism\common\datatypes\Coords $coords A Coords object.
+     * @param \qtism\common\datatypes\QtiCoords $coords A QtiCoords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -123,7 +123,7 @@ class AreaMapEntry extends QtiComponent
      * Get the size and position of the area, in conjunction with the
      * shape.
      *
-     * @return \qtism\common\datatypes\Coords A Coords object.
+     * @return \qtism\common\datatypes\QtiCoords A QtiCoords object.
      */
     public function getCoords()
     {

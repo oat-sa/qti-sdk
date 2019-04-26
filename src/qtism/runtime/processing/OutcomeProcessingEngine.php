@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\processing;
 
-use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\rules\RuleProcessorFactory;
 use qtism\data\QtiComponent;
-use qtism\runtime\common\ProcessingException;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\runtime\common\State;
 use qtism\runtime\common\AbstractEngine;
@@ -131,6 +129,7 @@ class OutcomeProcessingEngine extends AbstractEngine
     {
         $context = $this->getContext();
 
+        /** @var OutcomeProcessing $outcomeProcessing */
         $outcomeProcessing = $this->getComponent();
         foreach ($outcomeProcessing->getOutcomeRules() as $rule) {
             $processor = $this->getRuleProcessorFactory()->createProcessor($rule);

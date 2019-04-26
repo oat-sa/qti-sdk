@@ -47,7 +47,7 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
     /**
 	 * Process the related NumberIncorrect expression.
 	 *
-	 * @return integer The number of items in the given sub-set for which at least one of the defined response does not match its associated correct response.
+	 * @return QtiInteger The number of items in the given sub-set for which at least one of the defined response does not match its associated correct response.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

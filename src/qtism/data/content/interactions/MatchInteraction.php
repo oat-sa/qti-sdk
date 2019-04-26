@@ -246,7 +246,7 @@ class MatchInteraction extends BlockInteraction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {

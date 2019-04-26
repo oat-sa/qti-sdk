@@ -41,7 +41,6 @@ use qtism\common\datatypes\QtiScalar;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\State;
 use qtism\common\datatypes\QtiDatatype;
-use \InvalidArgumentException;
 
 /**
  * This class aims at providing the necessary behaviours to
@@ -122,6 +121,7 @@ class Marshaller
      *
      * @param \qtism\runtime\common\State|\qtism\common\datatypes\QtiDatatype|null $unit
      * @return array An array representing the JSON data to be encoded later on.
+     * @throws MarshallingException
      */
     protected function marshallUnit($unit)
     {
@@ -188,6 +188,8 @@ class Marshaller
             return $this->marshallString($scalar);
         } elseif ($scalar instanceof QtiIntOrIdentifier) {
             return $this->marshallIntOrIdentifier($scalar);
+        } else {
+            throw new MarshallingException('Unknown scalar type.', MarshallingException::NOT_SUPPORTED);
         }
     }
 
@@ -210,13 +212,15 @@ class Marshaller
             return $this->marshallDuration($complex);
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
+        } else {
+            throw new MarshallingException('Unknown complex type.', MarshallingException::NOT_SUPPORTED);
         }
     }
 
     /**
      * Marshall a QTI boolean datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Boolean $boolean
+     * @param \qtism\common\datatypes\QtiBoolean $boolean
      * @return array
      */
     protected function marshallBoolean(QtiBoolean $boolean)
@@ -227,7 +231,7 @@ class Marshaller
     /**
      * Marshall a QTI integer datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Integer $integer
+     * @param \qtism\common\datatypes\QtiInteger $integer
      * @return array
      */
     protected function marshallInteger(QtiInteger $integer)
@@ -238,7 +242,7 @@ class Marshaller
     /**
      * Marshall a QTI float datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Float $float
+     * @param \qtism\common\datatypes\QtiFloat $float
      * @return array
      */
     protected function marshallFloat(QtiFloat $float)
@@ -249,7 +253,7 @@ class Marshaller
     /**
      * Marshall a QTI identifier datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Identifier $identifier
+     * @param \qtism\common\datatypes\QtiIdentifier $identifier
      * @return array
      */
     protected function marshallIdentifier(QtiIdentifier $identifier)
@@ -260,7 +264,7 @@ class Marshaller
     /**
      * Marshall a QTI uri datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Uri $uri
+     * @param \qtism\common\datatypes\QtiUri $uri
      * @return array
      */
     protected function marshallUri(QtiUri $uri)
@@ -271,7 +275,7 @@ class Marshaller
     /**
      * Marshall a QTI string datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\String $string
+     * @param \qtism\common\datatypes\QtiString $string
      * @return array
      */
     protected function marshallString(QtiString $string)
@@ -282,7 +286,7 @@ class Marshaller
     /**
      * Marshall a QTI intOrIdentifier datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\IntOrIdentifier $intOrIdentifier
+     * @param \qtism\common\datatypes\QtiIntOrIdentifier $intOrIdentifier
      * @return array
      */
     protected function marshallIntOrIdentifier(QtiIntOrIdentifier $intOrIdentifier)
@@ -293,7 +297,7 @@ class Marshaller
     /**
      * Marshall a QTI point datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Point $point
+     * @param \qtism\common\datatypes\QtiPoint $point
      * @return array
      */
     protected function marshallPoint(QtiPoint $point)
@@ -304,7 +308,7 @@ class Marshaller
     /**
      * Marshall a QTI directedPair datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\DirectedPair $directedPair
+     * @param \qtism\common\datatypes\QtiDirectedPair $directedPair
      * @return array
      */
     protected function marshallDirectedPair(QtiDirectedPair $directedPair)
@@ -315,7 +319,7 @@ class Marshaller
     /**
      * Marshall a QTI pair datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Pair $pair
+     * @param \qtism\common\datatypes\QtiPair $pair
      * @return array
      */
     protected function marshallPair(QtiPair $pair)
@@ -326,7 +330,7 @@ class Marshaller
     /**
      * Marshall a QTI duration datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\Duration $duration
+     * @param \qtism\common\datatypes\QtiDuration $duration
      * @return array
      */
     protected function marshallDuration(QtiDuration $duration)
@@ -337,7 +341,7 @@ class Marshaller
     /**
      * Marshall a QTI file datatype into its PCI JSON Representation.
      *
-     * @param \qtism\common\datatypes\File $file
+     * @param \qtism\common\datatypes\QtiFile $file
      * @return array
      */
     protected function marshallFile(QtiFile $file)

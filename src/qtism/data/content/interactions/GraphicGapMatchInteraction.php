@@ -149,7 +149,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {

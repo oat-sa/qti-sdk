@@ -36,6 +36,7 @@ class AreaMapEntryCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of AreaMapEntry.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of AreaMapEntry.
 	 */
     protected function checkType($value)

@@ -69,7 +69,7 @@ class RoundToProcessor extends OperatorProcessor
      * * The cardinality of the operand is not single.
      * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
      *
-     * @return null|float A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
+     * @return null|QtiFloat A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
      * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
      */
     public function process()

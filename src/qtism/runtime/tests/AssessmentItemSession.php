@@ -32,13 +32,9 @@ use qtism\data\ShowHide;
 use qtism\common\datatypes\QtiScalar;
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\IAssessmentItem;
-use qtism\data\expressions\Correct;
-use qtism\runtime\expressions\CorrectProcessor;
-use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
@@ -52,7 +48,6 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use \DateTime;
-use \InvalidArgumentException;
 use \OutOfBoundsException;
 
 /**
@@ -539,7 +534,7 @@ class AssessmentItemSession extends State
     /**
      * Get the collection of Shuffling object representing how the choices involved in shufflable interactions are actually shuffled.
      * 
-     * @param \qtism\data\state\ShufflingCollection $shufflingStates
+     * @return \qtism\data\state\ShufflingCollection $shufflingStates
      */
     public function getShufflingStates() 
     {
@@ -984,7 +979,7 @@ class AssessmentItemSession extends State
     /**
      * Get the time that remains to the candidate to submit its responses.
      *
-     * @return false|\qtism\common\datatypes\Duration A Duration object or false if there is no time limit.
+     * @return false|\qtism\common\datatypes\QtiDuration A Duration object or false if there is no time limit.
      */
     public function getRemainingTime()
     {
@@ -1058,7 +1053,6 @@ class AssessmentItemSession extends State
      * If the item session has the NOT_SELECTED state, false is directly returned because it is certain that there is no correct response yet in the session.
      *
      * @return boolean
-     * @throws \qtism\runtime\tests\AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
      */
     public function isCorrect()
     {
@@ -1241,6 +1235,7 @@ class AssessmentItemSession extends State
      * 
      * @param integer $shufflingStateIndex The index corresponding to the interaction in the item e.g. 0 for the first interaction of the item.
      * @param integer $choiceIndex The index corresponding to the choice you want to retrieve the identifier.
+     * @return string
      * @throws OutOfBoundsException If no identifier is found at [$shufflingStateIndex,$choiceIndex].
      */
     public function getShuffledChoiceIdentifierAt($shufflingStateIndex, $choiceIndex)
@@ -1361,7 +1356,7 @@ class AssessmentItemSession extends State
      * This method checks whether or not the item can be skipped depending on the current itemSessionControl
      * configuration and the $responses provided to end the attempt.
      * 
-     * @param \qtism\runtime\common\State $state
+     * @param \qtism\runtime\common\State $responses
      * @throws \qtism\runtime\tests\AssessmentItemSessionException If itemSessionControl->allowSkipping is false and the item is being skipped.
      */
     private function checkAllowSkipping(State $responses)

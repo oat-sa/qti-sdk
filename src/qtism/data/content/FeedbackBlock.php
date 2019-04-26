@@ -107,7 +107,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
     /**
      * The identifier of an outcome variable ruling the visibility of the feedbackBlock.
      *
-     * @param string $identifier A QTI identifier.
+     * @param string $outcomeIdentifier A QTI identifier.
      * @throws \InvalidArgumentException If $outcomeIdentifier is an invalid identifier.
      */
     public function setOutcomeIdentifier($outcomeIdentifier)

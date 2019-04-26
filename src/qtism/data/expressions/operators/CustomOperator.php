@@ -142,7 +142,7 @@ class CustomOperator extends Operator implements IExternal, Pure
         if (is_string($definition) === true) {
             $this->definition = $definition;
         } else {
-            $msg = "The 'definition' argument must be a string, '" . gettype($class) . "' given.";
+            $msg = "The 'definition' argument must be a string, '" . gettype($definition) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

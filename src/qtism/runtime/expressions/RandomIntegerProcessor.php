@@ -47,7 +47,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
 	 * * Throws an ExpressionProcessingException if a variable reference is not found in the current state.
 	 * * Throws an ExpressionProcessingException if a variable reference's value is not an integer.
 	 *
-	 * @return integer A random integer value.
+	 * @return QtiInteger A random integer value.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

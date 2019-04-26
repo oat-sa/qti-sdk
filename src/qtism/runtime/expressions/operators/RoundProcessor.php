@@ -48,7 +48,7 @@ class RoundProcessor extends OperatorProcessor
     /**
 	 * Process the Round operator.
 	 *
-	 * @return integer|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
+	 * @return QtiInteger|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

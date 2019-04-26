@@ -45,7 +45,7 @@ class MathConstant extends Expression implements Pure
     /**
 	 * Create a new instance of MathConstant.
 	 *
-	 * @param int $value A value from the MathEnumeration enumeration.
+	 * @param int $name A value from the MathEnumeration enumeration.
 	 */
     public function __construct($name)
     {

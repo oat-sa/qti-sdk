@@ -22,6 +22,7 @@
 
 namespace qtism\data\content\xhtml\lists;
 
+use qtism\common\utils\Format;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;

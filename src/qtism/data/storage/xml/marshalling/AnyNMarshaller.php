@@ -41,7 +41,7 @@ class AnyNMarshaller extends OperatorMarshaller
 	 * Unmarshall an AnyN object into a QTI anyN element.
 	 *
 	 * @param QtiComponent $component The AnyN object to marshall.
-	 * @param \DOMElements[] $elements An array of child DOMEelement objects.
+	 * @param \DOMElement[] $elements An array of child DOMEelement objects.
 	 * @return \DOMElement The marshalled QTI anyN element.
 	 */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

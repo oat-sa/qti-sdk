@@ -36,6 +36,7 @@ class ModalFeedbackRuleCollection extends QtiComponentCollection
     /**
      * Checks whether $value is an instance of ModalFeedbackRule.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of ModalFeedbackRule.
      */
     protected function checkType($value)

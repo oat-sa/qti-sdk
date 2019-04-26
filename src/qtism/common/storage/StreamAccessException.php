@@ -58,7 +58,7 @@ class StreamAccessException extends Exception
      * Create a new StreamAccessException object.
      *
      * @param string $message A human-readable message.
-     * @param qtism\common\storage\AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
+     * @param \qtism\common\storage\AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
      * @param integer $code An exception code. See class constants.
      * @param \Exception $previous An optional previously thrown exception.
      */

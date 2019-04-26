@@ -178,7 +178,7 @@ class InlineChoiceInteraction extends InlineInteraction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {

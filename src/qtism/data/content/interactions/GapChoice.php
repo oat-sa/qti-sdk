@@ -131,7 +131,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
             $this->matchMin = $matchMin;
         } else {
             $msg = "The 'matchMin' argument must be a positive integer, '" . gettype($matchMin) . "' given.";
-            throw InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
     }
 

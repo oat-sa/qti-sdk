@@ -36,6 +36,7 @@ class MatchTableEntryCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of MatchTableEntry.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of MatchTableEntry.
 	 */
     protected function checkType($value)

@@ -46,7 +46,7 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
     /**
 	 * Process the related NumberCorrect expression.
 	 *
-	 * @return integer The number of items of the given sub-set for which all the response variables match their associated correct response.
+	 * @return QtiInteger The number of items of the given sub-set for which all the response variables match their associated correct response.
 	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
     public function process()

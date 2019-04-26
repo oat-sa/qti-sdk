@@ -108,7 +108,7 @@ class QtiDuration implements QtiDatatype
      * Create a Duration object from a DateInterval object.
      *
      * @param \DateInterval $interval
-     * @return \qtism\common\datatypes\Duration
+     * @return \qtism\common\datatypes\QtiDuration
      */
     public static function createFromDateInterval(DateInterval $interval)
     {
@@ -161,7 +161,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of days.
      *
-     * @param boolean $total Wether the number of days must be the total of days or simply an offset (default).
+     * @param boolean $total Whether the number of days must be the total of days or simply an offset (default).
      * @return int
      */
     public function getDays($total = false)
@@ -192,7 +192,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of seconds.
      *
-     * @param int $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
+     * @param boolean $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
      * @return int The value of the total duration in seconds.
      */
     public function getSeconds($total = false)
@@ -211,6 +211,13 @@ class QtiDuration implements QtiDatatype
         return $sYears + $sMonths + $sDays + $sHours + $sMinutes + $sSeconds;
     }
 
+    /**
+     * QtiDuration to string
+     *
+     * Returns a string representation of the QtiDuration object, as per ISO8601.
+     *
+     * @return string
+     */
     public function __toString()
     {
         $string = 'P';
@@ -268,7 +275,7 @@ class QtiDuration implements QtiDatatype
      * Whether the duration described by this Duration object is shorter
      * than the one described by $duration.
      *
-     * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
+     * @param \qtism\common\datatypes\QtiDuration $duration A Duration object to compare with this one.
      * @return boolean
      */
     public function shorterThan(QtiDuration $duration)
@@ -280,7 +287,7 @@ class QtiDuration implements QtiDatatype
      * Whether the duration described by this Duration object is longer than or
      * equal to the one described by $duration.
      *
-     * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
+     * @param \qtism\common\datatypes\QtiDuration $duration A Duration object to compare with this one.
      * @return boolean
      */
     public function longerThanOrEquals(QtiDuration $duration)
@@ -293,7 +300,7 @@ class QtiDuration implements QtiDatatype
      *
      * For instance, PT1S + PT1S = PT2S.
      *
-     * @param \qtism\common\datatypes\Duration|\DateInterval $duration A Duration or DateInterval object.
+     * @param \qtism\common\datatypes\QtiDuration|\DateInterval $duration A QtiDuration or DateInterval object.
      */
     public function add($duration)
     {
@@ -316,10 +323,12 @@ class QtiDuration implements QtiDatatype
     }
 
     /**
-     * Subtract a duration to this one. If $duration is greather than or equal to
+     * Subtract a duration to this one. If $duration is greater than or equal to
      * the current duration, a duration of 0 seconds is returned.
      *
      * For instance P2S - P1S = P1S
+     *
+     * @param QtiDuration $duration
      */
     public function sub(QtiDuration $duration)
     {

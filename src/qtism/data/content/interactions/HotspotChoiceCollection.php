@@ -37,6 +37,7 @@ class HotspotChoiceCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of HotspotChoice.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of HotspotChoice.
      */
     protected function checkType($value)

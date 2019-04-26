@@ -47,7 +47,7 @@ class LteProcessor extends OperatorProcessor
     /**
 	 * Process the Lte operator.
 	 *
-	 * @return boolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
+	 * @return QtiBoolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

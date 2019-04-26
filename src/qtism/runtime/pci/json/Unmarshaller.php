@@ -24,6 +24,7 @@
 namespace qtism\runtime\pci\json;
 
 use qtism\common\datatypes\files\FileManager;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -38,7 +39,6 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\common\State;
 use qtism\common\utils\Arrays;
 use \InvalidArgumentException;
 
@@ -103,7 +103,8 @@ class Unmarshaller
      *
      * @param string|array $json The json data to be transformed.
      * @throws \qtism\runtime\pci\json\UnmarshallingException If an error occurs while processing $json.
-     * @return null|qtism\common\datatypes\QtiDataType|array
+     * @throws FileManagerException
+     * @return null|\qtism\common\datatypes\QtiDatatype|array
      */
     public function unmarshall($json)
     {
@@ -217,7 +218,8 @@ class Unmarshaller
      *
      * @param array $unit
      * @throws \qtism\runtime\pci\json\UnmarshallingException
-     * @return null|qtism\common\datatypes\QtiDatatype
+     * @throws FileManagerException
+     * @return null|\qtism\common\datatypes\QtiDatatype
      */
     protected function unmarshallUnit(array $unit)
     {
@@ -292,7 +294,7 @@ class Unmarshaller
      * Unmarshall a boolean JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Boolean
+     * @return \qtism\common\datatypes\QtiBoolean
      */
     protected function unmarshallBoolean(array $unit)
     {
@@ -303,7 +305,7 @@ class Unmarshaller
      * Unmarshall an integer JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Integer
+     * @return \qtism\common\datatypes\QtiInteger
      */
     protected function unmarshallInteger(array $unit)
     {
@@ -314,7 +316,7 @@ class Unmarshaller
      * Unmarshall a float JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Float
+     * @return \qtism\common\datatypes\QtiFloat
      */
     protected function unmarshallFloat(array $unit)
     {
@@ -331,7 +333,7 @@ class Unmarshaller
      * Unmarshall a string JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\String
+     * @return \qtism\common\datatypes\QtiString
      */
     protected function unmarshallString(array $unit)
     {
@@ -342,7 +344,7 @@ class Unmarshaller
      * Unmarshall a point JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Point
+     * @return \qtism\common\datatypes\QtiPoint
      */
     protected function unmarshallPoint(array $unit)
     {
@@ -353,7 +355,7 @@ class Unmarshaller
      * Unmarshall a pair JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Pair
+     * @return \qtism\common\datatypes\QtiPair
      */
     protected function unmarshallPair(array $unit)
     {
@@ -364,7 +366,7 @@ class Unmarshaller
      * Unmarshall a directed pair JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\DirectedPair
+     * @return \qtism\common\datatypes\QtiDirectedPair
      */
     protected function unmarshallDirectedPair(array $unit)
     {
@@ -375,7 +377,7 @@ class Unmarshaller
      * Unmarshall a duration JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Duration
+     * @return \qtism\common\datatypes\QtiDuration
      */
     protected function unmarshallDuration(array $unit)
     {
@@ -386,7 +388,8 @@ class Unmarshaller
      * Unmarshall a duration JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\File
+     * @return \qtism\common\datatypes\QtiFile
+     * @throws FileManagerException
      */
     protected function unmarshallFile(array $unit)
     {
@@ -399,7 +402,7 @@ class Unmarshaller
      * Unmarshall a duration JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Uri
+     * @return \qtism\common\datatypes\QtiUri
      */
     protected function unmarshallUri(array $unit)
     {
@@ -410,7 +413,7 @@ class Unmarshaller
      * Unmarshall an intOrIdentifier JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\IntOrIdentifier
+     * @return \qtism\common\datatypes\QtiIntOrIdentifier
      */
     protected function unmarshallIntOrIdentifier(array $unit)
     {
@@ -421,7 +424,7 @@ class Unmarshaller
      * Unmarshall an identifier JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\Identifier
+     * @return \qtism\common\datatypes\QtiIdentifier
      */
     protected function unmarshallIdentifier(array $unit)
     {

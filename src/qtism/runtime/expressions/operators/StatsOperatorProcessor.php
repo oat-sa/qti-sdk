@@ -61,7 +61,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
 	 * Process the StatsOperator.
 	 *
-	 * @return float A single float or NULL if the sub-expression or any value contained therein is NULL.
+	 * @return QtiFloat A single float or NULL if the sub-expression or any value contained therein is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()
@@ -90,7 +90,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
     /**
 	 *
-	 * @return null|qtism\common\datatypes\Float
+	 * @return null|\qtism\common\datatypes\QtiFloat
 	 */
     protected function processMean()
     {

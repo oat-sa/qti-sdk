@@ -125,6 +125,7 @@ class FileSystemFileManager implements FileManager
     /**
      * Delete a FileSystemFile object from the persistence.
      *
+     * @param QtiFile $file
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function delete(QtiFile $file)

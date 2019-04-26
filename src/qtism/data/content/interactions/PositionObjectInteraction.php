@@ -58,7 +58,7 @@ class PositionObjectInteraction extends Interaction
      * several position object interactions and is therefore defined in a class
      * of its own: positionObjectStage.
      *
-     * @var \qtism\common\datatypes\Point
+     * @var \qtism\common\datatypes\QtiPoint
      * @qtism-bean-property
      */
     private $centerPoint = null;
@@ -119,7 +119,7 @@ class PositionObjectInteraction extends Interaction
      * Set the centerPoint attribute. Give the null value if there is no centerPoint
      * specified.
      *
-     * @param \qtism\common\datatypes\Point $centerPoint A Point object or null.
+     * @param \qtism\common\datatypes\QtiPoint $centerPoint A Point object or null.
      */
     public function setCenterPoint(QtiPoint $centerPoint = null)
     {
@@ -130,7 +130,7 @@ class PositionObjectInteraction extends Interaction
      * Get the centerPoint attribute. The null value is returned if there is no centerPoint
      * specified.
      *
-     * @return \qtism\common\datatypes\Point A Point object or null.
+     * @return \qtism\common\datatypes\QtiPoint A Point object or null.
      */
     public function getCenterPoint()
     {
@@ -238,7 +238,7 @@ class PositionObjectInteraction extends Interaction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {

@@ -37,6 +37,7 @@ class PositionObjectInteractionCollection extends QtiComponentCollection
     /**
      * Check whether $value is a PositionObjectInteraction.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not a PositionObjectInteraction object.
      */
     protected function checkType($value)

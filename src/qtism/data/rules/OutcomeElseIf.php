@@ -70,7 +70,7 @@ class OutcomeElseIf extends QtiComponent
     /**
 	 * Get the expression to be evaluated with the Else If statement.
 	 *
-	 * @return \qtism\data\expressionsExpression An Expression object.
+	 * @return \qtism\data\expressions\Expression An Expression object.
 	 */
     public function getExpression()
     {

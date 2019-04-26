@@ -115,7 +115,7 @@ class TestVariables extends ItemSubset
             $this->variableIdentifier = $variableIdentifier;
         } else {
             $msg = "'${variableIdentifier}' is not a valid QTI Identifier.";
-            throw new InvalidArgumentException($variableIdentifier);
+            throw new InvalidArgumentException($msg);
         }
     }
 

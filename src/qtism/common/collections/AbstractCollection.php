@@ -143,7 +143,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      * Wether a offset exists.
      *
      * @param mixed $offset An offset to check for.
-     * @return Wether the offset exist.
+     * @return boolean Wether the offset exist.
      */
     public function offsetExists($offset)
     {
@@ -155,7 +155,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      * value is returned.
      *
      * @param mixed $offset The offset to retrieve.
-     * @return mixex The value at specified offset.
+     * @return mixed The value at specified offset.
      */
     public function offsetGet($offset)
     {
@@ -336,7 +336,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
     /**
      * Merge the collection with another one.
      *
-     * @param qtism\common\collections\AbstractCollection $collection
+     * @param \qtism\common\collections\AbstractCollection $collection
      * @throws \InvalidArgumentException If $collection is not a subclass of the target of the call.
      */
     public function merge(AbstractCollection $collection)

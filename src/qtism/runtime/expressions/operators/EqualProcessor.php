@@ -67,7 +67,7 @@ class EqualProcessor extends OperatorProcessor
     /**
 	 * Process the Equal operator.
 	 *
-	 * @return boolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
+	 * @return QtiBoolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
     public function process()

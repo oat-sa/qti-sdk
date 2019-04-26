@@ -23,6 +23,7 @@
 namespace qtism\data\content;
 
 use \InvalidArgumentException;
+use qtism\common\utils\Format;
 
 /**
  * From IMS QTI:

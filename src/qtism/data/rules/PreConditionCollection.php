@@ -36,6 +36,7 @@ class PreConditionCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of PreCondition.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of PreCondition.
 	 */
     protected function checkType($value)

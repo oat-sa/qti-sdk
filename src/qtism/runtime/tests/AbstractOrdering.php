@@ -23,7 +23,6 @@
 
 namespace qtism\runtime\tests;
 
-use qtism\data\rules\Ordering;
 use qtism\data\AssessmentSection;
 
 /**

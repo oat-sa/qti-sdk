@@ -36,6 +36,7 @@ class InlineChoiceCollection extends QtiComponentCollection
     /**
      * Check whether $value is an instance of InlineChoice.
      *
+     * @param mixed $value
      * @throws \InvalidArgumentException If $value is not an instance of InlineChoice.
      */
     protected function checkType($value)

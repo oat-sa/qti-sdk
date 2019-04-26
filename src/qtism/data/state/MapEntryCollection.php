@@ -36,6 +36,7 @@ class MapEntryCollection extends QtiComponentCollection
     /**
 	 * Check if a given $value is an instance of MapEntry.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If the given $value is not an instance of MapEntry.
 	 */
     protected function checkType($value)

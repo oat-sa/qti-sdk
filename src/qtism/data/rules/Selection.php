@@ -72,6 +72,7 @@ class Selection extends QtiComponent implements IExternal
 	 *
 	 * @param int $select The number of child elements to be selected.
 	 * @param boolean $withReplacement Selection (combinations) with or without replacement.
+     * @param string $xmlString
 	 * @throws \InvalidArgumentException If $select is not a valid integer or if $withReplacement is not a valid boolean.
 	 */
     public function __construct($select, $withReplacement = false, $xmlString = '')
@@ -107,6 +108,7 @@ class Selection extends QtiComponent implements IExternal
             $this->select = $select;
         } else {
             $msg = "Select must be an integer, '" . gettype($select) . "' given.";
+            throw new InvalidArgumentException($msg);
         }
     }
 

@@ -33,6 +33,7 @@ class Url
      * Remove leading and trailing slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URL
      * or $urlComponent.
      *
+     * @param string $urlComponent
      * @return The trimmed URL or URL component.
      */
     public static function trim($urlComponent)
@@ -46,6 +47,7 @@ class Url
      * Remove leading slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URL
      * or $urlComponent.
      *
+     * @param string $urlComponent
      * @return The trimmed URL or URL component.
      */
     public static function ltrim($urlComponent)
@@ -57,6 +59,7 @@ class Url
      * Remove trailing slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URL
      * or $urlComponent.
      *
+     * @param string $urlComponent
      * @return The trimmed URL or URL component.
      */
     public static function rtrim($urlComponent)

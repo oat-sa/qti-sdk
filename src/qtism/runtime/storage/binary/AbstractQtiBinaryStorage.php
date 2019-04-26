@@ -91,6 +91,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      *
      * @param integer $config (optional) The configuration to be taken into account for the instantiated AssessmentTestSession object.
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
+     * @throws StorageException
      * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.
      */
     public function instantiate($config = 0, $sessionId = '')
@@ -222,6 +223,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * Retrieve an AssessmentTestSession object from storage by $sessionId.
      *
      * @param string $sessionId
+     * @return AssessmentTestSession
      * @throws \qtism\runtime\storage\common\StorageException If the AssessmentTestSession could not be retrieved from persistent binary storage.
      */
     public function retrieve($sessionId)

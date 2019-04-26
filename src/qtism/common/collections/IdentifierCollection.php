@@ -35,6 +35,7 @@ class IdentifierCollection extends StringCollection
     /**
      * Check if $value is a valid QTI Identifier.
      *
+     * @param mixed $value A given value.
      * @throws \InvalidArgumentException If $value is not a valid QTI Identifier.
      */
     protected function checkType($value)
@@ -48,6 +49,13 @@ class IdentifierCollection extends StringCollection
         }
     }
 
+    /**
+     * IdentifierCollection to string
+     *
+     * Returns the collection as a string. The identifiers are separated with commas (',').
+     *
+     * @return string
+     */
     public function __toString()
     {
         $strArray = array();
