@@ -1394,11 +1394,11 @@ class AssessmentTestSession extends State
             // Get the constraints from all places in the Assessment Test.
             $places = (AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_SECTION | AssessmentTestPlace::ASSESSMENT_ITEM);
         }
-    
-        $route = $this->getRoute();
+
         $navigationMode = $this->getCurrentNavigationMode();
         $routeItem = $this->getCurrentRouteItem();
         $durationStore = $this->getDurationStore();
+        $constraints = new TimeConstraintCollection();
     
         if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
             $source = $routeItem->getAssessmentTest();
