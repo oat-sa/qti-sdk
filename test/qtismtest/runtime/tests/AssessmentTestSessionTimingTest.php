@@ -3,6 +3,7 @@ namespace qtismtest\runtime\tests;
 
 use qtism\runtime\tests\AssessmentItemSession;
 
+use qtism\runtime\tests\TimeConstraintCollection;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\common\datatypes\QtiIdentifier;
@@ -223,6 +224,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->setTime(self::createDate('2014-07-14 13:00:02', 'Europe/Luxembourg'));
         $session->beginAttempt();
         $timeConstraints = $session->getTimeConstraints();
+        $this->assertInstanceOf(TimeConstraintCollection::class, $timeConstraints);
         $this->assertEquals(4, count($timeConstraints));
         
         // AssessmentTest level
