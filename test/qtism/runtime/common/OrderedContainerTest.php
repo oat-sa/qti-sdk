@@ -38,6 +38,11 @@ class OrderedContainerTest extends QtiSmTestCase {
 		$this->assertEquals(BaseType::INTEGER, $container->getBaseType());
 		$this->assertEquals(Cardinality::ORDERED, $container->getCardinality());
 	}
+
+    public function testEqualsNull() {
+        $container = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10)));
+        $this->assertFalse($container->equals(null));
+    }
 	
 	public function equalsValidProvider() {
 		return array(
