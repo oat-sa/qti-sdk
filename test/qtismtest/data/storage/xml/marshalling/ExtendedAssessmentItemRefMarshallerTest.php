@@ -43,7 +43,36 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('Q01', $element->getAttribute('identifier'));
 		$this->assertEquals('./q01.xml', $element->getAttribute('href'));
 		$this->assertEquals('', $element->getAttribute('endAttemptIdentifiers'));
+		$this->assertFalse($element->hasAttribute('title'));
+		$this->assertFalse($element->hasAttribute('label'));
 	}
+
+    public function testMarshallMinimalWithTitle() {
+        $factory = new CompactMarshallerFactory();
+        $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+        $component->setTitle('A title');
+        $marshaller = $factory->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('assessmentItemRef', $element->nodeName);
+        $this->assertTrue($element->hasAttribute('title'));
+        $this->assertEquals('A title', $element->getAttribute('title'));
+        $this->assertFalse($element->hasAttribute('label'));
+    }
+
+    public function testMarshallMinimalWithLabel() {
+        $factory = new CompactMarshallerFactory();
+        $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+        $component->setLabel('A label');
+        $marshaller = $factory->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('assessmentItemRef', $element->nodeName);
+        $this->assertTrue($element->hasAttribute('label'));
+        $this->assertEquals('A label', $element->getAttribute('label'));
+    }
 	
 	public function testUnmarshallMinimal() {
 		$factory = new CompactMarshallerFactory();
@@ -61,7 +90,35 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('Q01', $component->getIdentifier());
 		$this->assertEquals('./q01.xml', $component->getHref());
 		$this->assertEquals(0, count($component->getEndAttemptIdentifiers()));
+		$this->assertFalse($component->hasTitle());
+		$this->assertFalse($component->hasLabel());
 	}
+
+    public function testUnmarshallMinimalWithTitle() {
+        $factory = new CompactMarshallerFactory();
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" title="A title" timeDependent="false"/>');
+        $element = $dom->documentElement;
+        $marshaller = $factory->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertTrue($component->hasTitle());
+        $this->assertEquals('A title', $component->getTitle());
+    }
+
+    public function testUnmarshallMinimalWithLabel() {
+        $factory = new CompactMarshallerFactory();
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" label="A label" timeDependent="false"/>');
+        $element = $dom->documentElement;
+        $marshaller = $factory->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertTrue($component->hasLabel());
+        $this->assertEquals('A label', $component->getLabel());
+    }
 	
 	/**
 	 * @depends testMarshallMinimal
