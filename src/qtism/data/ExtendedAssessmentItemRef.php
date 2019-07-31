@@ -141,6 +141,13 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $responseValidityConstraints;
 
     /**
+     * @var string
+     */
+    private $title = '';
+
+    private $label = '';
+
+    /**
      * Create a new instance of CompactAssessmentItem
      *
      * @param string $identifier A QTI Identifier.
@@ -580,5 +587,33 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         );
 
         return new QtiComponentCollection($components);
+    }
+
+    public function setTitle($title)
+    {
+        if (gettype($title) === 'string') {
+            $this->title = $title;
+        } else {
+            throw new InvalidArgumentException("The title argument must be a string, '" . gettype($title) . "' given.");
+        }
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setLabel($label)
+    {
+        if (gettype($label) === 'string') {
+            $this->label = $label;
+        } else {
+            throw new InvalidArgumentException("The label argument must be a string, '" . gettype($label) . "' given.'");
+        }
+    }
+
+    public function getLabel()
+    {
+        return $this->label;
     }
 }
