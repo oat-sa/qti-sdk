@@ -169,4 +169,14 @@ interface IAssessmentItem extends QtiIdentifiable
      * @return \qtism\data\state\ResponseValidityConstraintCollection
      */
     public function getResponseValidityConstraints();
+
+    public function setTitle($title);
+
+    public function getTitle();
+
+    public function setLabel($label);
+
+    public function getLabel();
+
+    public function hasLabel();
 }
