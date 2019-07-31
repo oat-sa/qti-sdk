@@ -668,4 +668,36 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
             array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml')
         );
     }
+
+    public function testCreateFromAssessmentTestTitleAndLabels()
+    {
+        $doc = new XmlDocument('2.1');
+        $file = self::samplesDir() . 'custom/extended_title_label.xml';
+        $doc->load($file);
+        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
+
+        $assessmentItemRefs = $compactDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef');
+        $this->assertEquals(3, count($assessmentItemRefs));
+
+        $assessmentItemRef = $assessmentItemRefs[0];
+        $this->assertEquals('Q01', $assessmentItemRef->getIdentifier());
+        $this->assertEquals('Unattended Luggage', $assessmentItemRef->getTitle());
+        $this->assertTrue($assessmentItemRef->hasTitle());
+        $this->assertSame('', $assessmentItemRef->getLabel());
+        $this->assertFalse($assessmentItemRef->hasLabel());
+
+        $assessmentItemRef = $assessmentItemRefs[1];
+        $this->assertEquals('Q02', $assessmentItemRef->getIdentifier());
+        $this->assertEquals('Unattended Luggage', $assessmentItemRef->getTitle());
+        $this->assertTrue($assessmentItemRef->hasTitle());
+        $this->assertEquals('My Label', $assessmentItemRef->getLabel());
+        $this->assertTrue($assessmentItemRef->hasLabel());
+
+        $assessmentItemRef = $assessmentItemRefs[2];
+        $this->assertEquals('Q03', $assessmentItemRef->getIdentifier());
+        $this->assertEquals('Unattended Luggage', $assessmentItemRef->getTitle());
+        $this->assertTrue($assessmentItemRef->hasTitle());
+        $this->assertSame('', $assessmentItemRef->getLabel());
+        $this->assertFalse($assessmentItemRef->hasLabel());
+    }
 }

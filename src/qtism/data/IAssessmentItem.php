@@ -169,4 +169,52 @@ interface IAssessmentItem extends QtiIdentifiable
      * @return \qtism\data\state\ResponseValidityConstraintCollection
      */
     public function getResponseValidityConstraints();
+
+
+    /**
+     * Set the title.
+     *
+     * Set the title of the assessmentItem.
+     *
+     * @param string $title
+     * @throws \InvalidArgumentException
+     */
+    public function setTitle($title);
+
+    /**
+     * Get the title.
+     *
+     * Get the title of the assessmentItem.
+     *
+     * @return string
+     */
+    public function getTitle();
+
+    /**
+     * Set the label.
+     *
+     * Set the label of the assessmentItem
+     *
+     * @param $label
+     * @throws \InvalidArgumentException
+     */
+    public function setLabel($label);
+
+    /**
+     * Get the label.
+     *
+     * Get the label of the assessmentItem.
+     *
+     * @return string
+     */
+    public function getLabel();
+
+    /**
+     * Has a label.
+     *
+     * Whether or not the assessmentItem has a label.
+     *
+     * @return string
+     */
+    public function hasLabel();
 }

@@ -23,6 +23,7 @@
 namespace qtism\data\storage\xml;
 
 use qtism\common\collections\IdentifierCollection;
+use qtism\data\AssessmentItem;
 use qtism\data\TestFeedbackRef;
 use qtism\data\content\RubricBlockRef;
 use qtism\data\QtiComponentIterator;
@@ -289,7 +290,8 @@ class XmlCompactDocument extends XmlDocument
             // Resolve external documents.
             $doc->xInclude();
             $doc->resolveTemplateLocation();
-            
+
+            /** @var AssessmentItem $item */
             $item = $doc->getDocumentComponent();
 
             foreach ($item->getResponseDeclarations() as $resp) {
@@ -321,6 +323,8 @@ class XmlCompactDocument extends XmlDocument
             $compactAssessmentItemRef->setTimeDependent($item->isTimeDependent());
             $compactAssessmentItemRef->setEndAttemptIdentifiers($item->getEndAttemptIdentifiers());
             $compactAssessmentItemRef->setResponseValidityConstraints($item->getResponseValidityConstraints());
+            $compactAssessmentItemRef->setTitle($item->getTitle());
+            $compactAssessmentItemRef->setLabel($item->getLabel());
         } catch (Exception $e) {
             $msg = "An error occured while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);

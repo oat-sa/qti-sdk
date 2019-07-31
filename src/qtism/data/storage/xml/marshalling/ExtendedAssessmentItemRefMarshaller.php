@@ -95,6 +95,14 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         
         $this->setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
         $this->setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+
+        if ($component->hasTitle() === true) {
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
+        }
+
+        if ($component->hasLabel() === true) {
+            $this->setDOMElementAttribute($element, 'label', $component->getLabel());
+        }
         
         $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
         if (count($endAttemptIdentifiers) > 0) {
@@ -213,6 +221,14 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             if (count($identifiersArray) > 0) {
                 $compactAssessmentItemRef->setEndAttemptIdentifiers(new IdentifierCollection($identifiersArray));
             }
+        }
+
+        if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
+            $compactAssessmentItemRef->setTitle($title);
+        }
+
+        if (($label = $this->getDOMElementAttributeAs($element, 'label')) !== null) {
+            $compactAssessmentItemRef->setLabel($label);
         }
 
         return $compactAssessmentItemRef;
