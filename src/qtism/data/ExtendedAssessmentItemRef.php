@@ -142,9 +142,14 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 
     /**
      * @var string
+     * @qtism-bean-property
      */
     private $title = '';
 
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
     private $label = '';
 
     /**
@@ -603,6 +608,11 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         return $this->title;
     }
 
+    public function hasTitle()
+    {
+        return !empty($this->getTitle());
+    }
+
     public function setLabel($label)
     {
         if (gettype($label) === 'string') {
@@ -615,5 +625,10 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     public function getLabel()
     {
         return $this->label;
+    }
+
+    public function hasLabel()
+    {
+        return !empty($this->getLabel());
     }
 }
