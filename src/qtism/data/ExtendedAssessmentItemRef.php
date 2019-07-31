@@ -22,6 +22,7 @@
 
 namespace qtism\data;
 
+use qtism\common\utils\Format;
 use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\content\ModalFeedbackRule;
 use qtism\data\state\ResponseDeclaration;
@@ -115,7 +116,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $modalFeedbackRules;
     
     /**
-     * The template processing found in the referenced assessmentIem.
+     * The template processing found in the referenced assessmentItem.
      * 
      * @var \qtism\data\processing\TemplateProcessing
      * @qtism-bean-property
@@ -141,12 +142,16 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $responseValidityConstraints;
 
     /**
+     * The title found in the referenced assessmentItem.
+     *
      * @var string
      * @qtism-bean-property
      */
     private $title = '';
 
     /**
+     * The label found (if any) in the referenced assessmentItem.
+     *
      * @var string
      * @qtism-bean-property
      */
@@ -594,6 +599,14 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         return new QtiComponentCollection($components);
     }
 
+    /**
+     * Set the title.
+     *
+     * Set the title found in the referenced assessmentItem.
+     *
+     * @param $title
+     * @throws InvalidArgumentException
+     */
     public function setTitle($title)
     {
         if (gettype($title) === 'string') {
@@ -603,30 +616,66 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         }
     }
 
+    /**
+     * Get the title.
+     *
+     * Get the title found in the referenced assessmentItem.
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * Has a title.
+     *
+     * Whether or not a title was found in the referenced assessmentItem.
+     *
+     * @return bool
+     */
     public function hasTitle()
     {
         return !empty($this->getTitle());
     }
 
+    /**
+     * Set the label.
+     *
+     * Set the label found in the referenced assessmentItem.
+     *
+     * @param $label
+     * @throws InvalidArgumentException
+     */
     public function setLabel($label)
     {
-        if (gettype($label) === 'string') {
+        if (Format::isString256($label)) {
             $this->label = $label;
         } else {
-            throw new InvalidArgumentException("The label argument must be a string, '" . gettype($label) . "' given.'");
+            throw new InvalidArgumentException("The label argument must be a string with at most 256 characters.'");
         }
     }
 
+    /**
+     * Get the label.
+     *
+     * Get the label (if any) found in the referenced assessmentItem.
+     *
+     * @return string
+     */
     public function getLabel()
     {
         return $this->label;
     }
 
+    /**
+     * Has a label.
+     *
+     * Whether or not a label was found in the referenced assessmentItem.
+     *
+     * @return bool
+     */
     public function hasLabel()
     {
         return !empty($this->getLabel());
