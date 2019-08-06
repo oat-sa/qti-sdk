@@ -2182,11 +2182,13 @@ class AssessmentTestSession extends State
     /**
      * Get an assessment item session.
      *
+     * Get an AssessmentItemSession object based on $assessmentItemRef and $occurence.
+     *
      * @param \qtism\data\AssessmentItemRef $assessmentItemRef
      * @param integer $occurence
      * @return \qtism\runtime\tests\AssessmentItemSession|false
      */
-    protected function getItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
+    public function getItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
     {
         $store = $this->getAssessmentItemSessionStore();
         if ($store->hasAssessmentItemSession($assessmentItemRef, $occurence) === true) {
@@ -2420,7 +2422,7 @@ class AssessmentTestSession extends State
      *
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is currently not running.
      */
-    protected function moveNextTestPart()
+    public function moveNextTestPart()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
@@ -2443,7 +2445,7 @@ class AssessmentTestSession extends State
      *
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
      */
-    protected function moveNextAssessmentSection()
+    public function moveNextAssessmentSection()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.";
