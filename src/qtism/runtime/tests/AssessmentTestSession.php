@@ -2182,17 +2182,17 @@ class AssessmentTestSession extends State
     /**
      * Get an assessment item session.
      *
-     * Get an AssessmentItemSession object based on $assessmentItemRef and $occurence.
+     * Get an AssessmentItemSession object based on $assessmentItemRef and $occurrence.
      *
      * @param \qtism\data\AssessmentItemRef $assessmentItemRef
-     * @param integer $occurence
+     * @param integer $occurrence
      * @return \qtism\runtime\tests\AssessmentItemSession|false
      */
-    public function getItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
+    public function getItemSession(AssessmentItemRef $assessmentItemRef, $occurrence = 0)
     {
         $store = $this->getAssessmentItemSessionStore();
-        if ($store->hasAssessmentItemSession($assessmentItemRef, $occurence) === true) {
-            return $store->getAssessmentItemSession($assessmentItemRef, $occurence);
+        if ($store->hasAssessmentItemSession($assessmentItemRef, $occurrence) === true) {
+            return $store->getAssessmentItemSession($assessmentItemRef, $occurrence);
         }
 
         // No such item session found.
