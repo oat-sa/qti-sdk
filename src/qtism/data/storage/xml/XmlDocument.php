@@ -533,7 +533,12 @@ class XmlDocument extends QtiDocument
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
                 $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
                 break;
-            
+
+            case '2.1.0':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                break;
+
             case '2.1.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
                 $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
