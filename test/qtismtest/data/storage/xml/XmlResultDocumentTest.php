@@ -7,6 +7,7 @@ use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
 use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\storage\xml\XmlResultDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
 class XmlResultDocumentTest extends QtiSmTestCase
@@ -43,6 +44,16 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this->assertInstanceOf(\DateTime::class, $testResult->getDatestamp());
 
         $this->assertCount(2, $testResult->getItemVariables());
+    }
 
+    public function testLoadMissingData()
+    {
+        $this->setExpectedException(
+            XmlStorageException::class,
+            'The document could not be validated with XML Schema'
+        );
+
+        $xmlDoc = new XmlResultDocument();
+        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-data.xml', true);
     }
 }
