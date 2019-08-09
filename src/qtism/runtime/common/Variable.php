@@ -523,14 +523,16 @@ abstract class Variable
     {
         $values = new ValueCollection();
 
-        if ($this->getCardinality() === Cardinality::SINGLE) {
-            $values[] = new Value($this->getValue() . '');
-        } elseif ($this->getValue() !== null && ($this->getCardinality() === Cardinality::MULTIPLE || $this->getCardinality() === Cardinality::ORDERED)) {
-            foreach ($this->getValue() as $v) {
-                $values[] = new Value($this->getValue() . '');
+        if ($this->getValue() !== null) {
+            if ($this->getCardinality() === Cardinality::SINGLE) {
+                $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($this->getValue() . '', $this->getBaseType()));
+            } elseif ($this->getValue() !== null && ($this->getCardinality() === Cardinality::MULTIPLE || $this->getCardinality() === Cardinality::ORDERED)) {
+                foreach ($this->getValue() as $v) {
+                    $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($v->getValue() . '', $this->getBaseType()));
+                }
             }
         }
-
+        
         return $values;
     }
 
