@@ -27,8 +27,19 @@ use qtism\data\results\ItemResult;
 use qtism\data\results\SessionStatus;
 use qtism\runtime\tests\AssessmentItemSession;
 
+/**
+ * Class ItemResultBuilder
+ *
+ * This class aims at building ItemResult objects from
+ * AssessmentItemSession objects.
+ */
 class ItemResultBuilder extends AbstractResultBuilder
 {
+    /**
+     * Build ItemResult
+     *
+     * @return ItemResult
+     */
     public function buildResult()
     {
         /** @var AssessmentItemSession $state */
@@ -49,6 +60,13 @@ class ItemResultBuilder extends AbstractResultBuilder
         return $itemResult;
     }
 
+    /**
+     * Get all variables
+     *
+     * Get all the variables held by the AssessmentItemSession.
+     *
+     * @return \qtism\runtime\common\VariableCollection
+     */
     protected function getAllVariables()
     {
         return $this->state->getAllVariables();

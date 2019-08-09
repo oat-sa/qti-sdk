@@ -30,7 +30,14 @@ use qtism\data\results\ResultResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\common\VariableCollection;
 
+/**
+ * Class AbstractResultBuilder
+ *
+ * This abstract class aims at providing a base class for QTI Results
+ * building from AssessmentItemSession and AssessmentTestSession objects.
+ */
 abstract class AbstractResultBuilder
 {
     /**
@@ -38,11 +45,25 @@ abstract class AbstractResultBuilder
      */
     protected $state;
 
+    /**
+     * AbstractResultBuilder constructor.
+     *
+     * Create a new AbstractResultBuilder based object.
+     *
+     * @param State $state
+     */
     public function __construct(State $state)
     {
         $this->state = $state;
     }
 
+    /**
+     * Build Variables
+     *
+     * Build the ItemVariable objects contained in the target State object.
+     *
+     * @return ItemVariableCollection
+     */
     protected function buildVariables() {
         $itemVariables = new ItemVariableCollection();
 
@@ -80,7 +101,19 @@ abstract class AbstractResultBuilder
         return $itemVariables;
     }
 
+    /**
+     * Get All Variables
+     *
+     * Get all the variables to be serialized as ItemVariable objects.
+     *
+     * @return VariableCollection
+     */
     abstract protected function getAllVariables();
 
+    /**
+     * Trigger the build.
+     *
+     * @return mixed
+     */
     abstract public function buildResult();
 }

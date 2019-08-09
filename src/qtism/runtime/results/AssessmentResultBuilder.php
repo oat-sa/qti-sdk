@@ -31,9 +31,20 @@ use qtism\data\results\TestResult;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentTestSession;
 
+/**
+ * Class AssessmentResultBuilder
+ *
+ * This class aims at building QTI AssessmentResult objects from a given
+ * AssessmentTestSession object.
+ */
 class AssessmentResultBuilder extends AbstractResultBuilder
 {
 
+    /**
+     * Build Result
+     *
+     * @return AssessmentResult
+     */
     public function buildResult()
     {
         /** @var AssessmentTestSession $state */
@@ -68,6 +79,13 @@ class AssessmentResultBuilder extends AbstractResultBuilder
         return $assessmentResult;
     }
 
+    /**
+     * Get the variables
+     *
+     * Get the variables representing the intrinsic state of the AssessmentTestSession.
+     *
+     * @return \qtism\runtime\common\VariableCollection
+     */
     protected function getAllVariables()
     {
         return $this->state->getAllVariables();
