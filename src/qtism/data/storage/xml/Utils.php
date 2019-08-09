@@ -102,6 +102,8 @@ class Utils
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd') {
                     $version = '3.0.0';
                 }
+            } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+                $version = '2.1.0';
             }
         }
         
