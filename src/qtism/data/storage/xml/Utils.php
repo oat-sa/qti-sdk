@@ -104,6 +104,8 @@ class Utils
                 }
             } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
                 $version = '2.1.0';
+            } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+                $version = '2.2.0';
             }
         }
         
