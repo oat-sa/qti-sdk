@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\runtime\common;
 
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 
 use qtismtest\QtiSmTestCase;
@@ -96,7 +97,22 @@ class ResponseVariableTest extends QtiSmTestCase {
 	    $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
 	    $this->assertFalse($responseVariable->isCorrect());
 	}
-	
+
+	public function testGetDataModelValuesSingleCardinality()
+    {
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(10));
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(1, $values);
+        $this->assertSame(10, $values[0]->getValue());
+
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(10.1));
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(1, $values);
+        $this->assertSame(10.1, $values[0]->getValue());
+    }
+
 	public function testClone() {
 	    // value, default value and correct response must be independent after cloning.
 	    $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));

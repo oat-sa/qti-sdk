@@ -26,6 +26,7 @@ namespace qtism\runtime\common;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\data\expressions\operators\IsNull;
+use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
 use qtism\common\enums\Cardinality;
@@ -509,6 +510,30 @@ abstract class Variable
     public function isString()
     {
         return (!$this->isNull() && $this->getBaseType() === BaseType::STRING);
+    }
+
+    /**
+     * Get Data Model Values
+     *
+     * Get the representation of the variable's value in terms of value QTI elements.
+     *
+     * @return ValueCollection
+     */
+    public function getDataModelValues()
+    {
+        $values = new ValueCollection();
+
+        if ($this->getValue() !== null) {
+            if ($this->getCardinality() === Cardinality::SINGLE) {
+                $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($this->getValue() . '', $this->getBaseType()));
+            } elseif ($this->getValue() !== null && ($this->getCardinality() === Cardinality::MULTIPLE || $this->getCardinality() === Cardinality::ORDERED)) {
+                foreach ($this->getValue() as $v) {
+                    $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($v->getValue() . '', $this->getBaseType()));
+                }
+            }
+        }
+        
+        return $values;
     }
 
     /**

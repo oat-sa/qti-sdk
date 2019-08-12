@@ -292,16 +292,15 @@ abstract class MarshallerFactory
         $this->addMappingEntry('hotspotChoice', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
         $this->addMappingEntry('associableHotspot', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
         $this->addMappingEntry('include', 'qtism\\data\\storage\\xml\\marshalling\\XIncludeMarshaller');
-    }
-
-    /**
-	 * Set the associative array which represents the current QTI class <-> Marshaller class mapping.
-	 *
-	 * @param array $mapping An associative array where keys are QTI class names and values are fully qualified PHP class names.
-	 */
-    protected function setMapping(array &$mapping)
-    {
-        $this->mapping = $mapping;
+        $this->addMappingEntry('assessmentResult', 'qtism\\data\\storage\\xml\\marshalling\\AssessmentResultMarshaller');
+        $this->addMappingEntry('context', 'qtism\\data\\storage\\xml\\marshalling\\ContextMarshaller');
+        $this->addMappingEntry('sessionIdentifier', 'qtism\\data\\storage\\xml\\marshalling\\SessionIdentifierMarshaller');
+        $this->addMappingEntry('testResult', 'qtism\\data\\storage\\xml\\marshalling\\TestResultMarshaller');
+        $this->addMappingEntry('itemResult', 'qtism\\data\\storage\\xml\\marshalling\\ItemResultMarshaller');
+        $this->addMappingEntry('responseVariable', 'qtism\\data\\storage\\xml\\marshalling\\ResponseVariableMarshaller');
+        $this->addMappingEntry('candidateResponse', 'qtism\\data\\storage\\xml\\marshalling\\CandidateResponseMarshaller');
+        $this->addMappingEntry('templateVariable', 'qtism\\data\\storage\\xml\\marshalling\\TemplateVariableMarshaller');
+        $this->addMappingEntry('outcomeVariable', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeVariableMarshaller');
     }
 
     /**
