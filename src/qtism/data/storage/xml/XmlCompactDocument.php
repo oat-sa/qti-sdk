@@ -407,7 +407,7 @@ class XmlCompactDocument extends XmlDocument
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
                 } catch (XmlStorageException $e) {
                     $msg = "An error occured while creating external rubrickBlock definition(s).";
-                    throw new XmlStorageException($msg, $e);
+                    throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }
         }
