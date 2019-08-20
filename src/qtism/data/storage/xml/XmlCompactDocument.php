@@ -398,43 +398,16 @@ class XmlCompactDocument extends XmlDocument
     {
         // Take care of rubricBlock explosion. Transform actual rubricBlocks in rubricBlockRefs.
         if ($this->mustExplodeRubricBlocks() === true) {
-
-            // Get all rubricBlock elements...
-            $iterator = new QtiComponentIterator($documentComponent, array('rubricBlock'));
-            $sectionCount = new SplObjectStorage();
-
-            foreach ($iterator as $rubricBlock) {
-                // $section contains the assessmentSection the rubricBlock is related to.
-                $section = $iterator->parent();
-
-                // determine the occurence number of the rubricBlock relative to its section.
-                if (isset($sectionCount[$section]) === false) {
-                    $sectionCount[$section] = 0;
-                }
-
-                $sectionCount[$section] = $sectionCount[$section] + 1;
-                $occurence = $sectionCount[$section];
-
-                // determine a suitable file name for the external rubricBlock definition.
-                $rubricBlockRefId = 'RB_' . $section->getIdentifier() . '_' . $occurence;
-                $href = './rubricBlock_' . $rubricBlockRefId . '.xml';
-
-                $doc = new XmlDocument();
-                $doc->setDocumentComponent($rubricBlock);
-
+            foreach ($this->explodeRubricBlocks() as $href => $rubricBlock) {
                 try {
+                    $doc = new XmlDocument();
+                    $doc->setDocumentComponent($rubricBlock);
+
                     $pathinfo = pathinfo($uri);
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
-
-                    // replace the rubric block with a reference.
-                    $sectionRubricBlocks = $section->getRubricBlocks();
-                    $sectionRubricBlocks->remove($rubricBlock);
-
-                    $sectionRubricBlockRefs = $section->getRubricBlockRefs();
-                    $sectionRubricBlockRefs[] = new RubricBlockRef($rubricBlockRefId, $href);
                 } catch (XmlStorageException $e) {
                     $msg = "An error occured while creating external rubrickBlock definition(s).";
-                    throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
+                    throw new XmlStorageException($msg, $e);
                 }
             }
         }
@@ -487,6 +460,46 @@ class XmlCompactDocument extends XmlDocument
                 } 
             }
         }
+    }
+
+    /**
+     * Explode Rubric Blocks into RubricBlockRefs.
+     *
+     * @return array where keys are RubricBlockRefs href and values are RubricBlocs as QtiComponent objets.
+     */
+    public function explodeRubricBlocks() {
+        // Get all rubricBlock elements...
+        $iterator = new QtiComponentIterator($this->getDocumentComponent(), array('rubricBlock'));
+        $sectionCount = new SplObjectStorage();
+        $references = array();
+
+        foreach ($iterator as $rubricBlock) {
+            // $section contains the assessmentSection the rubricBlock is related to.
+            $section = $iterator->parent();
+
+            // determine the occurence number of the rubricBlock relative to its section.
+            if (isset($sectionCount[$section]) === false) {
+                $sectionCount[$section] = 0;
+            }
+
+            $sectionCount[$section] = $sectionCount[$section] + 1;
+            $occurence = $sectionCount[$section];
+
+            // determine a suitable file name for the external rubricBlock definition.
+            $rubricBlockRefId = 'RB_' . $section->getIdentifier() . '_' . $occurence;
+            $href = './rubricBlock_' . $rubricBlockRefId . '.xml';
+
+            // replace the rubric block with a reference.
+            $sectionRubricBlocks = $section->getRubricBlocks();
+            $sectionRubricBlocks->remove($rubricBlock);
+
+            $sectionRubricBlockRefs = $section->getRubricBlockRefs();
+            $sectionRubricBlockRefs[] = new RubricBlockRef($rubricBlockRefId, $href);
+
+            $references[$href] = $rubricBlock;
+        }
+
+        return $references;
     }
     
     protected function inferVersion()
