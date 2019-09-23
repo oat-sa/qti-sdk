@@ -46,7 +46,9 @@ use \InvalidArgumentException;
  *
  */
 class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule {
-	
+
+	const CLASS_NAME = 'setOutcomeValue';
+
 	/**
 	 * From IMS QTI:
 	 * 
@@ -124,7 +126,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	}
 	
 	public function getQtiClassName() {
-		return 'setOutcomeValue';
+		return self::CLASS_NAME;
 	}
 	
 	public function getComponents() {
