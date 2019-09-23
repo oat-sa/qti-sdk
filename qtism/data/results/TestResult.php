@@ -153,7 +153,7 @@ class TestResult extends QtiComponent
     /**
      * Get all test variables. Can be outcome, response, candidate or tempalte variable
      *
-     * @return mixed
+     * @return ItemVariableCollection
      */
     public function getItemVariables()
     {
