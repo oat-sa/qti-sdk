@@ -24,7 +24,7 @@ use qtism\data\results\CandidateResponse;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
 
 class CandidateResponseMarshallerTest extends QtiSmTestCase
 {

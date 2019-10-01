@@ -133,11 +133,11 @@ class OutcomeVariableMarshaller extends Marshaller
         }
 
         if ($element->hasAttribute('normalMaximum')) {
-            $component->setNormalMaximum(new QtiFloat(floatval($element->getAttribute('normalMaximum'))));
+            $component->setNormalMaximum(new QtiFloat((float) $element->getAttribute('normalMaximum')));
         }
 
         if ($element->hasAttribute('masteryValue')) {
-            $component->setMasteryValue(new QtiFloat(floatval($element->getAttribute('masteryValue'))));
+            $component->setMasteryValue(new QtiFloat((float) $element->getAttribute('masteryValue')));
         }
 
         $valuesElements = self::getChildElementsByTagName($element, 'value');

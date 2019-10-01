@@ -59,7 +59,7 @@ class ItemResult extends QtiComponent
      * Multiplicity [0,1]
      * @var QtiInteger
      */
-    protected $sequenceIndex=null;
+    protected $sequenceIndex;
 
     /**
      * The date stamp of when this result was recorded.
@@ -99,7 +99,7 @@ class ItemResult extends QtiComponent
      * Multiplicity [0,*]
      * @var VariableCollection
      */
-    protected $itemVariables=null;
+    protected $itemVariables;
 
     /**
      * An optional comment supplied by the candidate (see the allowComment in the ASI documentation [QTI, 15a]).
@@ -107,14 +107,14 @@ class ItemResult extends QtiComponent
      * Multiplicity [0,1]
      * @var QtiString
      */
-    protected $candidateComment=null;
+    protected $candidateComment;
 
     /**
      * ItemResult constructor.
      *
      * @param QtiIdentifier $identifier
      * @param DateTime $datestamp
-     * @param $sessionStatus
+     * @param integer $sessionStatus
      * @param ItemVariableCollection|null $itemVariables
      * @param QtiString|null $candidateComment
      * @param QtiInteger|null $sequenceIndex
@@ -207,7 +207,7 @@ class ItemResult extends QtiComponent
     /**
      * Get all test variables. Can be outcome, response, candidate or tempalte variable
      *
-     * @return mixed
+     * @return ItemVariableCollection
      */
     public function getItemVariables()
     {
@@ -287,8 +287,8 @@ class ItemResult extends QtiComponent
      */
     public function setSessionStatus($sessionStatus)
     {
-        $sessionStatus = intval($sessionStatus);
-        if (!in_array($sessionStatus, SessionStatus::asArray())) {
+        $sessionStatus = (int) $sessionStatus;
+        if (!in_array($sessionStatus, SessionStatus::asArray(), true)) {
             $msg = sprintf('Invalid session status. Should be one of "%s"', implode('", "', SessionStatus::asArray()));
             throw new \InvalidArgumentException($msg);
         }

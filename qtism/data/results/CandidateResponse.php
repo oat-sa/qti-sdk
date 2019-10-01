@@ -42,7 +42,7 @@ class CandidateResponse extends QtiComponent
      * Multiplicity [0,*]
      * @var ValueCollection
      */
-    protected $values=null;
+    protected $values;
 
     /**
      * CandidateResponse constructor.

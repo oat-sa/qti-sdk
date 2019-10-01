@@ -23,6 +23,7 @@
 namespace qtism\data\storage\xml;
 
 use DOMElement;
+use LogicException;
 
 /**
  * Class XmlResultDocument
@@ -49,7 +50,7 @@ class XmlResultDocument extends XmlDocument
      * Add Result namespace regarding version
      *
      * @param DOMElement $rootElement
-     * @throws \LogicException if the version is not supported by QTI result
+     * @throws LogicException if the version is not supported by QTI result
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
@@ -66,7 +67,7 @@ class XmlResultDocument extends XmlDocument
                 break;
 
             default:
-                throw new \LogicException('Result xml is not supported for QTI version "' . $version . '"');
+                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
         }
 
         $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");

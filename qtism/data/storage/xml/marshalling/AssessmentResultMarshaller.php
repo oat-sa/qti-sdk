@@ -25,13 +25,15 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use qtism\data\QtiComponent;
 use qtism\data\results\AssessmentResult;
+use qtism\data\results\Context;
 use qtism\data\results\ItemResultCollection;
+use InvalidArgumentException;
 
 /**
  * Class AssessmentResultMarshaller
  *
  * The marshaller to manage serialization between QTI component and DOM Element
- * 
+ *
  * @package qtism\data\storage\xml\marshalling
  */
 class AssessmentResultMarshaller extends Marshaller
@@ -74,10 +76,11 @@ class AssessmentResultMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         try {
+            /** @var Context $context */
             $contextElements = self::getChildElementsByTagName($element, 'context');
             $contextElement = array_shift($contextElements);
             $context = $this->getMarshallerFactory()->createMarshaller($contextElement)->unmarshall($contextElement);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $msg = "An 'assessmentResult' element must contain one 'context' element, none given.";
             throw new UnmarshallingException($msg, $element, $e);
         }

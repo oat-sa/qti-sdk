@@ -31,7 +31,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\results\CandidateResponse;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
 
 class ItemResultMarshallerTest extends QtiSmTestCase
 {

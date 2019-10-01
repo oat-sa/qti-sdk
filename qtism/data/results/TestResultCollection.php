@@ -23,6 +23,7 @@
 namespace qtism\data\result;
 
 use qtism\data\QtiComponentCollection;
+use \InvalidArgumentException;
 
 class TestResultCollection extends QtiComponentCollection
 {
@@ -35,7 +36,7 @@ class TestResultCollection extends QtiComponentCollection
     {
         if (!$value instanceof TestResult) {
             $msg = "TestResultCollection only accepts to store TestResult objects, '" . gettype($value) . "' given.";
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
     }
 }

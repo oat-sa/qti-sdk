@@ -32,7 +32,7 @@ use qtism\data\results\SessionIdentifierCollection;
  * Class ContextMarshaller
  *
  * The marshaller to manage serialization between QTI component and DOM Element
- * 
+ *
  * @package qtism\data\storage\xml\marshalling
  */
 class ContextMarshaller extends Marshaller
@@ -68,7 +68,7 @@ class ContextMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI context element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return Context A QtiComponent object.
      */
     protected function unmarshall(DOMElement $element)
     {

@@ -23,11 +23,10 @@
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\results\SessionIdentifier;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
 
 class ContextMarshallerTest extends QtiSmTestCase
 {

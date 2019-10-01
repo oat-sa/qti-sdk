@@ -52,7 +52,7 @@ class AssessmentResult extends QtiComponent
      * Multiplicity [0,1]
      * @var TestResult
      */
-    protected $testResult=null;
+    protected $testResult;
 
     /**
      * When a test result is given the following item results must relate only to items
@@ -62,7 +62,7 @@ class AssessmentResult extends QtiComponent
      * Multiplicity [0,*]
      * @var ItemResultCollection
      */
-    protected $itemResults=null;
+    protected $itemResults;
 
     /**
      * AssessmentResult constructor.
@@ -179,7 +179,7 @@ class AssessmentResult extends QtiComponent
     }
 
     /**
-     * Set item resutls
+     * Set item results
      *
      * @param ItemResultCollection|null $itemResults
      * @return $this

@@ -133,7 +133,7 @@ class Context extends QtiComponent
     {
         return $this->sessionIdentifiers;
     }
-    
+
     /**
      * Set the Session identifiers
      *

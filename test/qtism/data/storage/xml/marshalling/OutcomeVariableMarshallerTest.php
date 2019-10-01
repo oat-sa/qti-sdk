@@ -31,7 +31,7 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
 use qtism\data\state\Value;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
 
 class OutcomeVariableMarshallerTest extends QtiSmTestCase
 {
