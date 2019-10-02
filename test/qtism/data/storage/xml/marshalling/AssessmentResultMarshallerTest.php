@@ -38,7 +38,7 @@ use qtism\data\results\ItemResult;
 use qtism\data\results\CandidateResponse;
 use qtism\data\results\ItemVariableCollection;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
 
 class AssessmentResultMarshallerTest extends QtiSmTestCase
 {
@@ -153,7 +153,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                 </itemResult>
             </assessmentResult>
         ';
-        
+
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $this->createComponentFromXml($xml);
         $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
