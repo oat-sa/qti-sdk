@@ -43,9 +43,8 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     public function equals($obj)
     {
         $countA = count($this);
-        $countB = count($obj);
 
-        if (gettype($obj) === 'object' && $obj instanceof self && $countA === $countB) {
+        if (gettype($obj) === 'object' && $obj instanceof self && $countA === count($obj)) {
             for ($i = 0; $i < $countA; $i++) {
                 $objA = $this[$i];
                 $objB = $obj[$i];
