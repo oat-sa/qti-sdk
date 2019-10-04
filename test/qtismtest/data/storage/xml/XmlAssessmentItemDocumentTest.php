@@ -58,6 +58,15 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
         $this->assertEquals('2.1.0', $doc->getVersion());
     }
 
+    public function testLoad21NoSchemaLocation()
+    {
+        $file = self::samplesDir() . 'custom/items/2_1/no_schema_location.xml';
+        $doc = new XmlDocument();
+        $doc->load($file, true);
+
+        $this->assertEquals('2.1.0', $doc->getVersion());
+    }
+
     public function testLoad20() {
         $file = self::samplesDir() . 'ims/items/2_0/associate.xml';
         $doc = new XmlDocument();
