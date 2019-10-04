@@ -75,26 +75,22 @@ class Utils
             $rootNs = $root->namespaceURI;
             
             if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
-                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p0');
-                
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd') {
-                    $version = '2.0.0';
-                }
+                $version = '2.0.0';
             } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
                 $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p1');
                 
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd') {
-                    $version = '2.1.0';
-                } else if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
                     $version = '2.1.1';
+                } else {
+                    $version = '2.1.0';
                 }
             } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
                 $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p2');
                 
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd') {
-                    $version = '2.2.0';
-                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
                     $version = '2.2.1';
+                } else {
+                    $version = '2.2.0';
                 }
             } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0') {
                 $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0');
