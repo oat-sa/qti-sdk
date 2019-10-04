@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2  imsqti_v2p2.xsd"
+	identifier="Q02" title="Discriminant of a Quadratic Equation - Question 02" adaptive="false" timeDependent="false">
+	<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+		<correctResponse>
+			<value>discr3</value>
+		</correctResponse>
+	</responseDeclaration>
+	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+		<defaultValue>
+			<value>0</value>
+		</defaultValue>
+	</outcomeDeclaration>
+	<itemBody>
+		<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+			<mrow>
+				<mrow>
+					<!-- a -->
+					<mn>5</mn>
+					<msup>
+						<mi>x</mi>
+						<mn>2</mn>
+					</msup>
+				</mrow>
+				<mo>+</mo>
+				<mrow>
+					<!-- b -->
+					<mn>7</mn>
+					<mi>x</mi>
+				</mrow>
+				<mo>+</mo>
+				<mrow>
+					<!-- c -->
+					<mn>1</mn>
+				</mrow>
+				<mi>=</mi>
+				<mn>0</mn>
+			</mrow>
+		</math>
+		<choiceInteraction id="interaction" responseIdentifier="RESPONSE" shuffle="true" maxChoices="1">
+			<prompt>What is the discriminant of the above quadratic equation?</prompt>
+			<simpleChoice identifier="discr1">-16</simpleChoice>
+			<simpleChoice identifier="discr2">33</simpleChoice>
+			<simpleChoice identifier="discr3">29</simpleChoice>
+			<simpleChoice identifier="discr4">-84</simpleChoice>
+		</choiceInteraction>
+	</itemBody>
+	<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>

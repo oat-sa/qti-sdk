@@ -42,6 +42,33 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
         $this->assertFalse(file_exists($file));
     }
 
+    public function testLoad221()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2_1/choice.xml';
+        $doc = new XmlDocument();
+        $doc->load($file, true);
+
+        $this->assertEquals('2.2.1', $doc->getVersion());
+    }
+
+    public function testLoad22()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2/associate.xml';
+        $doc = new XmlDocument();
+        $doc->load($file, true);
+
+        $this->assertEquals('2.2.0', $doc->getVersion());
+    }
+
+    public function testLoad22NoSchemaLocation()
+    {
+        $file = self::samplesDir() . 'custom/items/2_2/no_schema_location.xml';
+        $doc = new XmlDocument();
+        $doc->load($file, true);
+
+        $this->assertEquals('2.2.0', $doc->getVersion());
+    }
+
     public function testLoad211() {
         $file = self::samplesDir() . 'ims/items/2_1_1/associate.xml';
         $doc = new XmlDocument();
