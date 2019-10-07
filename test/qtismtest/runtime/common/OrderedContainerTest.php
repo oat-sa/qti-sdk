@@ -15,8 +15,8 @@ use qtism\common\enums\BaseType;
 class OrderedContainerTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider equalsValidProvider
-     */
+    * @dataProvider equalsValidProvider
+    */
     public function testEqualsValid($containerA, $containerB)
     {
         $this->assertTrue($containerA->equals($containerB));
@@ -24,8 +24,8 @@ class OrderedContainerTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider equalsInvalidProvider
-     */
+    * @dataProvider equalsInvalidProvider
+    */
     public function testEqualsInvalid($containerA, $containerB)
     {
         $this->assertFalse($containerA->equals($containerB));
