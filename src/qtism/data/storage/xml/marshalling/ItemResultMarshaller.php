@@ -52,7 +52,7 @@ class ItemResultMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
         $element->setAttribute('identifier', $component->getIdentifier());
-        $element->setAttribute('datestamp', $component->getDatestamp()->format(DateTime::ISO8601));
+        $element->setAttribute('datestamp', $component->getDatestamp()->format('c')); // ISO 8601
         $element->setAttribute('sessionStatus', SessionStatus::getNameByConstant($component->getSessionStatus()));
 
         if ($component->hasSequenceIndex()) {

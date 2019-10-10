@@ -100,7 +100,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
     {
         $component = new ItemResult(
             new QtiIdentifier('fixture-identifier'),
-            new DateTime('2018-06-27T09:41:45.529'),
+            new DateTime('2018-06-27T09:41:45.529Z'),
             1,
             new ItemVariableCollection(array(
                 new ResultResponseVariable(
@@ -123,6 +123,8 @@ class ItemResultMarshallerTest extends QtiSmTestCase
 
         $this->assertEquals('fixture-identifier', $element->getAttribute('identifier'));
         $this->assertTrue($element->hasAttribute('datestamp'));
+        $this->assertEquals('2018-06-27T09:41:45+00:00', $element->getAttribute('datestamp'));
+
         $this->assertEquals('initial', $element->getAttribute('sessionStatus'));
         $this->assertEquals(1, $element->getAttribute('sequenceIndex'));
 

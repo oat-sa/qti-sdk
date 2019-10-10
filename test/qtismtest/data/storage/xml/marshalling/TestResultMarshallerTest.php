@@ -82,7 +82,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
     {
         $component = new TestResult(
             new QtiIdentifier('fixture-identifier'),
-            new DateTime('2018-06-27T09:41:45.529'),
+            new DateTime('2018-06-27T09:41:45.529Z'),
             new ItemVariableCollection(array(
                 new ResultResponseVariable(
                     new QtiIdentifier('response-identifier'), 0, new CandidateResponse()
@@ -102,6 +102,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
 
         $this->assertEquals('fixture-identifier', $element->getAttribute('identifier'));
         $this->assertTrue($element->hasAttribute('datestamp'));
+        $this->assertEquals('2018-06-27T09:41:45+00:00', $element->getAttribute('datestamp'));
 
         $this->assertEquals(1,$element->getElementsByTagName('responseVariable')->length);
         $this->assertEquals(1,$element->getElementsByTagName('templateVariable')->length);

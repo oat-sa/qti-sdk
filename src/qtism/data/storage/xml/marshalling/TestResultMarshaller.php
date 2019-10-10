@@ -51,7 +51,7 @@ class TestResultMarshaller extends Marshaller
 
         $element->setAttribute('identifier', $component->getIdentifier());
 
-        $datestamp = $component->getDatestamp()->format(DateTime::ISO8601);
+        $datestamp = $component->getDatestamp()->format('c'); // ISO 8601
         $element->setAttribute('datestamp', $datestamp);
 
         if ($component->hasItemVariables()) {
