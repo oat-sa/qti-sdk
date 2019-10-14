@@ -1842,58 +1842,66 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q03')[0]->getState());
         
         $session->moveNext();
+
+        // -- Q04.
+        // This is an informational item (No interactions/response declarations)
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $this->assertEquals(1, $session['Q04.numAttempts']->getValue());
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q04')[0]->getState());
         
         // !!! ALLOWSKIPPING = TRUE !!!
         
-        // -- Q04.
-        $session->beginAttempt();
-        $session->endAttempt(new State());
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q04')[0]->getState());
-        
-        $session->moveNext();
-        
         // -- Q05.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
+        $session->endAttempt(new State());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q05')[0]->getState());
         
         $session->moveNext();
         
         // -- Q06.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q06')[0]->getState());
+        
+        $session->moveNext();
+        
+        // -- Q07.
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('')))));
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q07')[0]->getState());
         
         $session->moveNext();
         
         /// !!! ALLOWSKIPPING = FALSE, But, ignored because the current submission mode is simultaneous !!!
         
-        // -- Q07.
+        // -- Q08.
         $session->beginAttempt();
         $session->endAttempt(new State());
         
         $session->moveNext();
         
-        // -- Q08.
+        // -- Q09.
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         $session->moveNext();
         
-        // -- Q09.
+        // -- Q10.
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('')))));
         
-        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q07')[0]->getState());
         $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q08')[0]->getState());
         $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q09')[0]->getState());
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q10')[0]->getState());
         
         // Simultaneous submission mode test part ends...
         $session->moveNext();
         
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q07')[0]->getState());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q08')[0]->getState());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q09')[0]->getState());
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q10')[0]->getState());
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
     
