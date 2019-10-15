@@ -1361,7 +1361,8 @@ class AssessmentItemSession extends State
      */
     private function checkAllowSkipping(State $responses)
     {
-        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false) {
+        // In case there are no response variable at all, the item is "skippable" as there is no possibility to provide an answer.
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false && count($this->getResponseVariables(false)) > 0) {
             
             $session = clone $this;
             
@@ -1372,9 +1373,9 @@ class AssessmentItemSession extends State
             }
             
             $state = $session->getResponseVariables(false);
-            
+
             // As per QTI Specification, the allowSkipping attribute is consistent with the numberResponded operator.
-            // In other words, the item can be submitted if at least one non-default value for at least one of the 
+            // In other words, the item can be submitted if at least one non-default value for at least one of the
             // response variables is provided.
             if ($state->containsValuesEqualToVariableDefaultOnly() === true) {
                 throw new AssessmentItemSessionException(

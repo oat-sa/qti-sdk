@@ -45,20 +45,23 @@
                     </defaultValue>
 				</responseDeclaration>
 			</assessmentItemRef>
+
+			<!-- Item with no interactions, no response declarations (informational item). Should be always skippable -->
+			<assessmentItemRef identifier="Q04" href="Q04.xml" timeDependent="false"/>
 		</assessmentSection>
         
         <!-- S02 is exactly the same as S01, but allowSkipping is true. -->
         <assessmentSection identifier="S02" title="Section2" visible="true">
             <!-- Allow skipping for section S02. -->
             <itemSessionControl allowSkipping="true"/>
-			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceA</value>
 					</correctResponse>
 				</responseDeclaration>
 			</assessmentItemRef>
-            <assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false">
+            <assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceB</value>
@@ -68,7 +71,7 @@
                     </defaultValue>
 				</responseDeclaration>
 			</assessmentItemRef>
-            <assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false">
+            <assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceB</value>
@@ -91,14 +94,14 @@
         <assessmentSection identifier="S03" title="Section3" visible="true">
             <!-- Do not allow skipping for section S03 (disabled by testPart's simultaneous submission mode). -->
             <itemSessionControl allowSkipping="false"/>
-			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q08" href="./Q08.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceA</value>
 					</correctResponse>
 				</responseDeclaration>
 			</assessmentItemRef>
-            <assessmentItemRef identifier="Q08" href="./Q08.xml" timeDependent="false">
+            <assessmentItemRef identifier="Q09" href="./Q09.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceB</value>
@@ -108,7 +111,7 @@
                     </defaultValue>
 				</responseDeclaration>
 			</assessmentItemRef>
-            <assessmentItemRef identifier="Q09" href="./Q09.xml" timeDependent="false">
+            <assessmentItemRef identifier="Q10" href="./Q10.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceB</value>
