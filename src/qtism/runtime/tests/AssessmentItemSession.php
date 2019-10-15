@@ -1361,7 +1361,7 @@ class AssessmentItemSession extends State
      */
     private function checkAllowSkipping(State $responses)
     {
-        // In case they are no response variable at all, the item is "skippable" as there is no possibility to provide an answer.
+        // In case there are no response variable at all, the item is "skippable" as there is no possibility to provide an answer.
         if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false && count($this->getResponseVariables(false)) > 0) {
             
             $session = clone $this;
