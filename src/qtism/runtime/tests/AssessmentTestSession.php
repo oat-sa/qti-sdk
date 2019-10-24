@@ -76,7 +76,8 @@ class AssessmentTestSession extends State
     const FORCE_PRECONDITIONS = 2;
     const PATH_TRACKING = 4;
     const ALWAYS_ALLOW_JUMPS = 8;
-    
+    const INITIALIZE_ALL_ITEMS = 16;
+
     /**
      * A unique ID for this AssessmentTestSession.
      *
@@ -671,6 +672,17 @@ class AssessmentTestSession extends State
      */
     public function mustAlwaysAllowJumps() {
         return (bool) ($this->getConfig() & self::ALWAYS_ALLOW_JUMPS);
+    }
+
+    /**
+     * Know whether or not to initialize all items.
+     *
+     * When turned on, all items will be initialized, it can be useful in case with branching rules, if you need to have all items.
+     *
+     * @return boolean
+     */
+    public function mustInitializeAllItems() {
+        return (bool) ($this->getConfig() & self::INITIALIZE_ALL_ITEMS);
     }
     
     /**
@@ -2136,9 +2148,17 @@ class AssessmentTestSession extends State
                 // have already been initialized previously.
                 
             } elseif ($this->isAdaptive($testPart->getIdentifier()) === true) {
-                // The current testPart is adaptive, but some others are not.
-                // Just initialize a session for the current routeItem.
-                $this->initializeAssessmentItemSession($routeItem);
+                if ($this->mustInitializeAllItems() === false) {
+                    // The current testPart is adaptive, but some others are not.
+                    // Just initialize a session for the current routeItem.
+                    $this->initializeAssessmentItemSession($routeItem);
+                } else {
+                    // initialize all items
+                    while ($route->valid() === true) {
+                        $this->initializeAssessmentItemSession($route->current());
+                        $route->next();
+                    }
+                }
             } elseif ($this->isTestPartVisited($testPart) === false) {
                 // The current testPart is not adaptive, but some others are.
                 // Initialize all sessions for routItems that belong to the current testPart.
