@@ -2125,57 +2125,62 @@ class AssessmentTestSession extends State
     protected function selectEligibleItems()
     {
         $route = $this->getRoute();
-        
-        if ($route->valid() === true) {
-            
-            $routeItem = $route->current();
-            $oldPosition = $route->getPosition();
-            $testPart = $routeItem->getTestPart();
-            
-            if ($this->isAdaptive() === false) {
-                $testPartsArray = $this->getAssessmentTest()->getTestParts()->getArrayCopy();
-                
-                if ($this->isTestPartVisited($testPartsArray[0]) === false) {
-                    // No testParts at all are adaptive and the first testPart has never been visited.
-                    // Initialize all assessmentItemSessions.
-                    while ($route->valid() === true) {
-                        $this->initializeAssessmentItemSession($route->current());
-                        $route->next();
+
+        if ($this->mustInitializeAllItems() === false) {
+
+            if ($route->valid() === true) {
+
+                $routeItem = $route->current();
+                $oldPosition = $route->getPosition();
+                $testPart = $routeItem->getTestPart();
+
+                if ($this->isAdaptive() === false) {
+                    $testPartsArray = $this->getAssessmentTest()->getTestParts()->getArrayCopy();
+
+                    if ($this->isTestPartVisited($testPartsArray[0]) === false) {
+                        // No testParts at all are adaptive and the first testPart has never been visited.
+                        // Initialize all assessmentItemSessions.
+                        while ($route->valid() === true) {
+                            $this->initializeAssessmentItemSession($route->current());
+                            $route->next();
+                        }
                     }
-                }
-                
-                // Otherwise, nothing to do because there the entirety of the sessions
-                // have already been initialized previously.
-                
-            } elseif ($this->isAdaptive($testPart->getIdentifier()) === true) {
-                if ($this->mustInitializeAllItems() === false) {
+
+                    // Otherwise, nothing to do because there the entirety of the sessions
+                    // have already been initialized previously.
+
+                } elseif ($this->isAdaptive($testPart->getIdentifier()) === true) {
                     // The current testPart is adaptive, but some others are not.
                     // Just initialize a session for the current routeItem.
                     $this->initializeAssessmentItemSession($routeItem);
-                } else {
-                    // initialize all items
-                    while ($route->valid() === true) {
+                } elseif ($this->isTestPartVisited($testPart) === false) {
+                    // The current testPart is not adaptive, but some others are.
+                    // Initialize all sessions for routItems that belong to the current testPart.
+                    while ($route->valid() && $route->isFirstOfTestPart() === false) {
+                        $route->previous();
+                    }
+
+                    $currentTestPart = $route->current()->getTestPart();
+
+                    while ($route->valid() && $route->current()->getTestPart()->getIdentifier() === $currentTestPart->getIdentifier()) {
                         $this->initializeAssessmentItemSession($route->current());
                         $route->next();
                     }
                 }
-            } elseif ($this->isTestPartVisited($testPart) === false) {
-                // The current testPart is not adaptive, but some others are.
-                // Initialize all sessions for routItems that belong to the current testPart.
-                while ($route->valid() && $route->isFirstOfTestPart() === false) {
-                    $route->previous();
-                }
 
-                $currentTestPart = $route->current()->getTestPart();
+                $route->setPosition($oldPosition);
+            }
+        } else {
+            $oldPosition = $route->getPosition();
 
-                while ($route->valid() && $route->current()->getTestPart()->getIdentifier() === $currentTestPart->getIdentifier()) {
-                    $this->initializeAssessmentItemSession($route->current());
-                    $route->next();
-                }
+            while ($route->valid() === true) {
+                $this->initializeAssessmentItemSession($route->current());
+                $route->next();
             }
 
             $route->setPosition($oldPosition);
         }
+
     }
 
     /**
