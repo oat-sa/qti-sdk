@@ -224,7 +224,7 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'invalid/noversion.xml');
     }
     
-    public function testLoadFromEmptyFile() {
+    public function testLoadFromNonExistingFile() {
         $doc = new XmlDocument('2.1');
         // This path does not resolve anything.
         $path = self::samplesDir() . 'invalid/unknown.xml';
