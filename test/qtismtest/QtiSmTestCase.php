@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest;
 
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
@@ -14,14 +16,47 @@ use \DateTime;
 use \DateTimeZone;
 
 abstract class QtiSmTestCase extends TestCase {
-	
+
+    /**
+     * @var Filesystem
+     */
+    private $fileSystem = null;
+
 	public function setUp() {
 	    parent::setUp();
+
+	    // Set up File System Local adapter for testing.
+        $adapter = new Local(self::samplesDir());
+        $this->setFileSystem(new Filesystem($adapter));
 	}
 	
 	public function tearDown() {
 	    parent::tearDown();
 	}
+
+    /**
+     * Set File System
+     *
+     * Setup the FileSystem implementation to be used for testing.
+     *
+     * @param Filesystem $filesystem
+     */
+	protected function setFileSystem(Filesystem $filesystem)
+    {
+        $this->fileSystem = $filesystem;
+    }
+
+    /**
+     * Get File System
+     *
+     * Setup the FileSystem implementation to be used for testing.
+     *
+     * @return Filesystem
+     */
+    protected function getFileSystem()
+    {
+        return $this->fileSystem;
+    }
 	
 	public function getMarshallerFactory($version = '2.1') {
 	    if (Version::compare($version, '2.0.0', '==') === true) {

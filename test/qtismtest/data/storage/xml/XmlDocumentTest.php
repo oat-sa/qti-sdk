@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\data\storage\xml;
 
+use qtism\data\AssessmentItem;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\TextRun;
 use qtism\data\storage\xml\XmlDocument;
@@ -441,5 +442,63 @@ class XmlDocumentTest extends QtiSmTestCase {
         );
         
         $doc->save('path.xml');
+    }
+
+    public function testLoadFromFileSystemNoValidation()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->loadFromFileSystem($fileSystem, 'ims/items/2_1/choice.xml');
+
+        $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
+    }
+
+    public function testLoadFromFileSystemPositiveValidation()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->loadFromFileSystem($fileSystem, 'ims/items/2_1/choice.xml', true);
+
+        $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
+    }
+
+    public function testLoadFromFileSystemNegativeValidation()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+
+        $this->setExpectedException(
+            XmlStorageException::class,
+            'The document could not be validated with XML Schema'
+        );
+
+        $doc->loadFromFileSystem($fileSystem, 'invalid/xsdinvalid.xml', true);
+    }
+
+    public function testLoadFromFileSystemNotExistingFile()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $path = 'invalid/unknown.xml';
+
+        $this->setExpectedException(
+            XmlStorageException::class,
+            "Cannot load QTI file at path '${path}'. It does not exist or is not readable."
+        );
+
+        $doc->loadFromFileSystem($fileSystem, $path);
+    }
+
+    public function testLoadFromFileSystemEmptyFile() {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $path = 'invalid/empty.xml';
+
+        $this->setExpectedException(
+            XmlStorageException::class,
+            'Cannot load QTI from an empty string.'
+        );
+
+        $doc->loadFromFileSystem($fileSystem, $path);
     }
 }

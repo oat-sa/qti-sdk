@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml;
 
+use League\Flysystem\FileNotFoundException;
+use League\Flysystem\Filesystem;
 use qtism\common\utils\Url;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
@@ -129,6 +131,28 @@ class XmlDocument extends QtiDocument
     public function loadFromString($string, $validate = false)
     {
         $this->loadImplementation($string, $validate, true);
+    }
+
+    /**
+     * @param Filesystem $filesystem
+     * @param $path
+     * @param bool $validate
+     * @throws XmlStorageException
+     */
+    public function loadFromFileSystem(Filesystem $filesystem, $path, $validate = false)
+    {
+        try {
+            $input = $filesystem->read($path);
+            $this->loadImplementation($input, $validate, true);
+
+        } catch (FileNotFoundException $e) {
+
+            throw new XmlStorageException(
+                "Cannot load QTI file at path '${path}'. It does not exist or is not readable.",
+                XmlStorageException::RESOLUTION,
+                $e
+            );
+        }
     }
 
     /**
