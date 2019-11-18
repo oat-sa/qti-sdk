@@ -67,6 +67,16 @@ class XmlDocument extends QtiDocument
     private $domDocument = null;
 
     /**
+     * @var string
+     */
+    private $customBaseUri = '';
+
+    /**
+     * @var null|Filesystem
+     */
+    private $fileSystem = null;
+
+    /**
 	 * Create a new XmlDocument.
 	 * 
 	 * If the given QTI $version number is given with no patch version (c.f. Semantic Versioning), 0 will be used as the patch
@@ -101,6 +111,26 @@ class XmlDocument extends QtiDocument
         return $this->domDocument;
     }
 
+    protected function setCustomBaseUri($customBaseUri)
+    {
+        $this->customBaseUri = $customBaseUri;
+    }
+
+    protected function getCustomBaseUri()
+    {
+        return $this->customBaseUri;
+    }
+
+    protected function setFileSystem(Filesystem $filesystem = null)
+    {
+        $this->fileSystem = $filesystem;
+    }
+
+    protected function getFileSystem()
+    {
+        return $this->fileSystem;
+    }
+
     /**
 	 * Load a QTI-XML assessment file. The file will be loaded and represented in
 	 * an AssessmentTest object.
@@ -115,6 +145,8 @@ class XmlDocument extends QtiDocument
 	 */
     public function load($uri, $validate = false)
     {
+        $this->setFileSystem(null);
+        $this->setCustomBaseUri('');
         $this->loadImplementation($uri, $validate, false);
 
         // We now are sure that the URI is valid.
@@ -130,6 +162,8 @@ class XmlDocument extends QtiDocument
 	 */
     public function loadFromString($string, $validate = false)
     {
+        $this->setFileSystem(null);
+        $this->setCustomBaseUri('');
         $this->loadImplementation($string, $validate, true);
     }
 
@@ -144,6 +178,10 @@ class XmlDocument extends QtiDocument
         try {
             $input = $filesystem->read($path);
             $this->loadImplementation($input, $validate, true);
+            $this->setFileSystem($filesystem);
+
+            // Build new custom basePath.
+            $this->setCustomBaseUri($path);
 
         } catch (FileNotFoundException $e) {
 
@@ -153,6 +191,28 @@ class XmlDocument extends QtiDocument
                 $e
             );
         }
+    }
+
+    /**
+     * Get the base URI of the document.
+     *
+     * Will return an empty string in case of no document loaded yet.
+     *
+     * @return string
+     */
+    public function getBaseUri()
+    {
+        $baseUri = '';
+
+        if (($customBaseUri = $this->getCustomBaseUri()) !== '') {
+
+            $baseUri = $customBaseUri;
+        } elseif (($document = $this->getDomDocument()) !== null) {
+
+            $baseUri = $document->documentElement->baseURI;
+        }
+
+        return $baseUri;
     }
 
     /**
@@ -459,13 +519,18 @@ class XmlDocument extends QtiDocument
                 
                 if (Url::isRelative($templateLocation) === true) {
                     
-                    $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+                    $baseUri = $this->getBaseUri();
                     $pathinfo = pathinfo($baseUri);
                     $basePath = $pathinfo['dirname'];
                     $templateLocation = Url::rtrim($basePath) . '/' . Url::ltrim($templateLocation);
                     
                     $doc = new XmlDocument();
-                    $doc->load($templateLocation, $validate);
+
+                    if (($filesystem = $this->getFileSystem()) !== null) {
+                        $doc->loadFromFileSystem($filesystem, $templateLocation, $validate);
+                    } else {
+                        $doc->load($templateLocation, $validate);
+                    }
                     
                     $newResponseProcessing = $doc->getDocumentComponent();
                     
@@ -498,7 +563,7 @@ class XmlDocument extends QtiDocument
     {
         if (($root = $this->getDocumentComponent()) !== null) {
             
-            $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+            $baseUri = str_replace('\\', '/', $this->getBaseUri());
             $pathinfo = pathinfo($baseUri);
             $basePath = $pathinfo['dirname'];
             
@@ -513,7 +578,13 @@ class XmlDocument extends QtiDocument
                         $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
                         
                         $doc = new XmlDocument();
-                        $doc->load($href, $validate);
+
+                        if (($filesystem = $this->getFileSystem()) !== null) {
+                            $doc->loadFromFileSystem($filesystem, $href, $validate);
+                        } else {
+                            $doc->load($href, $validate);
+                        }
+
                         $sectionRoot = $doc->getDocumentComponent();
                         
                         foreach ($sectionRoot->getComponentsByClassName(array('assessmentSectionRef', 'assessmentItemRef')) as $sectionPart) {
