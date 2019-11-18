@@ -121,7 +121,7 @@ class XmlDocument extends QtiDocument
         return $this->customBaseUri;
     }
 
-    protected function setFileSystem(Filesystem $filesystem = null)
+    public function setFileSystem(Filesystem $filesystem = null)
     {
         $this->fileSystem = $filesystem;
     }
@@ -145,12 +145,30 @@ class XmlDocument extends QtiDocument
 	 */
     public function load($uri, $validate = false)
     {
-        $this->setFileSystem(null);
-        $this->setCustomBaseUri('');
-        $this->loadImplementation($uri, $validate, false);
+        if (($filesystem = $this->getFileSystem()) === null) {
+            $this->setCustomBaseUri('');
+            $this->loadImplementation($uri, $validate, false);
 
-        // We now are sure that the URI is valid.
-        $this->setUrl($uri);
+            // We now are sure that the URI is valid.
+            $this->setUrl($uri);
+        } else {
+            try {
+                $input = $filesystem->read($uri);
+                $this->loadImplementation($input, $validate, true);
+                $this->setFileSystem($filesystem);
+
+                // Build new custom basePath.
+                $this->setCustomBaseUri($uri);
+
+            } catch (FileNotFoundException $e) {
+
+                throw new XmlStorageException(
+                    "Cannot load QTI file at path '${uri}'. It does not exist or is not readable.",
+                    XmlStorageException::RESOLUTION,
+                    $e
+                );
+            }
+        }
     }
 
     /**
@@ -162,35 +180,8 @@ class XmlDocument extends QtiDocument
 	 */
     public function loadFromString($string, $validate = false)
     {
-        $this->setFileSystem(null);
         $this->setCustomBaseUri('');
         $this->loadImplementation($string, $validate, true);
-    }
-
-    /**
-     * @param Filesystem $filesystem
-     * @param $path
-     * @param bool $validate
-     * @throws XmlStorageException
-     */
-    public function loadFromFileSystem(Filesystem $filesystem, $path, $validate = false)
-    {
-        try {
-            $input = $filesystem->read($path);
-            $this->loadImplementation($input, $validate, true);
-            $this->setFileSystem($filesystem);
-
-            // Build new custom basePath.
-            $this->setCustomBaseUri($path);
-
-        } catch (FileNotFoundException $e) {
-
-            throw new XmlStorageException(
-                "Cannot load QTI file at path '${path}'. It does not exist or is not readable.",
-                XmlStorageException::RESOLUTION,
-                $e
-            );
-        }
     }
 
     /**
@@ -459,7 +450,7 @@ class XmlDocument extends QtiDocument
         
         if (($root = $this->getDocumentComponent()) !== null) {
             
-            $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+            $baseUri = str_replace('\\', '/', $this->getBaseUri());
             $pathinfo = pathinfo($baseUri);
             $basePath = $pathinfo['dirname'];
             
@@ -477,6 +468,11 @@ class XmlDocument extends QtiDocument
                         $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
                         
                         $doc = new XmlDocument();
+
+                        if (($filesystem = $this->getFileSystem()) !== null) {
+                            $doc->setFileSystem($filesystem);
+                        }
+
                         $doc->load($href, $validate);
                         $includeRoot = $doc->getDocumentComponent();
                         
@@ -527,10 +523,10 @@ class XmlDocument extends QtiDocument
                     $doc = new XmlDocument();
 
                     if (($filesystem = $this->getFileSystem()) !== null) {
-                        $doc->loadFromFileSystem($filesystem, $templateLocation, $validate);
-                    } else {
-                        $doc->load($templateLocation, $validate);
+                        $doc->setFileSystem($filesystem);
                     }
+
+                    $doc->load($templateLocation, $validate);
                     
                     $newResponseProcessing = $doc->getDocumentComponent();
                     
@@ -580,10 +576,10 @@ class XmlDocument extends QtiDocument
                         $doc = new XmlDocument();
 
                         if (($filesystem = $this->getFileSystem()) !== null) {
-                            $doc->loadFromFileSystem($filesystem, $href, $validate);
-                        } else {
-                            $doc->load($href, $validate);
+                            $doc->setFileSystem($filesystem);
                         }
+
+                        $doc->load($href, $validate);
 
                         $sectionRoot = $doc->getDocumentComponent();
                         

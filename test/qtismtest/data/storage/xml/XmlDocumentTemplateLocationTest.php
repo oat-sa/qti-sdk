@@ -16,11 +16,11 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
     public function testCorrectlyFormed($file, $filesystem) {
         $doc = new XmlDocument();
 
-        if ($filesystem === false) {
-            $doc->load($file, true);
-        } else {
-            $doc->loadFromFileSystem($this->getFileSystem(), $file, true);
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
         }
+
+        $doc->load($file, true);
 
          
         $responseProcessings = $doc->getDocumentComponent()->getComponentsByClassName('responseProcessing');
@@ -58,11 +58,11 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
     public function testWrongTarget($file, $filesystem) {
         $doc = new XmlDocument();
 
-        if ($filesystem === false) {
-            $doc->load($file, true);
-        } else {
-            $doc->loadFromFileSystem($this->getFileSystem(), $file, true);
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
         }
+
+        $doc->load($file, true);
         
         $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException');
         $doc->resolveTemplateLocation();
@@ -85,11 +85,11 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
     public function testInvalidTargetNoValidation($file, $filesystem) {
         $doc = new XmlDocument();
 
-        if ($filesystem === false) {
-            $doc->load($file, true);
-        } else {
-            $doc->loadFromFileSystem($this->getFileSystem(), $file, true);
+        if ($filesystem === true) {
+           $doc->setFileSystem($this->getFileSystem());
         }
+
+        $doc->load($file, true);
         
         $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', "'responseProcessingZ' components are not supported in QTI version '2.1.0'.", XmlStorageException::VERSION);
         $doc->resolveTemplateLocation();
@@ -112,12 +112,11 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
     public function testInvalidTargetValidation($file, $filesystem) {
         $doc = new XmlDocument();
 
-        if ($filesystem === false) {
-            $doc->load($file, true);
-        } else {
-            $doc->loadFromFileSystem($this->getFileSystem(), $file, true);
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
         }
 
+        $doc->load($file, true);
         
         $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', null, XmlStorageException::XSD_VALIDATION);
         $doc->resolveTemplateLocation(true);

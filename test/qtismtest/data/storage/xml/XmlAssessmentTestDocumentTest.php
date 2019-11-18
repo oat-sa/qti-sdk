@@ -118,12 +118,11 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
     {
         $doc = new XmlDocument();
 
-        if ($filesystem === false) {
-            $doc->load($file, true);
-        } else {
-            $doc->loadFromFileSystem($this->getFileSystem(), $file, true);
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
         }
 
+        $doc->load($file, true);
         $doc->includeAssessmentSectionRefs();
         
         $root = $doc->getDocumentComponent();
@@ -165,12 +164,11 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
     {
         $doc = new XmlDocument();
 
-        if ($filesystem === false) {
-            $doc->load($file, true);
-        } else {
-            $doc->loadFromFileSystem($this->getFileSystem(), $file, true);
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
         }
 
+        $doc->load($file, true);
         $doc->includeAssessmentSectionRefs(true);
 
         $root = $doc->getDocumentComponent();

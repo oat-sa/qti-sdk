@@ -448,7 +448,8 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->loadFromFileSystem($fileSystem, 'ims/items/2_1/choice.xml');
+        $doc->setFileSystem($fileSystem);
+        $doc->load('ims/items/2_1/choice.xml');
 
         $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
     }
@@ -457,7 +458,8 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->loadFromFileSystem($fileSystem, 'ims/items/2_1/choice.xml', true);
+        $doc->setFileSystem($fileSystem);
+        $doc->load('ims/items/2_1/choice.xml', true);
 
         $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
     }
@@ -466,19 +468,21 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
+        $doc->setFileSystem($fileSystem);
 
         $this->setExpectedException(
             XmlStorageException::class,
             'The document could not be validated with XML Schema'
         );
 
-        $doc->loadFromFileSystem($fileSystem, 'invalid/xsdinvalid.xml', true);
+        $doc->load('invalid/xsdinvalid.xml', true);
     }
 
     public function testLoadFromFileSystemNotExistingFile()
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
+        $doc->setFileSystem($fileSystem);
         $path = 'invalid/unknown.xml';
 
         $this->setExpectedException(
@@ -486,12 +490,13 @@ class XmlDocumentTest extends QtiSmTestCase {
             "Cannot load QTI file at path '${path}'. It does not exist or is not readable."
         );
 
-        $doc->loadFromFileSystem($fileSystem, $path);
+        $doc->load($path);
     }
 
     public function testLoadFromFileSystemEmptyFile() {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
+        $doc->setFileSystem($fileSystem);
         $path = 'invalid/empty.xml';
 
         $this->setExpectedException(
@@ -499,6 +504,6 @@ class XmlDocumentTest extends QtiSmTestCase {
             'Cannot load QTI from an empty string.'
         );
 
-        $doc->loadFromFileSystem($fileSystem, $path);
+        $doc->load($path);
     }
 }
