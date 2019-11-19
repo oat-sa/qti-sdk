@@ -219,7 +219,7 @@ class XmlCompactDocument extends XmlDocument
                             }
 
                             $resolver->setBasePath($baseUri);
-                            self::resolveAssessmentItemRef($compactRef, $resolver);
+                            self::resolveAssessmentItemRef($xmlAssessmentTestDocument, $compactRef, $resolver);
 
                             $previousParts->replace($component, $compactRef);
                             break;
@@ -235,7 +235,7 @@ class XmlCompactDocument extends XmlDocument
                     
                     $resolver->setBasePath($baseUri);
                     
-                    $assessmentSectionDocument = self::resolveAssessmentSectionRef($component, $resolver);
+                    $assessmentSectionDocument = self::resolveAssessmentSectionRef($xmlAssessmentTestDocument, $component, $resolver);
                     $assessmentSection = $assessmentSectionDocument->getDocumentComponent();
                     $sectionStore[$assessmentSection] = $assessmentSectionDocument;
                     
@@ -279,12 +279,18 @@ class XmlCompactDocument extends XmlDocument
 	 * @param \qtism\data\storage\FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
-    protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver)
+    protected static function resolveAssessmentItemRef(XmlDocument $sourceDocument, ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver)
     {
         try {
             $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 
             $doc = new XmlDocument();
+
+            // In case of the use of a filesystem, reuse it.
+            if (($filesystem = $sourceDocument->getFileSystem()) !== null) {
+                $doc->setFileSystem($filesystem);
+            }
+
             $doc->load($href);
             
             // Resolve external documents.
@@ -341,12 +347,17 @@ class XmlCompactDocument extends XmlDocument
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while dereferencing the referenced file.
 	 * @return \qtism\data\XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
 	 */
-    protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
+    protected static function resolveAssessmentSectionRef(XmlDocument $sourceDocument, AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
     {
         try {
             $href = $resolver->resolve($assessmentSectionRef->getHref());
 
             $doc = new XmlDocument();
+
+            if (($filesystem = $sourceDocument->getFileSystem()) !== null) {
+                $doc->setFileSystem($filesystem);
+            }
+
             $doc->load($href);
             $doc->xInclude();
 

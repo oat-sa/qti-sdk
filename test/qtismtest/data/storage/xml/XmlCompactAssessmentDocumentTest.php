@@ -75,11 +75,19 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		unlink($file);
 		$this->assertFalse(file_exists($file));
 	}
-	
-	public function testCreateFrom()
+
+    /**
+     * @throws XmlStorageException
+     * @dataProvider createFromProvider
+     */
+	public function testCreateFrom($file, $filesystem)
     {
 		$doc = new XmlDocument('2.1');
-		$file = self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
+
+		if ($filesystem === true) {
+		    $doc->setFileSystem($this->getFileSystem());
+        }
+
 		$doc->load($file);
 		
 		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
@@ -91,14 +99,31 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$compactDoc = new XmlCompactDocument('2.1.0');
 		$compactDoc->load($file);
 		$this->testLoad($compactDoc);
-		unlink($file);
-		$this->assertFalse(file_exists($file));
 	}
-    
-    public function testCreateFromWithUnresolvableAssessmentSectionRef()
+
+	public function createFromProvider()
+    {
+        return [
+            [self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml', false],
+            ['ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml', true]
+        ];
+    }
+
+
+    /**
+     * @param $file
+     * @param $filesystem
+     * @throws XmlStorageException
+     * @dataProvider createFromWithUnresolvableAssessmentSectionRefProvider
+     */
+    public function testCreateFromWithUnresolvableAssessmentSectionRef($file, $filesystem)
     {
 		$doc = new XmlDocument('2.1');
-		$file = self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen3.xml';
+
+		if ($filesystem === true) {
+		    $doc->setFileSystem($this->getFileSystem());
+        }
+
 		$doc->load($file);
 		
         $this->setExpectedException(
@@ -108,6 +133,14 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         
 		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
 	}
+
+	public function createFromWithUnresolvableAssessmentSectionRefProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen3.xml', false],
+            ['custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen3.xml', true]
+        ];
+    }
 	
 	public function testCreateFromExploded($v = '', $sectionCount = 2)
     {
@@ -176,12 +209,23 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
     {
         $this->testCreateFromExploded('2', 3);
     }
-    
-    public function testCreateFromTestWithShuffledInteractions()
+
+    /**
+     * @param $file
+     * @param $filesystem
+     * @throws XmlStorageException
+     * @dataProvider createFromTestWithShuffledInteractionsProvider
+     */
+    public function testCreateFromTestWithShuffledInteractions($file, $filesystem)
     {
         $doc = new XmlDocument('2.1');
-		$file = self::samplesDir() . 'custom/tests/shufflings.xml';
+
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
+        }
+
 		$doc->load($file);
+
 		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
         $compactTest = $compactDoc->getDocumentComponent();
         
@@ -264,6 +308,14 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         
         $shufflings = $itemRef->getShufflings();
         $this->assertEquals(0, count($shufflings));
+    }
+
+    public function createFromTestWithShuffledInteractionsProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/tests/shufflings.xml', false],
+            ['custom/tests/shufflings.xml', true]
+        ];
     }
 	
 	public function testLoadRubricBlockRefs(XmlCompactDocument $doc = null)
