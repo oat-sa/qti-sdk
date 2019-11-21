@@ -82,21 +82,23 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
      */
 	public function testCreateFrom($file, $filesystem)
     {
+        $inputFilesystem = $filesystem ? $this->getFileSystem() : null;
+        $outputFilesystem = $filesystem ? $this->getOutputFileSystem() : null;
 		$doc = new XmlDocument('2.1');
 
-		if ($filesystem === true) {
-		    $doc->setFileSystem($this->getFileSystem());
-        }
-
+		$doc->setFileSystem($inputFilesystem);
 		$doc->load($file);
 		
 		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
 		
 		$file = tempnam('/tmp', 'qsm');
+		$compactDoc->setFileSystem($outputFilesystem);
+
 		$compactDoc->save($file);
-		$this->assertTrue(file_exists($file));
 		
 		$compactDoc = new XmlCompactDocument('2.1.0');
+		$compactDoc->setFileSystem($outputFilesystem);
+
 		$compactDoc->load($file);
 		$this->testLoad($compactDoc);
 	}
@@ -317,12 +319,22 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
             ['custom/tests/shufflings.xml', true]
         ];
     }
-	
-	public function testLoadRubricBlockRefs(XmlCompactDocument $doc = null)
+
+    /**
+     * @param XmlCompactDocument|null $doc
+     * @throws XmlStorageException
+     * @dataProvider loadRubricBlockRefsProvider
+     */
+	public function testLoadRubricBlockRefs(XmlCompactDocument $doc = null, $file, $filesystem)
     {
 	    if (empty($doc) === true) {
-	        $src = self::samplesDir() . 'custom/runtime/rubricblockref.xml';
+	        $src = $file;
 	        $doc = new XmlCompactDocument();
+
+	        if ($filesystem === true) {
+	            $doc->setFileSystem($this->getFileSystem());
+            }
+
 	        $doc->load($src, true);
 	    }
 	    
@@ -342,6 +354,14 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals('R01', $rubricBlockRef->getIdentifier());
 	    $this->assertEquals('./R01.xml', $rubricBlockRef->getHref());
 	}
+
+	public function loadRubricBlockRefsProvider()
+    {
+        return [
+            [null, self::samplesDir() . 'custom/runtime/rubricblockref.xml', false],
+            [null, 'custom/runtime/rubricblockref.xml', true]
+        ];
+    }
 	
 	public function testSaveRubricBlockRefs()
     {
@@ -353,7 +373,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $doc->save($file);
 	    
 	    $this->assertTrue(file_exists($file));
-	    $this->testLoadRubricBlockRefs($doc);
+	    $this->testLoadRubricBlockRefs($doc, '', false);
 	    
 	    unlink($file);
 	    $this->assertFalse(file_exists($file));

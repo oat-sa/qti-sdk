@@ -22,17 +22,38 @@ abstract class QtiSmTestCase extends TestCase {
      */
     private $fileSystem = null;
 
+    /**
+     * @var Filesystem
+     */
+    private $outputFileSystem = null;
+
 	public function setUp() {
 	    parent::setUp();
 
 	    // Set up File System Local adapter for testing.
         $adapter = new Local(self::samplesDir());
         $this->setFileSystem(new Filesystem($adapter));
+
+        // Set up File System Local adapter for output.
+        $adapter = new Local(sys_get_temp_dir() . '/qsmout');
+        $this->setOutputFileSystem(new Filesystem($adapter));
 	}
 	
 	public function tearDown() {
 	    parent::tearDown();
 	}
+
+    /**
+     * Get File System
+     *
+     * Setup the FileSystem implementation to be used for testing.
+     *
+     * @return Filesystem
+     */
+    protected function getFileSystem()
+    {
+        return $this->fileSystem;
+    }
 
     /**
      * Set File System
@@ -47,15 +68,27 @@ abstract class QtiSmTestCase extends TestCase {
     }
 
     /**
-     * Get File System
+     * Get Output File System
      *
      * Setup the FileSystem implementation to be used for testing.
      *
      * @return Filesystem
      */
-    protected function getFileSystem()
+    protected function getOutputFileSystem()
     {
-        return $this->fileSystem;
+        return $this->outputFileSystem;
+    }
+
+    /**
+     * Set Output File System
+     *
+     * Setup the FileSystem implementation to be used for testing.
+     *
+     * @param Filesystem $filesystem
+     */
+    protected function setOutputFileSystem(Filesystem $filesystem)
+    {
+        $this->outputFileSystem = $filesystem;
     }
 	
 	public function getMarshallerFactory($version = '2.1') {

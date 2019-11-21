@@ -281,7 +281,28 @@ class XmlDocument extends QtiDocument
 	 */
     public function save($uri, $formatOutput = true)
     {
-        $this->saveImplementation($uri, $formatOutput);
+        if (($filesystem = $this->getFileSystem()) === null) {
+            $this->saveImplementation($uri, $formatOutput);
+        } else {
+            $error = false;
+
+            try {
+                $output = $this->saveImplementation('', $formatOutput);
+                if (!$filesystem->put($uri, $output)) {
+                    $error = true;
+                }
+            } catch (LogicException $e) {
+                // FlySystem throws a LogicException when trying to write outside of the root... catch it!
+                $error = true;
+            }
+
+            if ($error) {
+                throw new XmlStorageException(
+                    "An error occurred while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?",
+                    XmlStorageException::WRITE
+                );
+            }
+        }
     }
 
     /**

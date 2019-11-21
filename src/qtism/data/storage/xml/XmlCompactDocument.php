@@ -152,6 +152,11 @@ class XmlCompactDocument extends XmlDocument
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
     {
         $compactAssessmentTest = new XmlCompactDocument();
+
+        if (($compactFilesystem = $xmlAssessmentTestDocument->getFileSystem()) !== null) {
+            $compactAssessmentTest->setFileSystem($compactFilesystem);
+        }
+
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
 
@@ -412,6 +417,7 @@ class XmlCompactDocument extends XmlDocument
             foreach ($this->explodeRubricBlocks() as $href => $rubricBlock) {
                 try {
                     $doc = new XmlDocument();
+                    $doc->setFileSystem($this->getFileSystem());
                     $doc->setDocumentComponent($rubricBlock);
 
                     $pathinfo = pathinfo($uri);
@@ -450,6 +456,7 @@ class XmlCompactDocument extends XmlDocument
                 
                 // Generate the document.
                 $doc = new XmlDocument();
+                $doc->setFileSystem($this->getFileSystem());
                 $doc->setDocumentComponent($testFeedback);
                 
                 try {

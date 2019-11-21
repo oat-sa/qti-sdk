@@ -274,6 +274,18 @@ class XmlDocumentTest extends QtiSmTestCase {
         
         $doc->save('/unknown/location/qti.xml');
     }
+
+    public function testSaveWrongLocationFileSystem()
+    {
+        $doc = new XmlDocument('2.1.1');
+        $doc->setFileSystem($this->getOutputFileSystem());
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $expectedMsg = "An error occured while saving QTI-XML file";
+        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException');
+
+        $doc->save('../../../../../../../../unknown/location.xml');
+    }
     
     public function testUnknownClassWhileSavingBecauseOfVersion1()
     {
@@ -431,17 +443,33 @@ class XmlDocumentTest extends QtiSmTestCase {
         );
         $doc->includeAssessmentSectionRefs();
     }
-    
-    public function testSaveNoComponent()
+
+    /**
+     * @throws XmlStorageException
+     * @dataProvider saveNoComponentProvider
+     */
+    public function testSaveNoComponent($file, $filesystem)
     {
         $doc = new XmlDocument();
+
+        if ($filesystem === true) {
+            $doc->setFileSystem($this->getFileSystem());
+        }
         
         $this->setExpectedException(
             'qtism\data\storage\xml\XmlStorageException',
             'The document cannot be saved. No document component object to be saved.'
         );
         
-        $doc->save('path.xml');
+        $doc->save($file);
+    }
+
+    public function saveNoComponentProvider()
+    {
+        return [
+            ['path.xml', true],
+            ['path.xml', false]
+        ];
     }
 
     public function testLoadFromFileSystemNoValidation()
@@ -505,5 +533,23 @@ class XmlDocumentTest extends QtiSmTestCase {
         );
 
         $doc->load($path);
+    }
+
+    public function testSaveFileSystem()
+    {
+        $filesystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFileSystem($filesystem);
+        $path = 'ims/items/2_1/choice.xml';
+
+        $doc->load($path);
+
+        $strXml = $doc->saveToString();
+        $outputFilesystem = $this->getOutputFileSystem();
+
+        $doc->setFileSystem($outputFilesystem);
+        $doc->save('XmlDocumentTest/choice-test-save.xml');
+
+        $this->assertSame($strXml, $outputFilesystem->read('XmlDocumentTest/choice-test-save.xml'));
     }
 }
