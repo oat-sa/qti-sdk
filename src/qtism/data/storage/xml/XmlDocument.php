@@ -531,11 +531,7 @@ class XmlDocument extends QtiDocument
                     $templateLocation = Url::rtrim($basePath) . '/' . Url::ltrim($templateLocation);
                     
                     $doc = new XmlDocument();
-
-                    if (($filesystem = $this->getFilesystem()) !== null) {
-                        $doc->setFilesystem($filesystem);
-                    }
-
+                    $doc->setFilesystem($this->getFilesystem());
                     $doc->load($templateLocation, $validate);
                     
                     $newResponseProcessing = $doc->getDocumentComponent();
@@ -584,11 +580,7 @@ class XmlDocument extends QtiDocument
                         $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
                         
                         $doc = new XmlDocument();
-
-                        if (($filesystem = $this->getFilesystem()) !== null) {
-                            $doc->setFilesystem($filesystem);
-                        }
-
+                        $doc->setFilesystem($this->getFilesystem());
                         $doc->load($href, $validate);
 
                         $sectionRoot = $doc->getDocumentComponent();
