@@ -152,10 +152,7 @@ class XmlCompactDocument extends XmlDocument
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
     {
         $compactAssessmentTest = new XmlCompactDocument();
-
-        if (($compactFilesystem = $xmlAssessmentTestDocument->getFileSystem()) !== null) {
-            $compactAssessmentTest->setFileSystem($compactFilesystem);
-        }
+        $compactAssessmentTest->setFileSystem($xmlAssessmentTestDocument->getFileSystem());
 
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
@@ -290,12 +287,7 @@ class XmlCompactDocument extends XmlDocument
             $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 
             $doc = new XmlDocument();
-
-            // In case of the use of a filesystem, reuse it.
-            if (($filesystem = $sourceDocument->getFileSystem()) !== null) {
-                $doc->setFileSystem($filesystem);
-            }
-
+            $doc->setFileSystem($sourceDocument->getFileSystem());
             $doc->load($href);
             
             // Resolve external documents.
@@ -358,11 +350,7 @@ class XmlCompactDocument extends XmlDocument
             $href = $resolver->resolve($assessmentSectionRef->getHref());
 
             $doc = new XmlDocument();
-
-            if (($filesystem = $sourceDocument->getFileSystem()) !== null) {
-                $doc->setFileSystem($filesystem);
-            }
-
+            $doc->setFileSystem($sourceDocument->getFileSystem());
             $doc->load($href);
             $doc->xInclude();
 
