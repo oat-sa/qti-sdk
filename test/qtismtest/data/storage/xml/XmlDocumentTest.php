@@ -278,7 +278,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     public function testSaveWrongLocationFileSystem()
     {
         $doc = new XmlDocument('2.1.1');
-        $doc->setFileSystem($this->getOutputFileSystem());
+        $doc->setFilesystem($this->getOutputFileSystem());
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
         $expectedMsg = "An error occured while saving QTI-XML file";
@@ -453,7 +453,7 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
-            $doc->setFileSystem($this->getFileSystem());
+            $doc->setFilesystem($this->getFileSystem());
         }
         
         $this->setExpectedException(
@@ -476,7 +476,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->setFileSystem($fileSystem);
+        $doc->setFilesystem($fileSystem);
         $doc->load('ims/items/2_1/choice.xml');
 
         $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
@@ -486,7 +486,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->setFileSystem($fileSystem);
+        $doc->setFilesystem($fileSystem);
         $doc->load('ims/items/2_1/choice.xml', true);
 
         $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
@@ -496,7 +496,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->setFileSystem($fileSystem);
+        $doc->setFilesystem($fileSystem);
 
         $this->setExpectedException(
             XmlStorageException::class,
@@ -510,7 +510,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->setFileSystem($fileSystem);
+        $doc->setFilesystem($fileSystem);
         $path = 'invalid/unknown.xml';
 
         $this->setExpectedException(
@@ -524,7 +524,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     public function testLoadFromFileSystemEmptyFile() {
         $fileSystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->setFileSystem($fileSystem);
+        $doc->setFilesystem($fileSystem);
         $path = 'invalid/empty.xml';
 
         $this->setExpectedException(
@@ -539,7 +539,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     {
         $filesystem = $this->getFileSystem();
         $doc = new XmlDocument();
-        $doc->setFileSystem($filesystem);
+        $doc->setFilesystem($filesystem);
         $path = 'ims/items/2_1/choice.xml';
 
         $doc->load($path);
@@ -547,7 +547,7 @@ class XmlDocumentTest extends QtiSmTestCase {
         $strXml = $doc->saveToString();
         $outputFilesystem = $this->getOutputFileSystem();
 
-        $doc->setFileSystem($outputFilesystem);
+        $doc->setFilesystem($outputFilesystem);
         $doc->save('XmlDocumentTest/choice-test-save.xml');
 
         $this->assertSame($strXml, $outputFilesystem->read('XmlDocumentTest/choice-test-save.xml'));

@@ -17,7 +17,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
-            $doc->setFileSystem($this->getFileSystem());
+            $doc->setFilesystem($this->getFileSystem());
         }
 
         $doc->load($file, true);
@@ -59,7 +59,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
-            $doc->setFileSystem($this->getFileSystem());
+            $doc->setFilesystem($this->getFileSystem());
         }
 
         $doc->load($file, true);
@@ -86,7 +86,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
-           $doc->setFileSystem($this->getFileSystem());
+           $doc->setFilesystem($this->getFileSystem());
         }
 
         $doc->load($file, true);
@@ -113,7 +113,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
-            $doc->setFileSystem($this->getFileSystem());
+            $doc->setFilesystem($this->getFileSystem());
         }
 
         $doc->load($file, true);

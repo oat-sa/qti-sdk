@@ -67,6 +67,9 @@ class XmlDocument extends QtiDocument
     private $domDocument = null;
 
     /**
+     * The Filesystem implementation in use. Contains null
+     * in case of old fashioned local file system implementation.
+     *
      * @var null|Filesystem
      */
     private $fileSystem = null;
@@ -106,12 +109,29 @@ class XmlDocument extends QtiDocument
         return $this->domDocument;
     }
 
-    public function setFileSystem(Filesystem $filesystem = null)
+    /**
+     * Set the Filesystem implementation.
+     *
+     * Set the Filesystem implementation to be used. As soon as an implementation is set,
+     * all subsequent creations of related XmlDocument objects will use this Filesystem
+     * implementation.
+     *
+     * @param Filesystem|null $filesystem
+     */
+    public function setFilesystem(Filesystem $filesystem = null)
     {
         $this->fileSystem = $filesystem;
     }
 
-    protected function getFileSystem()
+    /**
+     * Get the Filesystem implementation.
+     *
+     * Get the Filesystem implementation currently in use. Returns null
+     * in case of the local file system is in use.
+     *
+     * @return Filesystem|null
+     */
+    protected function getFilesystem()
     {
         return $this->fileSystem;
     }
@@ -123,6 +143,10 @@ class XmlDocument extends QtiDocument
 	 * If the XmlDocument object was previously with a QTI version which does not
 	 * correspond to version in use in the loaded file, the version found into
 	 * the file will supersede the version specified at instantiation time.
+     *
+     * In case of a Filesystem object being injected prior to the call via the XmlDocument::setFilesystem()
+     * method, the data will be loaded through this implementation. Otherwise, it will be loaded from the
+     * local filesystem.
 	 *
 	 * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
 	 * @param boolean $validate Whether or not the file must be validated unsing XML Schema? Default is false.
@@ -130,7 +154,7 @@ class XmlDocument extends QtiDocument
 	 */
     public function load($uri, $validate = false)
     {
-        if (($filesystem = $this->getFileSystem()) === null) {
+        if (($filesystem = $this->getFilesystem()) === null) {
             $this->loadImplementation($uri, $validate, false);
 
             // We now are sure that the URI is valid.
@@ -139,7 +163,7 @@ class XmlDocument extends QtiDocument
             try {
                 $input = $filesystem->read($uri);
                 $this->loadImplementation($input, $validate, true);
-                $this->setFileSystem($filesystem);
+                $this->setFilesystem($filesystem);
 
                 // Build new custom basePath.
                 $this->setUrl($uri);
@@ -274,6 +298,9 @@ class XmlDocument extends QtiDocument
     /**
 	 * Save the Assessment Document at the location described by $uri. Please be carefull
 	 * to provide an AssessmentTest object to save before calling this method.
+     *
+     * In case of a Filesystem object being injected prior to the call, data will be stored on through
+     * this Filesystem implementation. Otherwise, it will be stored on the local filesystem.
 	 *
 	 * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
 	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
@@ -281,7 +308,7 @@ class XmlDocument extends QtiDocument
 	 */
     public function save($uri, $formatOutput = true)
     {
-        if (($filesystem = $this->getFileSystem()) === null) {
+        if (($filesystem = $this->getFilesystem()) === null) {
             $this->saveImplementation($uri, $formatOutput);
         } else {
             $error = false;
@@ -308,7 +335,7 @@ class XmlDocument extends QtiDocument
     /**
 	 * Save the Assessment Document as an XML string.
 	 *
-	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
+	 * @param boolean $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
      * @return string The XML string.
 	 */
@@ -452,8 +479,8 @@ class XmlDocument extends QtiDocument
                         
                         $doc = new XmlDocument();
 
-                        if (($filesystem = $this->getFileSystem()) !== null) {
-                            $doc->setFileSystem($filesystem);
+                        if (($filesystem = $this->getFilesystem()) !== null) {
+                            $doc->setFilesystem($filesystem);
                         }
 
                         $doc->load($href, $validate);
@@ -505,8 +532,8 @@ class XmlDocument extends QtiDocument
                     
                     $doc = new XmlDocument();
 
-                    if (($filesystem = $this->getFileSystem()) !== null) {
-                        $doc->setFileSystem($filesystem);
+                    if (($filesystem = $this->getFilesystem()) !== null) {
+                        $doc->setFilesystem($filesystem);
                     }
 
                     $doc->load($templateLocation, $validate);
@@ -558,8 +585,8 @@ class XmlDocument extends QtiDocument
                         
                         $doc = new XmlDocument();
 
-                        if (($filesystem = $this->getFileSystem()) !== null) {
-                            $doc->setFileSystem($filesystem);
+                        if (($filesystem = $this->getFilesystem()) !== null) {
+                            $doc->setFilesystem($filesystem);
                         }
 
                         $doc->load($href, $validate);

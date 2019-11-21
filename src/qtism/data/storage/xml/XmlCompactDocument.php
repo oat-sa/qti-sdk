@@ -152,7 +152,7 @@ class XmlCompactDocument extends XmlDocument
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
     {
         $compactAssessmentTest = new XmlCompactDocument();
-        $compactAssessmentTest->setFileSystem($xmlAssessmentTestDocument->getFileSystem());
+        $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());
 
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
@@ -287,7 +287,7 @@ class XmlCompactDocument extends XmlDocument
             $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 
             $doc = new XmlDocument();
-            $doc->setFileSystem($sourceDocument->getFileSystem());
+            $doc->setFilesystem($sourceDocument->getFilesystem());
             $doc->load($href);
             
             // Resolve external documents.
@@ -350,7 +350,7 @@ class XmlCompactDocument extends XmlDocument
             $href = $resolver->resolve($assessmentSectionRef->getHref());
 
             $doc = new XmlDocument();
-            $doc->setFileSystem($sourceDocument->getFileSystem());
+            $doc->setFilesystem($sourceDocument->getFilesystem());
             $doc->load($href);
             $doc->xInclude();
 
@@ -405,7 +405,7 @@ class XmlCompactDocument extends XmlDocument
             foreach ($this->explodeRubricBlocks() as $href => $rubricBlock) {
                 try {
                     $doc = new XmlDocument();
-                    $doc->setFileSystem($this->getFileSystem());
+                    $doc->setFilesystem($this->getFilesystem());
                     $doc->setDocumentComponent($rubricBlock);
 
                     $pathinfo = pathinfo($uri);
@@ -444,7 +444,7 @@ class XmlCompactDocument extends XmlDocument
                 
                 // Generate the document.
                 $doc = new XmlDocument();
-                $doc->setFileSystem($this->getFileSystem());
+                $doc->setFilesystem($this->getFilesystem());
                 $doc->setDocumentComponent($testFeedback);
                 
                 try {

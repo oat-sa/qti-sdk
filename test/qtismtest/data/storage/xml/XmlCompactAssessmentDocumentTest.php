@@ -86,18 +86,18 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         $outputFilesystem = $filesystem ? $this->getOutputFileSystem() : null;
 		$doc = new XmlDocument('2.1');
 
-		$doc->setFileSystem($inputFilesystem);
+		$doc->setFilesystem($inputFilesystem);
 		$doc->load($file);
 		
 		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
 		
 		$file = tempnam('/tmp', 'qsm');
-		$compactDoc->setFileSystem($outputFilesystem);
+		$compactDoc->setFilesystem($outputFilesystem);
 
 		$compactDoc->save($file);
 		
 		$compactDoc = new XmlCompactDocument('2.1.0');
-		$compactDoc->setFileSystem($outputFilesystem);
+		$compactDoc->setFilesystem($outputFilesystem);
 
 		$compactDoc->load($file);
 		$this->testLoad($compactDoc);
@@ -123,7 +123,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$doc = new XmlDocument('2.1');
 
 		if ($filesystem === true) {
-		    $doc->setFileSystem($this->getFileSystem());
+		    $doc->setFilesystem($this->getFileSystem());
         }
 
 		$doc->load($file);
@@ -223,7 +223,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         $doc = new XmlDocument('2.1');
 
         if ($filesystem === true) {
-            $doc->setFileSystem($this->getFileSystem());
+            $doc->setFilesystem($this->getFileSystem());
         }
 
 		$doc->load($file);
@@ -332,7 +332,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	        $doc = new XmlCompactDocument();
 
 	        if ($filesystem === true) {
-	            $doc->setFileSystem($this->getFileSystem());
+	            $doc->setFilesystem($this->getFileSystem());
             }
 
 	        $doc->load($src, true);
