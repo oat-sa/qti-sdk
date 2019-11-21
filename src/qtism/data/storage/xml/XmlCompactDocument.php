@@ -277,6 +277,7 @@ class XmlCompactDocument extends XmlDocument
 	 * Dereference the file referenced by an assessmentItemRef and add
 	 * outcome/responseDeclarations to the compact one.
 	 *
+     * @param XmlDocument $sourceDocument The source document from where assessmentItemRef must be resolved.
 	 * @param \qtism\data\ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
 	 * @param \qtism\data\storage\FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
@@ -339,10 +340,11 @@ class XmlCompactDocument extends XmlDocument
      * 
      * The xinclude elements in the target assessmentSection file will be resolved at the same time.
 	 *
+     * @param \qtism\data\storage\xml\XmlDocument $sourceDocument The source document from where assessmentItemRef must be resolved.
 	 * @param \qtism\data\AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
 	 * @param \qtism\data\storage\FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while dereferencing the referenced file.
-	 * @return \qtism\data\XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
+	 * @return \qtism\data\storage\xml\XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
 	 */
     protected static function resolveAssessmentSectionRef(XmlDocument $sourceDocument, AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
     {
@@ -367,7 +369,7 @@ class XmlCompactDocument extends XmlDocument
 	 * of the default schema.
 	 *
 	 * @param string $filename An optional filename to force the validation against a particular schema.
-	 * @return boolean
+     * @throws XmlStorageException
 	 */
     public function schemaValidate($filename = '')
     {
@@ -383,7 +385,7 @@ class XmlCompactDocument extends XmlDocument
     /**
 	 * Override of XmlDocument.
 	 *
-	 * Specifices the correct XSD schema locations and main namespace
+	 * Specifies the correct XSD schema locations and main namespace
 	 * for the root element of a Compact XML document.
 	 *
 	 * @param \DOMElement $rootElement The root element of a compact XML document.
