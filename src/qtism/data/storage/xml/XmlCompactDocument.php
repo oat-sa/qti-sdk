@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -152,6 +152,8 @@ class XmlCompactDocument extends XmlDocument
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
     {
         $compactAssessmentTest = new XmlCompactDocument();
+        $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());
+
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
 
@@ -219,7 +221,7 @@ class XmlCompactDocument extends XmlDocument
                             }
 
                             $resolver->setBasePath($baseUri);
-                            self::resolveAssessmentItemRef($compactRef, $resolver);
+                            self::resolveAssessmentItemRef($xmlAssessmentTestDocument, $compactRef, $resolver);
 
                             $previousParts->replace($component, $compactRef);
                             break;
@@ -235,7 +237,7 @@ class XmlCompactDocument extends XmlDocument
                     
                     $resolver->setBasePath($baseUri);
                     
-                    $assessmentSectionDocument = self::resolveAssessmentSectionRef($component, $resolver);
+                    $assessmentSectionDocument = self::resolveAssessmentSectionRef($xmlAssessmentTestDocument, $component, $resolver);
                     $assessmentSection = $assessmentSectionDocument->getDocumentComponent();
                     $sectionStore[$assessmentSection] = $assessmentSectionDocument;
                     
@@ -275,16 +277,18 @@ class XmlCompactDocument extends XmlDocument
 	 * Dereference the file referenced by an assessmentItemRef and add
 	 * outcome/responseDeclarations to the compact one.
 	 *
+     * @param XmlDocument $sourceDocument The source document from where assessmentItemRef must be resolved.
 	 * @param \qtism\data\ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
 	 * @param \qtism\data\storage\FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
-    protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver)
+    protected static function resolveAssessmentItemRef(XmlDocument $sourceDocument, ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver)
     {
         try {
             $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 
             $doc = new XmlDocument();
+            $doc->setFilesystem($sourceDocument->getFilesystem());
             $doc->load($href);
             
             // Resolve external documents.
@@ -336,17 +340,19 @@ class XmlCompactDocument extends XmlDocument
      * 
      * The xinclude elements in the target assessmentSection file will be resolved at the same time.
 	 *
+     * @param \qtism\data\storage\xml\XmlDocument $sourceDocument The source document from where assessmentItemRef must be resolved.
 	 * @param \qtism\data\AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
 	 * @param \qtism\data\storage\FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while dereferencing the referenced file.
-	 * @return \qtism\data\XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
+	 * @return \qtism\data\storage\xml\XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
 	 */
-    protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
+    protected static function resolveAssessmentSectionRef(XmlDocument $sourceDocument, AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
     {
         try {
             $href = $resolver->resolve($assessmentSectionRef->getHref());
 
             $doc = new XmlDocument();
+            $doc->setFilesystem($sourceDocument->getFilesystem());
             $doc->load($href);
             $doc->xInclude();
 
@@ -363,7 +369,7 @@ class XmlCompactDocument extends XmlDocument
 	 * of the default schema.
 	 *
 	 * @param string $filename An optional filename to force the validation against a particular schema.
-	 * @return boolean
+     * @throws XmlStorageException
 	 */
     public function schemaValidate($filename = '')
     {
@@ -379,7 +385,7 @@ class XmlCompactDocument extends XmlDocument
     /**
 	 * Override of XmlDocument.
 	 *
-	 * Specifices the correct XSD schema locations and main namespace
+	 * Specifies the correct XSD schema locations and main namespace
 	 * for the root element of a Compact XML document.
 	 *
 	 * @param \DOMElement $rootElement The root element of a compact XML document.
@@ -401,6 +407,7 @@ class XmlCompactDocument extends XmlDocument
             foreach ($this->explodeRubricBlocks() as $href => $rubricBlock) {
                 try {
                     $doc = new XmlDocument();
+                    $doc->setFilesystem($this->getFilesystem());
                     $doc->setDocumentComponent($rubricBlock);
 
                     $pathinfo = pathinfo($uri);
@@ -439,6 +446,7 @@ class XmlCompactDocument extends XmlDocument
                 
                 // Generate the document.
                 $doc = new XmlDocument();
+                $doc->setFilesystem($this->getFilesystem());
                 $doc->setDocumentComponent($testFeedback);
                 
                 try {

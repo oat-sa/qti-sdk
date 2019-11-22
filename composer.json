@@ -24,12 +24,13 @@
 		"GPL-2.0-only"
 	],
 	"require" : {
-		"php" : ">=5.5",
+		"php" : ">=7.0",
 		"ext-dom": "*",
 		"ext-mbstring": "*",
 		"ext-json": "*",
 		"ext-date": "*",
-		"wp-cli/php-cli-tools": "0.10.3"
+		"wp-cli/php-cli-tools": "0.10.3",
+		"league/flysystem": "^1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~5.0",

@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\data\storage\xml;
 
+use qtism\data\AssessmentItem;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\TextRun;
 use qtism\data\storage\xml\XmlDocument;
@@ -224,7 +225,7 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'invalid/noversion.xml');
     }
     
-    public function testLoadFromEmptyFile() {
+    public function testLoadFromNonExistingFile() {
         $doc = new XmlDocument('2.1');
         // This path does not resolve anything.
         $path = self::samplesDir() . 'invalid/unknown.xml';
@@ -272,6 +273,18 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::WRITE);
         
         $doc->save('/unknown/location/qti.xml');
+    }
+
+    public function testSaveWrongLocationFileSystem()
+    {
+        $doc = new XmlDocument('2.1.1');
+        $doc->setFilesystem($this->getOutputFileSystem());
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $expectedMsg = "An error occured while saving QTI-XML file";
+        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException');
+
+        $doc->save('../../../../../../../../unknown/location.xml');
     }
     
     public function testUnknownClassWhileSavingBecauseOfVersion1()
@@ -430,16 +443,113 @@ class XmlDocumentTest extends QtiSmTestCase {
         );
         $doc->includeAssessmentSectionRefs();
     }
-    
-    public function testSaveNoComponent()
+
+    /**
+     * @throws XmlStorageException
+     * @dataProvider saveNoComponentProvider
+     */
+    public function testSaveNoComponent($file, $filesystem)
     {
         $doc = new XmlDocument();
+
+        if ($filesystem === true) {
+            $doc->setFilesystem($this->getFileSystem());
+        }
         
         $this->setExpectedException(
             'qtism\data\storage\xml\XmlStorageException',
             'The document cannot be saved. No document component object to be saved.'
         );
         
-        $doc->save('path.xml');
+        $doc->save($file);
+    }
+
+    public function saveNoComponentProvider()
+    {
+        return [
+            ['path.xml', true],
+            ['path.xml', false]
+        ];
+    }
+
+    public function testLoadFromFileSystemNoValidation()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFilesystem($fileSystem);
+        $doc->load('ims/items/2_1/choice.xml');
+
+        $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
+    }
+
+    public function testLoadFromFileSystemPositiveValidation()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFilesystem($fileSystem);
+        $doc->load('ims/items/2_1/choice.xml', true);
+
+        $this->assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
+    }
+
+    public function testLoadFromFileSystemNegativeValidation()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFilesystem($fileSystem);
+
+        $this->setExpectedException(
+            XmlStorageException::class,
+            'The document could not be validated with XML Schema'
+        );
+
+        $doc->load('invalid/xsdinvalid.xml', true);
+    }
+
+    public function testLoadFromFileSystemNotExistingFile()
+    {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFilesystem($fileSystem);
+        $path = 'invalid/unknown.xml';
+
+        $this->setExpectedException(
+            XmlStorageException::class,
+            "Cannot load QTI file at path '${path}'. It does not exist or is not readable."
+        );
+
+        $doc->load($path);
+    }
+
+    public function testLoadFromFileSystemEmptyFile() {
+        $fileSystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFilesystem($fileSystem);
+        $path = 'invalid/empty.xml';
+
+        $this->setExpectedException(
+            XmlStorageException::class,
+            'Cannot load QTI from an empty string.'
+        );
+
+        $doc->load($path);
+    }
+
+    public function testSaveFileSystem()
+    {
+        $filesystem = $this->getFileSystem();
+        $doc = new XmlDocument();
+        $doc->setFilesystem($filesystem);
+        $path = 'ims/items/2_1/choice.xml';
+
+        $doc->load($path);
+
+        $strXml = $doc->saveToString();
+        $outputFilesystem = $this->getOutputFileSystem();
+
+        $doc->setFilesystem($outputFilesystem);
+        $doc->save('XmlDocumentTest/choice-test-save.xml');
+
+        $this->assertSame($strXml, $outputFilesystem->read('XmlDocumentTest/choice-test-save.xml'));
     }
 }

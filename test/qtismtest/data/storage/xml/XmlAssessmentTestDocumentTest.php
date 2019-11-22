@@ -1,14 +1,15 @@
 <?php
 namespace qtismtest\data\storage\xml;
 
+use League\Flysystem\Filesystem;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\XmlStorageException;
 
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	
-	public function testLoad() {
+	public function testLoad()
+    {
 		$uri = dirname(__FILE__) . '/../../../../samples/ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
 		$doc = new XmlDocument('2.1');
 		$doc->load($uri);
@@ -17,7 +18,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
 	}
 	
-	public function testLoadFileDoesNotExist() {
+	public function testLoadFileDoesNotExist()
+    {
 		// This file does not exist.
 		$uri = dirname(__FILE__) . '/../../../../samples/invalid/abcd.xml';
 		$doc = new XmlDocument('2.1');
@@ -25,7 +27,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 		$doc->load($uri);
 	}
 	
-	public function testLoadFileMalformed() {
+	public function testLoadFileMalformed()
+    {
 		// This file contains malformed xml markup.
 		$uri = dirname(__FILE__) . '/../../../../samples/invalid/malformed.xml';
 		$doc = new XmlDocument('2.1');
@@ -41,7 +44,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 		}
 	}
 	
-	public function testLoadSimpleItemSessionControlOnTestPart() {
+	public function testLoadSimpleItemSessionControlOnTestPart()
+    {
 	    $doc = new XmlDocument('2.1');
 	    $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
 	    $testParts = $doc->getDocumentComponent()->getTestParts();
@@ -50,7 +54,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
 	}
 	
-	public function testSaveSimpleItemSessionControlOnTestPart() {
+	public function testSaveSimpleItemSessionControlOnTestPart()
+    {
 	    $doc = new XmlDocument('2.1');
 	    $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
 	    $file = tempnam('/tmp', 'qsm');
@@ -66,7 +71,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	    unlink($file);
 	}
 	
-	public function testFullyQualified() {
+	public function testFullyQualified()
+    {
 		$uri = dirname(__FILE__) . '/../../../../samples/custom/fully_qualified_assessmenttest.xml';
 		$doc = new XmlDocument('2.1');
 		$doc->load($uri);
@@ -76,7 +82,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
 	}
 	
-	public function testItemSessionControls() {
+	public function testItemSessionControls()
+    {
 	    $doc = new XmlDocument('2.1');
 	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_itemsessioncontrols.xml');
 	    
@@ -91,7 +98,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
 	}
     
-    public function testAssessmentSectionRefsInTestParts() {
+    public function testAssessmentSectionRefsInTestParts()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
         
@@ -102,10 +110,19 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
         $this->assertTrue(isset($sectionParts['SR01']));
         $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['SR01']);
     }
-    
-    public function testIncludeAssessmentSectionRefsInTestParts() {
+
+    /**
+     * @dataProvider includeAssessmentSectionRefsInTestPartsProvider
+     */
+    public function testIncludeAssessmentSectionRefsInTestParts($file, $filesystem)
+    {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
+
+        if ($filesystem === true) {
+            $doc->setFilesystem($this->getFileSystem());
+        }
+
+        $doc->load($file, true);
         $doc->includeAssessmentSectionRefs();
         
         $root = $doc->getDocumentComponent();
@@ -131,23 +148,37 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
         $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
+
+    public function includeAssessmentSectionRefsInTestPartsProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', false],
+            ['custom/tests/nested_assessment_section_refs/test_definition/test.xml', true]
+        ];
+    }
     
     /**
      * @dataProvider testIncludeAssessmentSectionRefsMixedProvider
      */
-    public function testIncludeAssessmentSectionRefsMixed($file) {
+    public function testIncludeAssessmentSectionRefsMixed($file, $filesystem)
+    {
         $doc = new XmlDocument();
+
+        if ($filesystem === true) {
+            $doc->setFilesystem($this->getFileSystem());
+        }
+
         $doc->load($file, true);
         $doc->includeAssessmentSectionRefs(true);
-        
+
         $root = $doc->getDocumentComponent();
-        
+
         $testParts = $root->getTestParts();
         $this->assertTrue(isset($testParts['T01']));
-        
+
         $this->assertCount(1, $testParts['T01']->getAssessmentSections());
         $this->assertTrue(isset($testParts['T01']->getAssessmentSections()['S00']));
-        
+
         $mainSection = $testParts['T01']->getAssessmentSections()['S00'];
         $sectionParts = $mainSection->getSectionParts();
         $this->assertCount(5, $sectionParts);
@@ -155,32 +186,36 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
             array('Q01', 'S01', 'Q03', 'S02', 'Q05'),
             $sectionParts->getKeys()
         );
-        
+
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q01']);
         $this->assertInstanceOf('qtism\\data\\AssessmentSection', $sectionParts['S01']);
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q03']);
         $this->assertInstanceOf('qtism\\data\\AssessmentSection', $sectionParts['S02']);
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q05']);
-        
+
         $section = $sectionParts['S01'];
         $this->assertCount(1, $section->getSectionParts());
         $this->assertTrue(isset($section->getSectionParts()['Q02']));
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $section->getSectionParts()['Q02']);
-        
+
         $section = $sectionParts['S02'];
         $this->assertCount(1, $section->getSectionParts());
         $this->assertTrue(isset($section->getSectionParts()['Q04']));
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $section->getSectionParts()['Q04']);
     }
-    
-    public function testIncludeAssessmentSectionRefsMixedProvider() {
+
+    public function testIncludeAssessmentSectionRefsMixedProvider()
+    {
         return array(
-            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml'),
-            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml')
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml', false),
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml', false),
+            array('custom/tests/mixed_assessment_section_refs/test_similar_ids.xml', true),
+            array('custom/tests/mixed_assessment_section_refs/test_different_ids.xml', true)
         );
     }
 	
-	private static function decorateUri($uri) {
+	private static function decorateUri($uri)
+    {
 		return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;
 	}
 }
