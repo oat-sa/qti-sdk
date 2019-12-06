@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -25,7 +25,6 @@ namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\IntegerModulus;
-use qtism\data\expressions\Expression;
 
 /**
  * The IntegerModulusProcessor class aims at processing IntegerModulus operators.
@@ -84,6 +83,6 @@ class IntegerModulusProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\IntegerModulus';
+        return IntegerModulus::class;
     }
 }

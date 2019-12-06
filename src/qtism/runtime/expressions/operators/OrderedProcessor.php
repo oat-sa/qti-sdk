@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,10 +23,9 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiScalar;
+use qtism\data\expressions\operators\Ordered;
 use qtism\runtime\common\Utils as CommonUtils;
 use qtism\runtime\common\OrderedContainer;
-use qtism\data\expressions\Expression;
-use qtism\data\expressions\operators\Ordered;
 
 /**
  * The OrderedProcessor class aims at processing Ordered QTI Data Model Expression objects.
@@ -123,6 +122,6 @@ class OrderedProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\Ordered';
+        return Ordered::class;
     }
 }
