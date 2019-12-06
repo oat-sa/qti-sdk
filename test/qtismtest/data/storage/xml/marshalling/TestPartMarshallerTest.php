@@ -127,7 +127,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
 		
 		$preConditions = $component->getPreConditions();
 		$this->assertEquals(1, count($preConditions));
-		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Not', $preConditions[0]->getExpression());
+		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\NotOperator', $preConditions[0]->getExpression());
 		
 		$this->assertTrue($component->hasItemSessionControl());
 		$this->assertEquals(0, $component->getItemSessionControl()->getMaxAttempts());
