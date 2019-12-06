@@ -25,7 +25,6 @@ namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\IntegerToFloat;
-use qtism\data\expressions\Expression;
 
 /**
  * The IntegerToFloatProcessor class aims at processing IntegerToFloat operators.
@@ -76,6 +75,6 @@ class IntegerToFloatProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\IntegerToFloat';
+        return IntegerToFloat::class;
     }
 }

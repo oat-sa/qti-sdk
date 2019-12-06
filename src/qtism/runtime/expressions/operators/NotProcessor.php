@@ -24,7 +24,6 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Not;
 
 /**
@@ -76,6 +75,6 @@ class NotProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\Not';
+        Not::class;
     }
 }

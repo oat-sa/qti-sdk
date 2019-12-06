@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,12 +24,11 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\Comparable;
+use qtism\data\expressions\operators\Delete;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Utils as RuntimeUtils;
-use qtism\data\expressions\operators\Delete;
-use qtism\data\expressions\Expression;
 
 /**
  * The DeleteProcessor class aims at processing Delete operators.
@@ -103,6 +102,6 @@ class DeleteProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\Delete';
+        return Delete::class;
     }
 }
