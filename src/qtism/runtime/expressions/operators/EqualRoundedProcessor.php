@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -27,10 +27,9 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\operators\EqualRounded;
 use qtism\data\expressions\operators\RoundTo;
 use qtism\runtime\common\Utils as RuntimeUtils;
-use qtism\data\expressions\operators\EqualRounded;
-use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils;
 
 /**
@@ -130,6 +129,6 @@ class EqualRoundedProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\EqualRounded';
+        return EqualRounded::class;
     }
 }

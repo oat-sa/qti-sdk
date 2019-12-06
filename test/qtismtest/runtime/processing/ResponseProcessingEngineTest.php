@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\runtime\processing;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
@@ -283,5 +284,38 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
         $engine->removeTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct');
         
         $this->assertTrue(true, "The template mapping removal should not produce any error.");
+    }
+
+    public function testNotOperator()
+    {
+        $var = new OutcomeVariable('NOTRESULT', Cardinality::SINGLE, BaseType::BOOLEAN);
+        $state = new State([$var]);
+
+        $responseProcessing = $this->createComponentFromXml('
+            <!--
+                if (isNull($NOTRESULT)) {
+                    $NOTRESULT = true;
+                }
+            -->
+            <responseProcessing>
+                <responseCondition>
+                    <responseIf>
+                        <isNull>
+                            <variable identifier="NOTRESULT"/>
+                        </isNull>
+                        <setOutcomeValue identifier="NOTRESULT">
+                            <not>
+                                <baseValue baseType="boolean">true</baseValue>
+                            </not>
+                        </setOutcomeValue>
+                    </responseIf>
+                </responseCondition>
+            </responseProcessing>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing, $state);
+        $engine->process();
+
+        $this->assertSame(false, $state['NOTRESULT']->getValue());
     }
 }

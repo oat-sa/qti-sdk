@@ -22,6 +22,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\expressions\operators\AndOperator;
+use qtism\data\expressions\operators\NotOperator;
+use qtism\data\expressions\operators\OrOperator;
 use qtism\data\storage\xml\Utils;
 
 use qtism\data\expressions\operators\CustomOperator;
@@ -141,9 +144,11 @@ class OperatorMarshaller extends RecursiveMarshaller
         // AndOperator because of PHP reserved words restriction.
 
         if ($element->localName === 'and') {
-            $className = 'qtism\\data\\expressions\\operators\\AndOperator';
+            $className = AndOperator::class;
         } elseif ($element->localName === 'or') {
-            $className = 'qtism\\data\\expressions\\operators\\OrOperator';
+            $className = OrOperator::class;
+        } elseif ($element->localName === 'not') {
+            $className = NotOperator::class;
         } else {
             $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
         }

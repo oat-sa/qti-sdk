@@ -36,7 +36,7 @@ use qtism\data\expressions\Pure;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Not extends Operator implements Pure
+class NotOperator extends Operator implements Pure
 {
     /**
      * Create a new Not object.
