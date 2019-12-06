@@ -8,7 +8,7 @@
 
 # QTI Software Development Kit for PHP
 
-An IMS QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 5.5 and higher supporting a wide 
+An IMS QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 7.0 and higher supporting a wide 
 range of features described by the [IMS QTI specification family](http://www.imsglobal.org/question).
 
 __This implementation of QTI is under constant enhancement. The API of the master branch might change at any time.__
@@ -26,7 +26,7 @@ __This implementation of QTI is under constant enhancement. The API of the maste
 * PreConditions & Branching
 * Selection and Ordering
 * Response, Outcome and Template Processing
-* Unit test driven from PHP 5.5 to 7.0
+* Unit test driven
 
 ## Installation (developers)
 
@@ -258,6 +258,8 @@ echo "SCORE: " . $itemSession['SCORE'] . "\n";
 $itemSession->endItemSession();
 ```
 
+You can get more information on the QTI-SDK GitHub Wiki!
+
 ## QTI Rendering
 
 The QTI Software Development Kit enables you to transform XML serialized QTI files
@@ -269,7 +271,7 @@ is redirected to the `/home/jerome/qti.html` file.
 ./vendor/bin/qtisdk render -df --source path/to/qti.xml --flavour goldilocks > /home/jerome/qti.html
 ```
 
-For additionnal help and information, just call the help screen to know about the features provided by the rendering binaries!
+For additional help and information, just call the help screen to know about the features provided by the rendering binaries!
 
 ```shell
 ./vendor/bin/qtisdk render --help
@@ -277,17 +279,8 @@ For additionnal help and information, just call the help screen to know about th
 
 ## Configuration
 
-As for other major PHP frameworks such as [Doctrine](http://stackoverflow.com/questions/21925354/doctrine-is-freaking-out-when-i-turn-on-php-opcache-on), Zend Framework 2 or PHPUnit, QTI-SDK makes use
+As for other major PHP frameworks such as [Doctrine](http://stackoverflow.com/questions/21925354/doctrine-is-freaking-out-when-i-turn-on-php-opcache-on) QTI-SDK makes use
 of annotations. In such a context, the two following Zend Opcache configuration directives must be
 configured as below.
-
-### PHP5 Configuration
-
-* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
-* [opcache.load_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments): 1
-
-### PHP7 Configuration
-
-The `opcache.load_comments` option was removed from PHP7. Only `opcache.save_comments` remains.
 
 * [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
