@@ -292,13 +292,18 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
         $state = new State([$var]);
 
         $responseProcessing = $this->createComponentFromXml('
+            <!--
+                if (isNull($NOTRESULT)) {
+                    $NOTRESULT = true;
+                }
+            -->
             <responseProcessing>
                 <responseCondition>
                     <responseIf>
                         <isNull>
                             <variable identifier="NOTRESULT"/>
                         </isNull>
-                         <setOutcomeValue identifier="NOTRESULT">
+                        <setOutcomeValue identifier="NOTRESULT">
                             <not>
                                 <baseValue baseType="boolean">true</baseValue>
                             </not>
