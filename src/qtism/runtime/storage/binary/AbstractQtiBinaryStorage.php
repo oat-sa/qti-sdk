@@ -53,6 +53,8 @@ use \InvalidArgumentException;
  */
 abstract class AbstractQtiBinaryStorage extends AbstractStorage
 {
+    const VERSION = 1;
+
     private $seeker;
 
     /**
@@ -125,6 +127,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream = new MemoryStream();
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
+
+            // -- Tag version.
+            $access->writeTinyInt(self::VERSION);
 
             // -- Deal with intrinsic values of the Test Session.
             $access->writeTinyInt($assessmentTestSession->getState());
@@ -233,6 +238,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream = $this->getRetrievalStream($sessionId);
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
+
+            // -- Consume version (not used yet).
+            $access->readTinyInt();
 
             // -- Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
