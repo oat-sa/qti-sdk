@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,9 +23,8 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\runtime\common\ResponseVariable;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\Correct;
+use qtism\runtime\common\ResponseVariable;
 
 /**
  * The CorrectProcessor class aims at processing Correct Expression objects from the
@@ -79,6 +78,6 @@ class CorrectProcessor extends ExpressionProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\Correct';
+        return Correct::class;
     }
 }

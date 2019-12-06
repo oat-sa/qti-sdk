@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,11 +23,8 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\data\state\Value;
-use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\data\expressions\BaseValue;
-use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
+use qtism\runtime\common\Utils as RuntimeUtils;
 
 /**
  * The BaseValueProcessor class aims at processing BaseValue expressions.
@@ -56,6 +53,6 @@ class BaseValueProcessor extends ExpressionProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\BaseValue';
+        return BaseValue::class;
     }
 }
