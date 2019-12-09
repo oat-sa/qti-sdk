@@ -96,7 +96,7 @@ class ItemResultMarshaller extends Marshaller
         }
 
         $identifier = new QtiIdentifier($element->getAttribute('identifier'));
-        $datestamp = new DateTime($element->getAttribute('datestamp'));
+        $datestamp = new DateTime($element->getAttribute('datestamp'), new \DateTimeZone('UTC'));
         $sessionStatus = SessionStatus::getConstantByName($element->getAttribute('sessionStatus'));
 
         $variableElements = array_merge(
