@@ -91,7 +91,7 @@ class Utils
                 
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd') {
                     $version = '2.2.2';
-                } else                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
                     $version = '2.2.1';
                 } else {
                     $version = '2.2.0';
@@ -102,9 +102,9 @@ class Utils
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd') {
                     $version = '3.0.0';
                 }
-            } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
                 $version = '2.1.0';
-            } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
                 $version = '2.2.0';
             }
         }
