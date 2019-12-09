@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\runtime\tests;
 
+use DateTime;
+use DateTimeZone;
 use qtismtest\QtiSmAssessmentItemTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
@@ -105,6 +107,13 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endAttempt(new State(array($resp)));
         $this->assertTrue($itemSession->isResponded());
         $this->assertTrue($itemSession->isResponded(false));
+        
+        // Checks the last processing time.
+        $lastProcessingTime = $itemSession->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $lastProcessingTime);
+        // Checks that the DateTime is less that one second in the past.
+        $difference = (new DateTime('now', new DateTimeZone('UTC')))->diff($lastProcessingTime);
+        $this->assertLessThan(1000000, $difference->format('%f'));
         
         // The ItemSessionControl for this session was not specified, it is then
         // the default one, with default values. Because maxAttempts is not specified,

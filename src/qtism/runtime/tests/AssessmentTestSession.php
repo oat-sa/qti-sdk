@@ -51,7 +51,7 @@ use qtism\data\TestFeedbackRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\runtime\common\Variable;
-use \DateTime;
+use DateTime;
 use \SplObjectStorage;
 use \InvalidArgumentException;
 use \OutOfRangeException;
@@ -66,8 +66,10 @@ use \Exception;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTestSession extends State
+class AssessmentTestSession extends State implements lastProcessingTimeAwareInterface
 {
+    use lastProcessingTimeAwareTrait;
+
     const ROUTECOUNT_ALL = 0;
     const ROUTECOUNT_EXCLUDENORESPONSE = 1;
     const ROUTECOUNT_FLOW = 2;
@@ -871,7 +873,7 @@ class AssessmentTestSession extends State
                 throw $this->transformException($e);
             }
     
-            // Update the lastly updated item occurence.
+            // Update the lastly updated item occurrence.
             $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
     
             // Item Results submission.
@@ -884,6 +886,7 @@ class AssessmentTestSession extends State
     
             // Outcome processing.
             $this->outcomeProcessing();
+            $this->updateLastProcessingTime();
         }
     }
     

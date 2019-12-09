@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\runtime\tests;
 
+use DateTime;
+use DateTimeZone;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIdentifier;
@@ -193,7 +195,14 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 	    $this->assertFalse($assessmentTestSession->getCurrentTestPart());
 	    $this->assertFalse($assessmentTestSession->getCurrentNavigationMode());
 	    $this->assertFalse($assessmentTestSession->getCurrentSubmissionMode());
-	}
+	    
+        // Checks the last processing time.
+        $lastProcessingTime = $assessmentTestSession->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $lastProcessingTime);
+        // Checks that the DateTime is less that one second in the past.
+        $difference = (new DateTime('now', new DateTimeZone('UTC')))->diff($lastProcessingTime);
+        $this->assertLessThan(1000000, $difference->format('%f'));
+    }
 	
 	public function testLinearAnswerAll()
     {

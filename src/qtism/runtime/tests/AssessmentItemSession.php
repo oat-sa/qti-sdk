@@ -129,8 +129,10 @@ use \OutOfBoundsException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10055 The IMS QTI 2.1 Item Session Lifecycle.
  */
-class AssessmentItemSession extends State
+class AssessmentItemSession extends State implements lastProcessingTimeAwareInterface
 {
+    use lastProcessingTimeAwareTrait;
+    
     /**
      * The item completion status 'incomplete'.
      *
@@ -822,6 +824,7 @@ class AssessmentItemSession extends State
             if ($rule !== null && ($rule->hasTemplate() === true || $rule->hasTemplateLocation() === true || count($rule->getResponseRules()) > 0)) {
                 $engine = $this->createResponseProcessingEngine($rule);
                 $engine->process();
+                $this->updateLastProcessingTime();
             }
         }
 
