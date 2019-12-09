@@ -83,7 +83,7 @@ class TestResultMarshaller extends Marshaller
         }
 
         $identifier = new QtiIdentifier($element->getAttribute('identifier'));
-        $datestamp = new DateTime($element->getAttribute('datestamp'));
+        $datestamp = new DateTime($element->getAttribute('datestamp'), new \DateTimeZone('UTC'));
 
         $variableElements = array_merge(
             self::getChildElementsByTagName($element, 'responseVariable'),
