@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,14 +24,12 @@ namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\collections\Container;
+use qtism\data\expressions\operators\Repeat;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\Utils as ExprUtils;
 use qtism\runtime\common\OrderedContainer;
-use qtism\data\expressions\operators\Repeat;
-use qtism\data\expressions\Expression;
 
 /**
  * The RepeatProcessor class aims at processing Repeat operators.
@@ -145,6 +143,6 @@ class RepeatProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\Repeat';
+        return Repeat::class;
     }
 }

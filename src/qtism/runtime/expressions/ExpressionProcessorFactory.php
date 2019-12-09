@@ -25,8 +25,6 @@ namespace qtism\runtime\expressions;
 
 use qtism\data\QtiComponent;
 use qtism\runtime\common\ProcessorFactory;
-use qtism\runtime\common\Processable;
-use qtism\data\expressions\Expression;
 use \RuntimeException;
 
 /**

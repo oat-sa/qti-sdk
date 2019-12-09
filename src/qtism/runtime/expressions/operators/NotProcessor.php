@@ -24,8 +24,6 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
-use qtism\data\expressions\operators\Not;
 
 /**
  * The NotProcessor class aims at processing Not QTI DataModel expressions.
@@ -76,6 +74,6 @@ class NotProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\Not';
+        return 'qtism\\data\\expressions\\operators\\NotOperator';
     }
 }
