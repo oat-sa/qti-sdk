@@ -52,6 +52,8 @@ class Utils
             $filename = dirname(__FILE__) . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
         } elseif ($version === '2.2.1') {
             $filename = dirname(__FILE__) . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+        } elseif ($version === '2.2.2') {
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
         } else {
             $filename = dirname(__FILE__) . '/schemes/imsqti_v2p0.xsd';
         }
@@ -87,7 +89,9 @@ class Utils
             } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
                 $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p2');
                 
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd') {
+                    $version = '2.2.2';
+                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
                     $version = '2.2.1';
                 } else {
                     $version = '2.2.0';
@@ -98,9 +102,9 @@ class Utils
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd') {
                     $version = '3.0.0';
                 }
-            } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
                 $version = '2.1.0';
-            } else if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
                 $version = '2.2.0';
             }
         }

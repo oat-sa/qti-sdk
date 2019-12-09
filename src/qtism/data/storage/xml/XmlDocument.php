@@ -36,6 +36,7 @@ use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\content\Flow;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -303,7 +304,7 @@ class XmlDocument extends QtiDocument
      * this Filesystem implementation. Otherwise, it will be stored on the local filesystem.
 	 *
 	 * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
-	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
+	 * @param boolean $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
 	 */
     public function save($uri, $formatOutput = true)
@@ -647,6 +648,11 @@ class XmlDocument extends QtiDocument
                 $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
                 break;
             
+            case '2.2.2':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                break;
+            
             case '3.0.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
                 $xmlns = "http://www.imsglobal.org/xsd/imsaqti_item_v1p0";
@@ -713,6 +719,8 @@ class XmlDocument extends QtiDocument
             return new Qti22MarshallerFactory();
         } elseif ($version === '2.2.1') {
             return new Qti221MarshallerFactory();
+        } elseif ($version === '2.2.2') {
+            return new Qti222MarshallerFactory();
         } elseif ($version === '3.0.0') {
             return new Qti30MarshallerFactory();
         } else {
