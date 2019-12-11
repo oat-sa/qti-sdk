@@ -36,6 +36,7 @@ use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\AssessmentSectionCollection;
+use qtism\runtime\tests\lastProcessingTimeAwareInterface;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\BranchRuleCollection;
@@ -877,6 +878,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeShufflingState($shufflingState);
             }
             
+            // Writes last processing time.
+            $this->writeDateTimeWithMicroSeconds($session->getLastProcessingTime());
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing an assessment item session.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);

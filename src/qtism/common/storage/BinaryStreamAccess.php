@@ -22,6 +22,7 @@
 namespace qtism\common\storage;
 
 use \DateTime;
+use Exception;
 
 /**
  * The BinaryStreamAccess aims at providing the needed methods to
@@ -283,16 +284,16 @@ class BinaryStreamAccess extends AbstractStreamAccess
     {
         try {
             $timeStamp = current(unpack('l', $this->getStream()->read(4)));
-            $date = new DateTime('now', new \DateTimeZone('UTC'));
-
-            return $date->setTimestamp($timeStamp);
+            return new DateTime('@' . $timeStamp, new \DateTimeZone('UTC'));
         } catch (StreamException $e) {
             $this->handleStreamException($e, BinaryStreamAccessException::DATETIME);
+        } catch (Exception $e) {
+            throw new BinaryStreamAccessException($e->getMessage(), $this, BinaryStreamAccessException::DATETIME);
         }
     }
 
     /**
-     * Write a DateTime from the current binary stream.
+     * Write a DateTime to the current binary stream.
      *
      * @param \DateTime $dateTime A DateTime object.
      * @throws \qtism\common\storage\BinaryStreamAccessException
@@ -300,10 +301,56 @@ class BinaryStreamAccess extends AbstractStreamAccess
     public function writeDateTime(DateTime $dateTime)
     {
         try {
-            $timeStamp = $dateTime->getTimestamp();
-            $this->getStream()->write(pack('l', $timeStamp));
+            $this->getStream()->write(pack('l', $dateTime->getTimestamp()));
         } catch (StreamException $e) {
             $this->handleStreamException($e, BinaryStreamAccessException::DATETIME, false);
+        }
+    }
+
+    /**
+     * Read a DateTime with micro seconds from the current binary stream.
+     *
+     * @return \DateTime A DateTime object.
+     * @throws \qtism\common\storage\BinaryStreamAccessException
+     */
+    public function readDateTimeWithMicroSeconds()
+    {
+        try {
+            // Boolean flag: 0 = null, 1 = DateTime.
+            if (ord($this->getStream()->read(1)) === 0) {
+                return null;
+            }
+
+            $timeStamp = current(unpack('l', $this->getStream()->read(4)));
+            $microSeconds = current(unpack('L', $this->getStream()->read(4)));
+            return DateTime::createFromFormat('U.u', $timeStamp . '.' . $microSeconds, new \DateTimeZone('UTC'));
+        } catch (StreamException $e) {
+            $this->handleStreamException($e, BinaryStreamAccessException::DATETIME_MICROSECONDS);
+        }
+    }
+
+    /**
+     * Writes a DateTime with micro seconds to the current binary stream, prepended with a boolean flag:
+     *      0: null value.
+     *      1: non-null value.
+     *
+     * @param \DateTime $dateTime A DateTime object.
+     *
+     * @throws \qtism\common\storage\BinaryStreamAccessException
+     */
+    public function writeDateTimeWithMicroSeconds(DateTime $dateTime = null)
+    {
+        try {
+            // Boolean flag: 0 = null, 1 = DateTime.
+            $this->getStream()->write(pack('b', $dateTime !== null));
+
+            // Actual DateTime value.
+            if ($dateTime !== null) {
+                $this->getStream()->write(pack('l', $dateTime->getTimestamp()));
+                $this->getStream()->write(pack('L', (int)$dateTime->format('u')));
+            }
+        } catch (StreamException $e) {
+            $this->handleStreamException($e, BinaryStreamAccessException::DATETIME_MICROSECONDS, false);
         }
     }
 
@@ -363,12 +410,12 @@ class BinaryStreamAccess extends AbstractStreamAccess
                 break;
 
             case StreamException::READ:
-                $msg = "An error occured while ${strAction} a ${strType}.";
+                $msg = "An error occurred while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
                 break;
 
             default:
-                $msg = "An unknown error occured while ${strAction} a ${strType}.";
+                $msg = "An unknown error occurred while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
         }

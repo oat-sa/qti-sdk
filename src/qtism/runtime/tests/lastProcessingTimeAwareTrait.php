@@ -39,7 +39,7 @@ trait lastProcessingTimeAwareTrait
      */
     public function updateLastProcessingTime()
     {
-        $this->lastProcessingTime = new DateTime('now', new DateTimeZone('UTC'));
+        $this->lastProcessingTime = DateTime::createFromFormat('U.u', microtime(true), new DateTimeZone('UTC'));
     }
 
     /**

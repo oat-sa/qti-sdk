@@ -28,6 +28,7 @@ use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\tests\DurationStore;
+use qtism\runtime\tests\lastProcessingTimeAwareInterface;
 use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\common\OutcomeVariable;
@@ -53,7 +54,9 @@ use \InvalidArgumentException;
  */
 abstract class AbstractQtiBinaryStorage extends AbstractStorage
 {
-    const VERSION = 1;
+    const CURRENT_VERSION = 2;
+
+    const VERSION_WITH_LAST_PROCESSING_TIME = 2;
 
     private $seeker;
 
@@ -129,7 +132,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $access = $this->createBinaryStreamAccess($stream);
 
             // -- Tag version.
-            $access->writeTinyInt(self::VERSION);
+            $access->writeTinyInt(self::CURRENT_VERSION);
 
             // -- Deal with intrinsic values of the Test Session.
             $access->writeTinyInt($assessmentTestSession->getState());
@@ -160,14 +163,17 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             // -- Persist configuration
             $access->writeShort($assessmentTestSession->getConfig());
 
-            // -- Persist the Route of the AssessmentTestSession and the related item sessions.
+            // Persist the Route of the AssessmentTestSession.
             $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
+
+            // Persists the last processing time.
+            $access->writeDateTimeWithMicroSeconds($assessmentTestSession->getLastProcessingTime());
+
+            // Persists the related item sessions.
             $oldRoutePosition = $route->getPosition();
-
             $seeker = $this->getSeeker();
-
             foreach ($route as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
@@ -181,7 +187,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                     $access->writeBoolean(true);
                     $access->writeAssessmentItemSession($seeker, $itemSession);
                     
-                    // Deal with last occurence update.
+                    // Deal with last occurrence update.
                     $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
                     
                     // Deal with PendingResponses

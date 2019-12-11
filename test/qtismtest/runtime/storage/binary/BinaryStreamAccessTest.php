@@ -116,6 +116,39 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(1378280229, $date->getTimestamp());
     }
     
+    public function testReadDateTimeWithMicroSeconds() {
+        $date = DateTime::createFromFormat('U.u', '1378280229.1234', new DateTimeZone('Europe/Luxembourg'));
+        $stream = new MemoryStream(pack('l', $date->getTimestamp()) . pack('L', 1234));
+        $stream->open();
+        $access = new BinaryStreamAccess($stream);
+
+        $actual = $access->readDateTimeWithMicroSeconds();
+        $this->assertEquals($date, $actual);
+    }
+
+    public function testReadDateTimeWithMicroSecondsx() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new BinaryStreamAccess($stream);
+
+        $this->expectException(BinaryStreamAccessException::class);
+        $this->expectExceptionCode(BinaryStreamAccessException::DATETIME_MICROSECONDS);
+        $this->expectExceptionMessage('An error occurred while reading a unknown datatype.');
+
+        $access->readDateTimeWithMicroSeconds();
+    }
+
+    public function testWriteDateTimeWithMicroSeconds() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+
+        $access->writeDateTimeWithMicroSeconds(new DateTime('2013:09:04 09:37:09', new DateTimeZone('Europe/Luxembourg')));
+        $stream->rewind();
+
+        $date = $access->readDateTimeWithMicroSeconds();
+        $this->assertEquals(1378280229, $date->getTimestamp());
+    }
+
     public function testReadShort() {
         $stream = new MemoryStream(pack('S', 0) . pack('S', 1) . pack ('S', 65535));
         $stream->open();

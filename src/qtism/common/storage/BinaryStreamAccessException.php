@@ -86,4 +86,11 @@ class BinaryStreamAccessException extends StreamAccessException
      * @var integer
      */
     const DATETIME = 9;
+
+    /**
+     * An error occured while reading|writing a DateTime.
+     *
+     * @var integer
+     */
+    const DATETIME_MICROSECONDS = 10;
 }
