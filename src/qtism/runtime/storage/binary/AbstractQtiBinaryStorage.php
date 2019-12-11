@@ -28,7 +28,7 @@ use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\tests\DurationStore;
-use qtism\runtime\tests\lastProcessingTimeAwareInterface;
+use qtism\runtime\tests\LastProcessingTimeAwareInterface;
 use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\common\OutcomeVariable;

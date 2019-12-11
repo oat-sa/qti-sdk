@@ -23,23 +23,18 @@
 namespace qtismtest\runtime\tests;
 
 use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
-use qtism\runtime\tests\lastProcessingTimeAwareInterface;
-use qtism\runtime\tests\lastProcessingTimeAwareTrait;
+use qtism\runtime\tests\LastProcessingTimeAwareInterface;
+use qtism\runtime\tests\LastProcessingTimeAwareTrait;
 
-class lastProcessingTimeAwareTraitTest extends TestCase implements lastProcessingTimeAwareInterface
+class LastProcessingTimeAwareTraitTest extends TestCase implements LastProcessingTimeAwareInterface
 {
-    use lastProcessingTimeAwareTrait;
+    use LastProcessingTimeAwareTrait;
     
     public function test()
     {
         $this->updateLastProcessingTime();
         $lastProcessingTime = $this->getLastProcessingTime();
         $this->assertInstanceOf(DateTime::class, $lastProcessingTime);
-        
-        // Checks that the DateTime is less that one second in the past.
-        $difference = (new DateTime('now', new DateTimeZone('UTC')))->diff($lastProcessingTime); 
-        $this->assertLessThan(1000000, $difference->format('%f'));
     }
 }

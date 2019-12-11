@@ -66,9 +66,9 @@ use \Exception;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTestSession extends State implements lastProcessingTimeAwareInterface
+class AssessmentTestSession extends State implements LastProcessingTimeAwareInterface
 {
-    use lastProcessingTimeAwareTrait;
+    use LastProcessingTimeAwareTrait;
 
     const ROUTECOUNT_ALL = 0;
     const ROUTECOUNT_EXCLUDENORESPONSE = 1;

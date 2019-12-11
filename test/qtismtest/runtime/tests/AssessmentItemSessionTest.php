@@ -111,9 +111,6 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         // Checks the last processing time.
         $lastProcessingTime = $itemSession->getLastProcessingTime();
         $this->assertInstanceOf(DateTime::class, $lastProcessingTime);
-        // Checks that the DateTime is less that one second in the past.
-        $difference = (new DateTime('now', new DateTimeZone('UTC')))->diff($lastProcessingTime);
-        $this->assertLessThan(1000000, $difference->format('%f'));
         
         // The ItemSessionControl for this session was not specified, it is then
         // the default one, with default values. Because maxAttempts is not specified,

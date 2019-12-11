@@ -129,9 +129,9 @@ use \OutOfBoundsException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10055 The IMS QTI 2.1 Item Session Lifecycle.
  */
-class AssessmentItemSession extends State implements lastProcessingTimeAwareInterface
+class AssessmentItemSession extends State implements LastProcessingTimeAwareInterface
 {
-    use lastProcessingTimeAwareTrait;
+    use LastProcessingTimeAwareTrait;
     
     /**
      * The item completion status 'incomplete'.

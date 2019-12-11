@@ -176,6 +176,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
+	    $item1LastProcessingTime = $assessmentTestSession->getLastProcessingTime();
+	    $this->assertInstanceOf(DateTime::class, $item1LastProcessingTime);
 	    
 	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 	    $assessmentTestSession->beginAttempt();
@@ -184,7 +186,10 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
-	    
+        $item2LastProcessingTime = $assessmentTestSession->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $item2LastProcessingTime);
+	    $this->assertNotEquals($item2LastProcessingTime, $item1LastProcessingTime);
+        
 	    $assessmentTestSession->beginAttempt();
 	    $assessmentTestSession->endAttempt(new State());
 	    $assessmentTestSession->moveNext();
@@ -195,13 +200,13 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 	    $this->assertFalse($assessmentTestSession->getCurrentTestPart());
 	    $this->assertFalse($assessmentTestSession->getCurrentNavigationMode());
 	    $this->assertFalse($assessmentTestSession->getCurrentSubmissionMode());
+        $item3LastProcessingTime = $assessmentTestSession->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $item3LastProcessingTime);
+        $this->assertNotEquals($item3LastProcessingTime, $item2LastProcessingTime);
 	    
         // Checks the last processing time.
         $lastProcessingTime = $assessmentTestSession->getLastProcessingTime();
         $this->assertInstanceOf(DateTime::class, $lastProcessingTime);
-        // Checks that the DateTime is less that one second in the past.
-        $difference = (new DateTime('now', new DateTimeZone('UTC')))->diff($lastProcessingTime);
-        $this->assertLessThan(1000000, $difference->format('%f'));
     }
 	
 	public function testLinearAnswerAll()

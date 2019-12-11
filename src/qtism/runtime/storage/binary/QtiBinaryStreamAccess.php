@@ -36,7 +36,7 @@ use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\AssessmentSectionCollection;
-use qtism\runtime\tests\lastProcessingTimeAwareInterface;
+use qtism\runtime\tests\LastProcessingTimeAwareInterface;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\BranchRuleCollection;

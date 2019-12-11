@@ -25,7 +25,7 @@ namespace qtism\runtime\tests;
 use DateTime;
 use DateTimeZone;
 
-trait lastProcessingTimeAwareTrait
+trait LastProcessingTimeAwareTrait
 {
     /**
      * Date and time of the last processing performed.

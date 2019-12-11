@@ -24,7 +24,7 @@ namespace qtism\runtime\tests;
 
 use DateTime;
 
-interface lastProcessingTimeAwareInterface
+interface LastProcessingTimeAwareInterface
 {
     /**
      * Updates the last processing time to the current time.
