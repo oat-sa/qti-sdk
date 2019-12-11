@@ -342,7 +342,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
     {
         try {
             // Boolean flag: 0 = null, 1 = DateTime.
-            $this->getStream()->write(pack('b', $dateTime !== null));
+            $val = $dateTime !== null ? 1 : 0;
+            $this->getStream()->write(chr($val));
 
             // Actual DateTime value.
             if ($dateTime !== null) {

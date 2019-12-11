@@ -118,7 +118,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     
     public function testReadDateTimeWithMicroSeconds() {
         $date = DateTime::createFromFormat('U.u', '1378280229.1234', new DateTimeZone('Europe/Luxembourg'));
-        $stream = new MemoryStream(pack('l', $date->getTimestamp()) . pack('L', 1234));
+        $stream = new MemoryStream(chr(1) . pack('l', $date->getTimestamp()) . pack('L', 1234));
         $stream->open();
         $access = new BinaryStreamAccess($stream);
 
