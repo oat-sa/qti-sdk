@@ -22,6 +22,7 @@
 
 namespace qtism\runtime\results;
 
+use DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\results\CandidateResponse;
 use qtism\data\results\ItemVariableCollection;
@@ -31,6 +32,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableCollection;
+use qtism\runtime\tests\LastProcessingTimeAwareInterface;
 
 /**
  * Class AbstractResultBuilder
@@ -116,4 +118,18 @@ abstract class AbstractResultBuilder
      * @return mixed
      */
     abstract public function buildResult();
+
+    /**
+     * @param State $state
+     *
+     * @return DateTime
+     */
+    protected function getLastProcessingTime()
+    {
+        if (!$this->state instanceof LastProcessingTimeAwareInterface) {
+            return new DateTime();
+        }
+
+        return $this->state->getLastProcessingTime() ?? new DateTime();
+    }
 }

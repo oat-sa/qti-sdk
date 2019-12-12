@@ -51,7 +51,7 @@ class ItemResultBuilder extends AbstractResultBuilder
 
         $itemResult = new ItemResult(
             $itemResultIdentifier,
-            new \DateTime(),
+            $this->getLastProcessingTime(),
             SessionStatus::STATUS_FINAL
         );
 

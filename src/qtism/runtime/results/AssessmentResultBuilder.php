@@ -55,7 +55,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
 
         $testResult = new TestResult(
             new QtiIdentifier($state->getSessionId()),
-            new \DateTime()
+            $this->getLastProcessingTime()
         );
 
         $testResult->setItemVariables($this->buildVariables());
