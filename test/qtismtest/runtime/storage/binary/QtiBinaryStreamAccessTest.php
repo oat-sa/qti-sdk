@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\runtime\storage\binary;
 
+use DateTime;
 use qtism\runtime\storage\binary\AbstractQtiBinaryStorage;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\tests\SessionManager;
@@ -667,7 +668,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $shufflingCount = "\x00"; // No shuffling states.
         
-        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $shufflingCount));
+        $bin = implode('', [$position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $shufflingCount]);
         $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -692,9 +693,56 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
     }
     
-    /**
-     * @depends testReadAssessmentItemSession1
-     */
+    public function testReadAssessmentItemSession1WithLastTimeProcessing() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $position = pack('S', 0); // Q01
+        $state = "\x01"; // INTERACTING
+        $navigationMode = "\x00"; // LINEAR
+        $submissionMode = "\x00"; // INDIVIDUAL
+        $attempting = "\x00"; // false
+        $hasItemSessionControl = "\x00"; // false
+        $numAttempts = "\x02"; // 2
+        $duration = pack('S', 4) . 'PT0S'; // 0 seconds recorded yet.
+        $completionStatus = pack('S', 10) . 'incomplete';
+        $hasTimeReference = "\x01"; // true
+        $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
+        $varCount = "\x02"; // 2 variables (scoring & RESPONSE).
+        
+        $score = pack('S', 0) . pack('S', 8) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 9th (8 + 1) outcomeDeclaration.
+        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
+        
+        $shufflingCount = "\x00"; // No shuffling states.
+
+        $lastTimeProcessing = chr(1) . pack('l', 1378302030) . pack('L', 123456); //  Wednesday, September 4th 2013, 13:40:30 (GMT) with microseconds.
+        
+        $bin = implode('', [$position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $shufflingCount, $lastTimeProcessing]);
+        $stream = new MemoryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
+        
+        $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
+        $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
+        $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
+        $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
+        $this->assertFalse($session->isAttempting());
+        $this->assertEquals(2, $session['numAttempts']->getValue());
+        $this->assertEquals('PT0S', $session['duration']->__toString());
+        $this->assertEquals('incomplete', $session['completionStatus']->getValue());
+        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('scoring'));
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['scoring']);
+        $this->assertEquals(1.0, $session['scoring']->getValue());
+        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiString', $session['RESPONSE']);
+        $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
+        $this->assertEquals(DateTime::createFromFormat('U.u','1378302030.123456'), $session->getLastProcessingTime());
+    }
+    
     public function testReadAssessmentItemSession2() {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
@@ -718,26 +766,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $shufflingCount = "\x00"; // No shuffling states.
         
-        $binArray = array(
-            $position,
-            $state,
-            $navigationMode, 
-            $submissionMode,
-            $attempting,
-            $hasItemSessionControl,
-            $numAttempts,
-            $duration, 
-            $completionStatus,
-            $hasTimeReference,
-            $timeReference,
-            $varCount, 
-            $score,
-            $response,
-            $template,
-            $shufflingCount
-        );
-        
-        $bin = implode('', $binArray);
+        $bin = implode('', [$position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $template, $shufflingCount]);
         $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -763,6 +792,60 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\runtime\\common\\TemplateVariable', $session->getVariable('TPL'));
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['TPL']);
         $this->assertSame(10, $session['TPL']->getValue());
+    }
+    
+    public function testReadAssessmentItemSession2WithLastTimeProcessing() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
+        
+        $position = pack('S', 0); // Q01
+        $state = "\x04"; // CLOSED
+        $navigationMode = "\x01"; // NONLINEAR
+        $submissionMode = "\x01"; // SIMULTANEOUS
+        $attempting = "\x00"; // false
+        $hasItemSessionControl = "\x00"; // false
+        $numAttempts = "\x01"; // 1
+        $duration = pack('S', 5) . 'PT20S'; // 20 seconds recorded.
+        $completionStatus = pack('S', 8) . 'complete';
+        $hasTimeReference = "\x01"; // true
+        $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
+        $varCount = "\x03"; // 3 variables (SCORE & RESPONSE & TPL)
+        
+        $score = pack('S', 0) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 1st (0 + 1) outcomeDeclaration.
+        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" .  "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
+        $template = pack('S', 2) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('l', 10); // 1st (0 + 1) templateDeclaration.
+        
+        $shufflingCount = "\x00"; // No shuffling states.
+
+        $lastTimeProcessing = chr(0); // Null last processing time
+
+        $bin = implode('', [$position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $template, $shufflingCount, $lastTimeProcessing]);
+        $stream = new MemoryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl'));
+        
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
+        
+        $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getState());
+        $this->assertEquals(NavigationMode::NONLINEAR, $session->getNavigationMode());
+        $this->assertEquals(SubmissionMode::SIMULTANEOUS, $session->getSubmissionMode());
+        $this->assertFalse($session->isAttempting(false));
+        $this->assertEquals(1, $session['numAttempts']->getValue());
+        $this->assertEquals('PT20S', $session['duration']->__toString());
+        $this->assertEquals('complete', $session['completionStatus']->getValue());
+        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('SCORE'));
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['SCORE']);
+        $this->assertEquals(1.0, $session['SCORE']->getValue());
+        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertSame(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiString', $session['RESPONSE']);
+        $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
+        $this->assertInstanceOf('qtism\\runtime\\common\\TemplateVariable', $session->getVariable('TPL'));
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['TPL']);
+        $this->assertSame(10, $session['TPL']->getValue());
+        $this->assertNull($session->getLastProcessingTime());
     }
     
     public function testWriteAssessmentItemSession1() {
