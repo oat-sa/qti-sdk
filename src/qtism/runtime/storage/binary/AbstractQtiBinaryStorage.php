@@ -168,9 +168,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
 
-            // Persists the last processing time.
-            $access->writeDateTimeWithMicroSeconds($assessmentTestSession->getLastProcessingTime());
-
             // Persists the related item sessions.
             $oldRoutePosition = $route->getPosition();
             $seeker = $this->getSeeker();
@@ -220,8 +217,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $access->writeVariableValue($durationStore->getVariable($k));
             }
 
-            $this->persistStream($assessmentTestSession, $stream);
+            // -- Last processing time.
+            $access->writeDateTimeWithMicroSeconds($assessmentTestSession->getLastProcessingTime());
 
+            // Persist the stream.            
+            $this->persistStream($assessmentTestSession, $stream);
             $stream->close();
         } catch (Exception $e) {
             $sessionId = $assessmentTestSession->getSessionId();
@@ -245,8 +245,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
 
-            // -- Consume version (not used yet).
-            $access->readTinyInt();
+            // -- Tag version.
+            $version = $access->readTinyInt();
 
             // -- Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
@@ -287,7 +287,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 
                 // An already instantiated session for this route item?
                 if ($access->readBoolean() === true) {
-                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker);
+                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker, $version);
                     
                     // last-update
                     if ($access->readBoolean() === true) {
@@ -334,6 +334,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             $assessmentTestSession->setDurationStore($durationStore);
 
+            // -- Last processing time.
+            if ($version >= self::VERSION_WITH_LAST_PROCESSING_TIME) {
+                $assessmentTestSession->setLastProcessingTime($access->readDateTimeWithMicroSeconds());
+            }
+            
             $stream->close();
 
             return $assessmentTestSession;

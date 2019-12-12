@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\runtime\storage\binary;
 
+use qtism\runtime\storage\binary\AbstractQtiBinaryStorage;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\files\DefaultFileManager;
@@ -672,7 +673,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME - 1);
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
@@ -742,7 +743,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl'));
         
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME - 1);
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getState());
@@ -779,7 +780,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
         
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -808,7 +809,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -838,7 +839,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -876,7 +877,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
         
         $this->assertEquals(2, $session->getItemSessionControl()->getMaxAttempts());
         $this->assertFalse($session->getItemSessionControl()->isDefault());
@@ -910,7 +911,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
         
         $this->assertTrue($session->getVariable('RESPONSE')->getCorrectResponse()->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P')))));
     }
@@ -941,7 +942,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME);
         $this->assertCount(1, $session->getShufflingStates());
     }
     

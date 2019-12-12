@@ -674,10 +674,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param \qtism\runtime\tests\AbstractSessionManager $manager
      * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @param int $version Format version 
      * @return AssessmentItemSession
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker)
+    public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker, $version)
     {
         try {
             $itemRefPosition = $this->readShort();
@@ -767,9 +768,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
             $session->setShufflingStates($shufflingStates);
 
+            // Reads last processing time.
+            if ($version >= AbstractQtiBinaryStorage::VERSION_WITH_LAST_PROCESSING_TIME) {
+                $session->setLastProcessingTime($this->readDateTimeWithMicroSeconds());
+            }
+
             return $session;
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading an assessment item session.";
+            $msg = 'An error occured while reading an assessment item session.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "No assessmentItemRef found at position ${itemRefPosition} in the assessmentTest tree structure.";
