@@ -45,6 +45,14 @@ trait LastProcessingTimeAwareTrait
     /**
      * @inheritdoc
      */
+    public function setLastProcessingTime(DateTime $lastProcessingTime = null)
+    {
+        $this->lastProcessingTime = $lastProcessingTime;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getLastProcessingTime()
     {
         return $this->lastProcessingTime;

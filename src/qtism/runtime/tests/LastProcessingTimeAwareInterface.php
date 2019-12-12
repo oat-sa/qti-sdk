@@ -37,4 +37,11 @@ interface LastProcessingTimeAwareInterface
      * @return DateTime
      */
     public function getLastProcessingTime();
+
+    /**
+     * Sets the last processing time to the given time.
+     * 
+     * @param DateTime|null $lastProcessingTime
+     */
+    public function setLastProcessingTime(DateTime $lastProcessingTime = null);
 }
