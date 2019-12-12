@@ -59,7 +59,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($sessionId);
         
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
-    
+        $this->assertNull($session->getLastProcessingTime());
+        
         // The test session has begun. We are in linear mode so that all
         // item sessions must be initialized and selected for presentation
         // to the candidate.
@@ -70,6 +71,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
             $refItemSessions = $itemSessionStore->getAssessmentItemSessions($itemRef);
             foreach ($refItemSessions as $refItemSession) {
                 $this->assertEquals(AssessmentItemSessionState::INITIAL, $refItemSession->getState());
+                $this->assertNull($refItemSession->getLastProcessingTime());
                 $itemSessionCount++;
             }
         }
@@ -95,7 +97,10 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         // The canditate spends 1 second on item Q01.
         $session->setTime(new DateTime('2014-07-14T13:00:01+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
-        
+        $this->assertInstanceOf(DateTime::class, $session->getLastProcessingTime());
+        $q01ProcessingTime = $session->getCurrentAssessmentItemSession()->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $q01ProcessingTime);
+            
         // Are durations correct?
         $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT1S')));
         $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT1S')));
@@ -132,6 +137,9 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         // The candidate spends 2 seconds on item Q02.
         $session->setTime(new DateTime('2014-07-14T13:00:04+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'M')))))));
+        $q02ProcessingTime = $session->getCurrentAssessmentItemSession()->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $q02ProcessingTime);
+        $this->assertNotEquals($q02ProcessingTime, $q01ProcessingTime);
         
         // Whate about scores of Q02?
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q02.SCORE']);
@@ -157,6 +165,9 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         // The candidate spends 10 seconds on Q03 and then skip the item.
         $session->setTime(new DateTime('2014-07-14T13:00:14+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State());
+        $q03ProcessingTime = $session->getCurrentAssessmentItemSession()->getLastProcessingTime();
+        $this->assertInstanceOf(DateTime::class, $q03ProcessingTime);
+        $this->assertNotEquals($q03ProcessingTime, $q02ProcessingTime);
         
         // Are the durations correct?
         $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT14S')));
