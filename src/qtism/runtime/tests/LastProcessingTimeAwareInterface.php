@@ -34,7 +34,7 @@ interface LastProcessingTimeAwareInterface
     /**
      * Returns the last processing time.
      *
-     * @return DateTime
+     * @return DateTime|null
      */
     public function getLastProcessingTime();
 

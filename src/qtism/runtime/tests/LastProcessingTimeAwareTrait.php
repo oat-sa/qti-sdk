@@ -30,7 +30,7 @@ trait LastProcessingTimeAwareTrait
     /**
      * Date and time of the last processing performed.
      *
-     * @var DateTime
+     * @var DateTime|null
      */
     private $lastProcessingTime;
 
