@@ -8,7 +8,6 @@ use qtism\common\datatypes\QtiString;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
 use qtism\common\datatypes\QtiDuration;
-use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
@@ -18,7 +17,8 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
-use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\common\datatypes\QtiInteger;
 
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
@@ -48,25 +48,25 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this->assertFalse($itemSession->hasTimeLimits());
         
         // Response variables instantiated and set to NULL?
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('RESPONSE'));
-        $this->assertSame(null, $itemSession['RESPONSE']);
+        $this->assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('RESPONSE'));
+        $this->assertNull($itemSession['RESPONSE']);
         
         // Outcome variables instantiated and set to their default if any?
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('SCORE'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $itemSession['SCORE']);
+        $this->assertInstanceOf(OutcomeVariable::class, $itemSession->getVariable('SCORE'));
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
         
         // Built-in variables instantiated and values initialized correctly?
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('numAttempts'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $itemSession['numAttempts']);
+        $this->assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('numAttempts'));
+        $this->assertInstanceOf(QtiInteger::class, $itemSession['numAttempts']);
         $this->assertEquals(0, $itemSession['numAttempts']->getValue());
         
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('duration'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $itemSession['duration']);
-        $this->assertEquals('PT0S', $itemSession['duration']->__toString());
+        $this->assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('duration'));
+        $this->assertInstanceOf(QtiDuration::class, $itemSession['duration']);
+        $this->assertEquals('PT0S', (string)$itemSession['duration']);
         
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('completionStatus'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiString', $itemSession['completionStatus']);
+        $this->assertInstanceOf(OutcomeVariable::class, $itemSession->getVariable('completionStatus'));
+        $this->assertInstanceOf(QtiString::class, $itemSession['completionStatus']);
         $this->assertEquals('not_attempted', $itemSession['completionStatus']->getValue());
         $this->assertEquals(BaseType::IDENTIFIER, $itemSession->getVariable('completionStatus')->getBaseType());
         
