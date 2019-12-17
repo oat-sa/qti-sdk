@@ -22,6 +22,7 @@
 
 namespace qtism\runtime\results;
 
+use DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\AssessmentItemRef;
@@ -42,8 +43,8 @@ use qtism\runtime\tests\AssessmentTestSession;
  */
 class AssessmentResultBuilder extends AbstractResultBuilder
 {
-    public const CUSTOM_PARAMETERS_SESSION_IDENTIFIER = 'LtiCustomParameters';
-    public const CUSTOM_PARAMETERS_URI = 'http://lti-custom-parameter/';
+    const CUSTOM_PARAMETERS_SESSION_IDENTIFIER = 'LtiCustomParameters';
+    const CUSTOM_PARAMETERS_URI = 'http://lti-custom-parameter/';
     
     /**
      * Build Result
@@ -62,7 +63,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
 
         $testResult = new TestResult(
             new QtiIdentifier($state->getSessionId()),
-            $this->getLastProcessingTime()
+            new DateTime()
         );
 
         $testResult->setItemVariables($this->buildVariables());
