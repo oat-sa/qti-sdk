@@ -23,9 +23,12 @@
 namespace qtismtest\runtime\results;
 
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponentCollection;
 use qtism\data\results\AssessmentResult;
+use qtism\data\results\SessionIdentifier;
 use qtism\data\results\TestResult;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -36,6 +39,16 @@ class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testBasic()
     {
+        $customPrefixedKey = 'custom_key';
+        $passedValue = 'this value is passed';
+        $notCustomPrefixedKey = 'not_custom_prefixed';
+        $notPassedValue = 'this one isn\'t';
+
+        $customParameters = [
+            $customPrefixedKey => $passedValue,
+            $notCustomPrefixedKey => $notPassedValue,
+        ];
+
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
         $session->beginTestSession();
 
@@ -47,15 +60,35 @@ class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
                     Cardinality::SINGLE,
                     BaseType::IDENTIFIER,
                     new QtiIdentifier('ChoiceA')
-                )
+                ),
             ])
         );
 
         $assessmentResultBuilder = new AssessmentResultBuilder($session);
-        $assessmentResult = $assessmentResultBuilder->buildResult();
+        $assessmentResult = $assessmentResultBuilder->buildResult($customParameters);
 
         $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
+        $context = $assessmentResult->getContext();
+        $contextComponents = $context->getComponents();
+        $this->assertInstanceOf(QtiComponentCollection::class, $contextComponents);
+        $this->assertCount(1, $contextComponents);
+
+        $contextComponent = $contextComponents[0]; 
+        $this->assertInstanceOf(SessionIdentifier::class, $contextComponent);
+        /** @var SessionIdentifier $contextComponent */
+
+        $sourceId = $contextComponent->getSourceID();
+        $this->assertInstanceOf(QtiUri::class, $sourceId); 
+        /** @var QtiUri $sourceId */
+        $this->assertEquals($assessmentResultBuilder::CUSTOM_PARAMETERS_URI, $sourceId->getValue());
+
+        $identifier = $contextComponent->getIdentifier();
+        $this->assertInstanceOf(QtiIdentifier::class, $identifier);
+        /** @var QtiIdentifier $identifier */
+
+        $this->assertEquals([$customPrefixedKey => $passedValue], json_decode(base64_decode($identifier->getValue()), true));
+        
         $testResult = $assessmentResult->getTestResult();
         $this->assertInstanceOf(TestResult::class, $testResult);
         $this->assertCount(0, $testResult->getItemVariables());

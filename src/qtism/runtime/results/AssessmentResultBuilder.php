@@ -23,10 +23,13 @@
 namespace qtism\runtime\results;
 
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiUri;
 use qtism\data\AssessmentItemRef;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\ItemResultCollection;
+use qtism\data\results\SessionIdentifier;
+use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\results\TestResult;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentTestSession;
@@ -39,23 +42,27 @@ use qtism\runtime\tests\AssessmentTestSession;
  */
 class AssessmentResultBuilder extends AbstractResultBuilder
 {
-
+    public const CUSTOM_PARAMETERS_SESSION_IDENTIFIER = 'LtiCustomParameters';
+    public const CUSTOM_PARAMETERS_URI = 'http://lti-custom-parameter/';
+    
     /**
      * Build Result
      *
+     * @param array $customParameters LTI custom parameters to be inserted into the results' context.
+     *
      * @return AssessmentResult
      */
-    public function buildResult()
+    public function buildResult(array $ltiCustomParameters = null)
     {
         /** @var AssessmentTestSession $state */
         $state = $this->state;
 
-        $assessmentContext = new Context();
+        $assessmentContext = $this->buildContext($ltiCustomParameters);
         $assessmentResult = new AssessmentResult($assessmentContext);
 
         $testResult = new TestResult(
             new QtiIdentifier($state->getSessionId()),
-            new \DateTime()
+            $this->getLastProcessingTime()
         );
 
         $testResult->setItemVariables($this->buildVariables());
@@ -89,5 +96,32 @@ class AssessmentResultBuilder extends AbstractResultBuilder
     protected function getAllVariables()
     {
         return $this->state->getAllVariables();
+    }
+
+    /**
+     * Creates context from optional LTI custom parameters.
+     * @param array $ltiCustomParameters
+     *
+     * @return Context
+     */
+    private function buildContext(array $ltiCustomParameters): Context
+    {
+        // Only "custom_" prefixed keys are taken into account.
+        $customParameters = array_filter(
+            $ltiCustomParameters,
+            static function ($key) {
+                return strpos($key, 'custom_') === 0;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+        
+        if (count($customParameters) === 0) {
+            return new Context();
+        }
+        
+        $sessionIdentifier = new SessionIdentifier(new QtiUri(self::CUSTOM_PARAMETERS_URI), new QtiIdentifier(base64_encode(json_encode($customParameters))));
+        $customParametersIdentifier = new QtiIdentifier(self::CUSTOM_PARAMETERS_SESSION_IDENTIFIER);
+        $customParametersCollection = new SessionIdentifierCollection([$sessionIdentifier]);
+        return new Context($customParametersIdentifier, $customParametersCollection);
     }
 }
