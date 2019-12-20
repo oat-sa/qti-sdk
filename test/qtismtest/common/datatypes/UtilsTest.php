@@ -39,7 +39,7 @@ class UtilsTest extends TestCase
     {
         $this->assertEquals($expected, Utils::isQtiInteger($integer));
     }
-    
+
     public function integersToTest(): array
     {
         return [
@@ -53,11 +53,31 @@ class UtilsTest extends TestCase
         ];
     }
 
-    public function testNormalizeString()
+    /**
+     * @dataProvider stringsToNormalize
+     */
+    public function testNormalizeString($string, $normalizedString)
     {
-        $string = "string with\n\rtabulations\tand\r\nnew lines\nto be replaced\rby spaces";
-        $normalizedString = 'string with  tabulations and  new lines to be replaced by spaces';
-
         $this->assertEquals($normalizedString, Utils::normalizeString($string));
+    }
+
+    public function stringsToNormalize()
+    {
+        return [
+            [
+                "string with\n\rtabulations\tand\r\nnew lines\nto be replaced\rby spaces",
+                'string with  tabulations and  new lines to be replaced by spaces',
+            ],
+            // Multi-byte 
+            [
+                "L'élève \"\\/\"\tse lève\rénervé\n.",
+                'L\'élève "\\/" se lève énervé .',
+            ],
+            // Multi-byte not in utf-8
+            [
+                iconv('utf-8', 'ISO-8859-1', "L'élève \"\\/\"\tse lève\rénervé\n."),
+                iconv('utf-8', 'ISO-8859-1', 'L\'élève "\\/" se lève énervé .'),
+            ],
+        ];
     }
 }
