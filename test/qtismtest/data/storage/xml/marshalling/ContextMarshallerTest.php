@@ -22,6 +22,7 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\results\SessionIdentifier;
@@ -63,10 +64,8 @@ class ContextMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(Context::class, $context);
 
         $this->assertFalse($context->hasSourcedId());
-        $this->assertNull($context->getSourcedId());
 
         $this->assertFalse($context->hasSessionIdentifiers());
-        $this->assertNull($context->getSessionIdentifiers());
     }
 
     public function testMarshall()
@@ -84,7 +83,7 @@ class ContextMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
         $this->assertEquals($sourcedId, $element->getAttribute('sourcedId'));
@@ -103,7 +102,7 @@ class ContextMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
         $this->assertFalse($element->hasAttributes());

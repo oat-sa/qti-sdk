@@ -17,21 +17,20 @@
  * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Moyon Camille, <camille@taotesting.com>
+ * @author Julien Sébire, <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\results;
 
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiUri;
+use qtism\common\datatypes\Utils;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
 /**
- * Class Context
- *
  * This is the context for the 'assessmentResult'. It provides the corresponding set of identifiers.
- *
- * @package qtism\data\results
  */
 class Context extends QtiComponent
 {
@@ -39,6 +38,7 @@ class Context extends QtiComponent
      * A unique identifier for the test candidate. The attribute is defined by the IMS Learning Information Services specification [LIS, 13].
      *
      * Multiplicity [0,1]
+     *
      * @var QtiIdentifier
      */
     protected $sourcedId;
@@ -49,6 +49,7 @@ class Context extends QtiComponent
      * to the session which should be added to the context if the result is modified and exported for transport again.
      *
      * Multiplicity [0,*]
+     *
      * @var SessionIdentifierCollection
      */
     protected $sessionIdentifiers;
@@ -61,9 +62,14 @@ class Context extends QtiComponent
      * @param QtiIdentifier|null $sourcedId
      * @param SessionIdentifierCollection|null $sessionIdentifiers
      */
-    public function __construct(QtiIdentifier $sourcedId=null, SessionIdentifierCollection $sessionIdentifiers=null)
-    {
+    public function __construct(
+        QtiIdentifier $sourcedId = null,
+        SessionIdentifierCollection $sessionIdentifiers = null
+    ) {
         $this->setSourcedId($sourcedId);
+        if ($sessionIdentifiers === null) {
+            $sessionIdentifiers = new SessionIdentifierCollection();
+        }
         $this->setSessionIdentifiers($sessionIdentifiers);
     }
 
@@ -82,7 +88,7 @@ class Context extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         if ($this->hasSessionIdentifiers()) {
             $components = $this->getSessionIdentifiers()->getArrayCopy();
@@ -95,7 +101,7 @@ class Context extends QtiComponent
     /**
      * Get the sourcedId of the context
      *
-     * @return QtiIdentifier
+     * @return QtiIdentifier|null
      */
     public function getSourcedId()
     {
@@ -108,7 +114,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier $sourcedId
      * @return $this
      */
-    public function setSourcedId(QtiIdentifier $sourcedId=null)
+    public function setSourcedId(QtiIdentifier $sourcedId = null): self
     {
         $this->sourcedId = $sourcedId;
         return $this;
@@ -119,9 +125,9 @@ class Context extends QtiComponent
      *
      * @return bool
      */
-    public function hasSourcedId()
+    public function hasSourcedId(): bool
     {
-        return !is_null($this->sourcedId);
+        return $this->sourcedId !== null;
     }
 
     /**
@@ -129,20 +135,41 @@ class Context extends QtiComponent
      *
      * @return SessionIdentifierCollection
      */
-    public function getSessionIdentifiers()
+    public function getSessionIdentifiers(): SessionIdentifierCollection
     {
         return $this->sessionIdentifiers;
     }
-    
+
     /**
      * Set the Session identifiers
      *
-     * @param $sessionIdentifiers
+     * @param SessionIdentifierCollection $sessionIdentifiers
      * @return $this
      */
-    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers=null)
+    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers): self
     {
         $this->sessionIdentifiers = $sessionIdentifiers;
+        return $this;
+    }
+
+    /**
+     * Adds a Session identifier given its parameters.
+     *
+     * @param string $sourceId
+     * @param string $identifier
+     * @return $this
+     */
+    public function addSessionIdentifier(string $sourceId, string $identifier): self
+    {
+        $identifier = Utils::normalizeString($identifier);
+
+        $this->sessionIdentifiers->attach(
+            new SessionIdentifier(
+                new QtiUri($sourceId),
+                new QtiIdentifier($identifier)
+            )
+        );
+
         return $this;
     }
 
@@ -151,9 +178,8 @@ class Context extends QtiComponent
      *
      * @return bool
      */
-    public function hasSessionIdentifiers()
+    public function hasSessionIdentifiers(): bool
     {
-        return !is_null($this->sessionIdentifiers);
+        return (bool)$this->sessionIdentifiers->count();
     }
-
 }
