@@ -17,6 +17,7 @@
  * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -25,9 +26,6 @@ namespace qtism\common\datatypes;
 /**
  * A class focusing on providing utility methods
  * for QTI Datatypes handling.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Utils
 {
@@ -35,20 +33,27 @@ class Utils
      * Whether a given $integer value is a QTI compliant
      * integer in the [-2147483647, 2147483647] range.
      *
-     * @param mixed $integer
+     * @param mixed $integer the value to test
      * @return boolean
      */
-    public static function isQtiInteger($integer)
+    public static function isQtiInteger($integer): bool
     {
         // QTI integers are twos-complement 32-bits integers.
-        if (is_int($integer) === false) {
-            return false;
-        } elseif ($integer > 2147483647) {
-            return false;
-        } elseif ($integer < -2147483647) {
-            return false;
-        } else {
-            return true;
-        }
+        return is_int($integer)
+            && $integer <= 2147483647
+            && $integer >= -2147483647;
+    }
+
+    /**
+     * Normalizes a string in the sense of xs:simpleType normalizedString with
+     * whiteSpace constraint as replace.
+     * See http://www.w3.org/TR/xmlschema-2/#normalizedString
+     *
+     * @param string $string the string to normalize
+     * @return string
+     */
+    public static function normalizeString(string $string): string
+    {
+        return str_replace(["\n", "\r", "\t"], ' ', $string);
     }
 }
