@@ -24,6 +24,7 @@ namespace qtismtest\data\results;
 
 use PHPUnit\Framework\TestCase;
 use qtism\data\results\Context;
+use qtism\data\results\DuplicateSourceIdException;
 use qtism\data\results\SessionIdentifier;
 
 class ContextTest extends TestCase
@@ -33,21 +34,54 @@ class ContextTest extends TestCase
         $sourceId = 'a source id';
         $identifier = "string with\n\rtabulations\tand\r\nnew lines\nto be replaced\rby spaces";
         $normalizedIdentifier = 'string with  tabulations and  new lines to be replaced by spaces';
-        
+
         $subject = new Context();
         $this->assertFalse($subject->hasSessionIdentifiers());
-        
+
         $subject->addSessionIdentifier($sourceId, $identifier);
         $this->assertTrue($subject->hasSessionIdentifiers());
-        
+
         $sessionIdentifierCollection = $subject->getSessionIdentifiers();
         $this->assertCount(1, $sessionIdentifierCollection);
-        
+
         $sessionIdentifier = $sessionIdentifierCollection->current();
         $this->assertInstanceOf(SessionIdentifier::class, $sessionIdentifier);
         /** @var SessionIdentifier $sessionIdentifier */
-        
+
         $this->assertEquals($sourceId, $sessionIdentifier->getSourceID()->getValue());
         $this->assertEquals($normalizedIdentifier, $sessionIdentifier->getIdentifier()->getValue());
+    }
+
+    public function testAddSessionIdentifierWithDuplicateSourceIdThrowsException()
+    {
+        $sourceId = 'a source id';
+        $identifier1 = 'id1';
+        $identifier2 = 'id2';
+
+        $subject = new Context();
+        $this->assertFalse($subject->hasSessionIdentifiers());
+
+        $subject->addSessionIdentifier($sourceId, $identifier1);
+        $this->assertTrue($subject->hasSessionIdentifiers());
+
+        $this->expectException(DuplicateSourceIdException::class);
+        $this->expectExceptionMessage('SourceId "' . $sourceId . '" already exist in this AssessmentResult context.');
+        $subject->addSessionIdentifier($sourceId, $identifier2);
+    }
+
+    public function testAddSessionIdentifierWithDuplicateIdentifierAdds()
+    {
+        $sourceId1 = 'sourceId1';
+        $sourceId2 = 'sourceId2';
+        $identifier = 'identifier';
+
+        $subject = new Context();
+        $this->assertFalse($subject->hasSessionIdentifiers());
+
+        $subject->addSessionIdentifier($sourceId1, $identifier);
+        $this->assertTrue($subject->hasSessionIdentifiers());
+
+        $subject->addSessionIdentifier($sourceId2, $identifier);
+        $this->assertCount(2, $subject->getSessionIdentifiers());
     }
 }
