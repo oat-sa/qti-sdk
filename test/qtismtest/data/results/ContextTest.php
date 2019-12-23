@@ -68,4 +68,20 @@ class ContextTest extends TestCase
         $this->expectExceptionMessage('SourceId "' . $sourceId . '" already exist in this AssessmentResult context.');
         $subject->addSessionIdentifier($sourceId, $identifier2);
     }
+
+    public function testAddSessionIdentifierWithDuplicateIdentifierAdds()
+    {
+        $sourceId1 = 'sourceId1';
+        $sourceId2 = 'sourceId2';
+        $identifier = 'identifier';
+
+        $subject = new Context();
+        $this->assertFalse($subject->hasSessionIdentifiers());
+
+        $subject->addSessionIdentifier($sourceId1, $identifier);
+        $this->assertTrue($subject->hasSessionIdentifiers());
+
+        $subject->addSessionIdentifier($sourceId2, $identifier);
+        $this->assertCount(2, $subject->getSessionIdentifiers());
+    }
 }
