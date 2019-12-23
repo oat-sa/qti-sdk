@@ -196,10 +196,6 @@ class Context extends QtiComponent
      */
     private function hasSessionIdentifierWithSourceId($sourceId): bool
     {
-        if (!$this->hasSessionIdentifiers()) {
-            return false;
-        }
-
         foreach ($this->sessionIdentifiers as $sessionIdentifier) {
             if ($sessionIdentifier->getSourceID()->getValue() === $sourceId) {
                 return true;
