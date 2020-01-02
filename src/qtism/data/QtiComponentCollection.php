@@ -37,12 +37,12 @@ use RuntimeException;
 class QtiComponentCollection extends AbstractCollection
 {
     /**
-	 * Check if $value is a QtiComponent object.
+     * Check if $value is a QtiComponent object.
      *
      * @param mixed $value The value of which we want to test the type.
      * 
-	 * @throws InvalidArgumentException If $value is not a QtiComponent object.
-	 */
+     * @throws InvalidArgumentException If $value is not a QtiComponent object.
+     */
     protected function checkType($value)
     {
         if (!$value instanceof QtiComponent) {
@@ -52,7 +52,8 @@ class QtiComponentCollection extends AbstractCollection
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
+     * @see AbstractCollection::offsetSet()
      */
     public function offsetSet($offset, $value)
     {
@@ -65,7 +66,8 @@ class QtiComponentCollection extends AbstractCollection
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
+     * @see AbstractCollection::offsetUnset()
      */
     public function offsetUnset($offset)
     {
@@ -81,10 +83,10 @@ class QtiComponentCollection extends AbstractCollection
      * Whether the collection contains exclusively QtiComponent objects having a given $className.
      * 
      * @param string $className A QTI class name.
-     * @param bool $recursive Wether to check children QtiComponent objects.
+     * @param bool $recursive Whether to check children QtiComponent objects.
      * @return bool
      */
-    public function exclusivelyContainsComponentsWithClassName($className, $recursive = true)
+    public function exclusivelyContainsComponentsWithClassName($className, $recursive = true): bool
     {
         $data = $this->getDataPlaceHolder();
         foreach ($data as $component) {
