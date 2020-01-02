@@ -78,7 +78,7 @@ class Context extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'context';
     }
@@ -158,10 +158,17 @@ class Context extends QtiComponent
      * @param string $sourceId
      * @param string $identifier
      * @return $this
+     * @throws DuplicateSourceIdException when an already existing sourceId is given.
      */
     public function addSessionIdentifier(string $sourceId, string $identifier): self
     {
         $identifier = Utils::normalizeString($identifier);
+
+        if ($this->hasSessionIdentifierWithSourceId($sourceId)) {
+            throw new DuplicateSourceIdException(
+                sprintf('SourceId "%s" already exist in this AssessmentResult context.', $sourceId)
+            );
+        }
 
         $this->sessionIdentifiers->attach(
             new SessionIdentifier(
@@ -181,5 +188,22 @@ class Context extends QtiComponent
     public function hasSessionIdentifiers(): bool
     {
         return (bool)$this->sessionIdentifiers->count();
+    }
+
+    /**
+     * Check if the context has a session identifier with the given sourceId.
+     *
+     * @param $sourceId
+     * @return bool
+     */
+    private function hasSessionIdentifierWithSourceId($sourceId): bool
+    {
+        foreach ($this->sessionIdentifiers as $sessionIdentifier) {
+            if ($sessionIdentifier->getSourceID()->getValue() === $sourceId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
