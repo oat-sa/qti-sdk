@@ -65,7 +65,7 @@ class ContextTest extends TestCase
         $this->assertTrue($subject->hasSessionIdentifiers());
 
         $this->expectException(DuplicateSourceIdException::class);
-        $this->expectExceptionMessage('SourceId "' . $sourceId . '" already exist in this AssessmentResult context.');
+        $this->expectExceptionMessage(sprintf('SourceId "%s" already exist in this AssessmentResult context.', $sourceId));
         $subject->addSessionIdentifier($sourceId, $identifier2);
     }
 

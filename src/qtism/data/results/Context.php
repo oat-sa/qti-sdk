@@ -78,7 +78,7 @@ class Context extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'context';
     }
@@ -165,9 +165,11 @@ class Context extends QtiComponent
         $identifier = Utils::normalizeString($identifier);
 
         if ($this->hasSessionIdentifierWithSourceId($sourceId)) {
-            throw new DuplicateSourceIdException('SourceId "' . $sourceId . '" already exist in this AssessmentResult context.');
+            throw new DuplicateSourceIdException(
+                sprintf('SourceId "%s" already exist in this AssessmentResult context.', $sourceId)
+            );
         }
-        
+
         $this->sessionIdentifiers->attach(
             new SessionIdentifier(
                 new QtiUri($sourceId),
