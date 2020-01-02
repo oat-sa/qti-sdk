@@ -22,7 +22,7 @@
 
 namespace qtism\data\results;
 
-use \Exception;
+use Exception;
 
 class DuplicateSourceIdException extends Exception
 {

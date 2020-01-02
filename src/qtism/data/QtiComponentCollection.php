@@ -23,8 +23,8 @@
 namespace qtism\data;
 
 use qtism\common\collections\AbstractCollection;
-use \InvalidArgumentException;
-use \RuntimeException;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * A collection that aims at storing QtiComponent objects. The QtiComponentCollection
@@ -37,10 +37,12 @@ use \RuntimeException;
 class QtiComponentCollection extends AbstractCollection
 {
     /**
-	 * Check if $value is a QtiComponent object.
-	 *
-	 * @throws \InvalidArgumentException If $value is not a QtiComponent object.
-	 */
+     * Check if $value is a QtiComponent object.
+     *
+     * @param mixed $value The value of which we want to test the type.
+     * 
+     * @throws InvalidArgumentException If $value is not a QtiComponent object.
+     */
     protected function checkType($value)
     {
         if (!$value instanceof QtiComponent) {
@@ -50,7 +52,8 @@ class QtiComponentCollection extends AbstractCollection
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::offsetSet()
+     * @inheritDoc
+     * @see AbstractCollection::offsetSet()
      */
     public function offsetSet($offset, $value)
     {
@@ -63,7 +66,8 @@ class QtiComponentCollection extends AbstractCollection
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::offsetUnset()
+     * @inheritDoc
+     * @see AbstractCollection::offsetUnset()
      */
     public function offsetUnset($offset)
     {
@@ -79,20 +83,19 @@ class QtiComponentCollection extends AbstractCollection
      * Whether the collection contains exclusively QtiComponent objects having a given $className.
      * 
      * @param string $className A QTI class name.
-     * @param boolean $recursive Wether to check children QtiComponent objects.
-     * @return boolean
+     * @param bool $recursive Whether to check children QtiComponent objects.
+     * @return bool
      */
-    public function exclusivelyContainsComponentsWithClassName($className, $recursive = true)
+    public function exclusivelyContainsComponentsWithClassName($className, $recursive = true): bool
     {
         $data = $this->getDataPlaceHolder();
         foreach ($data as $component) {
             if ($component->getQtiClassName() !== $className) {
-                
                 return false;
-            } else if ($recursive === true) {
+            } 
+            if ($recursive === true) {
                 foreach ($component->getIterator() as $subComponent) {
                     if ($subComponent->getQtiClassName() !== $className) {
-                        
                         return false;
                     }
                 }
