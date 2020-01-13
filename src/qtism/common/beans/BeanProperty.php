@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,22 +22,19 @@
 
 namespace qtism\common\beans;
 
-use \ReflectionProperty;
-use \ReflectionException;
+use ReflectionException;
+use ReflectionProperty;
 
 /**
  * Represents a Bean property. In other words, a class property
  * annotated with @qtism-bean-property.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BeanProperty
 {
     /**
      * The wrapped ReflectionProperty object.
      *
-     * @var \ReflectionProperty
+     * @var ReflectionProperty
      */
     private $property;
 
@@ -46,7 +43,7 @@ class BeanProperty
      *
      * @param string $class The name of the class the property belongs to.
      * @param string $name The name of the property.
-     * @throws \qtism\common\beans\BeanException If such a property does not exist or is not correctly annotated.
+     * @throws BeanException If such a property does not exist or is not correctly annotated.
      */
     public function __construct($class, $name)
     {
@@ -74,8 +71,8 @@ class BeanProperty
     /**
      * Set the wrapped ReflectionProperty object.
      *
-     * @param \ReflectionProperty $property A ReflectionProperty object.
-     * @throws \qtism\common\beans\BeanException If the given $property is not annotated with @qtism-bean-property.
+     * @param ReflectionProperty $property A ReflectionProperty object.
+     * @throws BeanException If the given $property is not annotated with @qtism-bean-property.
      */
     protected function setProperty(ReflectionProperty $property)
     {
@@ -90,7 +87,7 @@ class BeanProperty
     /**
      * Get the wrapped ReflectionProperty.
      *
-     * @return \ReflectionProperty A ReflectionProperty object.
+     * @return ReflectionProperty A ReflectionProperty object.
      */
     public function getProperty()
     {

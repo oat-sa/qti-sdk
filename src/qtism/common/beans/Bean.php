@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +22,13 @@
 
 namespace qtism\common\beans;
 
-use \InvalidArgumentException;
-use \ReflectionClass;
-use \ReflectionObject;
+use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * A wrapper implementing a similar approach to Java Beans to annotate
  * PHP classes.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Bean
 {
@@ -40,12 +37,12 @@ class Bean
      *
      * @var string
      */
-    const ANNOTATION_PROPERTY = "@qtism-bean-property";
+    const ANNOTATION_PROPERTY = '@qtism-bean-property';
 
     /**
      * The object to be wrapped as a bean as a PHP ReflectionObject.
      *
-     * @var \ReflectionClass
+     * @var ReflectionClass
      */
     private $class;
 
@@ -57,6 +54,7 @@ class Bean
      * @param string $asInstanceOf The name of the class that should be used for reflection.
      * @throws InvalidArgumentException If $object is not an object.
      * @throws BeanException
+     * @throws ReflectionException
      */
     public function __construct($object, $strict = false, $asInstanceOf = '')
     {
@@ -71,7 +69,7 @@ class Bean
                 try {
                     $this->validateStrictBean();
                 } catch (BeanException $e) {
-                    $msg = "The given object is not a strict bean.";
+                    $msg = 'The given object is not a strict bean.';
                     throw new BeanException($msg, BeanException::NOT_STRICT, $e);
                 }
             }
@@ -84,7 +82,7 @@ class Bean
     /**
      * Set the object to be wrapped Bean as a PHP ReflectionClass.
      *
-     * @param \ReflectionClass $class A ReflectionClass object.
+     * @param ReflectionClass $class A ReflectionClass object.
      */
     protected function setClass(ReflectionClass $class)
     {
@@ -94,7 +92,7 @@ class Bean
     /**
      * Get the object to be wrapped as a Bean as a PHP ReflectionClass.
      *
-     * @return \ReflectionClass A ReflectionClass object.
+     * @return ReflectionClass A ReflectionClass object.
      */
     protected function getClass()
     {
@@ -104,10 +102,11 @@ class Bean
     /**
      * Get the getter related to the property with name $propertyName.
      *
-     * @param string|\qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty object the getter is related to.
-     * @return \qtism\common\beans\BeanMethod A BeanMethod object.
-     * @throws \qtism\common\beans\BeanException If no such valid bean property or getter exists for the bean.
-     * @throws \InvalidArgumentException If $property is not a string nor a Bean
+     * @param string|BeanProperty $property The name of the property/the BeanProperty object the getter is related to.
+     * @return BeanMethod A BeanMethod object.
+     * @throws BeanException If no such valid bean property or getter exists for the bean.
+     * @throws InvalidArgumentException If $property is not a string nor a Bean
+     * @throws ReflectionException
      */
     public function getGetter($property)
     {
@@ -141,9 +140,10 @@ class Bean
      * * Its visibility is public.
      * * A valid bean property exists for $propertyName.
      *
-     * @param string|\qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty the getter is related to.
+     * @param string|BeanProperty $property The name of the property/the BeanProperty the getter is related to.
      * @return false|string False if not found or the final chosen name for the getter.
-     * @throws \InvalidArgumentException If $property is not a string nor a BeanProperty object.
+     * @throws InvalidArgumentException If $property is not a string nor a BeanProperty object.
+     * @throws ReflectionException
      */
     public function hasGetter($property)
     {
@@ -174,7 +174,10 @@ class Bean
     /**
      * Get the valid bean getters of the bean.
      *
-     * @return \qtism\common\beans\BeanMethodCollection A collection of BeanMethod objects.
+     * @param bool $excludeConstructor
+     * @return BeanMethodCollection A collection of BeanMethod objects.
+     * @throws BeanException
+     * @throws ReflectionException
      */
     public function getGetters($excludeConstructor = false)
     {
@@ -182,7 +185,6 @@ class Bean
 
         foreach ($this->getProperties() as $prop) {
             if (($getterName = $this->hasGetter($prop->getName())) !== false) {
-
                 if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
                     $methods[] = new BeanMethod($this->getClass()->getName(), $getterName);
                 }
@@ -196,9 +198,10 @@ class Bean
      * Get the setter related to the property with name $propertyName.
      *
      * @param string|BeanProperty $property The name of the property/The BeanProperty object the setter is related to.
-     * @return \qtism\common\beans\BeanMethod A BeanMethod object.
-     * @throws \qtism\common\beans\BeanException If no such valid bean property or setter exists for the bean.
-     * @throws \InvalidArgumentException If $property is not a string nor a BeanProperty object.
+     * @return BeanMethod A BeanMethod object.
+     * @throws BeanException If no such valid bean property or setter exists for the bean.
+     * @throws InvalidArgumentException If $property is not a string nor a BeanProperty object.
+     * @throws ReflectionException
      */
     public function getSetter($property)
     {
@@ -232,8 +235,9 @@ class Bean
      * * Its visibility is public.
      * * A valid bean property exists for $propertyName.
      *
-     * @param string|\qtism\common\beans\BeanProperty $property The name of the property/the BeanProperty object related to the setter to be checked.
+     * @param string|BeanProperty $property The name of the property/the BeanProperty object related to the setter to be checked.
      * @return boolean
+     * @throws ReflectionException
      */
     public function hasSetter($property)
     {
@@ -259,7 +263,10 @@ class Bean
     /**
      * Get the valid setters of this bean.
      *
-     * @return \qtism\common\beans\BeanMethodCollection A collection of BeanMethod objects.
+     * @param bool $excludeConstructor
+     * @return BeanMethodCollection A collection of BeanMethod objects.
+     * @throws BeanException
+     * @throws ReflectionException
      */
     public function getSetters($excludeConstructor = false)
     {
@@ -267,7 +274,6 @@ class Bean
 
         foreach ($this->getProperties() as $prop) {
             if ($this->hasSetter($prop->getName()) === true) {
-
                 if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
                     $methods[] = new BeanMethod($this->getClass()->getName(), 'set' . ucfirst($prop->getName()));
                 }
@@ -286,24 +292,26 @@ class Bean
      *
      * @param string $propertyName The name of the class property to check.
      * @return boolean
+     * @throws ReflectionException
      */
     public function hasProperty($propertyName)
     {
-       return $this->isPropertyAnnotated($propertyName);
+        return $this->isPropertyAnnotated($propertyName);
     }
 
     /**
      * Get a bean property with name $propertyName.
      *
      * @param string $propertyName The name of the bean property.
-     * @return \qtism\common\beans\BeanProperty A BeanProperty object.
+     * @return BeanProperty A BeanProperty object.
+     * @throws BeanException
+     * @throws ReflectionException
      */
     public function getProperty($propertyName)
     {
         $className = $className = $this->getClass()->getName();
 
         if ($this->hasProperty($propertyName) === true) {
-
             try {
                 return new BeanProperty($className, $propertyName);
             } catch (BeanException $e) {
@@ -319,20 +327,20 @@ class Bean
     /**
      * Get the bean properties. Only valid annotated bean properties will be returned.
      *
-     * @return \qtism\common\beans\BeanPropertyCollection A collection of BeanProperty objects ordered by apparition in source code.
+     * @return BeanPropertyCollection A collection of BeanProperty objects ordered by apparition in source code.
+     * @throws BeanException
+     * @throws ReflectionException
      */
     public function getProperties()
     {
         $properties = new BeanPropertyCollection();
 
         // Properties already taken into account accross the hierarchy.
-        $registeredProperties = array();
+        $registeredProperties = [];
         $target = $this->getClass();
 
         while ($target) {
-
             foreach ($target->getProperties() as $prop) {
-
                 $propName = $prop->getName();
 
                 if ($this->isPropertyAnnotated($propName) === true && in_array($propName, $registeredProperties) === false) {
@@ -350,8 +358,9 @@ class Bean
     /**
      * Get the bean getters related to the parameters of the bean's constructor.
      *
-     * @return \qtism\common\beans\BeanMethodCollection A collection of BeanMethod objects.
+     * @return BeanMethodCollection A collection of BeanMethod objects.
      * @throws BeanException
+     * @throws ReflectionException
      */
     public function getConstructorGetters()
     {
@@ -367,8 +376,9 @@ class Bean
     /**
      * Get the bean setters related to the parameters of the bean's constructor.
      *
-     * @return \qtism\common\beans\BeanMethodCollection A collection of BeanMethod objects.
+     * @return BeanMethodCollection A collection of BeanMethod objects.
      * @throws BeanException
+     * @throws ReflectionException
      */
     public function getConstructorSetters()
     {
@@ -385,14 +395,15 @@ class Bean
      * Get the constructor parameters of the bean. Only parameters that have the same name
      * than a valid bean property will be returned.
      *
-     * @return \qtism\common\beans\BeanParameterCollection A collection of BeanParameter objects.
+     * @return BeanParameterCollection A collection of BeanParameter objects.
+     * @throws BeanException
+     * @throws ReflectionException
      */
     public function getConstructorParameters()
     {
         $parameters = new BeanParameterCollection();
 
         if (($ctor = $this->getClass()->getConstructor()) !== null) {
-
             foreach ($ctor->getParameters() as $param) {
                 if ($this->hasProperty($param->getName()) === true) {
                     $parameters[] = new BeanParameter($this->getClass()->getName(), '__construct', $param->getName());
@@ -409,13 +420,13 @@ class Bean
      *
      * @param string $parameterName The name of the parameter.
      * @return boolean
+     * @throws ReflectionException
      */
     public function hasConstructorParameter($parameterName)
     {
         $hasConstructorParameter = false;
 
         if (($ctor = $this->getClass()->getConstructor()) !== null) {
-
             foreach ($ctor->getParameters() as $param) {
                 if ($param->getName() === $parameterName && $this->hasProperty($param->getName()) === true) {
                     $hasConstructorParameter = true;
@@ -432,6 +443,7 @@ class Bean
      *
      * @param string $propertyName The name of the property.
      * @return boolean
+     * @throws ReflectionException
      */
     protected function isPropertyAnnotated($propertyName)
     {
@@ -439,7 +451,6 @@ class Bean
         $isAnnotated = false;
 
         while ($target) {
-
             if ($target->hasProperty($propertyName)) {
                 $comment = $target->getProperty($propertyName)->getDocComment();
                 if (empty($comment) === false) {
@@ -448,7 +459,6 @@ class Bean
                     if ($isAnnotated === true) {
                         break;
                     }
-
                 }
             }
 
@@ -462,7 +472,8 @@ class Bean
      * Contains the internal logic of bean validation. Throws exceptions
      * to know why it's not a valid bean.
      *
-     * @throws \qtism\common\beans\BeanException
+     * @throws BeanException
+     * @throws ReflectionException
      */
     protected function validateStrictBean()
     {
@@ -526,11 +537,11 @@ class Bean
     {
         $ucPropName = ucfirst($propertyName);
 
-        return array(
+        return [
             'get' . $ucPropName,
             'is' . $ucPropName,
             'must' . $ucPropName,
-            'does' . $ucPropName
-        );
+            'does' . $ucPropName,
+        ];
     }
 }

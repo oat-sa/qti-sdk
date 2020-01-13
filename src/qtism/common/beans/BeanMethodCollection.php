@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +22,11 @@
 
 namespace qtism\common\beans;
 
+use InvalidArgumentException;
 use qtism\common\collections\AbstractCollection;
-use \InvalidArgumentException;
 
 /**
  * A specialized collection aiming at storing BeanMethod objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BeanMethodCollection extends AbstractCollection
 {
@@ -37,12 +34,12 @@ class BeanMethodCollection extends AbstractCollection
      * Checks whether $value is an instance of BeanMethod.
      *
      * @param mixed $value A given value.
-     * @throws \InvalidArgumentException If $value is not an instance of BeanMethod.
+     * @throws InvalidArgumentException If $value is not an instance of BeanMethod.
      */
     protected function checkType($value)
     {
         if (!$value instanceof BeanMethod) {
-            $msg = "The BeanMethodCollection class only accepts to store BeanMethod objects.";
+            $msg = 'The BeanMethodCollection class only accepts to store BeanMethod objects.';
             throw new InvalidArgumentException($msg);
         }
     }
