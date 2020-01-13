@@ -14,16 +14,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\collections;
 
+use ArrayAccess;
+use Countable;
+use InvalidArgumentException;
+use Iterator;
 use qtism\common\Comparable;
-use \InvalidArgumentException;
-use \UnexpectedValueException;
+use UnexpectedValueException;
 
 /**
  * The AbstractCollection class is the base class of all collections.
@@ -31,22 +35,22 @@ use \UnexpectedValueException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
+abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 {
     /**
      * A data place holder to actually store data for the collection.
      *
      * @var array
      */
-    protected $dataPlaceHolder = array();
+    protected $dataPlaceHolder = [];
 
     /**
      * Create a new instance of AbstractCollection.
      *
      * @param array $array An array of data to be stored by the collection.
-     * @throws \InvalidArgumentException If the $array argument contains invalid datatypes, checked with the AbstractCollection::checkType() method.
+     * @throws InvalidArgumentException If the $array argument contains invalid datatypes, checked with the AbstractCollection::checkType() method.
      */
-    public function __construct(array $array = array())
+    public function __construct(array $array = [])
     {
         foreach ($array as $a) {
             $this->checkType($a);
@@ -71,7 +75,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      *
      * @return array The data placeholder of the collection.
      */
-    protected function &getDataPlaceHolder() {
+    protected function &getDataPlaceHolder()
+    {
         return $this->dataPlaceHolder;
     }
 
@@ -79,7 +84,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      * Check the type of a given $value that has to be stored by the collection.
      *
      * @param mixed $value A given value.
-     * @throws \InvalidArgumentException If the datatype of $value is incorrect.
+     * @throws InvalidArgumentException If the datatype of $value is incorrect.
      */
     abstract protected function checkType($value);
 
@@ -168,7 +173,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      *
      * @param mixed $offset The offset to assign the value to.
      * @param mixed $value The value to set.
-     * @throws \InvalidArgumentException If $value has not a valid type regarding the implementation.
+     * @throws InvalidArgumentException If $value has not a valid type regarding the implementation.
      */
     public function offsetSet($offset, $value)
     {
@@ -220,7 +225,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      * Attach a given $object to the collection.
      *
      * @param mixed $object An object.
-     * @throws \InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
+     * @throws InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
      */
     public function attach($object)
     {
@@ -238,8 +243,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      * Detach a given $object from the collection.
      *
      * @param mixed $object An object.
-     * @throws \InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
-     * @throws \UnexpectedValueException If $object cannot be found in the collection.
+     * @throws InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
+     * @throws UnexpectedValueException If $object cannot be found in the collection.
      */
     public function detach($object)
     {
@@ -267,8 +272,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      *
      * @param mixed $object An object to be replaced.
      * @param mixed $replacement An object to be used as a replacement.
-     * @throws \InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
-     * @throws \UnexpectedValueException If $object is not contained in the collection.
+     * @throws InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
+     * @throws UnexpectedValueException If $object is not contained in the collection.
      */
     public function replace($object, $replacement)
     {
@@ -319,7 +324,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
      */
     public function reset()
     {
-        $a = array();
+        $a = [];
         $this->dataPlaceHolder = $a;
     }
 
@@ -336,8 +341,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
     /**
      * Merge the collection with another one.
      *
-     * @param \qtism\common\collections\AbstractCollection $collection
-     * @throws \InvalidArgumentException If $collection is not a subclass of the target of the call.
+     * @param AbstractCollection $collection
+     * @throws InvalidArgumentException If $collection is not a subclass of the target of the call.
      */
     public function merge(AbstractCollection $collection)
     {
@@ -346,7 +351,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
             $this->dataPlaceHolder = $newData;
         } else {
             $msg = "Only collections with compliant types can be merged ";
-            $msg.= "('" . get_class($this) . "' vs '" . get_class($collection) . "').";
+            $msg .= "('" . get_class($this) . "' vs '" . get_class($collection) . "').";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -354,8 +359,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
     /**
      * Get the difference between this collection and another one.
      *
-     * @param \qtism\common\collections\AbstractCollection $collection
-     * @return \qtism\common\collections\AbstractCollection
+     * @param AbstractCollection $collection
+     * @return AbstractCollection
      */
     public function diff(AbstractCollection $collection)
     {
@@ -372,8 +377,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
     /**
      * Get the intersection between this collection and another one.
      *
-     * @param \qtism\common\collections\AbstractCollection $collection
-     * @return \qtism\common\collections\AbstractCollection
+     * @param AbstractCollection $collection
+     * @return AbstractCollection
      */
     public function intersect(AbstractCollection $collection)
     {

@@ -22,16 +22,15 @@
 
 namespace qtism\common\collections;
 
-use qtism\common\datatypes\QtiFile;
-use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\QtiString;
-use qtism\data\state\ValueCollection;
-use qtism\common\enums\Cardinality;
-use qtism\common\collections\AbstractCollection;
+use InvalidArgumentException;
 use qtism\common\Comparable;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFile;
+use qtism\common\datatypes\QtiString;
+use qtism\common\enums\Cardinality;
 use qtism\common\utils\Php as PhpUtils;
+use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Utils as RuntimeUtils;
-use \InvalidArgumentException;
 
 /**
  * A generic Collection which is able to contain any QTI Scalar Datatype in
@@ -76,7 +75,7 @@ class Container extends AbstractCollection implements Comparable
      *
      * @param array $array An array of values to be set in the container.
      */
-    public function __construct(array $array = array())
+    public function __construct(array $array = [])
     {
         parent::__construct($array);
     }
@@ -91,7 +90,7 @@ class Container extends AbstractCollection implements Comparable
             $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";
             $msg .= "null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ";
             $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. '${displayType}' given.";
-            
+
             throw new InvalidArgumentException($msg);
         }
     }
@@ -189,9 +188,9 @@ class Container extends AbstractCollection implements Comparable
     /**
      * Create a Container object from a Data Model ValueCollection object.
      *
-     * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-     * @return \qtism\common\collections\Container A Container object populated with the values found in $valueCollection.
-     * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
+     * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+     * @return Container A Container object populated with the values found in $valueCollection.
+     * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
      */
     public static function createFromDataModel(ValueCollection $valueCollection)
     {
@@ -214,7 +213,7 @@ class Container extends AbstractCollection implements Comparable
      */
     protected function getToStringBounds()
     {
-        return array('[', ']');
+        return ['[', ']'];
     }
 
     /**
@@ -231,7 +230,7 @@ class Container extends AbstractCollection implements Comparable
             // Empty container.
             return $bounds[0] . $bounds[1];
         }
-        $strings = array();
+        $strings = [];
 
         foreach (array_keys($data) as $k) {
             $d = $data[$k];
@@ -253,7 +252,7 @@ class Container extends AbstractCollection implements Comparable
 
         return $bounds[0] . implode('; ', $strings) . $bounds[1];
     }
-    
+
     public function __clone()
     {
         foreach ($this->dataPlaceHolder as $key => $value) {
@@ -262,42 +261,42 @@ class Container extends AbstractCollection implements Comparable
             }
         }
     }
-    
+
     /**
      * Get Distinct Container Copy.
-     * 
+     *
      * Provides a copy of the container, with distinct values. In other words,
      * any duplicated values from the container will not appear in the returned
      * container.
-     * 
+     *
      * Please note that the container copy is a shallow copy of the original, not
      * a deep copy.
-     * 
-     * @return \qtism\common\collections\Container
+     *
+     * @return Container
      */
     public function distinct()
     {
         $container = clone $this;
         $newDataPlaceHolder = [];
-        
+
         foreach ($this->getDataPlaceHolder() as $key => $value) {
-            
             $found = false;
-            
+
             foreach ($newDataPlaceHolder as $newValue) {
-                
                 if (gettype($value) === 'object' && $value instanceof Comparable && $value->equals($newValue)) {
                     $found = true;
                     break;
                 } elseif (gettype($newValue) === 'object' && $newValue instanceof Comparable && $newValue->equals($value)) {
                     $found = true;
                     break;
-                } else if ($value === $newValue) {
-                    $found = true;
-                    break;
+                } else {
+                    if ($value === $newValue) {
+                        $found = true;
+                        break;
+                    }
                 }
             }
-            
+
             if ($found === false) {
                 if (is_string($key) === true) {
                     $newDataPlaceHolder[$key] = $value;
@@ -306,9 +305,9 @@ class Container extends AbstractCollection implements Comparable
                 }
             }
         }
-        
+
         $container->setDataPlaceHolder($newDataPlaceHolder);
-        
+
         return $container;
     }
 }
