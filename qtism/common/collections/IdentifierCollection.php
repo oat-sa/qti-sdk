@@ -14,51 +14,58 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *  
- *
  */
+
 namespace qtism\common\collections;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\utils\Format as Format;
 
 /**
  * A collection that aims at storing string values.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IdentifierCollection extends StringCollection {
+class IdentifierCollection extends StringCollection
+{
+    /**
+     * Check if $value is a valid QTI Identifier.
+     *
+     * @param mixed $value A given value.
+     * @throws InvalidArgumentException If $value is not a valid QTI Identifier.
+     */
+    protected function checkType($value)
+    {
+        if (gettype($value) !== 'string') {
+            $msg = "IdentifierCollection class only accept string values, '" . gettype($value) . "' given.";
+            throw new InvalidArgumentException($msg);
+        } elseif (!Format::isIdentifier($value)) {
+            $msg = "IdentifierCollection class only accept valid QTI Identifiers, '${value}' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 
-	/**
-	 * Check if $value is a valid QTI Identifier.
-	 * 
-	 * @throws InvalidArgumentException If $value is not a valid QTI Identifier.
-	 */
-	protected function checkType($value) {
-		if (gettype($value) !== 'string') {
-			$msg = "IdentifierCollection class only accept string values, '" . gettype($value) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-		else if (!Format::isIdentifier($value)) {
-			$msg = "IdentifierCollection class only accept valid QTI Identifiers, '${value}' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	public function __toString() {
-	    $strArray = array();
-	    $dataPlaceHolder = &$this->getDataPlaceHolder();
-	    
-	    foreach (array_keys($dataPlaceHolder) as $k) {
-	        $strArray[] = $dataPlaceHolder[$k];
-	    }
-	    
-	    return implode(',', $strArray);
-	}
+    /**
+     * IdentifierCollection to string
+     *
+     * Returns the collection as a string. The identifiers are separated with commas (',').
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $strArray = [];
+        $dataPlaceHolder = &$this->getDataPlaceHolder();
+
+        foreach (array_keys($dataPlaceHolder) as $k) {
+            $strArray[] = $dataPlaceHolder[$k];
+        }
+
+        return implode(',', $strArray);
+    }
 }
