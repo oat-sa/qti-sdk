@@ -22,9 +22,9 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -195,7 +195,6 @@ class OrderInteraction extends BlockInteraction
     public function setMinChoices($minChoices)
     {
         if (is_int($minChoices) === true && ($minChoices > 0 || $minChoices === -1)) {
-
             if ($minChoices > count($this->getSimpleChoices())) {
                 $msg = "The value of 'minChoices' cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
@@ -237,7 +236,6 @@ class OrderInteraction extends BlockInteraction
     public function setMaxChoices($maxChoices)
     {
         if (is_int($maxChoices) === true && $maxChoices > 0 || $maxChoices === -1) {
-
             if ($this->hasMinChoices() === true && $maxChoices > count($this->getSimpleChoices())) {
                 $msg = "The 'maxChoices' argument cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
@@ -295,7 +293,7 @@ class OrderInteraction extends BlockInteraction
     {
         return $this->orientation;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
@@ -304,7 +302,7 @@ class OrderInteraction extends BlockInteraction
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
             ($this->hasMinChoices() === true) ? $this->getMinChoices() : count($this->getSimpleChoices()),
-            ($this->hasMinChoices() === false) ? 0 : ($this->hasMaxChoices() === true) ? $this->getMaxChoices() : 0
+            $this->hasMinChoices() && $this->hasMaxChoices() ? $this->getMaxChoices() : 0
         );
     }
 
