@@ -136,7 +136,7 @@ class Marshaller
 
             foreach ($unit as $u) {
                 $data = $this->marshallUnit($u);
-                $json['list'][$strBaseType][] = $data['base'][$strBaseType];
+                $json['list'][$strBaseType][] = $data['base'][$strBaseType] ?? null;
             }
         } elseif ($unit instanceof RecordContainer) {
             $json = array();

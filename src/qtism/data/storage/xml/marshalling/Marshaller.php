@@ -279,7 +279,7 @@ abstract class Marshaller
                     if ($component instanceof QtiComponent && ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName()))) {
                         return $this->marshall($component);
                     } else {
-                        $componentName = ($component instanceof QtiComponent) ? $component->getQtiClassName() : (is_object($component)) ? ($component instanceof DOMElement) ? $component->localName : get_class($component) : $component;
+                        $componentName = $this->getComponentName($component);
                         throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
                     }
                 } else {
@@ -287,7 +287,7 @@ abstract class Marshaller
                     if ($element instanceof DOMElement && ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName()))) {
                         return call_user_func_array(array($this, 'unmarshall'), $args);
                     } else {
-                        $nodeName = ($element instanceof DOMElement) ? $element->localName : (is_object($element) ? get_class($element) : $element);
+                        $nodeName = $this->getElementName($element);
                         throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
                     }
                 }
@@ -581,4 +581,32 @@ abstract class Marshaller
      * @return string A QTI class name or an empty string.
      */
     abstract public function getExpectedQtiClassName();
+
+    /**
+     * @param QtiComponent|string $component
+     * @return string
+     */
+    private function getComponentName($component)
+    {
+        if ($component instanceof QtiComponent) {
+            return $component->getQtiClassName();
+        }
+        return $this->getElementName($component);
+    }
+
+    /**
+     * @param DOMElement|string $element
+     * @return string
+     */
+    private function getElementName($element)
+    {
+        if ($element instanceof DOMElement) {
+            return $element->localName;
+        }
+        if (is_object($element)) {
+            return get_class($element);
+        }
+
+        return $element;
+    }
 }
