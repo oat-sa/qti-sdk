@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +22,11 @@
 
 namespace qtism\common\datatypes\files;
 
-use \Exception;
+use Exception;
 
 /**
  * The exception class to be used when error occurs while dealing
  * with FileManager objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class FileManagerException extends Exception
 {
@@ -46,7 +43,7 @@ class FileManagerException extends Exception
      *
      * @param string $message A human-readable error message.
      * @param integer $code A machine understandable error code (see class constants).
-     * @param \Exception $previous A possible previous Exception object.
+     * @param Exception $previous A possible previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null)
     {

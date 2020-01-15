@@ -14,11 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\datatypes;
 
 use qtism\common\enums\Enumeration;
@@ -28,9 +29,6 @@ use qtism\common\enums\Enumeration;
  *
  * A value of a shape is alway accompanied by coordinates (see coords and an associated
  * image which provides a context for interpreting them.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiShape implements Enumeration
 {
@@ -91,13 +89,13 @@ class QtiShape implements Enumeration
      */
     public static function asArray()
     {
-        return array(
+        return [
             'DEF' => self::DEF,
             'RECT' => self::RECT,
             'CIRCLE' => self::CIRCLE,
             'POLY' => self::POLY,
-            'ELLIPSE' => self::ELLIPSE
-        );
+            'ELLIPSE' => self::ELLIPSE,
+        ];
     }
 
     /**
@@ -111,27 +109,27 @@ class QtiShape implements Enumeration
         switch (strtolower($name)) {
             case 'default':
                 return self::DEF;
-            break;
+                break;
 
             case 'rect':
                 return self::RECT;
-            break;
+                break;
 
             case 'circle':
                 return self::CIRCLE;
-            break;
+                break;
 
             case 'poly':
                 return self::POLY;
-            break;
+                break;
 
             case 'ellipse':
                 return self::ELLIPSE;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -146,27 +144,27 @@ class QtiShape implements Enumeration
         switch ($constant) {
             case self::DEF:
                 return 'default';
-            break;
+                break;
 
             case self::RECT:
                 return 'rect';
-            break;
+                break;
 
             case self::CIRCLE:
                 return 'circle';
-            break;
+                break;
 
             case self::POLY:
                 return 'poly';
-            break;
+                break;
 
             case self::ELLIPSE:
                 return 'ellipse';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

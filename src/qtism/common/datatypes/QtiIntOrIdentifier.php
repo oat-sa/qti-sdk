@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +22,12 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
 /**
  * Represents the IntOrIdentifier QTI datatype.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiIntOrIdentifier extends QtiScalar
 {
@@ -39,7 +36,7 @@ class QtiIntOrIdentifier extends QtiScalar
      * used as the intrinsic value of this object.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not compliant with the QTI IntOrIdentifier datatype.
+     * @throws InvalidArgumentException If $value is not compliant with the QTI IntOrIdentifier datatype.
      */
     protected function checkType($value)
     {

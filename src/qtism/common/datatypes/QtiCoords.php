@@ -14,23 +14,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
+use InvalidArgumentException;
 use qtism\common\collections\IntegerCollection;
-use \InvalidArgumentException;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 
 /**
  * Represents the QTI Coords Datatype.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiCoords extends IntegerCollection implements QtiDatatype
 {
@@ -46,9 +44,9 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      *
      * @param integer $shape A value from the Shape enumeration.
      * @param array $coords An array of number values.
-     * @throws \InvalidArgumentException If an error occurs while creating the Coords object.
+     * @throws InvalidArgumentException If an error occurs while creating the Coords object.
      */
-    public function __construct($shape, array $coords = array())
+    public function __construct($shape, array $coords = [])
     {
         parent::__construct($coords);
         $this->setShape($shape);
@@ -59,28 +57,28 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
                     $msg = "No coordinates should be given when the default shape is used.";
                     throw new InvalidArgumentException($msg);
                 }
-            break;
+                break;
 
             case QtiShape::RECT:
                 if (count($this->getDataPlaceHolder()) != 4) {
                     $msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
                     throw new InvalidArgumentException($msg);
                 }
-            break;
+                break;
 
             case QtiShape::CIRCLE:
                 if (count($this->getDataPlaceHolder()) != 3) {
                     $msg = "The circle coordinates must be composed by 3 values (x, y, r).";
                     throw new InvalidArgumentException($msg);
                 }
-            break;
+                break;
 
             case QtiShape::POLY:
                 if (count($this->getDataPlaceHolder()) % 2 > 0) {
                     $msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
                     throw new InvalidArgumentException($msg);
                 }
-            break;
+                break;
         }
     }
 
@@ -88,7 +86,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Set the $shape on which the coordinates apply.
      *
      * @param integer $shape A value from the Shape enumeration.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function setShape($shape)
     {
@@ -129,9 +127,9 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
             // we consider it is a polygon.
             // - Transform coordinates in vertices.
             // -- Use of the "point in polygon" algorithm.
-            $vertices = array();
+            $vertices = [];
             for ($i = 0; $i < count($this); $i++) {
-                $vertex = array();
+                $vertex = [];
                 $vertex[] = $this[$i]; //x
                 $i++;
                 $vertex[] = $this[$i]; //y
@@ -141,7 +139,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
 
             $intersects = 0;
             for ($i = 1; $i < count($vertices); $i++) {
-                $vertex1 = $vertices[$i -1];
+                $vertex1 = $vertices[$i - 1];
                 $vertex2 = $vertices[$i];
 
                 if ($vertex1[1] === $vertex2[1] && $vertex1[1] === $point->getY() && $point->getX() > min($vertex1[0], $vertex2[0]) && $point->getX() < max($vertex1[0], $vertex2[0])) {

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,17 +22,14 @@
 
 namespace qtism\common\datatypes\files;
 
+use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\QtiFile;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * An implementation of File focusing on storing a file
  * in a persistent manner, e.g. on the file system.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class FileSystemFile implements QtiFile
 {
@@ -69,7 +66,7 @@ class FileSystemFile implements QtiFile
      * Create a new PersistentFile object.
      *
      * @param string $path The path where the file is actually stored.
-     * @throws \RuntimeException If the file cannot be retrieved correctly.
+     * @throws RuntimeException If the file cannot be retrieved correctly.
      */
     public function __construct($path)
     {
@@ -159,7 +156,7 @@ class FileSystemFile implements QtiFile
     /**
      * Get the sequence of bytes composing the content of the file.
      *
-     * @throws \RuntimeException If the data cannot be retrieved.
+     * @throws RuntimeException If the data cannot be retrieved.
      */
     public function getData()
     {
@@ -178,8 +175,8 @@ class FileSystemFile implements QtiFile
     /**
      * Get a stream resource on the file.
      *
-     * @throws \RuntimeException If the stream on the file cannot be open.
      * @return resource An open stream.
+     * @throws RuntimeException If the stream on the file cannot be open.
      */
     public function getStream()
     {
@@ -206,26 +203,23 @@ class FileSystemFile implements QtiFile
      * @param string $destination Where the file resulting from $source will be stored.
      * @param string $mimeType The MIME type of the file.
      * @param mixed $withFilename Whether or not consider the $source's filename to be the $destination's file name. Give true to use the current file name. Give a string to select a different one. Default is true.
-     * @throws \RuntimeException If something wrong happens.
-     * @return \qtism\common\datatypes\files\FileSystemFile
+     * @return FileSystemFile
+     * @throws RuntimeException If something wrong happens.
      */
     public static function createFromExistingFile($source, $destination, $mimeType, $withFilename = true)
     {
         if (is_file($source) === true) {
-
             if (is_readable($source) === true) {
-
                 // Should we build the path to $destination?
                 $pathinfo = pathinfo($destination);
 
                 if (is_dir($pathinfo['dirname']) === false) {
-
                     if (($mkdir = @mkdir($pathinfo['dirname'], '0770', true)) === false) {
                         $msg = "Unable to create destination directory at '" . $pathinfo['dirname'] . "'.";
                         throw new RuntimeException($msg);
                     }
                 }
-                
+
                 $pathinfo = pathinfo($source);
                 $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : strval($withFilename);
 
@@ -245,7 +239,7 @@ class FileSystemFile implements QtiFile
                 if ($sourceFp === false) {
                     throw new RuntimeException("Source file '${source}' could not be open.");
                 }
-                
+
                 $destinationFp = @fopen($destination, 'w');
                 if ($destinationFp === false) {
                     throw new RuntimeException("Destination file '${destination}' could not be open.");
@@ -282,7 +276,7 @@ class FileSystemFile implements QtiFile
      * @param string $destination
      * @param string $mimeType
      * @param string $filename
-     * @return \qtism\common\datatypes\files\FileSystemFile
+     * @return FileSystemFile
      */
     public static function createFromData($data, $destination, $mimeType, $filename = '')
     {
@@ -299,8 +293,8 @@ class FileSystemFile implements QtiFile
      * Retrieve a previously persisted file.
      *
      * @param string $path The path to the persisted file.
-     * @throws \RuntimeException If something wrong occurs while retrieving the file.
-     * @return \qtism\common\datatypes\files\FileSystemFile
+     * @return FileSystemFile
+     * @throws RuntimeException If something wrong occurs while retrieving the file.
      */
     public static function retrieveFile($path)
     {

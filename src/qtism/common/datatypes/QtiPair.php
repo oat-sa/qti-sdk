@@ -14,17 +14,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
 
 /**
  * Represents the QTI Pair datatype.
@@ -33,9 +34,6 @@ use \InvalidArgumentException;
  *
  * A pair value represents a pair of identifiers corresponding to an association between two
  * objects. The association is undirected so (A,B) and (B,A) are equivalent.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiPair implements QtiDatatype
 {
@@ -58,7 +56,7 @@ class QtiPair implements QtiDatatype
      *
      * @param string $first The first identifier of the pair.
      * @param string $second The second identifier of the pair.
-     * @throws \InvalidArgumentException If $first nor $second are valid QTI identifiers.
+     * @throws InvalidArgumentException If $first nor $second are valid QTI identifiers.
      */
     public function __construct($first, $second)
     {
@@ -70,7 +68,7 @@ class QtiPair implements QtiDatatype
      * Set the first identifier of the pair.
      *
      * @param string $first A QTI Identifier.
-     * @throws \InvalidArgumentException If $first is an invalid QTI Identifier.
+     * @throws InvalidArgumentException If $first is an invalid QTI Identifier.
      */
     public function setFirst($first)
     {
@@ -96,7 +94,7 @@ class QtiPair implements QtiDatatype
      * Set the second identifier of the pair.
      *
      * @param string $second A QTI Identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
     public function setSecond($second)
     {
@@ -139,8 +137,8 @@ class QtiPair implements QtiDatatype
     public function equals($obj)
     {
         if (gettype($obj) === 'object' && $obj instanceof self) {
-            $a = array($this->getFirst(), $this->getSecond());
-            $b = array($obj->getFirst(), $obj->getSecond());
+            $a = [$this->getFirst(), $this->getSecond()];
+            $b = [$obj->getFirst(), $obj->getSecond()];
 
             return in_array($b[0], $a) && in_array($b[1], $a);
         }
