@@ -14,114 +14,133 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\common\datatypes\files;
 
 use qtism\common\datatypes\QtiFile;
-use \RuntimeException;
+use RuntimeException;
 
 /**
- * This implementation of FileManager is the default one of QTISM. 
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
+ * This implementation of FileManager is the default one of QTISM.
  */
-class FileSystemFileManager implements FileManager {
-    
+class FileSystemFileManager implements FileManager
+{
     private $storageDirectory;
-    
-    public function __construct($storageDirectory = '') {
+
+    public function __construct($storageDirectory = '')
+    {
         $this->setStorageDirectory((empty($storageDirectory) === true) ? sys_get_temp_dir() : $storageDirectory);
     }
-    
-    protected function setStorageDirectory($storageDirectory) {
+
+    /**
+     * Set the canonical path where files will be effectively stored
+     * on the file system.
+     *
+     * @param string $storageDirectory A canonical path.
+     */
+    protected function setStorageDirectory($storageDirectory)
+    {
         $this->storageDirectory = $storageDirectory;
     }
-    
-    protected function getStorageDirectory() {
+
+    /**
+     * Get the canonical path where files will be effectively stored
+     * on the file system.
+     *
+     * @return string A canonical path.
+     */
+    protected function getStorageDirectory()
+    {
         return $this->storageDirectory;
     }
-    
+
     /**
-     * 
-     * 
-     * @param string $path
-     * @param string $mimeType
-     * @param string $filename
-     * @throws FileManagerException
+     * Create a FileSystemFile object from an existing
+     * file on the file system.
+     *
+     * @param string $path The canonical path to the file.
+     * @param string $mimeType The mime-type of the file (if you want to force it).
+     * @param string $filename The file name of the file (if you want to force it).
      * @return FileSystemFile
+     * @throws FileManagerException
      */
-    public function createFromFile($path, $mimeType, $filename = '') {
+    public function createFromFile($path, $mimeType, $filename = '')
+    {
         $destination = $this->buildDestination();
-        
+
         try {
             return FileSystemFile::createFromExistingFile($path, $destination, $mimeType, $filename);
-        }
-        catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $msg = "An error occured while creating a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }
-    
+
     /**
-     * 
-     * 
-     * @param string $data
-     * @param string $mimeType
-     * @param string $filename
-     * @throws FileManagerException
+     * Create a FileSystemFile from existing data on the file system.
+     *
+     * @param string $data The binary data of the FileSystemFile object to be created.
+     * @param string $mimeType A mime-type.
+     * @param string $filename A file name e.g. "myfile.txt".
      * @return FileSystemFile
+     * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '') {
+    public function createFromData($data, $mimeType, $filename = '')
+    {
         $destination = $this->buildDestination();
-        
+
         try {
             return FileSystemFile::createFromData($data, $destination, $mimeType, $filename);
-        }
-        catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $msg = "An error occured while creating a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }
-    
+
     /**
+     * Retrieve a FileSystemFile object from its unique identifier.
+     *
      * @param string identifier
-     * @throws FileManagerException
      * @return FileSystemFile
+     * @throws FileManagerException
      */
-    public function retrieve($identifier) {
+    public function retrieve($identifier)
+    {
         try {
             return FileSystemFile::retrieveFile($identifier);
-        }
-        catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $msg = "An error occured while retrieving a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }
-    
+
     /**
-     * 
-     * 
+     * Delete a FileSystemFile object from the persistence.
+     *
+     * @param QtiFile $file
      * @throws FileManagerException
      */
-    public function delete(QtiFile $file) {
-        
+    public function delete(QtiFile $file)
+    {
         $deletion = @unlink($file->getPath());
         if ($deletion === false) {
             $msg = "The File System File located at '" . $file->getPath() . "' could not be deleted gracefully.";
             throw new FileManagerException($msg);
         }
     }
-    
-    protected function buildDestination() {
+
+    /**
+     * Build the destination directory where file will be stored.
+     *
+     * @return string
+     */
+    protected function buildDestination()
+    {
         return rtrim($this->getStorageDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid('qtism', true);
     }
 }

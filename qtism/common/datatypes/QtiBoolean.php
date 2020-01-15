@@ -14,39 +14,67 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
-class QtiBoolean extends QtiScalar implements QtiDatatype {
-    
-    protected function checkType($value) {
+/**
+ * Represents the Boolean QTI Datatype.
+ */
+class QtiBoolean extends QtiScalar implements QtiDatatype
+{
+    /**
+     * Check whether or not the intrinsic $value is a PHP boolean.
+     *
+     * @param mixed $value A given value.
+     * @throws InvalidArgumentException
+     */
+    protected function checkType($value)
+    {
         if (is_bool($value) !== true) {
             $msg = "The Boolean Datatype only accepts to store boolean values.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
-    public function getBaseType() {
+
+    /**
+     * Get the baseType of the Boolean value. This method
+     * systematically returns BaseType::BOOLEAN.
+     *
+     * @return integer A value from the BaseType enumeration.
+     */
+    public function getBaseType()
+    {
         return BaseType::BOOLEAN;
     }
-    
-    public function getCardinality() {
+
+    /**
+     * Get the cardinality of the Boolean value. This method
+     * systematically returns Cardinality::SINGLE.
+     *
+     * @return integer A value from the BaseType enumeration.
+     */
+    public function getCardinality()
+    {
         return Cardinality::SINGLE;
     }
-    
-    public function __toString() {
+
+    /**
+     * "true" or "false" depending on the intrinsic value of the Boolean
+     * object.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
         return ($this->getValue() === true) ? 'true' : 'false';
     }
 }
