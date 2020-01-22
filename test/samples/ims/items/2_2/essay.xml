@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd" identifier="essay" title="Write an essay" adaptive="false" timeDependent="false">
+    <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+    <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" externalScored="human"/>
+    <itemBody>
+        <p>
+            In the class room, we discovered Martin Luther King Jr. and his devotion.
+        </p>
+        <extendedTextInteraction responseIdentifier="RESPONSE">
+            <prompt>
+                <b>
+                    Write an abstract about the life of this historical figure.
+                </b>
+            </prompt>
+        </extendedTextInteraction>
+    </itemBody>
+</assessmentItem>
