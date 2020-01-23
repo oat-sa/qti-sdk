@@ -22,7 +22,31 @@ use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\common\MultipleContainer;
 
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
-	
+
+    public function testExternalScored()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'ims/items/2_2/essay.xml');
+
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager());
+        $itemSessionControl = $itemSession->getItemSessionControl();
+        $itemSessionControl->setMaxAttempts(0);
+        $itemSession->beginItemSession();
+
+        $response = new ResponseVariable(
+            'RESPONSE',
+            Cardinality::SINGLE,
+            BaseType::STRING,
+            new QtiString('some string'));
+
+        $itemSession->beginAttempt();
+        $responses = new State(array($response));
+        $itemSession->endAttempt($responses);
+
+        $this->assertEquals(3, $itemSession->getState());
+        $this->assertTrue($itemSession->isResponded());
+    }
+
     public function testInstantiation() {
         
         $itemSession = self::instantiateBasicAssessmentItemSession();
