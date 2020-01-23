@@ -15,6 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
+ * @license GPLv2
+ *
+ * @author Bartłomiej Marszał <bartlomiej@taotesting.com>
+ *
  * Copyright (c) 2020 (original work) Open Assessment Technologies SA;
  */
 
@@ -24,7 +28,6 @@ use qtism\common\enums\Enumeration;
 
 class ExternalScore implements Enumeration
 {
-
     const HUMAN = 'human';
 
     const EXTERNAL_MACHINE = 'externalMachine';
@@ -46,23 +49,19 @@ class ExternalScore implements Enumeration
      * Get a constant value by its name. If $name does not match any of the value
      * of the enumeration, false is returned.
      *
-     * @param integer|false $name The value relevant to $name or false if not found.
+     * @param string|false $name The value relevant to $name or false if not found.
      *
-     * @return bool|string
+     * @return string|bool
      */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
             case 'human':
                 return self::HUMAN;
-                break;
             case 'external_machine':
                 return self::EXTERNAL_MACHINE;
-                break;
             default:
                 return false;
-                break;
-
         }
     }
 
@@ -72,20 +71,17 @@ class ExternalScore implements Enumeration
      *
      * @param string|false $constant The relevant name or false if not found.
      *
-     * @return bool|string
+     * @return string|bool
      */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
             case self::HUMAN:
                 return 'human';
-                break;
             case self::EXTERNAL_MACHINE:
                 return 'externalMachine';
-                break;
             default:
                 return false;
-                break;
         }
     }
 }
