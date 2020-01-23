@@ -94,6 +94,10 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 			$lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
 			$element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
 		}
+
+		if ($component->getExternalScore() != null) {
+		    static::setDOMElementAttribute($element, 'externalScore', $component->getExternalScore());
+        }
 		
 		
 		return $element;

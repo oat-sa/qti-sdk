@@ -1,6 +1,7 @@
 <?php
 
 use qtism\common\datatypes\QtiDuration;
+use qtism\data\state\ExternalScore;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -14,6 +15,26 @@ use qtism\data\state\MatchTableEntryCollection;
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
+
+    public function testMarshallExternalScore()
+    {
+        // Initialize a minimal outcomeDeclaration.
+        $identifier = "outcome1";
+        $cardinality = Cardinality::SINGLE;
+        $baseType = BaseType::INTEGER;
+        $externalScore = ExternalScore::HUMAN;
+
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScore);
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        /** @var DOMElement $element */
+        $element = $marshaller->marshall($component);
+
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('human', $element->getAttribute('externalScore'));
+        $this->assertEquals('integer', $element->getAttribute('baseType'));
+        $this->assertEquals('outcome1', $element->getAttribute('identifier'));
+        $this->assertEquals('single', $element->getAttribute('cardinality'));
+    }
 
 	public function testMarshallMinimal() {
 

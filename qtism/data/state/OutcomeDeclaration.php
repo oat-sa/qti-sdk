@@ -154,9 +154,10 @@ class OutcomeDeclaration extends VariableDeclaration {
 	private $lookupTable = null;
 
     /**
-     * @var ExternalScore
+     * The externalScore attribute is determining custom way to score item
+     * @var string
      */
-	private $externalScore;
+	private $externalScore = null;
 
     /**
 	 * Create a new instanceof OutcomeDeclaration.
@@ -165,10 +166,10 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * @param int $baseType A value from the BaseType enumeration.
 	 * @param int $cardinality A value from the Cardinality enumeration.
 	 * @param DefaultValue $defaultValue A DefaultValue object.
-	 * @param ExternalScore $externalScore A ExternalScore object.
+	 * @param string $externalScore A ExternalScore object.
 	 * @throws InvalidArgumentException If one or more of the arguments are invalid.
 	 */
-	public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, ExternalScore $externalScore = null)
+	public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScore = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
         $this->setViews(new ViewCollection());
@@ -177,12 +178,21 @@ class OutcomeDeclaration extends VariableDeclaration {
 
     /**
      * Set external score attribute to determine how scoring should be proceed
-     * @param $externalScore
+     * @param string $externalScore
      */
     public function setExternalScore($externalScore)
     {
         $this->externalScore = $externalScore;
 	}
+
+    /**
+     * Get externalScore attribute
+     * @return string
+     */
+    public function getExternalScore()
+    {
+        return $this->externalScore;
+    }
 
 	/**
 	 * Get the intented audience for this Outcome Declaration. If the returned
