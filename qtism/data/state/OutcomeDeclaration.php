@@ -180,8 +180,11 @@ class OutcomeDeclaration extends VariableDeclaration {
      * Set external score attribute to determine how scoring should be proceed
      * @param string $externalScore
      */
-    public function setExternalScore($externalScore)
+    public function setExternalScore($externalScore = null)
     {
+        if ($externalScore !== null && !ExternalScore::getConstantByName($externalScore)) {
+            throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScore));
+        }
         $this->externalScore = $externalScore;
 	}
 

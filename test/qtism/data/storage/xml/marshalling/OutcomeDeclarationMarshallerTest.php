@@ -11,12 +11,27 @@ use qtism\data\state\ValueCollection;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 
-    public function testUnmarszallExternalScore()
+    public function testUnmarshallExternalScoreWithIllegalValue()
+    {
+        $this->expectException(UnmarshallingException::class);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" identifier="outcomeDeclarationRec" cardinality="record" externalScored="duck"/>'
+        );
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+    }
+
+    public function testUnmarshallExternalScore()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -30,6 +45,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $this->assertEquals($component->getExternalScore(), 'human');
 
     }
+
     public function testMarshallExternalScore()
     {
         // Initialize a minimal outcomeDeclaration.
