@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentItem xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd" identifier="essay" title="Write an essay" adaptive="false" timeDependent="false">
+<assessmentItem
+        xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd"
+        identifier="essay" title="Write an essay" adaptive="false" timeDependent="false">
     <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
     <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" externalScored="human"/>
     <itemBody>
