@@ -49,7 +49,7 @@ class ExternalScore implements Enumeration
      * Get a constant value by its name. If $name does not match any of the value
      * of the enumeration, false is returned.
      *
-     * @param string|false $name The value relevant to $name or false if not found.
+     * @param string $name
      *
      * @return string|bool
      */
@@ -69,7 +69,7 @@ class ExternalScore implements Enumeration
      * Get a constant name by its value. If $constant does not match any of the names
      * of the enumeration, false is returned.
      *
-     * @param string|false $constant The relevant name or false if not found.
+     * @param mixed $constant
      *
      * @return string|bool
      */
