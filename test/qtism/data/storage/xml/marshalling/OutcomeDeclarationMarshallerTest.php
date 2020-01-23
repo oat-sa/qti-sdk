@@ -16,6 +16,20 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 
+    public function testUnmarszallExternalScore()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" identifier="outcomeDeclarationRec" cardinality="record" externalScored="human"/>'
+        );
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $this->assertEquals($component->getExternalScore(), 'human');
+
+    }
     public function testMarshallExternalScore()
     {
         // Initialize a minimal outcomeDeclaration.

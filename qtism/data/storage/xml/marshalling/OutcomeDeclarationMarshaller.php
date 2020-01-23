@@ -119,7 +119,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 			$object->setBaseType($baseComponent->getBaseType());
 			$object->setCardinality($baseComponent->getCardinality());
 			$object->setDefaultValue($baseComponent->getDefaultValue());
-			
+			$object->setExternalScore($element->getAttribute('externalScored'));
+
 			// deal with views.
 			if (($views = static::getDOMElementAttributeAs($element, 'view')) != null) {
 				$viewCollection = new ViewCollection();
@@ -154,6 +155,10 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 			if (($masteryValue = static::getDOMElementAttributeAs($element, 'masteryValue', 'float')) !== null) {
 				$object->setMasteryValue($masteryValue);
 			}
+
+			if (($externalScore = static::getDOMElementAttributeAs($element, 'externalScore')) !== null) {
+			    $object->setExternalScore($externalScore);
+            }
 			
 			// deal with lookupTable.
 			$interpolationTables = $element->getElementsByTagName('interpolationTable');
