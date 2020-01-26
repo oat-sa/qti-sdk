@@ -1,6 +1,9 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use DOMElement;
+use qtism\data\state\ExternalScore;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\View;
 use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
@@ -42,6 +45,40 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('http://my.long.com/interpretation', $element->getAttribute('longInterpretation'));
         $this->assertEquals('0.5', $element->getAttribute('masteryValue'));
 	}
+
+    public function testUnmarshallExternalScoreWithIllegalValue()
+    {
+        $this->expectException(UnmarshallingException::class);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" identifier="outcomeDeclarationRec" cardinality="record" externalScored="duck"/>'
+        );
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+    }
+
+    public function testMarshallExternalScore()
+    {
+        // Initialize a minimal outcomeDeclaration.
+        $identifier = "outcome1";
+        $cardinality = Cardinality::SINGLE;
+        $baseType = BaseType::INTEGER;
+        $externalScore = ExternalScore::HUMAN;
+
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScore);
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        /** @var DOMElement $element */
+        $element = $marshaller->marshall($component);
+
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('human', $element->getAttribute('externalScore'));
+        $this->assertEquals('integer', $element->getAttribute('baseType'));
+        $this->assertEquals('outcome1', $element->getAttribute('identifier'));
+        $this->assertEquals('single', $element->getAttribute('cardinality'));
+    }
 	
 	/**
 	 * @depends testMarshall21

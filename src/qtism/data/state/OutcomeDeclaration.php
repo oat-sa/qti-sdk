@@ -152,18 +152,26 @@ class OutcomeDeclaration extends VariableDeclaration
     private $lookupTable = null;
 
     /**
-	 * Create a new instanceof OutcomeDeclaration.
-	 *
-	 * @param string $identifier A QTI identifier.
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @param int $cardinality A value from the Cardinality enumeration.
-	 * @param \qtism\data\state\DefaultValue $defaultValue A DefaultValue object.
-	 * @throws \InvalidArgumentException If one or more of the arguments are invalid.
-	 */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+     * The externalScore attribute is determining custom way to score item
+     * @var string
+     */
+    private $externalScore = null;
+
+    /**
+     * Create a new instanceof OutcomeDeclaration.
+     *
+     * @param string $identifier A QTI identifier.
+     * @param int $baseType A value from the BaseType enumeration.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param DefaultValue $defaultValue A DefaultValue object.
+     * @param string $externalScore A ExternalScore object.
+     * @throws InvalidArgumentException If one or more of the arguments are invalid.
+     */
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScore = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
         $this->setViews(new ViewCollection());
+        $this->setExternalScore($externalScore);
     }
 
     /**
@@ -360,5 +368,27 @@ class OutcomeDeclaration extends VariableDeclaration
         }
 
         return new QtiComponentCollection($comp);
+    }
+
+    /**
+     * Set external score attribute to determine how scoring should be proceed
+     *
+     * @param string $externalScore
+     */
+    public function setExternalScore($externalScore = null)
+    {
+        if ($externalScore !== null && !ExternalScore::getConstantByName($externalScore)) {
+            throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScore));
+        }
+        $this->externalScore = $externalScore;
+    }
+
+    /**
+     * Get externalScore attribute
+     * @return string
+     */
+    public function getExternalScore()
+    {
+        return $this->externalScore;
     }
 }

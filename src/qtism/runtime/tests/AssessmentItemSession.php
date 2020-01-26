@@ -24,6 +24,8 @@
 namespace qtism\runtime\tests;
 
 use qtism\common\datatypes\QtiBoolean;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\runtime\processing\TemplateProcessingEngine;
 use qtism\runtime\common\Utils;
 use qtism\runtime\tests\Utils as TestUtils;
@@ -801,6 +803,10 @@ class AssessmentItemSession extends State
             $this->mergeResponses($responses);
         }
 
+        if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
+            $responseProcessing = false;
+        }
+
         // Apply response processing.
         // As per QTI 2.1 specs, For Non-adaptive Items, the values of the outcome variables are reset to their
         // default values prior to each invocation of responseProcessing. For Adaptive Items the outcome variables
@@ -1421,6 +1427,25 @@ class AssessmentItemSession extends State
                 }
             }
         }
+    }
+
+    /**
+     * Method will determine if an item is externally scored
+     * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
+     * @param OutcomeDeclarationCollection $outcomeDeclarations
+     *
+     * @return bool
+     */
+    private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)
+    {
+        /** @var OutcomeDeclaration $outcomeDeclaration */
+        foreach ($outcomeDeclarations as $outcomeDeclaration) {
+            if ($outcomeDeclaration->getExternalScore() !== null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
