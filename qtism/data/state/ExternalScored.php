@@ -58,7 +58,7 @@ class ExternalScored implements Enumeration
         switch (strtolower($name)) {
             case 'human':
                 return self::HUMAN;
-            case 'external_machine':
+            case 'externalMachine':
                 return self::EXTERNAL_MACHINE;
             default:
                 return false;
