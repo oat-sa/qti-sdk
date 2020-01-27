@@ -95,8 +95,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 			$element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
 		}
 
-		if ($component->getExternalScore() !== null) {
-		    static::setDOMElementAttribute($element, 'externalScore', $component->getExternalScore());
+		if ($component->getExternalScored() !== null) {
+		    static::setDOMElementAttribute($element, 'externalScored', $component->getExternalScored());
         }
 		
 		
@@ -122,7 +122,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 
 			// Set external scored attribute
 			if ($element->hasAttribute('externalScored')) {
-                $object->setExternalScore($element->getAttribute('externalScored'));
+                $object->setExternalScored($element->getAttribute('externalScored'));
             }
 
 			// deal with views.
@@ -160,8 +160,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 				$object->setMasteryValue($masteryValue);
 			}
 
-			if (($externalScore = static::getDOMElementAttributeAs($element, 'externalScore')) !== null) {
-			    $object->setExternalScore($externalScore);
+			if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) !== null) {
+			    $object->setExternalScored($externalScored);
             }
 			
 			// deal with lookupTable.

@@ -1,7 +1,7 @@
 <?php
 
 use qtism\common\datatypes\QtiDuration;
-use qtism\data\state\ExternalScore;
+use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -17,7 +17,7 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 
-    public function testUnmarshallExternalScoreWithIllegalValue()
+    public function testUnmarshallExternalScoredWithIllegalValue()
     {
         $this->expectException(UnmarshallingException::class);
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -31,7 +31,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
     }
 
-    public function testUnmarshallExternalScore()
+    public function testUnmarshallExternalScored()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -42,25 +42,25 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
-        $this->assertEquals($component->getExternalScore(), 'human');
+        $this->assertEquals($component->getExternalScored(), 'human');
 
     }
 
-    public function testMarshallExternalScore()
+    public function testMarshallExternalScored()
     {
         // Initialize a minimal outcomeDeclaration.
         $identifier = "outcome1";
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
-        $externalScore = ExternalScore::HUMAN;
+        $externalScored = ExternalScored::HUMAN;
 
-        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScore);
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScored);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         /** @var DOMElement $element */
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf('\\DOMElement', $element);
-        $this->assertEquals('human', $element->getAttribute('externalScore'));
+        $this->assertEquals('human', $element->getAttribute('externalScored'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
         $this->assertEquals('outcome1', $element->getAttribute('identifier'));
         $this->assertEquals('single', $element->getAttribute('cardinality'));
