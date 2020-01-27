@@ -152,10 +152,10 @@ class OutcomeDeclaration extends VariableDeclaration
     private $lookupTable = null;
 
     /**
-     * The externalScore attribute is determining custom way to score item
+     * The externalScored attribute is determining custom way to score item
      * @var string
      */
-    private $externalScore = null;
+    private $externalScored = null;
 
     /**
      * Create a new instanceof OutcomeDeclaration.
@@ -164,14 +164,15 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
-     * @param string $externalScore A ExternalScore object.
+     * @param string $externalScored A ExternalScored object.
+     *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScore = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScored = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
         $this->setViews(new ViewCollection());
-        $this->setExternalScore($externalScore);
+        $this->setExternalScored($externalScored);
     }
 
     /**
@@ -373,22 +374,22 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set external score attribute to determine how scoring should be proceed
      *
-     * @param string $externalScore
+     * @param string $externalScored
      */
-    public function setExternalScore($externalScore = null)
+    public function setExternalScored($externalScored = null)
     {
-        if ($externalScore !== null && !ExternalScore::getConstantByName($externalScore)) {
-            throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScore));
+        if ($externalScored !== null && !ExternalScored::getConstantByName($externalScored)) {
+            throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScored));
         }
-        $this->externalScore = $externalScore;
+        $this->externalScored = $externalScored;
     }
 
     /**
-     * Get externalScore attribute
+     * Get externalScored attribute
      * @return string
      */
-    public function getExternalScore()
+    public function getExternalScored()
     {
-        return $this->externalScore;
+        return $this->externalScored;
     }
 }

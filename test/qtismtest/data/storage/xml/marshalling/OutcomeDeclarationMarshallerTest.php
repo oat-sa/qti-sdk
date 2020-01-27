@@ -2,7 +2,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\data\state\ExternalScore;
+use qtism\data\state\ExternalScored;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\View;
 use qtism\data\ViewCollection;
@@ -46,7 +46,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('0.5', $element->getAttribute('masteryValue'));
 	}
 
-    public function testUnmarshallExternalScoreWithIllegalValue()
+    public function testUnmarshallExternalScoredWithIllegalValue()
     {
         $this->expectException(UnmarshallingException::class);
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -60,21 +60,21 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
     }
 
-    public function testMarshallExternalScore()
+    public function testMarshallExternalScored()
     {
         // Initialize a minimal outcomeDeclaration.
         $identifier = "outcome1";
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
-        $externalScore = ExternalScore::HUMAN;
+        $externalScored = ExternalScored::HUMAN;
 
-        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScore);
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScored);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         /** @var DOMElement $element */
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf('\\DOMElement', $element);
-        $this->assertEquals('human', $element->getAttribute('externalScore'));
+        $this->assertEquals('human', $element->getAttribute('externalScored'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
         $this->assertEquals('outcome1', $element->getAttribute('identifier'));
         $this->assertEquals('single', $element->getAttribute('cardinality'));
