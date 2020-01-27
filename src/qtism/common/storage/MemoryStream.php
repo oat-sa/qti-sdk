@@ -14,11 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\storage;
 
 /**
@@ -142,7 +143,7 @@ class MemoryStream implements IStream
     /**
      * Open the binary stream.
      *
-     * @throws \qtism\common\storage\MemoryStreamException If the stream is already opened.
+     * @throws MemoryStreamException If the stream is already opened.
      */
     public function open()
     {
@@ -157,7 +158,7 @@ class MemoryStream implements IStream
     /**
      * Close the binary stream.
      *
-     * @throws \qtism\common\storage\MemoryStreamException If the stream is closed prior the call.
+     * @throws MemoryStreamException If the stream is closed prior the call.
      */
     public function close()
     {
@@ -173,8 +174,8 @@ class MemoryStream implements IStream
      * Read $length bytes from the MemoryStream.
      *
      * @param integer $length The number of bytes to read.
-     * @throws \qtism\common\storage\MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
      * @return string The read value or an empty string if length = 0.
+     * @throws MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
      */
     public function read($length)
     {
@@ -182,7 +183,7 @@ class MemoryStream implements IStream
             $msg = "Cannot read from a closed MemoryStream.";
             throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
-        
+
         if ($length === 0) {
             return '';
         }
@@ -210,9 +211,9 @@ class MemoryStream implements IStream
     /**
      * Write some $data in the stream.
      *
-     * @throws MemoryStreamException
      * @param string $data
      * @return integer The amount of written bytes.
+     * @throws MemoryStreamException
      */
     public function write($data)
     {
@@ -220,7 +221,7 @@ class MemoryStream implements IStream
             $msg = "Cannot write in a closed MemoryStream.";
             throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
-        
+
         if ($this->length - 1 === $this->position) {
             // simply append.
             $this->binary .= $data;
@@ -264,7 +265,7 @@ class MemoryStream implements IStream
     /**
      * Rewind the stream to its initial position.
      *
-     * @throws \qtism\common\storage\MemoryStreamException If the binary stream is not open.
+     * @throws MemoryStreamException If the binary stream is not open.
      */
     public function rewind()
     {
@@ -289,7 +290,7 @@ class MemoryStream implements IStream
     /**
      * Flush the whole stream.
      *
-     * @throws \qtism\common\storage\MemoryStreamException If the binary stream is closed.
+     * @throws MemoryStreamException If the binary stream is closed.
      */
     public function flush()
     {

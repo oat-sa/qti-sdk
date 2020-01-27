@@ -14,15 +14,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common;
 
-use \RuntimeException;
-use \Exception;
+use Exception;
+use RuntimeException;
 
 /**
  * The ResolutionException must be thrown when an error occurs while
@@ -37,7 +38,7 @@ class ResolutionException extends RuntimeException
      * Create a new ResolutionException.
      *
      * @param string $message A human-readable description of the exception.
-     * @param \Exception $previous An optional previous Exception that caused the exception to be thrown.
+     * @param Exception $previous An optional previous Exception that caused the exception to be thrown.
      */
     public function __construct($message, Exception $previous = null)
     {

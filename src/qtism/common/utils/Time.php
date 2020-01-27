@@ -22,9 +22,9 @@
 
 namespace qtism\common\utils;
 
-use \DateTime;
-use \DateInterval;
-use \DateTimeZone;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 
 /**
  * The Time class provides utility methods for time management.
@@ -37,8 +37,8 @@ class Time
     /**
      * Get the time difference between two DateTime object in seconds.
      *
-     * @param \DateTime $time1
-     * @param \DateTime $time2
+     * @param DateTime $time1
+     * @param DateTime $time2
      * @return integer a number of seconds.
      */
     public static function timeDiffSeconds(DateTime $time1, DateTime $time2)
@@ -51,7 +51,7 @@ class Time
     /**
      * Get the total number of seconds a given date $interval represents.
      *
-     * @param \DateInterval $interval
+     * @param DateInterval $interval
      * @return integer
      */
     public static function totalSeconds(DateInterval $interval)
@@ -71,8 +71,8 @@ class Time
     /**
      * Clone a given $time into its UTC equivalent.
      *
-     * @param \DateTime $time
-     * @return \DateTime
+     * @param DateTime $time
+     * @return DateTime
      */
     public static function toUtc(DateTime $time)
     {

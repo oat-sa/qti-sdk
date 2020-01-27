@@ -14,11 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\storage;
 
 /**
@@ -33,15 +34,15 @@ abstract class AbstractStreamAccess
     /**
      * The IStream object to read.
      *
-     * @var \qtism\common\storage\IStream.
+     * @var IStream.
      */
     private $stream;
 
     /**
      * Create a new AbstractStreamAccess object.
      *
-     * @param \qtism\common\storage\IStream $stream An IStream object to be read.
-     * @throws \qtism\common\storage\StreamAccessException If $stream is not open yet.
+     * @param IStream $stream An IStream object to be read.
+     * @throws StreamAccessException If $stream is not open yet.
      */
     public function __construct(IStream $stream)
     {
@@ -51,7 +52,7 @@ abstract class AbstractStreamAccess
     /**
      * Get the IStream object to be read.
      *
-     * @return \qtism\common\storage\IStream An IStream object.
+     * @return IStream An IStream object.
      */
     protected function getStream()
     {
@@ -61,8 +62,8 @@ abstract class AbstractStreamAccess
     /**
      * Set the IStream object to be read.
      *
-     * @param \qtism\common\storage\IStream $stream An IStream object.
-     * @throws \qtism\common\storage\StreamAccessException If the $stream is not open yet.
+     * @param IStream $stream An IStream object.
+     * @throws StreamAccessException If the $stream is not open yet.
      */
     protected function setStream(IStream $stream)
     {

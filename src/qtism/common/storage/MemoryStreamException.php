@@ -14,14 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\storage;
 
-use \Exception;
+use Exception;
 
 /**
  * The MemoryStreamException represents errors that might occur while
@@ -38,9 +39,9 @@ class MemoryStreamException extends StreamException
      * @param string $message The human-readable message describing the error.
      * @param IStream $source The IStream object where in the error occured.
      * @param integer $code A code describing the error.
-     * @param \Exception $previous An optional previous exception.
+     * @param Exception $previous An optional previous exception.
      */
-    public function __construct($message, IStream $source,  $code = 0, Exception $previous = null)
+    public function __construct($message, IStream $source, $code = 0, Exception $previous = null)
     {
         parent::__construct($message, $source, $code, $previous);
     }

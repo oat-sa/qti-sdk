@@ -14,14 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\storage;
 
-use \Exception;
+use Exception;
 
 /**
  * The StreamAccessException class represents the error
@@ -58,9 +59,9 @@ class StreamAccessException extends Exception
      * Create a new StreamAccessException object.
      *
      * @param string $message A human-readable message.
-     * @param \qtism\common\storage\AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
+     * @param AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
      * @param integer $code An exception code. See class constants.
-     * @param \Exception $previous An optional previously thrown exception.
+     * @param Exception $previous An optional previously thrown exception.
      */
     public function __construct($message, AbstractStreamAccess $source, $code = 0, Exception $previous = null)
     {
@@ -71,7 +72,7 @@ class StreamAccessException extends Exception
     /**
      * Get the AbstractStreamAccess object that caused the error.
      *
-     * @param \qtism\common\storage\AbstractStreamAccess $source An AbstractStreamAccess object.
+     * @param AbstractStreamAccess $source An AbstractStreamAccess object.
      */
     protected function setSource(AbstractStreamAccess $source)
     {
@@ -81,7 +82,7 @@ class StreamAccessException extends Exception
     /**
      * Set the AbstractStreamAccess object that caused the error.
      *
-     * @return \qtism\common\storage\AbstractStreamAccess An AbstractStreamAccess object.
+     * @return AbstractStreamAccess An AbstractStreamAccess object.
      */
     public function getSource()
     {

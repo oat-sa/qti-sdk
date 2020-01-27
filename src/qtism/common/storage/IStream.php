@@ -14,11 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\storage;
 
 /**
@@ -32,7 +33,7 @@ interface IStream
     /**
      * Open the stream.
      *
-     * @throws \qtism\common\storage\StreamException If an error occurs while opening the stream. The error code will be StreamException::OPEN or StreamException::ALREADY_OPEN.
+     * @throws StreamException If an error occurs while opening the stream. The error code will be StreamException::OPEN or StreamException::ALREADY_OPEN.
      */
     public function open();
 
@@ -48,14 +49,14 @@ interface IStream
      *
      * @param string $data The data to be written in the stream.
      * @return integer The length of the written $data.
-     * @throws \qtism\common\storage\StreamException If an error occurs while writing the stream. The error code will be StreamException::WRITE or StreamException::NOT_OPEN.
+     * @throws StreamException If an error occurs while writing the stream. The error code will be StreamException::WRITE or StreamException::NOT_OPEN.
      */
     public function write($data);
 
     /**
      * Close the stream.
      *
-     * @throws \qtism\common\storage\StreamException If an error occurs while closing the stream. The error code will be StreamException::CLOSE or StreamException::NOT_OPEN.
+     * @throws StreamException If an error occurs while closing the stream. The error code will be StreamException::CLOSE or StreamException::NOT_OPEN.
      */
     public function close();
 
@@ -63,14 +64,14 @@ interface IStream
      * Read $length bytes from the stream.
      *
      * @param integer $length The length in bytes of the data to be read from the stream.
-     * @throws \qtism\common\storage\StreamException If an error occurs while reading the stream. The error code will be StreamException::READ or StreamException::NOT_OPEN.
+     * @throws StreamException If an error occurs while reading the stream. The error code will be StreamException::READ or StreamException::NOT_OPEN.
      */
     public function read($length);
 
     /**
      * Rewind the stream as its beginning.
      *
-     * @throws \qtism\common\storage\StreamException If an error occurs during the rewind call. The error code will be StreamException::REWIND or StreamException::NOT_OPEN.
+     * @throws StreamException If an error occurs during the rewind call. The error code will be StreamException::REWIND or StreamException::NOT_OPEN.
      */
     public function rewind();
 
@@ -78,7 +79,7 @@ interface IStream
      * Whether the end of the stream is reached.
      *
      * @return boolean
-     * @throws \qtism\common\storage\StreamException If the stream is not open. The error code will be StreamException::NOT_OPEN;
+     * @throws StreamException If the stream is not open. The error code will be StreamException::NOT_OPEN;
      */
     public function eof();
 
@@ -87,8 +88,8 @@ interface IStream
      * calling this method. A call to flush automatically rewinds the stream to its
      * very begining.
      *
-     * @throws \qtism\common\storage\StreamException If an error occurs during the flush.
-     * @see \qtism\common\storage\IStream::rewind()
+     * @throws StreamException If an error occurs during the flush.
+     * @see IStream::rewind()
      */
     public function flush();
 }

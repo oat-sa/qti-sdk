@@ -19,6 +19,7 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\utils;
 
 /**
@@ -31,36 +32,36 @@ class Exception
 {
     /**
      * Format an Exception message.
-     * 
+     *
      * This method will format an exception message using the following scheme:
-     * 
+     *
      * [CLASSNAME] MESSAGE
-     * 
+     *
      * If the Exception contains previous exceptions, the following scheme will be used:
-     * 
+     *
      * [CLASSNAME] MESSAGE
      * Caused by:
      * [CLASSNAME] MESSAGE
      * ...
-     * 
+     *
      * @param \Exception $e A PHP Exception object.
      * @param true $withClassName Whether to show the Exception class name.
      * @return string
      */
-    static public function formatMessage(\Exception $e, $withClassName = true) 
+    static public function formatMessage(\Exception $e, $withClassName = true)
     {
         $returnValue = '';
-        
+
         do {
             $className = get_class($e);
             $message = $e->getMessage();
             $returnValue .= ($withClassName === true) ? "[${className}] ${message}" : $message;
-            
+
             if ($e = $e->getPrevious()) {
                 $returnValue .= "\nCaused by:\n";
             }
         } while ($e);
-        
+
         return $returnValue;
     }
 }

@@ -19,24 +19,25 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\utils;
 
-class Php 
+class Php
 {
     /**
      * Returns a displayable datatype for any $value.
-     * 
+     *
      * Example:
      * echo Php::displayType(null);
      * echo Php::displayType(12);
      * echo Php::displayType(12.1);
      * echo Php::displayType(new stdClass());
-     * 
+     *
      * // null
      * // php:integer
      * // php:double
      * // stdClass
-     * 
+     *
      * @param mixed $value
      * @return string
      */
@@ -49,5 +50,5 @@ class Php
         } else {
             return 'php:' . gettype($value);
         }
-    }    
+    }
 }

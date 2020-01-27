@@ -14,11 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\enums;
 
 /**
@@ -81,12 +82,12 @@ class Cardinality implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'SINGLE' => self::SINGLE,
             'MULTIPLE' => self::MULTIPLE,
             'ORDERED' => self::ORDERED,
-            'RECORD' => self::RECORD
-        );
+            'RECORD' => self::RECORD,
+        ];
     }
 
     /**
@@ -100,23 +101,23 @@ class Cardinality implements Enumeration
         switch (strtolower($name)) {
             case 'single':
                 return self::SINGLE;
-            break;
+                break;
 
             case 'multiple':
                 return self::MULTIPLE;
-            break;
+                break;
 
             case 'ordered':
                 return self::ORDERED;
-            break;
+                break;
 
             case 'record':
                 return self::RECORD;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -131,23 +132,23 @@ class Cardinality implements Enumeration
         switch ($constant) {
             case self::SINGLE:
                 return 'single';
-            break;
+                break;
 
             case self::MULTIPLE:
                 return 'multiple';
-            break;
+                break;
 
             case self::ORDERED:
                 return 'ordered';
-            break;
+                break;
 
             case self::RECORD:
                 return 'record';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }
