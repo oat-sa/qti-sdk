@@ -14,27 +14,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
+use qtism\common\utils\Format;
 
 /**
  * From IMS QTI:
- * 
- * The templateInline QTI class.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
+ * The templateInline QTI class.
  */
-class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic {
-    
+class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
+{
     /**
      * The base URI.
      *
@@ -42,18 +39,18 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * The content of the TemplateInline.
-     * 
+     *
      * @var InlineStaticCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new TemplateInline object.
-     * 
+     *
      * @param string $templateIdentifier The identifier of the associated template variable.
      * @param string $identifier The identifier of the templateInline.
      * @param string $id The id of the bodyElement.
@@ -62,63 +59,70 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If any of the argument is invalid.
      */
-    public function __construct($templateIdentifier, $identifier, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($templateIdentifier, $identifier, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($templateIdentifier, $identifier, $id, $class, $lang, $label);
         $this->setContent(new InlineStaticCollection());
     }
-    
+
     /**
      * Set the content of the templateInline.
-     * 
+     *
      * @param InlineStaticCollection $content A collection of InlineStatic objects.
      */
-    public function setContent(InlineStaticCollection $content) {
+    public function setContent(InlineStaticCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the content of the templateInline.
-     * 
+     *
      * @return InlineStaticCollection A collection of InlineStatic objects.
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * Set the base URI of the TemplateBlock.
      *
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'base' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the SimpleInline.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
-    public function hasXmlBase() {
+
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
-    public function getComponents() {
+
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
-    public function getQtiClassName() {
+
+    public function getQtiClassName()
+    {
         return 'templateInline';
     }
 }

@@ -14,27 +14,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
 
-
 /**
  * The XHTML dfn class.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class Dfn extends SimpleInline {
-    
-    public function getQtiClassName() {
+class Dfn extends SimpleInline
+{
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
         return 'dfn';
     }
 }

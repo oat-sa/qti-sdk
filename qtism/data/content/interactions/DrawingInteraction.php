@@ -14,47 +14,43 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\xhtml\QtiObject;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * The drawing interaction allows the candidate to use a common set of drawing tools
- * to modify a given graphical image (the canvas). It must be bound to a response 
- * variable with base-type file and single cardinality. The result is a file in the 
- * same format as the original image.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
+ * The drawing interaction allows the candidate to use a common set of drawing tools
+ * to modify a given graphical image (the canvas). It must be bound to a response
+ * variable with base-type file and single cardinality. The result is a file in the
+ * same format as the original image.
  */
-class DrawingInteraction extends BlockInteraction {
-    
+class DrawingInteraction extends BlockInteraction
+{
     /**
      * From IMS QTI:
-     * 
-     * The image that acts as the canvas on which the drawing takes 
-     * place is given as an object which must be of an image type, as 
+     *
+     * The image that acts as the canvas on which the drawing takes
+     * place is given as an object which must be of an image type, as
      * specified by the type attribute.
-     * 
+     *
      * @var Object
      * @qtism-bean-property
      */
     private $object;
-    
+
     /**
      * Create a new DrawingInteraction object.
-     * 
+     *
      * @param string $responseIdentifier The identifier of the associated response variable.
      * @param Object $object The image that acts as a canvas for drawing.
      * @param string $id The id of the bodyElement.
@@ -63,35 +59,47 @@ class DrawingInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
     }
-    
+
     /**
      * Set the image that acts as a canvas for drawing.
-     * 
+     *
      * @param Object $object An Object object representing an image.
      */
-    public function setObject(QtiObject $object) {
+    public function setObject(QtiObject $object)
+    {
         $this->object = $object;
     }
-    
+
     /**
      * Get the image that acts as a canvas for drawing.
-     * 
+     *
      * @return Object An Object object representing an image.
      */
-    public function getObject() {
+    public function getObject()
+    {
         return $this->object;
     }
-    
-    public function getComponents() {
+
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
+    public function getComponents()
+    {
         $parentComponents = parent::getComponents();
-        return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), array($this->getObject())));
+
+        return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), [$this->getObject()]));
     }
-    
-    public function getQtiClassName() {
+
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
         return 'drawingInteraction';
     }
 }
