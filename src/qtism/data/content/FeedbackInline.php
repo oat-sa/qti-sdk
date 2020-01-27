@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +22,12 @@
 
 namespace qtism\data\content;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\ShowHide;
-use \InvalidArgumentException;
 
 /**
  * The FeedbackInline QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class FeedbackInline extends SimpleInline implements FeedbackElement
 {
@@ -83,7 +80,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * @param string $class The class(es) of the bodyElement. If multiple classes, separate them with whitespaces (' ').
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any arguments of the constructor is invalid.
+     * @throws InvalidArgumentException If any arguments of the constructor is invalid.
      */
     public function __construct($outcomeIdentifier, $identifier, $showHide = ShowHide::SHOW, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -97,7 +94,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * Set the identifier of the outcome variable that determines the visibility of the feedbackInline.
      *
      * @param string $outcomeIdentifier A QTI identifier.
-     * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
+     * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
      */
     public function setOutcomeIdentifier($outcomeIdentifier)
     {
@@ -125,7 +122,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * matches.
      *
      * @param integer $showHide A value from the ShowHide enumeration.
-     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
@@ -151,7 +148,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * Set the identifier to be matched to show/hide the feedbackInline.
      *
      * @param string $identifier A QTI identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier)
     {

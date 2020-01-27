@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +22,13 @@
 
 namespace qtism\data\content\xhtml;
 
+use InvalidArgumentException;
 use qtism\data\content\ObjectFlow;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * The QTI param class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Param extends QtiComponent implements ObjectFlow
 {
@@ -97,7 +94,7 @@ class Param extends QtiComponent implements ObjectFlow
      * @param string $value The value to pass to the object named parameter.
      * @param integer $valueType A value from the ParamType enumeration.
      * @param string $type A mime-type for values valuetype REF.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($name, $value, $valueType = ParamType::DATA, $type = '')
     {
@@ -111,7 +108,7 @@ class Param extends QtiComponent implements ObjectFlow
      * Set the name of the parameter, as interpreted by the object.
      *
      * @param string $name A string.
-     * @throws \InvalidArgumentException If $name is not a string.
+     * @throws InvalidArgumentException If $name is not a string.
      */
     public function setName($name)
     {
@@ -137,7 +134,7 @@ class Param extends QtiComponent implements ObjectFlow
      * Set the value to pass to the object for the named parameter.
      *
      * @param string $value A value as a string.
-     * @throws \InvalidArgumentException If $value is not a string.
+     * @throws InvalidArgumentException If $value is not a string.
      */
     public function setValue($value)
     {
@@ -163,7 +160,7 @@ class Param extends QtiComponent implements ObjectFlow
      * Set the valueType attribute.
      *
      * @param integer $valueType A value from the ParamType enumeration.
-     * @throws \InvalidArgumentException If $valueType is not a value from the ParamType enumeration.
+     * @throws InvalidArgumentException If $valueType is not a value from the ParamType enumeration.
      */
     public function setValueType($valueType)
     {
@@ -190,7 +187,7 @@ class Param extends QtiComponent implements ObjectFlow
      * to indicate that no type is provided.
      *
      * @param string $type A mime-type.
-     * @throws \InvalidArgumentException If the $type argument is not a string.
+     * @throws InvalidArgumentException If the $type argument is not a string.
      */
     public function setType($type)
     {

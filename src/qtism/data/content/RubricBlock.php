@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +22,9 @@
 
 namespace qtism\data\content;
 
-use qtism\data\ViewCollection;
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
+use qtism\data\ViewCollection;
 
 /**
  * From IMS QTI:
@@ -33,56 +33,53 @@ use \InvalidArgumentException;
  * by the section. As sections are nestable the rubric presented for each item is the
  * concatenation of the rubric blocks from the top-most section down to the item's
  * immediately enclosing section.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
 {
     use FlowTrait;
-    
+
     /**
      * The components composing the RubricBlock content.
      *
-     * @var \qtism\data\content\FlowStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
 
     /**
-	 * The views in which the RubricBlock's content are to be shown.
-	 *
-	 * @var \qtism\data\ViewCollection
-	 * @qtism-bean-property
-	 */
+     * The views in which the RubricBlock's content are to be shown.
+     *
+     * @var ViewCollection
+     * @qtism-bean-property
+     */
     private $views;
 
     /**
-	 * The purpose for which the rubric is intended to be used.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The purpose for which the rubric is intended to be used.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $use = '';
 
     /**
-	 * The stylesheets are used to format just the contents of the rubricBlock.
-	 *
-	 * @var \qtism\data\content\StyleSheetCollection
-	 * @qtism-bean-property
-	 */
+     * The stylesheets are used to format just the contents of the rubricBlock.
+     *
+     * @var StylesheetCollection
+     * @qtism-bean-property
+     */
     private $stylesheets;
 
     /**
-	 * Create a new RubricBlock object.
-	 *
-	 * @param \qtism\data\ViewCollection $views A collection of values from the View enumeration.
-	 * @param string $id The identifier of the bodyElement.
-	 * @param string $class The class of the bodyElement.
-	 * @param string $lang The language of the bodyElement.
-	 * @param string $label The label of the bodyElement.
-	 * @throws \InvalidArgumentException If any of the arguments is invalid.
-	 */
+     * Create a new RubricBlock object.
+     *
+     * @param ViewCollection $views A collection of values from the View enumeration.
+     * @param string $id The identifier of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
+     */
     public function __construct(ViewCollection $views, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($id, $class, $lang, $label);
@@ -93,21 +90,21 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-	 * Get the views in which the rubric block's content are to be shown.
-	 *
-	 * @return \qtism\data\ViewCollection A collection of values that belong to the View enumeration.
-	 */
+     * Get the views in which the rubric block's content are to be shown.
+     *
+     * @return ViewCollection A collection of values that belong to the View enumeration.
+     */
     public function getViews()
     {
         return $this->views;
     }
 
     /**
-	 * Set the views in which the rubric block's content are to be shown.
-	 *
-	 * @param \qtism\data\ViewCollection $views A collection of values that belong to the View enumeration.
-	 * @throws \InvalidArgumentException If $views is an empty collection.
-	 */
+     * Set the views in which the rubric block's content are to be shown.
+     *
+     * @param ViewCollection $views A collection of values that belong to the View enumeration.
+     * @throws InvalidArgumentException If $views is an empty collection.
+     */
     public function setViews(ViewCollection $views)
     {
         if (count($views) > 0) {
@@ -119,23 +116,23 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-	 * Get he purpose for which the rubric is intended to be used. If there is no
-	 * use for the Rubric Block, an empty string is returned.
-	 *
-	 * @return string The use or an empty string ('').
-	 */
+     * Get he purpose for which the rubric is intended to be used. If there is no
+     * use for the Rubric Block, an empty string is returned.
+     *
+     * @return string The use or an empty string ('').
+     */
     public function getUse()
     {
         return $this->use;
     }
 
     /**
-	 * Set he purpose for which the rubric is intended to be used. If there is no
-	 * use for the Rubric Block.
-	 *
-	 * @param string $use A use.
-	 * @throws \InvalidArgumentException If $use is not a string.
-	 */
+     * Set he purpose for which the rubric is intended to be used. If there is no
+     * use for the Rubric Block.
+     *
+     * @param string $use A use.
+     * @throws InvalidArgumentException If $use is not a string.
+     */
     public function setUse($use)
     {
         if (gettype($use) === 'string') {
@@ -147,20 +144,20 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-	 * Get the stylesheets to format the contents of the Rubric Block.
-	 *
-	 * @return \qtism\data\content\StylesheetCollection A collection of stylesheet references.
-	 */
+     * Get the stylesheets to format the contents of the Rubric Block.
+     *
+     * @return StylesheetCollection A collection of stylesheet references.
+     */
     public function getStylesheets()
     {
         return $this->stylesheets;
     }
 
     /**
-	 * Set the stylesheets to format the contents of the Rubric Block.
-	 *
-	 * @param \qtism\data\content\StylesheetCollection $stylesheets A collection of stylesheet references.
-	 */
+     * Set the stylesheets to format the contents of the Rubric Block.
+     *
+     * @param StylesheetCollection $stylesheets A collection of stylesheet references.
+     */
     public function setStylesheets(StylesheetCollection $stylesheets)
     {
         $this->stylesheets = $stylesheets;
@@ -179,20 +176,20 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-	 * Set the collection of objects composing the RubricBlock.
-	 *
-	 * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
-	 */
+     * Set the collection of objects composing the RubricBlock.
+     *
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
+     */
     public function setContent(FlowStaticCollection $content)
     {
         $this->content = $content;
     }
 
     /**
-	 * Get the content of objects composing the RubricBlock.
-	 *
-	 * @return \qtism\data\content\FlowStaticCollection
-	 */
+     * Get the content of objects composing the RubricBlock.
+     *
+     * @return FlowStaticCollection
+     */
     public function getContent()
     {
         return $this->content;

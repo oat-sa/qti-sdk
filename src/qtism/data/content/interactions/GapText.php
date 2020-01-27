@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +22,21 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\TextOrVariableCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * A simple run of text to be inserted into a gap by the user, may be subject
  * to variable value substitution with printedVariable.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GapText extends GapChoice
 {
     /**
      * The textOrVariable objects composing the GapText.
      *
-     * @var \qtism\data\content\TextOrVariableCollection
+     * @var TextOrVariableCollection
      * @qtism-bean-property
      */
     private $content;
@@ -53,7 +50,7 @@ class GapText extends GapChoice
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -64,7 +61,7 @@ class GapText extends GapChoice
     /**
      * Get the textOrVariable objects composing the GapText.
      *
-     * @return \qtism\data\content\TextOrVariableCollection
+     * @return TextOrVariableCollection
      */
     public function getComponents()
     {
@@ -74,7 +71,7 @@ class GapText extends GapChoice
     /**
      * Set the textOrVariable objects composing the GapText.
      *
-     * @param \qtism\data\content\TextOrVariableCollection $content
+     * @param TextOrVariableCollection $content
      */
     public function setContent(TextOrVariableCollection $content)
     {
@@ -84,7 +81,7 @@ class GapText extends GapChoice
     /**
      * Get the textOrVariable objects composing the GapText.
      *
-     * @return \qtism\data\content\TextOrVariableCollection
+     * @return TextOrVariableCollection
      */
     public function getContent()
     {

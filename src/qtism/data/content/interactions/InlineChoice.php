@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +22,21 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\TextOrVariableCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * A simple run of text to be displayed to the user, may be subject to
  * variable value substitution with printedVariable.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InlineChoice extends Choice
 {
     /**
      * A collection of TextOrVariable objects.
      *
-     * @var \qtism\data\content\TextOrVariableCollection
+     * @var TextOrVariableCollection
      * @qtism-bean-property
      */
     private $content;
@@ -52,7 +49,7 @@ class InlineChoice extends Choice
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the arguments is invalid.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -63,7 +60,7 @@ class InlineChoice extends Choice
     /**
      * Set the content of the InlineChoice.
      *
-     * @param \qtism\data\content\TextOrVariableCollection $content A collection of TextOrVariable objects.
+     * @param TextOrVariableCollection $content A collection of TextOrVariable objects.
      */
     public function setContent(TextOrVariableCollection $content)
     {
@@ -73,7 +70,7 @@ class InlineChoice extends Choice
     /**
      * Get the content of the InlineChoice.
      *
-     * @return \qtism\data\content\TextOrVariableCollection A collection of TextOrVariable objects.
+     * @return TextOrVariableCollection A collection of TextOrVariable objects.
      */
     public function getContent()
     {

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\FlowStaticCollection;
 
 class SimpleChoice extends Choice
@@ -29,7 +30,7 @@ class SimpleChoice extends Choice
     /**
      * The components composing the simpleChoice.
      *
-     * @var \qtism\data\content\FlowStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -42,7 +43,7 @@ class SimpleChoice extends Choice
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -53,7 +54,7 @@ class SimpleChoice extends Choice
     /**
      * Get the components composing the simpleChoice.
      *
-     * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
+     * @return FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getComponents()
     {
@@ -63,7 +64,7 @@ class SimpleChoice extends Choice
     /**
      * Set the components composing the simpleChoice.
      *
-     * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
     public function setContent(FlowStaticCollection $content)
     {
@@ -73,7 +74,7 @@ class SimpleChoice extends Choice
     /**
      * Get the components composing the simpleChoice.
      *
-     * @return \qtism\data\content\FlowStaticCollection
+     * @return FlowStaticCollection
      */
     public function getContent()
     {

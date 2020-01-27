@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -30,9 +30,6 @@ use \InvalidArgumentException;
  * The upload interaction allows the candidate to upload a pre-prepared file representing
  * their response. It must be bound to a response variable with base-type file and single
  * cardinality.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class UploadInteraction extends BlockInteraction
 {
@@ -56,7 +53,7 @@ class UploadInteraction extends BlockInteraction
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any argument is invalid.
+     * @throws InvalidArgumentException If any argument is invalid.
      */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -67,7 +64,7 @@ class UploadInteraction extends BlockInteraction
      * Set the expected mime-type of the uploaded file.
      *
      * @param string $type A mime-type.
-     * @throws \InvalidArgumentException If $type is not a string value.
+     * @throws InvalidArgumentException If $type is not a string value.
      */
     public function setType($type)
     {

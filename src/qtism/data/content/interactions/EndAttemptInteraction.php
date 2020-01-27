@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +22,8 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -41,9 +41,6 @@ use \InvalidArgumentException;
  * or through the default method for the delivery engine, then the associated
  * response variable is set to false. The default value of the response variable
  * is always ignored.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class EndAttemptInteraction extends InlineInteraction
 {
@@ -69,7 +66,7 @@ class EndAttemptInteraction extends InlineInteraction
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the argument is invalid.
+     * @throws InvalidArgumentException If any of the argument is invalid.
      */
     public function __construct($responseIdentifier, $title, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -82,7 +79,7 @@ class EndAttemptInteraction extends InlineInteraction
      * for ending the attempt.
      *
      * @param string $title A string.
-     * @throws \InvalidArgumentException If $title is not a string.
+     * @throws InvalidArgumentException If $title is not a string.
      */
     public function setTitle($title)
     {

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +22,19 @@
 
 namespace qtism\data\content\xhtml\tables;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\content\FlowStatic;
+use InvalidArgumentException;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The XHTML table class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Table extends BodyElement implements BlockStatic, FlowStatic
 {
-    use \qtism\data\content\FlowTrait;
+    use FlowTrait;
 
     /**
      * The summary attribute.
@@ -49,7 +47,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * A caption.
      *
-     * @var \qtism\data\content\xhtml\tables\Caption
+     * @var Caption
      * @qtism-bean-property
      */
     private $caption = null;
@@ -59,7 +57,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * If a table directly contains a col then it must not contain any colgroup elements.
      *
-     * @var \qtism\data\content\xhtml\tables\ColCollection
+     * @var ColCollection
      * @qtism-bean-property
      */
     private $cols;
@@ -69,7 +67,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * If a table contains a colgroup it must not directly contain any col elements.
      *
-     * @var \qtism\data\content\xhtml\tables\ColgroupCollection
+     * @var ColgroupCollection
      * @qtism-bean-property
      */
     private $colgroups;
@@ -93,7 +91,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * The tbody elements.
      *
-     * @var \qtism\data\content\xhtml\tables\TbodyCollection
+     * @var TbodyCollection
      * @qtism-bean-property
      */
     private $tbodies;
@@ -101,12 +99,12 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Create a new Table object.
      *
-     * @param \qtism\data\content\xhtml\tables\TbodyCollection $tbodies A collection of Tbody objects.
+     * @param TbodyCollection $tbodies A collection of Tbody objects.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of arguments is invalid.
+     * @throws InvalidArgumentException If any of arguments is invalid.
      */
     public function __construct(TbodyCollection $tbodies, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -121,7 +119,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * means there is no summary.
      *
      * @param string $summary
-     * @throws \InvalidArgumentException If $summary is not a string.
+     * @throws InvalidArgumentException If $summary is not a string.
      */
     public function setSummary($summary)
     {
@@ -158,7 +156,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * Set the Caption object of the Table. A null value means there
      * is no Caption.
      *
-     * @param \qtism\data\content\xhtml\tables\Caption $caption A Caption object or null.
+     * @param Caption $caption A Caption object or null.
      */
     public function setCaption(Caption $caption = null)
     {
@@ -169,7 +167,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * Get the Caption object of the Table. A null value means there
      * is no Caption.
      *
-     * @return \qtism\data\content\xhtml\tables\Caption|null A Caption object or null.
+     * @return Caption|null A Caption object or null.
      */
     public function getCaption()
     {
@@ -189,7 +187,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the Col objects composing the Table.
      *
-     * @param \qtism\data\content\xhtml\tables\ColCollection $cols A collection of Col objects.
+     * @param ColCollection $cols A collection of Col objects.
      */
     public function setCols(ColCollection $cols)
     {
@@ -199,7 +197,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Col objects composing the Table.
      *
-     * @return \qtism\data\content\xhtml\tables\ColCollection A collection of Col objects.
+     * @return ColCollection A collection of Col objects.
      */
     public function getCols()
     {
@@ -209,7 +207,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the Colgroup objects composing the Table.
      *
-     * @param \qtism\data\content\xhtml\tables\ColgroupCollection $colgroups A collection of Colgroup objects.
+     * @param ColgroupCollection $colgroups A collection of Colgroup objects.
      */
     public function setColgroups(ColgroupCollection $colgroups)
     {
@@ -219,7 +217,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Colgroup objects composing the Table.
      *
-     * @return \qtism\data\content\xhtml\tables\ColgroupCollection A collection of Colgroup objects.
+     * @return ColgroupCollection A collection of Colgroup objects.
      */
     public function getColgroups()
     {
@@ -230,7 +228,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * Set the Thead object. A null value means there is no
      * Thead.
      *
-     * @param \qtism\data\content\xhtml\tables\Thead $thead A Thead object or null.
+     * @param Thead $thead A Thead object or null.
      */
     public function setThead(Thead $thead = null)
     {
@@ -240,7 +238,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Thead object. A null value means there is no Thead.
      *
-     * @return \qtism\data\content\xhtml\tables\Thead A Thead object or null.
+     * @return Thead A Thead object or null.
      */
     public function getThead()
     {
@@ -260,7 +258,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the Tfoot object
      *
-     * @param \qtism\data\content\xhtml\tables\Tfoot $tfoot
+     * @param Tfoot $tfoot
      */
     public function setTfoot(Tfoot $tfoot)
     {
@@ -271,7 +269,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * Get the Tfoot object of the Table. A null value means there is no
      * Tfoot.
      *
-     * @return \qtism\data\content\xhtml\tables\Tfoot A Tfoot object or null.
+     * @return Tfoot A Tfoot object or null.
      */
     public function getTfoot()
     {
@@ -291,7 +289,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the Tbody objects composing the Table.
      *
-     * @param \qtism\data\content\xhtml\tables\TbodyCollection $tbodies A collection of Tbody objects.
+     * @param TbodyCollection $tbodies A collection of Tbody objects.
      */
     public function setTbodies(TbodyCollection $tbodies)
     {
@@ -301,7 +299,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Tbody objects composing the Table.
      *
-     * @return \qtism\data\content\xhtml\tables\TbodyCollection A collection of Tbody objects.
+     * @return TbodyCollection A collection of Tbody objects.
      */
     public function getTbodies()
     {
@@ -313,7 +311,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      */
     public function getComponents()
     {
-        $array = array();
+        $array = [];
 
         if ($this->hasCaption() === true) {
             $array[] = $this->getCaption();

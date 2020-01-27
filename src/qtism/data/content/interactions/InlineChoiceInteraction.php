@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +22,8 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\state\ResponseValidityConstraint;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -36,9 +36,6 @@ use \InvalidArgumentException;
  *
  * The inlineChoiceInteraction must be bound to a response variable with a
  * baseType of identifier and single cardinality only.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InlineChoiceInteraction extends InlineInteraction
 {
@@ -75,7 +72,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * An ordered list of the choices that are displayed to the user. The order
      * is the order of the choices presented to the user unless shuffle is true.
      *
-     * @var \qtism\data\content\interactions\InlineChoiceCollection
+     * @var InlineChoiceCollection
      * @qtism-bean-property
      */
     private $content;
@@ -84,12 +81,12 @@ class InlineChoiceInteraction extends InlineInteraction
      * Create a new InlineChoiceInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param \qtism\data\content\interactions\InlineChoiceCollection $content The InlineChoice objects composing the interaction.
+     * @param InlineChoiceCollection $content The InlineChoice objects composing the interaction.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the arguments is invalid.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, InlineChoiceCollection $content, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -103,7 +100,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * Set whether the delivery engine must shuffle the choices.
      *
      * @param boolean $shuffle
-     * @throws \InvalidArgumentException If $shuffle is not a boolean value.
+     * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
     {
@@ -129,7 +126,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * Set whether a choice is required to be selected by the candidate.
      *
      * @param boolean $required
-     * @throws \InvalidArgumentException If $required is not a boolean value.
+     * @throws InvalidArgumentException If $required is not a boolean value.
      */
     public function setRequired($required)
     {
@@ -154,8 +151,8 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Set the InlineChoice objects composing the interaction.
      *
-     * @param \qtism\data\content\interactions\InlineChoiceCollection $content A collection of at least one InlineChoice object.
-     * @throws \InvalidArgumentException If $content is empty.
+     * @param InlineChoiceCollection $content A collection of at least one InlineChoice object.
+     * @throws InvalidArgumentException If $content is empty.
      */
     public function setContent(InlineChoiceCollection $content)
     {
@@ -170,13 +167,13 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Get the InlineChoice objects composing the interaction.
      *
-     * @return \qtism\data\content\interactions\InlineChoiceCollection A collection of at least one InlineChoice object.
+     * @return InlineChoiceCollection A collection of at least one InlineChoice object.
      */
     public function getContent()
     {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */

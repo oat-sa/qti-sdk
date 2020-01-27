@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -31,22 +31,21 @@ use qtism\common\collections\IdentifierCollection;
  *
  * This is a marker interface.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://en.wikipedia.org/wiki/Marker_interface_pattern
  */
 interface AssociableChoice
 {
     /**
      * Get the set of choices that this choice may be associated with.
-     * 
-     * @return \qtism\common\collections\IdentifierCollection
+     *
+     * @return IdentifierCollection
      */
     public function getMatchGroup();
-    
+
     /**
      * Set the set of choices that this choice may be associated with.
-     * 
-     * @param \qtism\common\collections\IdentifierCollection $matchGroup
+     *
+     * @param IdentifierCollection $matchGroup
      */
     public function setMatchGroup(IdentifierCollection $matchGroup);
 }

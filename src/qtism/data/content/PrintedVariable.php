@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +22,9 @@
 
 namespace qtism\data\content;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -62,9 +62,6 @@ use \InvalidArgumentException;
  * names and corresponding field values within the variable is printed, delimited
  * by the string value of the delimiter attribute and with the correspondence
  * between them indicated by the string value of the mappingIndicator attribute.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, TextOrVariable
 {
@@ -178,7 +175,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -190,7 +187,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Set the outcome or template variable identifier of the printedVariable.
      *
      * @param string $identifier A valid QTI identifier.
-     * @throws \InvalidArgumentException If the given $identifier is invalid.
+     * @throws InvalidArgumentException If the given $identifier is invalid.
      */
     public function setIdentifier($identifier)
     {
@@ -217,7 +214,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * to strings.
      *
      * @param string $format See Number Formatting Rules for details.
-     * @throws \InvalidArgumentException If $format is not a string with at most 256 characters.
+     * @throws InvalidArgumentException If $format is not a string with at most 256 characters.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10074
      */
     public function setFormat($format)
@@ -257,7 +254,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * for display.
      *
      * @param boolean $powerForm
-     * @throws \InvalidArgumentException If $powerForm is not a boolean value.
+     * @throws InvalidArgumentException If $powerForm is not a boolean value.
      */
     public function setPowerForm($powerForm)
     {
@@ -284,7 +281,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Set the number base to use when converting integer variables to strings.
      *
      * @param integer|string $base A base to use for conversion as an integer or a variable reference.
-     * @throws \InvalidArgumentException If $base is not an integer nor a variable reference.
+     * @throws InvalidArgumentException If $base is not an integer nor a variable reference.
      */
     public function setBase($base)
     {
@@ -311,7 +308,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * if there is no index indicated.
      *
      * @param integer|string $index An integer or variable reference.
-     * @throws \InvalidArgumentException If $index is not an integer nor a variable reference.
+     * @throws InvalidArgumentException If $index is not an integer nor a variable reference.
      */
     public function setIndex($index)
     {
@@ -349,7 +346,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * cardinality.
      *
      * @param string $delimiter A non-empty string with at most 256 characters.
-     * @throws \InvalidArgumentException If $delimiter is not a non-empty string with at most 256 characters.
+     * @throws InvalidArgumentException If $delimiter is not a non-empty string with at most 256 characters.
      */
     public function setDelimiter($delimiter)
     {
@@ -377,7 +374,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * empty string if no field is indicated.
      *
      * @param string $field A string with at most 256 characters.
-     * @throws \InvalidArgumentException If $field is not a string with at most 256 characters.
+     * @throws InvalidArgumentException If $field is not a string with at most 256 characters.
      */
     public function setField($field)
     {
@@ -417,7 +414,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * displaying variables of record cardinality.
      *
      * @param string $mappingIndicator A non-empty string with at most 256 characters.
-     * @throws \InvalidArgumentException If $mappingIndicator is not a non-empty string with at most 256 characters.
+     * @throws InvalidArgumentException If $mappingIndicator is not a non-empty string with at most 256 characters.
      */
     public function setMappingIndicator($mappingIndicator)
     {

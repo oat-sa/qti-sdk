@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +22,15 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
  *
  * A gap image contains a single image object to be inserted into a
  * gap by the candidate.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GapImg extends GapChoice
 {
@@ -65,7 +62,7 @@ class GapImg extends GapChoice
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $matchMax, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -79,7 +76,7 @@ class GapImg extends GapChoice
      * string indicates the GapImg has no objectLabel.
      *
      * @param string $objectLabel A label for the image.
-     * @throws \InvalidArgumentException If $objectLabel is not a string value.
+     * @throws InvalidArgumentException If $objectLabel is not a string value.
      */
     public function setObjectLabel($objectLabel)
     {
@@ -115,7 +112,7 @@ class GapImg extends GapChoice
     /**
      * Set the ObjectElement representing the GapImg's image.
      *
-     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object.
+     * @param ObjectElement $object An ObjectElement object.
      */
     public function setObject(ObjectElement $object)
     {
@@ -125,7 +122,7 @@ class GapImg extends GapChoice
     /**
      * Get the ObjectElement representing the GapImg's image.
      *
-     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object.
+     * @return ObjectElement An ObjectElement object.
      */
     public function getObject()
     {
@@ -137,7 +134,7 @@ class GapImg extends GapChoice
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array($this->getObject()));
+        return new QtiComponentCollection([$this->getObject()]);
     }
 
     /**

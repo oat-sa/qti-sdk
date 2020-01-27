@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +22,12 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * A specialization of AbstractCollection aiming at storing SimpleChoice
  * objects only.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SimpleChoiceCollection extends QtiComponentCollection
 {
@@ -38,7 +35,7 @@ class SimpleChoiceCollection extends QtiComponentCollection
      * Check if $value is an instance of SimpleChoice.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not an instance of SimpleChoice.
+     * @throws InvalidArgumentException If $value is not an instance of SimpleChoice.
      */
     protected function checkType($value)
     {

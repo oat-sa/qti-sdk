@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +22,15 @@
 
 namespace qtism\data\content\xhtml;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\content\SimpleInline;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * Although a inherits from simpleInline it must not contain, either directly or
  * indirectly, another a.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class A extends SimpleInline
 {
@@ -61,7 +58,7 @@ class A extends SimpleInline
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($href, $id = '', $class = '', $lang = '', $label = '')
     {

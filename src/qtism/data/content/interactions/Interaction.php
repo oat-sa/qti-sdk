@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +22,10 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\BodyElement;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
+use qtism\data\content\BodyElement;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -52,32 +53,29 @@ use \InvalidArgumentException;
  *
  * The current version of the specification does not support the embedding of interactions in other
  * interactions. This may change in future versions of the specification.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class Interaction extends BodyElement
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The response variable associated with the interaction.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The response variable associated with the interaction.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $responseIdentifier;
 
     /**
-	 * Create an Interaction object.
-	 *
-	 * @param string $responseIdentifier The identifier of the associated response.
-	 * @param string $id The id of the bodyElement.
-	 * @param string $class The class of the bodyElement.
-	 * @param string $lang The language of the bodyElement.
-	 * @param string $label The label of the bodyElement.
-	 * @throws \InvalidArgumentException If one of the argument is invalid.
-	 */
+     * Create an Interaction object.
+     *
+     * @param string $responseIdentifier The identifier of the associated response.
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws InvalidArgumentException If one of the argument is invalid.
+     */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($id, $class, $lang, $label);
@@ -85,11 +83,11 @@ abstract class Interaction extends BodyElement
     }
 
     /**
-	 * Set the response variable associated with the interaction.
-	 *
-	 * @param string $responseIdentifier A QTI identifier.
-	 * @throws \InvalidArgumentException If $responseIdentifier is not a valid QTI identifier.
-	 */
+     * Set the response variable associated with the interaction.
+     *
+     * @param string $responseIdentifier A QTI identifier.
+     * @throws InvalidArgumentException If $responseIdentifier is not a valid QTI identifier.
+     */
     public function setResponseIdentifier($responseIdentifier)
     {
         if (Format::isIdentifier($responseIdentifier, false) === true) {
@@ -101,22 +99,22 @@ abstract class Interaction extends BodyElement
     }
 
     /**
-	 * Get the response variable associated with the interaction.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the response variable associated with the interaction.
+     *
+     * @return string A QTI identifier.
+     */
     public function getResponseIdentifier()
     {
         return $this->responseIdentifier;
     }
-    
+
     /**
      * Get the validaty constraint rules to be applied on the response bound to the interaction.
-     * 
+     *
      * Subclasses of Interaction that claim to provide response validity constraints must override
      * this method in order to return an appropriately instantiated ResponseValidityConstraint object.
-     * 
-     * @return \qtism\data\state\ResponseValidityConstraint|null A ResponseValidityConstraint object or a null value if there is not response validity constraint bound to the interaction's response variable.
+     *
+     * @return ResponseValidityConstraint|null A ResponseValidityConstraint object or a null value if there is not response validity constraint bound to the interaction's response variable.
      */
     public function getResponseValidityConstraint()
     {

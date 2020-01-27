@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -25,8 +25,6 @@ namespace qtism\data\content;
 /**
  *
  * The atomicBlock QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  */
 abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStatic
 {
@@ -35,7 +33,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * The collection of Inline components contained by the AtomicBlock.
      *
-     * @var \qtism\data\content\InlineCollection
+     * @var InlineCollection
      * @qtism-bean-property
      */
     private $content;
@@ -57,7 +55,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Set the collection of Inline components composing the AtomicBlock.
      *
-     * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
+     * @param InlineCollection $content A collection of Inline objects.
      */
     public function setContent(InlineCollection $content)
     {
@@ -67,7 +65,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the collection of Inline components composing the AtomicBlock.
      *
-     * @return \qtism\data\content\InlineCollection
+     * @return InlineCollection
      */
     public function getContent()
     {
@@ -77,7 +75,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the collection of Inline components composing the AtomicBlock.
      *
-     * @return \qtism\data\content\InlineCollection A collection of Inline objects.
+     * @return InlineCollection A collection of Inline objects.
      */
     public function getComponents()
     {

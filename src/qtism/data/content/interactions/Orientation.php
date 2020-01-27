@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +26,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The QTI orientation enumeration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Orientation implements Enumeration
 {
@@ -38,10 +35,10 @@ class Orientation implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'VERTICAL' => 0,
-            'HORIZONTAL' => 1
-        );
+            'HORIZONTAL' => 1,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -49,15 +46,15 @@ class Orientation implements Enumeration
         switch (strtolower($name)) {
             case 'vertical':
                 return self::VERTICAL;
-            break;
+                break;
 
             case 'horizontal':
                 return self::HORIZONTAL;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -66,15 +63,15 @@ class Orientation implements Enumeration
         switch ($constant) {
             case self::VERTICAL:
                 return 'vertical';
-            break;
+                break;
 
             case self::HORIZONTAL:
                 return 'horizontal';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

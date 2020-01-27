@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,19 +22,13 @@
 
 namespace qtism\data\content;
 
-use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * The atomicInline QTI abstract class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AtomicInline extends BodyElement implements FlowStatic, InlineStatic
 {
-    
     use FlowTrait;
 
     /**
@@ -54,7 +48,7 @@ abstract class AtomicInline extends BodyElement implements FlowStatic, InlineSta
      * An atomicInline component does not contain any other component. As
      * a result, this method always returns an empty QtiComponentCollection object.
      *
-     * @return \qtism\data\QtiComponentCollection An empty QtiComponentCollection.
+     * @return QtiComponentCollection An empty QtiComponentCollection.
      */
     public function getComponents()
     {

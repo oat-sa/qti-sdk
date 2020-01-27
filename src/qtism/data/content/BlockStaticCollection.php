@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +22,11 @@
 
 namespace qtism\data\content;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * A specialized QtiComponentCollection aiming at storing BlockStatic objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BlockStaticCollection extends QtiComponentCollection
 {
@@ -37,7 +34,7 @@ class BlockStaticCollection extends QtiComponentCollection
      * Check whether $value is an instance of BlockStatic.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not an instance of BlockStatic.
+     * @throws InvalidArgumentException If $value is not an instance of BlockStatic.
      */
     protected function checkType($value)
     {
@@ -46,5 +43,4 @@ class BlockStaticCollection extends QtiComponentCollection
             throw new InvalidArgumentException($msg);
         }
     }
-
 }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,17 +22,15 @@
 
 namespace qtism\data\content\xhtml\lists;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;
 use qtism\data\content\FlowStatic;
-use qtism\data\content\BlockStatic;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The XHTML ol class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Ol extends BodyElement implements BlockStatic, FlowStatic
 {
@@ -47,7 +45,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic
     /**
      * The Li objects composing the Ul.
      *
-     * @var \qtism\data\content\xhtml\lists\LiCollection
+     * @var LiCollection
      * @qtism-bean-property
      */
     private $content;
@@ -59,7 +57,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -70,7 +68,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the Li objects composing the Ul.
      *
-     * @param \qtism\data\content\xhtml\lists\LiCollection $content A collection of Li objects.
+     * @param LiCollection $content A collection of Li objects.
      */
     public function setContent(LiCollection $content)
     {
@@ -80,7 +78,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Li objects composing the Ul.
      *
-     * @return \qtism\data\content\xhtml\lists\LiCollection
+     * @return LiCollection
      */
     public function getContent()
     {
@@ -90,7 +88,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Li objects composing the Ul.
      *
-     * @return \qtism\data\QtiComponentCollection A collection of Li objects.
+     * @return QtiComponentCollection A collection of Li objects.
      */
     public function getComponents()
     {
@@ -101,7 +99,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic
      * Set the base URI of the Ul.
      *
      * @param string $xmlBase A URI.
-     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '')
     {

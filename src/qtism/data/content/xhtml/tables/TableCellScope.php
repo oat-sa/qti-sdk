@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +26,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The QTI tableCellScope class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TableCellScope implements Enumeration
 {
@@ -58,12 +55,12 @@ class TableCellScope implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'ROW' => self::ROW,
             'COL' => self::COL,
             'ROWGROUP' => self::ROWGROUP,
-            'COLGROUP' => self::COLGROUP
-        );
+            'COLGROUP' => self::COLGROUP,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -71,23 +68,23 @@ class TableCellScope implements Enumeration
         switch (strtolower($name)) {
             case 'row':
                 return self::ROW;
-            break;
+                break;
 
             case 'col':
                 return self::COL;
-            break;
+                break;
 
             case 'rowgroup':
                 return self::ROWGROUP;
-            break;
+                break;
 
             case 'colgroup':
                 return self::COLGROUP;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -96,23 +93,23 @@ class TableCellScope implements Enumeration
         switch ($constant) {
             case self::ROW:
                 return 'row';
-            break;
+                break;
 
             case self::COL:
                 return 'col';
-            break;
+                break;
 
             case self::ROWGROUP:
                 return 'rowgroup';
-            break;
+                break;
 
             case self::COLGROUP:
                 return 'colgroup';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,9 +24,6 @@ namespace qtism\data\content;
 
 /**
  * The simpleBlock QTI abstract class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStatic
 {
@@ -35,7 +32,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * The Block components composing the SimpleBlock object.
      *
-     * @var \qtism\data\content\BlockCollection
+     * @var BlockCollection
      * @qtism-bean-property
      */
     private $content;
@@ -57,7 +54,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the collection of Block objects composing the Simpleblock.
      *
-     * @return \qtism\data\content\BlockCollection A collection of Block objects.
+     * @return BlockCollection A collection of Block objects.
      */
     public function getComponents()
     {
@@ -67,7 +64,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Set the collection of Block objects composing the SimpleBlock.
      *
-     * @param \qtism\data\content\BlockCollection $content A collection of Block objects.
+     * @param BlockCollection $content A collection of Block objects.
      */
     public function setContent(BlockCollection $content)
     {
@@ -77,7 +74,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the content of Block objects composing the Simpleblock.
      *
-     * @return \qtism\data\content\BlockCollection
+     * @return BlockCollection
      */
     public function getContent()
     {

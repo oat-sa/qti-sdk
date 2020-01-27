@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,17 +22,14 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
+use qtism\data\content\Block;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\ObjectElement;
-use qtism\data\content\Block;
-use \InvalidArgumentException;
 
 /**
  * The PositionObjectStage QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PositionObjectStage extends QtiComponent implements Block
 {
@@ -42,7 +39,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * The image to be used as a stage onto which individual positionObjectInteractions
      * allow the candidate to place their objects.
      *
-     * @var \qtism\data\content\xhtml\ObjectElement
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -50,7 +47,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * The positionObjectInteractions composing the positionObjectStage.
      *
-     * @var \qtism\data\content\interactions\PositionObjectInteractionCollection
+     * @var PositionObjectInteractionCollection
      * @qtism-bean-property
      */
     private $positionObjectInteractions;
@@ -58,7 +55,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Set the image to be used as a stage.
      *
-     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object.
+     * @param ObjectElement $object An ObjectElement object.
      * @qtism-bean-property
      */
     public function setObject(ObjectElement $object)
@@ -69,7 +66,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Get the image to be used as a stage.
      *
-     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object.
+     * @return ObjectElement An ObjectElement object.
      * @qtism-bean-property
      */
     public function getObject()
@@ -80,8 +77,8 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Create a new PositionObjectStage object.
      *
-     * @param \qtism\data\content\xhtml\ObjectElement $object The image to be used as a stage.
-     * @param \qtism\data\content\interactions\PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
+     * @param ObjectElement $object The image to be used as a stage.
+     * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
      */
     public function __construct(ObjectElement $object, PositionObjectInteractionCollection $positionObjectInteractions)
     {
@@ -92,8 +89,8 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Set the positionObjectInteractions composing the positionObjectStage.
      *
-     * @param \qtism\data\content\interactions\PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
-     * @throws \InvalidArgumentException If $positionObjectInteractions is empty.
+     * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
+     * @throws InvalidArgumentException If $positionObjectInteractions is empty.
      */
     public function setPositionObjectInteractions(PositionObjectInteractionCollection $positionObjectInteractions)
     {
@@ -108,7 +105,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Get the positionObjectInteractions composing the positionObjectStage.
      *
-     * @return \qtism\data\content\interactions\PositionObjectInteractionCollection A collection of PositionObjectInteraction objects.
+     * @return PositionObjectInteractionCollection A collection of PositionObjectInteraction objects.
      */
     public function getPositionObjectInteractions()
     {
@@ -120,7 +117,7 @@ class PositionObjectStage extends QtiComponent implements Block
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getPositionObjectInteractions()->getArrayCopy()));
+        return new QtiComponentCollection(array_merge([$this->getObject()], $this->getPositionObjectInteractions()->getArrayCopy()));
     }
 
     /**

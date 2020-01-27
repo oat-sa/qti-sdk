@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +22,12 @@
 
 namespace qtism\data\content\xhtml\text;
 
-use qtism\data\content\SimpleInline;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\content\SimpleInline;
 
 /**
  * The XHTML q class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Q extends SimpleInline
 {
@@ -49,7 +47,7 @@ class Q extends SimpleInline
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
      * @param string $cite
-     * @throws \InvalidArgumentException If any of the arguments above is invalid.
+     * @throws InvalidArgumentException If any of the arguments above is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '')
     {
@@ -71,7 +69,7 @@ class Q extends SimpleInline
      * Set the cite attribute's value.
      *
      * @param string $cite
-     * @throws \InvalidArgumentException If $cite is not a valid URI.
+     * @throws InvalidArgumentException If $cite is not a valid URI.
      */
     public function setCite($cite)
     {
@@ -79,7 +77,7 @@ class Q extends SimpleInline
             $this->cite = $cite;
         } else {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
     }
 

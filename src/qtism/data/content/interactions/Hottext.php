@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +22,11 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\InlineStaticCollection;
-use qtism\data\content\InlineStatic;
+use InvalidArgumentException;
 use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
+use qtism\data\content\InlineStatic;
+use qtism\data\content\InlineStaticCollection;
 
 /**
  * From IMS QTI:
@@ -37,18 +39,15 @@ use qtism\data\content\FlowStatic;
  * the content of the choice must still be presented to the candidate as if it were
  * simply part of the surrounding material. In the case of hottext, the effect of
  * hiding the choice is simply to make the run of text unselectable by the candidate.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Hottext extends Choice implements FlowStatic, InlineStatic
 {
-    use \qtism\data\content\FlowTrait;
-    
+    use FlowTrait;
+
     /**
      * The components composing the hottext.
      *
-     * @var \qtism\data\content\InlineStaticCollection
+     * @var InlineStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -61,7 +60,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -72,7 +71,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     /**
      * Set the components composing the hottext.
      *
-     * @param \qtism\data\content\InlineStaticCollection $content A collection of InlineStatic objects.
+     * @param InlineStaticCollection $content A collection of InlineStatic objects.
      */
     public function setContent(InlineStaticCollection $content)
     {
@@ -82,7 +81,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     /**
      * Get the components composing the hottext.
      *
-     * @return \qtism\data\content\InlineStaticCollection
+     * @return InlineStaticCollection
      */
     public function getContent()
     {

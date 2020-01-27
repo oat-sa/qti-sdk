@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +22,12 @@
 
 namespace qtism\data\content\xhtml\lists;
 
+use InvalidArgumentException;
 use qtism\data\content\InlineCollection;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The dt XHTML class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Dt extends DlElement
 {
@@ -48,7 +46,7 @@ class Dt extends DlElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -59,7 +57,7 @@ class Dt extends DlElement
     /**
      * Set the Inline objects composing the Dt.
      *
-     * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
+     * @param InlineCollection $content A collection of Inline objects.
      */
     public function setContent(InlineCollection $content)
     {
@@ -69,7 +67,7 @@ class Dt extends DlElement
     /**
      * Get the Inline objects composing the Dt.
      *
-     * @return \qtism\data\content\InlineCollection
+     * @return InlineCollection
      */
     public function getContent()
     {
@@ -79,7 +77,7 @@ class Dt extends DlElement
     /**
      * Get the Inline objects composing the Dt.
      *
-     * @return \qtism\data\QtiComponentCollection The Inline objects composing the Dt.
+     * @return QtiComponentCollection The Inline objects composing the Dt.
      */
     public function getComponents()
     {

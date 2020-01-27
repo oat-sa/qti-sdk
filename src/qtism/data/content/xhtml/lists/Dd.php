@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +22,18 @@
 
 namespace qtism\data\content\xhtml\lists;
 
+use InvalidArgumentException;
 use qtism\data\content\FlowCollection;
-use \InvalidArgumentException;
 
 /**
  * The XHTML dd class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Dd extends DlElement
 {
     /**
      * The Flow objects composing the Dd.
      *
-     * @var \qtism\data\content\FlowCollection
+     * @var FlowCollection
      * @qtism-bean-property
      */
     private $content;
@@ -48,7 +45,7 @@ class Dd extends DlElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -59,7 +56,7 @@ class Dd extends DlElement
     /**
      * Set the Flow objects composing the Dd.
      *
-     * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
+     * @param FlowCollection $content A collection of Flow objects.
      */
     public function setContent(FlowCollection $content)
     {
@@ -69,7 +66,7 @@ class Dd extends DlElement
     /**
      * Set the Flow objects composing the Dd.
      *
-     * @return \qtism\data\content\FlowCollection
+     * @return FlowCollection
      */
     public function getContent()
     {
@@ -79,7 +76,7 @@ class Dd extends DlElement
     /**
      * Get the Flow objects composing the Dd.
      *
-     * @return \qtism\data\content\FlowCollection A collection of Flow objects.
+     * @return FlowCollection A collection of Flow objects.
      */
     public function getComponents()
     {

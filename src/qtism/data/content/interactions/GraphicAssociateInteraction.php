@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +22,11 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
-use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\state\AssociationValidityConstraint;
-use \InvalidArgumentException;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -38,9 +38,6 @@ use \InvalidArgumentException;
  * with respect to each other (as represented by the graphic image) is important
  * to the needs of the item. Otherwise, associateInteraction should be used
  * instead with separate Material for each option.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GraphicAssociateInteraction extends GraphicInteraction
 {
@@ -88,13 +85,13 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Create a new GraphicAssociateInteraction.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param \qtism\data\content\xhtml\ObjectElement $object The associated image as an ObjectElement object.
-     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots The hotspots that define the choices that are to be associated by the candidate.
+     * @param ObjectElement $object The associated image as an ObjectElement object.
+     * @param AssociableHotspotCollection $associableHotspots The hotspots that define the choices that are to be associated by the candidate.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($responseIdentifier, ObjectElement $object, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -105,8 +102,8 @@ class GraphicAssociateInteraction extends GraphicInteraction
     /**
      * Set the hotspots that define the gaps that are to be filled by the candidate.
      *
-     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of at least 1 AssociableHotspot object.
-     * @throws \InvalidArgumentException If $associableHotspots is empty.
+     * @param AssociableHotspotCollection $associableHotspots A collection of at least 1 AssociableHotspot object.
+     * @throws InvalidArgumentException If $associableHotspots is empty.
      */
     public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots)
     {
@@ -121,7 +118,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     /**
      * Get the hotspots that define the gaps that are to be filled by the candidate.
      *
-     * @return \qtism\data\content\interactions\AssociableHotspotCollection A collection of AssociableHotspot objects.
+     * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
     public function getAssociableHotspots()
     {
@@ -133,7 +130,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * to make.
      *
      * @param integer $maxAssociations A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $maxAssociations is not a positive integer.
+     * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
     {
@@ -161,12 +158,11 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * make.
      *
      * @param integer $minAssociations A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
+     * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations)
     {
         if (is_int($minAssociations) === true && $minAssociations >= 0) {
-
             if ($minAssociations > $this->getMaxAssociations()) {
                 $msg = "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
                 throw new InvalidArgumentException($msg);
@@ -189,7 +185,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     {
         return $this->minAssociations;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
@@ -200,7 +196,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
             $this->getMinAssociations(),
             $this->getMaxAssociations()
         );
-        
+
         foreach ($this->getComponentsByClassName('associableHotspot') as $associableHotspot) {
             $responseValidityConstraint->addAssociationValidityConstraint(
                 new AssociationValidityConstraint(
@@ -210,7 +206,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
                 )
             );
         }
-        
+
         return $responseValidityConstraint;
     }
 
@@ -219,7 +215,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getAssociableHotspots()->getArrayCopy()));
+        return new QtiComponentCollection(array_merge([$this->getObject()], $this->getAssociableHotspots()->getArrayCopy()));
     }
 
     /**

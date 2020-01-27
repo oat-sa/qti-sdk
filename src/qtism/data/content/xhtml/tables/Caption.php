@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +22,12 @@
 
 namespace qtism\data\content\xhtml\tables;
 
-use qtism\data\content\InlineCollection;
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\InlineCollection;
 
 /**
  * The XHTML caption class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Caption extends BodyElement
 {
@@ -49,7 +46,7 @@ class Caption extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement;
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -60,7 +57,7 @@ class Caption extends BodyElement
     /**
      * Get the components composing the caption.
      *
-     * @return \qtism\data\content\InlineCollection A collection of Inline objects.
+     * @return InlineCollection A collection of Inline objects.
      */
     public function getComponents()
     {
@@ -70,7 +67,7 @@ class Caption extends BodyElement
     /**
      * Set the components composing the caption.
      *
-     * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
+     * @param InlineCollection $content A collection of Inline objects.
      */
     public function setContent(InlineCollection $content)
     {
@@ -80,7 +77,7 @@ class Caption extends BodyElement
     /**
      * Get the components composing the caption.
      *
-     * @return \qtism\data\content\InlineCollection
+     * @return InlineCollection
      */
     public function getContent()
     {
