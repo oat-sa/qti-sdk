@@ -14,80 +14,76 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *  
- *
  */
-namespace qtism\common\storage;
 
-use \Exception;
+namespace qtism\common\storage;
 
 /**
  * The BinaryStreamAccessException class represents the error
  * that could occur while reading/extracting data from a BinaryStream
  * object.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamAccessException extends StreamAccessException {
-    
+class BinaryStreamAccessException extends StreamAccessException
+{
     /**
      * An error occured while reading|writing a tinyint.
-     * 
+     *
      * @var integer
      */
     const TINYINT = 2;
-    
+
     /**
      * An error occured while reading|writing a short int.
-     * 
+     *
      * @var integer
      */
     const SHORT = 3;
-    
+
     /**
      * An error occured while reading|writing an int.
-     * 
+     *
      * @var integer
      */
     const INT = 4;
-    
+
     /**
      * An error occured while reading|writing a float.
-     * 
+     *
      * @var integer
      */
     const FLOAT = 5;
-    
+
     /**
      * An error occured while reading|writing a boolean.
-     * 
+     *
      * @var integer
      */
     const BOOLEAN = 6;
-    
+
     /**
      * An error occured while reading|writing a string.
-     * 
+     *
      * @var integer
      */
     const STRING = 7;
-    
+
     /**
      * An error occured while reading|writing binary data.
-     * 
+     *
      * @var integer
      */
     const BINARY = 8;
-    
+
     /**
      * An error occured while reading|writing a DateTime.
-     * 
+     *
      * @var integer
      */
     const DATETIME = 9;
