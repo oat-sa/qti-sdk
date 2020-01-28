@@ -46,7 +46,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
     public function testMarshallExternalScored()
     {
         // Initialize a minimal outcomeDeclaration.
-        $identifier = "outcome1";
+        $identifier = 'outcome1';
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
         $externalScored = ExternalScored::HUMAN;
@@ -66,7 +66,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	public function testMarshallMinimal() {
 
 		// Initialize a minimal outcomeDeclaration.
-		$identifier = "outcome1";
+		$identifier = 'outcome1';
 		$cardinality = Cardinality::SINGLE;
 		$baseType = BaseType::INTEGER;
 		
@@ -83,7 +83,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	
 	public function testMarshallDefaultValue() {
 		
-		$identifier = "outcome2";
+		$identifier = 'outcome2';
 		$cardinality = Cardinality::MULTIPLE;
 		$baseType = BaseType::DURATION;
 		
