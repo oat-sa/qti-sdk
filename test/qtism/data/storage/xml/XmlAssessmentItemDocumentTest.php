@@ -13,8 +13,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	/**
 	 * @dataProvider validFileProvider
 	 */
-	public function testLoad($uri) {
-		$doc = new XmlDocument('2.1');
+	public function testLoad($uri, $version = '2.1') {
+		$doc = new XmlDocument($version);
 		$doc->load($uri);
 		
 		$assessmentItem = $doc->getDocumentComponent();
@@ -24,8 +24,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
     /**
 	 * @dataProvider validFileProvider
 	 */
-    public function testLoadFromString($uri) {
-        $doc = new XmlDocument('2.1');
+    public function testLoadFromString($uri, $version = '2.1') {
+        $doc = new XmlDocument($version);
 		$doc->loadFromString(file_get_contents($uri));
 		
 		$assessmentItem = $doc->getDocumentComponent();
@@ -35,8 +35,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	/**
 	 * @dataProvider validFileProvider
 	 */
-	public function testWrite($uri) {
-		$doc = new XmlDocument('2.1');
+	public function testWrite($uri, $version = '2.1') {
+		$doc = new XmlDocument($version);
 		$doc->load($uri);
 		
 		$assessmentItem = $doc->getDocumentComponent();
@@ -56,8 +56,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
     /**
 	 * @dataProvider validFileProvider
 	 */
-    public function testSaveToString($uri) {
-        $doc = new XmlDocument('2.1');
+    public function testSaveToString($uri, $version = '2.1') {
+        $doc = new XmlDocument($version);
 		$doc->load($uri);
 		
 		$assessmentItem = $doc->getDocumentComponent();
@@ -273,7 +273,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             array(self::decorateUri('slider.xml', '2.2')),
             array(self::decorateUri('template.xml', '2.2')),
             array(self::decorateUri('text_entry.xml', '2.2')),
-        
+            array(self::decorateUri('essay.xml', '2.2')),
+
             // QTI 2.1
 		    array(self::decorateUri('adaptive.xml')),
 		    array(self::decorateUri('adaptive_template.xml')),
