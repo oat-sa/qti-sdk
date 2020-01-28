@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\ViewCollection;
 use qtism\data\View;
@@ -95,7 +97,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         if ($component->getExternalScored() !== null) {
-            static::setDOMElementAttribute($element, 'externalScored', $component->getExternalScored());
+            static::setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
         }
 
         return $element;
@@ -120,8 +122,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
             // Set external scored attribute
-            if ($element->hasAttribute('externalScored')) {
-                $object->setExternalScored($element->getAttribute('externalScored'));
+            if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) != null) {
+                $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
             }
 
             // deal with views.
@@ -160,7 +162,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             }
 
             if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) !== null) {
-                $object->setExternalScored($externalScored);
+                $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
             }
 
             // deal with lookupTable.

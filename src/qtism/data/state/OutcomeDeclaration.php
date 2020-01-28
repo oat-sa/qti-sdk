@@ -153,7 +153,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * The externalScored attribute is determining custom way to score item
-     * @var string
+     * @var int|null
      */
     private $externalScored = null;
 
@@ -164,7 +164,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
-     * @param string $externalScored A ExternalScored object.
+     * @param int|null $externalScored A ExternalScored object.
      *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
@@ -378,7 +378,7 @@ class OutcomeDeclaration extends VariableDeclaration
      */
     public function setExternalScored($externalScored = null)
     {
-        if ($externalScored !== null && !ExternalScored::getConstantByName($externalScored)) {
+        if ($externalScored !== null && !in_array($externalScored, ExternalScored::asArray(), true)) {
             throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScored));
         }
         $this->externalScored = $externalScored;

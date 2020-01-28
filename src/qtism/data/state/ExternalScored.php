@@ -28,9 +28,9 @@ use qtism\common\enums\Enumeration;
 
 class ExternalScored implements Enumeration
 {
-    const HUMAN = 'human';
+    const HUMAN = 1;
 
-    const EXTERNAL_MACHINE = 'externalMachine';
+    const EXTERNAL_MACHINE = 2;
 
     /**
      * Return the possible values of the enumeration as an array.
@@ -51,14 +51,14 @@ class ExternalScored implements Enumeration
      *
      * @param string $name
      *
-     * @return string|bool
+     * @return integer|bool
      */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
             case 'human':
                 return self::HUMAN;
-            case 'external_machine':
+            case 'externalmachine':
                 return self::EXTERNAL_MACHINE;
             default:
                 return false;
