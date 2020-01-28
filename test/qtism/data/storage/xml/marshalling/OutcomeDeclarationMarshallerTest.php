@@ -26,9 +26,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         );
         $element = $dom->documentElement;
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
-        $component = $marshaller->unmarshall($element);
-
-        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $marshaller->unmarshall($element);
     }
 
     public function testUnmarshallExternalScored()
@@ -42,8 +40,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
-        $this->assertEquals($component->getExternalScored(), 'human');
-
+        $this->assertEquals(ExternalScored::HUMAN, $component->getExternalScored());
     }
 
     public function testMarshallExternalScored()
