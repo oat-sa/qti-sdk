@@ -29,7 +29,7 @@
 		"oat-sa/lib-tao-dtms" :  "1.0.0"
 	},
 	"require-dev": {
-		"phpunit/PHPUnit": "<6.0.0"
+		"phpunit/phpunit": "<6.0.0"
 	},
 	"autoload": {
 		"psr-0": {
