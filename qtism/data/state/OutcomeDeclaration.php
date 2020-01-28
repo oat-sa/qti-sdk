@@ -167,7 +167,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
-     * @param integer|bool $externalScored A ExternalScore object.
+     * @param int|null $externalScored A ExternalScore object.
      *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
@@ -181,7 +181,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set external scored attribute to determine how scoring should be proceed
      *
-     * @param int|bool $externalScored
+     * @param int|null $externalScored
      */
     public function setExternalScored($externalScored = null)
     {

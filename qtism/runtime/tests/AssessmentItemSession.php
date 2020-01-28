@@ -614,10 +614,11 @@ class AssessmentItemSession extends State {
 	public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false) {
 
 	    // We are required to check if our item does contain externalScored attribute in OutcomeDeclaration.
-        // If item have to be externally scored we are not processing response
+	    // If item have to be externally scored we are not processing response
         if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
             $responseProcessing = false;
         }
+
         // End of attempt, go in SUSPEND state.
         $this->suspend();
 
