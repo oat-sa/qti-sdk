@@ -25,9 +25,6 @@ namespace qtism\common\storage;
 /**
  * The AbstractStreamAccess is the base class of all classes that have
  * to access a stream.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractStreamAccess
 {

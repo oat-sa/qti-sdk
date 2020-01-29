@@ -28,9 +28,6 @@ use Exception;
  * The StreamAccessException class represents the error
  * that could occur while reading/extracting data from an IStream object
  * object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class StreamAccessException extends Exception
 {

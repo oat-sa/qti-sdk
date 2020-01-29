@@ -25,9 +25,6 @@ namespace qtism\common\collections;
 /**
  * Collections that are implemented as a stack must
  * implement this interface.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 interface Stack
 {

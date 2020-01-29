@@ -28,9 +28,6 @@ use RuntimeException;
 /**
  * The ResolutionException must be thrown when an error occurs while
  * resolving something.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ResolutionException extends RuntimeException
 {

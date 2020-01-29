@@ -27,9 +27,6 @@ use Exception;
 /**
  * The StreamException class represents the exception that might occur while
  * dealing with data streams.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class StreamException extends Exception
 {

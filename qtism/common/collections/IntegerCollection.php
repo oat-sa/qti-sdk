@@ -26,9 +26,6 @@ use InvalidArgumentException as InvalidArgumentException;
 
 /**
  * A collection that aims at storing integer values.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class IntegerCollection extends AbstractCollection
 {

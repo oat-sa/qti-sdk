@@ -27,9 +27,6 @@ use Exception;
 /**
  * The MemoryStreamException represents errors that might occur while
  * dealing with a MemoryStream object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MemoryStreamException extends StreamException
 {

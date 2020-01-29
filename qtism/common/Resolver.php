@@ -24,9 +24,6 @@ namespace qtism\common;
 
 /**
  * An interface describing how to resolve a URL into a different one.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 interface Resolver
 {

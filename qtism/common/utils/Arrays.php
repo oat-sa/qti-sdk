@@ -24,9 +24,6 @@ namespace qtism\common\utils;
 
 /**
  * A utility class focusing on arrays.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Arrays
 {

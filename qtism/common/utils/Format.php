@@ -28,9 +28,6 @@ use qtism\common\utils\data\CharacterMap;
 
 /**
  * A utility class focusing on string format checks.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Format
 {

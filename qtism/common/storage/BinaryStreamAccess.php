@@ -28,9 +28,6 @@ use DateTimeZone;
 /**
  * The BinaryStreamAccess aims at providing the needed methods to
  * easily read the data contained by BinaryStream objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BinaryStreamAccess extends AbstractStreamAccess
 {

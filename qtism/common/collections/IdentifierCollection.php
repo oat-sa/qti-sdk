@@ -27,9 +27,6 @@ use qtism\common\utils\Format as Format;
 
 /**
  * A collection that aims at storing string values.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class IdentifierCollection extends StringCollection
 {

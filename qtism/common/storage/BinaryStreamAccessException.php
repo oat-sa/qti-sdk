@@ -26,9 +26,6 @@ namespace qtism\common\storage;
  * The BinaryStreamAccessException class represents the error
  * that could occur while reading/extracting data from a BinaryStream
  * object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BinaryStreamAccessException extends StreamAccessException
 {

@@ -25,9 +25,6 @@ namespace qtism\common\storage;
 /**
  * The MemoryStream class represents a binary stream based on
  * an in-memory binary string.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MemoryStream implements IStream
 {

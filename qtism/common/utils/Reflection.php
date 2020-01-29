@@ -27,9 +27,6 @@ use ReflectionException;
 
 /**
  * A utility class focusing on Reflection.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Reflection
 {

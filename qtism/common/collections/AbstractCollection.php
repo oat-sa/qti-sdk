@@ -31,9 +31,6 @@ use UnexpectedValueException;
 
 /**
  * The AbstractCollection class is the base class of all collections.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 {
