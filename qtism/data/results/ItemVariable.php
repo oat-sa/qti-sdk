@@ -14,27 +14,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\data\results;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\data\QtiComponent;
-use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
 
 /**
  * Class Variable
  *
  * The Item result information related to a { Response | Outcome | Template } variable.
- *
- * @package qtism\data\results
  */
 abstract class ItemVariable extends QtiComponent
 {
@@ -42,6 +39,7 @@ abstract class ItemVariable extends QtiComponent
      * The identifier of the variable.
      *
      * Multiplicity [1]
+     *
      * @var QtiIdentifier
      */
     private $identifier;
@@ -50,6 +48,7 @@ abstract class ItemVariable extends QtiComponent
      * The cardinality of the variable, taken from the corresponding declaration or definition.
      *
      * Multiplicity [1]
+     *
      * @var integer
      */
     private $cardinality;
@@ -59,9 +58,10 @@ abstract class ItemVariable extends QtiComponent
      * This value is omitted only for variables with record cardinality.
      *
      * Multiplicity [0,1]
+     *
      * @var integer
      */
-    private $baseType=null;
+    private $baseType = null;
 
     /**
      * Variable constructor.
@@ -70,7 +70,7 @@ abstract class ItemVariable extends QtiComponent
      * @param $cardinality
      * @param int $baseType
      */
-    public function __construct(QtiIdentifier $identifier, $cardinality, $baseType=null)
+    public function __construct(QtiIdentifier $identifier, $cardinality, $baseType = null)
     {
         $this->setIdentifier($identifier);
         $this->setCardinality($cardinality);
@@ -145,7 +145,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * @throws InvalidArgumentException If the baseType is invalid
      */
-    public function setBaseType($baseType=null)
+    public function setBaseType($baseType = null)
     {
         if (!is_null($baseType) && !in_array($baseType, BaseType::asArray())) {
             $msg = sprintf('Invalid baseType. Should be one of "%s"', implode('", "', BaseType::asArray()));

@@ -14,31 +14,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
-
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\ShowHide;
+use DOMElement;
+use InvalidArgumentException;
 use qtism\data\content\FlowStaticCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
+use qtism\data\ShowHide;
 
 /**
  * The Marshaller implementation for GapChoice(gapText/gapImg) elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class GapChoiceMarshaller extends ContentMarshaller {
-    
+class GapChoiceMarshaller extends ContentMarshaller
+{
     private static $gapTextAllowedContent = [
         'textRun',
         'printedVariable',
@@ -68,27 +63,26 @@ class GapChoiceMarshaller extends ContentMarshaller {
         'small',
         'samp',
         'b',
-        'cite'
+        'cite',
     ];
 
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
-
                 $fqClass = $this->lookupClass($element);
 
                 if ($element->localName === 'gapImg') {
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
-                    }
-                    else {
+                    } else {
                         $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . " given.";
                         throw new UnmarshallingException($msg, $element);
                     }
-                }
-                else {
+                } else {
                     $component = new $fqClass($identifier, $matchMax);
                 }
 
@@ -113,7 +107,7 @@ class GapChoiceMarshaller extends ContentMarshaller {
                         // The allowed set of elements in a gapText (for QTI 2.2) is a subset of FlowStatic.
                         // Let's make sure that children elements are in this subset.
                         $childrenArray = $children->getArrayCopy();
-                        
+
                         foreach ($childrenArray as $child) {
                             if (in_array($child->getQtiClassName(), self::$gapTextAllowedContent) === false) {
                                 throw new UnmarshallingException(
@@ -122,15 +116,13 @@ class GapChoiceMarshaller extends ContentMarshaller {
                                 );
                             }
                         }
-                        
+
                         $component->setContent(new FlowStaticCollection($childrenArray));
-                    }
-                    catch (InvalidArgumentException $e) {
+                    } catch (InvalidArgumentException $e) {
                         $msg = "Invalid content in 'gapText' element.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
-                }
-                else {
+                } else {
                     if (($objectLabel = self::getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
                         $component->setObjectLabel($objectLabel);
                     }
@@ -138,22 +130,21 @@ class GapChoiceMarshaller extends ContentMarshaller {
 
                 self::fillBodyElement($component, $element);
                 return $component;
-            }
-            else {
+            } else {
                 $msg = "The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element.";
                 throw new UnmarshallingException($msg, $element);
             }
-        }
-        else {
+        } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element.";
             throw new UnmarshallingException($msg, $element);
         }
-
-
     }
 
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
 
@@ -187,7 +178,11 @@ class GapChoiceMarshaller extends ContentMarshaller {
         return $element;
     }
 
-    protected function setLookupClasses() {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
+    protected function setLookupClasses()
+    {
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

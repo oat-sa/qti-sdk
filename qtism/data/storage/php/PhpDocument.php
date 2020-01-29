@@ -14,52 +14,54 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\storage\php;
 
-use qtism\common\datatypes\QtiCoords;
-use qtism\data\ExtendedAssessmentSection;
-use qtism\data\QtiDocument;
-use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
-use qtism\common\datatypes\QtiDatatype;
-use qtism\data\AssessmentSection;
-use qtism\data\processing\ResponseProcessing;
-use qtism\data\AssessmentItem;
-use qtism\data\AssessmentTest;
-use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
-use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
-use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
+use Exception;
+use ParseError;
 use qtism\common\beans\Bean;
 use qtism\common\collections\AbstractCollection;
-use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\storage\MemoryStream;
-use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\AssessmentItem;
+use qtism\data\AssessmentSection;
+use qtism\data\AssessmentTest;
+use qtism\data\ExtendedAssessmentSection;
+use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
+use qtism\data\QtiDocument;
+use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
+use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
+use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
+use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
+use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtism\data\storage\php\Utils as PhpUtils;
-use \SplStack;
-use \Exception;
+use SplStack;
 
 /**
  * Represents a PHP source code document containing the appropriate source code
  * to load a QTI Component and the components it contains.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class PhpDocument extends QtiDocument {
-
+class PhpDocument extends QtiDocument
+{
     /**
      * Create a new PhpDocument object.
      *
+     * As PHP-serialized QTI documents contain the necessary information about the QTI version they are
+     * refering to, the value of the $version argument will simply be ignored.
+     *
+     * @param string $version (optional) Expected QTI version (default is "2.1").
      * @param QtiComponent $documentComponent The root QtiComponent object to contained by the PhpDocument.
      */
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
+    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    {
         parent::__construct($version, $documentComponent);
     }
 
@@ -70,12 +72,12 @@ class PhpDocument extends QtiDocument {
      * @return $this
      * @throws PhpStorageException If an error occurs while saving.
      */
-    public function save($url) {
+    public function save($url)
+    {
         try {
             $stream = $this->transformToPhp();
             file_put_contents($url, $stream->getBinary());
-        }
-        catch (StreamAccessException $e) {
+        } catch (StreamAccessException $e) {
             $msg = "An error occured while writing the PHP source code stream.";
             throw new PhpStorageException($msg, 0, $e);
         }
@@ -92,8 +94,7 @@ class PhpDocument extends QtiDocument {
         try {
             $memoryStream = $this->transformToPhp();
             return $memoryStream->getBinary();
-        }
-        catch (StreamAccessException $e) {
+        } catch (StreamAccessException $e) {
             $msg = "An error occured while writing the PHP source code stream.";
             throw new PhpStorageException($msg, 0, $e);
         }
@@ -111,7 +112,7 @@ class PhpDocument extends QtiDocument {
         $stack->push($this->getDocumentComponent());
 
         // 1st/2nd pass marker.
-        $marker = array();
+        $marker = [];
 
         // marshalling context.
         $stream = new MemoryStream();
@@ -122,7 +123,6 @@ class PhpDocument extends QtiDocument {
         $ctx->setFormatOutput(true);
 
         while (count($stack) > 0) {
-
             $component = $stack->pop();
             $isMarked = in_array($component, $marker, true);
 
@@ -140,11 +140,10 @@ class PhpDocument extends QtiDocument {
                 $getters = array_reverse(array_merge($bodyGetters->getArrayCopy(), $ctorGetters->getArrayCopy()));
 
                 foreach ($getters as $getter) {
-                    $stack->push(call_user_func(array($component, $getter->getName())));
+                    $stack->push(call_user_func([$component, $getter->getName()]));
                 }
-            }
-            // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
-            else if ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
+            } // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
+            elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
                 // AbstractCollection node, 1st pass.
                 // Mark as explored.
                 array_push($marker, $component);
@@ -156,8 +155,7 @@ class PhpDocument extends QtiDocument {
                 foreach ($values as $val) {
                     $stack->push($val);
                 }
-            }
-            else if ($isMarked === true && $component instanceof QtiComponent) {
+            } elseif ($isMarked === true && $component instanceof QtiComponent) {
                 // QtiComponent, 2nd pass.
                 $marshaller = new PhpQtiComponentMarshaller($ctx, $component);
                 $marshaller->setAsInstanceOf(self::getBaseImplementation($component));
@@ -167,28 +165,23 @@ class PhpDocument extends QtiDocument {
                 }
 
                 $marshaller->marshall();
-            }
-            else if ($component instanceof QtiDatatype) {
+            } elseif ($component instanceof QtiDatatype) {
                 // Leaf node QtiDataType.
                 $marshaller = new PhpQtiDatatypeMarshaller($ctx, $component);
                 $marshaller->marshall();
-            }
-            else if ($isMarked === true && $component instanceof AbstractCollection) {
+            } elseif ($isMarked === true && $component instanceof AbstractCollection) {
                 // AbstractCollection, 2nd pass.
                 $marshaller = new PhpCollectionMarshaller($ctx, $component);
                 $marshaller->marshall();
-            }
-            else if (PhpUtils::isScalar($component) === true) {
+            } elseif (PhpUtils::isScalar($component) === true) {
                 // Leaf node (QtiDatatype or PHP scalar (including the null value)).
                 $marshaller = new PhpScalarMarshaller($ctx, $component);
                 $marshaller->marshall();
-            }
-            else if (is_array($component) === true) {
+            } elseif (is_array($component) === true) {
                 // Leaf node array.
                 $marshaller = new PhpArrayMarshaller($ctx, $component);
                 $marshaller->marshall();
-            }
-            else {
+            } else {
                 $msg = "Datatype '" . gettype($component) . "' cannot be handled by the PhpDocument::save() method.";
                 throw new PhpStorageException($msg);
             }
@@ -203,7 +196,8 @@ class PhpDocument extends QtiDocument {
      * @param string $url A URL (Uniform Resource Locator) describing where to find the PHP document to load.
      * @throws PhpStorageException If an error occurs while loading the PHP file located at $url.
      */
-    public function load($url) {
+    public function load($url)
+    {
         if (is_readable($url) === false) {
             $msg = "The PHP document located at '${url}' is not readable or does not exist.";
             throw new PhpStorageException($msg);
@@ -213,7 +207,7 @@ class PhpDocument extends QtiDocument {
 
         try {
             @require($url);
-            
+
             if (isset($rootcomponent)) {
                 $this->setDocumentComponent($rootcomponent);
                 $this->setUrl($url);
@@ -224,7 +218,7 @@ class PhpDocument extends QtiDocument {
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg, 0, $e);
-        } catch (\ParseError $e) {
+        } catch (ParseError $e) {
             // For PHP 7.X
             $msg = "A PHP Parsing error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg);
@@ -233,7 +227,6 @@ class PhpDocument extends QtiDocument {
                 @ob_end_clean();
             }
         }
-        
     }
 
     /**
@@ -245,19 +238,19 @@ class PhpDocument extends QtiDocument {
     public function loadFromString($data)
     {
         $obstart = @ob_start();
-        
+
         try {
             if (empty($data)) {
                 throw new Exception('Unable to find valid data to load.');
             }
             $data = trim($data);
             $evaluation = null;
-            if (substr($data,0,5)==='<?php') {
+            if (substr($data, 0, 5) === '<?php') {
                 $evaluation = @eval('?>' . $data);
             } else {
                 $evaluation = @eval($data);
             }
-            
+
             // $evaluation check is required for PHP 5.X.
             if ($evaluation !== false && isset($rootcomponent)) {
                 $this->setDocumentComponent($rootcomponent);
@@ -268,7 +261,7 @@ class PhpDocument extends QtiDocument {
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
             throw new PhpStorageException($msg, 0, $e);
-        } catch (\ParseError $e) {
+        } catch (ParseError $e) {
             // For PHP 7.X
             $msg = "A PHP Parsing Error occurred while executing the PHP source code representing the document.";
             throw new PhpStorageException($msg);
@@ -279,23 +272,19 @@ class PhpDocument extends QtiDocument {
         }
     }
 
-    protected static function getBaseImplementation($object) {
+    protected static function getBaseImplementation($object)
+    {
         if ($object instanceof AssessmentTest) {
             return "qtism\\data\\AssessmentTest";
-        }
-        else if ($object instanceof AssessmentItem) {
+        } elseif ($object instanceof AssessmentItem) {
             return "qtism\\data\\AssessmentItem";
-        }
-        else if ($object instanceof ResponseProcessing) {
+        } elseif ($object instanceof ResponseProcessing) {
             return "qtism\\data\\processing\\ResponseProcessing";
-        }
-        else if ($object instanceof ExtendedAssessmentSection) {
+        } elseif ($object instanceof ExtendedAssessmentSection) {
             return 'qtism\\data\\ExtendedAssessmentSection';
-        }
-        else if ($object instanceof AssessmentSection) {
+        } elseif ($object instanceof AssessmentSection) {
             return "qtism\\data\\AssessmentSection";
-        }
-        else {
+        } else {
             return get_class($object);
         }
     }

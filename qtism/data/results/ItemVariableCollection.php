@@ -14,14 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\results;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
 class ItemVariableCollection extends QtiComponentCollection
@@ -29,12 +30,12 @@ class ItemVariableCollection extends QtiComponentCollection
     /**
      * Check if a given $value is an instance of ItemResult.
      *
-     * @throws \InvalidArgumentException If the given $value is not an instance of ItemResult.
+     * @throws InvalidArgumentException If the given $value is not an instance of ItemResult.
      */
     protected function checkType($value)
     {
         if (!$value instanceof ItemVariable) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 "ItemVariableCollection only accepts to store ItemVariable objects, '%s' given.",
                 is_object($value) ? get_class($value) : gettype($value)
             ));

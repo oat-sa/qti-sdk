@@ -14,27 +14,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\ItemResultCollection;
-use InvalidArgumentException;
 
 /**
  * Class AssessmentResultMarshaller
  *
  * The marshaller to manage serialization between QTI component and DOM Element
- *
- * @package qtism\data\storage\xml\marshalling
  */
 class AssessmentResultMarshaller extends Marshaller
 {
@@ -97,14 +95,14 @@ class AssessmentResultMarshaller extends Marshaller
             $itemResultElements = $element->getElementsByTagName('itemResult');
             if ($itemResultElements->length > 0) {
                 $itemResults = [];
-                foreach($itemResultElements as $itemResultElement) {
+                foreach ($itemResultElements as $itemResultElement) {
                     $itemResults[] = $this->getMarshallerFactory()
                         ->createMarshaller($itemResultElement)
                         ->unmarshall($itemResultElement);
                 }
                 $assessmentResult->setItemResults(new ItemResultCollection($itemResults));
             }
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             throw new UnmarshallingException('Error has occurred during unmarshalling of AssessmentResult element : ' . $e->getMessage(), $element, $e);
         }
 

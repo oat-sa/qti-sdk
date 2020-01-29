@@ -14,14 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\results;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
@@ -34,8 +35,6 @@ use qtism\data\View;
  * Class ResultOutcomeVariable
  *
  * The Item result information related to a 'Outcome Variable'.
- *
- * @package qtism\data\results
  */
 class ResultOutcomeVariable extends ItemVariable
 {
@@ -44,25 +43,28 @@ class ResultOutcomeVariable extends ItemVariable
      * to hide information not relevant in a specific situation. If no values are given, the outcome's value should be considered relevant in all views.
      *
      * Multiplicity [0,1]
+     *
      * @var integer
      */
-    protected $view=null;
+    protected $view = null;
 
     /**
      * A human readable interpretation of the default value.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiString
      */
-    protected $interpretation=null;
+    protected $interpretation = null;
 
     /**
      * An optional link to an extended interpretation of the outcome variable's value.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiUri
      */
-    protected $longInterpretation=null;
+    protected $longInterpretation = null;
 
     /**
      * The normalMaximum attribute optionally defines the maximum magnitude of numeric outcome variables, it must be a positive value.
@@ -70,34 +72,38 @@ class ResultOutcomeVariable extends ItemVariable
      * in the range [-1.0,1.0]. normalMaximum has no affect on responseProcessing or the values that the outcome variable itself can take.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiFloat
      */
-    protected $normalMaximum=null;
+    protected $normalMaximum = null;
 
     /**
      * The normalMinimum attribute optionally defines the minimum value of numeric outcome variables, it may be negative.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiFloat
      */
-    protected $normalMinimum=null;
+    protected $normalMinimum = null;
 
     /**
      * The masteryValue attribute optionally defines a value for numeric outcome variables above
      * which the aspect being measured is considered to have been mastered by the candidate.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiFloat
      */
-    protected $masteryValue=null;
+    protected $masteryValue = null;
 
     /**
      * The value(s) of the outcome variable. The order of the values is significant only if the outcome was declared with ordered cardinality.
      *
      * Multiplicity [0,*]
+     *
      * @var ValueCollection
      */
-    protected $values=null;
+    protected $values = null;
 
     /**
      * ResultOutcomeVariable constructor.
@@ -112,19 +118,19 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat|null $normalMaximum
      * @param QtiFloat|null $normalMinimum
      * @param QtiFloat|null $masteryValue
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(
         QtiIdentifier $identifier,
         $cardinality,
-        $baseType=null,
-        ValueCollection $values=null,
-        $view=null,
-        QtiString $interpretation=null,
-        QtiUri $longInterpretation=null,
-        QtiFloat $normalMaximum=null,
-        QtiFloat $normalMinimum=null,
-        QtiFloat $masteryValue=null
+        $baseType = null,
+        ValueCollection $values = null,
+        $view = null,
+        QtiString $interpretation = null,
+        QtiUri $longInterpretation = null,
+        QtiFloat $normalMaximum = null,
+        QtiFloat $normalMinimum = null,
+        QtiFloat $masteryValue = null
     ) {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setValues($values);
@@ -176,7 +182,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param ValueCollection $values
      * @return $this
      */
-    public function setValues(ValueCollection $values=null)
+    public function setValues(ValueCollection $values = null)
     {
         $this->values = $values;
         return $this;
@@ -207,13 +213,13 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @param $view
      * @return $this
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function setView($view=null)
+    public function setView($view = null)
     {
         if (!is_null($view) && !in_array($view, View::asArray())) {
             $msg = sprintf('Invalid View. Should be one of "%s"', implode('", "', View::asArray()));
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
         $this->view = $view;
         return $this;
@@ -245,7 +251,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiString $interpretation
      * @return $this
      */
-    public function setInterpretation(QtiString $interpretation=null)
+    public function setInterpretation(QtiString $interpretation = null)
     {
         $this->interpretation = $interpretation;
         return $this;
@@ -277,7 +283,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiUri $longInterpretation
      * @return $this
      */
-    public function setLongInterpretation(QtiUri $longInterpretation=null)
+    public function setLongInterpretation(QtiUri $longInterpretation = null)
     {
         $this->longInterpretation = $longInterpretation;
         return $this;
@@ -309,7 +315,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $normalMaximum
      * @return $this
      */
-    public function setNormalMaximum(QtiFloat $normalMaximum=null)
+    public function setNormalMaximum(QtiFloat $normalMaximum = null)
     {
         $this->normalMaximum = $normalMaximum;
         return $this;
@@ -341,7 +347,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $normalMinimum
      * @return $this
      */
-    public function setNormalMinimum(QtiFloat $normalMinimum=null)
+    public function setNormalMinimum(QtiFloat $normalMinimum = null)
     {
         $this->normalMinimum = $normalMinimum;
         return $this;
@@ -373,7 +379,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $masteryValue
      * @return $this
      */
-    public function setMasteryValue(QtiFloat $masteryValue=null)
+    public function setMasteryValue(QtiFloat $masteryValue = null)
     {
         $this->masteryValue = $masteryValue;
         return $this;
@@ -388,5 +394,4 @@ class ResultOutcomeVariable extends ItemVariable
     {
         return !is_null($this->masteryValue);
     }
-
 }

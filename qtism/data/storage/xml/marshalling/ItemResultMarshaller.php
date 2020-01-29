@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -36,8 +36,6 @@ use qtism\data\results\SessionStatus;
  * Class ItemResultMarshaller
  *
  * The marshaller to manage serialization between QTI component and DOM Element
- *
- * @package qtism\data\storage\xml\marshalling
  */
 class ItemResultMarshaller extends Marshaller
 {
@@ -126,7 +124,7 @@ class ItemResultMarshaller extends Marshaller
         }
 
         $sequenceIndex = $element->hasAttribute('sequenceIndex')
-            ? new QtiInteger((int) $element->getAttribute('sequenceIndex'))
+            ? new QtiInteger((int)$element->getAttribute('sequenceIndex'))
             : null;
 
         return new ItemResult($identifier, $datestamp, $sessionStatus, $variableCollection, $candidateComment, $sequenceIndex);
@@ -145,5 +143,4 @@ class ItemResultMarshaller extends Marshaller
     {
         return 'itemResult';
     }
-
 }

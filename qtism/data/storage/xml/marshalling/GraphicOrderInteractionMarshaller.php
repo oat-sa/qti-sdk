@@ -14,122 +14,121 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
-
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\data\content\interactions\HotspotChoiceCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for GraphicOrderInteraction elements of the content model.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class GraphicOrderInteractionMarshaller extends ContentMarshaller {
-    
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-            
+class GraphicOrderInteractionMarshaller extends ContentMarshaller
+{
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            
             $objectElts = self::getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
-                
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-                
+
                 try {
                     $choices = new HotspotChoiceCollection($children->getArrayCopy());
-                }
-                catch (InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     $msg = "A 'graphicOrderInteraction' element can only contain 'hotspotChoice' choices.";
-                    throw new UnmarshallingException($msg, $element, $e); 
+                    throw new UnmarshallingException($msg, $element, $e);
                 }
-                
+
                 if (count($choices) > 0) {
-                    
                     $fqClass = $this->lookupClass($element);
                     $component = new $fqClass($responseIdentifier, $object, $choices);
-                    
+
                     if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                         $component->setMinChoices($minChoices);
                     }
-                    
+
                     if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                         $component->setMaxChoices($maxChoices);
                     }
-                    
+
                     if (($xmlBase = self::getXmlBase($element)) !== false) {
                         $component->setXmlBase($xmlBase);
                     }
-                    
+
                     $promptElts = self::getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                         $component->setPrompt($prompt);
                     }
-                    
+
                     self::fillBodyElement($component, $element);
+
                     return $component;
-                }
-                else {
+                } else {
                     $msg = "A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given.";
                     throw new UnmarshallingException($msg, $element);
                 }
-            }
-            else {
+            } else {
                 $msg = "A 'graphicOrderInteraction' element must contain exactly one 'object' element, none given.";
                 throw new UnmarshallingException($msg, $element);
             }
-        }
-        else {
+        } else {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'graphicOrderInteraction' element.";
             throw new UnmarshallingException($msg, $element);
         }
     }
-    
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        
+
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
-        
+
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
-        
+
         if ($component->hasMinChoices()) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
-        
+
         if ($component->hasMaxChoices()) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
-        
+
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
-    protected function setLookupClasses() {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
+    protected function setLookupClasses()
+    {
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

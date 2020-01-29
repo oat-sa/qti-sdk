@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -33,8 +33,6 @@ use qtism\data\QtiComponentCollection;
  * Information about the test is optional, in some systems it may be possible to interact
  * with items that are not organized into a test at all. For example, items that are organized
  * with learning resources and presented individually in a formative context.
- *
- * @package qtism\data\results
  */
 class AssessmentResult extends QtiComponent
 {
@@ -42,6 +40,7 @@ class AssessmentResult extends QtiComponent
      * Contains the contextual information for the associated itemTest and itemResults. Contextual information must be supplied.
      *
      * Multiplicity [1]
+     *
      * @var Context
      */
     protected $context;
@@ -50,6 +49,7 @@ class AssessmentResult extends QtiComponent
      * A summary report for a test is represented by an assessment result containing a testResult but no itemResults.
      *
      * Multiplicity [0,1]
+     *
      * @var TestResult
      */
     protected $testResult;
@@ -60,6 +60,7 @@ class AssessmentResult extends QtiComponent
      * Furthermore, all items selected for presentation should be reported with a corresponding itemResult.
      *
      * Multiplicity [0,*]
+     *
      * @var ItemResultCollection
      */
     protected $itemResults;
@@ -73,7 +74,7 @@ class AssessmentResult extends QtiComponent
      * @param TestResult|null $testResult
      * @param ItemResultCollection|null $itemResults
      */
-    public function __construct(Context $context, TestResult $testResult=null, ItemResultCollection $itemResults=null)
+    public function __construct(Context $context, TestResult $testResult = null, ItemResultCollection $itemResults = null)
     {
         $this->setContext($context);
         $this->setTestResult($testResult);
@@ -152,7 +153,7 @@ class AssessmentResult extends QtiComponent
      * @param TestResult $testResult
      * @return $this
      */
-    public function setTestResult(TestResult $testResult=null)
+    public function setTestResult(TestResult $testResult = null)
     {
         $this->testResult = $testResult;
         return $this;
@@ -184,7 +185,7 @@ class AssessmentResult extends QtiComponent
      * @param ItemResultCollection|null $itemResults
      * @return $this
      */
-    public function setItemResults(ItemResultCollection $itemResults=null)
+    public function setItemResults(ItemResultCollection $itemResults = null)
     {
         $this->itemResults = $itemResults;
         return $this;
@@ -199,5 +200,4 @@ class AssessmentResult extends QtiComponent
     {
         return !is_null($this->itemResults);
     }
-
 }

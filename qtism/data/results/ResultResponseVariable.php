@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -30,8 +30,6 @@ use qtism\data\state\CorrectResponse;
  * Class ResultResponseVariable
  *
  * The Item result information related to a 'Response Variable'.
- *
- * @package qtism\data\results
  */
 class ResultResponseVariable extends ItemVariable
 {
@@ -41,9 +39,10 @@ class ResultResponseVariable extends ItemVariable
      * When shuffling is in effect, the sequence of choices should be reported as a sequence of choice identifiers using this attribute.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiIdentifier
      */
-    protected $choiceSequence=null;
+    protected $choiceSequence = null;
 
     /**
      * The correct response may be output as part of the report if desired.
@@ -52,14 +51,16 @@ class ResultResponseVariable extends ItemVariable
      * from the declaration passed to the delivery engine e.g. for security.
      *
      * Multiplicity [0,1]
+     *
      * @var CorrectResponse
      */
-    protected $correctResponse=null;
+    protected $correctResponse = null;
 
     /**
      * The response given by the candidate.
      *
      * Multiplicity [1]
+     *
      * @var CandidateResponse
      */
     protected $candidateResponse;
@@ -78,9 +79,9 @@ class ResultResponseVariable extends ItemVariable
         QtiIdentifier $identifier,
         $cardinality,
         CandidateResponse $candidateResponse,
-        $baseType=null,
-        CorrectResponse $correctResponse=null,
-        QtiIdentifier $choiceSequence=null
+        $baseType = null,
+        CorrectResponse $correctResponse = null,
+        QtiIdentifier $choiceSequence = null
     ) {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setCandidateResponse($candidateResponse);
@@ -150,7 +151,7 @@ class ResultResponseVariable extends ItemVariable
      * @param CorrectResponse $correctResponse
      * @return $this
      */
-    public function setCorrectResponse(CorrectResponse $correctResponse=null)
+    public function setCorrectResponse(CorrectResponse $correctResponse = null)
     {
         $this->correctResponse = $correctResponse;
         return $this;
@@ -182,7 +183,7 @@ class ResultResponseVariable extends ItemVariable
      * @param QtiIdentifier $choiceSequence
      * @return $this
      */
-    public function setChoiceSequence(QtiIdentifier $choiceSequence=null)
+    public function setChoiceSequence(QtiIdentifier $choiceSequence = null)
     {
         $this->choiceSequence = $choiceSequence;
         return $this;
@@ -197,5 +198,4 @@ class ResultResponseVariable extends ItemVariable
     {
         return !is_null($this->choiceSequence);
     }
-
 }

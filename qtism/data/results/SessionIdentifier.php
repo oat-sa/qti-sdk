@@ -14,16 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\results;
 
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -33,8 +32,6 @@ use qtism\data\QtiComponentCollection;
  *
  * The system that creates the result (for example, the test delivery system) should assign a session identifier
  * that it can use to identify the session.
- *
- * @package qtism\data\results
  */
 class SessionIdentifier extends QtiComponent
 {
@@ -42,6 +39,7 @@ class SessionIdentifier extends QtiComponent
      * A unique identifier of the system which added this identifier to the result.
      *
      * Multiplicity [1]
+     *
      * @var QtiUri
      */
     protected $sourceID;
@@ -52,6 +50,7 @@ class SessionIdentifier extends QtiComponent
      * and should add this too if the result is exported again for further transport.
      *
      * Multiplicity [1]
+     *
      * @var QtiIdentifier
      */
     protected $identifier;
@@ -133,5 +132,4 @@ class SessionIdentifier extends QtiComponent
         $this->identifier = $identifier;
         return $this;
     }
-
 }

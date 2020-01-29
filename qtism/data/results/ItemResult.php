@@ -14,14 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\results;
 
+use InvalidArgumentException;
 use oat\dtms\DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -36,8 +37,6 @@ use qtism\runtime\common\VariableCollection;
  * The result of an item session is reported with an itemResult.
  * A report may contain multiple results for the same instance of an item representing multiple attempts,
  * progression through an adaptive item or even more detailed tracking. In these cases, each item result must have a different datestamp.
- *
- * @package qtism\data\results
  */
 class ItemResult extends QtiComponent
 {
@@ -48,6 +47,7 @@ class ItemResult extends QtiComponent
      * Where possible, the value should match the identifier attribute on the associated assessmentItem.
      *
      * Multiplicity [1]
+     *
      * @var QtiIdentifier
      */
     protected $identifier;
@@ -57,6 +57,7 @@ class ItemResult extends QtiComponent
      * within the specific instance of the test. The first item of the first part of the test is defined to have sequence index 1.
      *
      * Multiplicity [0,1]
+     *
      * @var QtiInteger
      */
     protected $sequenceIndex;
@@ -65,6 +66,7 @@ class ItemResult extends QtiComponent
      * The date stamp of when this result was recorded.
      *
      * Multiplicity [1]
+     *
      * @var DateTime
      */
     protected $datestamp;
@@ -73,16 +75,17 @@ class ItemResult extends QtiComponent
      * The session status is used to interpret the values of the item variables. See the sessionStatus vocabulary.
      *
      * Multiplicity [1]
+     *
      * @var SessionStatus = Enumerated value set of: {
-     *  - final 	The value to use when the item variables represent the values at the end of an attempt after response processing has taken place.
+     *  - final    The value to use when the item variables represent the values at the end of an attempt after response processing has taken place.
      *              In other words, after the outcome values have been updated to reflect the values of the response variables.
-     *  - initial 	The value to use for sessions in the initial state, as described above. This value can only be used to describe sessions
+     *  - initial    The value to use for sessions in the initial state, as described above. This value can only be used to describe sessions
      *              for which the response variable numAttempts is 0. The values of the variables are set according to the rules
      *              defined in the appropriate declarations (see responseDeclaration, outcomeDeclaration and templateDeclaration).
-     *  - pendingResponseProcessing 	The value to use when the item variables represent the values of the response variables after submission
+     *  - pendingResponseProcessing    The value to use when the item variables represent the values of the response variables after submission
      *                                  but before response processing has taken place. Again, the outcomes are those assigned at the end of the previous attempt
      *                                  as they are awaiting response processing.
-     *  - pendingSubmission 	The value to use when the item variables represent a snapshot of the current values during an attempt
+     *  - pendingSubmission    The value to use when the item variables represent a snapshot of the current values during an attempt
      *                          (in other words, while interacting or suspended). The values of the response variables represent work in progress
      *                          that has not yet been submitted for response processing by the candidate. The values of the outcome variables represent
      *                          the values assigned during response processing at the end of the previous attempt or, in the case of the first attempt,
@@ -97,6 +100,7 @@ class ItemResult extends QtiComponent
      * Each value is represented in the report by an instance of itemVariable.
      *
      * Multiplicity [0,*]
+     *
      * @var VariableCollection
      */
     protected $itemVariables;
@@ -105,6 +109,7 @@ class ItemResult extends QtiComponent
      * An optional comment supplied by the candidate (see the allowComment in the ASI documentation [QTI, 15a]).
      *
      * Multiplicity [0,1]
+     *
      * @var QtiString
      */
     protected $candidateComment;
@@ -123,9 +128,9 @@ class ItemResult extends QtiComponent
         QtiIdentifier $identifier,
         DateTime $datestamp,
         $sessionStatus,
-        ItemVariableCollection $itemVariables=null,
-        QtiString $candidateComment=null,
-        QtiInteger $sequenceIndex=null
+        ItemVariableCollection $itemVariables = null,
+        QtiString $candidateComment = null,
+        QtiInteger $sequenceIndex = null
     ) {
         $this->setIdentifier($identifier);
         $this->setDatestamp($datestamp);
@@ -220,7 +225,7 @@ class ItemResult extends QtiComponent
      * @param ItemVariableCollection $itemVariables
      * @return $this
      */
-    public function setItemVariables(ItemVariableCollection $itemVariables=null)
+    public function setItemVariables(ItemVariableCollection $itemVariables = null)
     {
         $this->itemVariables = $itemVariables;
         return $this;
@@ -252,7 +257,7 @@ class ItemResult extends QtiComponent
      * @param QtiInteger|null $sequenceIndex
      * @return $this
      */
-    public function setSequenceIndex(QtiInteger $sequenceIndex=null)
+    public function setSequenceIndex(QtiInteger $sequenceIndex = null)
     {
         $this->sequenceIndex = $sequenceIndex;
         return $this;
@@ -270,6 +275,7 @@ class ItemResult extends QtiComponent
 
     /**
      * Get the session status of itemResult.
+     *
      * @return SessionStatus
      */
     public function getSessionStatus()
@@ -283,14 +289,14 @@ class ItemResult extends QtiComponent
      * @param $sessionStatus
      * @return $this
      *
-     * @throws \InvalidArgumentException If the sessionStatus is not a valid sessionStatus
+     * @throws InvalidArgumentException If the sessionStatus is not a valid sessionStatus
      */
     public function setSessionStatus($sessionStatus)
     {
-        $sessionStatus = (int) $sessionStatus;
+        $sessionStatus = (int)$sessionStatus;
         if (!in_array($sessionStatus, SessionStatus::asArray(), true)) {
             $msg = sprintf('Invalid session status. Should be one of "%s"', implode('", "', SessionStatus::asArray()));
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
         $this->sessionStatus = $sessionStatus;
         return $this;
@@ -312,7 +318,7 @@ class ItemResult extends QtiComponent
      * @param QtiString $candidateComment
      * @return $this
      */
-    public function setCandidateComment(QtiString $candidateComment=null)
+    public function setCandidateComment(QtiString $candidateComment = null)
     {
         $this->candidateComment = $candidateComment;
         return $this;
@@ -327,5 +333,4 @@ class ItemResult extends QtiComponent
     {
         return !is_null($this->candidateComment);
     }
-
 }

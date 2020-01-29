@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -30,8 +30,6 @@ use qtism\data\state\ValueCollection;
  * Class CandidateResponse
  *
  * The response given by the candidate.
- *
- * @package qtism\data\results
  */
 class CandidateResponse extends QtiComponent
 {
@@ -40,6 +38,7 @@ class CandidateResponse extends QtiComponent
      * The order of the values is significant only if the response was declared with ordered cardinality.
      *
      * Multiplicity [0,*]
+     *
      * @var ValueCollection
      */
     protected $values;
@@ -49,7 +48,7 @@ class CandidateResponse extends QtiComponent
      *
      * @param ValueCollection|null $values
      */
-    public function __construct(ValueCollection $values=null)
+    public function __construct(ValueCollection $values = null)
     {
         $this->setValues($values);
     }
@@ -94,7 +93,7 @@ class CandidateResponse extends QtiComponent
      * @param ValueCollection|null $values
      * @return $this
      */
-    public function setValues(ValueCollection $values=null)
+    public function setValues(ValueCollection $values = null)
     {
         $this->values = $values;
         return $this;
