@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,9 +34,6 @@ namespace qtism\common\enums;
  * in the specification itself. The use of an enumeration to define the set of baseTypes
  * used in the runtime model, as opposed to the use of classes with similar names, is
  * designed to help distinguish between these two distinct levels of modelling.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BaseType implements Enumeration
 {

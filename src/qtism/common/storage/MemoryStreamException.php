@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,9 +28,6 @@ use Exception;
 /**
  * The MemoryStreamException represents errors that might occur while
  * dealing with a MemoryStream object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MemoryStreamException extends StreamException
 {

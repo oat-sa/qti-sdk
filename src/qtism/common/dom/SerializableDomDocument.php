@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2017-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,23 +25,20 @@ namespace qtism\common\dom;
 
 /**
  * Serializable DOM Document
- * 
+ *
  * This class is a PHP Serializable DOMDocument implementation.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SerializableDomDocument extends \DOMDocument
 {
     private $xmlData;
     
-    function __sleep()
+    public function __sleep()
     {
         $this->xmlData = $this->saveXML();
         return array('xmlData');
     }
     
-    function __wakeup()
+    public function __wakeup()
     {
         $this->loadXML($this->xmlData);
     }

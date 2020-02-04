@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,9 +26,6 @@ namespace qtism\common\storage;
 /**
  * The AbstractStreamAccess is the base class of all classes that have
  * to access a stream.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractStreamAccess
 {

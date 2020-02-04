@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,9 +29,6 @@ use Exception;
  * The StreamAccessException class represents the error
  * that could occur while reading/extracting data from an IStream object
  * object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class StreamAccessException extends Exception
 {

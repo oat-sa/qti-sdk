@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,9 +47,6 @@ namespace qtism\common\enums;
  * customInteractions to manipulate more complex responses and customOperators to
  * return more complex values, in addition to the use for detailed information about
  * numeric responses described in the stringInteraction abstract class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Cardinality implements Enumeration
 {

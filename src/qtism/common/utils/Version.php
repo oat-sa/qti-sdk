@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -27,9 +28,7 @@ use InvalidArgumentException;
 /**
  * This utility class provides utility classes about Semantic Versionning.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://semver.org Semantic Versioning
- *
  */
 class Version
 {
@@ -59,7 +58,7 @@ class Version
      * @throws InvalidArgumentException
      * @see http://semver.org Semantic Versioning
      */
-    static public function compare($version1, $version2, $operator = null)
+    public static function compare($version1, $version2, $operator = null)
     {
         $version1 = trim($version1);
         $version2 = trim($version2);
@@ -95,7 +94,7 @@ class Version
      * @param string $version A version with major, minor and patch version e.g. '2.1.1'.
      * @return boolean
      */
-    static public function isKnown($version)
+    public static function isKnown($version)
     {
         $version = self::appendPatchVersion($version);
         return in_array($version, self::knownVersions());
@@ -107,7 +106,7 @@ class Version
      *
      * @return array An array of QTI version numbers containing major, minor and patch version e.g. '2.1.1'.
      */
-    static public function knownVersions()
+    public static function knownVersions()
     {
         return ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2', '3.0.0'];
     }
@@ -119,7 +118,7 @@ class Version
      * @param string $version
      * @return string
      */
-    static public function appendPatchVersion($version)
+    public static function appendPatchVersion($version)
     {
         $shortKnownVersions = ['2.0', '2.1', '2.2'];
         if (in_array($version, $shortKnownVersions) === true) {

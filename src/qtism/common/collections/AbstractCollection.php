@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,9 +32,6 @@ use UnexpectedValueException;
 
 /**
  * The AbstractCollection class is the base class of all collections.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 {

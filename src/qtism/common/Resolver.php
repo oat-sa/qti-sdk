@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,9 +25,6 @@ namespace qtism\common;
 
 /**
  * An interface describing how to resolve a URL into a different one.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 interface Resolver
 {
