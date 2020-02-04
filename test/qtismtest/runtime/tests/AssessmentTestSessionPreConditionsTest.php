@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
@@ -9,9 +10,11 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSession;
 
-class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase {
-	
-    public function testInstantiationSample1() {
+class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
+{
+    
+    public function testInstantiationSample1()
+    {
         
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
         $route = $testSession->getRoute();
@@ -42,7 +45,8 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this->assertEquals('Q03.SCORE', $var[0]->getIdentifier());
     }
     
-    public function testSingleSectionLinear1() {
+    public function testSingleSectionLinear1()
+    {
 
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
         $testSession->beginTestSession();
@@ -61,7 +65,8 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this->assertSame(null, $testSession['Q04.SCORE']);
     }
     
-    public function testSingleSectionNonLinear1() {
+    public function testSingleSectionNonLinear1()
+    {
         // This test aims at checking that preconditions are by default ignored when
         // the navigation mode is non linear.
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_nonlinear.xml');
@@ -78,7 +83,8 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
     
-    public function testSingleSectionNonLinearForcePreconditions() {
+    public function testSingleSectionNonLinearForcePreconditions()
+    {
         // This test aims at testing that when forcing preconditions is in force,
         // they are executed even if the current navigation mode is non linear.
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_nonlinear.xml', null, AssessmentTestSession::FORCE_PRECONDITIONS);
@@ -98,7 +104,8 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this->assertSame(null, $testSession['Q04.SCORE']);
     }
     
-    public function testKillerTestEpicFail() {
+    public function testKillerTestEpicFail()
+    {
         
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
         $testSession->beginTestSession();
@@ -119,7 +126,8 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this->assertSame(null, $testSession['Q05.SCORE']);
     }
     
-    public function testKillerTestEpicWin() {
+    public function testKillerTestEpicWin()
+    {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
         $testSession->beginTestSession();
         

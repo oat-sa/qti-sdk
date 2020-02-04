@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentItemTestCase;
@@ -13,8 +14,8 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
-use \DateTime;
-use \DateTimeZone;
+use DateTime;
+use DateTimeZone;
 
 class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 {
@@ -277,8 +278,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
             $itemSession->endAttempt();
             // An exception MUST be thrown.
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_UNDERFLOW, $e->getCode());
         }
     
@@ -296,8 +296,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         try {
             $itemSession->endAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
         }
     
@@ -345,8 +344,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
             $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
@@ -413,8 +411,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
             $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
             // Must be rejected, no more time remaining!!!
             $this->assertFalse(true);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
             $this->assertTrue($itemSession->getRemainingTime()->equals(new QtiDuration('PT0S')));
         }

@@ -1,8 +1,8 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtism\runtime\tests\AssessmentTestSessionState;
-
 use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\QtiIdentifier;
@@ -11,15 +11,11 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 
-/**
- * Focus on testing the numberCompleted method of AssessmentTestSession.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
- */
-class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTestSessionTestCase
+{
     
-    public function testEndAttemptInteraction() {
+    public function testEndAttemptInteraction()
+    {
         
         // Max Attempts = 0 -> Infinite.
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml');

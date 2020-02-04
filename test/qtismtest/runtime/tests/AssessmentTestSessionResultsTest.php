@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
@@ -14,9 +15,11 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\data\storage\xml\XmlCompactDocument;
 
-class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase
+{
     
-    public function testTestResultsSubmissionNonLinearOutcomeProcessing() {
+    public function testTestResultsSubmissionNonLinearOutcomeProcessing()
+    {
         // This test focuses on test results submission at outcome processing time.
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();
@@ -67,7 +70,8 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $this->assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][2]->getValue(), 3));
     }
     
-    public function testTestResultsSubmissionNonLinearEnd() {
+    public function testTestResultsSubmissionNonLinearEnd()
+    {
         // This test focuses on test results submission at outcome processing time.
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();

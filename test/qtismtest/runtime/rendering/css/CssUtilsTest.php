@@ -1,23 +1,27 @@
 <?php
+
 namespace qtismtest\runtime\rendering\css;
 
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rendering\css\Utils as CssUtils;
 
-class CssUtilsTest extends QtiSmTestCase {
+class CssUtilsTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider mapSelectorProvider
-     * 
+     *
      * @param string $expected
      * @param string $selector
      * @param array $map
      */
-    public function testMapSelector($selector, $expected, array $map) {
+    public function testMapSelector($selector, $expected, array $map)
+    {
         $this->assertEquals($expected, CssUtils::mapSelector($selector, $map));
     }
     
-    public function mapSelectorProvider() {
+    public function mapSelectorProvider()
+    {
         $map = array('div' => 'qtism-div',
                       'prompt' => 'qtism-prompt',
                       'a' => 'qtism-a',
@@ -43,16 +47,18 @@ class CssUtilsTest extends QtiSmTestCase {
     
     /**
      * @dataProvider mapPseudoClassesProvider
-     * 
+     *
      * @param string $selector
      * @param string $expected
      * @param array $map
      */
-    public function testMapPseudoClasses($selector, $expected, array $map) {
+    public function testMapPseudoClasses($selector, $expected, array $map)
+    {
         $this->assertEquals($expected, CssUtils::mapPseudoClasses($selector, $map));
     }
     
-    public function mapPseudoClassesProvider() {
+    public function mapPseudoClassesProvider()
+    {
         $map = array(
             'qti-selected' => 'qti-selected'
         );

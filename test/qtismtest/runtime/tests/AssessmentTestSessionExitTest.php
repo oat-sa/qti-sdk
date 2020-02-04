@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
@@ -10,9 +11,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 
-class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
+{
     
-    public function testExitSection() {
+    public function testExitSection()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsection.xml';
         $testSession = self::instantiate($url);
         
@@ -28,7 +31,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
     }
     
-    public function testExitSectionEndOfTest() {
+    public function testExitSectionEndOfTest()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionendoftest.xml';
         $testSession = self::instantiate($url);
         
@@ -55,7 +59,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(false, $itemSessions);
     }
     
-    public function testExitSectionFromEndOfSection() {
+    public function testExitSectionFromEndOfSection()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionfromendofsection.xml';
         $testSession = self::instantiate($url);
         
@@ -74,7 +79,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
     
-    public function testExitSectionPreconditionsEndOfTest() {
+    public function testExitSectionPreconditionsEndOfTest()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionpreconditions.xml';
         $testSession = self::instantiate($url);
         
@@ -105,7 +111,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(false, $itemSessions);
     }
     
-    public function testExitTestPart() {
+    public function testExitTestPart()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exittestpart.xml';
         $testSession = self::instantiate($url);
     
@@ -121,7 +128,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
     }
     
-    public function testExitTestPartEndOfTest() {
+    public function testExitTestPartEndOfTest()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exittestpartendoftest.xml';
         $testSession = self::instantiate($url);
     
@@ -148,7 +156,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(false, $itemSessions);
     }
     
-    public function testExitTestPartPreconditionsEndOfTest() {
+    public function testExitTestPartPreconditionsEndOfTest()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exittestpartpreconditions.xml';
         $testSession = self::instantiate($url);
     
@@ -179,7 +188,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(false, $itemSessions);
     }
     
-    public function testExitTest() {
+    public function testExitTest()
+    {
         $url = self::samplesDir() . 'custom/runtime/exits/exittest.xml';
         $testSession = self::instantiate($url);
     

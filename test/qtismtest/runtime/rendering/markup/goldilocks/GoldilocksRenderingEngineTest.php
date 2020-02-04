@@ -1,16 +1,18 @@
 <?php
+
 namespace qtismtest\runtime\rendering\markup\goldilocks;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 
-class GoldilocksRenderingEngineTest extends QtiSmTestCase {
-	
+class GoldilocksRenderingEngineTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider testRenderingProvider
      */
-    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy) 
+    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy)
     {
         $engine = new GoldilocksRenderingEngine();
         $engine->setChoiceShowHidePolicy($renderingMode);
@@ -312,7 +314,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         $xmlBasePolicy = GoldilocksRenderingEngine::XMLBASE_IGNORE;
         $stylesheetPolicy = GoldilocksRenderingEngine::STYLESHEET_INLINE;
         $cssClassPolicy = GoldilocksRenderingEngine::CSSCLASS_CONCRETE;
-        
+
         $engine = new GoldilocksRenderingEngine();
         $engine->setChoiceShowHidePolicy($renderingMode);
         $engine->setFeedbackShowHidePolicy($renderingMode);
@@ -321,10 +323,10 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         $engine->setXmlBasePolicy($xmlBasePolicy);
         $engine->setStylesheetPolicy($stylesheetPolicy);
         $engine->setCssClassPolicy($cssClassPolicy);
-        
+
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/table.xml');
-        
+
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
         file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/table-0.html', $strRendered . "\n");

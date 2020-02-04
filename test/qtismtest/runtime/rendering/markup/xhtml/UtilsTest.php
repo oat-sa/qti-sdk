@@ -1,15 +1,18 @@
 <?php
+
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\ShufflableCollection;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\runtime\rendering\markup\xhtml\Utils;
-use \DOMDocument;
+use DOMDocument;
 
-class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
+class RenderingMarkupXhtmlUtils extends QtiSmTestCase
+{
     
-    public function testShuffleWithFixed() {
+    public function testShuffleWithFixed()
+    {
         // It is difficult to test a random algorithm.
         // In this way, we just check it runs. Deeper
         // analysis can be done in /test/scripts/.
@@ -64,7 +67,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
     
-    public function testShuffleWithStatements() {
+    public function testShuffleWithStatements()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
             <interaction>
@@ -82,7 +86,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         Utils::shuffle($dom->documentElement, $shufflables);
     }
     
-    public function testHasClass() {
+    public function testHasClass()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('root');
         
@@ -95,7 +100,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $this->assertFalse(Utils::hasClass($node, array('unknown', 'class')));
     }
     
-    public function testExtractStatements() {
+    public function testExtractStatements()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('fakenode');
         $dom->appendChild($node);
@@ -114,7 +120,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $this->assertEquals('qtism-endif', $statements[1]->data);
     }
     
-    public function testExtractStatementsNothing() {
+    public function testExtractStatementsNothing()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('fakenode');
         $dom->appendChild($node);
@@ -125,7 +132,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $this->assertEquals(array(), Utils::extractStatements($div));
     }
     
-    public function testExtractStatementsIfOnly() {
+    public function testExtractStatementsIfOnly()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('fakenode');
         $dom->appendChild($node);

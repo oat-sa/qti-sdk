@@ -1,13 +1,16 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentItemTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\AssessmentItemSession;
 
-class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase {
+class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
+{
     
-    public function testShufflingOccurs() {
+    public function testShufflingOccurs()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
         

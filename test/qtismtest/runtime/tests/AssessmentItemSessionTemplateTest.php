@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentItemTestCase;
@@ -11,9 +12,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentItemSession;
 
-class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase {
+class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
+{
     
-    public function testAssigningScoresAndCorrectResponses() {
+    public function testAssigningScoresAndCorrectResponses()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/template_processing.xml');
         

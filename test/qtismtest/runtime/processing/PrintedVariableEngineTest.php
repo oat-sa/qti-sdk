@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\processing;
 
 use qtismtest\QtiSmTestCase;
@@ -148,7 +149,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         
         return array(
             array('', 'nonExistingVariable', $state),
-            array('', 'nullValue', $state),            
+            array('', 'nullValue', $state),
                         
             array('Non Empty String', 'nonEmptyString', $state),
             array('', 'emptyString', $state),
@@ -209,7 +210,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
                  
             array('1.000000e+1', 'orderedIndexedFloat', $state, '', false, 10, 0),
             array('2.000000e+1', 'orderedIndexedFloat', $state, '', false, 10, 1),
-            array('-1.000000e+0', 'orderedIndexedFloat', $state, '', false, 10, 2), 
+            array('-1.000000e+0', 'orderedIndexedFloat', $state, '', false, 10, 2),
             array('Ta', 'orderedIndexedString', $state, '', false, 10, 0),
             array('Daaa', 'orderedIndexedString', $state, '', false, 10, 1),
             array('h', 'orderedIndexedString', $state, '', false, 10, 2),
@@ -297,7 +298,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
     /**
      *
-     * @dataProvider NewProvider
+     * @dataProvider newProvider
      *
      * @param $expected int
      * @param $id string
@@ -314,7 +315,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $this->assertEquals($expected, $engine->process());
     }
 
-    public function NewProvider() {
+    public function newProvider()
+    {
 
         $state = new State();
 

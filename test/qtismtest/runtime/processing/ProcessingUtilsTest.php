@@ -1,26 +1,30 @@
 <?php
+
 namespace qtismtest\runtime\processing;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\processing\TemplateProcessing;
 use qtism\runtime\processing\Utils;
 
-class ProcessingUtilsTest extends QtiSmTestCase {
-	
+class ProcessingUtilsTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider impactedVariablesProvider
-     * 
+     *
      * @param TemplateProcessing $templateProcessing
      * @param array $expectedIdentifiers
      */
-    public function testImpactedVariables(TemplateProcessing $templateProcessing, array $expectedIdentifiers) {
+    public function testImpactedVariables(TemplateProcessing $templateProcessing, array $expectedIdentifiers)
+    {
         $this->assertEquals(
             $expectedIdentifiers,
             Utils::templateProcessingImpactedVariables($templateProcessing)
         );
     }
     
-    public function impactedVariablesProvider() {
+    public function impactedVariablesProvider()
+    {
         $data = array();
         
         $templateProcessing = $this->createComponentFromXml('

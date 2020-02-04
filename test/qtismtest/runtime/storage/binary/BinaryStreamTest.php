@@ -1,37 +1,44 @@
 <?php
+
 namespace qtismtest\runtime\storage\binary;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\MemoryStreamException;
 
-class BinaryStreamTest extends QtiSmTestCase {
-	
+class BinaryStreamTest extends QtiSmTestCase
+{
+    
     private $basicStream;
     
     private $emptyStream;
     
-    public function getBasicStream() {
+    public function getBasicStream()
+    {
         return $this->basicStream;
     }
     
-    public function getEmptyStream() {
+    public function getEmptyStream()
+    {
         return $this->emptyStream;
     }
     
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->basicStream =  new MemoryStream('binary-data');
         $this->emptyStream = new MemoryStream();
     }
     
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
         unset($this->basicStream);
         unset($this->emptyStream);
     }
     
-    public function testInstantiate() {
+    public function testInstantiate()
+    {
         $stream = $this->getBasicStream();
         $this->assertInstanceOf('qtism\\common\\storage\\MemoryStream', $stream);
         
@@ -42,47 +49,50 @@ class BinaryStreamTest extends QtiSmTestCase {
         $this->assertEquals(strlen('binary-data'), $stream->getLength());
     }
     
-    public function testCloseOnClosedStream() {
+    public function testCloseOnClosedStream()
+    {
         $stream = $this->getBasicStream();
         
         try {
             $stream->close();
             // An exception must be thrown.
             $this->assertTrue(false);
-        }
-        catch (MemoryStreamException $e) {
+        } catch (MemoryStreamException $e) {
             $this->assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
         }
     }
     
-    public function testRewindOnClosedStream() {
+    public function testRewindOnClosedStream()
+    {
         $stream = $this->getBasicStream();
         
         try {
             $stream->rewind();
             // An exception must be thrown.
             $this->assertTrue(false);
-        }
-        catch (MemoryStreamException $e) {
+        } catch (MemoryStreamException $e) {
             $this->assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
         }
     }
     
-    public function testOpen() {
+    public function testOpen()
+    {
         $stream = $this->getBasicStream();
         $stream->open();
         
         $this->assertTrue($stream->isOpen());
     }
     
-    public function testClose() {
+    public function testClose()
+    {
         $stream = $this->getBasicStream();
         $stream->open();
         $stream->close();
         $this->assertFalse($stream->isOpen());
     }
     
-    public function testRead() {
+    public function testRead()
+    {
         $stream = $this->getBasicStream();
         $stream->open();
         
@@ -110,15 +120,15 @@ class BinaryStreamTest extends QtiSmTestCase {
             // EOF is reached... cannot read more.
             $data = $stream->read(1);
             $this->assertTrue(false);
-        }
-        catch (MemoryStreamException $e) {
+        } catch (MemoryStreamException $e) {
             $this->assertTrue(true);
         }
         
         $stream->close();
     }
     
-    public function testWrite() {
+    public function testWrite()
+    {
         // test writing in an empty stream.
         $stream = $this->getEmptyStream();
         $stream->open();
@@ -162,7 +172,8 @@ class BinaryStreamTest extends QtiSmTestCase {
         $stream->close();
     }
     
-    public function testOpenOnOpenStream() {
+    public function testOpenOnOpenStream()
+    {
         $stream = $this->getBasicStream();
         
         try {
@@ -170,8 +181,7 @@ class BinaryStreamTest extends QtiSmTestCase {
             $stream->open();
             // An exception must be thrown.
             $this->assertTrue(false);
-        }
-        catch (MemoryStreamException $e) {
+        } catch (MemoryStreamException $e) {
             $this->assertEquals(MemoryStreamException::ALREADY_OPEN, $e->getCode());
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
@@ -14,9 +15,11 @@ use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 
-class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSessionTestCase {
-	
-    public function testValidateResponseValidateSkippingAllowedLinearIndividual() {
+class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSessionTestCase
+{
+    
+    public function testValidateResponseValidateSkippingAllowedLinearIndividual()
+    {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/validate_skipping_allowed_linear_individual.xml');
         $testSession->beginTestSession();
         
@@ -30,8 +33,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::MULTIPLE, 
-                            BaseType::IDENTIFIER, 
+                            Cardinality::MULTIPLE,
+                            BaseType::IDENTIFIER,
                             new MultipleContainer(
                                 BaseType::IDENTIFIER,
                                 array(
@@ -45,7 +48,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q01).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -59,8 +61,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::MULTIPLE, 
-                        BaseType::IDENTIFIER, 
+                        Cardinality::MULTIPLE,
+                        BaseType::IDENTIFIER,
                         new MultipleContainer(
                             BaseType::IDENTIFIER,
                             array(
@@ -87,8 +89,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::SINGLE, 
-                            BaseType::STRING, 
+                            Cardinality::SINGLE,
+                            BaseType::STRING,
                             new QtiString('AAAAA')
                         )
                     )
@@ -96,7 +98,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q02).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -111,7 +112,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::SINGLE, 
+                            Cardinality::SINGLE,
                             BaseType::STRING,
                             null
                         )
@@ -120,7 +121,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q02).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -137,7 +137,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q02).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -151,7 +150,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::SINGLE, 
+                        Cardinality::SINGLE,
                         BaseType::STRING,
                         new QtiString('aaaaa')
                     )
@@ -186,8 +185,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                         ),
                         new ResponseVariable(
                             'RESPONSE2',
-                            Cardinality::SINGLE, 
-                            BaseType::STRING, 
+                            Cardinality::SINGLE,
+                            BaseType::STRING,
                             new QtiString('AAAAA')
                         )
                     )
@@ -195,7 +194,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -224,8 +222,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                         ),
                         new ResponseVariable(
                             'RESPONSE2',
-                            Cardinality::SINGLE, 
-                            BaseType::STRING, 
+                            Cardinality::SINGLE,
+                            BaseType::STRING,
                             new QtiString('aaaaa')
                         )
                     )
@@ -233,7 +231,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -264,7 +261,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -290,8 +286,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     ),
                     new ResponseVariable(
                         'RESPONSE2',
-                        Cardinality::SINGLE, 
-                        BaseType::STRING, 
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
                         new QtiString('aaaaa')
                     )
                 )
@@ -330,7 +326,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q04).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q04.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -367,7 +362,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
     
-    public function testValidateResponseValidateSkippingNotAllowedLinearIndividual() {
+    public function testValidateResponseValidateSkippingNotAllowedLinearIndividual()
+    {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/validate_skipping_not_allowed_linear_individual.xml');
         $testSession->beginTestSession();
         
@@ -381,8 +377,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::MULTIPLE, 
-                            BaseType::IDENTIFIER, 
+                            Cardinality::MULTIPLE,
+                            BaseType::IDENTIFIER,
                             new MultipleContainer(
                                 BaseType::IDENTIFIER,
                                 array(
@@ -396,7 +392,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q01).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -413,8 +408,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::MULTIPLE, 
-                            BaseType::IDENTIFIER, 
+                            Cardinality::MULTIPLE,
+                            BaseType::IDENTIFIER,
                             new MultipleContainer(
                                 BaseType::IDENTIFIER
                             )
@@ -424,7 +419,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q01).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
             $this->assertEquals("The Item Session 'Q01.0' is not allowed to be skipped.", $e->getMessage());
@@ -438,8 +432,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::MULTIPLE, 
-                        BaseType::IDENTIFIER, 
+                        Cardinality::MULTIPLE,
+                        BaseType::IDENTIFIER,
                         new MultipleContainer(
                             BaseType::IDENTIFIER,
                             array(
@@ -466,8 +460,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::SINGLE, 
-                            BaseType::STRING, 
+                            Cardinality::SINGLE,
+                            BaseType::STRING,
                             new QtiString('AAAAA')
                         )
                     )
@@ -475,7 +469,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q02).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -490,7 +483,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     array(
                         new ResponseVariable(
                             'RESPONSE',
-                            Cardinality::SINGLE, 
+                            Cardinality::SINGLE,
                             BaseType::STRING,
                             null
                         )
@@ -499,7 +492,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q02).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -516,7 +508,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q02).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -530,7 +521,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::SINGLE, 
+                        Cardinality::SINGLE,
                         BaseType::STRING,
                         new QtiString('aaaaa')
                     )
@@ -565,8 +556,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                         ),
                         new ResponseVariable(
                             'RESPONSE2',
-                            Cardinality::SINGLE, 
-                            BaseType::STRING, 
+                            Cardinality::SINGLE,
+                            BaseType::STRING,
                             new QtiString('AAAAA')
                         )
                     )
@@ -574,7 +565,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -603,8 +593,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                         ),
                         new ResponseVariable(
                             'RESPONSE2',
-                            Cardinality::SINGLE, 
-                            BaseType::STRING, 
+                            Cardinality::SINGLE,
+                            BaseType::STRING,
                             new QtiString('aaaaa')
                         )
                     )
@@ -612,7 +602,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -643,7 +632,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -669,8 +657,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     ),
                     new ResponseVariable(
                         'RESPONSE2',
-                        Cardinality::SINGLE, 
-                        BaseType::STRING, 
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
                         new QtiString('aaaaa')
                     )
                 )
@@ -686,7 +674,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
     
-    public function testValidateResponseDoNotValidateSkippingAllowedLinearIndividual() {
+    public function testValidateResponseDoNotValidateSkippingAllowedLinearIndividual()
+    {
         // Here I can do what I want because responses are not validated and skipping is allowed!!!
         
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/dont_validate_skipping_allowed_linear_individual.xml');
@@ -701,8 +690,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::MULTIPLE, 
-                        BaseType::IDENTIFIER, 
+                        Cardinality::MULTIPLE,
+                        BaseType::IDENTIFIER,
                         new MultipleContainer(
                             BaseType::IDENTIFIER,
                             array(
@@ -729,8 +718,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::SINGLE, 
-                        BaseType::STRING, 
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
                         new QtiString('AAAAA')
                     )
                 )
@@ -777,7 +766,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
     
-    public function testValidateResponseDoNotValidateSkippingNotAllowedLinearIndividual() {
+    public function testValidateResponseDoNotValidateSkippingNotAllowedLinearIndividual()
+    {
         
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/dont_validate_skipping_not_allowed_linear_individual.xml');
         $testSession->beginTestSession();
@@ -791,8 +781,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::MULTIPLE, 
-                        BaseType::IDENTIFIER, 
+                        Cardinality::MULTIPLE,
+                        BaseType::IDENTIFIER,
                         new MultipleContainer(
                             BaseType::IDENTIFIER,
                             array(
@@ -819,8 +809,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::SINGLE, 
-                        BaseType::STRING, 
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
                         new QtiString('AAAAA')
                     )
                 )
@@ -861,7 +851,6 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             );
             
             $this->assertFalse(true, "An exception should be thrown (Q03).");
-            
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
             $this->assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
@@ -916,8 +905,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::MULTIPLE, 
-                        BaseType::IDENTIFIER, 
+                        Cardinality::MULTIPLE,
+                        BaseType::IDENTIFIER,
                         new MultipleContainer(
                             BaseType::IDENTIFIER,
                             array(
@@ -946,8 +935,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 array(
                     new ResponseVariable(
                         'RESPONSE',
-                        Cardinality::SINGLE, 
-                        BaseType::STRING, 
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
                         new QtiString('')
                     )
                 )

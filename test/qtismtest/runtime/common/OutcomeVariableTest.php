@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\common;
 
 use qtismtest\QtiSmTestCase;
@@ -17,7 +18,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class OutcomeVariableTest extends QtiSmTestCase
 {
@@ -83,8 +84,7 @@ class OutcomeVariableTest extends QtiSmTestCase
             $variable->setValue(new MultipleContainer(BaseType::DURATION));
             // This code portion should not be reached.
             $this->assertTrue(false, 'Developer: Exception not thrown but not compliant baseType?!');
-        }
-        catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
 
@@ -92,8 +92,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         try {
             $variable->setValue(new OrderedContainer(BaseType::INTEGER));
             $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
-        }
-        catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
 
@@ -101,8 +100,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         try {
             $variable->setValue(new QtiInteger(25));
             $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
-        }
-        catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
     }
@@ -137,7 +135,8 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertTrue($pair->equals($outcomeVariable->getDefaultValue()));
     }
 
-    public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality() {
+    public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality()
+    {
         $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="pair" cardinality="multiple">

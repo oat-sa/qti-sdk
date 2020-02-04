@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\common;
 
 use qtismtest\QtiSmTestCase;

@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmTestCase;
@@ -8,11 +9,13 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;
 
-class SessionManagerTest extends QtiSmTestCase {
-	
+class SessionManagerTest extends QtiSmTestCase
+{
+    
     private $test;
     
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         
         $test = new XmlCompactDocument();
@@ -20,28 +23,32 @@ class SessionManagerTest extends QtiSmTestCase {
         $this->setTest($test->getDocumentComponent());
     }
     
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
         unset($this->test);
     }
     
     /**
-     * 
+     *
      * @param AssessmentTest $test
      */
-    private function setTest(AssessmentTest $test) {
+    private function setTest(AssessmentTest $test)
+    {
         $this->test = $test;
     }
     
     /**
-     * 
+     *
      * @return AssessmentTest
      */
-    private function getTest() {
+    private function getTest()
+    {
         return $this->test;
     }
     
-    public function testDefaultAssessmentTestSessionCreation() {
+    public function testDefaultAssessmentTestSessionCreation()
+    {
         $manager = new SessionManager(new FileSystemFileManager());
         $session = $manager->createAssessmentTestSession($this->getTest());
         

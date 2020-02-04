@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\rendering\css;
 
 use qtismtest\QtiSmTestCase;
@@ -8,7 +9,7 @@ class CssScoperTest extends QtiSmTestCase
 {
     /**
      * @dataProvider testOutputProvider
-     * 
+     *
      * @param string $inputFile
      * @param string $outputFile
      * @param string $id
@@ -16,7 +17,7 @@ class CssScoperTest extends QtiSmTestCase
      * @param boolean $pseudoClassMapping
      * @param boolean $wcFriendly
      */
-    public function testOutput ($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
+    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
     {
         $cssScoper = new CssScoper($cssMapping, $pseudoClassMapping);
         $cssScoper->setWebComponentFriendly($wcFriendly);

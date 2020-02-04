@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
@@ -10,9 +11,11 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 
-class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase {
-	
-    public function testSimpleTemplatingLinear() {
+class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase
+{
+    
+    public function testSimpleTemplatingLinear()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $session->beginTestSession();
         // We are in linear mode with no branching/preconditions, so the sessions are instantiated after beginTestSession call.
@@ -25,7 +28,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         // QTPL1 - correct response.
         $session->beginAttempt();
         $responses = new State(
-            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))              
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))
         );
         $session->endAttempt($responses);
         $session->moveNext();
@@ -43,7 +46,8 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         $this->assertEquals(2.0, $session['QTPL2.SCORE']->getValue());
     }
     
-    public function testSimpleTemplatingNonLinear() {
+    public function testSimpleTemplatingNonLinear()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_nonlinear.xml');
         $session->beginTestSession();
         // We are in nonlinear mode, so the sessions are instantiated after beginTestSession call.
@@ -56,7 +60,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         // QTPL1 - correct response.
         $session->beginAttempt();
         $responses = new State(
-            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))              
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))
         );
         $session->endAttempt($responses);
         $session->moveNext();
@@ -74,7 +78,8 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         $this->assertEquals(2.0, $session['QTPL2.SCORE']->getValue());
     }
     
-    public function testSimpleTemplatingNonLinearMultipleTestParts() {
+    public function testSimpleTemplatingNonLinearMultipleTestParts()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_nonlinear_multiple_testparts.xml');
         $session->beginTestSession();
         // We are in nonlinear mode, so the sessions are instantiated after beginTestSession call.
@@ -93,7 +98,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         // QTPL1 - correct response.
         $session->beginAttempt();
         $responses = new State(
-            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))              
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))
         );
         $session->endAttempt($responses);
         $session->moveNext();

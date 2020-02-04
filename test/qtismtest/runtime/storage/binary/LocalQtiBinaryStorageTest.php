@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\storage\binary;
 
 use qtism\runtime\tests\AssessmentTestSession;
@@ -22,12 +23,14 @@ use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\binary\LocalQtiBinaryStorage;
 use qtism\runtime\storage\common\StorageException;
-use \DateTime;
-use \DateTimeZone;
+use DateTime;
+use DateTimeZone;
 
-class LocalQtiBinaryStorageTest extends QtiSmTestCase {
+class LocalQtiBinaryStorageTest extends QtiSmTestCase
+{
     
-    public function testLocalQtiBinaryStorage() {
+    public function testLocalQtiBinaryStorage()
+    {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -402,7 +405,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session['Q07.3.duration']->equals(new QtiDuration('PT1H')));
     }
     
-    public function testLinearNavigationSimultaneousSubmission() {
+    public function testLinearNavigationSimultaneousSubmission()
+    {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
@@ -554,7 +558,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
     }
     
-    public function testNonLinear() {
+    public function testNonLinear()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
         $test = $doc->getDocumentComponent();
@@ -583,7 +588,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         }
     }
     
-    public function testFiles() {
+    public function testFiles()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
         $test = $doc->getDocumentComponent();
@@ -687,7 +693,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertFalse(file_exists($path3));
     }
     
-    public function testTemplateProcessingBasic1() {
+    public function testTemplateProcessingBasic1()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templates/template_processing_test_simple.xml');
         $test = $doc->getDocumentComponent();
@@ -870,7 +877,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $QTPL2Session->getState());
     }
     
-    public function testTemplateDefault1() {
+    public function testTemplateDefault1()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $test = $doc->getDocumentComponent();
@@ -1023,11 +1031,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $QTPL2Session->getState());
     }
     
-    public function testVisitedTestPartsLinear1TestPart() {
+    public function testVisitedTestPartsLinear1TestPart()
+    {
         $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
         $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1065,11 +1074,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session->isTestPartVisited('P01'));
     }
     
-    public function testVisitedTestPartsLinear2TestPart() {
+    public function testVisitedTestPartsLinear2TestPart()
+    {
         $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
         $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1129,11 +1139,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session->isTestPartVisited('P02'));
     }
     
-    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart() {
+    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart()
+    {
         $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
-	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+        $test = $doc->getDocumentComponent();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1200,11 +1211,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
     
-    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart() {
+    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart()
+    {
         $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
-	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+        $test = $doc->getDocumentComponent();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1265,11 +1277,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
     
-    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart() {
+    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart()
+    {
         $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
-	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+        $test = $doc->getDocumentComponent();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1339,9 +1352,9 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
     public function testConfigPersistence()
     {
         $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
-	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
+        $test = $doc->getDocumentComponent();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $config = AssessmentTestSession::FORCE_BRANCHING | AssessmentTestSession::FORCE_PRECONDITIONS;
         $session = $storage->instantiate($config);

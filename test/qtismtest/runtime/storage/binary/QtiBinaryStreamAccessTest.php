@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\storage\binary;
 
 use qtismtest\QtiSmTestCase;
@@ -48,16 +49,18 @@ use qtism\common\storage\MemoryStream;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 
-class QtiBinaryStreamAccessTest extends QtiSmTestCase {
-	
+class QtiBinaryStreamAccessTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider readVariableValueProvider
-     * 
+     *
      * @param Variable $variable
      * @param string $binary
      * @param mixed $expectedValue
      */
-    public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccess::RW_VALUE) {
+    public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccess::RW_VALUE)
+    {
         $stream = new MemoryStream($binary);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -79,30 +82,26 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         if (is_scalar($expectedValue) === true) {
             $this->assertEquals($expectedValue, call_user_func(array($variable, $getterToCall))->getValue());
-        }
-        else if (is_null($expectedValue) === true) {
+        } elseif (is_null($expectedValue) === true) {
             $this->assertSame($expectedValue, call_user_func(array($variable, $getterToCall)));
-        }
-        else if ($expectedValue instanceof RecordContainer) {
+        } elseif ($expectedValue instanceof RecordContainer) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
             $this->assertTrue($expectedValue->equals(call_user_func(array($variable, $getterToCall))));
-        }
-        else if ($expectedValue instanceof Container) {
+        } elseif ($expectedValue instanceof Container) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
             $this->assertEquals($expectedValue->getBaseType(), $variable->getBaseType());
             $this->assertTrue($expectedValue->equals(call_user_func(array($variable, $getterToCall))));
-        }
-        else if ($expectedValue instanceof Comparable) {
+        } elseif ($expectedValue instanceof Comparable) {
             // Duration, Point, Pair, ...
             $this->assertTrue($expectedValue->equals(call_user_func(array($variable, $getterToCall))));
-        }
-        else {
+        } else {
             // can't happen.
             $this->assertTrue(false);
         }
     }
     
-    public function readVariableValueProvider() {
+    public function readVariableValueProvider()
+    {
         $returnValue = array();
         
         $rw_value = QtiBinaryStreamAccess::RW_VALUE;
@@ -307,7 +306,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         return $returnValue;
     }
     
-    public function testReadVariableValueEmptyStream() {
+    public function testReadVariableValueEmptyStream()
+    {
         // Empty stream.
         $stream = new MemoryStream('');
         $stream->open();
@@ -325,7 +325,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         );
     }
     
-    public function testReadVariableValueTypeMismatch() {
+    public function testReadVariableValueTypeMismatch()
+    {
         $bin = "\x00" . "\x01" . pack('S', 1) . '1' . pack('S', 1) . '2';
         $stream = new MemoryStream($bin);
         $stream->open();
@@ -345,10 +346,11 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     
     /**
      * @dataProvider writeVariableValueProvider
-     * 
+     *
      * @param Variable $variable
      */
-    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccess::RW_VALUE) {
+    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccess::RW_VALUE)
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -387,31 +389,27 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         // Compare.
         if (is_null($originalValue) === true) {
             $this->assertSame($originalValue, $readValue);
-        }
-        else if (is_scalar($originalValue) === true) {
+        } elseif (is_scalar($originalValue) === true) {
             $this->assertEquals($originalValue, $readValue);
-        }
-        else if ($originalValue instanceof RecordContainer) {
+        } elseif ($originalValue instanceof RecordContainer) {
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertTrue($readValue->equals($originalValue));
-        }
-        else if ($originalValue instanceof Container) {
+        } elseif ($originalValue instanceof Container) {
             // MULTIPLE or ORDERED container.
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertEquals($readValue->getBaseType(), $readValue->getBaseType());
             $this->assertTrue($readValue->equals($originalValue), $originalValue . " != " . $readValue);
-        }
-        else if ($originalValue instanceof Comparable) {
+        } elseif ($originalValue instanceof Comparable) {
             // Complex QTI Runtime object.
             $this->assertTrue($readValue->equals($originalValue));
-        }
-        else {
+        } else {
             // Unknown datatype.
             $this->assertTrue(false);
         }
     }
     
-    public function writeVariableValueProvider() {
+    public function writeVariableValueProvider()
+    {
         
         $rw_value = QtiBinaryStreamAccess::RW_VALUE;
         $rw_defaultValue = QtiBinaryStreamAccess::RW_DEFAULTVALUE;
@@ -434,12 +432,24 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), null, new QtiInteger(1), null, new QtiInteger(200000)))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(0), null, new QtiInteger(1), null, new QtiInteger(200000)))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setDefaultValue(null); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setDefaultValue(new QtiInteger(26)); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setCorrectResponse(new QtiInteger(26)); $data[] = array($v, $rw_correctResponse);
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setDefaultValue(new QtiInteger(-34455)); $data[] = array($v, $rw_defaultValue);
-        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER); $v->setDefaultValue(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(-2147483647)))); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER); $v->setCorrectResponse(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(2147483647)))); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER);
+        $v->setDefaultValue(null);
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER);
+        $v->setDefaultValue(new QtiInteger(26));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER);
+        $v->setCorrectResponse(new QtiInteger(26));
+        $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER);
+        $v->setDefaultValue(new QtiInteger(-34455));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER);
+        $v->setDefaultValue(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(-2147483647))));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER);
+        $v->setCorrectResponse(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(2147483647))));
+        $data[] = array($v, $rw_correctResponse);
         
         // -- Floats
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(26.1)));
@@ -456,10 +466,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), null, new QtiFloat(1.1), null, new QtiFloat(200000.005)))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(0.0), null, new QtiFloat(1.1), null, new QtiFloat(200000.005)))));
         
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT); $v->setDefaultValue(new QtiFloat(26.1)); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT); $v->setCorrectResponse(new QtiFloat(26.1)); $data[] = array($v, $rw_correctResponse);
-        $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT); $v->setDefaultValue(new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-1.1), new QtiFloat(1.1), new QtiFloat(-200000.005), new QtiFloat(200000.005)))); $data[] = array($v, $rw_defaultValue);
-        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT); $v->setDefaultValue(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-1.1), new QtiFloat(1.1), new QtiFloat(-200000.005), new QtiFloat(200000.005)))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT);
+        $v->setDefaultValue(new QtiFloat(26.1));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT);
+        $v->setCorrectResponse(new QtiFloat(26.1));
+        $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT);
+        $v->setDefaultValue(new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-1.1), new QtiFloat(1.1), new QtiFloat(-200000.005), new QtiFloat(200000.005))));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT);
+        $v->setDefaultValue(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-1.1), new QtiFloat(1.1), new QtiFloat(-200000.005), new QtiFloat(200000.005))));
+        $data[] = array($v, $rw_defaultValue);
         // $data[] = array();
         // -- Booleans
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
@@ -476,9 +494,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(false), null, new QtiBoolean(true), null, new QtiBoolean(false)))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new QtiBoolean(false), null, new QtiBoolean(true), null, new QtiBoolean(false)))));
         
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN); $v->setDefaultValue(new QtiBoolean(true)); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN); $v->setCorrectResponse(new QtiBoolean(true)); $data[] = array($v, $rw_correctResponse);
-        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER); $v->setDefaultValue(new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), new QtiIdentifier('identifier2'), new QtiIdentifier('identifier3'), new QtiIdentifier('identifier4'), new QtiIdentifier('identifier5')))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN);
+        $v->setDefaultValue(new QtiBoolean(true));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN);
+        $v->setCorrectResponse(new QtiBoolean(true));
+        $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER);
+        $v->setDefaultValue(new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), new QtiIdentifier('identifier2'), new QtiIdentifier('identifier3'), new QtiIdentifier('identifier4'), new QtiIdentifier('identifier5'))));
+        $data[] = array($v, $rw_defaultValue);
         
         // -- Identifiers
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('identifier')));
@@ -495,8 +519,12 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), null, new QtiIdentifier('identifier2'), null, new QtiIdentifier('identifier3')))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), null, new QtiIdentifier('identifier2'), null, new QtiIdentifier('identifier3')))));
         
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER); $v->setDefaultValue(new QtiIdentifier('non-identifier')); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER); $v->setDefaultValue(new QtiIdentifier('non-identifier')); $data[] = array($v, $rw_correctResponse);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER);
+        $v->setDefaultValue(new QtiIdentifier('non-identifier'));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER);
+        $v->setDefaultValue(new QtiIdentifier('non-identifier'));
+        $data[] = array($v, $rw_correctResponse);
         
         // -- URIs
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new QtiUri('http://www.my.uri')));
@@ -513,9 +541,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3')))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3')))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI); $v->setDefaultValue(new QtiUri('http://www.my.uri')); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::URI); $v->setDefaultValue(new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3')))); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::URI); $v->setCorrectResponse(new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3')))); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI);
+        $v->setDefaultValue(new QtiUri('http://www.my.uri'));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::URI);
+        $v->setDefaultValue(new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3'))));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::URI);
+        $v->setCorrectResponse(new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3'))));
+        $data[] = array($v, $rw_correctResponse);
         
         // -- Durations
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('P3DT2H1S')));
@@ -531,9 +565,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new QtiDuration('P4D'), null, new QtiDuration('P10D'), null, new QtiDuration('P20D')))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new QtiDuration('P4D'), null, new QtiDuration('P10D'), null, new QtiDuration('P20D')))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION); $v->setDefaultValue(new QtiDuration('P3DT2H1S')); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::DURATION); $v->setDefaultValue(new OrderedContainer(BaseType::DURATION, array(new QtiDuration('PT1S'), new QtiDuration('PT2S'), new QtiDuration('PT3S'), new QtiDuration('PT4S'), new QtiDuration('PT5S')))); array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::DURATION); $v->setCorrectResponse(new OrderedContainer(BaseType::DURATION, array(new QtiDuration('PT1S'), new QtiDuration('PT2S'), new QtiDuration('PT3S'), new QtiDuration('PT4S'), new QtiDuration('PT5S')))); array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION);
+        $v->setDefaultValue(new QtiDuration('P3DT2H1S'));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::DURATION);
+        $v->setDefaultValue(new OrderedContainer(BaseType::DURATION, array(new QtiDuration('PT1S'), new QtiDuration('PT2S'), new QtiDuration('PT3S'), new QtiDuration('PT4S'), new QtiDuration('PT5S'))));
+        array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::DURATION);
+        $v->setCorrectResponse(new OrderedContainer(BaseType::DURATION, array(new QtiDuration('PT1S'), new QtiDuration('PT2S'), new QtiDuration('PT3S'), new QtiDuration('PT4S'), new QtiDuration('PT5S'))));
+        array($v, $rw_correctResponse);
         
         // -- Pairs
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR, new QtiPair('A', 'B')));
@@ -549,9 +589,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), null, new QtiPair('C', 'D'), null, new QtiPair('E', 'F')))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), null, new QtiPair('D', 'E'), null, new QtiPair('F', 'G')))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR); $v->setDefaultValue(new QtiPair('A', 'B')); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR); $v->setDefaultValue(new MultipleContainer(BaseType::PAIR, array(null))); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR); $v->setCorrectResponse(new MultipleContainer(BaseType::PAIR, array(null))); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR);
+        $v->setDefaultValue(new QtiPair('A', 'B'));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR);
+        $v->setDefaultValue(new MultipleContainer(BaseType::PAIR, array(null)));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR);
+        $v->setCorrectResponse(new MultipleContainer(BaseType::PAIR, array(null)));
+        $data[] = array($v, $rw_correctResponse);
         
         // -- DirectedPairs
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR, new QtiDirectedPair('A', 'B')));
@@ -567,9 +613,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), null, new QtiDirectedPair('C', 'D'), null, new QtiDirectedPair('E', 'F')))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), null, new QtiDirectedPair('D', 'E'), null, new QtiDirectedPair('F', 'G')))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR); $v->setDefaultValue(new QtiDirectedPair('A', 'B')); array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR); $v->setDefaultValue(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiDirectedPair('E', 'F'), new QtiDirectedPair('G', 'H'), new QtiDirectedPair('I', 'J')))); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR); $v->setCorrectResponse(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiDirectedPair('E', 'F'), new QtiDirectedPair('G', 'H'), new QtiDirectedPair('I', 'J')))); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR);
+        $v->setDefaultValue(new QtiDirectedPair('A', 'B'));
+        array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR);
+        $v->setDefaultValue(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiDirectedPair('E', 'F'), new QtiDirectedPair('G', 'H'), new QtiDirectedPair('I', 'J'))));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR);
+        $v->setCorrectResponse(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiDirectedPair('E', 'F'), new QtiDirectedPair('G', 'H'), new QtiDirectedPair('I', 'J'))));
+        $data[] = array($v, $rw_correctResponse);
         
         // -- Points
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(50, 50)));
@@ -585,9 +637,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new QtiPoint(30, 50), null, new QtiPoint(20, 50), null, new QtiPoint(45, 32)))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new QtiPoint(20, 11), null, new QtiPoint(36, 43), null, new QtiPoint(50, 44)))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT); $v->setDefaultValue(new QtiPoint(50, 50)); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT); $v->setDefaultValue(new OrderedContainer(BaseType::POINT, array(new QtiPoint(50, 50)))); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT); $v->setCorrectResponse(new OrderedContainer(BaseType::POINT, array(new QtiPoint(50, 50)))); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT);
+        $v->setDefaultValue(new QtiPoint(50, 50));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT);
+        $v->setDefaultValue(new OrderedContainer(BaseType::POINT, array(new QtiPoint(50, 50))));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT);
+        $v->setCorrectResponse(new OrderedContainer(BaseType::POINT, array(new QtiPoint(50, 50))));
+        $data[] = array($v, $rw_correctResponse);
         
         // IntOrIdentifiers
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new QtiIntOrIdentifier(26)));
@@ -604,30 +662,47 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier(0), null, new QtiIntOrIdentifier(1), null, new QtiIntOrIdentifier(200000)))));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier(0), null, new QtiIntOrIdentifier('Q01'), null, new QtiIntOrIdentifier(200000)))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER); $v->setDefaultValue(new QtiIntOrIdentifier(26)); $data[] = array($v, $rw_defaultValue);
-        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER); $v->setDefaultValue(new QtiIntOrIdentifier('Q01')); $data[] = array($v, $rw_defaultValue);
-        $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER); $v->setDefaultValue(new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier(0), new QtiIntOrIdentifier(-1), new QtiIntOrIdentifier(1), new QtiIntOrIdentifier(-200000), new QtiIntOrIdentifier('Q05')))); $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER);
+        $v->setDefaultValue(new QtiIntOrIdentifier(26));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER);
+        $v->setDefaultValue(new QtiIntOrIdentifier('Q01'));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER);
+        $v->setDefaultValue(new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier(0), new QtiIntOrIdentifier(-1), new QtiIntOrIdentifier(1), new QtiIntOrIdentifier(-200000), new QtiIntOrIdentifier('Q05'))));
+        $data[] = array($v, $rw_defaultValue);
         
         // Files
         $data[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt')));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FILE, new MultipleContainer(BaseType::FILE, array(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'), FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_noname.txt')))));
         
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE); $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt')); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE); $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt')); $data[] = array($v, $rw_correctResponse);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE);
+        $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE);
+        $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'));
+        $data[] = array($v, $rw_correctResponse);
         
         // Records
         $data[] = array(new OutcomeVariable('VAR', Cardinality::RECORD));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::RECORD, -1, new RecordContainer(array('key1' => null))));
         $data[] = array(new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true)))));
         
-        $v = new OutcomeVariable('VAR', Cardinality::RECORD, -1); $v->setDefaultValue(new RecordContainer(array('key1' => null))); array($v, $rw_defaultValue);
-        $v = new ResponseVariable('Var', Cardinality::RECORD, -1); $v->setDefaultValue(new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true)))); $data[] = array($v, $rw_defaultValue);
-        $v = new ResponseVariable('Var', Cardinality::RECORD, -1); $v->setCorrectResponse(new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true)))); $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::RECORD, -1);
+        $v->setDefaultValue(new RecordContainer(array('key1' => null)));
+        array($v, $rw_defaultValue);
+        $v = new ResponseVariable('Var', Cardinality::RECORD, -1);
+        $v->setDefaultValue(new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true))));
+        $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('Var', Cardinality::RECORD, -1);
+        $v->setCorrectResponse(new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true))));
+        $data[] = array($v, $rw_defaultValue);
         
         return $data;
     }
     
-    public function testWriteVariableValueClosedStream() {
+    public function testWriteVariableValueClosedStream()
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -644,7 +719,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeVariableValue($var, $type);
     }
     
-    public function testReadAssessmentItemSession1() {
+    public function testReadAssessmentItemSession1()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -694,7 +770,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     /**
      * @depends testReadAssessmentItemSession1
      */
-    public function testReadAssessmentItemSession2() {
+    public function testReadAssessmentItemSession2()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
         
@@ -720,16 +797,16 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $binArray = array(
             $position,
             $state,
-            $navigationMode, 
+            $navigationMode,
             $submissionMode,
             $attempting,
             $hasItemSessionControl,
             $numAttempts,
-            $duration, 
+            $duration,
             $completionStatus,
             $hasTimeReference,
             $timeReference,
-            $varCount, 
+            $varCount,
             $score,
             $response,
             $template,
@@ -764,7 +841,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertSame(10, $session['TPL']->getValue());
     }
     
-    public function testWriteAssessmentItemSession1() {
+    public function testWriteAssessmentItemSession1()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -793,7 +871,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertFalse($session->hasTimeReference());
     }
     
-    public function testWriteAssessmentItemSession2() {
+    public function testWriteAssessmentItemSession2()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
     
@@ -823,7 +902,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertFalse($session->hasTimeReference());
     }
     
-    public function testWriteAssessmentItemSession() {
+    public function testWriteAssessmentItemSession()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
     
@@ -855,7 +935,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionNotDefaultItemSessionControl() {
+    public function testWriteAssessmentItemSessionNotDefaultItemSessionControl()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -885,7 +966,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionCorrectResponseChanged() {
+    public function testWriteAssessmentItemSessionCorrectResponseChanged()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -918,7 +1000,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionWithShufflingState() {
+    public function testWriteAssessmentItemSessionWithShufflingState()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -948,7 +1031,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionWrongSeeker() {
+    public function testWriteAssessmentItemSessionWrongSeeker()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -972,7 +1056,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($wrongSeeker, $session);
     }
     
-    public function testWriteAssessmentItemSessionClosedStream() {
+    public function testWriteAssessmentItemSessionClosedStream()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
     
@@ -995,7 +1080,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     }
     
-    public function testReadRouteItem() {
+    public function testReadRouteItem()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -1023,7 +1109,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(0, count($routeItem->getPreConditions()));
     }
     
-    public function testWriteRouteItem() {
+    public function testWriteRouteItem()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -1051,17 +1138,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(0, count($routeItem->getPreConditions()));
     }
     
-    public function testReadPendingResponses() {
-    	$doc = new XmlCompactDocument();
+    public function testReadPendingResponses()
+    {
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $bin = '';
-        $bin.= "\x01"; // variable-count = 1.
-        $bin.= pack('S', 0); // response-declaration-position = 0
-        $bin.= pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // variable-value = 'ChoiceA' (identifier)
-        $bin.= pack('S', 0); // item-tree-position = 0
-        $bin.= "\x00"; // occurence = 0
+        $bin .= "\x01"; // variable-count = 1.
+        $bin .= pack('S', 0); // response-declaration-position = 0
+        $bin .= pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // variable-value = 'ChoiceA' (identifier)
+        $bin .= pack('S', 0); // item-tree-position = 0
+        $bin .= "\x00"; // occurence = 0
         
         $stream = new MemoryStream($bin);
         $stream->open();
@@ -1080,8 +1168,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
     
-    public function testWritePendingResponses() {
-    	$doc = new XmlCompactDocument();
+    public function testWritePendingResponses()
+    {
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
@@ -1110,7 +1199,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
     
-    public function testReadShufflingGroup() {
+    public function testReadShufflingGroup()
+    {
         $bin = '';
         $bin .= "\x03"; // identifier-count = 3
         $bin .= pack('S', 3) . 'id1';
@@ -1128,7 +1218,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
     }
     
-    public function testReadShufflingGroupEmptyStream() {
+    public function testReadShufflingGroupEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1142,7 +1233,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $shufflingGroup = $access->readShufflingGroup();
     }
     
-    public function testWriteShufflingGroup() {
+    public function testWriteShufflingGroup()
+    {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
         
@@ -1158,7 +1250,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
     }
     
-    public function testWriteShufflingGroupClosedStream() {
+    public function testWriteShufflingGroupClosedStream()
+    {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
         
@@ -1176,7 +1269,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $shufflingGroup = $access->writeShufflingGroup($shufflingGroup);
     }
     
-    public function testReadShufflingState() {
+    public function testReadShufflingState()
+    {
         $bin = '';
         
         // Binary data related to Shuffling State.
@@ -1203,7 +1297,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
-    public function testReadShufflingStateEmptyStream() {
+    public function testReadShufflingStateEmptyStream()
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1217,7 +1312,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $shufflingGroup = $access->readShufflingState();
     }
     
-    public function testWriteShufflingState() {
+    public function testWriteShufflingState()
+    {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
         $shufflingGroups = new ShufflingGroupCollection(array($shufflingGroup));
@@ -1238,7 +1334,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
-    public function testWriteShufflingStateClosedStream() {
+    public function testWriteShufflingStateClosedStream()
+    {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
         $shufflingGroups = new ShufflingGroupCollection(array($shufflingGroup));
@@ -1259,7 +1356,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $shufflingGroup = $access->writeShufflingState($shuffling);
     }
     
-    public function testReadRecordFieldEmptyStream() {
+    public function testReadRecordFieldEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1273,7 +1371,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readRecordField();
     }
     
-    public function testWriteRecordFieldClosedStream() {
+    public function testWriteRecordFieldClosedStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1288,7 +1387,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeRecordField(array('key', new QtiString('string')));
     }
     
-    public function testReadIdentifierEmptyStream() {
+    public function testReadIdentifierEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1302,7 +1402,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readIdentifier();
     }
     
-    public function testWriteIdentifierClosedStream() {
+    public function testWriteIdentifierClosedStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1317,7 +1418,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeIdentifier('identifier');
     }
     
-    public function testReadPointEmptyStream() {
+    public function testReadPointEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1331,7 +1433,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readPoint();
     }
     
-    public function testWritePointClosedStream() {
+    public function testWritePointClosedStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1346,7 +1449,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writePoint(new QtiPoint(0, 0));
     }
     
-    public function testReadPairEmptyStream() {
+    public function testReadPairEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1360,7 +1464,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readPair();
     }
     
-    public function testWritePairClosedStream() {
+    public function testWritePairClosedStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1375,7 +1480,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writePair(new QtiPair('A', 'B'));
     }
     
-    public function testReadDirectedPairEmptyStream() {
+    public function testReadDirectedPairEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1389,7 +1495,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readDirectedPair();
     }
     
-    public function testWriteDirectedPairClosedStream() {
+    public function testWriteDirectedPairClosedStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1404,7 +1511,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeDirectedPair(new QtiDirectedPair('A', 'B'));
     }
     
-    public function testReadDurationEmptyStream() {
+    public function testReadDurationEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1418,7 +1526,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readDuration();
     }
     
-    public function testWriteDurationClosedStream() {
+    public function testWriteDurationClosedStream()
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1433,7 +1542,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeDuration(new QtiDuration('PT0S'));
     }
     
-    public function testReadUriEmptyStream() {
+    public function testReadUriEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1447,7 +1557,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readUri();
     }
     
-    public function testWriteUriClosedStream() {
+    public function testWriteUriClosedStream()
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1462,7 +1573,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeUri(new QtiUri('http://www.taotesting.com'));
     }
     
-    public function testReadIntOrIdentifierEmptyStream() {
+    public function testReadIntOrIdentifierEmptyStream()
+    {
         $stream = new MemoryStream('');
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -1476,7 +1588,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->readIntOrIdentifier();
     }
     
-    public function testWriteIntOrIdentifierClosedStream() {
+    public function testWriteIntOrIdentifierClosedStream()
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());

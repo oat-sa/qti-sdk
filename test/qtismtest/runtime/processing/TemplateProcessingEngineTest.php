@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\processing;
 
 use qtismtest\QtiSmTestCase;
@@ -9,21 +10,25 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\State;
 
-class TemplateProcessingEngineTest extends QtiSmTestCase {
-	
-    public function testWrongInput() {
+class TemplateProcessingEngineTest extends QtiSmTestCase
+{
+    
+    public function testWrongInput()
+    {
         $component = $this->createComponentFromXml('
             <outcomeProcessing>
                 <exitTest/>
             </outcomeProcessing>
         ');
         $this->setExpectedException(
-            '\\InvalidArgumentException', 
-            'The TemplateProcessing class only accepts TemplateProcessing objects to be executed.');
+            '\\InvalidArgumentException',
+            'The TemplateProcessing class only accepts TemplateProcessing objects to be executed.'
+        );
         $templateProcessing = new TemplateProcessingEngine($component);
     }
     
-    public function testVeryBasic() {
+    public function testVeryBasic()
+    {
         $component = $this->createComponentFromXml('
             <templateProcessing>
                 <setTemplateValue identifier="TEMPLATE">
@@ -33,7 +38,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase {
         ');
         
         $state = new State(
-            array(new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1336)))                
+            array(new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1336)))
         );
         
         $engine = new TemplateProcessingEngine($component, $state);
@@ -45,7 +50,8 @@ class TemplateProcessingEngineTest extends QtiSmTestCase {
     /**
      * @depends testVeryBasic
      */
-    public function testExitTemplate() {
+    public function testExitTemplate()
+    {
         $component = $this->createComponentFromXml('
             <templateProcessing>
                 <setTemplateValue identifier="TEMPLATE">
@@ -71,7 +77,8 @@ class TemplateProcessingEngineTest extends QtiSmTestCase {
     /**
      * @depends testVeryBasic
      */
-    public function testTemplateConstraintImpossibleWithTemplateVariableOnly() {
+    public function testTemplateConstraintImpossibleWithTemplateVariableOnly()
+    {
         $component = $this->createComponentFromXml('
             <templateProcessing>
                 <setTemplateValue identifier="TEMPLATE">

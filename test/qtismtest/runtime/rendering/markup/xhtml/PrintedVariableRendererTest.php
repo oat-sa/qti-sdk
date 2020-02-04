@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use qtismtest\QtiSmTestCase;
@@ -11,9 +12,10 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\rendering\markup\xhtml\PrintedVariableRenderer;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-class PrintedVariableRendererTest extends QtiSmTestCase 
+class PrintedVariableRendererTest extends QtiSmTestCase
 {
-    public function testRenderContextStatic() {
+    public function testRenderContextStatic()
+    {
         $ctx = new XhtmlRenderingEngine();
         $pv = new PrintedVariable('OUTCOME1', 'my-id');
         $pv->setFormat('%d');
@@ -41,7 +43,8 @@ class PrintedVariableRendererTest extends QtiSmTestCase
         $this->assertEquals('=', $element->getAttribute('data-mapping-indicator'));
     }
     
-    public function testRenderContextAware() {
+    public function testRenderContextAware()
+    {
         $ctx = new XhtmlRenderingEngine();
         $ctx->setPrintedVariablePolicy(XhtmlRenderingEngine::CONTEXT_AWARE);
         

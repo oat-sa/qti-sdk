@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentItemTestCase;
@@ -121,8 +122,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
             
             // An exception MUST be thrown.
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
@@ -198,8 +198,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
             $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             // The session is closed, you cannot begin another attempt.
             $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
@@ -219,8 +218,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         try {
             $itemSession->endAttempt(new State());
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals("Skipping item 'Q01' is not allowed.", $e->getMessage());
             $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
         }
@@ -229,8 +227,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         try {
             $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER))));
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals("Skipping item 'Q01' is not allowed.", $e->getMessage());
             $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
         }
@@ -253,8 +250,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         try {
             $itemSession->endAttempt(new State());
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals("Skipping item 'default_value' is not allowed.", $e->getMessage());
             $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
             $this->assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
@@ -264,8 +260,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         try {
             $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals("Skipping item 'default_value' is not allowed.", $e->getMessage());
             $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
             $this->assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
@@ -699,9 +694,9 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endAttempt(
             new State([
                 new ResponseVariable(
-                    'RESPONSEB', 
-                    Cardinality::SINGLE, 
-                    BaseType::STRING, 
+                    'RESPONSEB',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
                     new QtiString('')
                 )
             ])
@@ -717,7 +712,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
                 new ResponseVariable(
                     'RESPONSEB',
                     Cardinality::SINGLE,
-                    BaseType::STRING, 
+                    BaseType::STRING,
                     new QtiString('Lorem Ipsum')
                 )
             ])
@@ -816,7 +811,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
                     Cardinality::MULTIPLE,
                     BaseType::IDENTIFIER,
                     new MultipleContainer(
-                        BaseType::IDENTIFIER, 
+                        BaseType::IDENTIFIER,
                         [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')]
                     )
                 )

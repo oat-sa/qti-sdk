@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmTestCase;
@@ -8,9 +9,11 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\tests\TimeConstraint;
 use qtism\data\AssessmentItemRef;
 
-class TimeConstraintTest extends QtiSmTestCase {
+class TimeConstraintTest extends QtiSmTestCase
+{
     
-    public function testInstantiation() {
+    public function testInstantiation()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
         
@@ -18,7 +21,8 @@ class TimeConstraintTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $timeConstraint->getDuration());
     }
     
-    public function testNoConstraints() {
+    public function testNoConstraints()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
         
@@ -29,7 +33,8 @@ class TimeConstraintTest extends QtiSmTestCase {
         $this->assertFalse($timeConstraint->maxTimeInForce());
     }
     
-    public function testNegativeTime() {
+    public function testNegativeTime()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(null, new QtiDuration('PT10S'));
         $assessmentItemRef->setTimeLimits($timeLimits);
@@ -42,7 +47,8 @@ class TimeConstraintTest extends QtiSmTestCase {
         $this->assertFalse($minRemaining);
     }
     
-    public function testDoesAllowLateSubmission() {
+    public function testDoesAllowLateSubmission()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(null, new QtiDuration('PT10S'), true);
         $assessmentItemRef->setTimeLimits($timeLimits);
@@ -59,7 +65,8 @@ class TimeConstraintTest extends QtiSmTestCase {
         $this->assertTrue($timeConstraint->allowLateSubmission());
     }
     
-    public function testRemainingTime() {
+    public function testRemainingTime()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
         $this->assertFalse($timeConstraint->maxTimeInForce());
@@ -82,7 +89,8 @@ class TimeConstraintTest extends QtiSmTestCase {
         $this->assertEquals('PT30S', $timeConstraint->getMaximumRemainingTime()->__toString());
     }
     
-    public function testNonLinearNavigationMode() {
+    public function testNonLinearNavigationMode()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(new QtiDuration('PT1S'), new QtiDuration('PT2S'), false);
         $assessmentItemRef->setTimeLimits($timeLimits);
@@ -94,7 +102,8 @@ class TimeConstraintTest extends QtiSmTestCase {
         $this->assertFalse($timeConstraint->getMinimumRemainingTime());
     }
     
-    public function testLinearNavigationMode() {
+    public function testLinearNavigationMode()
+    {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(new QtiDuration('PT1S'), new QtiDuration('PT2S'), false);
         $assessmentItemRef->setTimeLimits($timeLimits);

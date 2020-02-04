@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\processing;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -15,9 +16,11 @@ use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
-class ResponseProcessingEngineTest extends QtiSmTestCase {
-	
-    public function testResponseProcessingMatchCorrect() {
+class ResponseProcessingEngineTest extends QtiSmTestCase
+{
+    
+    public function testResponseProcessingMatchCorrect()
+    {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
         ');
@@ -57,7 +60,8 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
         $this->assertEquals(0.0, $context['SCORE']->getValue());
     }
     
-    public function testResponseProcessingNoResponseRule() {
+    public function testResponseProcessingNoResponseRule()
+    {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
                 <responseCondition>
@@ -111,8 +115,9 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
         $this->assertEquals(1.0, $context['SCORE']->getValue());
     }
-	
-    public function testResponseProcessingExitResponse() {
+    
+    public function testResponseProcessingExitResponse()
+    {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
                 <setOutcomeValue identifier="OUTCOME">
@@ -134,7 +139,8 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
         $this->assertEquals(1, $state['OUTCOME']->getValue());
     }
     
-    public function testSetOutcomeValueWithSum() {
+    public function testSetOutcomeValueWithSum()
+    {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
                 <responseCondition>

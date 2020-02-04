@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
@@ -8,14 +9,16 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 
-class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase
+{
     
     /**
-     * 
+     *
      * @dataProvider numberXMethodProvider
      * @param string $method
      */
-    public function testNumberXNonRunning($method) {
+    public function testNumberXNonRunning($method)
+    {
         // Test AssessmentTestSession::numberCorrect, numberIncorrect, numberResponded, numberSelected, numberPresented
         //  with a non running test session.
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/subset/number_x.xml');
@@ -29,17 +32,19 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         $this->assertEquals(0, call_user_func(array($session, $method)), 'S0X');
     }
     
-    public function numberXMethodProvider() {
+    public function numberXMethodProvider()
+    {
         return array(
             array('numberCorrect'),
             array('numberIncorrect'),
             array('numberSelected'),
             array('numberPresented'),
-            array('numberResponded')               
+            array('numberResponded')
         );
     }
     
-    public function testNumberXRunning() {
+    public function testNumberXRunning()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/subset/number_x.xml');
         $session->beginTestSession();
         

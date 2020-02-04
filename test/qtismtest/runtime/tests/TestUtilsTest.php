@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmTestCase;
@@ -15,16 +16,19 @@ use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\state\AssociationValidityConstraint;
 use qtism\runtime\tests\Utils as TestUtils;
 
-class TestUtilsTest extends QtiSmTestCase {
+class TestUtilsTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider isResponseValidProvider
      */
-    public function testIsResponseValid($expected, QtiDatatype $response = null, ResponseValidityConstraint $constraint) {
+    public function testIsResponseValid($expected, QtiDatatype $response = null, ResponseValidityConstraint $constraint)
+    {
         $this->assertEquals($expected, TestUtils::isResponseValid($response, $constraint));
     }
     
-    public function isResponseValidProvider() {
+    public function isResponseValidProvider()
+    {
         $tests = array(
             // Null values tests.
             array(true, null, new ResponseValidityConstraint('RESPONSE', 0, 0)),
@@ -97,7 +101,8 @@ class TestUtilsTest extends QtiSmTestCase {
         return $tests;
     }
     
-    public function testIsResponseValidRuntimeException() {
+    public function testIsResponseValidRuntimeException()
+    {
         $this->setExpectedException('\\RuntimeException', "PCRE Engine error");
         
         $valid = TestUtils::isResponseValid(
