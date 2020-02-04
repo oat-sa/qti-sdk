@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\cli;
 
 use qtism\common\utils\Exception as ExceptionUtils;
@@ -29,19 +31,17 @@ use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 use cli\Arguments as Arguments;
-use \DOMXPath;
+use DOMXPath;
 
 /**
  * Render CLI Module.
- * 
+ *
  * This CLI Module enables you to render QTI XML files in various flavours
  * e.g. XHTML or Goldilocks.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Render extends Cli
-{   
+{
+
     /**
      * @see \qtism\cli\Cli::setupArguments()
      */
@@ -92,13 +92,13 @@ class Render extends Cli
         // Novalidate flag.
         $arguments->addFlag(
             array('novalidate', 'n'),
-            'Do not validate QTI XML source.'                
+            'Do not validate QTI XML source.'
         );
         
         // CSS Class Hierarchy flag.
         $arguments->addFlag(
             array('csshierarchy', 'c'),
-            'Full qti- CSS class hierarchy.'                
+            'Full qti- CSS class hierarchy.'
         );
         
         return $arguments;
@@ -160,10 +160,10 @@ class Render extends Cli
     
     /**
      * Renders a QTI XML File into another flavour.
-     * 
+     *
      * This implementations considers that all necessary checks about
      * arguments and their values were performed in \qtism\cli\Render::checkArguments().
-     * 
+     *
      * @see \qtism\cli\Cli::run()
      * @see \qtism\cli\Render::checkArguments()
      */
@@ -229,7 +229,7 @@ class Render extends Cli
     
     /**
      * Run the rendering behaviour related to the "Goldilocks" flavour.
-     * 
+     *
      * @param \qtism\data\storage\xml\XmlDocument $doc the QTI XML document to be rendered.
      * @param \qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine $renderer An instance of GoldilocksRenderingEngine
      * @return string The rendered data as a string.
@@ -266,7 +266,7 @@ class Render extends Cli
             // Take the content of <assessmentItem> and put it into <html>.
             $attributes = $assessmentItemElts->item(0)->attributes;
             foreach ($attributes as $name => $attr) {
-                $htmlAttributes[$name] = $name . '="'. XmlUtils::escapeXmlSpecialChars($attr->value, true) . '"';
+                $htmlAttributes[$name] = $name . '="' . XmlUtils::escapeXmlSpecialChars($attr->value, true) . '"';
             }
     
             while ($attributes->length > 0) {
@@ -316,7 +316,7 @@ class Render extends Cli
     
     /**
      * Run the rendering behaviour related to the "XHTML" flavour.
-     * 
+     *
      * @param \qtism\data\storage\xml\XmlDocument $doc The QTI XML document to be rendered.
      * @param \qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine $renderer
      * @return string The raw rendering data.
@@ -385,10 +385,10 @@ class Render extends Cli
     
     /**
      * Instantiate an appropriate Rendering Engine.
-     * 
+     *
      * The instantiated Rendering Engine implementation will depend on the "flavour"
      * CLI argument.
-     * 
+     *
      * @return \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine
      */
     private function instantiateEngine()
