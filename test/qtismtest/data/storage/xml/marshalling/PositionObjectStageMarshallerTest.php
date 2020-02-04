@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -7,29 +8,32 @@ use qtism\data\content\interactions\PositionObjectStage;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\xhtml\ObjectElement;
-use \DOMDocument;
+use DOMDocument;
 
-class PositionObjectStageMarshallerTest extends QtiSmTestCase {
+class PositionObjectStageMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-	    $interactionObject = new ObjectElement('airplane.jpg', 'image/jpeg');
-	    $interactionObject->setHeight(16);
-	    $interactionObject->setWidth(16);
-	    
-	    $interaction = new PositionObjectInteraction('RESPONSE', $interactionObject);
-	    $interaction->setCenterPoint(new QtiPoint(8, 8));
-	    
-	    $stageObject = new ObjectElement('country.jpg', 'image/jpeg');
-	    $positionObjectStage = new PositionObjectStage($stageObject, new PositionObjectInteractionCollection(array($interaction)));
-	    
+    public function testMarshall()
+    {
+        $interactionObject = new ObjectElement('airplane.jpg', 'image/jpeg');
+        $interactionObject->setHeight(16);
+        $interactionObject->setWidth(16);
+        
+        $interaction = new PositionObjectInteraction('RESPONSE', $interactionObject);
+        $interaction->setCenterPoint(new QtiPoint(8, 8));
+        
+        $stageObject = new ObjectElement('country.jpg', 'image/jpeg');
+        $positionObjectStage = new PositionObjectStage($stageObject, new PositionObjectInteractionCollection(array($interaction)));
+        
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($positionObjectStage)->marshall($positionObjectStage);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<positionObjectStage><object data="country.jpg" type="image/jpeg"/><positionObjectInteraction responseIdentifier="RESPONSE" centerPoint="8 8"><object data="airplane.jpg" type="image/jpeg" width="16" height="16"/></positionObjectInteraction></positionObjectStage>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <positionObjectStage>
                 <object data="country.jpg" type="image/jpeg"/>
@@ -59,5 +63,5 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('image/jpeg', $interactionObject->getType());
         $this->assertEquals(16, $interactionObject->getWidth());
         $this->assertEquals(16, $interactionObject->getHeight());
-	}
+    }
 }

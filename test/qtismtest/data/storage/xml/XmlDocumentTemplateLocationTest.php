@@ -1,11 +1,13 @@
 <?php
+
 namespace qtismtest\data\storage\xml;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 
-class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
+class XmlDocumentTemplateLocationTest extends QtiSmTestCase
+{
 
     /**
      * @param $file
@@ -13,7 +15,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
      * @throws XmlStorageException
      * @dataProvider correctlyFormedProvider
      */
-    public function testCorrectlyFormed($file, $filesystem) {
+    public function testCorrectlyFormed($file, $filesystem)
+    {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
@@ -42,7 +45,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
         ];
     }
     
-    public function testNotLoaded() {
+    public function testNotLoaded()
+    {
         $doc = new XmlDocument();
         
         $this->setExpectedException('\\LogicException', 'Cannot resolve template location before loading any file.');
@@ -55,7 +59,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
      * @throws XmlStorageException
      * @dataProvider wrongTargetProvider
      */
-    public function testWrongTarget($file, $filesystem) {
+    public function testWrongTarget($file, $filesystem)
+    {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
@@ -82,11 +87,12 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
      * @throws XmlStorageException
      * @dataProvider invalidTargetNoValidationProvider
      */
-    public function testInvalidTargetNoValidation($file, $filesystem) {
+    public function testInvalidTargetNoValidation($file, $filesystem)
+    {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {
-           $doc->setFilesystem($this->getFileSystem());
+            $doc->setFilesystem($this->getFileSystem());
         }
 
         $doc->load($file, true);
@@ -109,7 +115,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
      * @throws XmlStorageException
      * @dataProvider invalidTargetValidationProvider
      */
-    public function testInvalidTargetValidation($file, $filesystem) {
+    public function testInvalidTargetValidation($file, $filesystem)
+    {
         $doc = new XmlDocument();
 
         if ($filesystem === true) {

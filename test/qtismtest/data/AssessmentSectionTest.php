@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtism\data\rules\Ordering;
@@ -7,7 +8,7 @@ use qtism\data\AssessmentSection;
 
 class AssessmentSectionTest extends QtiSmTestCase
 {
-	public function testSetTitleWrongType()
+    public function testSetTitleWrongType()
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',

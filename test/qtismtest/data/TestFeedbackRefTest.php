@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
@@ -8,7 +9,7 @@ use qtism\data\ShowHide;
 
 class TestFeedbackRefTest extends QtiSmTestCase
 {
-	public function testSetAccessWrongType()
+    public function testSetAccessWrongType()
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',

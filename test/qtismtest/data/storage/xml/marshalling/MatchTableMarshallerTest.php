@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -9,52 +10,55 @@ use qtism\data\state\MatchTableEntryCollection;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\common\datatypes\QtiPair;
-use \DOMDocument;
+use DOMDocument;
 
-class MatchTableMarshallerTest extends QtiSmTestCase {
+class MatchTableMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
+    public function testMarshall()
+    {
 
-		$matchTableEntryCollection = new MatchTableEntryCollection();
-		$matchTableEntryCollection[] = new MatchTableEntry(1, new QtiPair('A', 'B'));
-		$matchTableEntryCollection[] = new MatchTableEntry(2, new QtiPair('A', 'C'));
-		
-		$component = new MatchTable($matchTableEntryCollection);
-		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::PAIR));
-		$element = $marshaller->marshall($component);
-		
-		$this->assertInstanceOf('\\DOMElement', $element);
-		$this->assertEquals('matchTable', $element->nodeName);
-		
-		$entryElements = $element->getElementsByTagName('matchTableEntry');
-		$this->assertEquals(2, $entryElements->length);
-		$entry = $entryElements->item(0);
-		$this->assertEquals($entry->getAttribute('targetValue'), 'A B');
-		$this->assertEquals($entry->nodeName, 'matchTableEntry');
-		$this->assertEquals($entry->getAttribute('sourceValue'), '1');
-	}
-	
-	public function testUnmarshall() {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML(
-			'
+        $matchTableEntryCollection = new MatchTableEntryCollection();
+        $matchTableEntryCollection[] = new MatchTableEntry(1, new QtiPair('A', 'B'));
+        $matchTableEntryCollection[] = new MatchTableEntry(2, new QtiPair('A', 'C'));
+        
+        $component = new MatchTable($matchTableEntryCollection);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::PAIR));
+        $element = $marshaller->marshall($component);
+        
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('matchTable', $element->nodeName);
+        
+        $entryElements = $element->getElementsByTagName('matchTableEntry');
+        $this->assertEquals(2, $entryElements->length);
+        $entry = $entryElements->item(0);
+        $this->assertEquals($entry->getAttribute('targetValue'), 'A B');
+        $this->assertEquals($entry->nodeName, 'matchTableEntry');
+        $this->assertEquals($entry->getAttribute('sourceValue'), '1');
+    }
+    
+    public function testUnmarshall()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
 			<matchTable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
 				<matchTableEntry sourceValue="1" targetValue="A B"/>
 				<matchTableEntry sourceValue="2" targetValue="A C"/>
 			</matchTable>
 			'
-		);
-		$element = $dom->documentElement;
+        );
+        $element = $dom->documentElement;
 
-		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::DIRECTED_PAIR));
-		$component = $marshaller->unmarshall($element);
-		
-		$this->assertInstanceOf('qtism\\data\\state\\MatchTable', $component);
-		$matchTableEntries = $component->getMatchTableEntries();
-		$this->assertEquals(2, count($matchTableEntries));
-		$entry = $matchTableEntries[0];
-		$this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $entry);
-		$this->assertEquals(1, $entry->getSourceValue());
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $entry->getTargetValue());
-	}
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::DIRECTED_PAIR));
+        $component = $marshaller->unmarshall($element);
+        
+        $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $component);
+        $matchTableEntries = $component->getMatchTableEntries();
+        $this->assertEquals(2, count($matchTableEntries));
+        $entry = $matchTableEntries[0];
+        $this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $entry);
+        $this->assertEquals(1, $entry->getSourceValue());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $entry->getTargetValue());
+    }
 }

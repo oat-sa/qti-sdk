@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
@@ -7,7 +8,7 @@ use qtism\data\content\FlowStaticCollection;
 
 class TestFeedbackTest extends QtiSmTestCase
 {
-	public function testSetAccessWrongType()
+    public function testSetAccessWrongType()
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
         

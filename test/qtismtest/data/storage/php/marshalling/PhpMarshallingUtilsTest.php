@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -6,19 +7,22 @@ use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\storage\php\marshalling\Utils as PhpMarshallingUtils;
 
-class PhpMarshallingUtilsTest extends QtiSmTestCase {
-	
+class PhpMarshallingUtilsTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider variableNameDataProvider
      * @param mixed $value
      * @param integer $occurence
      * @param string $expected
      */
-    public function testVariableName($value, $occurence, $expected) {
+    public function testVariableName($value, $occurence, $expected)
+    {
         $this->assertEquals($expected, PhpMarshallingUtils::variableName($value, $occurence));
     }
     
-    public function variableNameDataProvider() {
+    public function variableNameDataProvider()
+    {
         return array(
             array(null, 0, 'scalarnullvalue_0'),
             array(null, 1, 'scalarnullvalue_1'),

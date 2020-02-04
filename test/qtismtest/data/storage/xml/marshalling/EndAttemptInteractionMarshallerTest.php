@@ -1,24 +1,25 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\EndAttemptInteraction;
-use \DOMDocument;
+use DOMDocument;
 
 class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 {
-	public function testMarshall()
+    public function testMarshall()
     {
-	    $endAttemptInteraction = new EndAttemptInteraction('BOOL_RESP', 'End the attempt now!', 'my-end', 'ending');
+        $endAttemptInteraction = new EndAttemptInteraction('BOOL_RESP', 'End the attempt now!', 'my-end', 'ending');
         $endAttemptInteraction->setXmlBase('/home/jerome');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($endAttemptInteraction)->marshall($endAttemptInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!" xml:base="/home/jerome"/>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall()
+    }
+    
+    public function testUnmarshall()
     {
         $element = $this->createDOMElement('
             <endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!" xml:base="/home/jerome"/>
@@ -31,7 +32,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
         $this->assertEquals('BOOL_RESP', $component->getResponseIdentifier());
         $this->assertEquals('End the attempt now!', $component->getTitle());
         $this->assertEquals('/home/jerome', $component->getXmlBase());
-	}
+    }
     
     /**
      * @depends testUnmarshall
@@ -44,7 +45,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
         
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertEquals('', $component->getTitle());
-	}
+    }
     
     /**
      * @depends testUnmarshall
@@ -61,5 +62,5 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
         );
         
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-	}
+    }
 }

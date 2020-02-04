@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\content\interactions;
 
 use qtism\data\content\interactions\OrderInteraction;
@@ -16,7 +17,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
         
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection([])
+            'RESPONSE',
+            new SimpleChoiceCollection([])
         );
     }
     
@@ -28,7 +30,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
             
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection(
+            'RESPONSE',
+            new SimpleChoiceCollection(
                 [
                     new SimpleChoice('ChoiceA'),
                     new SimpleChoice('ChoiceB')
@@ -47,7 +50,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
         
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection(
+            'RESPONSE',
+            new SimpleChoiceCollection(
                 [
                     new SimpleChoice('ChoiceA'),
                     new SimpleChoice('ChoiceB')
@@ -66,7 +70,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
         
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection(
+            'RESPONSE',
+            new SimpleChoiceCollection(
                 [
                     new SimpleChoice('ChoiceA'),
                     new SimpleChoice('ChoiceB')
@@ -85,7 +90,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
         
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection(
+            'RESPONSE',
+            new SimpleChoiceCollection(
                 [
                     new SimpleChoice('ChoiceA'),
                     new SimpleChoice('ChoiceB')
@@ -104,7 +110,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
         
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection(
+            'RESPONSE',
+            new SimpleChoiceCollection(
                 [
                     new SimpleChoice('ChoiceA'),
                     new SimpleChoice('ChoiceB')
@@ -124,7 +131,8 @@ class OrderInteractionTest extends QtiSmTestCase
         );
         
         $orderInteraction = new OrderInteraction(
-            'RESPONSE', new SimpleChoiceCollection(
+            'RESPONSE',
+            new SimpleChoiceCollection(
                 [
                     new SimpleChoice('ChoiceA'),
                     new SimpleChoice('ChoiceB')

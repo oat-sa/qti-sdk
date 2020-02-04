@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\state;
 
 use qtism\common\enums\BaseType;

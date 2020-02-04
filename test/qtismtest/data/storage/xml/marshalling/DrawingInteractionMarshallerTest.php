@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -8,27 +9,27 @@ use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\DrawingInteraction;
 use qtism\data\content\xhtml\ObjectElement;
-use \DOMDocument;
+use DOMDocument;
 
 class DrawingInteractionMarshallerTest extends QtiSmTestCase
 {
-	public function testMarshall()
+    public function testMarshall()
     {
-	    $object = new ObjectElement('my-canvas.png', 'image/png');
-	    $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
-	    $drawingInteraction->setXmlBase('/home/jerome');
-	    $prompt = new Prompt();
-	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
-	    $drawingInteraction->setPrompt($prompt);
-	    
+        $object = new ObjectElement('my-canvas.png', 'image/png');
+        $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
+        $drawingInteraction->setXmlBase('/home/jerome');
+        $prompt = new Prompt();
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
+        $drawingInteraction->setPrompt($prompt);
+        
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($drawingInteraction)->marshall($drawingInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-canvas.png" type="image/png"/></drawingInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall()
+    }
+    
+    public function testUnmarshall()
     {
         $element = $this->createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE" xml:base="/home/jerome">
@@ -50,7 +51,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         
         $promptContent = $component->getPrompt()->getContent();
         $this->assertEquals('Prompt...', $promptContent[0]->getContent());
-	}
+    }
     
     /**
      * @depends testUnmarshall

@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtism\data\content\InlineCollection;
@@ -9,7 +10,7 @@ use qtism\data\QtiComponentCollection;
 
 class QtiComponentCollectionTest extends QtiSmTestCase
 {
-	public function testInsertWrongType()
+    public function testInsertWrongType()
     {
         $collection = new QtiComponentCollection();
         

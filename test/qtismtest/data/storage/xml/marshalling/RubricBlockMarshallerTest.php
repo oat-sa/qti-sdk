@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -12,11 +13,13 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\H3;
 use qtism\data\content\Stylesheet;
-use \DOMDocument;
+use DOMDocument;
 
-class RubricBlockMarshallerTest extends QtiSmTestCase {
+class RubricBlockMarshallerTest extends QtiSmTestCase
+{
 
-	public function testUnmarshall() {
+    public function testUnmarshall()
+    {
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" view="candidate tutor" xml:base="/home/jerome">
                 <h3>Be carefull kiddo !</h3>inner text<p>Read the instructions twice.</p>
@@ -42,12 +45,13 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('./stylesheet.css', $stylesheets[0]->getHref());
         $this->assertEquals('text/css', $stylesheets[0]->getType());
         $this->assertEquals('screen', $stylesheets[0]->getMedia());
-	}
+    }
     
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoViewsAttribute() {
+    public function testUnmarshallNoViewsAttribute()
+    {
         
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -60,12 +64,13 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
                 <stylesheet href="./stylesheet.css" type="text/css" media="screen"/>
             </rubricBlock>
         ');
-	}
+    }
     
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidContent() {
+    public function testUnmarshallInvalidContent()
+    {
         
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -79,12 +84,13 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
                 </choiceInteraction>
             </rubricBlock>
         ');
-	}
-	
+    }
+    
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallApipAccessibilityInRubricBlock() {
+    public function testUnmarshallApipAccessibilityInRubricBlock()
+    {
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" view="candidate tutor" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
                 <h3>Be carefull kiddo !</h3>
@@ -95,29 +101,30 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
         ');
         
         $this->assertInstanceOf('qtism\\data\\content\\RubricBlock', $rubricBlock);
-	}
-	
-	public function testMarshall() {
+    }
+    
+    public function testMarshall()
+    {
 
-	    $stylesheet = new Stylesheet('./stylesheet.css');
-	    
-	    $h3 = new H3();
-	    $h3->setContent(new InlineCollection(array(new TextRun('Be carefull kiddo!'))));
-	    
-	    $p = new P();
-	    $p->setContent(new InlineCollection(array(new TextRun('Read the instructions twice.'))));
-	    
-	    $rubricBlock = new RubricBlock(new ViewCollection(array(View::CANDIDATE, View::TUTOR)));
-	    $rubricBlock->setClass('warning');
-	    $rubricBlock->setContent(new FlowStaticCollection((array($h3, $p))));
-	    $rubricBlock->setStylesheets(new StylesheetCollection(array($stylesheet)));
+        $stylesheet = new Stylesheet('./stylesheet.css');
+        
+        $h3 = new H3();
+        $h3->setContent(new InlineCollection(array(new TextRun('Be carefull kiddo!'))));
+        
+        $p = new P();
+        $p->setContent(new InlineCollection(array(new TextRun('Read the instructions twice.'))));
+        
+        $rubricBlock = new RubricBlock(new ViewCollection(array(View::CANDIDATE, View::TUTOR)));
+        $rubricBlock->setClass('warning');
+        $rubricBlock->setContent(new FlowStaticCollection((array($h3, $p))));
+        $rubricBlock->setStylesheets(new StylesheetCollection(array($stylesheet)));
         $rubricBlock->setXmlBase('/home/jerome');
         $rubricBlock->setUse('Some use!');
-	    
-	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($rubricBlock)->marshall($rubricBlock);
-	    $dom = new DOMDocument('1.0', 'UTF-8');
-	    $element = $dom->importNode($element, true);
-	    
-	    $this->assertEquals('<rubricBlock view="candidate tutor" use="Some use!" xml:base="/home/jerome" class="warning"><h3>Be carefull kiddo!</h3><p>Read the instructions twice.</p><stylesheet href="./stylesheet.css" media="screen" type="text/css"/></rubricBlock>', $dom->saveXML($element));
-	}
+        
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($rubricBlock)->marshall($rubricBlock);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        
+        $this->assertEquals('<rubricBlock view="candidate tutor" use="Some use!" xml:base="/home/jerome" class="warning"><h3>Be carefull kiddo!</h3><p>Read the instructions twice.</p><stylesheet href="./stylesheet.css" media="screen" type="text/css"/></rubricBlock>', $dom->saveXML($element));
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: tom
@@ -12,7 +13,6 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
-
 
 class ExpressionTest extends QtiSmTestCase
 {
@@ -33,8 +33,10 @@ class ExpressionTest extends QtiSmTestCase
         $impures = ['Q5', 'Q37', 'Q47', 'Q48', 'Q49', 'Q50', 'Q52', 'Q53', 'Q55'];
 
         for ($i = 1; $i < 56; $i++) {
-            $this->assertEquals(!in_array('Q' . $i, $impures),
-                $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->IsPure());
+            $this->assertEquals(
+                !in_array('Q' . $i, $impures),
+                $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->IsPure()
+            );
         }
     }
 
@@ -59,7 +61,6 @@ class ExpressionTest extends QtiSmTestCase
         $maxTest = 56;
 
         if ($handle) {
-
             $lineNumber = 1;
 
             while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
@@ -71,8 +72,10 @@ class ExpressionTest extends QtiSmTestCase
         }
 
         for ($i = 1; $i < $maxTest; $i++) {
-            $this->assertEquals($qtiPLExpressions["Q" . $i],
-                $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()));
+            $this->assertEquals(
+                $qtiPLExpressions["Q" . $i],
+                $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression())
+            );
         }
     }
 
@@ -90,7 +93,6 @@ class ExpressionTest extends QtiSmTestCase
         $maxTest = 36 + 1;
 
         if ($handle) {
-
             $lineNumber = 1;
 
             while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
@@ -102,8 +104,10 @@ class ExpressionTest extends QtiSmTestCase
         }
 
         for ($i = 1; $i < $maxTest; $i++) {
-            $this->assertEquals($qtiPLExpressions["Q" . $i],
-                $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()));
+            $this->assertEquals(
+                $qtiPLExpressions["Q" . $i],
+                $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression())
+            );
         }
     }
 }

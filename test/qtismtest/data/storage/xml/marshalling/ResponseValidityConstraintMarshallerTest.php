@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -6,11 +7,13 @@ use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\state\AssociationValidityConstraint;
 use qtism\data\state\AssociationValidityConstraintCollection;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
-use \DOMDocument;
+use DOMDocument;
 
-class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
+class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
+{
     
-    public function testUnmarshallSimple() {
+    public function testUnmarshallSimple()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>');
         $element = $dom->documentElement;
@@ -27,7 +30,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallWithAssociationConstraints() {
+    public function testUnmarshallWithAssociationConstraints()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
             <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1">
@@ -54,7 +58,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallWithPatternMask() {
+    public function testUnmarshallWithPatternMask()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="/.+/ui"/>');
         $element = $dom->documentElement;
@@ -67,7 +72,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallNoResponseIdentifier() {
+    public function testUnmarshallNoResponseIdentifier()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint minConstraint="0" maxConstraint="1"/>');
         $element = $dom->documentElement;
@@ -83,7 +89,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallNoMinConstraint() {
+    public function testUnmarshallNoMinConstraint()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" maxConstraint="1"/>');
         $element = $dom->documentElement;
@@ -99,7 +106,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallNoMaxConstraint() {
+    public function testUnmarshallNoMaxConstraint()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0"/>');
         $element = $dom->documentElement;
@@ -115,7 +123,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallInvalidMaxConstraintOne() {
+    public function testUnmarshallInvalidMaxConstraintOne()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="-2"/>');
         $element = $dom->documentElement;
@@ -131,7 +140,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testUnmarshallSimple
      */
-    public function testUnmarshallInvalidMaxConstraintTwo() {
+    public function testUnmarshallInvalidMaxConstraintTwo()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="2" maxConstraint="1"/>');
         $element = $dom->documentElement;
@@ -144,7 +154,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
     
-    public function testMarshallSimple() {
+    public function testMarshallSimple()
+    {
         $component = new ResponseValidityConstraint('RESPONSE', 0, 1, '/.+/ui');
         $factory = new CompactMarshallerFactory();
         
@@ -158,7 +169,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     /**
      * @depends testMarshallSimple
      */
-    public function testMarshallWithAssociationConstraints() {
+    public function testMarshallWithAssociationConstraints()
+    {
         $component = new ResponseValidityConstraint('RESPONSE', 0, 1);
         $component->setAssociationValidityConstraints(
             new AssociationValidityConstraintCollection(

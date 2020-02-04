@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\expressions\operators;
 
 use qtismtest\QtiSmEnumTestCase;

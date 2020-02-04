@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -8,31 +9,31 @@ use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\Orientation;
 use qtism\data\content\interactions\SliderInteraction;
-use \DOMDocument;
+use DOMDocument;
 
 class SliderInteractionMarshallerTest extends QtiSmTestCase
 {
-	public function testMarshall()
+    public function testMarshall()
     {
-	    $sliderInteraction = new SliderInteraction('RESPONSE', 0.0, 100.0, 'my-slider', 'slide-it');
-	    $sliderInteraction->setStep(1);
-	    $sliderInteraction->setStepLabel(true);
-	    $sliderInteraction->setOrientation(Orientation::VERTICAL);
-	    $sliderInteraction->setReverse(true);
+        $sliderInteraction = new SliderInteraction('RESPONSE', 0.0, 100.0, 'my-slider', 'slide-it');
+        $sliderInteraction->setStep(1);
+        $sliderInteraction->setStepLabel(true);
+        $sliderInteraction->setOrientation(Orientation::VERTICAL);
+        $sliderInteraction->setReverse(true);
         $sliderInteraction->setXmlBase('/home/jerome');
-	    
-	    $prompt = new Prompt();
-	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
-	    $sliderInteraction->setPrompt($prompt);
-	    
+        
+        $prompt = new Prompt();
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
+        $sliderInteraction->setPrompt($prompt);
+        
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($sliderInteraction)->marshall($sliderInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true" xml:base="/home/jerome"><prompt>Prompt...</prompt></sliderInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall()
+    }
+    
+    public function testUnmarshall()
     {
         $element = $this->createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">
@@ -54,7 +55,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         $this->assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
         $this->assertEquals('Prompt...', $promptContent[0]->getContent());
-	}
+    }
     
     /**
      * @depends testUnmarshall
@@ -73,7 +74,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         );
         
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-	}
+    }
     
     /**
      * @depends testUnmarshall
@@ -92,7 +93,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         );
         
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-	}
+    }
     
     /**
      * @depends testUnmarshall
@@ -111,7 +112,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         );
         
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-	}
+    }
     
     /**
      * @depends testUnmarshall
@@ -130,5 +131,5 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         );
         
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-	}
+    }
 }

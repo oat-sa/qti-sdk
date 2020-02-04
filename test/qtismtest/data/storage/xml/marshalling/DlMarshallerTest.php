@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -9,11 +10,13 @@ use qtism\data\content\xhtml\lists\Dd;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\lists\Dt;
-use \DOMDocument;
+use DOMDocument;
 
-class DlMarshallerTest extends QtiSmTestCase {
+class DlMarshallerTest extends QtiSmTestCase
+{
 
-	public function testUnmarshall() {
+    public function testUnmarshall()
+    {
         $dl = $this->createComponentFromXml('
             <dl id="my-description-list">
                <dt>Cola</dt>
@@ -53,10 +56,11 @@ class DlMarshallerTest extends QtiSmTestCase {
         $dd2Content = $dd2->getContent();
         $this->assertEquals(1, count($dd2Content));
         $this->assertEquals('Hot water with something.', $dd2Content[0]->getContent());
-	}
-	
-	
-	public function testMarshall() {
+    }
+    
+    
+    public function testMarshall()
+    {
         $dt1 = new Dt();
         $dt1->setContent(new InlineCollection(array(new TextRun('Cola'))));
         
@@ -78,5 +82,5 @@ class DlMarshallerTest extends QtiSmTestCase {
         $element = $dom->importNode($element, true);
         
         $this->assertEquals('<dl id="my-description-list"><dt>Cola</dt><dd class="soda">Black sparkling soda.</dd><dt class="beverage">Tea</dt><dd>Hot water with something</dd></dl>', $dom->saveXML($element));
-	}
+    }
 }

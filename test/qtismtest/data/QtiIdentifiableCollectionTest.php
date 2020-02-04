@@ -1,40 +1,43 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 
-class QtiIdentifiableCollectionTest extends QtiSmTestCase {
-	
-	public function testWithWeights() {
-		
-		$weight1 = new Weight('weight1', 1.0);
-		$weight2 = new Weight('weight2', 1.1);
-		$weight3 = new Weight('weight3', 1.2);
-		$weights = new WeightCollection(array($weight1, $weight2, $weight3));
-		
-		$this->assertTrue($weights['weight1'] === $weight1);
-		$this->assertTrue($weights['weight2'] === $weight2);
-		$this->assertTrue($weights['weight3'] === $weight3);
-		
-		$this->assertTrue($weights['weightX'] === null);
+class QtiIdentifiableCollectionTest extends QtiSmTestCase
+{
+    
+    public function testWithWeights()
+    {
+        
+        $weight1 = new Weight('weight1', 1.0);
+        $weight2 = new Weight('weight2', 1.1);
+        $weight3 = new Weight('weight3', 1.2);
+        $weights = new WeightCollection(array($weight1, $weight2, $weight3));
+        
+        $this->assertTrue($weights['weight1'] === $weight1);
+        $this->assertTrue($weights['weight2'] === $weight2);
+        $this->assertTrue($weights['weight3'] === $weight3);
+        
+        $this->assertTrue($weights['weightX'] === null);
         $this->assertFalse(isset($weights['weightX']));
-		
-		// Can I address the by identifier?
-		$this->assertTrue($weights['weight2'] === $weight2);
-		
-		// What happens if I change the identifier of an object.
-		// Is it adressable with the new identifier?
-		$weight2->setIdentifier('weightX');
-		$this->assertTrue($weights['weightX'] === $weight2);
-		$this->assertFalse(isset($weights['weight2']));
+        
+        // Can I address the by identifier?
+        $this->assertTrue($weights['weight2'] === $weight2);
+        
+        // What happens if I change the identifier of an object.
+        // Is it adressable with the new identifier?
+        $weight2->setIdentifier('weightX');
+        $this->assertTrue($weights['weightX'] === $weight2);
+        $this->assertFalse(isset($weights['weight2']));
         $this->assertTrue(isset($weights['weightX']));
         
         // What happens if I remove an object?
         unset($weights['weightX']);
         $this->assertFalse(isset($weights['weightX']));
-	}
+    }
     
     /**
      * @depends testWithWeights
@@ -42,9 +45,9 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
     public function testReplace()
     {
         $weight1 = new Weight('weight1', 1.0);
-		$weight2 = new Weight('weight2', 1.1);
-		$weight3 = new Weight('weight3', 1.2);
-		$weights = new WeightCollection(array($weight1, $weight2, $weight3));
+        $weight2 = new Weight('weight2', 1.1);
+        $weight3 = new Weight('weight3', 1.2);
+        $weights = new WeightCollection(array($weight1, $weight2, $weight3));
         
         // Let's replace weight2 with another Weight object having the same identifier.
         $this->assertSame($weight2, $weights['weight2']);
@@ -84,7 +87,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
         $weight2 = new Weight('weight2', 1.2);
         $weight3 = new Weight('weight3', 1.3);
         
-		$weights = new WeightCollection(array($weight1, $weight2));
+        $weights = new WeightCollection(array($weight1, $weight2));
         
         $this->setExpectedException(
             '\\UnexpectedValueException',
@@ -100,7 +103,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
     {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.2);
-		$weights = new WeightCollection(array($weight1, $weight2));
+        $weights = new WeightCollection(array($weight1, $weight2));
         
         $this->assertCount(2, $weights);
         $this->assertTrue(isset($weights['weight1']));
@@ -126,7 +129,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.2);
         $weight3 = new Weight('weight3', 1.2);
-		$weights = new WeightCollection(array($weight1, $weight2, $weight3));
+        $weights = new WeightCollection(array($weight1, $weight2, $weight3));
         
         // If weight2 gets a new identifier "weight4", it should still be in second position in the collection.
         $this->assertSame(

@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\php;
 
 use qtismtest\QtiSmTestCase;
@@ -8,36 +9,40 @@ use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\PhpStreamAccess;
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\IStream;
-use \stdClass;
+use stdClass;
 
-class PhpStreamAccessTest extends QtiSmTestCase {
-	
+class PhpStreamAccessTest extends QtiSmTestCase
+{
+    
     /**
      * A stream to be used in each test of this test case.
-     * 
+     *
      * @var MemoryStream
      */
     private $stream;
     
     /**
      * Set the stream to be used in each test of this test case.
-     * 
+     *
      * @param MemoryStream $stream
      */
-    protected function setStream(MemoryStream $stream) {
+    protected function setStream(MemoryStream $stream)
+    {
         $this->stream = $stream;
     }
     
     /**
      * Get the stream to be used in each test of this test case.
-     * 
+     *
      * @return MemoryStream
      */
-    protected function getStream() {
+    protected function getStream()
+    {
         return $this->stream;
     }
     
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         
         $stream = new MemoryStream();
@@ -45,7 +50,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->setStream($stream);
     }
     
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
         
         if ($this->getStream()->isOpen()) {
@@ -53,7 +59,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         }
     }
     
-    public function testInstantiation() {
+    public function testInstantiation()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpStreamAccess', $access);
     }
@@ -63,19 +70,22 @@ class PhpStreamAccessTest extends QtiSmTestCase {
      * @param string $toWrite
      * @param string $expected
      */
-    public function testWriteScalar($toWrite, $expected) {
+    public function testWriteScalar($toWrite, $expected)
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScalar($toWrite);
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
     
-    public function testWriteScalarInvalidData() {
+    public function testWriteScalarInvalidData()
+    {
         $this->setExpectedException('\\InvalidArgumentException');
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScalar(new stdClass());
     }
     
-    public function testWriteScalarCloseStream() {
+    public function testWriteScalarCloseStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -88,7 +98,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeScalar(10);
     }
     
-    public function testWriteEquals() {
+    public function testWriteEquals()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeEquals();
         $this->assertEquals(" = ", $this->getStream()->getBinary());
@@ -98,7 +109,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals("=", $this->getStream()->getBinary());
     }
     
-    public function testWriteEqualsClosedStream() {
+    public function testWriteEqualsClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -111,13 +123,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeEquals();
     }
     
-    public function testWriteNewline() {
+    public function testWriteNewline()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeNewline();
         $this->assertEquals("\n", $this->getStream()->getBinary());
     }
     
-    public function testWriteNewlineClosedStream() {
+    public function testWriteNewlineClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -130,7 +144,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeNewline();
     }
     
-    public function testWriteOpeningTag() {
+    public function testWriteOpeningTag()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeOpeningTag();
         $this->assertEquals("<?php\n", $this->getStream()->getBinary());
@@ -140,7 +155,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals("<?php", $this->getStream()->getBinary());
     }
     
-    public function testWriteOpeningTagClosedStream() {
+    public function testWriteOpeningTagClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -153,7 +169,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeOpeningTag();
     }
     
-    public function testWriteClosingTag() {
+    public function testWriteClosingTag()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeClosingTag();
         $this->assertEquals("\n?>", $this->getStream()->getBinary());
@@ -164,7 +181,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals("?>", $this->getStream()->getBinary());
     }
     
-    public function testWriteClosingTagClosedStream() {
+    public function testWriteClosingTagClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -177,7 +195,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeClosingTag();
     }
     
-    public function testWriteSemicolon() {
+    public function testWriteSemicolon()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeSemicolon();
         $this->assertEquals(";\n", $this->getStream()->getBinary());
@@ -187,7 +206,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(";", $this->getStream()->getBinary());
     }
     
-    public function testWriteSemicolonClosedStream() {
+    public function testWriteSemicolonClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -200,13 +220,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeSemicolon();
     }
     
-    public function testWriteScopeResolution() {
+    public function testWriteScopeResolution()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScopeResolution();
         $this->assertEquals("::", $this->getStream()->getBinary());
     }
     
-    public function testWriteScopeResolutionClosedStream() {
+    public function testWriteScopeResolutionClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -219,13 +241,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeScopeResolution();
     }
     
-    public function testWriteOpeningParenthesis() {
+    public function testWriteOpeningParenthesis()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeOpeningParenthesis();
         $this->assertEquals("(", $this->getStream()->getBinary());
     }
     
-    public function testWriteOpeningParenthesisClosedStream() {
+    public function testWriteOpeningParenthesisClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -238,13 +262,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeOpeningParenthesis();
     }
     
-    public function testWriteClosingParenthesis() {
+    public function testWriteClosingParenthesis()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeClosingParenthesis();
         $this->assertEquals(")", $this->getStream()->getBinary());
     }
     
-    public function testWriteClosingParenthesisClosedStream() {
+    public function testWriteClosingParenthesisClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -257,7 +283,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeClosingParenthesis();
     }
     
-    public function testWriteComma() {
+    public function testWriteComma()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeComma();
         $this->assertEquals(", ", $this->getStream()->getBinary());
@@ -267,7 +294,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(",", $this->getStream()->getBinary());
     }
     
-    public function testWriteCommaClosedStream() {
+    public function testWriteCommaClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -280,13 +308,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeComma();
     }
     
-    public function testWriteSpace() {
+    public function testWriteSpace()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeSpace();
         $this->assertEquals(" ", $this->getStream()->getBinary());
     }
     
-    public function testWriteSpaceClosedStream() {
+    public function testWriteSpaceClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -299,13 +329,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeSpace();
     }
     
-    public function testWriteVariable() {
+    public function testWriteVariable()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeVariable('foobar');
         $this->assertEquals('$foobar', $this->getStream()->getBinary());
     }
     
-    public function testWriteVariableClosedStream() {
+    public function testWriteVariableClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -318,13 +350,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeVariable('foobar');
     }
     
-    public function testWriteObjectOperator() {
+    public function testWriteObjectOperator()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeObjectOperator();
         $this->assertEquals("->", $this->getStream()->getBinary());
     }
     
-    public function testWriteObjectOperatorClosedStream() {
+    public function testWriteObjectOperatorClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -338,19 +372,21 @@ class PhpStreamAccessTest extends QtiSmTestCase {
     }
     
     /**
-     * 
+     *
      * @dataProvider writeFunctionCallDataProvider
      * @param string $expected
      * @param string $funcname
      * @param PhpArgumentCollection $arguments
      */
-    public function testWriteFunctionCall($expected, $funcname, PhpArgumentCollection $arguments = null) {
+    public function testWriteFunctionCall($expected, $funcname, PhpArgumentCollection $arguments = null)
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeFunctionCall($funcname, $arguments);
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
     
-    public function testWriteFunctionCallClosedStream() {
+    public function testWriteFunctionCallClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -363,7 +399,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeFunctionCall('callMe');
     }
     
-    public function testWriteNew() {
+    public function testWriteNew()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeNew();
         $this->assertEquals('new ', $this->getStream()->getBinary());
@@ -373,7 +410,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('new', $this->getStream()->getBinary());
     }
     
-    public function testWriteNewClosedStream() {
+    public function testWriteNewClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -386,13 +424,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeNew();
     }
     
-    public function testWriteColon() {
+    public function testWriteColon()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeColon();
         $this->assertEquals(":", $this->getStream()->getBinary());
     }
     
-    public function testWriteColonClosedStream() {
+    public function testWriteColonClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -406,19 +446,21 @@ class PhpStreamAccessTest extends QtiSmTestCase {
     }
     
     /**
-     * 
+     *
      * @dataProvider writeInstantiationDataProvider
      * @param string $expected
      * @param string $classname
      * @param PhpArgumentCollection $arguments
      */
-    public function testWriteInstantiation($expected, $classname, PhpArgumentCollection $arguments = null) {
+    public function testWriteInstantiation($expected, $classname, PhpArgumentCollection $arguments = null)
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeInstantiation($classname, $arguments);
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
     
-    public function testWriteInstantiationClosedStream() {
+    public function testWriteInstantiationClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -431,13 +473,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeInstantiation('stdClass');
     }
     
-    public function testWritePaamayimNekudotayim() {
+    public function testWritePaamayimNekudotayim()
+    {
         $access = new PhpStreamAccess($this->getStream());
         $access->writePaamayimNekudotayim();
         $this->assertEquals("::", $this->getStream()->getBinary());
     }
     
-    public function testWritePaamayimNekudotayimClosedStream() {
+    public function testWritePaamayimNekudotayimClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -450,7 +494,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writePaamayimNekudotayim();
     }
     
-    public function testWriteStaticMethodCall() {
+    public function testWriteStaticMethodCall()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $access->writeMethodCall('foo', 'bar', null, true);
@@ -458,7 +503,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('$foo::bar()', $stream->getBinary());
     }
     
-    public function testWriteStaticMethodCallClosedStream() {
+    public function testWriteStaticMethodCallClosedStream()
+    {
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
         $stream->close();
@@ -471,7 +517,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeMethodCall('foo', 'bar', null, true);
     }
     
-    public function testWriteArgumentsCloseStream() {
+    public function testWriteArgumentsCloseStream()
+    {
         $arguments = new PhpArgumentCollection(array(new PhpArgument(10)));
         $stream = $this->getStream();
         $access = new PhpStreamAccess($stream);
@@ -485,7 +532,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeArguments($arguments);
     }
     
-    public function writeScalarDataProvider() {
+    public function writeScalarDataProvider()
+    {
         return array(
             array('', '""'),
             array("\"", "\"\\\"\""),
@@ -507,7 +555,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         );
     }
     
-    public function writeFunctionCallDataProvider() {
+    public function writeFunctionCallDataProvider()
+    {
         return array(
             array('call_user_func()', 'call_user_func', null),
             array('call_user_func_array($array)', 'call_user_func_array', new PhpArgumentCollection(array(new PhpArgument(new PhpVariable('array'))))),
@@ -515,7 +564,8 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         );
     }
     
-    public function writeInstantiationDataProvider() {
+    public function writeInstantiationDataProvider()
+    {
         return array(
             array('new stdClass()', 'stdClass', null),
             array('new A(true, "This is a test!", 20, 20.3, null, $foo)', 'A', new PhpArgumentCollection(array(new PhpArgument(true), new PhpArgument('This is a test!'), new PhpArgument(20), new PhpArgument(20.3), new PhpArgument(null), new PhpArgument(new PhpVariable('foo')))))

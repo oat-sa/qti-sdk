@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
@@ -14,7 +15,7 @@ use qtism\common\enums\BaseType;
 
 class AssessmentItemRefTest extends QtiSmTestCase
 {
-	public function testCreateAssessmentItemRefWrongIdentifier()
+    public function testCreateAssessmentItemRefWrongIdentifier()
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',

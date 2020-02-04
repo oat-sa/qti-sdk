@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
@@ -9,11 +10,13 @@ use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\H1;
-use \DOMDocument;
+use DOMDocument;
 
-class ItemBodyMarshallerTest extends QtiSmTestCase {
+class ItemBodyMarshallerTest extends QtiSmTestCase
+{
 
-	public function testUnmarshall() {
+    public function testUnmarshall()
+    {
         $itemBody = $this->createComponentFromXml('
             <itemBody id="my-body">
                 <h1>Super Item</h1>
@@ -37,24 +40,25 @@ class ItemBodyMarshallerTest extends QtiSmTestCase {
         $divContent = $div->getContent();
         $this->assertEquals(1, count($divContent));
         $this->assertEquals('This is some stimulus.', $divContent[0]->getContent());
-	}
-	
-	
-	public function testMarshall() {
+    }
+    
+    
+    public function testMarshall()
+    {
        
-	    $h1 = new H1();
-	    $h1->setContent(new InlineCollection(array(new TextRun('Super Item'))));
-	    
-	    $div = new Div();
-	    $div->setContent(new FlowCollection(array(new TextRun('This is some stimulus.'))));
-	    
-	    $itemBody = new ItemBody('my-body');
-	    $itemBody->setContent(new BlockCollection(array($h1, $div)));
-	    
-	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($itemBody)->marshall($itemBody);
-	    
-	    $dom = new DOMDocument('1.0', 'UTF-8');
-	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<itemBody id="my-body"><h1>Super Item</h1><div>This is some stimulus.</div></itemBody>', $dom->saveXML($element));
-	}
+        $h1 = new H1();
+        $h1->setContent(new InlineCollection(array(new TextRun('Super Item'))));
+        
+        $div = new Div();
+        $div->setContent(new FlowCollection(array(new TextRun('This is some stimulus.'))));
+        
+        $itemBody = new ItemBody('my-body');
+        $itemBody->setContent(new BlockCollection(array($h1, $div)));
+        
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($itemBody)->marshall($itemBody);
+        
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        $this->assertEquals('<itemBody id="my-body"><h1>Super Item</h1><div>This is some stimulus.</div></itemBody>', $dom->saveXML($element));
+    }
 }

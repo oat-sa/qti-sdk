@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,12 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
-
 
 namespace qtismtest\data\storage\xml\marshalling;
 
@@ -233,10 +233,12 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                 new QtiIdentifier('fixture-sourcedId'),
                 new SessionIdentifierCollection(array(
                     new SessionIdentifier(
-                        new QtiUri('http://sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')
+                        new QtiUri('http://sessionIdentifier1-sourceID'),
+                        new QtiIdentifier('sessionIdentifier1-id')
                     ),
                     new SessionIdentifier(
-                        new QtiUri('http://sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')
+                        new QtiUri('http://sessionIdentifier2-sourceID'),
+                        new QtiIdentifier('sessionIdentifier2-id')
                     )
                 ))
             ),
@@ -282,8 +284,8 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                             new ValueCollection(array(
                                     new Value('fixture-test-value1'),
                                     new Value('fixture-test-value2')
-                                )
-                            )),
+                                ))
+                        ),
                         new ResultOutcomeVariable(
                             new QtiIdentifier('response-identifier'),
                             0,
@@ -291,8 +293,8 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                             new ValueCollection(array(
                                     new Value('fixture-test-value1'),
                                     new Value('fixture-test-value2')
-                                )
-                            ))
+                                ))
+                        )
                     ))
                 ),
                 new ItemResult(
@@ -314,8 +316,8 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                             new ValueCollection(array(
                                     new Value('fixture-test-value1'),
                                     new Value('fixture-test-value2')
-                                )
-                            ))
+                                ))
+                        )
                     ))
                 )
             ))
@@ -350,5 +352,4 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this->assertEquals(0, $element->getElementsByTagName('testResult')->length);
         $this->assertEquals(0, $element->getElementsByTagName('itemResult')->length);
     }
-
 }

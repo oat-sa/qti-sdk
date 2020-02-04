@@ -1,12 +1,15 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\ItemSessionControl;
 
-class ItemSessionControlTest extends QtiSmTestCase {
-	
-    public function testIsDefault() {
+class ItemSessionControlTest extends QtiSmTestCase
+{
+    
+    public function testIsDefault()
+    {
         $itemSessionControl = new ItemSessionControl();
         $this->assertTrue($itemSessionControl->isDefault());
         
@@ -14,7 +17,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $this->assertFalse($itemSessionControl->isDefault());
     }
     
-    public function testSetMaxAttemptsWrongType() {
+    public function testSetMaxAttemptsWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(
@@ -25,7 +29,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $itemSessionControl->setMaxAttempts(true);
     }
     
-    public function testSetShowFeedbackWrongType() {
+    public function testSetShowFeedbackWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(
@@ -36,7 +41,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $itemSessionControl->setShowFeedback(999);
     }
     
-    public function testSetAllowReviewWrongType() {
+    public function testSetAllowReviewWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(
@@ -47,7 +53,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $itemSessionControl->setAllowReview(999);
     }
     
-    public function testSetShowSolutionWrongType() {
+    public function testSetShowSolutionWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(
@@ -58,7 +65,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $itemSessionControl->setShowSolution(999);
     }
     
-    public function testSetAllowCommentWrongType() {
+    public function testSetAllowCommentWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(
@@ -69,7 +77,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $itemSessionControl->setAllowComment(999);
     }
     
-    public function testSetAllowSkippingWrongType() {
+    public function testSetAllowSkippingWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(
@@ -80,7 +89,8 @@ class ItemSessionControlTest extends QtiSmTestCase {
         $itemSessionControl->setAllowSkipping(999);
     }
     
-    public function testSetValidateResponsesWrongType() {
+    public function testSetValidateResponsesWrongType()
+    {
         $itemSessionControl = new ItemSessionControl();
         
         $this->setExpectedException(

@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\state;
 
 use qtismtest\QtiSmTestCase;
@@ -6,15 +7,17 @@ use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\state\AssociationValidityConstraint;
 use qtism\data\state\AssociationValidityConstraintCollection;
 
-class ResponseValidityConstraintTest extends QtiSmTestCase {
+class ResponseValidityConstraintTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider successfulInstantiationBasicProvider
-     * 
+     *
      * @param integer $minConstraint
      * @param integer $maxConstraint
      */
-	public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '') {
+    public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '')
+    {
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', $minConstraint, $maxConstraint, $patternMask);
         $this->assertEquals('RESPONSE', $responseValidityConstraint->getResponseIdentifier());
         $this->assertEquals($minConstraint, $responseValidityConstraint->getMinConstraint());
@@ -22,7 +25,8 @@ class ResponseValidityConstraintTest extends QtiSmTestCase {
         $this->assertEquals($patternMask, $responseValidityConstraint->getPatternMask());
     }
     
-    public function successfulInstantiationBasicProvider() {
+    public function successfulInstantiationBasicProvider()
+    {
         return array(
             array(0, 1),
             array(0, 0),
@@ -35,18 +39,20 @@ class ResponseValidityConstraintTest extends QtiSmTestCase {
     
     /**
      * @dataProvider unsuccessfulInstantiationProvider
-     * 
+     *
      * @param string $responseIdentifier
      * @param integer $minConstraint
      * @param integer $maxConstraint
      * @param string $msg
      */
-    public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '') {
+    public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')
+    {
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         $responseValidityConstraint = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
     }
     
-    public function unsuccessfulInstantiationProvider() {
+    public function unsuccessfulInstantiationProvider()
+    {
         return array(
             array('', 0, 0, "The 'responseIdentifier' argument must be a non-empty string."),
             array('RESPONSE', 3, 2, "The 'maxConstraint' argument must be greather or equal to than the 'minConstraint' in place."),
@@ -56,7 +62,8 @@ class ResponseValidityConstraintTest extends QtiSmTestCase {
         );
     }
     
-    public function testAssociations() {
+    public function testAssociations()
+    {
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 0);
         $responseValidityConstraint->addAssociationValidityConstraint(
             new AssociationValidityConstraint('IDENTIFIER', 0, 1)

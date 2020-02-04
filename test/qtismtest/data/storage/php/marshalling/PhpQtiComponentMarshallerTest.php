@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use qtismtest\QtiSmPhpMarshallerTestCase;
@@ -8,9 +9,11 @@ use qtism\data\state\Weight;
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\rules\ExitTest;
 
-class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase {
-	
-    public function testEmptyComponent() {
+class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
+{
+    
+    public function testEmptyComponent()
+    {
         $component = new ExitTest();
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiComponentMarshaller($ctx, $component);
@@ -19,7 +22,8 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase {
         $this->assertEquals("\$exittest_0 = new qtism\\data\\rules\\ExitTest();\n", $this->getStream()->getBinary());
     }
     
-    public function testOnlyScalarPropertiesComponentAllInConstructor() {
+    public function testOnlyScalarPropertiesComponentAllInConstructor()
+    {
         $component = new Weight('weight1', 1.1);
         $ctx = $this->createMarshallingContext();
         
@@ -32,13 +36,14 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase {
         $componentMarshaller->marshall();
         
         $expected = "\$string_0 = \"weight1\";\n";
-        $expected.= "\$double_0 = 1.1;\n";
-        $expected.= "\$weight_0 = new qtism\\data\\state\\Weight(\$string_0, \$double_0);\n";
+        $expected .= "\$double_0 = 1.1;\n";
+        $expected .= "\$weight_0 = new qtism\\data\\state\\Weight(\$string_0, \$double_0);\n";
         
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
     
-    public function testOnlyScalarPropertiesConstructorAndProperties() {
+    public function testOnlyScalarPropertiesConstructorAndProperties()
+    {
         $component = new ItemSessionControl();
         $ctx = $this->createMarshallingContext();
         
@@ -61,20 +66,20 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase {
         $componentMarshaller->marshall();
         
         $expected = "\$integer_0 = 1;\n";
-        $expected.= "\$boolean_0 = false;\n";
-        $expected.= "\$boolean_1 = true;\n";
-        $expected.= "\$boolean_2 = false;\n";
-        $expected.= "\$boolean_3 = false;\n";
-        $expected.= "\$boolean_4 = false;\n";
-        $expected.= "\$boolean_5 = true;\n";
-        $expected.= "\$itemsessioncontrol_0 = new qtism\\data\\ItemSessionControl();\n";
-        $expected.= "\$itemsessioncontrol_0->setMaxAttempts(\$integer_0);\n";
-        $expected.= "\$itemsessioncontrol_0->setShowFeedback(\$boolean_0);\n";
-        $expected.= "\$itemsessioncontrol_0->setAllowReview(\$boolean_1);\n";
-        $expected.= "\$itemsessioncontrol_0->setShowSolution(\$boolean_2);\n";
-        $expected.= "\$itemsessioncontrol_0->setAllowComment(\$boolean_3);\n";
-        $expected.= "\$itemsessioncontrol_0->setValidateResponses(\$boolean_4);\n";
-        $expected.= "\$itemsessioncontrol_0->setAllowSkipping(\$boolean_5);\n";
+        $expected .= "\$boolean_0 = false;\n";
+        $expected .= "\$boolean_1 = true;\n";
+        $expected .= "\$boolean_2 = false;\n";
+        $expected .= "\$boolean_3 = false;\n";
+        $expected .= "\$boolean_4 = false;\n";
+        $expected .= "\$boolean_5 = true;\n";
+        $expected .= "\$itemsessioncontrol_0 = new qtism\\data\\ItemSessionControl();\n";
+        $expected .= "\$itemsessioncontrol_0->setMaxAttempts(\$integer_0);\n";
+        $expected .= "\$itemsessioncontrol_0->setShowFeedback(\$boolean_0);\n";
+        $expected .= "\$itemsessioncontrol_0->setAllowReview(\$boolean_1);\n";
+        $expected .= "\$itemsessioncontrol_0->setShowSolution(\$boolean_2);\n";
+        $expected .= "\$itemsessioncontrol_0->setAllowComment(\$boolean_3);\n";
+        $expected .= "\$itemsessioncontrol_0->setValidateResponses(\$boolean_4);\n";
+        $expected .= "\$itemsessioncontrol_0->setAllowSkipping(\$boolean_5);\n";
 
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }

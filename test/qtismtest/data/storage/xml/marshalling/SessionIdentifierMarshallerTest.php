@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -29,7 +30,7 @@ use qtismtest\QtiSmTestCase;
 
 class SessionIdentifierMarshallerTest extends QtiSmTestCase
 {
-	public function testUnmarshall()
+    public function testUnmarshall()
     {
         /** @var SessionIdentifier $sessionIdentifier */
         $sessionIdentifier = $this->createComponentFromXml(
@@ -45,9 +46,9 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(QtiIdentifier::class, $sessionIdentifier->getIdentifier());
         $this->assertEquals('fixture-id', $sessionIdentifier->getIdentifier()->getValue());
         $this->assertEquals('fixture-id', $sessionIdentifier->getIdentifier());
-	}
-	
-	public function testMarshall()
+    }
+    
+    public function testMarshall()
     {
         $sourceID = 'fixture-sourceID';
         $id = 'fixture-id';
@@ -60,7 +61,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
         $this->assertEquals($sourceID, $element->getAttribute('sourceID'));
         $this->assertEquals($id, $element->getAttribute('identifier'));
-	}
+    }
 
     public function testGetExpectedQtiClassName()
     {

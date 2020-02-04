@@ -1,19 +1,23 @@
 <?php
+
 namespace qtismtest\data\storage\php;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\php\Utils as PhpUtils;
 
-class PhpUtilsTest extends QtiSmTestCase {
+class PhpUtilsTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider doubleQuotedPhpStringDataProvider
      */
-    public function testDoubleQuotedPhpString($input, $expected) {
+    public function testDoubleQuotedPhpString($input, $expected)
+    {
         $this->assertEquals($expected, PhpUtils::doubleQuotedPhpString($input));
     }
     
-    public function doubleQuotedPhpStringDataProvider() {
+    public function doubleQuotedPhpStringDataProvider()
+    {
         return array(
             array('', '""'),
             array("\"", "\"\\\"\""),

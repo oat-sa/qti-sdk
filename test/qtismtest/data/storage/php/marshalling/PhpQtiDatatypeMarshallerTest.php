@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use qtismtest\QtiSmPhpMarshallerTestCase;
@@ -12,17 +13,18 @@ use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
-use \stdClass;
+use stdClass;
 
-class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
-	
+class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
+{
+    
     /**
-     * 
+     *
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param QtiDatatype $qtiDatatype
      */
-    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype) 
+    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype)
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, $qtiDatatype);
@@ -31,14 +33,14 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
         $this->assertEquals($expectedInStream, $this->getStream()->getBinary());
     }
     
-    public function testMarshallWrongDataType() 
+    public function testMarshallWrongDataType()
     {
         $this->setExpectedException('\\InvalidArgumentException');
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new stdClass());
     }
 
-    public function marshallDataProvider() 
+    public function marshallDataProvider()
     {
         return array(
             array("\$array_0 = array(10, 10, 5);\n\$qticoords_0 = new qtism\\common\\datatypes\\QtiCoords(2, \$array_0);\n", new QtiCoords(QtiShape::CIRCLE, array(10, 10, 5))),

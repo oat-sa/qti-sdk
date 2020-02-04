@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
@@ -19,9 +20,9 @@ use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ShowHide;
 
-class ExtendedAssessmentItemRefTest extends QtiSmTestCase 
+class ExtendedAssessmentItemRefTest extends QtiSmTestCase
 {
-	
+    
     public function testCreateFromAssessmentItemRef()
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');

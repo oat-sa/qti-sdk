@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\storage\php;
 
 use qtism\data\expressions\BaseValue;
@@ -16,7 +17,7 @@ use qtism\data\storage\xml\XmlDocument;
 
 class PhpDocumentTest extends QtiSmTestCase
 {
-	
+    
     public function testSimpleLoad($path = '')
     {
         
@@ -87,8 +88,8 @@ class PhpDocumentTest extends QtiSmTestCase
         $this->assertEquals(1, count($responseRules));
     }
     
-     public function testSimpleSave()
-     {
+    public function testSimpleSave()
+    {
 
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
@@ -101,7 +102,7 @@ class PhpDocumentTest extends QtiSmTestCase
         unlink($file);
     }
     
-    public function testCustomOperatorOne() 
+    public function testCustomOperatorOne()
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_1.xml');

@@ -1,15 +1,16 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\interactions\Prompt;
-use \DOMDocument;
+use DOMDocument;
 
 class PromptMarshallerTest extends QtiSmTestCase
 {
-	public function testMarshall()
+    public function testMarshall()
     {
         $component = new Prompt('my-prompt', 'qti-prompt');
         $component->setContent(new FlowStaticCollection(array(new TextRun('This is a prompt'))));
@@ -20,9 +21,9 @@ class PromptMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall()
+    }
+    
+    public function testUnmarshall()
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>');
         
@@ -36,9 +37,9 @@ class PromptMarshallerTest extends QtiSmTestCase
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
         $this->assertEquals('This is a prompt', $content[0]->getContent());
-	}
-	
-	public function testUnmarshallExcludedFlowStatic()
+    }
+    
+    public function testUnmarshallExcludedFlowStatic()
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt with a <pre>pre which is not allowed.</pre></prompt>');
         

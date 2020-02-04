@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\data\content\interactions;
 
 use qtismtest\QtiSmTestCase;
@@ -20,8 +21,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->setExpectedException(
@@ -42,8 +42,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->setExpectedException(
@@ -64,8 +63,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->setExpectedException(
@@ -86,8 +84,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->setExpectedException(
@@ -109,8 +106,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->assertFalse($matchInteraction->hasMinAssociations());
@@ -129,8 +125,7 @@ class MatchInteractionTest extends QtiSmTestCase
             'RESPONSE',
             new SimpleMatchSetCollection([
                     $matchSet1
-                ]
-            )
+                ])
         );
     }
     
@@ -144,8 +139,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->assertSame($matchSet1, $matchInteraction->getSourceChoices());
@@ -161,8 +155,7 @@ class MatchInteractionTest extends QtiSmTestCase
             new SimpleMatchSetCollection([
                     $matchSet1,
                     $matchSet2
-                ]
-            )
+                ])
         );
         
         $this->assertSame($matchSet2, $matchInteraction->getTargetChoices());
