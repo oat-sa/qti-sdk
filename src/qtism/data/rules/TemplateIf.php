@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,9 +23,9 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\Expression;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -36,16 +36,13 @@ use qtism\data\QtiComponent;
  * sub-rules. If the expression is true then the sub-rules are processed,
  * otherwise they are skipped (including if the expression is NULL) and the
  * following templateElseIf or templateElse parts (if any) are considered instead.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateIf extends QtiComponent
 {
     /**
      * The expression to be evaluated.
      *
-     * @var \qtism\data\expressions\Expression
+     * @var Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -54,7 +51,7 @@ class TemplateIf extends QtiComponent
      * The template rules to be evaluated if the expression
      * returns true.
      *
-     * @var \qtism\data\rules\TemplateRuleCollection
+     * @var TemplateRuleCollection
      * @qtism-bean-property
      */
     private $templateRules;
@@ -62,8 +59,8 @@ class TemplateIf extends QtiComponent
     /**
      * Create a new TemplateIf object.
      *
-     * @param \qtism\data\expressions\Expression $expression The Expression to be evaluated.
-     * @param \qtism\data\rules\TemplateRuleCollection $templateRules The TemplateRule objects to be evaluated if the expression returns true.
+     * @param Expression $expression The Expression to be evaluated.
+     * @param TemplateRuleCollection $templateRules The TemplateRule objects to be evaluated if the expression returns true.
      */
     public function __construct(Expression $expression, TemplateRuleCollection $templateRules)
     {
@@ -74,7 +71,7 @@ class TemplateIf extends QtiComponent
     /**
      * Set the Expression object to be evaluated.
      *
-     * @param \qtism\data\expressions\Expression $expression An Expression object.
+     * @param Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression)
     {
@@ -84,7 +81,7 @@ class TemplateIf extends QtiComponent
     /**
      * Get the Expression object to be evaluated.
      *
-     * @return \qtism\data\expressions\Expression An Expression object.
+     * @return Expression An Expression object.
      */
     public function getExpression()
     {
@@ -95,7 +92,7 @@ class TemplateIf extends QtiComponent
      * Set the collection of TemplateRule objects to be evaluated if the
      * expression returns true.
      *
-     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
     public function setTemplateRules(TemplateRuleCollection $templateRules)
     {
@@ -106,7 +103,7 @@ class TemplateIf extends QtiComponent
      * Get the collection of TemplateRule objects to be evaluated if the expression
      * returns true.
      *
-     * @return \qtism\data\rules\TemplateRuleCollection A collection of TemplateRule objects.
+     * @return TemplateRuleCollection A collection of TemplateRule objects.
      */
     public function getTemplateRules()
     {
@@ -118,7 +115,7 @@ class TemplateIf extends QtiComponent
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array_merge(array($this->getExpression()), $this->getTemplateRules()->getArrayCopy()));
+        return new QtiComponentCollection(array_merge([$this->getExpression()], $this->getTemplateRules()->getArrayCopy()));
     }
 
     /**

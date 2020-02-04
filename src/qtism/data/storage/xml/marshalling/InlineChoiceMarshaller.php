@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,20 +23,17 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMCharacterData;
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
-use qtism\data\ShowHide;
 use qtism\data\content\TextOrVariableCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \DOMCharacterData;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
+use qtism\data\ShowHide;
 
 /**
  * The Marshaller implementation for InlineChoice elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InlineChoiceMarshaller extends ContentMarshaller
 {
@@ -45,7 +43,6 @@ class InlineChoiceMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             $version = $this->getVersion();
             $fqClass = $this->lookupClass($element);
 
@@ -60,7 +57,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
                 $msg = "An 'inlineChoice' element must only contain text. Children elements found.";
                 throw new UnmarshallingException($msg, $element);
             }
-            
+
             try {
                 $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
             } catch (InvalidArgumentException $e) {
@@ -83,7 +80,6 @@ class InlineChoiceMarshaller extends ContentMarshaller
             $this->fillBodyElement($component, $element);
 
             return $component;
-
         } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element.";
             throw new UnmarshallingException($msg, $element);
@@ -126,6 +122,6 @@ class InlineChoiceMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,43 +23,40 @@
 
 namespace qtism\data\storage\php;
 
-use qtism\data\ExtendedAssessmentTest;
-use qtism\common\datatypes\QtiCoords;
-use qtism\data\ExtendedAssessmentSection;
-use qtism\data\QtiDocument;
-use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
-use qtism\common\datatypes\QtiDatatype;
-use qtism\data\AssessmentSection;
-use qtism\data\processing\ResponseProcessing;
-use qtism\data\AssessmentItem;
-use qtism\data\AssessmentTest;
-use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
-use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
-use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
+use Exception;
 use qtism\common\beans\Bean;
 use qtism\common\collections\AbstractCollection;
-use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\storage\MemoryStream;
-use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\AssessmentItem;
+use qtism\data\AssessmentSection;
+use qtism\data\AssessmentTest;
+use qtism\data\ExtendedAssessmentSection;
+use qtism\data\ExtendedAssessmentTest;
+use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
+use qtism\data\QtiDocument;
+use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
+use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
+use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
+use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
+use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtism\data\storage\php\Utils as PhpUtils;
-use \SplStack;
-use \Exception;
+use SplStack;
 
 /**
  * Represents a PHP source code document containing the appropriate source code
  * to load a QTI Component and the components it contains.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpDocument extends QtiDocument
 {
     /**
      * Create a new PhpDocument object.
-     * 
+     *
      * As PHP-serialized QTI documents contain the necessary information about the QTI version they are
-     * refering to, the value of the $version argument will simply be ignored. 
+     * refering to, the value of the $version argument will simply be ignored.
      *
      * @param string $version (optional) Expected QTI version (default is "2.1").
      * @param QtiComponent $documentComponent The root QtiComponent object to contained by the PhpDocument.
@@ -80,8 +78,8 @@ class PhpDocument extends QtiDocument
         $stack->push($this->getDocumentComponent());
 
         // 1st/2nd pass marker.
-        $marker = array();
-        
+        $marker = [];
+
         // marshalling context.
         $stream = new MemoryStream();
         $stream->open();
@@ -91,7 +89,6 @@ class PhpDocument extends QtiDocument
         $ctx->setFormatOutput(true);
 
         while (count($stack) > 0) {
-
             $component = $stack->pop();
             $isMarked = in_array($component, $marker, true);
 
@@ -109,11 +106,10 @@ class PhpDocument extends QtiDocument
                 $getters = array_reverse(array_merge($bodyGetters->getArrayCopy(), $ctorGetters->getArrayCopy()));
 
                 foreach ($getters as $getter) {
-                    $stack->push(call_user_func(array($component, $getter->getName())));
+                    $stack->push(call_user_func([$component, $getter->getName()]));
                 }
-            }
-            // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
-            elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
+            } elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
+                // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
                 // AbstractCollection node, 1st pass.
                 // Mark as explored.
                 array_push($marker, $component);
@@ -159,11 +155,11 @@ class PhpDocument extends QtiDocument
 
         $exists = file_exists($url);
         $written = @file_put_contents($url, $stream->getBinary());
-        
+
         if ($written === false) {
             throw new PhpStorageException("File located at '${url}' could not be written.");
         }
-        
+
         if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
             opcache_invalidate($url, true);
         }

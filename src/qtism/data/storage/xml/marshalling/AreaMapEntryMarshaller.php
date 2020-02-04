@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,27 +23,24 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use Exception;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\QtiComponent;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\storage\Utils;
-use \DOMElement;
-use \Exception;
 
 /**
  * Marshalling/Unmarshalling implementation for AreaMapEntry.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AreaMapEntryMarshaller extends Marshaller
 {
     /**
-	 * Marshall an AreaMapEntry object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An AreaMapEntry object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall an AreaMapEntry object into a DOMElement object.
+     *
+     * @param QtiComponent $component An AreaMapEntry object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -55,22 +53,19 @@ class AreaMapEntryMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI areaMapEntry element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent An AreaMapEntry object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI areaMapEntry element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent An AreaMapEntry object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
-
             $shapeVal = QtiShape::getConstantByName($shape);
 
             if ($shapeVal !== false) {
-
                 if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {
-
                     try {
                         $coords = Utils::stringToCoords($coords, $shapeVal);
 
@@ -96,7 +91,6 @@ class AreaMapEntryMarshaller extends Marshaller
                 $msg = "The 'shape' attribute value '${shape}' is not a valid value to represent QTI shapes.";
                 throw new UnmarshallingException($msg, $element);
             }
-
         } else {
             $msg = "The mandatory attribute 'shape' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
@@ -104,8 +98,8 @@ class AreaMapEntryMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'areaMapEntry';

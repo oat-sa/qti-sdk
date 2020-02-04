@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,22 +23,22 @@
 
 namespace qtism\data;
 
-use qtism\data\storage\StorageException;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
-use \InvalidArgumentException;
+use qtism\data\storage\StorageException;
 
 abstract class QtiDocument
 {
     /**
      * The version of the document.
-     * 
+     *
      * @var string
      */
     private $version = '2.1.0';
 
     /**
      * The root QTI Component of the document.
-     * 
+     *
      * @var QtiComponent
      */
     private $documentComponent;
@@ -56,9 +57,9 @@ abstract class QtiDocument
 
     /**
      * Set the QTI $version in use for this document.
-     * 
+     *
      * @param string $version A QTI version number e.g. '2.1.1'.
-     * @throws \InvalidArgumentException If $version is unknown regarding existing QTI versions.
+     * @throws InvalidArgumentException If $version is unknown regarding existing QTI versions.
      */
     public function setVersion($version)
     {
@@ -72,7 +73,7 @@ abstract class QtiDocument
 
     /**
      * The QTI version in use within the document.
-     * 
+     *
      * @return string A Semantic Versioning version number with major, minor and patch version e.g. '2.1.0'.
      */
     public function getVersion()
@@ -82,7 +83,7 @@ abstract class QtiDocument
 
     /**
      * Set the root component of the document.
-     * 
+     *
      * @param QtiComponent $documentComponent A QTI Component object.
      */
     public function setDocumentComponent(QtiComponent $documentComponent = null)
@@ -93,7 +94,7 @@ abstract class QtiDocument
     /**
      * Get the root component of the document.
      *
-     * @return \qtism\data\QtiComponent
+     * @return QtiComponent
      */
     public function getDocumentComponent()
     {
@@ -113,14 +114,14 @@ abstract class QtiDocument
     /**
      *
      * @param string $url
-     * @throws \qtism\data\storage\StorageException
+     * @throws StorageException
      */
     abstract public function load($url);
 
     /**
      *
      * @param string $url
-     * @throws \qtism\data\storage\StorageException
+     * @throws StorageException
      */
     abstract public function save($url);
 }

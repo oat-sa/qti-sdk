@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,13 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\TestFeedbackRefCollection;
+use DOMElement;
 use qtism\data\ExtendedTestPart;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\TestFeedbackRefCollection;
 
 /**
  * Marshalling/Unmarshalling implementation for ExtendedTestPart.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ExtendedTestPartMarshaller extends TestPartMarshaller
 {
@@ -41,35 +39,35 @@ class ExtendedTestPartMarshaller extends TestPartMarshaller
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
-        
+
         // TestFeedbackRefs.
         foreach ($component->getTestFeedbackRefs() as $testFeedbackRef) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($testFeedbackRef);
             $element->appendChild($marshaller->marshall($testFeedbackRef));
         }
-        
+
         return $element;
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+     */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
         $component = ExtendedTestPart::createFromTestPart($baseComponent);
-        
+
         // TestFeedbackRefs.
         $testFeedbackRefElts = $this->getChildElementsByTagName($element, 'testFeedbackRef');
         $testFeedbackRefs = new TestFeedbackRefCollection();
-        
+
         foreach ($testFeedbackRefElts as $testFeedbackRefElt) {
-           $marshaller = $this->getMarshallerFactory()->createMarshaller($testFeedbackRefElt);
-           $testFeedbackRefs[] = $marshaller->unmarshall($testFeedbackRefElt);
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($testFeedbackRefElt);
+            $testFeedbackRefs[] = $marshaller->unmarshall($testFeedbackRefElt);
         }
-        
+
         $component->setTestFeedbackRefs($testFeedbackRefs);
-        
+
         return $component;
     }
 }

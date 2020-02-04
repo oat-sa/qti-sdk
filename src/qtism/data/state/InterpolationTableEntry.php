@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,58 +23,55 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The MatchTableEntry class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InterpolationTableEntry extends QtiComponent
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The lower bound for the source value to match this entry.
-	 *
-	 * @var float
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The lower bound for the source value to match this entry.
+     *
+     * @var float
+     * @qtism-bean-property
+     */
     private $sourceValue;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The target value that is used to set the outcome when a match is found.
-	 *
-	 * @var mixed
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The target value that is used to set the outcome when a match is found.
+     *
+     * @var mixed
+     * @qtism-bean-property
+     */
     private $targetValue;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Determines if an exact match of sourceValue matches this entry.
-	 * If true, the default, then an exact match of the value is considered a
-	 * match of this entry.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Determines if an exact match of sourceValue matches this entry.
+     * If true, the default, then an exact match of the value is considered a
+     * match of this entry.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $includeBoundary = true;
 
     /**
-	 * Create a new instance of InterpolationTableEntry.
-	 *
-	 * @param float $sourceValue The lower bound for the source value to match this entry.
-	 * @param mixed $targetValue The target value that is used to set the outcome when a match is found.
-	 * @param boolean $includeBoundary Determines if an exact match of $sourceValue matches this entry.
-	 * @throws \InvalidArgumentException If $sourceValue is not a float or $includeBoundary is not a boolean.
-	 */
+     * Create a new instance of InterpolationTableEntry.
+     *
+     * @param float $sourceValue The lower bound for the source value to match this entry.
+     * @param mixed $targetValue The target value that is used to set the outcome when a match is found.
+     * @param boolean $includeBoundary Determines if an exact match of $sourceValue matches this entry.
+     * @throws InvalidArgumentException If $sourceValue is not a float or $includeBoundary is not a boolean.
+     */
     public function __construct($sourceValue, $targetValue, $includeBoundary = true)
     {
         $this->setSourceValue($sourceValue);
@@ -82,21 +80,21 @@ class InterpolationTableEntry extends QtiComponent
     }
 
     /**
-	 * Get the lower bound for the source value to match this entry.
-	 *
-	 * @return float A float value.
-	 */
+     * Get the lower bound for the source value to match this entry.
+     *
+     * @return float A float value.
+     */
     public function getSourceValue()
     {
         return $this->sourceValue;
     }
 
     /**
-	 * Set the lower bound for the source value to match this entry.
-	 *
-	 * @param float $sourceValue A float value.
-	 * @throws \InvalidArgumentException If $sourceValue is not a float.
-	 */
+     * Set the lower bound for the source value to match this entry.
+     *
+     * @param float $sourceValue A float value.
+     * @throws InvalidArgumentException If $sourceValue is not a float.
+     */
     public function setSourceValue($sourceValue)
     {
         if (is_float($sourceValue)) {
@@ -108,31 +106,31 @@ class InterpolationTableEntry extends QtiComponent
     }
 
     /**
-	 * Get the value that is used to set the ouctome when a match is found.
-	 *
-	 * @return mixed A value that satisfies the QTI baseType datatype.
-	 */
+     * Get the value that is used to set the ouctome when a match is found.
+     *
+     * @return mixed A value that satisfies the QTI baseType datatype.
+     */
     public function getTargetValue()
     {
         return $this->targetValue;
     }
 
     /**
-	 * Set the value that is used to set the ouctome when a match is found.
-	 *
-	 * @param mixed $targetValue A value that satisfies the QTI baseType datatype.
-	 */
+     * Set the value that is used to set the ouctome when a match is found.
+     *
+     * @param mixed $targetValue A value that satisfies the QTI baseType datatype.
+     */
     public function setTargetValue($targetValue)
     {
         $this->targetValue = $targetValue;
     }
 
     /**
-	 * Set if an exact match of the sourceValue attribute matches this entry.
-	 *
-	 * @param boolean $includeBoundary A boolean value.
-	 * @throws \InvalidArgumentException If $includeBoundary is not a boolean.
-	 */
+     * Set if an exact match of the sourceValue attribute matches this entry.
+     *
+     * @param boolean $includeBoundary A boolean value.
+     * @throws InvalidArgumentException If $includeBoundary is not a boolean.
+     */
     public function setIncludeBoundary($includeBoundary)
     {
         if (is_bool($includeBoundary)) {
@@ -144,26 +142,26 @@ class InterpolationTableEntry extends QtiComponent
     }
 
     /**
-	 * State if an exact match of the sourceValue attribute matches this entry.
-	 *
-	 * @return boolean A boolean value.
-	 */
+     * State if an exact match of the sourceValue attribute matches this entry.
+     *
+     * @return boolean A boolean value.
+     */
     public function doesIncludeBoundary()
     {
         return $this->includeBoundary;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'interpolationTableEntry';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,9 +25,6 @@ namespace qtism\data\storage\php;
 
 /**
  * This class provides utility methods dedicated to PHP data storage.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Utils
 {
@@ -63,8 +61,8 @@ class Utils
      */
     public static function doubleQuotedPhpString($string)
     {
-        $escapes = array("\\", '"', "\n", "\t", "\v", "\r", "\f", "$");
-        $replace = array("\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f", "\\$");
+        $escapes = ["\\", '"', "\n", "\t", "\v", "\r", "\f", "$"];
+        $replace = ["\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f", "\\$"];
 
         return "\"" . str_replace($escapes, $replace, $string) . "\""; // UTF-8 safe.
     }

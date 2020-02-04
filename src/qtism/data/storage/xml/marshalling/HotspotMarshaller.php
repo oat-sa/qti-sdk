@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,33 +23,30 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
-use qtism\common\utils\Version;
-use qtism\data\storage\Utils;
-use qtism\data\content\interactions\HotspotChoice;
-use qtism\data\content\interactions\AssociableHotspot;
 use qtism\common\datatypes\QtiShape;
-use qtism\data\ShowHide;
+use qtism\common\utils\Version;
+use qtism\data\content\interactions\AssociableHotspot;
+use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
-use \UnexpectedValueException;
+use qtism\data\ShowHide;
+use qtism\data\storage\Utils;
+use UnexpectedValueException;
 
 /**
  * Marshalling/Unmarshalling implementation for HotspotChoice/AssociableHotspot.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class HotspotMarshaller extends Marshaller
 {
     /**
-	 * Marshall a HotspotChoice/AssociableHotspot object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A HotspotChoice/AssociableHotspot object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a HotspotChoice/AssociableHotspot object into a DOMElement object.
+     *
+     * @param QtiComponent $component A HotspotChoice/AssociableHotspot object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
@@ -72,23 +70,22 @@ class HotspotMarshaller extends Marshaller
         if ($component->hasHotspotLabel() === true) {
             $this->setDOMElementAttribute($element, 'hotspotLabel', $component->getHotspotLabel());
         }
-        
+
         if ($component instanceof AssociableHotspot) {
-            
             if (Version::compare($version, '2.1.0', '<') === true) {
                 $matchGroup = $component->getMatchGroup();
                 if (count($matchGroup) > 0) {
                     $this->setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
                 }
             }
-            
+
             if (Version::compare($version, '2.1.0', '>=') === true) {
                 if ($component->getMatchMin() !== 0) {
                     $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
                 }
             }
         }
-        
+
         if ($component instanceof AssociableHotspot) {
             $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
         }
@@ -99,21 +96,18 @@ class HotspotMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a hotspotChoice/associableHotspot element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A HotspotChoice/AssociableHotspot object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a hotspotChoice/associableHotspot element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A HotspotChoice/AssociableHotspot object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
-
                 if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {
-
                     $shape = QtiShape::getConstantByName($shape);
                     if ($shape === false) {
                         $msg = "The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration.";
@@ -154,7 +148,6 @@ class HotspotMarshaller extends Marshaller
                     }
 
                     if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
-
                         if (($showHide = ShowHide::getConstantByName($showHide)) !== false) {
                             $component->setShowHide($showHide);
                         } else {
@@ -162,14 +155,14 @@ class HotspotMarshaller extends Marshaller
                             throw new UnmarshallingException($msg, $element);
                         }
                     }
-                    
+
                     if ($element->localName === 'associableHotspot') {
                         if (Version::compare($version, '2.1.0', '<') === true) {
                             if (($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                                 $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                             }
                         }
-                        
+
                         if (Version::compare($version, '2.1.0', '>=') === true) {
                             if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                                 $component->setMatchMin($matchMin);
@@ -195,8 +188,8 @@ class HotspotMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return '';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,25 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\TextFormat;
-use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
-use \DOMElement;
+use qtism\data\storage\xml\Utils as XmlUtils;
 
 /**
  * Marshalling/Unmarshalling implementation for TextEntryInteraction/ExtendedTextInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TextInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall a TextEntryInteraction/ExtendedTextInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A TextEntryInteraction/ExtendedTextInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a TextEntryInteraction/ExtendedTextInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component A TextEntryInteraction/ExtendedTextInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
@@ -103,18 +101,17 @@ class TextInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a textEntryInteraction/extendedTextInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A TextEntryInteraction/ExtendedTextInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a textEntryInteraction/extendedTextInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A TextEntryInteraction/ExtendedTextInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
-        
-        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             try {
                 $localName = $element->localName;
                 $name = ($this->isWebComponentFriendly()) ? ucfirst(XmlUtils::qtiFriendlyName($localName)) : ucfirst($localName);
@@ -150,7 +147,6 @@ class TextInteractionMarshaller extends Marshaller
             }
 
             if ($element->localName === 'extendedTextInteraction') {
-
                 if (($maxStrings = $this->getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
                     $component->setMaxStrings($maxStrings);
                 }
@@ -183,8 +179,8 @@ class TextInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return '';

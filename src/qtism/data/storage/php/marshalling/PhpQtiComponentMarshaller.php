@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,15 @@
 
 namespace qtism\data\storage\php\marshalling;
 
-use qtism\data\storage\php\PhpVariable;
-use qtism\data\storage\php\PhpArgument;
-use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\common\beans\Bean;
 use qtism\data\QtiComponent;
+use qtism\data\storage\php\PhpArgument;
+use qtism\data\storage\php\PhpArgumentCollection;
+use qtism\data\storage\php\PhpVariable;
 
 /**
  * A PHP Marshaller implementation focusing on QtiComponent marshalling.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see \qtism\data\QtiComponent
  */
 class PhpQtiComponentMarshaller extends PhpMarshaller
@@ -128,7 +128,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
 
             $access->writeVariable($componentVarName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $access->writeInstantiation((empty($asInstanceOf) === true) ? get_class($component) : $asInstanceOf , $phpArgs);
+            $access->writeInstantiation((empty($asInstanceOf) === true) ? get_class($component) : $asInstanceOf, $phpArgs);
             $access->writeSemicolon($ctx->mustFormatOutput());
 
             // -- Call to setters (that are not involved in the component construction).

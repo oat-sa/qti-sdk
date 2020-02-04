@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,11 @@
 
 namespace qtism\data;
 
-use \InvalidArgumentException;
-use qtism\data\TestFeedbackAccess;
-use qtism\data\ShowHide;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 
 /**
  * The TestFeedback class.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestFeedbackRef extends QtiComponent
 {
@@ -50,7 +46,7 @@ class TestFeedbackRef extends QtiComponent
      * @qtism-bean-property
      */
     private $access = TestFeedbackAccess::DURING;
-    
+
     /**
      * The QTI Identifier of the outcome variable bound to this feedback.
      *
@@ -58,7 +54,7 @@ class TestFeedbackRef extends QtiComponent
      * @qtism-bean-property
      */
     private $outcomeIdentifier;
-    
+
     /**
      * From IMS QTI:
      *
@@ -72,7 +68,7 @@ class TestFeedbackRef extends QtiComponent
      * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
-    
+
     /**
      * The QTI identifier of the TestFeedback.
      *
@@ -80,24 +76,24 @@ class TestFeedbackRef extends QtiComponent
      * @qtism-bean-property
      */
     private $identifier;
-    
+
     /**
      * A URI referencing the actual real TestFeedback QTI class.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $href;
-    
+
     /**
      * Create a new TestFeedbackRef object.
-     * 
+     *
      * @param string $identifier An identifier.
      * @param string $outcomeIdentifier An identifier.
      * @param integer $access A value from the TestFeedbackAccess enumeration.
      * @param integer $showHide A value from the ShowHide enumeration.
      * @param string $href A URI.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($identifier, $outcomeIdentifier, $access, $showHide, $href)
     {
@@ -107,7 +103,7 @@ class TestFeedbackRef extends QtiComponent
         $this->setAccess($access);
         $this->setShowHide($showHide);
     }
-    
+
     /**
      * Get how the feedback is shown to the candidate.
      *
@@ -120,7 +116,7 @@ class TestFeedbackRef extends QtiComponent
     {
         return $this->access;
     }
-    
+
     /**
      * Set how the feedback is shown to the candidate.
      *
@@ -128,7 +124,7 @@ class TestFeedbackRef extends QtiComponent
      * * TestFeedbackAccess:AT_END = At the end of the TestPart or AssessmentTest.
      *
      * @param int $access A value of the TestFeedbackAccess enumeration.
-     * @throws \InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
+     * @throws InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
      */
     public function setAccess($access)
     {
@@ -139,7 +135,7 @@ class TestFeedbackRef extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the QTI Identifier of the outcome variable bound to this TestFeedback.
      *
@@ -149,12 +145,12 @@ class TestFeedbackRef extends QtiComponent
     {
         return $this->outcomeIdentifier;
     }
-    
+
     /**
      * Set the QTI Identifier of the outcome variable bound to this TestFeedback.
      *
      * @param string $outcomeIdentifier A QTI Identifier.
-     * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
      */
     public function setOutcomeIdentifier($outcomeIdentifier)
     {
@@ -165,7 +161,7 @@ class TestFeedbackRef extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the QTI identifier of this TestFeedback.
      *
@@ -175,12 +171,12 @@ class TestFeedbackRef extends QtiComponent
     {
         return $this->identifier;
     }
-    
+
     /**
      * Set the QTI identifier of this TestFeedback.
      *
      * @param string $identifier A QTI Identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
     public function setIdentifier($identifier)
     {
@@ -191,7 +187,7 @@ class TestFeedbackRef extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get how the feedback should be displayed.
      *
@@ -201,12 +197,12 @@ class TestFeedbackRef extends QtiComponent
     {
         return $this->showHide;
     }
-    
+
     /**
      * Set how the feedback should be displayed.
      *
      * @param boolean $showHide A value from the ShowHide enumeration.
-     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
@@ -217,20 +213,20 @@ class TestFeedbackRef extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Set the hyper-text reference to the actual content of the TestFeedback.
-     * 
+     *
      * @return string
      */
     public function getHref()
     {
         return $this->href;
     }
-    
+
     /**
      * Get the hyper-text reference to the actual content of the TestFeedback.
-     * 
+     *
      * @param string $href
      */
     public function setHref($href)
@@ -242,7 +238,7 @@ class TestFeedbackRef extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
@@ -250,7 +246,7 @@ class TestFeedbackRef extends QtiComponent
     {
         return 'testFeedbackRef';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */

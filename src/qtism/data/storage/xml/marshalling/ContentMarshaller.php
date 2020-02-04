@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,64 +23,61 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use DOMNode;
+use DOMText;
+use qtism\data\content\AtomicBlock;
+use qtism\data\content\FeedbackBlock;
 use qtism\data\content\InfoControl;
-use qtism\data\content\ModalFeedback;
+use qtism\data\content\interactions\AssociateInteraction;
+use qtism\data\content\interactions\ChoiceInteraction;
+use qtism\data\content\interactions\GapImg;
+use qtism\data\content\interactions\GapMatchInteraction;
+use qtism\data\content\interactions\GapText;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
 use qtism\data\content\interactions\GraphicOrderInteraction;
 use qtism\data\content\interactions\HotspotInteraction;
-use qtism\data\content\interactions\HottextInteraction;
 use qtism\data\content\interactions\Hottext;
-use qtism\data\content\TemplateInline;
-use qtism\data\content\TemplateBlock;
-use qtism\data\content\FeedbackBlock;
+use qtism\data\content\interactions\HottextInteraction;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\interactions\InlineChoiceInteraction;
-use qtism\data\content\interactions\GapMatchInteraction;
-use qtism\data\content\interactions\GapImg;
-use qtism\data\content\interactions\GapText;
 use qtism\data\content\interactions\MatchInteraction;
-use qtism\data\content\interactions\SimpleMatchSet;
-use qtism\data\content\interactions\AssociateInteraction;
-use qtism\data\content\interactions\SimpleAssociableChoice;
 use qtism\data\content\interactions\OrderInteraction;
 use qtism\data\content\interactions\Prompt;
-use qtism\data\content\interactions\ChoiceInteraction;
+use qtism\data\content\interactions\SimpleAssociableChoice;
 use qtism\data\content\interactions\SimpleChoice;
-use qtism\data\content\xhtml\text\Blockquote;
+use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\ItemBody;
-use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\xhtml\ObjectElement;
-use qtism\data\content\xhtml\lists\DlElement;
+use qtism\data\content\ModalFeedback;
+use qtism\data\content\SimpleInline;
+use qtism\data\content\TemplateBlock;
+use qtism\data\content\TemplateInline;
 use qtism\data\content\xhtml\lists\Dl;
+use qtism\data\content\xhtml\lists\DlElement;
+use qtism\data\content\xhtml\lists\Li;
 use qtism\data\content\xhtml\lists\Ol;
 use qtism\data\content\xhtml\lists\Ul;
-use qtism\data\content\xhtml\lists\Li;
-use qtism\data\content\AtomicBlock;
-use qtism\data\content\xhtml\tables\Th;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
+use qtism\data\content\xhtml\tables\Th;
 use qtism\data\content\xhtml\tables\Tr;
-use qtism\data\content\SimpleInline;
+use qtism\data\content\xhtml\text\Blockquote;
+use qtism\data\content\xhtml\text\Div;
 use qtism\data\ExternalQtiComponent;
-use qtism\data\storage\xml\Utils as XmlUtils;
-use \DOMElement;
-use \DOMNode;
-use \DOMText;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
+use qtism\data\storage\xml\Utils as XmlUtils;
 
 /**
  * An abstract implementation of a marshaller/unmarshaller focusing
  * on QTI components that belong to the QTI content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class ContentMarshaller extends RecursiveMarshaller
 {
     /**
      * Create a new ContentMarshaller object.
-     * 
+     *
      * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
      */
     public function __construct($version)
@@ -95,18 +93,91 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected $lookupClasses;
 
-    private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
-                                      'thead', 'tfoot', 'rubricBlock', 'gap', 'textEntryInteraction', 'extendedTextInteraction',
-                                      'selectPointInteraction', 'associableHotspot', 'hotspotChoice', 'graphicGapMatchInteraction',
-                                      'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
-                                      'drawingInteraction', 'uploadInteraction', 'endAttemptInteraction', 'customInteraction',
-                                      'printedVariable', 'include');
+    private static $finals = [
+        'textRun',
+        'br',
+        'param',
+        'hr',
+        'col',
+        'img',
+        'math',
+        'table',
+        'colgroup',
+        'tbody',
+        'thead',
+        'tfoot',
+        'rubricBlock',
+        'gap',
+        'textEntryInteraction',
+        'extendedTextInteraction',
+        'selectPointInteraction',
+        'associableHotspot',
+        'hotspotChoice',
+        'graphicGapMatchInteraction',
+        'positionObjectInteraction',
+        'positionObjectStage',
+        'sliderInteraction',
+        'mediaInteraction',
+        'drawingInteraction',
+        'uploadInteraction',
+        'endAttemptInteraction',
+        'customInteraction',
+        'printedVariable',
+        'include',
+    ];
 
-    private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
-                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',
-                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'templateBlock',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback', 
-                                             'feedbackBlock', 'bdo');
+    private static $simpleComposites = [
+        'a',
+        'abbr',
+        'acronym',
+        'b',
+        'big',
+        'cite',
+        'code',
+        'dfn',
+        'em',
+        'feedbackInline',
+        'templateInline',
+        'i',
+        'kbd',
+        'q',
+        'samp',
+        'small',
+        'span',
+        'strong',
+        'sub',
+        'sup',
+        'tt',
+        'var',
+        'td',
+        'th',
+        'object',
+        'infoControl',
+        'caption',
+        'address',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'pre',
+        'li',
+        'dd',
+        'dt',
+        'div',
+        'templateBlock',
+        'simpleChoice',
+        'simpleAssociableChoice',
+        'prompt',
+        'gapText',
+        'inlineChoice',
+        'hottext',
+        'modalFeedback',
+        'feedbackBlock',
+        'bdo',
+    ];
 
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
@@ -176,7 +247,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         } elseif ($component instanceof GapText) {
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof GapImg) {
-            return array($component->getObject());
+            return [$component->getObject()];
         } elseif ($component instanceof ChoiceInteraction) {
             return $component->getSimpleChoices()->getArrayCopy();
         } elseif ($component instanceof OrderInteraction) {
@@ -223,14 +294,14 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     {
         $simpleComposites = self::$simpleComposites;
         $localName = $element->localName;
-        
+
         if ($this->isWebComponentFriendly() === true) {
             $qtiFriendlyName = XmlUtils::qtiFriendlyName($localName);
             if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses) === true) {
                 $localName = $qtiFriendlyName;
             }
         }
-        
+
         if (in_array($localName, $simpleComposites) === true) {
             return self::getChildElements($element, true);
         } elseif ($localName === 'choiceInteraction') {
@@ -242,7 +313,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         } elseif ($localName === 'matchInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleMatchSet');
         } elseif ($localName === 'gapMatchInteraction') {
-            return $this->getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
+            return $this->getChildElementsByTagName($element, ['gapText', 'gapImg', 'prompt'], true);
         } elseif ($localName === 'inlineChoiceInteraction') {
             return $this->getChildElementsByTagName($element, 'inlineChoice');
         } elseif ($localName === 'hottextInteraction') {
@@ -254,11 +325,11 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         } elseif ($localName === 'graphicOrderInteraction') {
             return $this->getChildElementsByTagName($element, 'hotspotChoice');
         } elseif ($localName === 'tr') {
-            return $this->getChildElementsByTagName($element, array('td', 'th'));
+            return $this->getChildElementsByTagName($element, ['td', 'th']);
         } elseif ($localName === 'ul' || $element->localName === 'ol') {
             return $this->getChildElementsByTagName($element, 'li');
         } elseif ($localName === 'dl') {
-            return $this->getChildElementsByTagName($element, array('dd', 'dt'));
+            return $this->getChildElementsByTagName($element, ['dd', 'dt']);
         } elseif ($localName === 'itemBody') {
             return self::getChildElements($element);
         } elseif ($localName === 'blockquote') {
@@ -268,7 +339,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         } elseif ($localName === 'gapImg') {
             return $this->getChildElementsByTagName($element, 'object');
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -298,9 +369,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     /**
      * Get the related PHP class name of a given $element.
      *
-     * @param \DOMElement $element The element you want to know the data model PHP class.
-     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If no class can be found for $element.
+     * @param DOMElement $element The element you want to know the data model PHP class.
      * @return string A fully qualified class name.
+     * @throws UnmarshallingException If no class can be found for $element.
      */
     protected function lookupClass(DOMElement $element)
     {
@@ -308,7 +379,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $localName) === 1) {
             $localName = XmlUtils::qtiFriendlyName($localName);
         }
-        
+
         $lookup = $this->getLookupClasses();
         $class = ucfirst($localName);
 
@@ -318,7 +389,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             if (class_exists($fqClass) === true) {
                 return $fqClass;
             }
-            
+
             $fqClass = $fqClass . 'Element';
             if (class_exists($fqClass) === true) {
                 return $fqClass;

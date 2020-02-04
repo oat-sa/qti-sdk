@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +23,18 @@
 
 namespace qtism\data\storage\php;
 
-use qtism\data\storage\php\Utils as PhpUtils;
-use qtism\common\storage\StreamAccessException;
-use qtism\common\storage\IStream;
+use Exception;
+use InvalidArgumentException;
 use qtism\common\storage\AbstractStreamAccess;
+use qtism\common\storage\IStream;
+use qtism\common\storage\StreamAccessException;
 use qtism\common\storage\StreamException;
-use \InvalidArgumentException;
-use \Exception;
+use qtism\data\storage\php\Utils as PhpUtils;
 
 /**
  *
  * The PhpStreamAccess class provides methods to write some
  * PHP Code into a given IStream object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpStreamAccess extends AbstractStreamAccess
 {
@@ -213,8 +211,8 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * An alias to PhpStreamAccess::writeScopeResolution ;-).
      *
-     * @see PhpStreamAccess::writeScopeResolution
      * @throws StreamAccessException If an error occurs while writing the "Paamayim Nekudotayim".
+     * @see PhpStreamAccess::writeScopeResolution
      */
     public function writePaamayimNekudotayim()
     {
@@ -434,7 +432,6 @@ class PhpStreamAccess extends AbstractStreamAccess
             $argsCount = count($arguments);
 
             for ($i = 0; $i < $argsCount; $i++) {
-
                 $this->writeArgument($arguments[$i]);
 
                 if ($i < $argsCount - 1) {

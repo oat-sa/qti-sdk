@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,40 +23,34 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\interactions\GraphicGapMatchInteraction;
-use qtism\data\content\interactions\GapImgCollection;
+use DOMElement;
 use qtism\data\content\interactions\AssociableHotspotCollection;
+use qtism\data\content\interactions\GapImgCollection;
+use qtism\data\content\interactions\GraphicGapMatchInteraction;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * The Marshaller implementation for GraphicGapMatchInteraction elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GraphicGapMatchInteractionMarshaller extends Marshaller
 {
     /**
-	 * Unmarshall a DOMElement object corresponding to a graphicGapMatchInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A GraphicGapMatchInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a graphicGapMatchInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A GraphicGapMatchInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
-
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
 
                 $associableHotspotElts = $this->getChildElementsByTagName($element, 'associableHotspot');
 
                 if (count($associableHotspotElts) > 0) {
-
                     $associableHotspots = new AssociableHotspotCollection();
 
                     foreach ($associableHotspotElts as $associableHotspotElt) {
@@ -65,7 +60,6 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
                     $gapImgElts = $this->getChildElementsByTagName($element, 'gapImg');
 
                     if (count($gapImgElts) > 0) {
-
                         $gapImgs = new GapImgCollection();
 
                         foreach ($gapImgElts as $gapImgElt) {
@@ -92,7 +86,6 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
                         $msg = "A 'graphicGapMatchInteraction' element must contain at least one 'gapImg' element, none given.";
                         throw new UnmarshallingException($msg, $element);
                     }
-
                 } else {
                     $msg = "A 'graphiGapMatchInteraction' element must contain at least one 'associableHotspot' element, none given.";
                     throw new UnmarshallingException($msg, $element);
@@ -108,12 +101,12 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Marshall an GraphicGapMatchInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A GraphicGapMatchInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall an GraphicGapMatchInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component A GraphicGapMatchInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);

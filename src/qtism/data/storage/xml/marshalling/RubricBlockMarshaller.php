@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,37 +23,33 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\FlowStaticCollection;
+use DOMElement;
+use DOMText;
 use qtism\data\content\FlowStatic;
-use qtism\data\content\Block;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\RubricBlock;
 use qtism\data\content\Stylesheet;
 use qtism\data\content\StylesheetCollection;
 use qtism\data\QtiComponent;
-use qtism\data\content\RubricBlock;
-use qtism\data\ViewCollection;
 use qtism\data\View;
-use \DOMElement;
-use \DOMText;
+use qtism\data\ViewCollection;
 
 /**
  * Marshalling/Unmarshalling implementation for rubrickBlock.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RubricBlockMarshaller extends Marshaller
 {
     /**
-	 * Marshall a RubricBlock object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A RubricBlock object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a RubricBlock object into a DOMElement object.
+     *
+     * @param QtiComponent $component A RubricBlock object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
 
-        $arrayViews = array();
+        $arrayViews = [];
         foreach ($component->getViews() as $view) {
             $key = array_search($view, View::asArray());
             // replace '_' by the space char.
@@ -87,12 +84,12 @@ class RubricBlockMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI rubrickBlock element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\content\RubricBlock A RubricBlock object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'href' is missing from $element.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI rubrickBlock element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return RubricBlock A RubricBlock object.
+     * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
+     */
     protected function unmarshall(DOMElement $element)
     {
         // First we retrieve the mandatory views.
@@ -122,7 +119,6 @@ class RubricBlockMarshaller extends Marshaller
             $content = new FlowStaticCollection();
 
             foreach ($this->getChildElementsByTagName($element, 'apipAccessibility', true, true) as $elt) {
-
                 if ($elt instanceof DOMText) {
                     $elt = self::getDOMCradle()->createElement('textRun', $elt->wholeText);
                 }
@@ -132,7 +128,7 @@ class RubricBlockMarshaller extends Marshaller
 
                 if ($cpt instanceof Stylesheet) {
                     $stylesheets[] = $cpt;
-                } elseif ($cpt instanceof FlowStatic && !in_array($cpt->getQtiClassName(), array('hottext', 'feedbackBlock', 'feedbackInline', 'rubricBlock', 'infoControl'))) {
+                } elseif ($cpt instanceof FlowStatic && !in_array($cpt->getQtiClassName(), ['hottext', 'feedbackBlock', 'feedbackInline', 'rubricBlock', 'infoControl'])) {
                     $content[] = $cpt;
                 } else {
                     $msg = "The 'rubricBlock' cannot contain '" . $cpt->getQtiClassName() . "' elements.";
@@ -153,8 +149,8 @@ class RubricBlockMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'rubricBlock';

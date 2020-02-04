@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
@@ -41,9 +41,7 @@ class Utils
         $sectparent = null;
 
         foreach ($sections as $key => $sect) {
-
             if (in_array($component, $sect->getSectionParts()->getArrayCopy())) {
-
                 $sectparent = $sect;
             }
 
@@ -62,11 +60,11 @@ class Utils
      * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
      * find the firstItem from another QtiComponent : this is then done iteratively.
      *
-     * @param $test \qtism\data\AssessmentTest The AssessmentTest where we are searching the item from where the branch
+     * @param $test AssessmentTest The AssessmentTest where we are searching the item from where the branch
      * comes.
-     * @param $component \qtism\data\QtiComponent The QtiComponent targeted by a branch.
+     * @param $component QtiComponent The QtiComponent targeted by a branch.
      * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @return \qtism\data\AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
+     * @return AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
      * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
      * has been reached.
      */
@@ -76,7 +74,6 @@ class Utils
         $visitedNodes = [];
 
         while (true) {
-
             $visitedNodes[] = $currentCmp->getIdentifier();
 
             switch ($currentCmp->getQtiClassName()) {
@@ -88,18 +85,15 @@ class Utils
                     $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
                     if (count($items) == 0) {
-
                         // Check for recursion
 
                         $sectparent = Utils::checkRecursion($currentCmp, $sections);
 
-                        if ($sectparent != null)
-                        {
+                        if ($sectparent != null) {
                             $nextSectpart = null;
                             $currentFound = false;
 
-                            foreach ($sectparent->getSectionParts() as $key => $scpt)
-                            {
+                            foreach ($sectparent->getSectionParts() as $key => $scpt) {
                                 if ($currentFound) {
                                     $nextSectpart = $scpt;
                                     break;
@@ -115,14 +109,11 @@ class Utils
                             } else { // Recursive part
                                 $currentCmp = $nextSectpart;
                             }
-                        }
-                        else { // No recursion
-
+                        } else { // No recursion
                             $nextSect = null;
                             $keyFound = null;
 
                             foreach ($sections as $sect) {
-
                                 if (($keyFound) and (!in_array($sect->getIdentifier(), $visitedNodes))) {
                                     $nextSect = $sect;
                                     break;
@@ -148,14 +139,12 @@ class Utils
                     $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
                     if (count($items) == 0) {
-
                         // First item of the next testpart
 
                         $nextTest = null;
                         $keyFound = null;
 
                         foreach ($test->getComponentsByClassName($currentCmp->getQtiClassName()) as $test) {
-
                             if ($keyFound) {
                                 $nextTest = $test;
                                 break;
@@ -179,7 +168,6 @@ class Utils
                 default:
                     return null;
             }
-
         }
     }
 
@@ -190,11 +178,11 @@ class Utils
      * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
      * find the lastItem from another QtiComponent : this is then done iteratively.
      *
-     * @param $test \qtism\data\AssessmentTest The AssessmentTest where we are searching the item from where the branch
+     * @param $test AssessmentTest The AssessmentTest where we are searching the item from where the branch
      * starts.
-     * @param $component \qtism\data\QtiComponent The QtiComponent with a BranchRule.
+     * @param $component QtiComponent The QtiComponent with a BranchRule.
      * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @return \qtism\data\AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
+     * @return AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
      * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
      * test has been reached.
      */
@@ -203,8 +191,7 @@ class Utils
         $currentCmp = $component;
         // $sections = null;
 
-        while (true)
-        {
+        while (true) {
             switch ($currentCmp->getQtiClassName()) {
                 case "assessmentItemRef":
                     return $currentCmp;
@@ -214,7 +201,6 @@ class Utils
                     $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
                     if (count($items) == 0) {
-
                         // Check for recursion
 
                         $sectparent = Utils::checkRecursion($currentCmp, $sections);
@@ -230,21 +216,17 @@ class Utils
                                 $prevSectPart = $scpt;
                             }
 
-                            if ($prevSectPart == null)
-                            {
+                            if ($prevSectPart == null) {
                                 $currentCmp = $sectparent;
                             } else {
                                 $currentCmp = $prevSectPart;
                             }
-                        }
-                        else {
-
+                        } else {
                             // No recursion
                             $prevSect = null;
                             $keyFound = null;
 
                             foreach ($sections as $sect) {
-
                                 if ($sect->getIdentifier() == $currentCmp->getIdentifier()) {
                                     break;
                                 } else {
@@ -267,14 +249,12 @@ class Utils
                     $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
                     if (count($items) == 0) {
-
                         // First item of the next testpart
 
                         $prevTest = null;
                         $keyFound = null;
 
                         foreach ($test->getComponentsByClassName($currentCmp->getQtiClassName()) as $test) {
-
                             if ($test->getIdentifier() == $currentCmp->getIdentifier()) {
                                 break;
                             } else {

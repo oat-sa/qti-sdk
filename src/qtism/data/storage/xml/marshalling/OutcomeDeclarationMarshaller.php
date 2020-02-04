@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,25 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclaration;
-use qtism\data\ViewCollection;
 use qtism\data\View;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\ViewCollection;
 
 /**
  * Marshalling/Unmarshalling implementation for outcomeDeclaration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
 {
     /**
-	 * Marshall an OutcomeDeclaration object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An OutcomeDeclaration object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall an OutcomeDeclaration object into a DOMElement object.
+     *
+     * @param QtiComponent $component An OutcomeDeclaration object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
@@ -53,7 +51,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         // !!! If $arrayViews contain all possible views, it means that the treated
         // !!! outcome is relevant to all views, as per QTI 2.1 spec.
         if (Version::compare($version, '2.1.0', '>=') === true && !in_array($component->getViews()->getArrayCopy(), View::asArray())) {
-            $arrayViews = array();
+            $arrayViews = [];
             foreach ($component->getViews() as $view) {
                 $arrayViews[] = View::getNameByConstant($view);
             }
@@ -90,7 +88,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
 
         // Deal with lookup table.
         if ($component->getLookupTable() != null) {
-            $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
+            $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), [$component->getBaseType()]);
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
 
@@ -98,16 +96,15 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI outcomeDeclaration element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent An OutcomeDeclaration object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI outcomeDeclaration element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent An OutcomeDeclaration object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         try {
-
             $version = $this->getVersion();
             $baseComponent = parent::unmarshall($element);
             $object = new OutcomeDeclaration($baseComponent->getIdentifier());
@@ -164,7 +161,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
                     $lookupTable = $matchTable->item(0);
                 }
 
-                $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($lookupTable, array($object->getBaseType()));
+                $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($lookupTable, [$object->getBaseType()]);
                 $object->setLookupTable($lookupTableMarshaller->unmarshall($lookupTable));
             }
 
@@ -176,8 +173,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'outcomeDeclaration';

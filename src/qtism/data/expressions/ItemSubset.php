@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\data\expressions;
 
-use qtism\common\utils\Format;
+use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
-use \InvalidArgumentException;
+use qtism\common\utils\Format;
 
 /**
  * From IMS QTI:
@@ -33,46 +34,43 @@ use \InvalidArgumentException;
  * The attributes define criteria that must be matched by all members of the sub-set.
  * It is used to control a number of expressions in outcomeProcessing for returning
  * information about the test as a whole, or arbitrary subsets of it.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ItemSubset extends Expression implements Pure
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * If specified, only variables from items in the assessmentSection with matching
-	 * identifier are matched. Items in sub-sections are included in this definition.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * If specified, only variables from items in the assessmentSection with matching
+     * identifier are matched. Items in sub-sections are included in this definition.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $sectionIdentifier = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * If specified, only variables from items with a matching category are included.
-	 *
-	 * @var \qtism\common\collections\IdentifierCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * If specified, only variables from items with a matching category are included.
+     *
+     * @var IdentifierCollection
+     * @qtism-bean-property
+     */
     private $includeCategories = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * If specified, only variables from items with no matching category are included.
-	 *
-	 * @var \qtism\common\collections\IdentifierCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * If specified, only variables from items with no matching category are included.
+     *
+     * @var IdentifierCollection
+     * @qtism-bean-property
+     */
     private $excludeCategories = null;
 
     /**
-	 * Create a new instance of ItemSubset.
-	 */
+     * Create a new instance of ItemSubset.
+     */
     public function __construct()
     {
         $this->setIncludeCategories(new IdentifierCollection());
@@ -80,11 +78,11 @@ class ItemSubset extends Expression implements Pure
     }
 
     /**
-	 * Set the assessment section identifier to match.
-	 *
-	 * @param string $sectionIdentifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $sectionIdentifier is not a valid QTI Identifier.
-	 */
+     * Set the assessment section identifier to match.
+     *
+     * @param string $sectionIdentifier A QTI Identifier.
+     * @throws InvalidArgumentException If $sectionIdentifier is not a valid QTI Identifier.
+     */
     public function setSectionIdentifier($sectionIdentifier)
     {
         if (Format::isIdentifier($sectionIdentifier) || empty($sectionIdentifier)) {
@@ -96,58 +94,58 @@ class ItemSubset extends Expression implements Pure
     }
 
     /**
-	 * Get the assessment section identifier to match.
-	 *
-	 * @return string
-	 */
+     * Get the assessment section identifier to match.
+     *
+     * @return string
+     */
     public function getSectionIdentifier()
     {
         return $this->sectionIdentifier;
     }
 
     /**
-	 * Set the matching categories.
-	 *
-	 * @param \qtism\common\collections\IdentifierCollection $includeCategories A collection of QTI Identifiers.
-	 */
+     * Set the matching categories.
+     *
+     * @param IdentifierCollection $includeCategories A collection of QTI Identifiers.
+     */
     public function setIncludeCategories(IdentifierCollection $includeCategories)
     {
         $this->includeCategories = $includeCategories;
     }
 
     /**
-	 * Get the matching categories.
-	 *
-	 * @return \qtism\common\collections\IdentifierCollection
-	 */
+     * Get the matching categories.
+     *
+     * @return IdentifierCollection
+     */
     public function getIncludeCategories()
     {
         return $this->includeCategories;
     }
 
     /**
-	 * Set the categories that must not be matched.
-	 *
-	 * @param \qtism\common\collections\IdentifierCollection $excludeCategories A collection of QTI Identifiers.
-	 */
+     * Set the categories that must not be matched.
+     *
+     * @param IdentifierCollection $excludeCategories A collection of QTI Identifiers.
+     */
     public function setExcludeCategories(IdentifierCollection $excludeCategories)
     {
         $this->excludeCategories = $excludeCategories;
     }
 
     /**
-	 * Get the categories that must not be matched.
-	 *
-	 * @return \qtism\common\collections\IdentifierCollection
-	 */
+     * Get the categories that must not be matched.
+     *
+     * @return IdentifierCollection
+     */
     public function getExcludeCategories()
     {
         return $this->excludeCategories;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'itemSubset';
@@ -155,6 +153,7 @@ class ItemSubset extends Expression implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

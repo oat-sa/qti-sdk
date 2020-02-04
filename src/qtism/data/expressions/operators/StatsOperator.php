@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,10 +23,10 @@
 
 namespace qtism\data\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -35,39 +36,36 @@ use \InvalidArgumentException;
  * If the sub-expression or any value contained therein is NULL, the result is NULL.
  * If any value contained in the sub-expression is not a numerical value, then the
  * result is NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class StatsOperator extends Operator implements Pure
 {
     /**
-	 * The name of the statistics operator to use.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * The name of the statistics operator to use.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $name;
 
     /**
-	 * Create a new instance of StatsOperator.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
-	 * @param integer $name A value from the Statistics enumeration.
-	 * @throws \InvalidArgumentException If $name is not a value from the Statistics enumeration or if the count of $expressions is greather than 1.
-	 */
+     * Create a new instance of StatsOperator.
+     *
+     * @param ExpressionCollection $expressions A collection of Expression objects.
+     * @param integer $name A value from the Statistics enumeration.
+     * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration or if the count of $expressions is greather than 1.
+     */
     public function __construct(ExpressionCollection $expressions, $name)
     {
-        parent::__construct($expressions, 1, 1, array(Cardinality::MULTIPLE, Cardinality::ORDERED), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
+        parent::__construct($expressions, 1, 1, [Cardinality::MULTIPLE, Cardinality::ORDERED], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
         $this->setName($name);
     }
 
     /**
-	 * Set the statistics operator to use.
-	 *
-	 * @param integer $name A value from the Statistics enumeration.
-	 * @throws \InvalidArgumentException If $name is not a value from the Statistics enumeration.
-	 */
+     * Set the statistics operator to use.
+     *
+     * @param integer $name A value from the Statistics enumeration.
+     * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration.
+     */
     public function setName($name)
     {
         if (in_array($name, Statistics::asArray())) {
@@ -79,18 +77,18 @@ class StatsOperator extends Operator implements Pure
     }
 
     /**
-	 * Get the name of the statistics operator to use.
-	 *
-	 * @return integer A value from the Statistics enumeration.
-	 */
+     * Get the name of the statistics operator to use.
+     *
+     * @return integer A value from the Statistics enumeration.
+     */
     public function getName()
     {
         return $this->name;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'statsOperator';
@@ -98,6 +96,7 @@ class StatsOperator extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

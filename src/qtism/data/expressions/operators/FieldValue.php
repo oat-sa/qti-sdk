@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,47 +23,44 @@
 
 namespace qtism\data\expressions\operators;
 
+use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use qtism\common\utils\Format;
-use \InvalidArgumentException;
 
 /**
  * The field-value operator takes a sub-expression with a record container value. The
  * result is the value of the field with the specified fieldIdentifier. If there is
  * no field with that identifier then the result of the operator is NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class FieldValue extends Operator implements Pure
 {
     /**
-	 * The identifier of the field to lookup.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The identifier of the field to lookup.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $fieldIdentifier;
 
     /**
-	 * Create a new instance of FieldValue.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
-	 * @param string $fieldIdentifier A QTI Identifier.
-	 */
+     * Create a new instance of FieldValue.
+     *
+     * @param ExpressionCollection $expressions A collection of Expression objects.
+     * @param string $fieldIdentifier A QTI Identifier.
+     */
     public function __construct(ExpressionCollection $expressions, $fieldIdentifier)
     {
-        parent::__construct($expressions, 1, 1, array(OperatorCardinality::RECORD), array(OperatorBaseType::ANY));
+        parent::__construct($expressions, 1, 1, [OperatorCardinality::RECORD], [OperatorBaseType::ANY]);
         $this->setFieldIdentifier($fieldIdentifier);
     }
 
     /**
-	 * Set the fieldIdentifier attribute.
-	 *
-	 * @param string $fieldIdentifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
-	 */
+     * Set the fieldIdentifier attribute.
+     *
+     * @param string $fieldIdentifier A QTI Identifier.
+     * @throws InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
+     */
     public function setFieldIdentifier($fieldIdentifier)
     {
         if (Format::isIdentifier($fieldIdentifier)) {
@@ -74,18 +72,18 @@ class FieldValue extends Operator implements Pure
     }
 
     /**
-	 * Get the fieldIdentifier attribute.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the fieldIdentifier attribute.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getFieldIdentifier()
     {
         return $this->fieldIdentifier;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'fieldValue';
@@ -93,6 +91,7 @@ class FieldValue extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

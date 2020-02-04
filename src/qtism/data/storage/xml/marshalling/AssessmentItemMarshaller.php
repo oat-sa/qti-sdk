@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,29 +23,26 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use qtism\data\AssessmentItem;
 use qtism\data\content\ModalFeedbackCollection;
 use qtism\data\content\StylesheetCollection;
+use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\TemplateDeclarationCollection;
-use qtism\data\QtiComponent;
-use qtism\data\AssessmentItem;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for AssessmentItem.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentItemMarshaller extends Marshaller
 {
     /**
-	 * Marshall an AssessmentItem object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An AssessmentItem object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall an AssessmentItem object into a DOMElement object.
+     *
+     * @param QtiComponent $component An AssessmentItem object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -115,24 +113,21 @@ class AssessmentItemMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI assessmentItem element.
-	 *
-	 * If $assessmentItem is provided, it will be used as the unmarshalled component instead of creating
-	 * a new one.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @param \qtism\data\AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
-	 * @return \qtism\data\QtiComponent An AssessmentItem object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI assessmentItem element.
+     *
+     * If $assessmentItem is provided, it will be used as the unmarshalled component instead of creating
+     * a new one.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
+     * @return QtiComponent An AssessmentItem object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
-
-                if (($title= $this->getDOMElementAttributeAs($element, 'title')) !== null) {
-
+                if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
                     if (empty($assessmentItem)) {
                         $object = new AssessmentItem($identifier, $title, $timeDependent);
                     } else {
@@ -163,7 +158,6 @@ class AssessmentItemMarshaller extends Marshaller
 
                     $responseDeclarationElts = $this->getChildElementsByTagName($element, 'responseDeclaration');
                     if (!empty($responseDeclarationElts)) {
-
                         $responseDeclarations = new ResponseDeclarationCollection();
 
                         foreach ($responseDeclarationElts as $responseDeclarationElt) {
@@ -176,7 +170,6 @@ class AssessmentItemMarshaller extends Marshaller
 
                     $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
                     if (!empty($outcomeDeclarationElts)) {
-
                         $outcomeDeclarations = new OutcomeDeclarationCollection();
 
                         foreach ($outcomeDeclarationElts as $outcomeDeclarationElt) {
@@ -189,7 +182,6 @@ class AssessmentItemMarshaller extends Marshaller
 
                     $templateDeclarationElts = $this->getChildElementsByTagName($element, 'templateDeclaration');
                     if (!empty($templateDeclarationElts)) {
-
                         $templateDeclarations = new TemplateDeclarationCollection();
 
                         foreach ($templateDeclarationElts as $templateDeclarationElt) {
@@ -258,8 +250,8 @@ class AssessmentItemMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentItem';

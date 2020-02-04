@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +31,6 @@ use qtism\common\utils\Format;
  *
  * This trait deals with xml:base information of a QTI content Component.
  *
- * @authorJérôme Bogaerts <jerome@taotesting.com>
  * @see \qtism\data\content\Flow
  */
 trait FlowTrait

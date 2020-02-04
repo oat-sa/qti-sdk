@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,27 +23,24 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
+use DOMElement;
 use qtism\data\expressions\operators\Substring;
-use \DOMElement;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A complex Operator marshaller focusing on the marshalling/unmarshalling process
  * of substring QTI operators.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SubstringMarshaller extends OperatorMarshaller
 {
     /**
-	 * Unmarshall a Substring object into a QTI substring element.
-	 *
-	 * @param \qtism\data\QtiComponent $component The Substring object to marshall.
-	 * @param array $elements An array of child DOMEelement objects.
-	 * @return \DOMElement The marshalled QTI substring element.
-	 */
+     * Unmarshall a Substring object into a QTI substring element.
+     *
+     * @param QtiComponent $component The Substring object to marshall.
+     * @param array $elements An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI substring element.
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -56,13 +54,13 @@ class SubstringMarshaller extends OperatorMarshaller
     }
 
     /**
-	 * Unmarshall a QTI substring operator element into a Substring object.
-	 *
-	 * @param \DOMElement The substring element to unmarshall.
-	 * @param \qtism\data\QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return \qtism\data\QtiComponent A Substring object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a QTI substring operator element into a Substring object.
+     *
+     * @param DOMElement The substring element to unmarshall.
+     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent A Substring object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $object = new Substring($children);

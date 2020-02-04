@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,19 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\rules\SetOutcomeValue;
-use qtism\data\rules\LookupOutcomeValue;
-use qtism\data\rules\ExitTest;
+use DOMElement;
+use DOMNode;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\OutcomeCondition;
-use qtism\data\rules\OutcomeIf;
+use qtism\data\rules\OutcomeElse;
 use qtism\data\rules\OutcomeElseIf;
 use qtism\data\rules\OutcomeElseIfCollection;
-use qtism\data\rules\OutcomeElse;
-use \DOMElement;
-use \DOMNode;
+use qtism\data\rules\OutcomeIf;
+use qtism\data\rules\OutcomeRuleCollection;
 
 /**
  * Marshalling/Unmarshalling implementation for OutcomeCondition QTI components.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeConditionMarshaller extends RecursiveMarshaller
 {
@@ -81,8 +76,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -95,45 +90,45 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     */
     protected function isElementFinal(DOMNode $element)
     {
-        $exclusion = array('outcomeIf', 'outcomeElseIf', 'outcomeElse', 'outcomeCondition');
+        $exclusion = ['outcomeIf', 'outcomeElseIf', 'outcomeElse', 'outcomeCondition'];
 
         return !in_array($element->localName, $exclusion);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     */
     protected function isComponentFinal(QtiComponent $component)
     {
         return (!$component instanceof OutcomeIf &&
-                 !$component instanceof OutcomeElseIf &&
-                 !$component instanceof OutcomeElse &&
-                 !$component instanceof OutcomeCondition);
+            !$component instanceof OutcomeElseIf &&
+            !$component instanceof OutcomeElse &&
+            !$component instanceof OutcomeCondition);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     */
     protected function getChildrenElements(DOMElement $element)
     {
-        return $this->getChildElementsByTagName($element, array(
-                'outcomeIf',
-                'outcomeElseIf',
-                'outcomeElse',
-                'exitTest',
-                'lookupOutcomeValue',
-                'setOutcomeValue',
-                'outcomeCondition'
-        ));
+        return $this->getChildElementsByTagName($element, [
+            'outcomeIf',
+            'outcomeElseIf',
+            'outcomeElse',
+            'exitTest',
+            'lookupOutcomeValue',
+            'setOutcomeValue',
+            'outcomeCondition',
+        ]);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     */
     protected function getChildrenComponents(QtiComponent $component)
     {
         if ($component instanceof OutcomeIf || $component instanceof OutcomeElseIf || $component instanceof OutcomeElse) {
@@ -141,7 +136,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
             return $component->getOutcomeRules()->getArrayCopy();
         } else {
             // OutcomeCondition
-            $returnValue = array($component->getOutcomeIf());
+            $returnValue = [$component->getOutcomeIf()];
 
             if (count($component->getOutcomeElseIfs()) > 0) {
                 $returnValue = array_merge($returnValue, $component->getOutcomeElseIfs()->getArrayCopy());
@@ -156,8 +151,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     */
     protected function createCollection(DOMElement $currentNode)
     {
         if ($currentNode->localName != 'outcomeCondition') {
@@ -165,12 +160,11 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
         } else {
             return new QtiComponentCollection();
         }
-
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return '';

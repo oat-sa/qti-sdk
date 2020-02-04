@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,20 +23,17 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InlineStaticCollection;
-use qtism\data\ShowHide;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
+use qtism\data\ShowHide;
 
 /**
  * The Marshaller implementation for TemplateInline/TemplateBlock elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateElementMarshaller extends ContentMarshaller
 {
@@ -47,13 +45,10 @@ class TemplateElementMarshaller extends ContentMarshaller
         $fqClass = $this->lookupClass($element);
 
         if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
-
             if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
                 $component = new $fqClass($templateIdentifier, $identifier);
 
                 if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
-
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     } catch (InvalidArgumentException $e) {
@@ -64,10 +59,8 @@ class TemplateElementMarshaller extends ContentMarshaller
                     try {
                         $content = ($element->localName === 'templateInline') ? new InlineStaticCollection() : new FlowStaticCollection();
                         foreach ($children as $c) {
-
-                            if (!$c instanceof FlowStatic || ($element->localName === 'templateBlock' && in_array($c->getQtiClassName(), array('hottext', 'rubricBlock', 'infoControl')))) {
-
-                                $msg = "The '" . $element->localName . "' cannot contain '" . $c->getQtiClassName() ."' elements.";
+                            if (!$c instanceof FlowStatic || ($element->localName === 'templateBlock' && in_array($c->getQtiClassName(), ['hottext', 'rubricBlock', 'infoControl']))) {
+                                $msg = "The '" . $element->localName . "' cannot contain '" . $c->getQtiClassName() . "' elements.";
                                 throw new UnmarshallingException($msg, $element);
                             }
 
@@ -97,7 +90,6 @@ class TemplateElementMarshaller extends ContentMarshaller
             $msg = "The mandatory 'templateIdentifier' attribute is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
-
     }
 
     /**
@@ -127,6 +119,6 @@ class TemplateElementMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content");
+        $this->lookupClasses = ["qtism\\data\\content"];
     }
 }

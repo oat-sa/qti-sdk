@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,36 +23,32 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\utils\Version;
-
+use DOMElement;
 use qtism\common\utils\Format;
+use qtism\common\utils\Version;
 use qtism\data\content\PrintedVariable;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for PrintedVariable.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PrintedVariableMarshaller extends Marshaller
 {
     /**
-	 * Marshall a PrintedVariable object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A PrintedVariable object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a PrintedVariable object into a DOMElement object.
+     *
+     * @param QtiComponent $component A PrintedVariable object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
         $version = $this->getVersion();
-        
+
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         $this->setDOMElementAttribute($element, 'base', $component->getBase());
-        
+
         if (Version::compare($version, '2.1.0', '>=') === true) {
             $this->setDOMElementAttribute($element, 'powerForm', $component->mustPowerForm());
             $this->setDOMElementAttribute($element, 'delimiter', $component->getDelimiter());
@@ -80,16 +77,16 @@ class PrintedVariableMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a printedVariable element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A PrintedVariable object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a printedVariable element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A PrintedVariable object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
-        
+
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $component = new PrintedVariable($identifier);
 
@@ -135,8 +132,8 @@ class PrintedVariableMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'printedVariable';

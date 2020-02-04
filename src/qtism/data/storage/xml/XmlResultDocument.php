@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml;
 
 use DOMElement;
+use LogicException;
 
 /**
  * Class XmlResultDocument
- * @package qtism\data\storage\xml
  */
 class XmlResultDocument extends XmlDocument
 {
@@ -40,7 +41,7 @@ class XmlResultDocument extends XmlDocument
      */
     public function schemaValidate($filename = '')
     {
-        parent::schemaValidate(dirname(__FILE__) . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd');
+        parent::schemaValidate(__DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd');
     }
 
     /**
@@ -49,7 +50,7 @@ class XmlResultDocument extends XmlDocument
      * Add Result namespace regarding version
      *
      * @param DOMElement $rootElement
-     * @throws \LogicException if the version is not supported by QTI result
+     * @throws LogicException if the version is not supported by QTI result
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
@@ -68,7 +69,7 @@ class XmlResultDocument extends XmlDocument
                 break;
 
             default:
-                throw new \LogicException('Result xml is not supported for QTI version "' . $version . '"');
+                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
         }
 
         $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");

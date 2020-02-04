@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The TestFeedBack enumeration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestFeedbackAccess implements Enumeration
 {
@@ -38,10 +36,10 @@ class TestFeedbackAccess implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'AT_END' => self::AT_END,
-            'DURING' => self::DURING
-        );
+            'DURING' => self::DURING,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -49,15 +47,15 @@ class TestFeedbackAccess implements Enumeration
         switch (strtolower($name)) {
             case 'atend':
                 return self::AT_END;
-            break;
+                break;
 
             case 'during':
                 return self::DURING;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -66,15 +64,15 @@ class TestFeedbackAccess implements Enumeration
         switch ($constant) {
             case self::AT_END:
                 return 'atEnd';
-            break;
+                break;
 
             case self::DURING:
                 return 'during';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

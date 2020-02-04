@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use qtism\common\enums\Cardinality;
 
 /**
  * From IMS QTI:
@@ -45,25 +45,22 @@ use qtism\common\enums\Cardinality;
  * the member operator, the contains operator should not be used on sub-expressions
  * with a base-type of float and must not be used on sub-expressions with a base-type
  * of duration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Contains extends Operator implements Pure
 {
     /**
      * Create a new Contains object.
      *
-     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     * @param ExpressionCollection $expressions
      */
     public function __construct(ExpressionCollection $expressions)
     {
-        parent::__construct($expressions, 2, 2, array(OperatorCardinality::SAME), array(OperatorBaseType::SAME));
+        parent::__construct($expressions, 2, 2, [OperatorCardinality::SAME], [OperatorBaseType::SAME]);
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'contains';
@@ -71,6 +68,7 @@ class Contains extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

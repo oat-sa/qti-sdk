@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -57,142 +58,139 @@ use qtism\common\enums\Cardinality;
  * running out of time. The techniques required to distinguish
  * between these cases are an issue for user interface design and
  * are therefore out of scope for this specification.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ResponseDeclaration extends VariableDeclaration
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * A response declaration may assign an optional correctResponse.
-	 * This value may indicate the only possible value of the response
-	 * variable to be considered correct or merely just a correct value.
-	 * For responses that are being measured against a more complex scale
-	 * than correct/incorrect this value should be set to the (or an)
-	 * optimal value. Finally, for responses for which no such optimal
-	 * value is defined the correctResponse must be omitted. If a delivery
-	 * system supports the display of a solution then it should display
-	 * the correct values of responses (where defined) to the candidate.
-	 * When correct values are displayed they must be clearly distinguished
-	 * from the candidate's own responses (which may be hidden completely
-	 * if necessary).
-	 *
-	 * @var \qtism\data\state\CorrectResponse
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * A response declaration may assign an optional correctResponse.
+     * This value may indicate the only possible value of the response
+     * variable to be considered correct or merely just a correct value.
+     * For responses that are being measured against a more complex scale
+     * than correct/incorrect this value should be set to the (or an)
+     * optimal value. Finally, for responses for which no such optimal
+     * value is defined the correctResponse must be omitted. If a delivery
+     * system supports the display of a solution then it should display
+     * the correct values of responses (where defined) to the candidate.
+     * When correct values are displayed they must be clearly distinguished
+     * from the candidate's own responses (which may be hidden completely
+     * if necessary).
+     *
+     * @var CorrectResponse
+     * @qtism-bean-property
+     */
     private $correctResponse;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The mapping provides a mapping from the set of base values to a set of
-	 * numeric values for the purposes of response processing. See mapResponse
-	 * for information on how to use the mapping.
-	 *
-	 * @var \qtism\data\state\Mapping
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The mapping provides a mapping from the set of base values to a set of
+     * numeric values for the purposes of response processing. See mapResponse
+     * for information on how to use the mapping.
+     *
+     * @var Mapping
+     * @qtism-bean-property
+     */
     private $mapping = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The areaMapping, which may only be present in declarations of variables with
-	 * baseType point, provides an alternative form of mapping which tests against
-	 * areas of the coordinate space instead of mapping single values (i.e.,
-	 * single points).
-	 *
-	 * @var \qtism\data\state\AreaMapping
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The areaMapping, which may only be present in declarations of variables with
+     * baseType point, provides an alternative form of mapping which tests against
+     * areas of the coordinate space instead of mapping single values (i.e.,
+     * single points).
+     *
+     * @var AreaMapping
+     * @qtism-bean-property
+     */
     private $areaMapping = null;
 
     /**
-	 * Create a new instance of ResponseDeclaration.
-	 *
-	 * @param string $identifier The identifier of the ResponseDeclaration.
-	 * @param int $baseType A value from the BaseType enumeration or -1 if no baseType.
-	 * @param int $cardinality A value from the Cardinality enumeration.
-	 * @param \qtism\data\state\DefaultValue $defaultValue A DefaultValue object.
-	 */
+     * Create a new instance of ResponseDeclaration.
+     *
+     * @param string $identifier The identifier of the ResponseDeclaration.
+     * @param int $baseType A value from the BaseType enumeration or -1 if no baseType.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param DefaultValue $defaultValue A DefaultValue object.
+     */
     public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
     }
 
     /**
-	 * Set the correct response. Give null if no correct response is specified.
-	 *
-	 * @param \qtism\data\state\CorrectResponse $correctResponse A CorrectResponse object or null.
-	 */
+     * Set the correct response. Give null if no correct response is specified.
+     *
+     * @param CorrectResponse $correctResponse A CorrectResponse object or null.
+     */
     public function setCorrectResponse(CorrectResponse $correctResponse = null)
     {
         $this->correctResponse = $correctResponse;
     }
 
     /**
-	 * Get the correct response.
-	 *
-	 * @return \qtism\data\state\CorrectResponse A CorrectResponse object or null if no correct response is specified.
-	 */
+     * Get the correct response.
+     *
+     * @return CorrectResponse A CorrectResponse object or null if no correct response is specified.
+     */
     public function getCorrectResponse()
     {
         return $this->correctResponse;
     }
 
     /**
-	 * Set the mapping.
-	 *
-	 * @param \qtism\data\state\Mapping $mapping A Mapping object or null if no mapping is specified.
-	 */
+     * Set the mapping.
+     *
+     * @param Mapping $mapping A Mapping object or null if no mapping is specified.
+     */
     public function setMapping(Mapping $mapping = null)
     {
         $this->mapping = $mapping;
     }
 
     /**
-	 * Get the mapping.
-	 *
-	 * @return \qtism\data\state\Mapping A Mapping object or null if no mapping specified.
-	 */
+     * Get the mapping.
+     *
+     * @return Mapping A Mapping object or null if no mapping specified.
+     */
     public function getMapping()
     {
         return $this->mapping;
     }
 
     /**
-	 * Set the area mapping.
-	 *
-	 * @param \qtism\data\state\AreaMapping $areaMapping An AreaMapping object or null if no area mapping was specified.
-	 */
+     * Set the area mapping.
+     *
+     * @param AreaMapping $areaMapping An AreaMapping object or null if no area mapping was specified.
+     */
     public function setAreaMapping(AreaMapping $areaMapping = null)
     {
         $this->areaMapping = $areaMapping;
     }
 
     /**
-	 * Get the area mapping
-	 *
-	 * @return \qtism\data\state\AreaMapping An AreaMapping object or null if not area mapping is specified.
-	 */
+     * Get the area mapping
+     *
+     * @return AreaMapping An AreaMapping object or null if not area mapping is specified.
+     */
     public function getAreaMapping()
     {
         return $this->areaMapping;
     }
 
     /**
-	 * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
-	 */
+     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'responseDeclaration';
     }
 
     /**
-	 * @see \qtism\data\state\VariableDeclaration::getComponents()
-	 */
+     * @see \qtism\data\state\VariableDeclaration::getComponents()
+     */
     public function getComponents()
     {
         $comp = parent::getComponents()->getArrayCopy();

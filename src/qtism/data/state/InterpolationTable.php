@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\state;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -35,27 +36,24 @@ use \InvalidArgumentException;
  * For example, an interpolation table can be used to map a raw numeric score onto
  * an identifier representing a grade. It may also be used to implement numeric
  * transformations such as those from a simple raw score to a value on a calibrated scale.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InterpolationTable extends LookupTable
 {
     /**
      * A collection of InterpolationTableEntry objects.
      *
-     * @var \qtism\data\state\InterpolationTableEntryCollection
+     * @var InterpolationTableEntryCollection
      * @qtism-bean-property
      */
     private $interpolationTableEntries;
 
     /**
-	 * Create a new instance of InterpolationTable.
-	 *
-	 * @param \qtism\data\state\InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
-	 * @param mixed $defaultValue The default outcome value to be used when no matching table entry is found.
-	 * @throws \InvalidArgumentException If $interpolationTableEntries is an empty collection.
-	 */
+     * Create a new instance of InterpolationTable.
+     *
+     * @param InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
+     * @param mixed $defaultValue The default outcome value to be used when no matching table entry is found.
+     * @throws InvalidArgumentException If $interpolationTableEntries is an empty collection.
+     */
     public function __construct(InterpolationTableEntryCollection $interpolationTableEntries, $defaultValue = null)
     {
         parent::__construct($defaultValue);
@@ -63,21 +61,21 @@ class InterpolationTable extends LookupTable
     }
 
     /**
-	 * Get the InterpolationTableEntry objects contained by the InterpolationTable.
-	 *
-	 * @return \qtism\data\state\InterpolationTableEntryCollection A collection of InterpolationTableEntry objects.
-	 */
+     * Get the InterpolationTableEntry objects contained by the InterpolationTable.
+     *
+     * @return InterpolationTableEntryCollection A collection of InterpolationTableEntry objects.
+     */
     public function getInterpolationTableEntries()
     {
         return $this->interpolationTableEntries;
     }
 
     /**
-	 * Set the InterpolationTableEntry objects contained by the current InterpolationTable.
-	 *
-	 * @param \qtism\data\state\InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
-	 * @throws \InvalidArgumentException If $interpolationTableEntries is an empty collection.
-	 */
+     * Set the InterpolationTableEntry objects contained by the current InterpolationTable.
+     *
+     * @param InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
+     * @throws InvalidArgumentException If $interpolationTableEntries is an empty collection.
+     */
     public function setInterpolationTableEntries(InterpolationTableEntryCollection $interpolationTableEntries)
     {
         if (count($interpolationTableEntries) > 0) {
@@ -89,16 +87,16 @@ class InterpolationTable extends LookupTable
     }
 
     /**
-	 * @see \qtism\data\state\LookupTable::getQtiClassName()
-	 */
+     * @see \qtism\data\state\LookupTable::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'interpolationTable';
     }
 
     /**
-	 * @see \qtism\data\state\LookupTable::getComponents()
-	 */
+     * @see \qtism\data\state\LookupTable::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(

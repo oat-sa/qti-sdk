@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,45 +23,42 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The MatchTableEntry QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MatchTableEntry extends QtiComponent
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The source integer that must be matched exactly.
-	 *
-	 * @var int
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The source integer that must be matched exactly.
+     *
+     * @var int
+     * @qtism-bean-property
+     */
     private $sourceValue;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The target value that is used to set the outcome when a match is found.
-	 *
-	 *
-	 * @var mixed
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The target value that is used to set the outcome when a match is found.
+     *
+     *
+     * @var mixed
+     * @qtism-bean-property
+     */
     private $targetValue;
 
     /**
-	 * Create a new instance of MatchTableEntry.
-	 *
-	 * @param int $sourceValue The source integer that must be matched exactly.
-	 * @param mixed $targetValue The target value compliant with the baseType datatype.
-	 */
+     * Create a new instance of MatchTableEntry.
+     *
+     * @param int $sourceValue The source integer that must be matched exactly.
+     * @param mixed $targetValue The target value compliant with the baseType datatype.
+     */
     public function __construct($sourceValue, $targetValue)
     {
         $this->setSourceValue($sourceValue);
@@ -68,21 +66,21 @@ class MatchTableEntry extends QtiComponent
     }
 
     /**
-	 * Get the source integer that must be matched exactlty.
-	 *
-	 * @return int An integer value.
-	 */
+     * Get the source integer that must be matched exactlty.
+     *
+     * @return int An integer value.
+     */
     public function getSourceValue()
     {
         return $this->sourceValue;
     }
 
     /**
-	 * Set the source integer that must be matched exactly.
-	 *
-	 * @param integer $sourceValue An integer value.
-	 * @throws \InvalidArgumentException If $sourceValue is not an integer.
-	 */
+     * Set the source integer that must be matched exactly.
+     *
+     * @param integer $sourceValue An integer value.
+     * @throws InvalidArgumentException If $sourceValue is not an integer.
+     */
     public function setSourceValue($sourceValue)
     {
         if (is_int($sourceValue)) {
@@ -94,36 +92,36 @@ class MatchTableEntry extends QtiComponent
     }
 
     /**
-	 * Get the target value.
-	 *
-	 * @return mixed A value compliant with the QTI baseType datatype.
-	 */
+     * Get the target value.
+     *
+     * @return mixed A value compliant with the QTI baseType datatype.
+     */
     public function getTargetValue()
     {
         return $this->targetValue;
     }
 
     /**
-	 * Set the target value.
-	 *
-	 * @param mixed $targetValue A Value object.
-	 */
+     * Set the target value.
+     *
+     * @param mixed $targetValue A Value object.
+     */
     public function setTargetValue($targetValue)
     {
         $this->targetValue = $targetValue;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'matchTableEntry';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

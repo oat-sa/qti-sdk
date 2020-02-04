@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,9 +30,6 @@ use InvalidArgumentException;
  *
  * Elements that can appear inside list items, table cells, etc.
  * which includes block-type and inline-type elements.
- *
- * @authorJérôme Bogaerts <jerome@taotesting.com>
- *
  */
 interface Flow extends ObjectFlow
 {

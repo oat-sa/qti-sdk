@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,12 +23,12 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
+use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
 use qtism\data\state\Value;
-use qtism\common\enums\BaseType;
 use qtism\data\storage\Utils;
-use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * Marshalling/Unmarshalling implementation for value.
@@ -36,22 +37,19 @@ use \InvalidArgumentException;
  * of the value to indicate how to unserialize the intrinsic value of
  * the Value object in case it has not baseType attribute. This happen
  * when the baseType must be derived from the variableDeclaration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ValueMarshaller extends Marshaller
 {
     private $baseType = -1;
 
     /**
-	 * Set a baseType to this marshaller implementation in order
-	 * to force the datatype used for the unserialization of the intrinsic
-	 * value of the value. Set to -1 if there is no forced baseType.
-	 *
-	 * @param int $baseType A baseType from the BaseType enumeration.
-	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
-	 */
+     * Set a baseType to this marshaller implementation in order
+     * to force the datatype used for the unserialization of the intrinsic
+     * value of the value. Set to -1 if there is no forced baseType.
+     *
+     * @param int $baseType A baseType from the BaseType enumeration.
+     * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+     */
     protected function setBaseType($baseType)
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -63,23 +61,23 @@ class ValueMarshaller extends Marshaller
     }
 
     /**
-	 * Get the baseType that is used to force the unserialization of the instrinsic
-	 * value. Returns -1 if there is no forced baseType.
-	 *
-	 * @return int A baseType from the BaseType enumeration.
-	 */
+     * Get the baseType that is used to force the unserialization of the instrinsic
+     * value. Returns -1 if there is no forced baseType.
+     *
+     * @return int A baseType from the BaseType enumeration.
+     */
     public function getBaseType()
     {
         return $this->baseType;
     }
 
     /**
-	 * Create a new instance of ValueMarshaller.
-	 *
-	 * @param string $version The QTI version number on which the Marshaller operates.
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws \InvalidArgumentException if $baseType is not a value from the BaseType enumeration nor -1.
-	 */
+     * Create a new instance of ValueMarshaller.
+     *
+     * @param string $version The QTI version number on which the Marshaller operates.
+     * @param int $baseType A value from the BaseType enumeration.
+     * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration nor -1.
+     */
     public function __construct($version, $baseType = -1)
     {
         parent::__construct($version);
@@ -87,11 +85,11 @@ class ValueMarshaller extends Marshaller
     }
 
     /**
-	 * Marshall a Value object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A Value object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a Value object into a DOMElement object.
+     *
+     * @param QtiComponent $component A Value object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -113,12 +111,12 @@ class ValueMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI Value element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A Value object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the 'baseType' attribute is not a valid QTI baseType.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI Value element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A Value object.
+     * @throws UnmarshallingException If the 'baseType' attribute is not a valid QTI baseType.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $object = null;
@@ -144,7 +142,6 @@ class ValueMarshaller extends Marshaller
                     // value used as plain string (at your own risks).
                     $object = new Value($nodeValue);
                 }
-
             } else {
                 $msg = "The element '" . $element->localName . "' has no value.";
                 throw new UnmarshallingException($msg, $element);
@@ -159,8 +156,8 @@ class ValueMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'value';

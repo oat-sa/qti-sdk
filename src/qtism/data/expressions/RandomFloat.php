@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,13 @@
 
 namespace qtism\data\expressions;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 
 /**
  * From IMS QTI:
  *
  * Selects a random float from the specified range [min,max].
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RandomFloat extends Expression implements Pure
 {
@@ -43,20 +41,20 @@ class RandomFloat extends Expression implements Pure
     private $min = 0.0;
 
     /**
-	 * The max attribute value.
-	 *
-	 * @var float
-	 * @qtism-bean-property
-	 */
+     * The max attribute value.
+     *
+     * @var float
+     * @qtism-bean-property
+     */
     private $max;
 
     /**
-	 * Create a new instance of RandomFloat.
-	 *
-	 * @param number|string $min A variableRef or a float value.
-	 * @param number|string $max A variableRef or a float value.
-	 * @throws \InvalidArgumentException If $min or $max are not valid numerics/variableRefs.
-	 */
+     * Create a new instance of RandomFloat.
+     *
+     * @param number|string $min A variableRef or a float value.
+     * @param number|string $max A variableRef or a float value.
+     * @throws InvalidArgumentException If $min or $max are not valid numerics/variableRefs.
+     */
     public function __construct($min, $max)
     {
         $this->setMin($min);
@@ -64,21 +62,21 @@ class RandomFloat extends Expression implements Pure
     }
 
     /**
-	 * Get the min attribute value.
-	 *
-	 * @return number|string A numeric value or a variableRef.
-	 */
+     * Get the min attribute value.
+     *
+     * @return number|string A numeric value or a variableRef.
+     */
     public function getMin()
     {
         return $this->min;
     }
 
     /**
-	 * Set the min attribute value.
-	 *
-	 * @param number|string $min A float value, int value or a variableRef.
-	 * @throws \InvalidArgumentException If $min is not a numeric value nor a variableRef.
-	 */
+     * Set the min attribute value.
+     *
+     * @param number|string $min A float value, int value or a variableRef.
+     * @throws InvalidArgumentException If $min is not a numeric value nor a variableRef.
+     */
     public function setMin($min)
     {
         if (is_numeric($min) || Format::isVariableRef($min)) {
@@ -90,21 +88,21 @@ class RandomFloat extends Expression implements Pure
     }
 
     /**
-	 * Get the max attribute value.
-	 *
-	 * @return number|string A numeric value or a variableRef.
-	 */
+     * Get the max attribute value.
+     *
+     * @return number|string A numeric value or a variableRef.
+     */
     public function getMax()
     {
         return $this->max;
     }
 
     /**
-	 * Set the max attribute.
-	 *
-	 * @param number|string $max A numeric value or a variableRef.
-	 * @throws \InvalidArgumentException If $max is not a numeric value nor a variableRef.
-	 */
+     * Set the max attribute.
+     *
+     * @param number|string $max A numeric value or a variableRef.
+     * @throws InvalidArgumentException If $max is not a numeric value nor a variableRef.
+     */
     public function setMax($max)
     {
         if (is_numeric($max) || Format::isVariableRef($max)) {
@@ -116,8 +114,8 @@ class RandomFloat extends Expression implements Pure
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'randomFloat';
@@ -125,6 +123,7 @@ class RandomFloat extends Expression implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

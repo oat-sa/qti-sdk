@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The View enumeration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class View implements Enumeration
 {
@@ -45,97 +43,97 @@ class View implements Enumeration
     const TUTOR = 5;
 
     /**
-	 * Get the possible values of the enumaration as an array.
-	 *
-	 * @return array An array of integer constants.
-	 */
+     * Get the possible values of the enumaration as an array.
+     *
+     * @return array An array of integer constants.
+     */
     public static function asArray()
     {
-        return array(
+        return [
             'AUTHOR' => self::AUTHOR,
             'CANDIDATE' => self::CANDIDATE,
             'PROCTOR' => self::PROCTOR,
             'SCORER' => self::SCORER,
             'TEST_CONSTRUCTOR' => self::TEST_CONSTRUCTOR,
-            'TUTOR' => self::TUTOR
-        );
+            'TUTOR' => self::TUTOR,
+        ];
     }
 
     /**
-	 * Get a constant name by its value.
-	 *
-	 * @param integer $constant The constant value from the View enumeration.
-	 * @return string|boolean The name of the constant or false it if could not be resolved.
-	 */
+     * Get a constant name by its value.
+     *
+     * @param integer $constant The constant value from the View enumeration.
+     * @return string|boolean The name of the constant or false it if could not be resolved.
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
             case self::AUTHOR:
                 return 'author';
-            break;
+                break;
 
             case self::CANDIDATE:
                 return 'candidate';
-            break;
+                break;
 
             case self::PROCTOR:
                 return 'proctor';
-            break;
+                break;
 
             case self::SCORER:
                 return 'scorer';
-            break;
+                break;
 
             case self::TEST_CONSTRUCTOR:
                 return 'testConstructor';
-            break;
+                break;
 
             case self::TUTOR:
                 return 'tutor';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
     /**
-	 * Get the constant value from its name.
-	 *
-	 * @param string $name The name of the constant you want to retrieve the value.
-	 * @return integer|boolean The value of the related constant or false if the name could not be resolved.
-	 */
+     * Get the constant value from its name.
+     *
+     * @param string $name The name of the constant you want to retrieve the value.
+     * @return integer|boolean The value of the related constant or false if the name could not be resolved.
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
             case 'author':
                 return self::AUTHOR;
-            break;
+                break;
 
             case 'candidate':
                 return self::CANDIDATE;
-            break;
+                break;
 
             case 'proctor':
                 return self::PROCTOR;
-            break;
+                break;
 
             case 'scorer':
                 return self::SCORER;
-            break;
+                break;
 
             case 'testconstructor':
                 return self::TEST_CONSTRUCTOR;
-            break;
+                break;
 
             case 'tutor':
                 return self::TUTOR;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

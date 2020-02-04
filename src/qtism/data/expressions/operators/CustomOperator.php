@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,13 @@
 
 namespace qtism\data\expressions\operators;
 
-use qtism\data\ExternalQtiComponent;
-use qtism\data\IExternal;
+use InvalidArgumentException;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use \InvalidArgumentException;
+use qtism\data\ExternalQtiComponent;
+use qtism\data\IExternal;
+use RuntimeException;
 
 /**
  * From IMS QTI:
@@ -40,9 +43,6 @@ use \InvalidArgumentException;
  * marking of free text responses. Implementors experimenting with this approach
  * are encouraged to share information about their solutions to help determine
  * the best way to achieve this type of processing.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class CustomOperator extends Operator implements IExternal, Pure
 {
@@ -77,19 +77,19 @@ class CustomOperator extends Operator implements IExternal, Pure
     private $definition = '';
 
     /**
-     * @var \qtism\data\ExternalQtiComponent
+     * @var ExternalQtiComponent
      */
     private $externalComponent = null;
 
     /**
      * Create a new CustomOperator object.
      *
-     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     * @param ExpressionCollection $expressions
      * @param string $xmlString The XML representation of the operator.
      */
     public function __construct(ExpressionCollection $expressions, $xmlString)
     {
-        parent::__construct($expressions, 0, -1, array(OperatorCardinality::ANY), array(OperatorBaseType::ANY));
+        parent::__construct($expressions, 0, -1, [OperatorCardinality::ANY], [OperatorBaseType::ANY]);
         $this->setXmlString($xmlString);
         $this->setExternalComponent(new ExternalQtiComponent($xmlString));
     }
@@ -98,7 +98,7 @@ class CustomOperator extends Operator implements IExternal, Pure
      * Set the class attribute. An empty value means there is no class attribute specified.
      *
      * @param string $class A class name which is tool specific.
-     * @throws \InvalidArgumentException If $class is not a string.
+     * @throws InvalidArgumentException If $class is not a string.
      */
     public function setClass($class)
     {
@@ -135,7 +135,7 @@ class CustomOperator extends Operator implements IExternal, Pure
      * in the global namespace. An empty value means there is no value set for the definition attribute.
      *
      * @param string $definition A URI or an empty string.
-     * @throws \InvalidArgumentException If $definition is not a string.
+     * @throws InvalidArgumentException If $definition is not a string.
      */
     public function setDefinition($definition)
     {
@@ -171,8 +171,8 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Get the XML content of the custom operator itself and its content.
      *
-     * @return \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object representing the custom operator itself.
-     * @throws \RuntimeException If the XML content of the custom operator and/or its content cannot be transformed into a valid DOMDocument.
+     * @return SerializableDomDocument A DOMDocument (serializable) object representing the custom operator itself.
+     * @throws RuntimeException If the XML content of the custom operator and/or its content cannot be transformed into a valid DOMDocument.
      */
     public function getXml()
     {
@@ -206,7 +206,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Set the encapsulated external component.
      *
-     * @param \qtism\data\ExternalQtiComponent $externalComponent
+     * @param ExternalQtiComponent $externalComponent
      */
     private function setExternalComponent(ExternalQtiComponent $externalComponent)
     {
@@ -216,7 +216,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Get the encapsulated external component.
      *
-     * @return \qtism\data\ExternalQtiComponent
+     * @return ExternalQtiComponent
      */
     private function getExternalComponent()
     {
@@ -233,6 +233,7 @@ class CustomOperator extends Operator implements IExternal, Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @see https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

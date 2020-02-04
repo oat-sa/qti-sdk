@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +53,7 @@ class Direction implements Enumeration
      */
     const RTL = 2;
 
-    static public function asArray()
+    public static function asArray()
     {
         return [
             'AUTO' => self::AUTO,
@@ -61,7 +62,7 @@ class Direction implements Enumeration
         ];
     }
 
-    static public function getConstantByName($name)
+    public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
             case 'auto':
@@ -102,4 +103,4 @@ class Direction implements Enumeration
                 break;
         }
     }
-}    
+}

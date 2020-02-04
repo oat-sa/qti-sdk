@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\QtiComponent;
 use qtism\data\rules\Ordering;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for ordering.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OrderingMarshaller extends Marshaller
 {
     /**
-	 * Marshall an Ordering object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An Ordering object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall an Ordering object into a DOMElement object.
+     *
+     * @param QtiComponent $component An Ordering object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -50,11 +48,11 @@ class OrderingMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI Ordering element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent An Ordering object.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI Ordering element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent An Ordering object.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $object = new Ordering();
@@ -67,8 +65,8 @@ class OrderingMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'ordering';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +23,7 @@
 
 namespace qtism\data\storage\php;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Represents a PhpArgument. Two kind of arguments can be represented using
@@ -33,9 +34,6 @@ use \InvalidArgumentException;
  *
  * The PhpArgument class will automatically write PHP variable names if the given
  * value is a PhpVariable object. Otherwise, it will be considered as scalar value.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpArgument
 {

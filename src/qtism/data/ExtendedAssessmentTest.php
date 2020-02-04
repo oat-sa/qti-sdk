@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,23 +27,20 @@ namespace qtism\data;
  * The ExtendedAssessmentTest class is an extended representation of the QTI
  * AssessmentTest class. It gathers together the AssessmentTest + additional references
  * to testFeedback components.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ExtendedAssessmentTest extends AssessmentTest
 {
     /**
      * A collection of TestFeedbackRef objects.
-     * 
+     *
      * @var TestFeedbackRefCollection
      * @qtism-bean-property
      */
     private $testFeedbackRefs;
-    
+
     /**
      * Create a new ExtendedAssessmentTest object.
-     * 
+     *
      * @param string $identifier A QTI identifier.
      * @param string $title A title.
      * @param TestPartCollection $testParts A collection of ExtendedTestPart objects.
@@ -52,81 +50,81 @@ class ExtendedAssessmentTest extends AssessmentTest
         parent::__construct($identifier, $title, $testParts);
         $this->setTestFeedbackRefs(new TestFeedbackRefCollection());
     }
-    
+
     /**
      * Set the collection of TestFeedbackRef objects.
-     * 
-     * @param \qtism\data\TestFeedbackRefCollection $testFeedbackRefs
+     *
+     * @param TestFeedbackRefCollection $testFeedbackRefs
      */
     public function setTestFeedbackRefs(TestFeedbackRefCollection $testFeedbackRefs)
     {
         $this->testFeedbackRefs = $testFeedbackRefs;
     }
-    
+
     /**
      * Get the collection of TestFeedbackRef objects.
-     * 
-     * @return \qtism\data\TestFeedbackRefCollection
+     *
+     * @return TestFeedbackRefCollection
      */
     public function getTestFeedbackRefs()
     {
         return $this->testFeedbackRefs;
     }
-    
+
     /**
      * Add a TestFeedbackRef object.
-     * 
-     * @param \qtism\data\TestFeedbackRef $testFeedbackRef
+     *
+     * @param TestFeedbackRef $testFeedbackRef
      */
     public function addTestFeedbackRef(TestFeedbackRef $testFeedbackRef)
     {
         $this->getTestFeedbackRefs()->attach($testFeedbackRef);
     }
-    
+
     /**
      * Remove a TestFeedbackRef object.
-     * 
-     * @param \qtism\data\TestFeedbackRef $testFeedbackRef
+     *
+     * @param TestFeedbackRef $testFeedbackRef
      */
     public function removeTestFeedbackRef(TestFeedbackRef $testFeedbackRef)
     {
         $this->getTestFeedbackRefs()->detach($testFeedbackRef);
     }
-    
+
     /**
      * Create an ExtendedAssessmentTest object from an AssessmentTest object.
-     * 
-     * @param \qtism\data\AssessmentTest $assessmentTest
-     * @return \qtism\data\ExtendedAssessmentTest
+     *
+     * @param AssessmentTest $assessmentTest
+     * @return ExtendedAssessmentTest
      */
-    static public function createFromAssessmentTest(AssessmentTest $assessmentTest)
+    public static function createFromAssessmentTest(AssessmentTest $assessmentTest)
     {
         $ref = new ExtendedAssessmentTest(
             $assessmentTest->getIdentifier(),
             $assessmentTest->getTitle(),
             $assessmentTest->getTestParts()
         );
-        
+
         $ref->setTimeLimits($assessmentTest->getTimeLimits());
         $ref->setOutcomeDeclarations($assessmentTest->getOutcomeDeclarations());
         $ref->setOutcomeProcessing($assessmentTest->getOutcomeProcessing());
         $ref->setTestFeedbacks($assessmentTest->getTestFeedbacks());
         $ref->setToolName($assessmentTest->getToolName());
         $ref->setToolVersion($assessmentTest->getToolVersion());
-        
+
         return $ref;
     }
-    
+
     /**
      * @see \qtism\data\AssessmentTest::getComponents()
      */
     public function getComponents()
     {
-       $components = array_merge(
-           parent::getComponents()->getArrayCopy(),
-           $this->getTestFeedbackRefs()->getArrayCopy()                
-       );
-       
-       return new QtiComponentCollection($components);
+        $components = array_merge(
+            parent::getComponents()->getArrayCopy(),
+            $this->getTestFeedbackRefs()->getArrayCopy()
+        );
+
+        return new QtiComponentCollection($components);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,24 +24,21 @@
 namespace qtism\data\storage\php\marshalling;
 
 use qtism\common\storage\StreamAccessException;
-use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
+use qtism\data\storage\php\Utils as PhpUtils;
 
 /**
  * Implements the logic of marshalling PHP arrays into
  * PHP source code.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpArrayMarshaller extends PhpMarshaller
 {
     /**
      * Marshall an array into PHP source code.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If something wrong happens during marshalling.
-     * @throws StreamAccessException
+     * @throws PhpMarshallingException If something wrong happens during marshalling.
+     * @throws StreamdAccessException
      */
     public function marshall()
     {
