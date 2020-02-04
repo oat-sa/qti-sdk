@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,14 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -37,18 +36,15 @@ use qtism\data\expressions\operators\Lte;
  * true if the first expression is numerically less than or equal to the second and
  * false if it is greater than the second. If either sub-expression is NULL then the
  * operator results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class LteProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Lte operator.
-	 *
-	 * @return QtiBoolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Lte operator.
+     *
+     * @return QtiBoolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -69,7 +65,7 @@ class LteProcessor extends OperatorProcessor
 
         return new QtiBoolean($operands[0]->getValue() <= $operands[1]->getValue());
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

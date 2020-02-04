@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
@@ -28,9 +28,6 @@ use qtism\common\enums\Enumeration;
 /**
  * This enumerations regroups all the "places" a candidate can meet
  * during an AssessmentTest session.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentTestPlace implements Enumeration
 {
@@ -64,12 +61,12 @@ class AssessmentTestPlace implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'TEST_PART' => self::TEST_PART,
             'ASSESSMENT_SECTION' => self::ASSESSMENT_SECTION,
             'ASSESSMENT_ITEM' => self::ASSESSMENT_ITEM,
-            'ASSESSMENT_TEST' => self::ASSESSMENT_TEST
-        );
+            'ASSESSMENT_TEST' => self::ASSESSMENT_TEST,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -77,23 +74,23 @@ class AssessmentTestPlace implements Enumeration
         switch (strtolower($name)) {
             case 'testpart':
                 return self::TEST_PART;
-            break;
+                break;
 
             case 'assessmentsection':
                 return self::ASSESSMENT_SECTION;
-            break;
+                break;
 
             case 'assessmentitem':
                 return self::ASSESSMENT_ITEM;
-            break;
+                break;
 
             case 'assessmenttest':
                 return self::ASSESSMENT_TEST;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -102,23 +99,23 @@ class AssessmentTestPlace implements Enumeration
         switch ($constant) {
             case self::TEST_PART:
                 return 'testPart';
-            break;
+                break;
 
             case self::ASSESSMENT_SECTION:
                 return 'assessmentSection';
-            break;
+                break;
 
             case self::ASSESSMENT_ITEM:
                 return 'assessmentItem';
-            break;
+                break;
 
             case self::ASSESSMENT_TEST:
                 return 'assessmentTest';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

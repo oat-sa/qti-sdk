@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\storage\xml\Utils as XmlUtils;
-use qtism\data\storage\xml\marshalling\Marshaller;
-use qtism\data\ShufflableCollection;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
+use qtism\data\ShufflableCollection;
+use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * MatchInteraction renderer. Rendered components will be transformed as
@@ -41,16 +40,13 @@ use \DOMDocumentFragment;
  * * data-shuffle = qti:associateInteraction->shuffle
  * * data-max-associations = qti:associateInteraction->maxAssociations
  * * data-min-associations = qti:associateInteraction->minAssociations
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MatchInteractionRenderer extends InteractionRenderer
 {
     /**
      * Create a new MatchInteractionRenderer object.
      *
-     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     * @param AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
@@ -81,8 +77,8 @@ class MatchInteractionRenderer extends InteractionRenderer
 
         // Retrieve the two rendered simpleMatchSets and shuffle if needed.
         $currentSet = 0;
-        $choiceElts = array();
-        $simpleMatchSetElts = array();
+        $choiceElts = [];
+        $simpleMatchSetElts = [];
 
         for ($i = 0; $i < $fragment->firstChild->childNodes->length; $i++) {
             $n = $fragment->firstChild->childNodes->item($i);
@@ -113,29 +109,29 @@ class MatchInteractionRenderer extends InteractionRenderer
         $table->appendChild($tr);
         // Empty upper left cell.
         $tr->appendChild($fragment->ownerDocument->createElement('th'));
-        
-        $ifVerticalStatementsStorage = array();
-        
+
+        $ifVerticalStatementsStorage = [];
+
         for ($i = 0; $i < count($choiceElts[1]); $i++) {
             $ifStatements = Utils::extractStatements($choiceElts[1][$i], Utils::EXTRACT_IF);
             $incStatements = Utils::extractStatements($choiceElts[1][$i], Utils::EXTRACT_INCLUDE);
-            
+
             if (empty($incStatements) === false) {
                 $tr->appendChild($incStatements[0]);
             }
-            
+
             if (empty($ifStatements) === false) {
                 $ifVerticalStatementsStorage[$i] = $ifStatements;
                 $tr->appendChild($ifStatements[0]);
             }
-            
+
             $th = XmlUtils::changeElementName($choiceElts[1][$i], 'th');
             $tr->appendChild($th);
-            
+
             if (empty($incStatements) === false) {
                 $th->parentNode->insertBefore($incStatements[1], $th->nextSibling);
             }
-            
+
             if (empty($ifStatements) === false) {
                 $th->parentNode->insertBefore($ifStatements[1], $th->nextSibling);
             }
@@ -144,10 +140,10 @@ class MatchInteractionRenderer extends InteractionRenderer
         // Build all remaining rows.
         for ($i = 0; $i < count($choiceElts[0]); $i++) {
             $tr = $fragment->ownerDocument->createElement('tr');
-            
+
             $ifStatements = Utils::extractStatements($choiceElts[0][$i], Utils::EXTRACT_IF);
             $incStatements = Utils::extractStatements($choiceElts[0][$i], Utils::EXTRACT_INCLUDE);
-            
+
             $th = XmlUtils::changeElementName($choiceElts[0][$i], 'th');
             $tr->appendChild($th);
 
@@ -156,32 +152,31 @@ class MatchInteractionRenderer extends InteractionRenderer
             if (empty($incStatements) === false) {
                 $tr->parentNode->insertBefore($incStatements[0], $tr);
             }
-            
+
             if (empty($ifStatements) === false) {
                 $tr->parentNode->insertBefore($ifStatements[0], $tr);
             }
-            
+
             for ($j = 0; $j < count($choiceElts[1]); $j++) {
                 $input = $fragment->ownerDocument->createElement('input');
                 $input->setAttribute('type', 'checkbox');
                 $td = $fragment->ownerDocument->createElement('td');
                 $td->appendChild($input);
                 $tr->appendChild($td);
-                
+
                 if (isset($ifVerticalStatementsStorage[$j])) {
                     $td->parentNode->insertBefore($ifVerticalStatementsStorage[$j][0]->cloneNode(), $td);
                     $td->parentNode->insertBefore($ifVerticalStatementsStorage[$j][1]->cloneNode(), $td->nextSibling);
                 }
             }
-            
+
             if (empty($incStatements) === false && isset($td)) {
                 $tr->parentNode->insertBefore($incStatements[1], $tr->nextSibling);
             }
-            
+
             if (empty($ifStatements) === false && isset($td)) {
                 $tr->parentNode->insertBefore($ifStatements[1], $tr->nextSibling);
             }
         }
-        
     }
 }

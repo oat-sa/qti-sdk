@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -35,18 +35,15 @@ use qtism\data\expressions\operators\IntegerToFloat;
  * have single cardinality and base-type integer. The result is a value of base type
  * float with the same numeric value. If the sub-expression is NULL then the operator
  * results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class IntegerToFloatProcessor extends OperatorProcessor
 {
     /**
-	 * Process the IntegerToFloat operator.
-	 *
-	 * @return QtiFloat|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the IntegerToFloat operator.
+     *
+     * @return QtiFloat|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -69,7 +66,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
 
         return new QtiFloat(floatval($operand->getValue()));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

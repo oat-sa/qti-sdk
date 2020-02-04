@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,16 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\runtime\expressions\Utils;
@@ -57,18 +58,15 @@ use qtism\runtime\expressions\Utils;
  * range is used instead.
  *
  * x*(1-t0/100),x*(1+t1/100)
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class EqualProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Equal operator.
-	 *
-	 * @return QtiBoolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Equal operator.
+     *
+     * @return QtiBoolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -98,7 +96,7 @@ class EqualProcessor extends OperatorProcessor
 
             if (gettype($tolerance[0]) === 'string') {
                 $strTolerance = $tolerance;
-                $tolerance = array();
+                $tolerance = [];
 
                 // variableRef to handle.
                 $state = $this->getState();
@@ -126,7 +124,6 @@ class EqualProcessor extends OperatorProcessor
             }
 
             if ($expression->getToleranceMode() === ToleranceMode::ABSOLUTE) {
-
                 $t0 = $operand1->getValue() - $tolerance[0];
                 $t1 = $operand1->getValue() + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]);
 
@@ -147,7 +144,7 @@ class EqualProcessor extends OperatorProcessor
             }
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

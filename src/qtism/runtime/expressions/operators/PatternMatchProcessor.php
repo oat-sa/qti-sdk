@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -42,18 +43,16 @@ use qtism\runtime\expressions\operators\Utils as OperatorUtils;
  *
  * The syntax for the regular expression language is as defined in Appendix F of [XML_SCHEMA2].
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @link http://www.w3.org/TR/xmlschema-2/#regexs
- *
  */
 class PatternMatchProcessor extends OperatorProcessor
 {
     /**
-	 * Process the PatternMatch.
-	 *
-	 * @return QtiBoolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the PatternMatch.
+     *
+     * @return QtiBoolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -72,6 +71,9 @@ class PatternMatchProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
+        // XML schema always implicitly anchors the entire regular expression
+        // because there is no carret (^) nor dollar ($) signs.
+        // see http://www.regular-expressions.info/xml.html
         $rawPattern = $this->getExpression()->getPattern();
         $pattern = OperatorUtils::prepareXsdPatternForPcre($rawPattern);
         $result = @preg_match($pattern, $operands[0]->getValue());
@@ -86,7 +88,7 @@ class PatternMatchProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

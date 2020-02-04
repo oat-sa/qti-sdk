@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,28 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\processing;
 
+use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiInteger;
-use qtism\runtime\common\Variable;
-use qtism\data\QtiComponent;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
+use qtism\data\content\PrintedVariable;
+use qtism\data\QtiComponent;
+use qtism\runtime\common\AbstractEngine;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
-use qtism\common\enums\BaseType;
-use qtism\common\collections\Container;
-use qtism\common\enums\Cardinality;
-use qtism\data\content\TextRun;
-use qtism\data\content\PrintedVariable;
-use qtism\runtime\common\AbstractEngine;
-use \InvalidArgumentException;
+use qtism\runtime\common\Variable;
 
 /**
  * From IMS QTI:
@@ -76,9 +75,6 @@ use \InvalidArgumentException;
  * values within the variable is printed, delimited by the string value of the delimiter attribute
  * and with the correspondence between them indicated by the string value of the mappingIndicator
  * attribute.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PrintedVariableEngine extends AbstractEngine
 {
@@ -86,8 +82,8 @@ class PrintedVariableEngine extends AbstractEngine
      * Set the PrintedVariable object to be executed by the engine depending
      * on the current context.
      *
-     * @param \qtism\data\QtiComponent $printedVariable A PrintedVariable object.
-     * @throws \InvalidArgumentException If $printedVariable is not a PrintedVariable object.
+     * @param QtiComponent $printedVariable A PrintedVariable object.
+     * @throws InvalidArgumentException If $printedVariable is not a PrintedVariable object.
      */
     public function setComponent(QtiComponent $printedVariable)
     {
@@ -107,7 +103,7 @@ class PrintedVariableEngine extends AbstractEngine
      * * If no specific precision is given for a float display, the precision will be by default 6.
      *
      * @return string A processed PrintedVariable as a string or the NULL value if the variable's value is NULL.
-     * @throws \qtism\runtime\processing\PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
+     * @throws PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
      */
     public function process()
     {
@@ -175,12 +171,12 @@ class PrintedVariableEngine extends AbstractEngine
      * Processes all values of an ordered/multiple container and merge
      * them into a single string.
      *
-     * @param \qtism\runtime\common\Variable $variable The ordered/multiple container Variable to process.
+     * @param Variable $variable The ordered/multiple container Variable to process.
      * @return string All the values delimited by printedVariable->delimiter.
      */
     private function processOrderedMultiple(Variable $variable)
     {
-        $processedValues = array();
+        $processedValues = [];
         $baseType = $variable->getBaseType();
 
         foreach ($variable->getValue() as $v) {
@@ -194,12 +190,12 @@ class PrintedVariableEngine extends AbstractEngine
      * Processes all values of a record container and merge them into
      * a single string.
      *
-     * @param \qtism\runtime\common\RecordContainer $variable The record to process.
+     * @param RecordContainer $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
     private function processRecord(Variable $variable)
     {
-        $processedValues = array();
+        $processedValues = [];
         $baseType = $variable->getBaseType();
         $mappingIndicator = $this->getComponent()->getMappingIndicator();
 
@@ -215,8 +211,8 @@ class PrintedVariableEngine extends AbstractEngine
      *
      * @param integer $baseType The baseType of the value to process.
      * @param mixed $value A QTI Runtime compliant value.
-     * @throws \qtism\runtime\processing\PrintedVariableProcessingException If the baseType is unknown.
      * @return string
+     * @throws PrintedVariableProcessingException If the baseType is unknown.
      */
     private function processValue($baseType, $value)
     {
@@ -243,9 +239,9 @@ class PrintedVariableEngine extends AbstractEngine
             $format = $printedVariable->getFormat();
 
             if (empty($format) === false) {
-               $format = Format::printfFormatIsoToPhp($format);
+                $format = Format::printfFormatIsoToPhp($format);
 
-               return sprintf($format, $value->getValue());
+                return sprintf($format, $value->getValue());
             } elseif ($baseType === BaseType::FLOAT && $printedVariable->mustPowerForm() === true) {
                 return Format::scale10($value->getValue(), 'x');
             } elseif ($baseType === BaseType::FLOAT) {

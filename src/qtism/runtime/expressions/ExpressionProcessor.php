@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,49 +15,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
 
+use InvalidArgumentException;
+use qtism\common\utils\Reflection as ReflectionUtils;
+use qtism\data\expressions\Expression;
 use qtism\runtime\common\Processable;
 use qtism\runtime\common\State;
-use qtism\data\expressions\Expression;
-use qtism\common\utils\Reflection as ReflectionUtils;
-use \InvalidArgumentException;
 
 /**
  * The ExpressionProcessor class aims at processing QTI Data Model
  * Expressions.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class ExpressionProcessor implements Processable
 {
     /**
-	 * The QTI Data Model expression to be Processed.
-	 *
-	 * @var \qtism\data\expressions\Expression
-	 */
+     * The QTI Data Model expression to be Processed.
+     *
+     * @var Expression
+     */
     private $expression = null;
 
     /**
-	 * A state.
-	 *
-	 * @var \qtism\runtime\common\State
-	 */
+     * A state.
+     *
+     * @var State
+     */
     private $state = null;
 
     /**
-	 * Create a new ExpressionProcessor object.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression The QTI Data Model Expression to be processed.
-	 */
+     * Create a new ExpressionProcessor object.
+     *
+     * @param Expression $expression The QTI Data Model Expression to be processed.
+     */
     public function __construct(Expression $expression)
     {
         $this->setExpression($expression);
@@ -64,15 +61,15 @@ abstract class ExpressionProcessor implements Processable
     }
 
     /**
-	 * Set the QTI Data Model Expression to be processed.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression A QTI Data Model Expression object.
-	 * @throws \InvalidArgumentException If $expression is not a subclass nor implements the Expression type returned by the getExpressionType method.
-	 */
+     * Set the QTI Data Model Expression to be processed.
+     *
+     * @param Expression $expression A QTI Data Model Expression object.
+     * @throws InvalidArgumentException If $expression is not a subclass nor implements the Expression type returned by the getExpressionType method.
+     */
     public function setExpression(Expression $expression)
     {
         $expectedType = $this->getExpressionType();
-        
+
         if (ReflectionUtils::isInstanceOf($expression, $expectedType) === true) {
             $this->expression = $expression;
         } else {
@@ -81,44 +78,44 @@ abstract class ExpressionProcessor implements Processable
             $msg = "The ${procClass} Expression Processor only processes ${expectedType} Expression objects, ${givenType} given.";
             throw new InvalidArgumentException($msg);
         }
-        
+
         $this->expression = $expression;
     }
 
     /**
-	 * Get the QTI Data Model Expression to be processed.
-	 *
-	 * @return \qtism\data\expressions\Expression A QTI Data Model Expression object.
-	 */
+     * Get the QTI Data Model Expression to be processed.
+     *
+     * @return Expression A QTI Data Model Expression object.
+     */
     public function getExpression()
     {
         return $this->expression;
     }
 
     /**
-	 * Set the current State object.
-	 *
-	 * @param \qtism\runtime\common\State $state A State object.
-	 */
+     * Set the current State object.
+     *
+     * @param State $state A State object.
+     */
     public function setState(State $state)
     {
         $this->state = $state;
     }
 
     /**
-	 * Get the current State object.
-	 *
-	 * @return \qtism\runtime\common\State
-	 */
+     * Get the current State object.
+     *
+     * @return State
+     */
     public function getState()
     {
         return $this->state;
     }
-    
+
     /**
      * Get the expected type (fully qualifed class name) of the Expression objects that can be processed
      * by the actual implementation.
-     * 
+     *
      * @return string A Fully Qualified PHP Class Name (FQCN).
      */
     abstract protected function getExpressionType();

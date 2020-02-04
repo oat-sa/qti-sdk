@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,32 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use qtism\common\collections\AbstractCollection;
-use \InvalidArgumentException;
-use \OutOfBoundsException;
 
 /**
  * A collection that aims at storing Route objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SelectableRouteCollection extends AbstractCollection
 {
     /**
-	 * Check if $value is a Route object
-	 *
-	 * @throws \InvalidArgumentException If $value is not a Route object.
-	 */
+     * Check if $value is a Route object
+     *
+     * @throws InvalidArgumentException If $value is not a Route object.
+     */
     protected function checkType($value)
     {
         if (!$value instanceof SelectableRoute) {
@@ -49,13 +46,13 @@ class SelectableRouteCollection extends AbstractCollection
     }
 
     /**
-	 * Swap Route at position $key1 with the Route
-	 * at position $key2.
-	 *
-	 * @param int $position1 A RouteItem position.
-	 * @param int $position2 A RouteItem position.
-	 * @throws \OutOfBoundsException If $position1 or $position2 are not poiting to any Route.
-	 */
+     * Swap Route at position $key1 with the Route
+     * at position $key2.
+     *
+     * @param int $position1 A RouteItem position.
+     * @param int $position2 A RouteItem position.
+     * @throws OutOfBoundsException If $position1 or $position2 are not poiting to any Route.
+     */
     public function swap($position1, $position2)
     {
         $routes = &$this->getDataPlaceHolder();
@@ -76,11 +73,11 @@ class SelectableRouteCollection extends AbstractCollection
     }
 
     /**
-	 * Insert the SelectableRoute object $route at $position.
-	 *
-	 * @param \qtism\runtime\tests\SelectableRoute $route A SelectableRoute object.
-	 * @param integer $position An integer index where $route must be placed.
-	 */
+     * Insert the SelectableRoute object $route at $position.
+     *
+     * @param SelectableRoute $route A SelectableRoute object.
+     * @param integer $position An integer index where $route must be placed.
+     */
     public function insertAt(SelectableRoute $route, $position)
     {
         $data = &$this->getDataPlaceHolder();
@@ -89,9 +86,9 @@ class SelectableRouteCollection extends AbstractCollection
         } elseif ($position === (count($data))) {
             array_push($data, $route);
         } else {
-            array_splice($data, $position, 0, array($route));
+            array_splice($data, $position, 0, [$route]);
         }
-        
+
         // Make sure indexes are rebased.
         $data = array_values($data);
     }

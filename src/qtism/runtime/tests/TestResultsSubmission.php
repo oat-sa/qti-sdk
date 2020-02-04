@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
@@ -28,9 +28,6 @@ use qtism\common\enums\Enumeration;
 /**
  * The TestResultsSubmission enumeration represents the different configuration
  * values that can be applied for Test Results Submission.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestResultsSubmission implements Enumeration
 {
@@ -40,10 +37,10 @@ class TestResultsSubmission implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'END' => self::END,
-            'OUTCOME_PROCESSING' => self::OUTCOME_PROCESSING
-        );
+            'OUTCOME_PROCESSING' => self::OUTCOME_PROCESSING,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -51,15 +48,15 @@ class TestResultsSubmission implements Enumeration
         switch (strtolower($name)) {
             case 'end':
                 return self::END;
-            break;
+                break;
 
             case 'outcomeprocessing':
                 return self::OUTCOME_PROCESSING;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -68,15 +65,15 @@ class TestResultsSubmission implements Enumeration
         switch ($constant) {
             case self::END:
                 return 'end';
-            break;
+                break;
 
             case self::OUTCOME_PROCESSING:
                 return 'outcomeProcessing';
-            break;
-            
+                break;
+
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\enums\BaseType;
 use qtism\data\expressions\MapResponsePoint;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\enums\BaseType;
 use qtism\runtime\common\ResponseVariable;
 
 /**
@@ -41,25 +41,22 @@ use qtism\runtime\common\ResponseVariable;
  * containers each area can be mapped once only. For example, if the candidate identified
  * two points that both fall in the same area then the mappedValue is still added to the
  * calculated total just once.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MapResponsePointProcessor extends ExpressionProcessor
 {
     /**
-	 * Process the MapResponsePoint Expression.
-	 *
-	 * An ExpressionProcessingException is throw if:
-	 *
-	 * * The expression's identifier attribute does not point a variable in the current State object.
-	 * * The targeted variable is not a ResponseVariable object.
-	 * * The targeted variable has no areaMapping.
-	 * * The target variable has the RECORD cardinality.
-	 *
-	 * @return QtiFloat A transformed float value according to the areaMapping of the target variable.
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Process the MapResponsePoint Expression.
+     *
+     * An ExpressionProcessingException is throw if:
+     *
+     * * The expression's identifier attribute does not point a variable in the current State object.
+     * * The targeted variable is not a ResponseVariable object.
+     * * The targeted variable has no areaMapping.
+     * * The target variable has the RECORD cardinality.
+     *
+     * @return QtiFloat A transformed float value according to the areaMapping of the target variable.
+     * @throws ExpressionProcessingException
+     */
     public function process()
     {
         $expr = $this->getExpression();
@@ -77,7 +74,6 @@ class MapResponsePointProcessor extends ExpressionProcessor
 
                 // Correct cardinality ?
                 if ($var->getBaseType() === BaseType::POINT && ($var->isSingle() || $var->isMultiple())) {
-
                     // We can begin!
 
                     // -- Null value, nothing will match
@@ -86,17 +82,16 @@ class MapResponsePointProcessor extends ExpressionProcessor
                     }
 
                     if ($var->isSingle()) {
-                        $val = new MultipleContainer(BaseType::POINT, array($state[$identifier]));
+                        $val = new MultipleContainer(BaseType::POINT, [$state[$identifier]]);
                     } else {
                         $val = $state[$identifier];
                     }
 
                     $result = 0;
-                    $mapped = array();
+                    $mapped = [];
 
                     foreach ($val as $point) {
                         foreach ($areaMapping->getAreaMapEntries() as $areaMapEntry) {
-
                             $coords = $areaMapEntry->getCoords();
 
                             if (!in_array($coords, $mapped) && $coords->inside($point)) {
@@ -128,7 +123,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
                         $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
                         throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                     }
-                }            
+                }
             } else {
                 $msg = "The variable with identifier '${identifier}' is not a ResponseVariable.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
@@ -138,7 +133,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

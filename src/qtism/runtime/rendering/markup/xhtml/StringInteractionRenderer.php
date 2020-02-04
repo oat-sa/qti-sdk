@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,17 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
 
 /**
  * StringInteraction renderer. Rendered elements will be applied
@@ -38,9 +38,6 @@ use \DOMDocumentFragment;
  * * data-expected-length = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
  * * data-pattern-mask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
  * * data-placeholder-text = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class StringInteractionRenderer extends InteractionRenderer
 {

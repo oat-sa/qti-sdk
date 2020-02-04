@@ -15,34 +15,75 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
+use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * The Operator's generic expression QtiPLRenderer. Transforms the Operator's
  * expression into QtiPL.
- *
- * @author Tom Verhoof <tomv@taotesting.com>
  */
 class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
 {
     /**
      * @var array The list of all existing operators
      */
-    private static $operatorClassNames = array('and', 'anyN', 'containerSize', 'contains', 'customOperator',
-        'delete', 'divide', 'durationGTE', 'durationLT', 'equal', 'equalRounded', 'fieldValue', 'gcd',  'gt', 'gte', 'index',
-        'inside', 'integerDivide', 'integerModulus', 'integerToFloat', 'isNull', 'lcm', 'lt', 'lte', 'match',
-        'mathOperator', 'max', 'min', 'member', 'multiple', 'not', 'or', 'ordered', 'patternMatch', 'power', 'product', 'random',
-        'repeat', 'round', 'roundTo', 'statsOperator', 'stringMatch', 'substring', 'subtract', 'sum', 'truncate');
+    private static $operatorClassNames = [
+        'and',
+        'anyN',
+        'containerSize',
+        'contains',
+        'customOperator',
+        'delete',
+        'divide',
+        'durationGTE',
+        'durationLT',
+        'equal',
+        'equalRounded',
+        'fieldValue',
+        'gcd',
+        'gt',
+        'gte',
+        'index',
+        'inside',
+        'integerDivide',
+        'integerModulus',
+        'integerToFloat',
+        'isNull',
+        'lcm',
+        'lt',
+        'lte',
+        'match',
+        'mathOperator',
+        'max',
+        'min',
+        'member',
+        'multiple',
+        'not',
+        'or',
+        'ordered',
+        'patternMatch',
+        'power',
+        'product',
+        'random',
+        'repeat',
+        'round',
+        'roundTo',
+        'statsOperator',
+        'stringMatch',
+        'substring',
+        'subtract',
+        'sum',
+        'truncate',
+    ];
 
     /**
      * @return array The map with as keys the Qti name of the operators
@@ -75,27 +116,28 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rendering the component.
+     * @throws RenderingException If something goes wrong while rendering the component.
      */
     public function render($something)
     {
-        if (!array_key_exists($something->getQtiClassName(), $this->getSignAsOperatorMap()) ||
-            $something->getExpressions()->count() != 2) {
-
+        if (
+            !array_key_exists($something->getQtiClassName(), $this->getSignAsOperatorMap()) ||
+            $something->getExpressions()->count() != 2
+        ) {
             return $this->getDefaultRendering($something);
-        }
-        else { // With operator sign form
+        } else { // With operator sign form
             return $this->renderWithSignAsOperator($something);
         }
     }
 
     /**
      * Returns the default QtiPL rendering for an Operator.
+     *
      * @param mixed $something Something to render into another consitution.
      * @return string The default QtiPL rendering for an Operator
      */
-    public function getDefaultRendering($something) {
-
+    public function getDefaultRendering($something)
+    {
         $renderer = new QtiPLRenderer($this->getCRO());
         return $something->getQtiClassName() . $renderer->writeChildElements($something->getExpressions());
     }
@@ -118,11 +160,11 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
             && $something->getExpressions()[1]->getExpressions()->count() == 2;
 
         $qtipl .= ($needsparenthesis0) ? $renderer->getOpenChildElement() .
-            $renderer->render($something->getExpressions()[0]) . $renderer->getCloseChildElement():
+            $renderer->render($something->getExpressions()[0]) . $renderer->getCloseChildElement() :
             $renderer->render($something->getExpressions()[0]);
         $qtipl .= " " . $this->getSignAsOperatorMap()[$something->getQtiClassName()] . " ";
         $qtipl .= ($needsparenthesis1) ? $renderer->getOpenChildElement() .
-            $renderer->render($something->getExpressions()[1]) . $renderer->getCloseChildElement():
+            $renderer->render($something->getExpressions()[1]) . $renderer->getCloseChildElement() :
             $renderer->render($something->getExpressions()[1]);
 
         return $qtipl;

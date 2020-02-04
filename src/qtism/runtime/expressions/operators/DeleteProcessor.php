@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,20 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\collections\Container;
 use qtism\common\Comparable;
-use qtism\data\expressions\operators\Delete;
-use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\Cardinality;
+use qtism\data\expressions\operators\Delete;
+use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;
 
 /**
@@ -44,18 +45,15 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  *
  * The restrictions that apply to the member operator also apply to the delete
  * operator.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DeleteProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Delete operator.
-	 *
-	 * @return \qtism\common\collections\Container A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Delete operator.
+     *
+     * @return Container A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -96,7 +94,7 @@ class DeleteProcessor extends OperatorProcessor
 
         return $returnValue;
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

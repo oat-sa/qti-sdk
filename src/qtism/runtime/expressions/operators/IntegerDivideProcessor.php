@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -36,17 +36,14 @@ use qtism\data\expressions\operators\IntegerDivide;
  * corresponds to the first expression (x) divided by the second expression (y)
  * rounded down to the greatest integer (i) such that i<=(x/y). If y is 0, or if
  * either of the sub-expressions is NULL then the operator results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class IntegerDivideProcessor extends OperatorProcessor
 {
     /**
-	 * Process the IntegerDivide operator.
-	 *
-	 * @return QtiInteger|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
-	 */
+     * Process the IntegerDivide operator.
+     *
+     * @return QtiInteger|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -75,7 +72,7 @@ class IntegerDivideProcessor extends OperatorProcessor
 
         return new QtiInteger(intval(floor($operand1->getValue() / $operand2->getValue())));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,33 +15,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\pci\json;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileManagerException;
-use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiIntOrIdentifier;
-use qtism\common\datatypes\QtiUri;
-use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\QtiPair;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\QtiBoolean;
-use qtism\runtime\common\RecordContainer;
+use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\MultipleContainer;
 use qtism\common\utils\Arrays;
-use \InvalidArgumentException;
+use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\RecordContainer;
 
 /**
  * This class aims at providing the necessary behaviours to
@@ -50,11 +52,7 @@ use \InvalidArgumentException;
  * by the IMS Global Portable Custom Interaction Version 1.0 Candidate Final specification
  * in order to be correctly handled.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://www.imsglobal.org/assessment/pciv1p0cf/imsPCIv1p0cf.html#_Toc353965343
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Unmarshaller
 {
@@ -62,14 +60,14 @@ class Unmarshaller
      * A FileManager object making the JSON Unmarshaller able to build
      * QTI Files from a PCI JSON representation.
      *
-     * @var \qtism\common\datatypes\files\FileManager
+     * @var FileManager
      */
     private $fileManager;
 
     /**
      * Create a new JSON Unmarshaller object.
      *
-     * @param \qtism\common\datatypes\files\FileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
+     * @param FileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
      */
     public function __construct(FileManager $fileManager)
     {
@@ -80,7 +78,7 @@ class Unmarshaller
      * Set the FileManager object making the Unmarshaller able to build QTI Files from
      * a PCI JSON representation.
      *
-     * @param \qtism\common\datatypes\files\FileManager $fileManager A FileManager object.
+     * @param FileManager $fileManager A FileManager object.
      */
     protected function setFileManager(FileManager $fileManager)
     {
@@ -91,7 +89,7 @@ class Unmarshaller
      * Get the FileManager object making the Unmarshaller able to build QTI Files from
      * a PCI JSON representation.
      *
-     * @return \qtism\common\datatypes\files\FileManager A FileManager object.
+     * @return FileManager A FileManager object.
      */
     protected function getFileManager()
     {
@@ -102,14 +100,13 @@ class Unmarshaller
      * Transform a PCI JSON representation of QTI data into the QTISM runtime model.
      *
      * @param string|array $json The json data to be transformed.
-     * @throws \qtism\runtime\pci\json\UnmarshallingException If an error occurs while processing $json.
+     * @return null|QtiDatatype|array
      * @throws FileManagerException
-     * @return null|\qtism\common\datatypes\QtiDatatype|array
+     * @throws UnmarshallingException If an error occurs while processing $json.
      */
     public function unmarshall($json)
     {
         if (is_string($json) === true) {
-
             $tmpJson = @json_decode($json, true);
             if ($tmpJson === null) {
                 // An error occured while decoding.
@@ -148,7 +145,6 @@ class Unmarshaller
             // This is a base.
             return $this->unmarshallUnit($json);
         } elseif (in_array('list', $keys) === true) {
-
             $keys = array_keys($json['list']);
             if (isset($keys[0]) === false) {
                 $msg = "No baseType provided for list.";
@@ -168,14 +164,14 @@ class Unmarshaller
             // This is a list.
             foreach ($json['list'][$keys[0]] as $v) {
                 if ($v === null) {
-                    $returnValue[] = $this->unmarshallUnit(array('base' => $v));
+                    $returnValue[] = $this->unmarshallUnit(['base' => $v]);
                 } else {
-                    $returnValue[] = $this->unmarshallUnit(array('base' => array($keys[0] => $v)));
+                    $returnValue[] = $this->unmarshallUnit(['base' => [$keys[0] => $v]]);
                 }
             }
 
             return $returnValue;
-        } elseif (in_array('record' , $keys) === true) {
+        } elseif (in_array('record', $keys) === true) {
             // This is a record.
             $returnValue = new RecordContainer();
 
@@ -190,11 +186,11 @@ class Unmarshaller
                     throw new UnmarshallingException($msg, $code);
                 }
 
-                if (isset($v['base']) === true || (array_key_exists('base', $v) &&  $v['base'] === null)) {
-                    $unit = array('base' => $v['base']);
+                if (isset($v['base']) === true || (array_key_exists('base', $v) && $v['base'] === null)) {
+                    $unit = ['base' => $v['base']];
                 } else {
                     // No value found, let's go for a null value.
-                    $unit = array('base' => null);
+                    $unit = ['base' => null];
                 }
 
                 $returnValue[$v['name']] = $this->unmarshallUnit($unit);
@@ -203,7 +199,7 @@ class Unmarshaller
             return $returnValue;
         } else {
             // This is a state.
-            $state = array();
+            $state = [];
 
             foreach ($json as $k => $j) {
                 $state[$k] = $this->unmarshall($j);
@@ -217,69 +213,68 @@ class Unmarshaller
      * Unmarshall a unit of data into QTISM runtime model.
      *
      * @param array $unit
-     * @throws \qtism\runtime\pci\json\UnmarshallingException
+     * @return null|QtiDatatype
      * @throws FileManagerException
-     * @return null|\qtism\common\datatypes\QtiDatatype
+     * @throws UnmarshallingException
      */
     protected function unmarshallUnit(array $unit)
     {
         if (isset($unit['base'])) {
-
             // Primitive base type.
             try {
                 $keys = array_keys($unit['base']);
                 switch ($keys[0]) {
                     case 'boolean':
                         return $this->unmarshallBoolean($unit);
-                    break;
+                        break;
 
                     case 'integer':
                         return $this->unmarshallInteger($unit);
-                    break;
+                        break;
 
                     case 'float':
                         return $this->unmarshallFloat($unit);
-                    break;
+                        break;
 
                     case 'string':
                         return $this->unmarshallString($unit);
-                    break;
+                        break;
 
                     case 'point':
                         return $this->unmarshallPoint($unit);
-                    break;
+                        break;
 
                     case 'pair':
                         return $this->unmarshallPair($unit);
-                    break;
+                        break;
 
                     case 'directedPair':
                         return $this->unmarshallDirectedPair($unit);
-                    break;
+                        break;
 
                     case 'duration':
                         return $this->unmarshallDuration($unit);
-                    break;
+                        break;
 
                     case 'file':
                         return $this->unmarshallFile($unit);
-                    break;
+                        break;
 
                     case 'uri':
                         return $this->unmarshallUri($unit);
-                    break;
+                        break;
 
                     case 'intOrIdentifier':
                         return $this->unmarshallIntOrIdentifier($unit);
-                    break;
+                        break;
 
                     case 'identifier':
                         return $this->unmarshallIdentifier($unit);
-                    break;
+                        break;
 
                     default:
                         throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
-                    break;
+                        break;
                 }
             } catch (InvalidArgumentException $e) {
                 $msg = "A value does not satisfy its baseType.";
@@ -294,7 +289,7 @@ class Unmarshaller
      * Unmarshall a boolean JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiBoolean
+     * @return QtiBoolean
      */
     protected function unmarshallBoolean(array $unit)
     {
@@ -305,7 +300,7 @@ class Unmarshaller
      * Unmarshall an integer JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiInteger
+     * @return QtiInteger
      */
     protected function unmarshallInteger(array $unit)
     {
@@ -316,16 +311,16 @@ class Unmarshaller
      * Unmarshall a float JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiFloat
+     * @return QtiFloat
      */
     protected function unmarshallFloat(array $unit)
     {
         $val = $unit['base']['float'];
-        
+
         if (is_int($val) === true) {
-            $val = floatval($val);    
+            $val = floatval($val);
         }
-        
+
         return new QtiFloat($val);
     }
 
@@ -333,7 +328,7 @@ class Unmarshaller
      * Unmarshall a string JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiString
+     * @return QtiString
      */
     protected function unmarshallString(array $unit)
     {
@@ -344,7 +339,7 @@ class Unmarshaller
      * Unmarshall a point JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiPoint
+     * @return QtiPoint
      */
     protected function unmarshallPoint(array $unit)
     {
@@ -355,7 +350,7 @@ class Unmarshaller
      * Unmarshall a pair JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiPair
+     * @return QtiPair
      */
     protected function unmarshallPair(array $unit)
     {
@@ -366,7 +361,7 @@ class Unmarshaller
      * Unmarshall a directed pair JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiDirectedPair
+     * @return QtiDirectedPair
      */
     protected function unmarshallDirectedPair(array $unit)
     {
@@ -377,7 +372,7 @@ class Unmarshaller
      * Unmarshall a duration JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiDuration
+     * @return QtiDuration
      */
     protected function unmarshallDuration(array $unit)
     {
@@ -388,7 +383,7 @@ class Unmarshaller
      * Unmarshall a duration JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiFile
+     * @return QtiFile
      * @throws FileManagerException
      */
     protected function unmarshallFile(array $unit)
@@ -402,7 +397,7 @@ class Unmarshaller
      * Unmarshall a duration JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiUri
+     * @return QtiUri
      */
     protected function unmarshallUri(array $unit)
     {
@@ -413,7 +408,7 @@ class Unmarshaller
      * Unmarshall an intOrIdentifier JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiIntOrIdentifier
+     * @return QtiIntOrIdentifier
      */
     protected function unmarshallIntOrIdentifier(array $unit)
     {
@@ -424,7 +419,7 @@ class Unmarshaller
      * Unmarshall an identifier JSON PCI representation.
      *
      * @param array $unit
-     * @return \qtism\common\datatypes\QtiIdentifier
+     * @return QtiIdentifier
      */
     protected function unmarshallIdentifier(array $unit)
     {

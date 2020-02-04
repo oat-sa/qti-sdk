@@ -15,34 +15,31 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
+use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * The EqualRounded operator's QtiPLRenderer. Transforms the EqualRounded's
  * expression into QtiPL.
- *
- * @author Tom Verhoof <tomv@taotesting.com>
  */
 class EqualRoundedQtiPLRenderer extends AbstractQtiPLRenderer
 {
-
     /**
      * Render a QtiComponent object into another constitution.
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rendering the component.
+     * @throws RenderingException If something goes wrong while rendering the component.
      */
     public function render($something)
     {

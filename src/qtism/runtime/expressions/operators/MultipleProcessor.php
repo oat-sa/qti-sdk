@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,18 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
 
 use qtism\data\expressions\operators\Multiple;
-use qtism\runtime\common\Utils as CommonUtils;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\Utils as CommonUtils;
 
 /**
  * The MultipleProcessor class aims at processing Multiple QTI Data Model Expression objects.
@@ -38,18 +38,15 @@ use qtism\runtime\common\MultipleContainer;
  * multiple cardinality have their individual values added to the result: containers cannot contain other containers.
  * For example, when applied to A, B and {C,D} the multiple operator results in {A,B,C,D}. All sub-expressions with
  * NULL values are ignored. If no sub-expressions are given (or all are NULL) then the result is NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MultipleProcessor extends OperatorProcessor
 {
     /**
-	 * Process the current expression.
-	 *
-	 * @return \qtism\runtime\common\MultipleContainer|null A MultipleContainer object or NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the current expression.
+     *
+     * @return MultipleContainer|null A MultipleContainer object or NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -67,7 +64,6 @@ class MultipleProcessor extends OperatorProcessor
         $returnValue = null;
 
         foreach ($operands as $operand) {
-
             if (is_null($operand) || ($operand instanceof MultipleContainer && $operand->isNull())) {
                 // As per specs, ignore.
                 continue;
@@ -95,11 +91,11 @@ class MultipleProcessor extends OperatorProcessor
     }
 
     /**
-	 * Append a value (A MultipleContainer or a primitive datatype) to a given $container.
-	 *
-	 * @param \qtism\runtime\common\MultipleContainer $container A MultipleContainer object you want to append something to.
-	 * @param scalar|\qtism\runtime\common\MultipleContainer $value A value to append to the $container.
-	 */
+     * Append a value (A MultipleContainer or a primitive datatype) to a given $container.
+     *
+     * @param MultipleContainer $container A MultipleContainer object you want to append something to.
+     * @param scalar|MultipleContainer $value A value to append to the $container.
+     */
     protected static function appendValue(MultipleContainer $container, $value)
     {
         if ($value instanceof MultipleContainer) {
@@ -111,7 +107,7 @@ class MultipleProcessor extends OperatorProcessor
             $container[] = $value;
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\collections\Container;
@@ -38,18 +39,15 @@ use qtism\data\expressions\operators\OrOperator;
  * The or operator takes one or more sub-expressions each with a base-type of boolean and single cardinality.
  * The result is a single boolean which is true if any of the sub-expressions are true and false if all of them are
  * false. If one or more sub-expressions are NULL and all the others are false then the operator also results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OrProcessor extends OperatorProcessor
 {
     /**
-	 * Process the current expression.
-	 *
-	 * @return QtiBoolean True if the expression is true, false otherwise.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the current expression.
+     *
+     * @return QtiBoolean True if the expression is true, false otherwise.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -85,7 +83,7 @@ class OrProcessor extends OperatorProcessor
 
         return new QtiBoolean(false);
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

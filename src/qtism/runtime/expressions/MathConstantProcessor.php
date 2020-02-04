@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
@@ -33,17 +33,14 @@ use qtism\data\expressions\MathEnumeration;
  * From IMS QTI:
  *
  * The result is a mathematical constant returned as a single float, e.g. π and e.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathConstantProcessor extends ExpressionProcessor
 {
     /**
-	 * Process the MathConstant Expression.
-	 *
-	 * @return QtiFloat A float value (e or pi).
-	 */
+     * Process the MathConstant Expression.
+     *
+     * @return QtiFloat A float value (e or pi).
+     */
     public function process()
     {
         $expr = $this->getExpression();
@@ -53,7 +50,7 @@ class MathConstantProcessor extends ExpressionProcessor
             return new QtiFloat(M_PI);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

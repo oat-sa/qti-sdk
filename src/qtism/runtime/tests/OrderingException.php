@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,22 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\tests;
 
-use \Exception;
+use Exception;
 
 /**
  * The OrderingException must be thrown when an error occurs while
  * ordering child elements of an AssessmentSection.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OrderingException extends Exception
 {
@@ -54,7 +52,7 @@ class OrderingException extends Exception
      *
      * @param string $message A human-readable message describing the error while ordering child elements of an AssessmentSection.
      * @param integer $code The code that enables client-code to identify the nature of the error efficiently.
-     * @param \Exception $previous An optional previous Exception object.
+     * @param Exception $previous An optional previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null)
     {

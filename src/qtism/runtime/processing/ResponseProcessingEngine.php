@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,23 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\processing;
 
-use qtism\data\storage\php\PhpDocument;
-use qtism\runtime\common\ProcessingException;
-use qtism\runtime\rules\RuleProcessingException;
-use qtism\runtime\rules\RuleEngine;
+use InvalidArgumentException;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
-use qtism\runtime\common\State;
+use qtism\data\storage\php\PhpDocument;
 use qtism\runtime\common\AbstractEngine;
-use \InvalidArgumentException;
+use qtism\runtime\common\ProcessingException;
+use qtism\runtime\common\State;
+use qtism\runtime\rules\RuleEngine;
+use qtism\runtime\rules\RuleProcessingException;
 
 class ResponseProcessingEngine extends AbstractEngine
 {
@@ -42,30 +43,30 @@ class ResponseProcessingEngine extends AbstractEngine
      *
      * @var array
      */
-    private $templateMapping = array();
+    private $templateMapping = [];
 
     /**
      * Create a new ResponseProcessingEngine object.
      *
-     * @param \qtism\data\QtiComponent $responseProcessing
-     * @param \qtism\runtime\common\State $context
-     * @throws \InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
+     * @param QtiComponent $responseProcessing
+     * @param State $context
+     * @throws InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
      */
     public function __construct(QtiComponent $responseProcessing, State $context = null)
     {
         parent::__construct($responseProcessing, $context);
 
         $templateDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-        
+
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'map_response.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response_point', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'map_response_point.php');
-        
+
         // Response Processing Templates content are the same in QTI 2.1 and 2.2.
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response_point', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response_point.php');
-        
+
         // Response Processing Templates differ from QTI 2.0 to QTI 2.1.
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/match_correct', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.php');
@@ -75,8 +76,8 @@ class ResponseProcessingEngine extends AbstractEngine
     /**
      * Set the ResponseProcessing object to be executed.
      *
-     * @param \qtism\data\QtiComponent $responseProcessing A ResponseProcessing object.
-     * @throws \InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
+     * @param QtiComponent $responseProcessing A ResponseProcessing object.
+     * @throws InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
      */
     public function setComponent(QtiComponent $responseProcessing)
     {
@@ -93,7 +94,7 @@ class ResponseProcessingEngine extends AbstractEngine
      *
      * @param string $uri The template URI (Uniform Resource Identifier).
      * @param string $url The actual template URL, i.e. where to find the file containing the template markup.
-     * @throws \InvalidArgumentException If $uri or $url are not strings.
+     * @throws InvalidArgumentException If $uri or $url are not strings.
      */
     public function addTemplateMapping($uri, $url)
     {
@@ -116,7 +117,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * is found for $uri, nothing happens.
      *
      * @param string $uri The $uri you want to remove the mapping.
-     * @throws \InvalidArgumentException If $uri is not a string.
+     * @throws InvalidArgumentException If $uri is not a string.
      */
     public function removeTemplateMapping($uri)
     {
@@ -137,7 +138,8 @@ class ResponseProcessingEngine extends AbstractEngine
      *
      * @return array An array where keys are template URIs and values template URL (their location).
      */
-    protected function &getTemplateMapping() {
+    protected function &getTemplateMapping()
+    {
         return $this->templateMapping;
     }
 
@@ -150,7 +152,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * * ExpressionProcessingException: If an Expression within a ResponseRule produces an error.
      * * ResponseProcessingException: If there is a problem with the response processing template processing bound to the ResponseProcessing.
      *
-     * @throws \qtism\runtime\common\ProcessingException
+     * @throws ProcessingException
      */
     public function process()
     {
