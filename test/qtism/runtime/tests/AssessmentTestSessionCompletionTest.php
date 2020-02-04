@@ -1,36 +1,53 @@
 <?php
 
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @license GPLv2
+ */
+
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
 
-/**
- * Focus on testing the numberCompleted method of AssessmentTestSession.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
- */
-class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTestCase
+{
     
     /**
      * In linear mode, items are considered completed if they were
      * presented at least one time.
-     * 
-     * Please note that if $identifiers contain 
-     * 
+     *
+     * Please note that if $identifiers contain
+     *
      * * 'skip' strings, the item subject to the test will skip the current item instead of ending the attempt.
      * * 'moveNext' strings, the item subject to the test will not be end-attempted and a moveNext will be performed instead.
-     * 
+     *
      * @dataProvider completionPureLinearProvider
      * @param string $testFile The Compact test definition to be run as a candidate session.
      * @param array $identifiers An array of response identifier to be given for each item.
      * @param integer $finalNumberCompleted The expected number of completed items when the session closes.
      */
-    public function testCompletion($testFile, $identifiers, $finalNumberCompleted) {
+    public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
+    {
         
         $session = self::instantiate($testFile);
         $session->beginTestSession();
@@ -41,19 +58,16 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
         $i = 1;
         $movedNext = 0;
         foreach ($identifiers as $identifier) {
-
             $this->assertSame($i - 1 - $movedNext, $session->numberCompleted());
             
             $session->beginAttempt();
             
             if ($identifier === 'skip') {
                 $session->skip();
-            }
-            else if ($identifier === 'moveNext') {
+            } elseif ($identifier === 'moveNext') {
                 $session->moveNext();
                 $movedNext++;
-            }
-            else {
+            } else {
                 $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier)))));
             }
             
@@ -73,7 +87,8 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
         $this->assertFalse($session->isRunning());
     }
     
-    public function completionPureLinearProvider() {
+    public function completionPureLinearProvider()
+    {
         return array(
             array(self::samplesDir() . '/custom/runtime/linear_5_items.xml', array('skip', 'skip', 'skip', 'skip', 'skip'), 5),
             array(self::samplesDir() . '/custom/runtime/linear_5_items.xml', array('ChoiceA', 'skip', 'ChoiceC', 'ChoiceD', 'ChoiceE'), 5),

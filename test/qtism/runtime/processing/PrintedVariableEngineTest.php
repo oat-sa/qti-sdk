@@ -1,4 +1,5 @@
 <?php
+
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiUri;
@@ -20,10 +21,11 @@ use qtism\runtime\processing\PrintedVariableEngine;
 use qtism\data\content\PrintedVariable;
 use qtism\runtime\common\State;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-class PrintedVariableEngineTest extends QtiSmTestCase {
-	
+class PrintedVariableEngineTest extends QtiSmTestCase
+{
+    
     /**
      * @param mixed $value
      * @param string $expected
@@ -36,7 +38,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
      * @param stribng $mappingIndicator
      * @dataProvider printedVariableProvider
      */
-    public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=') {
+    public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
+    {
         
         $printedVariable = new PrintedVariable($identifier);
         $printedVariable->setFormat($format);
@@ -52,7 +55,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $this->assertEquals($expected, $engine->process());
     }
     
-    public function printedVariableProvider() {
+    public function printedVariableProvider()
+    {
         $state = new State();
         
         $state->setVariable(new OutcomeVariable('nullValue', Cardinality::SINGLE, BaseType::BOOLEAN, null));
@@ -143,7 +147,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         
         return array(
             array('', 'nonExistingVariable', $state),
-            array('', 'nullValue', $state),            
+            array('', 'nullValue', $state),
                         
             array('Non Empty String', 'nonEmptyString', $state),
             array('', 'emptyString', $state),
@@ -204,7 +208,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
                  
             array('1.000000e+1', 'orderedIndexedFloat', $state, '', false, 10, 0),
             array('2.000000e+1', 'orderedIndexedFloat', $state, '', false, 10, 1),
-            array('-1.000000e+0', 'orderedIndexedFloat', $state, '', false, 10, 2), 
+            array('-1.000000e+0', 'orderedIndexedFloat', $state, '', false, 10, 2),
             array('Ta', 'orderedIndexedString', $state, '', false, 10, 0),
             array('Daaa', 'orderedIndexedString', $state, '', false, 10, 1),
             array('h', 'orderedIndexedString', $state, '', false, 10, 2),

@@ -7,13 +7,16 @@ use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\Route;
 use qtism\runtime\tests\TestResultsSubmission;
 
-class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionManager {
+class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionManager
+{
     
-    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route) {
+    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route)
+    {
         return new SimpleResultsSubmittableTestSession($test, $this, $route);
     }
     
-    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
+    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
+    {
         return new AssessmentItemSession($assessmentItem, $this, $navigationMode, $submissionMode);
     }
 }

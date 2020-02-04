@@ -1,18 +1,22 @@
 <?php
+
 use qtism\data\storage\php\Utils as PhpUtils;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class PhpUtilsTest extends QtiSmTestCase {
+class PhpUtilsTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider doubleQuotedPhpStringDataProvider
      */
-    public function testDoubleQuotedPhpString($input, $expected) {
+    public function testDoubleQuotedPhpString($input, $expected)
+    {
         $this->assertEquals($expected, PhpUtils::doubleQuotedPhpString($input));
     }
     
-    public function doubleQuotedPhpStringDataProvider() {
+    public function doubleQuotedPhpStringDataProvider()
+    {
         return array(
             array('', '""'),
             array("\"", "\"\\\"\""),

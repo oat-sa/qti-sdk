@@ -11,11 +11,13 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class HotspotInteractionMarshallerTest extends QtiSmTestCase {
+class HotspotInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
+    public function testMarshall()
+    {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         
@@ -24,8 +26,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $choice3 = new HotspotChoice('hotspotchoice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(150, 235, 8)));
         
         $object = new QtiObject('./img/img.png', 'image/png');
-	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
-	    $hotspotInteraction->setPrompt($prompt);
+        $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
+        $hotspotInteraction->setPrompt($prompt);
         
         $element = $this->getMarshallerFactory()->createMarshaller($hotspotInteraction)->marshall($hotspotInteraction);
         
@@ -33,9 +35,10 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $element = $dom->importNode($element, true);
         
         $this->assertEquals('<hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
         ');
@@ -60,5 +63,5 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('hotspotchoice1', $choices[0]->getIdentifier());
         $this->assertEquals('hotspotchoice2', $choices[1]->getIdentifier());
         $this->assertEquals('hotspotchoice3', $choices[2]->getIdentifier());
-	}
+    }
 }

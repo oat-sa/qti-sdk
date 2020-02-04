@@ -2,15 +2,17 @@
 
 use qtism\data\expressions\Correct;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 
-class AssessmentTestSeekerTest extends QtiSmTestCase {
-	
-    public function testSeekComponent() {
+class AssessmentTestSeekerTest extends QtiSmTestCase
+{
+    
+    public function testSeekComponent()
+    {
         
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -36,21 +38,20 @@ class AssessmentTestSeekerTest extends QtiSmTestCase {
         try {
             $ref = $seeker->seekComponent('responseProcessing', 25);
             $this->assertFalse(true, "The 'responseProcessing' QTI class is not registered with the AssessmentTestSeeker object.");
-        }
-        catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
         
         try {
             $ref = $seeker->seekComponent('assessmentItemRef', 100);
             $this->assertFalse(true, "Nothing should be found for 'assessmentItemRef' at position '100'. This is out of bounds.");
-        }
-        catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
     }
     
-    public function testSeekPosition() {
+    public function testSeekPosition()
+    {
         
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -67,16 +68,14 @@ class AssessmentTestSeekerTest extends QtiSmTestCase {
         try {
             $pos = $seeker->seekPosition(new AssessmentItemRef('Q05', 'Q05.xml'));
             $this->assertFalse(true, "Nothing should be found for Q05.");
-        }
-        catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
         
         try {
             $pos = $seeker->seekPosition(new Correct('Q01.SCORE'));
             $this->assertFalse(true, "The 'correct' QTI class is not registered with the AssessmentTestSeeker object.");
-        }
-        catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
     }

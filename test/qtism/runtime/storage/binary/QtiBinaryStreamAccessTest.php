@@ -1,4 +1,5 @@
 <?php
+
 use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\files\DefaultFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
@@ -35,18 +36,20 @@ use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 use qtism\common\datatypes\files\FileSystemFileManager;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class QtiBinaryStreamAccessTest extends QtiSmTestCase {
-	
+class QtiBinaryStreamAccessTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider readVariableValueProvider
-     * 
+     *
      * @param Variable $variable
      * @param string $binary
      * @param mixed $expectedValue
      */
-    public function testReadVariableValue(Variable $variable, $binary, $expectedValue) {
+    public function testReadVariableValue(Variable $variable, $binary, $expectedValue)
+    {
         $stream = new MemoryStream($binary);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -54,30 +57,26 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         if (is_scalar($expectedValue) === true) {
             $this->assertEquals($expectedValue, $variable->getValue()->getValue());
-        }
-        else if (is_null($expectedValue) === true) {
+        } elseif (is_null($expectedValue) === true) {
             $this->assertSame($expectedValue, $variable->getValue());
-        }
-        else if ($expectedValue instanceof RecordContainer) {
+        } elseif ($expectedValue instanceof RecordContainer) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
             $this->assertTrue($expectedValue->equals($variable->getValue()));
-        }
-        else if ($expectedValue instanceof Container) {
+        } elseif ($expectedValue instanceof Container) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
             $this->assertEquals($expectedValue->getBaseType(), $variable->getBaseType());
             $this->assertTrue($expectedValue->equals($variable->getValue()));
-        }
-        else if ($expectedValue instanceof Comparable) {
+        } elseif ($expectedValue instanceof Comparable) {
             // Duration, Point, Pair, ...
             $this->assertTrue($expectedValue->equals($variable->getValue()));
-        }
-        else {
+        } else {
             // can't happen.
             $this->assertTrue(false);
         }
     }
     
-    public function readVariableValueProvider() {
+    public function readVariableValueProvider()
+    {
         $returnValue = array();
         
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(45)), "\x01", null);
@@ -190,10 +189,11 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     
     /**
      * @dataProvider writeVariableValueProvider
-     * 
+     *
      * @param Variable $variable
      */
-    public function testWriteVariableValue(Variable $variable) {
+    public function testWriteVariableValue(Variable $variable)
+    {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
@@ -215,31 +215,27 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         // Compare.
         if (is_null($originalValue) === true) {
             $this->assertSame($originalValue, $readValue);
-        }
-        else if (is_scalar($originalValue) === true) {
+        } elseif (is_scalar($originalValue) === true) {
             $this->assertEquals($originalValue, $readValue);
-        }
-        else if ($originalValue instanceof RecordContainer) {
+        } elseif ($originalValue instanceof RecordContainer) {
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertTrue($readValue->equals($originalValue));
-        }
-        else if ($originalValue instanceof Container) {
+        } elseif ($originalValue instanceof Container) {
             // MULTIPLE or ORDERED container.
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertEquals($readValue->getBaseType(), $readValue->getBaseType());
             $this->assertTrue($readValue->equals($originalValue), $originalValue . " != " . $readValue);
-        }
-        else if ($originalValue instanceof Comparable) {
+        } elseif ($originalValue instanceof Comparable) {
             // Complex QTI Runtime object.
             $this->assertTrue($readValue->equals($originalValue));
-        }
-        else {
+        } else {
             // Unknown datatype.
             $this->assertTrue(false);
         }
     }
     
-    public function writeVariableValueProvider() {
+    public function writeVariableValueProvider()
+    {
         return array(
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(26))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(-34455))),
@@ -378,7 +374,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier(0), null, new QtiIntOrIdentifier('Q01'), null, new QtiIntOrIdentifier(200000))))),
 
                         
-            array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'))),    
+            array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'))),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FILE, new MultipleContainer(BaseType::FILE, array(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'), FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_noname.txt'))))),
                         
             array(new OutcomeVariable('VAR', Cardinality::RECORD)),
@@ -387,7 +383,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         );
     }
     
-    public function testReadAssessmentItemSession() {
+    public function testReadAssessmentItemSession()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -430,7 +427,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
     }
     
-    public function testWriteAssessmentItemSession() {
+    public function testWriteAssessmentItemSession()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -457,7 +455,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
     }
     
-    public function testReadRouteItem() {
+    public function testReadRouteItem()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -485,7 +484,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(0, count($routeItem->getPreConditions()));
     }
     
-    public function testWriteRouteItem() {
+    public function testWriteRouteItem()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
@@ -513,17 +513,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(0, count($routeItem->getPreConditions()));
     }
     
-    public function testReadPendingResponses() {
-    	$doc = new XmlCompactDocument();
+    public function testReadPendingResponses()
+    {
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $bin = '';
-        $bin.= "\x01"; // variable-count = 1.
-        $bin.= pack('S', 0); // response-declaration-position = 0
-        $bin.= pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // variable-value = 'ChoiceA' (identifier)
-        $bin.= pack('S', 0); // item-tree-position = 0
-        $bin.= "\x00"; // occurence = 0
+        $bin .= "\x01"; // variable-count = 1.
+        $bin .= pack('S', 0); // response-declaration-position = 0
+        $bin .= pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // variable-value = 'ChoiceA' (identifier)
+        $bin .= pack('S', 0); // item-tree-position = 0
+        $bin .= "\x00"; // occurence = 0
         
         $stream = new MemoryStream($bin);
         $stream->open();
@@ -542,8 +543,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
     
-    public function testWritePendingResponses() {
-    	$doc = new XmlCompactDocument();
+    public function testWritePendingResponses()
+    {
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));

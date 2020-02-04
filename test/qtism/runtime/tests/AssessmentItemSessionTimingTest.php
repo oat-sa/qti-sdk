@@ -12,11 +12,13 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
 
-class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
+class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
+{
     
-    public function testEvolutionBasicTimeLimitsUnderflowOverflow() {
+    public function testEvolutionBasicTimeLimitsUnderflowOverflow()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
     
         // Give more than one attempt.
@@ -40,8 +42,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
             $itemSession->endAttempt();
             // An exception MUST be thrown.
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_UNDERFLOW, $e->getCode());
         }
     
@@ -59,8 +60,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         try {
             $itemSession->endAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
         }
     
@@ -70,7 +70,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
     }
     
-    public function testAcceptableLatency() {
+    public function testAcceptableLatency()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession(new QtiDuration('PT1S'));
     
         $itemSessionControl = new ItemSessionControl();
@@ -94,8 +95,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         try {
             $itemSession->endAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
             $this->assertEquals('PT4S', $itemSession['duration']->round()->__toString());
             $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
@@ -103,7 +103,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         }
     }
     
-    public function testEvolutionBasicMultipleAttempts() {
+    public function testEvolutionBasicMultipleAttempts()
+    {
     
         $count = 5;
         $attempts = array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'), new QtiIdentifier('ChoiceD'), new QtiIdentifier('ChoiceE'));
@@ -143,13 +144,13 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
             $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
     
-    public function testAllowLateSubmissionNonAdaptive() {
+    public function testAllowLateSubmissionNonAdaptive()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
     
         $timeLimits = new TimeLimits(null, new QtiDuration('PT1S'), true);
@@ -167,7 +168,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
     }
     
-    public function testDurationBrutalSessionClosing() {
+    public function testDurationBrutalSessionClosing()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $this->assertEquals('PT0S', $itemSession['duration']->round()->__toString());
@@ -181,7 +183,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals('PT1S', $itemSession['duration']->round()->__toString());
     }
     
-    public function testRemainingTimeOne() {
+    public function testRemainingTimeOne()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $this->assertFalse($itemSession->getRemainingTime());
         $timeLimits = new TimeLimits();
@@ -208,14 +211,14 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
             $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
             // Must be rejected, no more time remaining!!!
             $this->assertFalse(true);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
             $this->assertTrue($itemSession->getRemainingTime()->equals(new QtiDuration('PT0S')));
         }
     }
     
-    public function testRemainingTimeTwo() {
+    public function testRemainingTimeTwo()
+    {
         // by default, there is no max time limit.
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $this->assertFalse($itemSession->getRemainingTime());
@@ -233,7 +236,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertFalse($itemSession->getRemainingTime());
     }
     
-    public function testForceLateSubmission() {
+    public function testForceLateSubmission()
+    {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT1S'));
         

@@ -2,11 +2,13 @@
 
 use qtism\data\storage\xml\XmlDocument;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class XmlAssessmentContentDocumentTest extends QtiSmTestCase {
-	
-    public function testSimpleXmlBase() {
+class XmlAssessmentContentDocumentTest extends QtiSmTestCase
+{
+    
+    public function testSimpleXmlBase()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'rendering/xmlbase_1.xml');
         
@@ -23,7 +25,8 @@ class XmlAssessmentContentDocumentTest extends QtiSmTestCase {
         $this->assertFalse($imgs[2]->hasXmlBase());
     }
     
-    public function testModerateXmlBase() {
+    public function testModerateXmlBase()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'rendering/xmlbase_2.xml');
         

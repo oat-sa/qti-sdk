@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -13,50 +13,53 @@ use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 
-class ResponseProcessingEngineTest extends QtiSmTestCase {
-	
-	public function testResponseProcessingMatchCorrect() {
-		$responseProcessing = $this->createComponentFromXml('
+class ResponseProcessingEngineTest extends QtiSmTestCase
+{
+    
+    public function testResponseProcessingMatchCorrect()
+    {
+        $responseProcessing = $this->createComponentFromXml('
 			<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 		');
-		
-		$responseDeclaration = $this->createComponentFromXml('
+        
+        $responseDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 				<correctResponse>
 					<value>ChoiceA</value>
 				</correctResponse>
 			</responseDeclaration>		
 		');
-		
-		$outcomeDeclaration = $this->createComponentFromXml('
+        
+        $outcomeDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 				<defaultValue>
 					<value>0</value>
 				</defaultValue>
 			</outcomeDeclaration>
 		');
-		
-		$respVar = ResponseVariable::createFromDataModel($responseDeclaration);
-		$outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
-		$context = new State(array($respVar, $outVar));
-		
-		$engine = new ResponseProcessingEngine($responseProcessing, $context);
-		
-		// --> answer as a correct response.
-		$context['RESPONSE'] = new QtiIdentifier('ChoiceA');
-		$engine->process();
-		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-		$this->assertEquals(1.0, $context['SCORE']->getValue());
+        
+        $respVar = ResponseVariable::createFromDataModel($responseDeclaration);
+        $outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+        $context = new State(array($respVar, $outVar));
+        
+        $engine = new ResponseProcessingEngine($responseProcessing, $context);
+        
+        // --> answer as a correct response.
+        $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
+        $engine->process();
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this->assertEquals(1.0, $context['SCORE']->getValue());
         
         // --> answer as an incorrect response.
-		$context['RESPONSE'] = new QtiIdentifier('ChoiceB');
-		$engine->process();
-		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-		$this->assertEquals(0.0, $context['SCORE']->getValue());
-	}
+        $context['RESPONSE'] = new QtiIdentifier('ChoiceB');
+        $engine->process();
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this->assertEquals(0.0, $context['SCORE']->getValue());
+    }
     
-    public function testResponseProcessingNoResponseRule() {
-		$responseProcessing = $this->createComponentFromXml('
+    public function testResponseProcessingNoResponseRule()
+    {
+        $responseProcessing = $this->createComponentFromXml('
 			<responseProcessing>
                 <responseCondition>
                     <responseIf>
@@ -81,56 +84,57 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
                 </responseCondition>
             </responseProcessing>
 		');
-		
-		$responseDeclaration = $this->createComponentFromXml('
+        
+        $responseDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>	
 		');
-		
-		$outcomeDeclaration = $this->createComponentFromXml('
+        
+        $outcomeDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
 		');
-		
-		$respVar = ResponseVariable::createFromDataModel($responseDeclaration);
-		$outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
-		$context = new State(array($respVar, $outVar));
-		
-		$engine = new ResponseProcessingEngine($responseProcessing, $context);
-		
-		$context['RESPONSE'] = new QtiIdentifier('ChoiceA');
-		$engine->process();
-		$this->assertNull($context['SCORE']);
+        
+        $respVar = ResponseVariable::createFromDataModel($responseDeclaration);
+        $outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+        $context = new State(array($respVar, $outVar));
+        
+        $engine = new ResponseProcessingEngine($responseProcessing, $context);
+        
+        $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
+        $engine->process();
+        $this->assertNull($context['SCORE']);
         
         $context['RESPONSE'] = new QtiIdentifier('ChoiceB');
-		$engine->process();
-		$this->assertNull($context['SCORE']);
+        $engine->process();
+        $this->assertNull($context['SCORE']);
         
         $context['RESPONSE'] = new QtiIdentifier('ChoiceC');
         $engine->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
-		$this->assertEquals(1.0, $context['SCORE']->getValue());
-	}
-	
-	public function testResponseProcessingExitResponse() {
-	    $responseProcessing = $this->createComponentFromXml('
+        $this->assertEquals(1.0, $context['SCORE']->getValue());
+    }
+    
+    public function testResponseProcessingExitResponse()
+    {
+        $responseProcessing = $this->createComponentFromXml('
 	        <responseProcessing>
                 <exitResponse/>
 	        </responseProcessing>
 	    ');
-	    
-	    $engine = new ResponseProcessingEngine($responseProcessing);
-	    
-	    try {
-	        $engine->process();
-	        // An exception MUST be thrown.
-	        $this->assertTrue(true);
-	    }
-	    catch (ProcessingException $e) {
-	        $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
-	        $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
-	    }
-	}
+        
+        $engine = new ResponseProcessingEngine($responseProcessing);
+        
+        try {
+            $engine->process();
+            // An exception MUST be thrown.
+            $this->assertTrue(true);
+        } catch (ProcessingException $e) {
+            $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
+            $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
+        }
+    }
     
-    public function testSetOutcomeValueWithSum() {
+    public function testSetOutcomeValueWithSum()
+    {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
                 <responseCondition>

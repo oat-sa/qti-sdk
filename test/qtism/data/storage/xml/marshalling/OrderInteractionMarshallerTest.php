@@ -9,12 +9,14 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\interactions\SimpleChoiceCollection;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class OrderInteractionMarshallerTest extends QtiSmTestCase {
+class OrderInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-		
+    public function testMarshall()
+    {
+        
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection(array(new TextRun('Choice #1'))));
         $choice2 = new SimpleChoice('choice_2');
@@ -34,9 +36,10 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <orderInteraction responseIdentifier="RESPONSE" maxChoices="2"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>
         ');
@@ -58,5 +61,5 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase {
         
         $simpleChoices = $component->getSimpleChoices();
         $this->assertEquals(2, count($simpleChoices));
-	}
+    }
 }

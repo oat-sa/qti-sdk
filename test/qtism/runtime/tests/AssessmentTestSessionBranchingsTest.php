@@ -10,11 +10,13 @@ use qtism\runtime\tests\SessionManager;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
-	
-    public function testInstantiationSample1() {
+class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
+{
+    
+    public function testInstantiationSample1()
+    {
         
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
@@ -47,7 +49,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $this->assertEquals(0, count($routeItemQ04->getBranchRules()));
     }
     
-    public function testBranchingSingleSectionLinear1() {
+    public function testBranchingSingleSectionLinear1()
+    {
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
@@ -87,7 +90,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $this->assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
     }
     
-    public function testBranchingSingleSectionLinear2() {
+    public function testBranchingSingleSectionLinear2()
+    {
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
@@ -116,7 +120,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $this->assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
     }
     
-    public function testBranchingSingleSectionNonLinear1() {
+    public function testBranchingSingleSectionNonLinear1()
+    {
         // This test only aims at testing if branch rules
         // are correctly ignored when the navigation mode is non linear.
         $doc = new XmlCompactDocument('1.0');
@@ -137,7 +142,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
     
-    public function testBranchingSingleSectionNonLinear2() {
+    public function testBranchingSingleSectionNonLinear2()
+    {
         // This test aims at testing that branch rules are not
         // ignored in non-linear tests if force branching is in force.
         $doc = new XmlCompactDocument('2.1');
@@ -161,7 +167,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
     /**
      * @dataProvider branchingMultipleOccurencesProvider
      */
-    public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence) {
+    public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence)
+    {
         // This test aims at testing the possibility to jump
         // on a particular item ref occurence.
         $doc = new XmlCompactDocument('1.0');
@@ -176,8 +183,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         if (empty($response) === true) {
             $testSession->skip();
             $testSession->moveNext();
-        }
-        else {
+        } else {
             $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, $response))));
             $testSession->moveNext();
         }
@@ -186,12 +192,13 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $this->assertEquals($occurence, $testSession->getCurrentAssessmentItemRefOccurence());
     }
     
-    public function branchingMultipleOccurencesProvider() {
+    public function branchingMultipleOccurencesProvider()
+    {
         return array(
             array(new QtiIdentifier('goto21'), 'Q02', 0),
             array(new QtiIdentifier('goto22'), 'Q02', 1),
             array(new QtiIdentifier('goto23'), 'Q02', 2),
-            array(null, 'Q02', 3)              
+            array(null, 'Q02', 3)
         );
     }
 }

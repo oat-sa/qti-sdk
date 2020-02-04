@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
@@ -21,9 +21,11 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\common\MultipleContainer;
 
-class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
-	
-    public function testInstantiation() {
+class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
+{
+    
+    public function testInstantiation()
+    {
         
         $itemSession = self::instantiateBasicAssessmentItemSession();
         
@@ -78,7 +80,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession->isAttemptable());
     }
     
-    public function testEvolutionBasic() {
+    public function testEvolutionBasic()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $this->assertTrue($itemSession->isSelected());
@@ -120,13 +123,13 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             
             // An exception MUST be thrown.
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
     
-    public function testGetResponseVariables() {
+    public function testGetResponseVariables()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
@@ -143,7 +146,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue(isset($responses['RESPONSE']));
     }
     
-    public function testGetOutcomeVariables() {
+    public function testGetOutcomeVariables()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
@@ -159,7 +163,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue(isset($outcomes['SCORE']));
     }
     
-    public function testEvolutionAdaptiveItem() {
+    public function testEvolutionAdaptiveItem()
+    {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
         
@@ -195,14 +200,14 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             // The session is closed, you cannot begin another attempt.
             $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
     
-    public function testSkippingForbidden() {
+    public function testSkippingForbidden()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
@@ -213,13 +218,13 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         try {
             $itemSession->skip();
             $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
         }
     }
     
-    public function testSkippingAllowed() {
+    public function testSkippingAllowed()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
@@ -231,7 +236,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(null, $itemSession['RESPONSE']);
     }
     
-    public function testValidResponsesInForceValid() {
+    public function testValidResponsesInForceValid()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setValidateResponses(false);
@@ -244,7 +250,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->endAttempt($responses);
     }
     
-    public function testIsCorrect() {
+    public function testIsCorrect()
+    {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $itemSession->getState());
         
@@ -274,7 +281,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
     }
     
-    public function testStandaloneItemSession() {
+    public function testStandaloneItemSession()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/hotspot.xml');
         
@@ -287,7 +295,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1.0, $itemSession['SCORE']->getValue());
     }
     
-    public function testStandaloneMultipleInteractions() {
+    public function testStandaloneMultipleInteractions()
+    {
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/items/multiple_interactions.xml');
         
@@ -302,7 +311,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(6.0, $itemSession['SCORE']->getValue());
     }
     
-    public function testSimultaneousSubmissionOnlyOneAttempt() {
+    public function testSimultaneousSubmissionOnlyOneAttempt()
+    {
         // We want to test that if the current submission mode is SIMULTANEOUS,
         // only one attempt is allowed.
         $itemSession = self::instantiateBasicAssessmentItemSession();
@@ -322,43 +332,39 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         try {
             $itemSession->beginAttempt();
             $this->assertTrue(false, 'Nore more attempts should be allowed.');
-        }
-        catch (AssessmentItemSessionException $e) {
+        } catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
     
-    public function testRunCallback() {
+    public function testRunCallback()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
         $itemSession->registerCallback('beginAttempt', function ($item, $itemSessionTest, $itemSession) {
                 $itemSessionTest->assertEquals($item, $itemSession);
                 $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::INTERACTING);
-            },
-            array($this, $itemSession)
-        );
+        },
+            array($this, $itemSession));
         
         $itemSession->registerCallback('suspend', function ($item, $itemSessionTest, $itemSession) {
                 $itemSessionTest->assertEquals($item, $itemSession);
                 $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::SUSPENDED);
-            },
-            array($this, $itemSession)
-        );
+        },
+            array($this, $itemSession));
             
         $itemSession->registerCallback('interact', function ($item, $itemSessionTest, $itemSession) {
                 $itemSessionTest->assertEquals($item, $itemSession);
                 $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::INTERACTING);
-            },
-            array($this, $itemSession)
-        );
+        },
+            array($this, $itemSession));
         
         $itemSession->registerCallback('endAttempt', function ($item, $itemSessionTest, $itemSession) {
                 $itemSessionTest->assertEquals($item, $itemSession);
                 $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::CLOSED);
-            },
-            array($this, $itemSession)
-        );
+        },
+            array($this, $itemSession));
         
         $itemSession->beginAttempt();
         $itemSession->suspend();
@@ -366,7 +372,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->endAttempt();
     }
     
-    public function testSetOutcomeValuesWithSum() {
+    public function testSetOutcomeValuesWithSum()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
         
@@ -380,7 +387,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
     
-    public function testSetOutcomeValuesWithSumJuggling() {
+    public function testSetOutcomeValuesWithSumJuggling()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum_juggling.xml');
         
@@ -394,7 +402,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
     
-    public function testIsRespondedTextEntry() {
+    public function testIsRespondedTextEntry()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/text_entry.xml');
         
@@ -428,7 +437,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession->isResponded(false));
     }
     
-        public function testIsRespondedMultipleInteractions1()
+    public function testIsRespondedMultipleInteractions1()
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_singlechoice_textentry.xml');
@@ -464,12 +473,12 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginAttempt();
         $itemSession->endAttempt(
             new State([
-                new ResponseVariable(
-                    'RESPONSEB', 
-                    Cardinality::SINGLE, 
-                    BaseType::STRING, 
-                    new QtiString('')
-                )
+            new ResponseVariable(
+                'RESPONSEB',
+                Cardinality::SINGLE,
+                BaseType::STRING,
+                new QtiString('')
+            )
             ])
         );
         
@@ -480,12 +489,12 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginAttempt();
         $itemSession->endAttempt(
             new State([
-                new ResponseVariable(
-                    'RESPONSEB',
-                    Cardinality::SINGLE,
-                    BaseType::STRING, 
-                    new QtiString('Lorem Ipsum')
-                )
+            new ResponseVariable(
+                'RESPONSEB',
+                Cardinality::SINGLE,
+                BaseType::STRING,
+                new QtiString('Lorem Ipsum')
+            )
             ])
         );
         
@@ -496,12 +505,12 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginAttempt();
         $itemSession->endAttempt(
             new State([
-                new ResponseVariable(
-                    'RESPONSEA',
-                    Cardinality::SINGLE,
-                    BaseType::IDENTIFIER,
-                    new QtiIdentifier('ChoiceA')
-                )
+            new ResponseVariable(
+                'RESPONSEA',
+                Cardinality::SINGLE,
+                BaseType::IDENTIFIER,
+                new QtiIdentifier('ChoiceA')
+            )
             ])
         );
         
@@ -582,7 +591,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
                     Cardinality::MULTIPLE,
                     BaseType::IDENTIFIER,
                     new MultipleContainer(
-                        BaseType::IDENTIFIER, 
+                        BaseType::IDENTIFIER,
                         [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')]
                     )
                 )

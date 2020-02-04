@@ -5,7 +5,8 @@ use qtism\data\storage\xml\XmlDocument;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
-function spentTime($start, $end) {
+function spentTime($start, $end)
+{
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
     $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
@@ -21,7 +22,6 @@ $iterations = 100;
 
 
 foreach ($templates as $t) {
-    
     for ($i = 0; $i < $iterations; $i++) {
         // --- XML
         $start = microtime();
@@ -44,7 +44,6 @@ foreach ($templates as $t) {
 }
 
 foreach ($templates as $t) {
-    
     // compute arithmetic mean.
     $meanXml = 0;
     foreach ($xmlTimings[$t] as $v) {

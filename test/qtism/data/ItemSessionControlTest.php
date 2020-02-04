@@ -1,11 +1,13 @@
 <?php
-require_once (dirname(__FILE__) . '/../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
 
 use qtism\data\ItemSessionControl;
 
-class ItemSessionControlTest extends QtiSmTestCase {
-	
-    public function testIsDefault() {
+class ItemSessionControlTest extends QtiSmTestCase
+{
+    
+    public function testIsDefault()
+    {
         $itemSessionControl = new ItemSessionControl();
         $this->assertTrue($itemSessionControl->isDefault());
         

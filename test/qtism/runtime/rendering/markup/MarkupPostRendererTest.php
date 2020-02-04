@@ -1,14 +1,17 @@
 <?php
+
 use qtism\runtime\rendering\markup\MarkupPostRenderer;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class MarkupPostRendererTest extends QtiSmTestCase {
-	
+class MarkupPostRendererTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider xmlDeclarationCleanUpProvider
      */
-    public function testXmlDeclarationCleanUp($relativeUri) {
+    public function testXmlDeclarationCleanUp($relativeUri)
+    {
         // Regular file, simple new line after XML declaration.
         $file = self::samplesDir() . $relativeUri;
         $doc = new \DOMDocument('1.0', 'UTF-8');
@@ -24,18 +27,20 @@ class MarkupPostRendererTest extends QtiSmTestCase {
         $this->assertTrue(mb_strpos($output, '<itemBody', 0, 'UTF-8') === 0);
     }
     
-    public function xmlDeclarationCleanUpProvider() {
+    public function xmlDeclarationCleanUpProvider()
+    {
         return array(
             // Regular file, simple new line after XML declaration.
             array('rendering/postrendering/xmldeclaration_cleanup_1.xml'),
             // Regular file, multiple new lines after XML declaration.
             array('rendering/postrendering/xmldeclaration_cleanup_2.xml'),
             // Regular file, no new lines after XML declaration.
-            array('rendering/postrendering/xmldeclaration_cleanup_3.xml')                
+            array('rendering/postrendering/xmldeclaration_cleanup_3.xml')
         );
     }
     
-    public function testNoDocumentElement() {
+    public function testNoDocumentElement()
+    {
         $this->setExpectedException('qtism\\runtime\\rendering\\RenderingException');
         
         $doc = new \DOMDocument('1.0', 'UTF-8');
@@ -43,7 +48,8 @@ class MarkupPostRendererTest extends QtiSmTestCase {
         $output = $renderer->render($doc);
     }
     
-    public function testTemplateOrientedFeedback() {
+    public function testTemplateOrientedFeedback()
+    {
         $file = self::samplesDir() . 'rendering/postrendering/templateoriented_1.xml';
         $doc = new \DOMDocument('1.0', 'UTF-8');
         $doc->load($file, LIBXML_NONET);

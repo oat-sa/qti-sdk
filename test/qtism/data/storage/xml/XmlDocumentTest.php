@@ -1,14 +1,16 @@
 <?php
-use qtism\data\content\TextRun;
 
+use qtism\data\content\TextRun;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class XmlDocumentTest extends QtiSmTestCase {
-	
-    public function testRubricBlockRuptureNoValidation() {
+class XmlDocumentTest extends QtiSmTestCase
+{
+    
+    public function testRubricBlockRuptureNoValidation()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/paper_vs_xsd/rubricblock_other_content_than_block.xml');
         
@@ -34,7 +36,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
     
-    public function testRubricBlockRuptureValidation() {
+    public function testRubricBlockRuptureValidation()
+    {
         $doc = new XmlDocument();
         $file = self::samplesDir() . 'custom/paper_vs_xsd/rubricblock_other_content_than_block.xml';
 
@@ -49,7 +52,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertTrue(true);
     }
     
-    public function testTemplateBlockRuptureNoValidation() {
+    public function testTemplateBlockRuptureNoValidation()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/paper_vs_xsd/templateblock_other_content_than_block.xml');
         
@@ -75,7 +79,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
     
-    public function testTemplateBlockRuptureValidation() {
+    public function testTemplateBlockRuptureValidation()
+    {
         $doc = new XmlDocument();
         $file = self::samplesDir() . 'custom/paper_vs_xsd/templateblock_other_content_than_block.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -87,7 +92,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertTrue(true);
     }
     
-    public function testFeedbackBlockRuptureNoValidation() {
+    public function testFeedbackBlockRuptureNoValidation()
+    {
         $doc = new XmlDocument();
         $file = self::samplesDir() . 'custom/paper_vs_xsd/feedbackblock_other_content_than_block.xml';
         $doc->load($file);
@@ -117,7 +123,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
     
-    public function testFeedbackBlockRuptureValidation() {
+    public function testFeedbackBlockRuptureValidation()
+    {
         $doc = new XmlDocument();
         $file = self::samplesDir() . 'custom/paper_vs_xsd/feedbackblock_other_content_than_block.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -129,7 +136,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertTrue(true);
     }
     
-    public function testPromptRuptureNoValidation() {
+    public function testPromptRuptureNoValidation()
+    {
         $doc = new XmlDocument();
         $file = self::samplesDir() . 'custom/paper_vs_xsd/prompt_other_content_than_inlinestatic.xml';
         $doc->load($file);
@@ -155,7 +163,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertEquals('Resistance is futile!', $simpleChoiceContent[0]->getContent());
     }
     
-    public function testPromptRuptureValidation() {
+    public function testPromptRuptureValidation()
+    {
         $doc = new XmlDocument();
         $file = self::samplesDir() . 'custom/paper_vs_xsd/prompt_other_content_than_inlinestatic.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -167,7 +176,8 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertTrue(true);
     }
     
-    public function testAmps() {
+    public function testAmps()
+    {
         $file = self::samplesDir() . 'custom/amps.xml';
         $doc = new XmlDocument();
         $doc->load($file);

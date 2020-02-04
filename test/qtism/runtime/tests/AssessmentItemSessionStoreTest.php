@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\SessionManager;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -8,9 +8,11 @@ use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\data\AssessmentItemRef;
 
-class AssessmentItemSessionStoreTest extends QtiSmTestCase {
-	
-    public function testHasMultipleOccurences() {
+class AssessmentItemSessionStoreTest extends QtiSmTestCase
+{
+    
+    public function testHasMultipleOccurences()
+    {
         $sessionManager = new SessionManager();
         $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
         $store = new AssessmentItemSessionStore();
@@ -32,7 +34,8 @@ class AssessmentItemSessionStoreTest extends QtiSmTestCase {
         $this->assertFalse($store->hasAssessmentItemSession(new ExtendedAssessmentItemRef('Q02', './Q02.xml')));
     }
     
-    public function testGetAllAssessmentItemSessions() {
+    public function testGetAllAssessmentItemSessions()
+    {
         $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
         $itemRef2 = new ExtendedAssessmentItemRef('Q02', './Q02.xml');
         $itemRef3 = new ExtendedAssessmentItemRef('Q03', './Q03.xml');

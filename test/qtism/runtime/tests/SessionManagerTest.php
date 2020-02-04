@@ -5,14 +5,16 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 
-class SessionManagerTest extends QtiSmTestCase {
-	
+class SessionManagerTest extends QtiSmTestCase
+{
+    
     private $test;
     
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         
         $test = new XmlCompactDocument();
@@ -20,28 +22,32 @@ class SessionManagerTest extends QtiSmTestCase {
         $this->setTest($test->getDocumentComponent());
     }
     
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
         unset($this->test);
     }
     
     /**
-     * 
+     *
      * @param AssessmentTest $test
      */
-    private function setTest(AssessmentTest $test) {
+    private function setTest(AssessmentTest $test)
+    {
         $this->test = $test;
     }
     
     /**
-     * 
+     *
      * @return AssessmentTest
      */
-    private function getTest() {
+    private function getTest()
+    {
         return $this->test;
     }
     
-    public function testDefaultAssessmentTestSessionCreation() {
+    public function testDefaultAssessmentTestSessionCreation()
+    {
         // Default acceptable latency is PT0S.
         // default considerMinTime is true.
         $manager = new SessionManager();
@@ -52,7 +58,8 @@ class SessionManagerTest extends QtiSmTestCase {
         $this->assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT0S')), 'The default acceptable latency must be PT0S');
     }
     
-    public function testParametricAssessmentTestSessionCreation() {
+    public function testParametricAssessmentTestSessionCreation()
+    {
         $acceptableLatency = new QtiDuration('PT5S');
         $considerMinTime = false;
         

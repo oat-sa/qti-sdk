@@ -1,13 +1,15 @@
 <?php
-require_once (dirname(__FILE__) . '/../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
 
 use qtism\data\QtiIdentifiableCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 
-class QtiIdentifiableCollectionTest extends QtiSmTestCase {
-	
-    public function testWithWeights() {
+class QtiIdentifiableCollectionTest extends QtiSmTestCase
+{
+    
+    public function testWithWeights()
+    {
         
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.1);

@@ -1,13 +1,15 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 
-class StringTest extends QtiSmTestCase {
+class StringTest extends QtiSmTestCase
+{
     
-    public function testWrongValue() {
+    public function testWrongValue()
+    {
         $this->setExpectedException(
             '\\InvalidArgumentException',
             'The String Datatype only accepts to store string values.'
@@ -15,23 +17,26 @@ class StringTest extends QtiSmTestCase {
         $string = new QtiString(1337);
     }
     
-    public function testEmptyString() {
+    public function testEmptyString()
+    {
         $string = new QtiString('');
         $this->assertEquals('', $string->getValue());
     }
     
     /**
      * @dataProvider equalProvider
-     * 
+     *
      * @param string $str
      * @param mixed $val
      */
-    public function testEqual($str, $val) {
+    public function testEqual($str, $val)
+    {
         $qtiString = new QtiString($str);
         $this->assertTrue($qtiString->equals($val));
     }
     
-    public function equalProvider() {
+    public function equalProvider()
+    {
         return array(
             array('', null),
             array('', ''),
@@ -43,16 +48,18 @@ class StringTest extends QtiSmTestCase {
     
     /**
      * @dataProvider notEqualProvider
-     * 
+     *
      * @param string $str
      * @param mixed $val
      */
-    public function testNotEqual($str, $val) {
+    public function testNotEqual($str, $val)
+    {
         $qtiString = new QtiString($str);
         $this->assertFalse($qtiString->equals($val));
     }
     
-    public function notEqualProvider() {
+    public function notEqualProvider()
+    {
         return array(
             array('test', null),
             array('', 'test'),

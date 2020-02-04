@@ -7,25 +7,28 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\DrawingInteraction;
 use qtism\data\content\xhtml\QtiObject;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class DrawingInteractionMarshallerTest extends QtiSmTestCase {
+class DrawingInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-	    $object = new QtiObject('my-canvas.png', 'image/png');
-	    $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
-	    $prompt = new Prompt();
-	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
-	    $drawingInteraction->setPrompt($prompt);
-	    
+    public function testMarshall()
+    {
+        $object = new QtiObject('my-canvas.png', 'image/png');
+        $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
+        $prompt = new Prompt();
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
+        $drawingInteraction->setPrompt($prompt);
+        
         $element = $this->getMarshallerFactory()->createMarshaller($drawingInteraction)->marshall($drawingInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="my-canvas.png" type="image/png"/></drawingInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE">
                 <prompt>Prompt...</prompt>
@@ -45,5 +48,5 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase {
         
         $promptContent = $component->getPrompt()->getContent();
         $this->assertEquals('Prompt...', $promptContent[0]->getContent());
-	}
+    }
 }

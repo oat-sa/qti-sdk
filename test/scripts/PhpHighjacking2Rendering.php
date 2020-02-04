@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Will be simply rendered as it is.
  */
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 

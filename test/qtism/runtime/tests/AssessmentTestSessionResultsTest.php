@@ -1,4 +1,5 @@
 <?php
+
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\tests\TestResultsSubmission;
 use qtism\runtime\tests\AssessmentTestSessionState;
@@ -12,9 +13,11 @@ require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.p
 require_once(dirname(__FILE__) . '/mocks/SimpleResultsSubmittableTestSession.php');
 require_once(dirname(__FILE__) . '/mocks/SimpleResultsSubmittableTestSessionFactory.php');
 
-class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase
+{
     
-    public function testTestResultsSubmissionNonLinearOutcomeProcessing() {
+    public function testTestResultsSubmissionNonLinearOutcomeProcessing()
+    {
         // This test focuses on test results submission at outcome processing time.
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();
@@ -65,7 +68,8 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $this->assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][2]->getValue(), 3));
     }
     
-    public function testTestResultsSubmissionNonLinearEnd() {
+    public function testTestResultsSubmissionNonLinearEnd()
+    {
         // This test focuses on test results submission at outcome processing time.
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();

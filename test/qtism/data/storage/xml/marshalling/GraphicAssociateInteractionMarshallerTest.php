@@ -11,35 +11,38 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
+class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
+    public function testMarshall()
+    {
         
-	    $prompt = new Prompt();
-	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
-	    
-	    $object = new QtiObject('myimg.png', 'image/png');
-	    
-	    $choice1 = new AssociableHotspot('choice1', 2, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
-	    $choice1->setMatchMin(1);
-	    $choice2 = new AssociableHotspot('choice2', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(2, 2, 15)));
-	    $choice3 = new AssociableHotspot('choice3', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15)));
-	    $choices = new AssociableHotspotCollection(array($choice1, $choice2, $choice3));
-	    
-	    $graphicAssociateInteraction = new GraphicAssociateInteraction('RESPONSE', $object, $choices, 'prout');
-	    $graphicAssociateInteraction->setPrompt($prompt);
-	    
+        $prompt = new Prompt();
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
+        
+        $object = new QtiObject('myimg.png', 'image/png');
+        
+        $choice1 = new AssociableHotspot('choice1', 2, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
+        $choice1->setMatchMin(1);
+        $choice2 = new AssociableHotspot('choice2', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(2, 2, 15)));
+        $choice3 = new AssociableHotspot('choice3', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15)));
+        $choices = new AssociableHotspotCollection(array($choice1, $choice2, $choice3));
+        
+        $graphicAssociateInteraction = new GraphicAssociateInteraction('RESPONSE', $object, $choices, 'prout');
+        $graphicAssociateInteraction->setPrompt($prompt);
+        
         $element = $this->getMarshallerFactory()->createMarshaller($graphicAssociateInteraction)->marshall($graphicAssociateInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         
         $this->assertEquals('<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2" matchMin="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2" matchMin="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>
         ');
@@ -77,5 +80,5 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(0, $choices[2]->getMatchMin());
         $this->assertEquals(QtiShape::CIRCLE, $choices[2]->getShape());
         $this->assertTrue($choices[2]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15))));
-	}
+    }
 }

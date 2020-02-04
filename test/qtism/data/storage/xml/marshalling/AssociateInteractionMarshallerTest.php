@@ -9,12 +9,14 @@ use qtism\data\content\interactions\AssociateInteraction;
 use qtism\data\content\TextRun;
 use qtism\data\content\FlowStaticCollection;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class AssociateInteractionMarshallerTest extends QtiSmTestCase {
+class AssociateInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-		
+    public function testMarshall()
+    {
+        
         $choice1 = new SimpleAssociableChoice('choice_1', 1);
         $choice1->setContent(new FlowStaticCollection(array(new TextRun('Choice #1'))));
         $choice2 = new SimpleAssociableChoice('choice_2', 2);
@@ -34,9 +36,10 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>
         ');
@@ -57,5 +60,5 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase {
         
         $simpleChoices = $component->getSimpleAssociableChoices();
         $this->assertEquals(2, count($simpleChoices));
-	}
+    }
 }

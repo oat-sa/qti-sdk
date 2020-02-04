@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -62,10 +63,8 @@ class ContextMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(Context::class, $context);
 
         $this->assertFalse($context->hasSourcedId());
-        $this->assertNull($context->getSourcedId());
 
         $this->assertFalse($context->hasSessionIdentifiers());
-        $this->assertNull($context->getSessionIdentifiers());
     }
 
     public function testMarshall()

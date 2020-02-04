@@ -1,12 +1,15 @@
 <?php
+
 namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 
-class XmlDocumentXIncludeTest extends \QtiSmTestCase {
-	
-    public function testLoadAndSaveXIncludeNsInTag() {
+class XmlDocumentXIncludeTest extends \QtiSmTestCase
+{
+    
+    public function testLoadAndSaveXIncludeNsInTag()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
          
@@ -30,7 +33,8 @@ class XmlDocumentXIncludeTest extends \QtiSmTestCase {
     /**
      * @depends testLoadAndSaveXIncludeNsInTag
      */
-    public function testLoadAndResolveXIncludeSameBase() {
+    public function testLoadAndResolveXIncludeSameBase()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
         
@@ -60,7 +64,8 @@ class XmlDocumentXIncludeTest extends \QtiSmTestCase {
     /**
      * @depends testLoadAndResolveXIncludeSameBase
      */
-    public function testLoadAndResolveXIncludeDifferentBase() {
+    public function testLoadAndResolveXIncludeDifferentBase()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag_subfolder.xml', true);
         $doc->xInclude();

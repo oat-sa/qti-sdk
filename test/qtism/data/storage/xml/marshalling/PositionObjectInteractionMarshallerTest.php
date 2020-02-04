@@ -8,32 +8,35 @@ use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\xhtml\QtiObject;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
+class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-	    
-	    $object = new QtiObject('myimg.jpg', 'image/jpeg');
-	    $object->setWidth(400);
-	    $object->setHeight(300);
-	    
-	    $prompt = new Prompt();
-	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
-	    
-	    $positionObjectInteraction = new PositionObjectInteraction('RESPONSE', $object, 'my-pos');
-	    $positionObjectInteraction->setCenterPoint(new QtiPoint(150, 74));
-	    $positionObjectInteraction->setMaxChoices(2);
-	    $positionObjectInteraction->setMinChoices(1);
-	    
+    public function testMarshall()
+    {
+        
+        $object = new QtiObject('myimg.jpg', 'image/jpeg');
+        $object->setWidth(400);
+        $object->setHeight(300);
+        
+        $prompt = new Prompt();
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
+        
+        $positionObjectInteraction = new PositionObjectInteraction('RESPONSE', $object, 'my-pos');
+        $positionObjectInteraction->setCenterPoint(new QtiPoint(150, 74));
+        $positionObjectInteraction->setMaxChoices(2);
+        $positionObjectInteraction->setMinChoices(1);
+        
         $element = $this->getMarshallerFactory()->createMarshaller($positionObjectInteraction)->marshall($positionObjectInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="150 74" id="my-pos"><object data="myimg.jpg" type="image/jpeg" width="400" height="300"/></positionObjectInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="150 74" id="my-pos">
                <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
@@ -52,5 +55,5 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('image/jpeg', $component->getObject()->getType());
         $this->assertEquals(400, $component->getObject()->getWidth());
         $this->assertEquals(300, $component->getObject()->getHeight());
-	}
+    }
 }

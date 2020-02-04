@@ -1,13 +1,14 @@
 <?php
 
-
 use qtism\common\datatypes\files\FileSystemFileManager;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class FileSystemFileManagerTest extends QtiSmTestCase {
+class FileSystemFileManagerTest extends QtiSmTestCase
+{
     
-    public function testCreateFromFile() {
+    public function testCreateFromFile()
+    {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
         
@@ -21,7 +22,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase {
         unlink($mFile->getPath());
     }
     
-    public function testCreateFromData() {
+    public function testCreateFromData()
+    {
         $manager = new FileSystemFileManager();
         $file = $manager->createFromData('Some <em>text</em>...', 'text/html');
         
@@ -31,7 +33,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase {
         $manager->delete($file);
     }
     
-    public function testDelete() {
+    public function testDelete()
+    {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
         
@@ -44,7 +47,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase {
      * @depends testDelete
      * @depends testCreateFromFile
      */
-    public function testRetrieve() {
+    public function testRetrieve()
+    {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
         $mFile = $manager->retrieve($mFile->getIdentifier());

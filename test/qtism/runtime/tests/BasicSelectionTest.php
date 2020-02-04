@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\RouteItem;
 use qtism\runtime\tests\SelectableRouteCollection;
@@ -7,9 +7,11 @@ use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\BasicSelection;
 use qtism\data\storage\xml\XmlDocument;
 
-class BasicSelectionTest extends QtiSmTestCase {
+class BasicSelectionTest extends QtiSmTestCase
+{
     
-    public function testBasicSelection() {
+    public function testBasicSelection()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering.xml');
         
@@ -52,7 +54,8 @@ class BasicSelectionTest extends QtiSmTestCase {
         $this->assertTrue($routeCheck1 === true || $routeCheck2 === true);
     }
     
-    private static function isRouteCorrect(SelectableRoute $route, array $expectedIdentifiers) {
+    private static function isRouteCorrect(SelectableRoute $route, array $expectedIdentifiers)
+    {
         
         $i = 0;
         foreach ($route as $routeItem) {

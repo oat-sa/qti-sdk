@@ -20,37 +20,40 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\pci\json\Unmarshaller;
 use qtism\common\datatypes\QtiScalar;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class JsonUnmarshallerTest extends QtiSmTestCase {
-	
-    static protected function createUnmarshaller() {
+class JsonUnmarshallerTest extends QtiSmTestCase
+{
+    
+    protected static function createUnmarshaller()
+    {
         return new Unmarshaller(new FileSystemFileManager());
     }
     
     /**
      * @dataProvider unmarshallScalarProvider
-     * 
+     *
      * @param Scalar $expectedScalar
      * @param string $json
      */
-    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json) {
+    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json)
+    {
         $unmarshaller = self::createUnmarshaller();
         if (is_null($expectedScalar) === false) {
             $this->assertTrue($unmarshaller->unmarshall($json)->equals($expectedScalar));
-        }
-        else {
+        } else {
             $this->assertSame($expectedScalar, $unmarshaller->unmarshall($json));
         }
     }
     
     /**
      * @dataProvider unmarshallComplexProvider
-     * 
+     *
      * @param QtiDatatype $expectedComplex
      * @param string $json
      */
-    public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json) {
+    public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json)
+    {
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
         $this->assertTrue($expectedComplex->equals($value));
@@ -58,11 +61,12 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     
     /**
      * @dataProvider unmarshallFileProvider
-     * 
+     *
      * @param File $expectedFile
      * @param string $json
      */
-    public function testUnmarshallFile(FileSystemFile $expectedFile, $json) {
+    public function testUnmarshallFile(FileSystemFile $expectedFile, $json)
+    {
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
         $this->assertTrue($expectedFile->equals($value));
@@ -74,11 +78,12 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     
     /**
      * @dataProvider unmarshallListProvider
-     * 
+     *
      * @param MultipleContainer $expectedContainer
      * @param string $json
      */
-    public function testUnmarshallList(MultipleContainer $expectedContainer, $json) {
+    public function testUnmarshallList(MultipleContainer $expectedContainer, $json)
+    {
         $unmarshaller = self::createUnmarshaller();
         $this->assertTrue($expectedContainer->equals($unmarshaller->unmarshall($json)));
     }
@@ -86,7 +91,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     /**
      * @expectedException  \qtism\runtime\pci\json\UnmarshallingException
      */
-    public function testUnmarshallListException() {
+    public function testUnmarshallListException()
+    {
         $json = '{ "list" : { "boolean": false } }';
         $unmarshaller = self::createUnmarshaller();
         $unmarshaller->unmarshall($json);
@@ -94,27 +100,30 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
 
     /**
      * @dataProvider unmarshallRecordProvider
-     * 
+     *
      * @param RecordContainer $expectedRecord
      * @param string $json
      */
-    public function testUnmarshallRecord(RecordContainer $expectedRecord, $json) {
+    public function testUnmarshallRecord(RecordContainer $expectedRecord, $json)
+    {
         $unmarshaller = self::createUnmarshaller();
         $this->assertTrue($expectedRecord->equals($unmarshaller->unmarshall($json)));
     }
     
     /**
      * @dataProvider unmarshallInvalidProvider
-     * 
+     *
      * @param mixed $input
      */
-    public function testUnmarshallInvalid($input) {
+    public function testUnmarshallInvalid($input)
+    {
         $unmarshaller = self::createUnmarshaller();
         $this->setExpectedException('qtism\\runtime\\pci\\json\\UnmarshallingException');
         $unmarshaller->unmarshall($input);
     }
     
-    public function testUnmarshallState() {
+    public function testUnmarshallState()
+    {
         $json = '
             {
                 "RESPONSE1": { "base" : { "identifier" : "ChoiceA" } },
@@ -124,7 +133,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
             }
         ';
         
-        $unmarshaller = self::createUnmarshaller();;
+        $unmarshaller = self::createUnmarshaller();
+        ;
         $state = $unmarshaller->unmarshall($json);
         $this->assertEquals(4, count($state));
         $this->assertEquals(array('RESPONSE1', 'RESPONSE2', 'RESPONSE3', 'RESPONSE4'), array_keys($state));
@@ -140,7 +150,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $this->assertSame($response4, $state['RESPONSE4']);
     }
     
-    public function unmarshallScalarProvider() {
+    public function unmarshallScalarProvider()
+    {
         return array(
             array(new QtiBoolean(true), '{ "base" : {"boolean" : true } }'),
             array(new QtiBoolean(false), '{ "base" : {"boolean" : false } }'),
@@ -156,7 +167,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         );
     }
     
-    public function unmarshallComplexProvider() {
+    public function unmarshallComplexProvider()
+    {
         $returnValue = array();
         
         $returnValue[] = array(new QtiPoint(10, 20), '{ "base" : { "point" : [10, 20] } }');
@@ -167,7 +179,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         return $returnValue;
     }
     
-    public function unmarshallFileProvider() {
+    public function unmarshallFileProvider()
+    {
         $returnValue = array();
         $samples = self::samplesDir();
         $fileManager = new FileSystemFileManager();
@@ -186,7 +199,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         return $returnValue;
     }
     
-    public function unmarshallListProvider() {
+    public function unmarshallListProvider()
+    {
         $returnValue = array();
         
         $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(true)));
@@ -228,7 +242,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         return $returnValue;
     }
     
-    public function unmarshallRecordProvider() {
+    public function unmarshallRecordProvider()
+    {
         $returnValue = array();
         
         $record = new RecordContainer();
@@ -250,7 +265,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         return $returnValue;
     }
     
-    public function unmarshallInvalidProvider() {
+    public function unmarshallInvalidProvider()
+    {
         return array(
             array(new \stdClass()),
             array(''),

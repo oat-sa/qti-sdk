@@ -10,12 +10,14 @@ use qtism\data\content\TextRun;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\SimpleAssociableChoice;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class MatchInteractionMarshallerTest extends QtiSmTestCase {
+class MatchInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-		
+    public function testMarshall()
+    {
+        
         $choice1A = new SimpleAssociableChoice('choice1A', 1);
         $choice1A->setContent(new FlowStaticCollection(array(new TextRun('choice1A'))));
         $choice1B = new SimpleAssociableChoice('choice1B', 1);
@@ -42,9 +44,10 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase {
         $element = $dom->importNode($element, true);
         
         $this->assertEquals('<matchInteraction responseIdentifier="RESPONSE" shuffle="true"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <matchInteraction responseIdentifier="RESPONSE" shuffle="true"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>
         ');
@@ -67,5 +70,5 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase {
         $associableChoices = $set2->getSimpleAssociableChoices();
         $this->assertEquals('choice2A', $associableChoices[0]->getIdentifier());
         $this->assertEquals('choice2B', $associableChoices[1]->getIdentifier());
-	}
+    }
 }

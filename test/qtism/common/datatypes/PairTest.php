@@ -2,22 +2,24 @@
 
 use qtism\common\datatypes\QtiPair;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-class PairTest extends QtiSmTestCase {
+class PairTest extends QtiSmTestCase
+{
 
-	public function testEquality() {
-		$p1 = new QtiPair('A', 'B');
-		$p2 = new QtiPair('A', 'B');
-		$p3 = new QtiPair('C', 'D');
-		$p4 = new QtiPair('D', 'C');
-		
-		$this->assertTrue($p1->equals($p2));
-		$this->assertTrue($p2->equals($p1));
-		$this->assertFalse($p1->equals($p3));
-		$this->assertFalse($p3->equals($p1));
-		$this->assertFalse($p3->equals(1337));
-		$this->assertTrue($p3->equals($p3));
-		$this->assertTrue($p4->equals($p3));
-	}
+    public function testEquality()
+    {
+        $p1 = new QtiPair('A', 'B');
+        $p2 = new QtiPair('A', 'B');
+        $p3 = new QtiPair('C', 'D');
+        $p4 = new QtiPair('D', 'C');
+        
+        $this->assertTrue($p1->equals($p2));
+        $this->assertTrue($p2->equals($p1));
+        $this->assertFalse($p1->equals($p3));
+        $this->assertFalse($p3->equals($p1));
+        $this->assertFalse($p3->equals(1337));
+        $this->assertTrue($p3->equals($p3));
+        $this->assertTrue($p4->equals($p3));
+    }
 }

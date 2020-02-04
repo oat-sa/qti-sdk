@@ -1,22 +1,25 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\ExpressionEngine;
 
-class ExpressionEngineTest extends QtiSmTestCase {
-	
-	public function testExpressionEngineBaseValue() {
-		$expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
-		$engine = new ExpressionEngine($expression);
-		$result = $engine->process();
-		$this->assertInstanceOf(QtiDuration::class, $result);
-		$this->assertEquals(2, $result->getDays());
-	}
-	
-	public function testExpressionEngineSum() {
-		$expression = $this->createComponentFromXml('
+class ExpressionEngineTest extends QtiSmTestCase
+{
+    
+    public function testExpressionEngineBaseValue()
+    {
+        $expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
+        $engine = new ExpressionEngine($expression);
+        $result = $engine->process();
+        $this->assertInstanceOf(QtiDuration::class, $result);
+        $this->assertEquals(2, $result->getDays());
+    }
+    
+    public function testExpressionEngineSum()
+    {
+        $expression = $this->createComponentFromXml('
 			<sum> <!-- 60 -->
 				<product> <!-- 50 -->
 					<baseValue baseType="integer">10</baseValue>
@@ -28,10 +31,10 @@ class ExpressionEngineTest extends QtiSmTestCase {
 				</divide>
 			</sum>
 		');
-		
-		$engine = new ExpressionEngine($expression);
-		$result = $engine->process();
-		$this->assertInstanceOf(QtiFloat::class, $result);
-		$this->assertEquals(60.0, $result->getValue());
-	}
+        
+        $engine = new ExpressionEngine($expression);
+        $result = $engine->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(60.0, $result->getValue());
+    }
 }

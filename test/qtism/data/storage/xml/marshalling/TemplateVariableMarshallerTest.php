@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -27,7 +28,7 @@ use qtism\data\state\ValueCollection;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\results\ResultTemplateVariable;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class TemplateVariableMarshallerTest extends QtiSmTestCase
 {
@@ -101,7 +102,7 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
         $this->assertEquals('single', $element->getAttribute('cardinality'));
         $this->assertEquals('string', $element->getAttribute('baseType'));
 
-        $this->assertEquals(2,$element->getElementsByTagName('value')->length);
+        $this->assertEquals(2, $element->getElementsByTagName('value')->length);
     }
 
     public function testMarshallMinimal()
@@ -119,12 +120,12 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
         $attributes = [];
-        for ($i=0; $i<2; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
         $this->assertEmpty(array_diff($attributes, array('identifier', 'cardinality')));
 
-        $this->assertEquals(0,$element->getElementsByTagName('value')->length);
+        $this->assertEquals(0, $element->getElementsByTagName('value')->length);
     }
 
     public function testGetExpectedQtiClassName()

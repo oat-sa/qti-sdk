@@ -1,15 +1,18 @@
 <?php
+
 use qtism\common\utils\Url;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-class UrlTest extends QtiSmTestCase {
-	
+class UrlTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider validRelativeUrlProvider
      * @param string $url
      */
-    public function testValidRelativeUrl($url) {
+    public function testValidRelativeUrl($url)
+    {
         $this->assertTrue(Url::isRelative($url));
     }
     
@@ -17,11 +20,13 @@ class UrlTest extends QtiSmTestCase {
      * @dataProvider invalidRelativeUrlProvider
      * @param unknown_type $url
      */
-    public function testInvalidRelativeUrl($url) {
+    public function testInvalidRelativeUrl($url)
+    {
         $this->assertFalse(Url::isRelative($url));
     }
     
-    public function validRelativeUrlProvider() {
+    public function validRelativeUrlProvider()
+    {
         return array(
             array('./path'),
             array('path'),
@@ -33,7 +38,8 @@ class UrlTest extends QtiSmTestCase {
         );
     }
     
-    public function invalidRelativeUrlProvider() {
+    public function invalidRelativeUrlProvider()
+    {
         return array(
             array('/'),
             array('http://www.google.com'),

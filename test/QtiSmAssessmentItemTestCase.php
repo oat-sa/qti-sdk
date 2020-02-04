@@ -9,34 +9,39 @@ use qtism\runtime\tests\SessionManager;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;
 
-abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
+abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
+{
     
-	public function setUp() {
-	    parent::setUp();
-	}
-	
-	public function tearDown() {
-	    parent::tearDown();
-	}
-	
-	protected static function createExtendedAssessmentItemRefFromXml($xmlString) {
-	    $marshaller = new ExtendedAssessmentItemRefMarshaller();
-	    $element = self::createDOMElement($xmlString);
-	    return $marshaller->unmarshall($element);
-	}
-	
-	/**
-	 * Instantiate a basic item session for a non-adaptive, non-timeDependent item with two variables:
-	 *
-	 * * RESPONSE (single, identifier, correctResponse = 'ChoiceB')
-	 * * SCORE (single, float, defaultValue = 0.0)
-	 *
-	 * The responseProcessing for item of the session is the template 'match_correct'.
-	 *
-	 * @return AssessmentItemSession
-	 */
-	protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null) {
-	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
+    public function setUp()
+    {
+        parent::setUp();
+    }
+    
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+    
+    protected static function createExtendedAssessmentItemRefFromXml($xmlString)
+    {
+        $marshaller = new ExtendedAssessmentItemRefMarshaller();
+        $element = self::createDOMElement($xmlString);
+        return $marshaller->unmarshall($element);
+    }
+    
+    /**
+     * Instantiate a basic item session for a non-adaptive, non-timeDependent item with two variables:
+     *
+     * * RESPONSE (single, identifier, correctResponse = 'ChoiceB')
+     * * SCORE (single, float, defaultValue = 0.0)
+     *
+     * The responseProcessing for item of the session is the template 'match_correct'.
+     *
+     * @return AssessmentItemSession
+     */
+    protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
+    {
+        $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -51,31 +56,32 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
             </assessmentItemRef>
         ');
-	
-	    $manager = new SessionManager();
-	    
-	    if (is_null($acceptableLatency) === false) {
-	        $manager->setAcceptableLatency($acceptableLatency);
-	    }
-	    
-	    return new AssessmentItemSession($itemRef, $manager);
-	}
-	
-	/**
-	 * Instantiate a basic item session for an adaptive, non-timeDependent item with two variables:
-	 *
-	 * * RESPONSE (single, identifier, correctResponse = 'ChoiceB'
-	 * * SCORE (single, float, defaultValue = 0.0)
-	 *
-	 * The responseProcessing sets:
-	 *
-	 * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
-	 * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
-	 *
-	 * @return \qtism\runtime\tests\AssessmentItemSession
-	 */
-	protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null) {
-	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
+    
+        $manager = new SessionManager();
+        
+        if (is_null($acceptableLatency) === false) {
+            $manager->setAcceptableLatency($acceptableLatency);
+        }
+        
+        return new AssessmentItemSession($itemRef, $manager);
+    }
+    
+    /**
+     * Instantiate a basic item session for an adaptive, non-timeDependent item with two variables:
+     *
+     * * RESPONSE (single, identifier, correctResponse = 'ChoiceB'
+     * * SCORE (single, float, defaultValue = 0.0)
+     *
+     * The responseProcessing sets:
+     *
+     * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
+     * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
+     *
+     * @return \qtism\runtime\tests\AssessmentItemSession
+     */
+    protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
+    {
+        $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -115,13 +121,13 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
                 </responseProcessing>
             </assessmentItemRef>
         ');
-	
-	    $manager = new SessionManager();
-	    
-	    if (is_null($acceptableLatency) === false) {
-	        $manager->setAcceptableLatency($acceptableLatency);
-	    }
-	    
-	    return new AssessmentItemSession($itemRef, $manager);
-	}
+    
+        $manager = new SessionManager();
+        
+        if (is_null($acceptableLatency) === false) {
+            $manager->setAcceptableLatency($acceptableLatency);
+        }
+        
+        return new AssessmentItemSession($itemRef, $manager);
+    }
 }

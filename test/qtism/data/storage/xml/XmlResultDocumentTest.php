@@ -49,7 +49,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
     {
         $this->setExpectedExceptionRegExp(
             XmlStorageException::class,
-            '/^The document could not be validated with schema/'
+            '/^The document could not be validated with XML Schema/'
         );
 
         $xmlDoc = new XmlResultDocument();
@@ -70,5 +70,4 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
         $this->assertEqualXMLStructure($expectedDom->firstChild, $str->firstChild);
     }
-
 }

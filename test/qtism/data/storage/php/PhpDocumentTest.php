@@ -4,7 +4,7 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 class PhpDocumentTest extends QtiSmTestCase
 {
@@ -30,8 +30,8 @@ class PhpDocumentTest extends QtiSmTestCase
         $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
     }
     
-     public function testSimpleSave()
-     {
+    public function testSimpleSave()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());

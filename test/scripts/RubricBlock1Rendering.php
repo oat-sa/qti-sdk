@@ -21,8 +21,7 @@ if (isset($argv[1])) {
         foreach ($strviews as $v) {
             $view[] = View::getConstantByName(trim($v));
         }
-    }
-    else {
+    } else {
         $view = new ViewCollection(array(View::getConstantByName(trim($argv[1]))));
     }
     

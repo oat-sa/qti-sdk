@@ -2,22 +2,25 @@
 
 use qtism\runtime\rendering\css\Utils as CssUtils;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class CssUtilsTest extends QtiSmTestCase {
+class CssUtilsTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider mapSelectorProvider
-     * 
+     *
      * @param string $expected
      * @param string $selector
      * @param array $map
      */
-    public function testMapSelector ($selector, $expected, $map) {
+    public function testMapSelector($selector, $expected, $map)
+    {
         $this->assertEquals($expected, CssUtils::mapSelector($selector, $map));
     }
     
-    public function mapSelectorProvider() {
+    public function mapSelectorProvider()
+    {
         $map = array('div' => 'qtism-div',
                       'prompt' => 'qtism-prompt',
                       'a' => 'qtism-a',

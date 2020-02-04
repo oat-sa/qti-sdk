@@ -1,9 +1,10 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
 {
-    public function testSelectionAndOrdering() {
+    public function testSelectionAndOrdering()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
         
@@ -18,7 +19,8 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
         $this->assertEquals(12, $assessmentTestSession->getRouteCount());
     }
 
-    public function testOrderingBasic() {
+    public function testOrderingBasic()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic.xml');
 
@@ -27,7 +29,8 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
         $this->assertEquals(3, $assessmentTestSession->getRouteCount());
     }
 
-    public function testOrderingBasicFixed() {
+    public function testOrderingBasicFixed()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
         
@@ -37,7 +40,8 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
         $this->assertEquals('Q2', $assessmentTestSession->getRoute()->getRouteItemAt(1)->getAssessmentItemRef()->getIdentifier());
     }
 
-    public function testOrderingVisible() {
+    public function testOrderingVisible()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
          
@@ -46,7 +50,8 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
         $this->assertEquals(9, $assessmentTestSession->getRouteCount());
     }
 
-    public function testOrderingInvisibleDontKeepTogether() {
+    public function testOrderingInvisibleDontKeepTogether()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_dont_keep_together.xml');
 
@@ -55,7 +60,8 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
         $this->assertEquals(12, $assessmentTestSession->getRouteCount());
     }
 
-    public function testOrderingInvisibleKeepTogether() {
+    public function testOrderingInvisibleKeepTogether()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_keep_together.xml');
 

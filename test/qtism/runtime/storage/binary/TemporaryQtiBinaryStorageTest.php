@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFile;
 use qtism\common\datatypes\QtiFloat;
@@ -23,9 +23,11 @@ use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 
-class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
+class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
+{
     
-    public function testTemporaryQtiBinaryStorage() {
+    public function testTemporaryQtiBinaryStorage()
+    {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -208,7 +210,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
     }
     
-    public function testLinearNavigationSimultaneousSubmission() {
+    public function testLinearNavigationSimultaneousSubmission()
+    {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
@@ -344,7 +347,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
     }
     
-    public function testNonLinear() {
+    public function testNonLinear()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
         $test = $doc->getDocumentComponent();
@@ -359,7 +363,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
     }
     
-    public function testFiles() {
+    public function testFiles()
+    {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
         $test = $doc->getDocumentComponent();

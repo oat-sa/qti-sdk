@@ -2,28 +2,31 @@
 
 use qtism\data\rules\Selection;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class SelectionMarshallerTest extends QtiSmTestCase {
+class SelectionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
+    public function testMarshall()
+    {
 
-		$select = 2;
-		$withReplacement = true;
-		
-		$component = new Selection($select);
-		$component->setWithReplacement($withReplacement);
-		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-		$element = $marshaller->marshall($component);
-		
-		$this->assertInstanceOf('\\DOMElement', $element);
-		$this->assertEquals('selection', $element->nodeName);
-		$this->assertSame($select . '', $element->getAttribute('select'));
-		$this->assertEquals('true', $element->getAttribute('withReplacement'));
-	}
+        $select = 2;
+        $withReplacement = true;
+        
+        $component = new Selection($select);
+        $component->setWithReplacement($withReplacement);
+        
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+        
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('selection', $element->nodeName);
+        $this->assertSame($select . '', $element->getAttribute('select'));
+        $this->assertEquals('true', $element->getAttribute('withReplacement'));
+    }
     
-    public function testMarshallWithExternalData() {
+    public function testMarshallWithExternalData()
+    {
 
         $select = 2;
         $withReplacement = true;
@@ -43,21 +46,23 @@ class SelectionMarshallerTest extends QtiSmTestCase {
         
         $this->assertEquals($element->ownerDocument->saveXML($element), '<selection select="2" withReplacement="true"><som:adaptiveItemSelection xmlns:som="http://www.my-namespace.com"/></selection>');
     }
-	
-	public function testUnmarshallValid() {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2" withReplacement="true"/>');
-		$element = $dom->documentElement;
-		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
-		$component = $marshaller->unmarshall($element);
-		
-		$this->assertInstanceOf('qtism\\data\\Rules\\Selection', $component);
-		$this->assertEquals($component->getSelect(), 2);
-		$this->assertEquals($component->isWithReplacement(), true);
-	}
     
-    public function testUnmarshallValidTwo() {
+    public function testUnmarshallValid()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2" withReplacement="true"/>');
+        $element = $dom->documentElement;
+        
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+        
+        $this->assertInstanceOf('qtism\\data\\Rules\\Selection', $component);
+        $this->assertEquals($component->getSelect(), 2);
+        $this->assertEquals($component->isWithReplacement(), true);
+    }
+    
+    public function testUnmarshallValidTwo()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2"/>');
         $element = $dom->documentElement;
@@ -70,7 +75,8 @@ class SelectionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals($component->isWithReplacement(), false);
     }
 
-    public function testUnmarshallValidWithExtension() {
+    public function testUnmarshallValidWithExtension()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
             <selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2" >
@@ -96,16 +102,17 @@ class SelectionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiUsagedataRef')->length);
         $this->assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiMetadataRef')->length);
     }
-	
-	public function testUnmarshallInvalid() {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		// the mandatory 'select' attribute is missing in the following test.
-		$dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" withReplacement="true"/>');
-		$element = $dom->documentElement;
-		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
-		
-		$this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
-		$component = $marshaller->unmarshall($element);
-	}
+    
+    public function testUnmarshallInvalid()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        // the mandatory 'select' attribute is missing in the following test.
+        $dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" withReplacement="true"/>');
+        $element = $dom->documentElement;
+        
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        
+        $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
+        $component = $marshaller->unmarshall($element);
+    }
 }

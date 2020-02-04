@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -17,10 +17,12 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
-class MapResponseProcessorTest extends QtiSmTestCase {
-	
-	public function testSimple() {
-		$variableDeclaration = $this->createComponentFromXml('
+class MapResponseProcessorTest extends QtiSmTestCase
+{
+    
+    public function testSimple()
+    {
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single">
 				<mapping defaultValue="3">
 					<mapEntry mapKey="0" mappedValue="1"/>
@@ -28,37 +30,38 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		// The variable has no value so the default mapping value is returned.
-		$this->assertEquals(3, $result->getValue()); 
-		
-		$state['response1'] = new QtiInteger(0);
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(1, $result->getValue());
-		
-		$state['response1'] = new QtiInteger(1);
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(2, $result->getValue());
-		
-		$state['response1'] = new QtiInteger(240);
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(3, $result->getValue());
-	}
-	
-	public function testMultipleComplexTyping() {
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        // The variable has no value so the default mapping value is returned.
+        $this->assertEquals(3, $result->getValue());
+        
+        $state['response1'] = new QtiInteger(0);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(1, $result->getValue());
+        
+        $state['response1'] = new QtiInteger(1);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(2, $result->getValue());
+        
+        $state['response1'] = new QtiInteger(240);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(3, $result->getValue());
+    }
+    
+    public function testMultipleComplexTyping()
+    {
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="pair" cardinality="multiple">
 				<mapping defaultValue="1">
 					<mapEntry mapKey="A B" mappedValue="1.5"/>
@@ -66,38 +69,39 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor->setState($state);
-		
-		// No value could be tried to be matched.
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(1.0, $result->getValue());
-		
-		$state['response1'] = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(1.5, $result->getValue());
-		
-		$state['response1'][] = new QtiPair('C', 'D');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(4, $result->getValue());
-		
-		// mapEntries must be taken into account only once, as per QTI 2.1 spec.
-		$state['response1'][] = new QtiPair('C', 'D');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(4, $result->getValue()); // 2.5 taken into account only once!
-	}
-	
-	public function testIdentifier() {
-	    $variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor->setState($state);
+        
+        // No value could be tried to be matched.
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(1.0, $result->getValue());
+        
+        $state['response1'] = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B')));
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(1.5, $result->getValue());
+        
+        $state['response1'][] = new QtiPair('C', 'D');
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(4, $result->getValue());
+        
+        // mapEntries must be taken into account only once, as per QTI 2.1 spec.
+        $state['response1'][] = new QtiPair('C', 'D');
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(4, $result->getValue()); // 2.5 taken into account only once!
+    }
+    
+    public function testIdentifier()
+    {
+        $variableDeclaration = $this->createComponentFromXml('
 	        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                 <correctResponse>
                     <value>Choice_3</value>
@@ -108,53 +112,55 @@ class MapResponseProcessorTest extends QtiSmTestCase {
                 </mapping>
             </responseDeclaration>
 	    ');
-	    $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-	    $variable->setValue(new QtiIdentifier('Choice_3'));
-	    $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-	    $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-	    $mapResponseProcessor->setState(new State(array($variable)));
-	    $result = $mapResponseProcessor->process();
-	    $this->assertEquals(6.0, $result->getValue());
-	                    
-	}
-	
-	public function testVariableNotDefined() {
-		$this->setExpectedException(
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $variable->setValue(new QtiIdentifier('Choice_3'));
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState(new State(array($variable)));
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(6.0, $result->getValue());
+    }
+    
+    public function testVariableNotDefined()
+    {
+        $this->setExpectedException(
             "qtism\\runtime\\expressions\\ExpressionProcessingException",
             "No variable with identifier 'INVALID' could be found while processing MapResponse.",
             ExpressionProcessingException::NONEXISTENT_VARIABLE
         );
         
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="INVALID"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->process();
-	}
-	
-	public function testNoMapping() {
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="INVALID"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->process();
+    }
+    
+    public function testNoMapping()
+    {
         // When no mapping is set. We consider a "fake" mapping with a default value of 0.
-		$variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="response1" baseType="duration" cardinality="multiple"/>');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$mapResponseProcessor->setState(new State(array($variable)));
-		$result = $mapResponseProcessor->process();
+        $variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="response1" baseType="duration" cardinality="multiple"/>');
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $mapResponseProcessor->setState(new State(array($variable)));
+        $result = $mapResponseProcessor->process();
         $this->assertEquals(0.0, $result->getValue());
         
         $variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="response1" baseType="identifier" cardinality="single"/>');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
         $state = new State(array($variable));
         $state['response1'] = new QtiIdentifier('correct_identifier');
         $mapResponseProcessor->setState($state);
-		$result = $mapResponseProcessor->process();
+        $result = $mapResponseProcessor->process();
         $this->assertEquals(0.0, $result->getValue());
-	}
-	
-	public function testMultipleCardinalityIdentifierToFloat() {
-	    $responseDeclaration = $this->createComponentFromXml('
+    }
+    
+    public function testMultipleCardinalityIdentifierToFloat()
+    {
+        $responseDeclaration = $this->createComponentFromXml('
 	        <responseDeclaration identifier="RESPONSE" baseType="identifier" cardinality="multiple">
                 <correctResponse>
 	                <value>Choice1</value>
@@ -174,76 +180,78 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	            </mapping>
 	        </responseDeclaration>
 	    ');
-	    
-	    $mapResponseExpression = new MapResponse('RESPONSE');
-	    $mapResponseProcessor = new MapResponseProcessor($mapResponseExpression);
-	    $state = new State();
-	    $mapResponseProcessor->setState($state);
-	    
-	    // State setup.
-	    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
-	    $state->setVariable($responseVariable);
-	    
-	    // RESPONSE is an empty container.
-	    $this->assertTrue($responseVariable->isNull());
-	    $result = $mapResponseProcessor->process();
-	    $this->assertEquals(0.0, $result->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-	    
-	    // RESPONSE is NULL.
-	    $responseVariable->setValue(null);
-	    $result = $mapResponseProcessor->process();
-	    $this->assertEquals(0.0, $result->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-	    
-	    // RESPONSE is Choice 6, Choice 8.
-	    // Note that Choice 8 has not mapping, the mapping's default value (0) must be then used.
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
-	    $result = $mapResponseProcessor->process();
-	    $this->assertEquals(20.0, $result->getValue());
-	    
-	    // Response is Choice 6, Choice 8, but the mapping's default values goes to -1.
-	    $mapping = $responseDeclaration->getMapping();
-	    $mapping->setDefaultValue(-1.0);
-	    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
-	    $state->setVariable($responseVariable);
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
-	    $result = $mapResponseProcessor->process();
-	    $this->assertEquals(19.0, $result->getValue());
-	    
-	    // Response is 'choice7', and 'identifierX'. choice7 is in lower case but its
-	    // associated entry is case insensitive. It must be then matched.
-	    // 'identifierX' will not be matched at all, the mapping's default value (still -1) will be used.
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('choice7'), new QtiIdentifier('identifierX')));
-	    $result = $mapResponseProcessor->process();
-	    $this->assertEquals(-21.0, $result->getValue());
-	    
-	    // Empty state.
-	    // An exception is raised because no RESPONSE variable found.
-	    $state->reset();
-	    $this->setExpectedException('qtism\\runtime\\expressions\ExpressionProcessingException');
-	    $result = $mapResponseProcessor->process();
-	}
-	
-	public function testOutcomeDeclaration() {
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
-		$variableDeclaration = $this->createComponentFromXml('
+        
+        $mapResponseExpression = new MapResponse('RESPONSE');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpression);
+        $state = new State();
+        $mapResponseProcessor->setState($state);
+        
+        // State setup.
+        $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
+        $state->setVariable($responseVariable);
+        
+        // RESPONSE is an empty container.
+        $this->assertTrue($responseVariable->isNull());
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(0.0, $result->getValue());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        
+        // RESPONSE is NULL.
+        $responseVariable->setValue(null);
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(0.0, $result->getValue());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        
+        // RESPONSE is Choice 6, Choice 8.
+        // Note that Choice 8 has not mapping, the mapping's default value (0) must be then used.
+        $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(20.0, $result->getValue());
+        
+        // Response is Choice 6, Choice 8, but the mapping's default values goes to -1.
+        $mapping = $responseDeclaration->getMapping();
+        $mapping->setDefaultValue(-1.0);
+        $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
+        $state->setVariable($responseVariable);
+        $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(19.0, $result->getValue());
+        
+        // Response is 'choice7', and 'identifierX'. choice7 is in lower case but its
+        // associated entry is case insensitive. It must be then matched.
+        // 'identifierX' will not be matched at all, the mapping's default value (still -1) will be used.
+        $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('choice7'), new QtiIdentifier('identifierX')));
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(-21.0, $result->getValue());
+        
+        // Empty state.
+        // An exception is raised because no RESPONSE variable found.
+        $state->reset();
+        $this->setExpectedException('qtism\\runtime\\expressions\ExpressionProcessingException');
+        $result = $mapResponseProcessor->process();
+    }
+    
+    public function testOutcomeDeclaration()
+    {
+        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $variableDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="response1" baseType="integer" cardinality="multiple">
 				<mapping>
 					<mapEntry mapKey="0" mappedValue="0.0"/>
 				</mapping>
 			</outcomeDeclaration>
 		');
-		$variable = OutcomeVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$mapResponseProcessor->setState(new State(array($variable)));
-		$mapResponseProcessor->process();
-	}
+        $variable = OutcomeVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $mapResponseProcessor->setState(new State(array($variable)));
+        $mapResponseProcessor->process();
+    }
     
-    public function testEmptyMapEntryForStringSingleCardinality() {
-		$variableDeclaration = $this->createComponentFromXml('
+    public function testEmptyMapEntryForStringSingleCardinality()
+    {
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="string" cardinality="single">
 				<mapping lowerBound="-1" defaultValue="0">
 					<mapEntry mapKey="" mappedValue="-1"/>
@@ -251,17 +259,17 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // No response provided, so the null value is equal to empty string...
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Empty string response provided. Expected is the same result as above...
@@ -281,10 +289,11 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
-	}
+    }
     
-    public function testEmptyMapEntryForStringMultipleCardinality() {
-		$variableDeclaration = $this->createComponentFromXml('
+    public function testEmptyMapEntryForStringMultipleCardinality()
+    {
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="string" cardinality="multiple">
 				<mapping lowerBound="-1" defaultValue="0">
 					<mapEntry mapKey="" mappedValue="-1"/>
@@ -292,66 +301,67 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // No response provided, so the null value is equal to empty string...
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Empty string provided, so we expect the same result as with null.
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Null provided as the value of the only value of the container, we expect the same result as above.
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(null));
         $result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Empty container provided, as it is in QTI treated as null, we expect the same result as above.
         $state['response1'] = new MultipleContainer(BaseType::STRING);
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Similar values are counted a single time as per spec.
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(null, null));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('Correct')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('Correct'), null));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
-	}
+    }
     
-    public function testEmptyMapEntryForStringMultipleCardinalityCaseInsensitive() {
-		$variableDeclaration = $this->createComponentFromXml('
+    public function testEmptyMapEntryForStringMultipleCardinalityCaseInsensitive()
+    {
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="string" cardinality="multiple">
 				<mapping lowerBound="-1" defaultValue="0">
 					<mapEntry mapKey="" mappedValue="-1" caseSensitive="false"/>
@@ -359,97 +369,98 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // No response provided, so the null value is equal to empty string...
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Empty string provided, so we expect the same result as with null.
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Two empty strings provided, so we expect the same result as with null (because similar values are only counted one time).
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Null provided as the value of the only value of the container, we expect the same result as above.
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(null));
         $result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Null provided two times (will be considered onyl once).
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(null, null));
         $result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Empty container provided, as it is in QTI treated as null, we expect the same result as above.
         $state['response1'] = new MultipleContainer(BaseType::STRING);
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // mapKeys are matched a single time.
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(null, null));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct'), new QtiString('correct')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('CORRECT'), new QtiString('CORRECT')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('correct')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(2, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
         
         $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('correct'), null));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
-	}
+    }
     
-    public function testLowerBoundSingleCardinality() {
+    public function testLowerBoundSingleCardinality()
+    {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">
 				<mapping lowerBound="-1" defaultValue="0">
@@ -458,28 +469,29 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // Should just "touch" the lower bound...
         $state['RESPONSE'] = new QtiString('incorrect_1');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1.0, $result->getValue());
         
         // Try to overflow the lower bound...
         $state['RESPONSE'] = new QtiString('incorrect_2');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1.0, $result->getValue());
     }
     
-    public function testLowerBoundWithMultipleCardinality() {
+    public function testLowerBoundWithMultipleCardinality()
+    {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="multiple">
@@ -489,28 +501,29 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // Should just "touch" the lower bound...
         $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('incorrect_1')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1.0, $result->getValue());
         
         // Lower bound is the limit as we are mapping a container (multiple cardinality string).
         $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('incorrect_2')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-1.0, $result->getValue());
     }
     
-    public function testUpperBoundSingleCardinality() {
+    public function testUpperBoundSingleCardinality()
+    {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">
@@ -520,28 +533,29 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // Should just "touch" the upper bound...
         $state['RESPONSE'] = new QtiString('correct_1');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1.0, $result->getValue());
         
         // Try to overflow the upper bound...
         $state['RESPONSE'] = new QtiString('correct_2');
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1.0, $result->getValue());
     }
     
-    public function testUpperBoundWithMultipleCardinality() {
+    public function testUpperBoundWithMultipleCardinality()
+    {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="multiple">
@@ -551,28 +565,29 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		$mapResponseProcessor->setState($state);
-		
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        $mapResponseProcessor->setState($state);
+        
         // Should just "touch" the upper bound...
         $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct_1')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1.0, $result->getValue());
         
         // Upper bound is the limit as we are mapping a container (multiple cardinality string).
         $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct_2')));
-		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1.0, $result->getValue());
     }
     
-    public function testOrderedContainer() {
+    public function testOrderedContainer()
+    {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="pair" cardinality="ordered">
 				<mapping defaultValue="1">
@@ -581,13 +596,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor->setState($state);
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor->setState($state);
         
         $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new QtiPair('A', 'B')));
         $result = $mapResponseProcessor->process();
@@ -605,7 +620,8 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertEquals(4.0, $result->getValue());
     }
     
-    public function testDefaultValue() {
+    public function testDefaultValue()
+    {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="ordered">
 				<mapping defaultValue="1" upperBound="3">
@@ -614,13 +630,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 				</mapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor->setState($state);
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor->setState($state);
         
         // No response, should have 1.
         $state['response1'] = null;
@@ -677,12 +693,12 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		');
         
         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor->setState($state);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor->setState($state);
         
         // Null value, should have 0.
         $state['RESPONSE'] = null;
@@ -709,12 +725,12 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		');
         
         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor->setState($state);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor->setState($state);
         
         // Null value, should have 0.
         $state['RESPONSE'] = null;
@@ -747,12 +763,12 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		');
         
         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
-		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
-		
-		$state = new State();
-		$state->setVariable($variable);
-		$mapResponseProcessor->setState($state);
+        $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+        $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+        
+        $state = new State();
+        $state->setVariable($variable);
+        $mapResponseProcessor->setState($state);
         
         // Null value, should have 0.
         $state['RESPONSE'] = null;

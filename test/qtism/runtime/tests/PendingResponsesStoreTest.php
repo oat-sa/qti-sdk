@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiBoolean;
@@ -12,9 +12,11 @@ use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\PendingResponses;
 use qtism\runtime\tests\PendingResponsesCollection;
 
-class PendingResponseStoreTest extends QtiSmTestCase {
+class PendingResponseStoreTest extends QtiSmTestCase
+{
     
-    public function testPendingResponseStore() {
+    public function testPendingResponseStore()
+    {
         $itemRef1 = new AssessmentItemRef('Q01', './Q01.xml');
         $itemRef2 = new AssessmentItemRef('Q02', './Q02.xml');
         $itemRef3 = new AssessmentItemRef('Q03', './Q02.xml');

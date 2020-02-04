@@ -9,17 +9,19 @@ use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');
 
-class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
-	
+class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
+{
+    
     /**
-     * 
+     *
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param QtiDatatype $qtiDatatype
      */
-    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype) {
+    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype)
+    {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, $qtiDatatype);
         $marshaller->marshall();
@@ -27,13 +29,15 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
         $this->assertEquals($expectedInStream, $this->getStream()->getBinary());
     }
     
-    public function testMarshallWrongDataType() {
+    public function testMarshallWrongDataType()
+    {
         $this->setExpectedException('\\InvalidArgumentException');
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new stdClass());
     }
 
-    public function marshallDataProvider() {
+    public function marshallDataProvider()
+    {
         return array(
             array("\$array_0 = array(10, 10, 5);\n\$qticoords_0 = new qtism\\common\\datatypes\\QtiCoords(2, \$array_0);\n", new QtiCoords(QtiShape::CIRCLE, array(10, 10, 5))),
             array("\$qtipair_0 = new qtism\\common\\datatypes\\QtiPair(\"A\", \"B\");\n", new QtiPair('A', 'B')),

@@ -12,25 +12,27 @@ use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\TextRun;
 use qtism\data\content\interactions\GapText;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class GapMatchInteractionMarshallerTest extends QtiSmTestCase {
+class GapMatchInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
+    public function testMarshall()
+    {
 
-	    $gapText = new GapText('gapText1', 1);
-	    $gapText->setContent(new \qtism\data\content\FlowStaticCollection(array(new TextRun('This is gapText1'))));
+        $gapText = new GapText('gapText1', 1);
+        $gapText->setContent(new \qtism\data\content\FlowStaticCollection(array(new TextRun('This is gapText1'))));
 
-	    $object = new QtiObject("./myimg.png", "image/png");
-	    $gapImg = new GapImg('gapImg1', 1, $object);
+        $object = new QtiObject("./myimg.png", "image/png");
+        $gapImg = new GapImg('gapImg1', 1, $object);
 
-	    $gap1 = new Gap('G1');
-	    $gap2 = new Gap('G2');
+        $gap1 = new Gap('G1');
+        $gap2 = new Gap('G2');
 
-	    $p = new P();
-	    $p->setContent(new InlineCollection(array(new TextRun('A text... '), $gap1, new TextRun(' and an image... '), $gap2)));
+        $p = new P();
+        $p->setContent(new InlineCollection(array(new TextRun('A text... '), $gap1, new TextRun(' and an image... '), $gap2)));
 
-	    $gapMatch = new GapMatchInteraction('RESPONSE', new GapChoiceCollection(array($gapText, $gapImg)), new BlockStaticCollection(array($p)));
+        $gapMatch = new GapMatchInteraction('RESPONSE', new GapChoiceCollection(array($gapText, $gapImg)), new BlockStaticCollection(array($p)));
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($gapMatch);
         $element = $marshaller->marshall($gapMatch);
@@ -38,9 +40,10 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>', $dom->saveXML($element));
-	}
+    }
 
-	public function testUnmarshall() {
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
         ');
@@ -61,5 +64,5 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(2, count($gaps));
         $this->assertEquals('G1', $gaps[0]->getIdentifier());
         $this->assertEquals('G2', $gaps[1]->getIdentifier());
-	}
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . '/../../../QtiSmRouteTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmRouteTestCase.php');
 
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\AssessmentTestSession;
@@ -17,9 +17,11 @@ use qtism\runtime\tests\Route;
 use qtism\data\TestPartCollection;
 use qtism\data\AssessmentItemRefCollection;
 
-class RouteTest extends QtiSmRouteTestCase {
+class RouteTest extends QtiSmRouteTestCase
+{
     
-    public function testRouteTest() {
+    public function testRouteTest()
+    {
         
         $assessmentSections = new AssessmentSectionCollection();
         $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
@@ -93,8 +95,7 @@ class RouteTest extends QtiSmRouteTestCase {
         try {
             $tp1RouteItems = $route->getRouteItemsByTestPart('TPX');
             $this->assertFalse(true);
-        }
-        catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
         
@@ -117,8 +118,7 @@ class RouteTest extends QtiSmRouteTestCase {
         try {
             $sXRouteItems = $route->getRouteItemsByAssessmentSection(new AssessmentSection('SX', 'Unknown Section', true));
             $this->assertTrue(false, 'An exception must be thrown because the AssessmentSection object is not known by the Route.');
-        }
-        catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
         
@@ -169,7 +169,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertTrue(isset($exclusionRefs['Q6']));
     }
     
-    public function testOccurences() {
+    public function testOccurences()
+    {
         $assessmentItemRefs = new AssessmentItemRefCollection();
         $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
         $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q2.xml');
@@ -210,7 +211,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals(1, $routeItem4->getOccurence());
     }
     
-    public function testIsX() {
+    public function testIsX()
+    {
         $route = self::buildSimpleRoute();
         
         // Q1
@@ -243,7 +245,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertFalse($route->valid());
     }
     
-    public function testPreviousNext() {
+    public function testPreviousNext()
+    {
         $route = self::buildSimpleRoute();
         $this->assertEquals(0, $route->getPosition());
         
@@ -280,13 +283,15 @@ class RouteTest extends QtiSmRouteTestCase {
     /**
      * @expectedException OutOfBoundsException
      */
-    public function testCurrentException() {
+    public function testCurrentException()
+    {
         $route = self::buildSimpleRoute();
         $route->setPosition(3);
         $route->current();
     }
     
-    public function testGetNext() {
+    public function testGetNext()
+    {
         $route = self::buildSimpleRoute();
         
         // Q1 - First position.
@@ -304,7 +309,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $nextItem = $route->getNext();
     }
     
-    public function testGetPrevious() {
+    public function testGetPrevious()
+    {
         $route = self::buildSimpleRoute();
         $route->next();
         
@@ -326,7 +332,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $route->getPrevious();
     }
     
-    public function testGetCurrentTestPartRouteItems() {
+    public function testGetCurrentTestPartRouteItems()
+    {
         $route = self::buildSimpleRoute();
         $routeItems = $route->getCurrentTestPartRouteItems();
         $this->assertEquals(3, count($routeItems));

@@ -2,20 +2,23 @@
 
 use qtism\data\content\interactions\EndAttemptInteraction;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class EndAttemptInteractionMarshallerTest extends QtiSmTestCase {
+class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
+{
 
-	public function testMarshall() {
-	    $endAttemptInteraction = new EndAttemptInteraction('BOOL_RESP', 'End the attempt now!', 'my-end', 'ending');
+    public function testMarshall()
+    {
+        $endAttemptInteraction = new EndAttemptInteraction('BOOL_RESP', 'End the attempt now!', 'my-end', 'ending');
         $element = $this->getMarshallerFactory()->createMarshaller($endAttemptInteraction)->marshall($endAttemptInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!"/>', $dom->saveXML($element));
-	}
-	
-	public function testUnmarshall() {
+    }
+    
+    public function testUnmarshall()
+    {
         $element = $this->createDOMElement('
             <endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!"/>
         ');
@@ -26,5 +29,5 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('ending', $component->getClass());
         $this->assertEquals('BOOL_RESP', $component->getResponseIdentifier());
         $this->assertEquals('End the attempt now!', $component->getTitle());
-	}
+    }
 }

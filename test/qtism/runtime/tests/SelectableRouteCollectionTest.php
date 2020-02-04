@@ -1,13 +1,15 @@
 <?php
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\SelectableRouteCollection;
 
-class SelectableRouteCollectionTest extends QtiSmTestCase {
+class SelectableRouteCollectionTest extends QtiSmTestCase
+{
     
-    public function testInsertAt() {
+    public function testInsertAt()
+    {
         $routeA = new SelectableRoute();
         $routeB = new SelectableRoute();
         $routeC = new SelectableRoute();

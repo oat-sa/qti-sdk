@@ -1,14 +1,15 @@
 <?php
 
 use qtism\data\storage\php\PhpVariable;
-
 use qtism\data\storage\php\PhpArgument;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class PhpArgumentTest extends QtiSmTestCase {
-	
-    public function testPhpArgument() {
+class PhpArgumentTest extends QtiSmTestCase
+{
+    
+    public function testPhpArgument()
+    {
         
         // Test a variable reference.
         $arg = new PhpArgument(new PhpVariable('test'));
@@ -55,7 +56,8 @@ class PhpArgumentTest extends QtiSmTestCase {
     }
     
     
-    public function testObject() {
+    public function testObject()
+    {
         $this->setExpectedException('\\InvalidArgumentException');
         $arg = new PhpArgument(new stdClass());
     }

@@ -4,11 +4,13 @@ use qtism\data\ShufflableCollection;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\runtime\rendering\markup\xhtml\Utils;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
+class RenderingMarkupXhtmlUtils extends QtiSmTestCase
+{
     
-    public function testShuffleWithFixed() {
+    public function testShuffleWithFixed()
+    {
         // It is difficult to test a random algorithm.
         // In this way, we just check it runs. Deeper
         // analysis can be done in /test/scripts/.

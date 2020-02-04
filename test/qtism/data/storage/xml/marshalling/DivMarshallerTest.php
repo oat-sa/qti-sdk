@@ -11,11 +11,13 @@ use qtism\data\content\xhtml\lists\Ul;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\lists\Li;
 
-require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class DivMarshallerTest extends QtiSmTestCase {
+class DivMarshallerTest extends QtiSmTestCase
+{
 
-	public function testUnmarshall() {
+    public function testUnmarshall()
+    {
         $div = $this->createComponentFromXml('
             <div id="main-container" class="ui-pane">
                 <div id="menu">
@@ -107,10 +109,11 @@ class DivMarshallerTest extends QtiSmTestCase {
         $strongContent = $strong->getContent();
         $this->assertEquals(1, count($strongContent));
         $this->assertEquals('incredible', $strongContent[0]->getContent());
-	}
-	
-	
-	public function testMarshall() {
+    }
+    
+    
+    public function testMarshall()
+    {
         $li1 = new Li();
         $li1->setContent(new FlowCollection(array(new TextRun('Start the Game'))));
         
@@ -152,5 +155,5 @@ class DivMarshallerTest extends QtiSmTestCase {
         
         $expected = '<div id="main-container" class="ui-pane"><div id="menu"><ul><li>Start the Game</li><li>Configure Inputs</li><li>Hall of Fame</li><li>Quit</li></ul></div><div id="content"><h1>Escape from Death Star</h1><p class="short-story">An <strong>incredible</strong> adventure.</p></div></div>';
         $this->assertEquals($expected, $dom->saveXML($element));
-	}
+    }
 }

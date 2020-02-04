@@ -4,12 +4,14 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 
-class TemplateVariableTest extends QtiSmTestCase {
+class TemplateVariableTest extends QtiSmTestCase
+{
 
-    public function testCreateFromDataModel() {
+    public function testCreateFromDataModel()
+    {
         
         $decl = $this->createComponentFromXml('
             <templateDeclaration identifier="mytpl1" cardinality="single" baseType="identifier" paramVariable="true" mathVariable="false">

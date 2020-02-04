@@ -1,9 +1,9 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\dom\SerializableDomDocument;
 
-class VersionTest extends QtiSmTestCase 
+class VersionTest extends QtiSmTestCase
 {
     public function testSerialization()
     {

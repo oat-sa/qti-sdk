@@ -26,8 +26,7 @@ if ((isset($argv[1]) && $shuffle === true && isset($argv[2])) || (isset($argv[1]
     
     if ($shuffle === true) {
         $templateVariable->setValue($argv[2]);
-    }
-    else {
+    } else {
         $templateVariable->setValue($argv[1]);
     }
     

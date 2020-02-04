@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -11,10 +11,12 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\runtime\common\ProcessingException;
 
-class OutcomeProcessingEngineTest extends QtiSmTestCase {
-	
-	public function testResponseProcessingMatchCorrect() {
-		$outcomeProcessing = $this->createComponentFromXml('
+class OutcomeProcessingEngineTest extends QtiSmTestCase
+{
+    
+    public function testResponseProcessingMatchCorrect()
+    {
+        $outcomeProcessing = $this->createComponentFromXml('
 		    <!-- I known that this outcomeProcessing is not well written but this is just
 		         for a testing purpose. -->
 		    <outcomeProcessing>
@@ -44,48 +46,48 @@ class OutcomeProcessingEngineTest extends QtiSmTestCase {
 		        </outcomeCondition>
             </outcomeProcessing>
 		');
-		
-		$outcomeVariable = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT);
-		$context = new State(array($outcomeVariable));
-		$engine = new OutcomeProcessingEngine($outcomeProcessing, $context);
-		$engine->process();
-		
-		// SCORE is still NULL because the 't' variable was not provided to the context.
-		$this->assertSame(null, $context['SCORE']);
-		$context->setVariable(new OutcomeVariable('t', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
-		$this->assertTrue($context['t']->getValue());
-		
-		// After processing, the $context['SCORE'] value must be 20.0.
-		$engine->process();
-		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-		$this->assertEquals(20.0, $context['SCORE']->getValue());
-		
-		$context['t'] = new QtiBoolean(false);
-		// After processing, the $context['SCORE'] value must switch to 0.0.
-		$engine->process();
-		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-		$this->assertEquals(0.0, $context['SCORE']->getValue());
-	}
-	
-	public function testResponseProcessingExitTest() {
-	    $outcomeProcessing = $this->createComponentFromXml('
+        
+        $outcomeVariable = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT);
+        $context = new State(array($outcomeVariable));
+        $engine = new OutcomeProcessingEngine($outcomeProcessing, $context);
+        $engine->process();
+        
+        // SCORE is still NULL because the 't' variable was not provided to the context.
+        $this->assertSame(null, $context['SCORE']);
+        $context->setVariable(new OutcomeVariable('t', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
+        $this->assertTrue($context['t']->getValue());
+        
+        // After processing, the $context['SCORE'] value must be 20.0.
+        $engine->process();
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this->assertEquals(20.0, $context['SCORE']->getValue());
+        
+        $context['t'] = new QtiBoolean(false);
+        // After processing, the $context['SCORE'] value must switch to 0.0.
+        $engine->process();
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this->assertEquals(0.0, $context['SCORE']->getValue());
+    }
+    
+    public function testResponseProcessingExitTest()
+    {
+        $outcomeProcessing = $this->createComponentFromXml('
 	        <outcomeProcessing>
                 <exitTest/>
 	        </outcomeProcessing>
 	    ');
-	    
-	    $engine = new OutcomeProcessingEngine($outcomeProcessing);
-	    
-	    try {
-	        $engine->process();
-	        
-	        // An exception must be raised because of the Test termination.
-	        // In other words, the following code must be not reachable.
-	        $this->assertTrue(false);
-	    }
-	    catch (ProcessingException $e) {
-	        $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
-	        $this->assertEquals(RuleProcessingException::EXIT_TEST, $e->getCode());
-	    }
-	}
+        
+        $engine = new OutcomeProcessingEngine($outcomeProcessing);
+        
+        try {
+            $engine->process();
+            
+            // An exception must be raised because of the Test termination.
+            // In other words, the following code must be not reachable.
+            $this->assertTrue(false);
+        } catch (ProcessingException $e) {
+            $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
+            $this->assertEquals(RuleProcessingException::EXIT_TEST, $e->getCode());
+        }
+    }
 }

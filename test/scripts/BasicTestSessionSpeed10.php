@@ -1,6 +1,6 @@
 <?php
-use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 
+use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\runtime\storage\common\AbstractStorage;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
@@ -19,7 +19,8 @@ date_default_timezone_set('UTC');
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
-function loadTestDefinition(array &$average = null) {
+function loadTestDefinition(array &$average = null)
+{
     $start = microtime();
     
     $phpDoc = new PhpDocument();
@@ -32,15 +33,18 @@ function loadTestDefinition(array &$average = null) {
     return $phpDoc->getDocumentComponent();
 }
 
-function createFactory() {
+function createFactory()
+{
     return new SessionManager();
 }
 
-function createStorage(SessionManager $factory, AssessmentTest $test) {
+function createStorage(SessionManager $factory, AssessmentTest $test)
+{
     return new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($test));
 }
 
-function spentTime($start, $end, array &$registration = null) {
+function spentTime($start, $end, array &$registration = null)
+{
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
     $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
@@ -52,7 +56,8 @@ function spentTime($start, $end, array &$registration = null) {
     return $time;
 }
 
-function attempt(AssessmentTestSession $session, $identifier, array &$average = null) {
+function attempt(AssessmentTestSession $session, $identifier, array &$average = null)
+{
     $start = microtime();
 
     $session->beginAttempt();
@@ -63,7 +68,8 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
     }
 }
 
-function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, array &$average = null) {
+function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, array &$average = null)
+{
     $start = microtime();
 
     $session = $storage->retrieve($test, $sessionId);
@@ -75,7 +81,8 @@ function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, ar
     return $session;
 }
 
-function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null) {
+function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null)
+{
     $start = microtime();
 
     $storage->persist($session);
@@ -85,7 +92,8 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
     }
 }
 
-function moveNext(AssessmentTestSession $session, array &$average) {
+function moveNext(AssessmentTestSession $session, array &$average)
+{
     $start = microtime();
 
     $session->moveNext();
@@ -95,7 +103,8 @@ function moveNext(AssessmentTestSession $session, array &$average) {
     }
 }
 
-function neighbourhood(AssessmentTestSession $session, array &$average = null) {
+function neighbourhood(AssessmentTestSession $session, array &$average = null)
+{
     $start = microtime();
     $neighbourhood = $session->getPossibleJumps();
 
@@ -305,4 +314,3 @@ echo "Persist average time = " . (array_sum($averagePersist) / count($averagePer
 echo "MoveNext average time = " . (array_sum($averageNext) / count($averageNext)) . "\n";
 echo "Load average time = " . (array_sum($averageLoad) / count($averageLoad)) . "\n";
 echo "Neighbourhood average time = " . (array_sum($averageNeighbourhood) / count($averageNeighbourhood)) . "\n";
-

@@ -7,11 +7,13 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
+require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
 
-class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCase {
-	
-    public function testMultipleAttempts() {
+class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCase
+{
+    
+    public function testMultipleAttempts()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/attempts/max_3_attempts_nonlinear.xml');
         $session->beginTestSession();
         
@@ -33,5 +35,4 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         
         $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
     }
-    
 }
