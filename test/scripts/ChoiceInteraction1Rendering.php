@@ -27,8 +27,7 @@ if ((isset($argv[1]) && $shuffle === true && isset($argv[2])) || (isset($argv[1]
     
     if ($shuffle === true) {
         $templateVariable->setValue(new QtiIdentifier($argv[2]));
-    }
-    else {
+    } else {
         $templateVariable->setValue(new QtiIdentifier($argv[1]));
     }
     

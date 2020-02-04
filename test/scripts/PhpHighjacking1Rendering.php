@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Because CDATA nodes is not taken into account, no problem
  * with this one.
  */
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 

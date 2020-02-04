@@ -1,4 +1,5 @@
 <?php
+
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\SessionManager;

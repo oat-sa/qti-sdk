@@ -1,4 +1,5 @@
 <?php
+
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiIdentifier;
