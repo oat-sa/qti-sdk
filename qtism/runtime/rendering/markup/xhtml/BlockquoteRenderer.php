@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,31 +15,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
 
 /**
  * Blockquote renderer.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class BlockquoteRenderer extends BodyElementRenderer {
-    
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+class BlockquoteRenderer extends BodyElementRenderer
+{
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     */
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
-        
+
         if ($component->hasCite() === true) {
             $fragment->firstChild->setAttribute('cite', $this->transformUri($component->getCite(), $base));
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,41 +15,37 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\storage\xml\Utils;
-
-use qtism\runtime\rendering\RenderingException;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
-use \RuntimeException;
+use qtism\data\storage\xml\Utils;
+use qtism\runtime\rendering\RenderingException;
+use RuntimeException;
 
 /**
  * Math Renderer.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class MathRenderer extends ExternalQtiComponentRenderer {
-    
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+class MathRenderer extends ExternalQtiComponentRenderer
+{
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
+     */
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         try {
             $dom = $component->getXml();
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
             $node = Utils::anonimizeElement($node);
             $node->setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
             $fragment->appendChild($node);
-        }
-        catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $msg = "An error occured while rendering the XML content of the 'MathML' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,20 +25,20 @@ namespace qtism\common\dom;
 
 /**
  * Serializable DOM Document
- * 
+ *
  * This class is a PHP Serializable DOMDocument implementation.
  */
 class SerializableDomDocument extends \DOMDocument
 {
     private $xmlData;
     
-    function __sleep()
+    public function __sleep()
     {
         $this->xmlData = $this->saveXML();
         return array('xmlData');
     }
     
-    function __wakeup()
+    public function __wakeup()
     {
         $this->loadXML($this->xmlData);
     }

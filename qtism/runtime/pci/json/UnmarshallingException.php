@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,34 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\pci\json;
 
-use \Exception;
+use Exception;
 
 /**
  * Exception to be thrown when an Unmarshalling error occurs while
  * dealing with JSON Data.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class UnmarshallingException extends Exception {
-
+class UnmarshallingException extends Exception
+{
     const UNKNOWN = 0;
-    
+
     const NOT_SUPPORTED = 1;
-    
+
     const JSON_DECODE = 2;
-    
+
     const NOT_PCI = 3;
 
     /**
@@ -51,7 +46,8 @@ class UnmarshallingException extends Exception {
      * @param integer $code A machine-understandable (see class constants) error code.
      * @param Exception $previous An eventual previous Exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    public function __construct($message, $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
 }

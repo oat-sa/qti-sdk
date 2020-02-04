@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +36,7 @@ class Utils
      * @param mixed $integer the value to test
      * @return boolean
      */
-    static public function isQtiInteger($integer)
+    public static function isQtiInteger($integer)
     {
         // QTI integers are twos-complement 32-bits integers.
         if (is_int($integer) === false) {

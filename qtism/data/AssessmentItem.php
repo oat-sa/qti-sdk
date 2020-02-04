@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -723,9 +724,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function getComponents()
     {
-        $comp = array_merge($this->getResponseDeclarations()->getArrayCopy(),
+        $comp = array_merge(
+            $this->getResponseDeclarations()->getArrayCopy(),
             $this->getOutcomeDeclarations()->getArrayCopy(),
-            $this->getTemplateDeclarations()->getArrayCopy());
+            $this->getTemplateDeclarations()->getArrayCopy()
+        );
 
         if ($this->hasTemplateProcessing() === true) {
             $comp[] = $this->getResponseProcessing();
@@ -745,5 +748,4 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 
         return new QtiComponentCollection($comp);
     }
-
 }

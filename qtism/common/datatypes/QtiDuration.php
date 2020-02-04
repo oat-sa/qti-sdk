@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -103,7 +104,7 @@ class QtiDuration implements Comparable, QtiDatatype
         }
     }
 
-    static public function createFromDateInterval(\DateInterval $interval)
+    public static function createFromDateInterval(\DateInterval $interval)
     {
         $duration = new QtiDuration('PT0S');
         $duration->setInterval($interval);
@@ -238,7 +239,8 @@ class QtiDuration implements Comparable, QtiDatatype
             $string .= $this->interval->d . 'D';
         }
 
-        if ($this->interval->h > 0
+        if (
+            $this->interval->h > 0
             || $this->interval->i > 0
             || $this->interval->s > 0
             || (property_exists($this->interval, 'u') && $this->interval->u > 0)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +42,7 @@ class Reflection
      * @throws ReflectionException
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
-    static public function newInstance(ReflectionClass $class, $args = [])
+    public static function newInstance(ReflectionClass $class, $args = [])
     {
         if (empty($args) === true) {
             $fqName = $class->getName();
@@ -66,7 +67,7 @@ class Reflection
      * @param mixed $object An object or a fully qualified class name.
      * @return boolean|string A short class name or false if $object is not an object nor a string.
      */
-    static public function shortClassName($object)
+    public static function shortClassName($object)
     {
         $shortClassName = false;
 

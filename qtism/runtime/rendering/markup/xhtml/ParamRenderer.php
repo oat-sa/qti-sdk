@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,36 +15,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use DOMDocumentFragment;
 use qtism\data\content\xhtml\ParamType;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
 
 /**
  * Param renderer.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class ParamRenderer extends AbstractXhtmlRenderer {
-    
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+class ParamRenderer extends AbstractXhtmlRenderer
+{
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
+     */
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('name', $component->getName());
         $fragment->firstChild->setAttribute('value', $component->getValue());
         $fragment->firstChild->setAttribute('valuetype', ParamType::getNameByConstant($component->getValueType()));
-        
+
         if ($component->hasType() === true) {
             $fragment->firstChild->setAttribute('type', $component->hasType());
         }

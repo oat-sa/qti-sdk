@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering;
 
-interface Renderable {
-    
+/**
+ * Interface to be implemented to claim to be renderable.
+ */
+interface Renderable
+{
     /**
      * Render a QtiComponent object into another constitution.
      *
@@ -35,5 +36,4 @@ interface Renderable {
      * @throws RenderingException If something goes wrong while rendering the component.
      */
     public function render($something);
-    
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,23 +15,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\data\AssessmentTest;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 
-class BinaryAssessmentTestSeeker extends AssessmentTestSeeker {
-    
-    public function __construct(AssessmentTest $test) {
-        $classes = array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition', 'itemSessionControl');
+/**
+ * A implementation of AssessmentTestSeeker dedicated to binary data.
+ */
+class BinaryAssessmentTestSeeker extends AssessmentTestSeeker
+{
+    /**
+     * Create a new BinaryAssessmentTestSeeker object.
+     *
+     * @param AssessmentTest $test
+     */
+    public function __construct(AssessmentTest $test)
+    {
+        $classes = [
+            'assessmentItemRef',
+            'assessmentSection',
+            'testPart',
+            'outcomeDeclaration',
+            'responseDeclaration',
+            'branchRule',
+            'preCondition',
+            'itemSessionControl',
+        ];
+
         parent::__construct($test, $classes);
     }
 }

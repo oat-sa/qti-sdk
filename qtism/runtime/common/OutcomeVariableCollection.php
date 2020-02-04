@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,36 +15,31 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *  
- *
  */
+
 namespace qtism\data;
 
-use qtism\runtime\common\OutcomeVariable;
 use InvalidArgumentException as InvalidArgumentException;
 
 /**
  * A collection that aims at storing runtime OutcomeVariable objects.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class OutcomeVariableCollection extends VariableCollection {
-
-	/**
-	 * Check if $value is a valid OutcomeVariable object.
-	 * 
-	 * @throws InvalidArgumentException If $value is not a OutcomeVariable object.
-	 */
-	protected function checkType($value) {
-		if (!$value instanceof Variable) {
-			$msg = "The OutcomeVariableCollection class only accept OutcomeVariable objects, '${value}' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
+class OutcomeVariableCollection extends VariableCollection
+{
+    /**
+     * Check if $value is a valid OutcomeVariable object.
+     *
+     * @throws InvalidArgumentException If $value is not a OutcomeVariable object.
+     */
+    protected function checkType($value)
+    {
+        if (!$value instanceof Variable) {
+            $msg = "The OutcomeVariableCollection class only accept OutcomeVariable objects, '${value}' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 }

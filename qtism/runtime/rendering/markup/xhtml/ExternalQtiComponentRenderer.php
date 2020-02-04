@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,42 +15,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\RenderingException;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
-use \RuntimeException;
+use qtism\runtime\rendering\RenderingException;
+use RuntimeException;
 
 /**
  * ExternalQtiComponent Renderer.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer {
-    
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
+{
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendElement()
+     */
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         return;
     }
-    
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     */
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         try {
             $dom = $component->getXml();
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
             $fragment->appendChild($node);
-        }
-        catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $msg = "An error occured while rendering the XML content of the '" . $component->getQtiClassName() . "' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }

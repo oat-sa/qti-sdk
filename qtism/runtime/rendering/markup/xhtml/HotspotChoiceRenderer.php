@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,31 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * HotspotChoice renderer. This renderer will transform the choice into a 'div' element.
- * 
- * Depending on the value of the qti:choice->showHide attribute and only if 
+ *
+ * Depending on the value of the qti:choice->showHide attribute and only if
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
  * a value of 'qti-show' or 'qti-hide' will be set.
- * 
+ *
  * Moreover, the following data will be set to the data set of the element
  * with the help of the data-X attributes:
- * 
+ *
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
  * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
@@ -46,18 +44,25 @@ use \DOMDocumentFragment;
  * * data-shape = qti:hotspot->shape
  * * data-coords = qti:hotspot->coords
  * * data-hotspot-label = qti:hotspot->hotspotLabel (only if qti:hotspotLabel is set).
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class HotspotChoiceRenderer extends HotspotRenderer {
-    
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+class HotspotChoiceRenderer extends HotspotRenderer
+{
+    /**
+     * Create a new HotspotChoiceRenderer object.
+     *
+     * @param AbstractMarkupRenderingEngine $renderingEngine
+     */
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\HotspotRenderer::appendAttributes()
+     */
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-hotspotChoice');
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,42 +15,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
-use \DOMDocument;
-use \DOMDocumentFragment;
 
 /**
  * The QTI XHTML Rendering Engine.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
-    
-    public function __construct() {
+class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
+{
+    /**
+     * Create a new XhtmlRenderingEngine object.
+     */
+    public function __construct()
+    {
         parent::__construct();
-        
+
         // QTI Components the rendering engine will
         // not take into account.
-        $ignoreClasses = array('responseDeclaration',
-                                'outcomeDeclaration',
-                                'templateDeclaration',
-                                'templateProcessing',
-                                'responseProcessing');
-        
+        $ignoreClasses = [
+            'responseDeclaration',
+            'outcomeDeclaration',
+            'templateDeclaration',
+            'templateProcessing',
+            'responseProcessing',
+        ];
+
         $this->ignoreQtiClasses($ignoreClasses);
-    
+
         // The following QTI classes can be rendered
         // with the BodyElementRenderer.
         $bodyElementRenderer = new BodyElementRenderer();
@@ -94,19 +93,19 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('tfoot', $bodyElementRenderer);
         $this->registerRenderer('thead', $bodyElementRenderer);
         $this->registerRenderer('tr', $bodyElementRenderer);
-    
+
         // Both col and components elements can be rendered
         // by the ColRenderer.
         $colRenderer = new ColRenderer();
         $this->registerRenderer('col', $colRenderer);
         $this->registerRenderer('colgroup', $colRenderer);
-    
+
         // Both td and th components can be rendered by the
         // TableCellRenderer.
         $tableCellRenderer = new TableCellRenderer();
         $this->registerRenderer('td', $tableCellRenderer);
         $this->registerRenderer('th', $tableCellRenderer);
-    
+
         // Other bindings...
         $this->registerRenderer('textRun', new TextRunRenderer());
         $this->registerRenderer('a', new ARenderer());
@@ -155,7 +154,7 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('positionObjectStage', new PositionObjectStageRenderer());
         $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
         $this->registerRenderer('printedVariable', new PrintedVariableRenderer());
-        
+
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,19 +69,17 @@ class Utils
             $className = mb_strtolower($object->getShortName(), 'UTF-8');
 
             return "${className}_${occurence}";
-        } else {
+        } elseif (is_scalar($value) === true) {
             // Is it a PHP scalar value?
-            if (is_scalar($value) === true) {
-                return gettype($value) . '_' . $occurence;
-            } elseif (is_array($value) === true) {
-                return 'array_' . $occurence;
-            } // null value?
-            elseif (is_null($value) === true) {
-                return 'nullvalue_' . $occurence;
-            } else {
-                $msg = "Cannot handle the given value.";
-                throw new InvalidArgumentException($msg);
-            }
+            return gettype($value) . '_' . $occurence;
+        } elseif (is_array($value) === true) {
+            return 'array_' . $occurence;
+        } elseif (is_null($value) === true) {
+            // null value?
+            return 'nullvalue_' . $occurence;
+        } else {
+            $msg = "Cannot handle the given value.";
+            throw new InvalidArgumentException($msg);
         }
     }
 }

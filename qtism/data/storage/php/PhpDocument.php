@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -142,8 +143,8 @@ class PhpDocument extends QtiDocument
                 foreach ($getters as $getter) {
                     $stack->push(call_user_func([$component, $getter->getName()]));
                 }
-            } // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
-            elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
+            } elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
+                // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
                 // AbstractCollection node, 1st pass.
                 // Mark as explored.
                 array_push($marker, $component);
