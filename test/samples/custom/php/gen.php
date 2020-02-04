@@ -1,4 +1,5 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../../vendor/autoload.php');
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlCompactDocument;

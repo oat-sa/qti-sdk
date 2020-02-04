@@ -1,4 +1,5 @@
 <?php
+
 $string_0 = "";
 $string_1 = "";
 $array_0 = array();
