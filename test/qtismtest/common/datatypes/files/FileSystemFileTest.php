@@ -1,17 +1,20 @@
 <?php
+
 namespace qtismtest\common\datatypes\files;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\files\FileSystemFile;
 
-class FileSystemFileTest extends QtiSmTestCase {
+class FileSystemFileTest extends QtiSmTestCase
+{
     
     /**
      * @dataProvider retrieveProvider
-     * 
+     *
      * @param string $path The path to the QTI file instance.
      */
-    public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData) {
+    public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData)
+    {
         $pFile = FileSystemFile::retrieveFile($path);
         $this->assertEquals($expectedFilename, $pFile->getFilename());
         $this->assertEquals($expectedMimeType, $pFile->getMimeType());
@@ -20,7 +23,7 @@ class FileSystemFileTest extends QtiSmTestCase {
     
     /**
      * @dataProvider createFromExistingFileProvider
-     * 
+     *
      * @param string $source
      * @param string $mimeType
      * @param boolean|string $withFilename
@@ -36,8 +39,7 @@ class FileSystemFileTest extends QtiSmTestCase {
             // Check if the name is the original one.
             $pathinfo = pathinfo($source);
             $this->assertEquals($pathinfo['basename'], $pFile->getFilename());
-        }
-        else {
+        } else {
             $this->assertEquals($withFilename, $pFile->getFilename());
         }
         
@@ -92,7 +94,7 @@ class FileSystemFileTest extends QtiSmTestCase {
     /**
      * @dataProvider getStreamProvider
      * @depends testRetrieve
-     * 
+     *
      * @param string $path
      * @param string $expectedData
      */
@@ -149,7 +151,7 @@ class FileSystemFileTest extends QtiSmTestCase {
     public function getStreamProvider()
     {
         return array(
-            array(self::samplesDir() . 'datatypes/file/text-plain_name.txt', ''),          
+            array(self::samplesDir() . 'datatypes/file/text-plain_name.txt', ''),
             array(self::samplesDir() . 'datatypes/file/text-plain_noname.txt', ''),
             array(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt', 'Some text...'),
         );

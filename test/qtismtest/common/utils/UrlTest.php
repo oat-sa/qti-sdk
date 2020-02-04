@@ -1,16 +1,19 @@
 <?php
+
 namespace qtismtest\common\utils;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\utils\Url;
 
-class UrlTest extends QtiSmTestCase {
-	
+class UrlTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider validRelativeUrlProvider
      * @param string $url
      */
-    public function testValidRelativeUrl($url) {
+    public function testValidRelativeUrl($url)
+    {
         $this->assertTrue(Url::isRelative($url));
     }
     
@@ -18,23 +21,28 @@ class UrlTest extends QtiSmTestCase {
      * @dataProvider invalidRelativeUrlProvider
      * @param unknown_type $url
      */
-    public function testInvalidRelativeUrl($url) {
+    public function testInvalidRelativeUrl($url)
+    {
         $this->assertFalse(Url::isRelative($url));
     }
     
-    public function testTrim() {
+    public function testTrim()
+    {
         $this->assertEquals("hello", Url::trim("/hello/\n"));
     }
     
-    public function testLtrim() {
+    public function testLtrim()
+    {
         $this->assertEquals("hello/\n", Url::ltrim("/hello/\n"));
     }
     
-    public function testRtrim() {
+    public function testRtrim()
+    {
         $this->assertEquals("/hello", Url::rtrim("/hello/\n"));
     }
     
-    public function validRelativeUrlProvider() {
+    public function validRelativeUrlProvider()
+    {
         return array(
             array('./path'),
             array('path'),
@@ -46,7 +54,8 @@ class UrlTest extends QtiSmTestCase {
         );
     }
     
-    public function invalidRelativeUrlProvider() {
+    public function invalidRelativeUrlProvider()
+    {
         return array(
             array('/'),
             array('http://www.google.com'),

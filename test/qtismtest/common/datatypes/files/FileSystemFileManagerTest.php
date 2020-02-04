@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\common\datatypes\files;
 
 use qtismtest\QtiSmTestCase;

@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest\common\enums;
 
 use qtismtest\QtiSmEnumTestCase;

@@ -1,10 +1,11 @@
 <?php
+
 namespace qtismtest\common\dom;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\dom\SerializableDomDocument;
 
-class VersionTest extends QtiSmTestCase 
+class VersionTest extends QtiSmTestCase
 {
     public function testSerialization()
     {

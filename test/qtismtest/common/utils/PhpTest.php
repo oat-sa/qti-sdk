@@ -1,14 +1,16 @@
 <?php
+
 namespace qtismtest\common\utils;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\utils\Php as PhpUtils;
 
-class PhpTest extends QtiSmTestCase {
-	
+class PhpTest extends QtiSmTestCase
+{
+    
     /**
      * @dataProvider displayTypeProvider
-     * 
+     *
      * @param mixed $value
      * @param string $expected
      */
@@ -26,7 +28,7 @@ class PhpTest extends QtiSmTestCase {
             array('str', 'php:string'),
             array(true, 'php:boolean'),
             array(array(), 'php:array'),
-            array(new \stdClass(), 'stdClass')               
+            array(new \stdClass(), 'stdClass')
         );
     }
 }
