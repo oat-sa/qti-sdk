@@ -1,20 +1,21 @@
 <?php
+
 namespace qtismtest;
 
 use qtismtest\QtiSmTestCase;
 
-abstract class QtiSmEnumTestCase extends QtiSmTestCase 
+abstract class QtiSmEnumTestCase extends QtiSmTestCase
 {
     
-	public function setUp() 
+    public function setUp()
     {
-	    parent::setUp();
-	}
-	
-	public function tearDown() 
+        parent::setUp();
+    }
+    
+    public function tearDown()
     {
-	    parent::tearDown();
-	}
+        parent::tearDown();
+    }
     
     public function testConsistency()
     {
@@ -24,7 +25,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
         $this->assertEquals($refCount, count($this->getKeys()));
     }
     
-    public function testAsArray() 
+    public function testAsArray()
     {
         $array = call_user_func(
             array(

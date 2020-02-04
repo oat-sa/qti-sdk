@@ -1,4 +1,5 @@
 <?php
+
 namespace qtismtest;
 
 use qtismtest\QtiSmTestCase;
@@ -11,36 +12,36 @@ use qtism\data\TestPartCollection;
 use qtism\data\TestPart;
 use qtism\runtime\tests\Route;
 
-abstract class QtiSmRouteTestCase extends QtiSmTestCase 
+abstract class QtiSmRouteTestCase extends QtiSmTestCase
 {
     
-	public function setUp() 
+    public function setUp()
     {
-	    parent::setUp();
-	}
-	
-	public function tearDown() 
+        parent::setUp();
+    }
+    
+    public function tearDown()
     {
-	    parent::tearDown();
-	}
-	
-	/**
-	 * Build a simple route:
-	 *
+        parent::tearDown();
+    }
+    
+    /**
+     * Build a simple route:
+     *
      * $testPartCount = 1; $itemCount = 3
-     * 
-	 * * Q1 - S1 - T1
-	 * * Q2 - S1 - T1
-	 * * Q3 - S1 - T1
-     * 
+     *
+     * * Q1 - S1 - T1
+     * * Q2 - S1 - T1
+     * * Q3 - S1 - T1
+     *
      * $testPartCount = 2; $itemCount = 1
-     * 
+     *
      * * Q1 - S1 - T1
      * * Q2 - S2 - T2
-	 *
-	 * @return Route
-	 */
-	public static function buildSimpleRoute($routeClass = 'qtism\\runtime\\tests\\Route', $testPartCount = 1, $itemCount = 3) 
+     *
+     * @return Route
+     */
+    public static function buildSimpleRoute($routeClass = 'qtism\\runtime\\tests\\Route', $testPartCount = 1, $itemCount = 3)
     {
         
         $route = new $routeClass();
@@ -69,7 +70,7 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
         }
         
         $assessmentTest->setTestParts($testParts);
-	
-	    return $route;
-	}
+    
+        return $route;
+    }
 }
