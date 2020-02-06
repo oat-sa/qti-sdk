@@ -386,7 +386,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
-     * @return string
+     * @return int|null
      */
     public function getExternalScored()
     {
@@ -395,7 +395,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Is the outcome declaration externally scored?
-     * @return string
+     * @return bool
      */
     public function isExternallyScored()
     {
@@ -404,7 +404,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
-     * @return string
+     * @return bool
      */
     public function isScoredByHuman()
     {
@@ -413,7 +413,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
-     * @return string
+     * @return bool
      */
     public function isScoredByExternalMachine()
     {
