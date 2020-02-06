@@ -64,12 +64,12 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 		}
 
 		// deal with interpretation.
-		if ($component->getInterpretation() != '') {
+		if ($component->getInterpretation() !== '') {
 			static::setDOMElementAttribute($element, 'interpretation', $component->getInterpretation());
 		}
 
 		// deal with long interpretation.
-		if ($component->getLongInterpretation() != '') {
+		if ($component->getLongInterpretation() !== '') {
 			static::setDOMElementAttribute($element, 'longInterpretation', $component->getLongInterpretation());
 		}
 
@@ -89,7 +89,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 		}
 
 		// Deal with lookup table.
-		if ($component->getLookupTable() != null) {
+		if ($component->getLookupTable() !== null) {
 			$lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
 			$element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
 		}
