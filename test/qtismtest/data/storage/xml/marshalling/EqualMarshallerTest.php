@@ -2,36 +2,34 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
+use DOMDocument;
+use qtism\common\enums\BaseType;
+use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
-use qtism\data\expressions\BaseValue;
-use qtism\common\enums\BaseType;
-use DOMDocument;
+use qtismtest\QtiSmTestCase;
 
 class EqualMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshall()
     {
         $subs = new ExpressionCollection();
         $subs[] = new BaseValue(BaseType::INTEGER, 1);
         $subs[] = new BaseValue(BaseType::INTEGER, 2);
-        
+
         $toleranceMode = ToleranceMode::EXACT;
         $includeLowerBound = false;
         $includeUpperBound = true;
-        
+
         $component = new Equal($subs);
         $component->setToleranceMode($toleranceMode);
         $component->setIncludeLowerBound($includeLowerBound);
         $component->setIncludeUpperBound($includeUpperBound);
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('equal', $element->nodeName);
         $this->assertEquals('exact', $element->getAttribute('toleranceMode'));
@@ -39,7 +37,7 @@ class EqualMarshallerTest extends QtiSmTestCase
         $this->assertEquals('', $element->getAttribute('includeUpperBound'));
         $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
     }
-    
+
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -52,10 +50,10 @@ class EqualMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $component);
         $this->assertInternalType('boolean', $component->doesIncludeLowerBound());
         $this->assertInternalType('boolean', $component->doesIncludeUpperBound());

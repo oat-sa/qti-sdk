@@ -2,12 +2,11 @@
 
 namespace qtismtest\common\utils;
 
-use qtismtest\QtiSmTestCase;
 use qtism\common\utils\Arrays;
+use qtismtest\QtiSmTestCase;
 
 class ArraysTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider isAssocValidProvider
      */
@@ -15,7 +14,7 @@ class ArraysTest extends QtiSmTestCase
     {
         $this->assertTrue(Arrays::isAssoc($array));
     }
-    
+
     /**
      * @dataProvider isAssocInvalidProvider
      */
@@ -23,18 +22,18 @@ class ArraysTest extends QtiSmTestCase
     {
         $this->assertFalse(Arrays::isAssoc($array));
     }
-    
+
     public function isAssocValidProvider()
     {
-        return array(
-            array(array('test' => 0, 'bli' => 2))
-        );
+        return [
+            [['test' => 0, 'bli' => 2]],
+        ];
     }
-    
+
     public function isAssocInvalidProvider()
     {
-        return array(
-            array(array(0, 1))
-        );
+        return [
+            [[0, 1]],
+        ];
     }
 }

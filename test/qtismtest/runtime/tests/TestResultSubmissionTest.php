@@ -2,8 +2,8 @@
 
 namespace qtismtest\runtime\tests;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\runtime\tests\TestResultsSubmission;
+use qtismtest\QtiSmEnumTestCase;
 
 class TestResultsSubmissionTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class TestResultsSubmissionTest extends QtiSmEnumTestCase
     {
         return TestResultsSubmission::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'end',
-            'outcomeProcessing'
-        );
+            'outcomeProcessing',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'END',
-            'OUTCOME_PROCESSING'
-        );
+            'OUTCOME_PROCESSING',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             TestResultsSubmission::END,
-            TestResultsSubmission::OUTCOME_PROCESSING
-        );
+            TestResultsSubmission::OUTCOME_PROCESSING,
+        ];
     }
 }

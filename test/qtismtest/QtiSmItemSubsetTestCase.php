@@ -2,41 +2,39 @@
 
 namespace qtismtest;
 
-use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\files\FileSystemFileManager;
-use qtism\runtime\tests\SessionManager;
-use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\SessionManager;
 
 abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
 {
-    
     /**
      * Contains the test session to be tested with itemSubset expressions.
      *
      * @var AssessmentTestSession
      */
     private $testSession;
-    
+
     public function setUp()
     {
         parent::setUp();
-        
+
         $testFilePath = self::samplesDir() . 'custom/runtime/itemsubset.xml';
         $doc = new XmlCompactDocument();
         $doc->load($testFilePath);
-        
+
         $sessionManager = new SessionManager(new FileSystemFileManager());
         $testSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         $this->setTestSession($testSession);
     }
-    
+
     public function tearDown()
     {
         parent::tearDown();
     }
-    
+
     /**
      * Set the AssessmentTestSession object to be tested with itemSubset expressions.
      *
@@ -46,7 +44,7 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
     {
         $this->testSession = $testSession;
     }
-    
+
     /**
      * Get the AssessmentTestSession object to be tested with itemSubset expressions.
      *

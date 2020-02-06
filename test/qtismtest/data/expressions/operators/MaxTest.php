@@ -2,12 +2,12 @@
 
 namespace qtismtest\data\expressions\operators;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\operators\Max;
-use qtism\data\expressions\BaseValue;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\operators\Max;
+use qtismtest\QtiSmTestCase;
 
 class MaxTest extends QtiSmTestCase
 {
@@ -17,7 +17,7 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
-        
+
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Max', $max);
         $this->assertTrue(in_array(Cardinality::SINGLE, $max->getAcceptedCardinalities()));
         $this->assertTrue(in_array(Cardinality::MULTIPLE, $max->getAcceptedCardinalities()));
@@ -27,7 +27,7 @@ class MaxTest extends QtiSmTestCase
         $this->assertEquals(1, $max->getMinOperands());
         $this->assertEquals(-1, $max->getMaxOperands());
     }
-    
+
     /**
      * @depends testInstantiation
      */
@@ -37,15 +37,15 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "The minOperands argument must be an integer >= 0, '1' given."
         );
-        
+
         $max->setMinOperands(true);
     }
-    
+
     /**
      * @depends testInstantiation
      */
@@ -55,15 +55,15 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "The maxOperands argument must be an integer, 'boolean' given."
         );
-        
+
         $max->setMaxOperands(true);
     }
-    
+
     /**
      * @depends testInstantiation
      */
@@ -73,15 +73,15 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "Accepted cardinalities must be values from the Cardinality enumeration, '1' given"
         );
-        
-        $max->setAcceptedCardinalities(array(true));
+
+        $max->setAcceptedCardinalities([true]);
     }
-    
+
     /**
      * @depends testInstantiation
      */
@@ -91,12 +91,12 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "Accepted baseTypes must be values from the OperatorBaseType enumeration, '1' given."
         );
-        
-        $max->setAcceptedBaseTypes(array(true));
+
+        $max->setAcceptedBaseTypes([true]);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
@@ -16,11 +16,11 @@ if (empty($argv[1]) === false) {
         case 'ignore':
             $renderer->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_IGNORE);
             break;
-        
+
         case 'keep':
             $renderer->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_KEEP);
             break;
-        
+
         case 'process':
             $renderer->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_PROCESS);
             break;

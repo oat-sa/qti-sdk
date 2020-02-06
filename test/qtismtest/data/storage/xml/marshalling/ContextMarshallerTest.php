@@ -24,11 +24,11 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\data\results\Context;
-use qtism\data\results\SessionIdentifierCollection;
-use qtism\data\results\SessionIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
+use qtism\data\results\Context;
+use qtism\data\results\SessionIdentifier;
+use qtism\data\results\SessionIdentifierCollection;
 use qtismtest\QtiSmTestCase;
 
 class ContextMarshallerTest extends QtiSmTestCase
@@ -75,10 +75,10 @@ class ContextMarshallerTest extends QtiSmTestCase
 
         $component = new Context(
             new QtiIdentifier($sourcedId),
-            new SessionIdentifierCollection(array(
+            new SessionIdentifierCollection([
                 new SessionIdentifier(new QtiUri('sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')),
                 new SessionIdentifier(new QtiUri('sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */

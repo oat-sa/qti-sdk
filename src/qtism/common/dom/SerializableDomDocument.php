@@ -23,21 +23,23 @@
 
 namespace qtism\common\dom;
 
+use DOMDocument;
+
 /**
  * Serializable DOM Document
  *
  * This class is a PHP Serializable DOMDocument implementation.
  */
-class SerializableDomDocument extends \DOMDocument
+class SerializableDomDocument extends DOMDocument
 {
     private $xmlData;
-    
+
     public function __sleep()
     {
         $this->xmlData = $this->saveXML();
-        return array('xmlData');
+        return ['xmlData'];
     }
-    
+
     public function __wakeup()
     {
         $this->loadXML($this->xmlData);

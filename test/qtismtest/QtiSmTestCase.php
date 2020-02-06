@@ -2,23 +2,23 @@
 
 namespace qtismtest;
 
+use DateTime;
+use DateTimeZone;
+use DOMDocument;
+use DOMElement;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
-use DOMElement;
-use DOMDocument;
-use DateTime;
-use DateTimeZone;
 
 abstract class QtiSmTestCase extends TestCase
 {
-
     /**
      * @var Filesystem
      */
@@ -41,7 +41,7 @@ abstract class QtiSmTestCase extends TestCase
         $adapter = new Local(sys_get_temp_dir() . '/qsmout');
         $this->setOutputFileSystem(new Filesystem($adapter));
     }
-    
+
     public function tearDown()
     {
         parent::tearDown();
@@ -94,7 +94,7 @@ abstract class QtiSmTestCase extends TestCase
     {
         $this->outputFileSystem = $filesystem;
     }
-    
+
     public function getMarshallerFactory($version = '2.1')
     {
         if (Version::compare($version, '2.0.0', '==') === true) {
@@ -109,7 +109,7 @@ abstract class QtiSmTestCase extends TestCase
             return new Qti21MarshallerFactory();
         }
     }
-    
+
     /**
      * Returns the canonical path to the samples directory, with the
      * trailing slash.
@@ -120,7 +120,7 @@ abstract class QtiSmTestCase extends TestCase
     {
         return dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
     }
-    
+
     /**
      * Create a directory in OS temp directory with a unique name.
      *
@@ -129,18 +129,18 @@ abstract class QtiSmTestCase extends TestCase
     public static function tempDir()
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'qsm');
-        
+
         // Tempnam creates a file with 600 chmod. Remove
         // it and create a directory.
         if (file_exists($tmpFile) === true) {
             unlink($tmpFile);
         }
-        
+
         mkdir($tmpFile);
-        
+
         return $tmpFile;
     }
-    
+
     /**
      * Create a copy of $source to the temp directory. The copied
      * file will receive a unique file name.
@@ -151,17 +151,17 @@ abstract class QtiSmTestCase extends TestCase
     public static function tempCopy($source)
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'qsm');
-        
+
         // Same as for QtiSmTestCase::tempDir...
         if (file_exists($tmpFile) === true) {
             unlink($tmpFile);
         }
-        
+
         copy($source, $tmpFile);
-        
+
         return $tmpFile;
     }
-    
+
     /**
      * Create a DOMElement from an XML string.
      *
@@ -174,7 +174,7 @@ abstract class QtiSmTestCase extends TestCase
         $dom->loadXML($xmlString);
         return $dom->documentElement;
     }
-    
+
     /**
      * Create a DateTime object from a $date with format
      * Y-m-d H:i:s, and an optional timezone name.
@@ -187,13 +187,13 @@ abstract class QtiSmTestCase extends TestCase
     {
         return DateTime::createFromFormat('Y-m-d H:i:s', $date, new DateTimeZone($tz));
     }
-    
+
     /**
      * Create a QtiComponent object from an XML String.
      *
      * @param string $xmlString An XML String to transform in a QtiComponent object.
      * @param string $version A QTI version rule the creation of the component.
-     * @return \qtism\data\QtiComponent
+     * @return QtiComponent
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {

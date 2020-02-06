@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\content\interactions;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\content\interactions\Orientation;
+use qtismtest\QtiSmEnumTestCase;
 
 class OrientationTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class OrientationTest extends QtiSmEnumTestCase
     {
         return Orientation::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'vertical',
-            'horizontal'
-        );
+            'horizontal',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'VERTICAL',
-            'HORIZONTAL'
-        );
+            'HORIZONTAL',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             Orientation::VERTICAL,
-            Orientation::HORIZONTAL
-        );
+            Orientation::HORIZONTAL,
+        ];
     }
 }

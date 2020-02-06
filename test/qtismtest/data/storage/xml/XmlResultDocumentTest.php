@@ -23,6 +23,7 @@
 
 namespace qtismtest\data\storage\xml;
 
+use DateTime;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
@@ -62,7 +63,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
         $testResult = $assessmentResult->getTestResult();
         $this->assertEquals('fixture-test-identifier', $testResult->getIdentifier());
-        $this->assertInstanceOf(\DateTime::class, $testResult->getDatestamp());
+        $this->assertInstanceOf(DateTime::class, $testResult->getDatestamp());
 
         $this->assertCount(2, $testResult->getItemVariables());
     }

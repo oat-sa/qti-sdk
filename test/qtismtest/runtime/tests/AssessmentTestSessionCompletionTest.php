@@ -2,16 +2,15 @@
 
 namespace qtismtest\runtime\tests;
 
-use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTestCase
 {
-    
     /**
      * In linear mode, items are considered completed if they were
      * presented at least one time.
@@ -28,63 +27,62 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
      */
     public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
     {
-        
         $session = self::instantiate($testFile);
         $session->beginTestSession();
-        
+
         // Nothing completed at this time.
         $this->assertSame(0, $session->numberCompleted());
-        
+
         $i = 1;
         $movedNext = 0;
         foreach ($identifiers as $identifier) {
             $this->assertSame($i - 1 - $movedNext, $session->numberCompleted());
-            
+
             $session->beginAttempt();
-            
+
             if ($identifier === 'skip') {
                 $session->endAttempt(new State());
             } elseif ($identifier === 'moveNext') {
                 $session->moveNext();
                 $movedNext++;
             } else {
-                $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier)))));
+                $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier))]));
             }
-            
+
             $this->assertSame($i - $movedNext, $session->numberCompleted());
-            
+
             if ($identifier !== 'moveNext') {
                 $session->moveNext();
             }
-            
+
             $i++;
         }
-        
+
         // Final completion check.
         $this->assertSame($finalNumberCompleted, $session->numberCompleted());
-        
+
         // We must reach the end of the test session.
         $this->assertFalse($session->isRunning());
     }
-    
+
     public function completionPureLinearProvider()
     {
-        return array(
-            array(self::samplesDir() . '/custom/runtime/linear_5_items.xml', array('skip', 'skip', 'skip', 'skip', 'skip'), 5),
-            array(self::samplesDir() . '/custom/runtime/linear_5_items.xml', array('ChoiceA', 'skip', 'ChoiceC', 'ChoiceD', 'ChoiceE'), 5),
-            array(self::samplesDir() . '/custom/runtime/linear_5_items.xml', array('ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE'), 5),
-            array(self::samplesDir() . '/custom/runtime/completion/linear_10_items_2_testparts.xml', array('skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip'), 10),
-            array(self::samplesDir() . '/custom/runtime/completion/linear_10_items_2_testparts.xml', array('ChoiceA', 'skip', 'ChoiceC', 'skip', 'ChoiceE', 'skip', 'ChoiceG', 'skip', 'ChoiceI', 'skip'), 10),
-            array(self::samplesDir() . '/custom/runtime/completion/linear_10_items_2_testparts.xml', array('ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE', 'ChoiceF', 'ChoiceG', 'ChoiceH', 'ChoiceI', 'ChoiceJ'), 10),
-            array(self::samplesDir() . '/custom/runtime/nonlinear_5_items.xml', array('moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext'), 0),
-            array(self::samplesDir() . '/custom/runtime/nonlinear_5_items.xml', array('ChoiceA', 'moveNext', 'choiceC', 'ChoiceD', 'ChoiceE'), 4),
-            array(self::samplesDir() . '/custom/runtime/nonlinear_5_items.xml', array('ChoiceA', 'ChoiceB', 'choiceC', 'ChoiceD', 'ChoiceE'), 5),
-            array(self::samplesDir() . '/custom/runtime/completion/nonlinear_10_items_2_testparts.xml', array('moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext'), 0),
-            array(self::samplesDir() . '/custom/runtime/completion/nonlinear_10_items_2_testparts.xml', array('ChoiceA', 'moveNext', 'ChoiceC', 'moveNext', 'ChoiceE', 'moveNext', 'ChoiceG', 'moveNext', 'ChoiceI', 'moveNext'), 5),
-            array(self::samplesDir() . '/custom/runtime/completion/nonlinear_10_items_2_testparts.xml', array('ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE', 'ChoiceF', 'ChoiceG', 'ChoiceH', 'ChoiceI', 'ChoiceJ'), 10),
-            array(self::samplesDir() . '/custom/runtime/completion/linearnonlinear_10_items_2_testparts.xml', array('ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE', 'ChoiceF', 'ChoiceG', 'ChoiceH', 'ChoiceI', 'ChoiceJ'), 10),
-            array(self::samplesDir() . '/custom/runtime/completion/linearnonlinear_10_items_2_testparts.xml', array('skip', 'skip', 'skip', 'skip', 'skip', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext'), 5),
-            array(self::samplesDir() . '/custom/runtime/completion/linearnonlinear_10_items_2_testparts.xml', array('ChoiceA', 'skip', 'ChoiceC', 'skip', 'ChoiceE', 'moveNext', 'ChoiceG', 'moveNext', 'ChoiceI', 'moveNext'), 7),
-        );
+        return [
+            [self::samplesDir() . '/custom/runtime/linear_5_items.xml', ['skip', 'skip', 'skip', 'skip', 'skip'], 5],
+            [self::samplesDir() . '/custom/runtime/linear_5_items.xml', ['ChoiceA', 'skip', 'ChoiceC', 'ChoiceD', 'ChoiceE'], 5],
+            [self::samplesDir() . '/custom/runtime/linear_5_items.xml', ['ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE'], 5],
+            [self::samplesDir() . '/custom/runtime/completion/linear_10_items_2_testparts.xml', ['skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip', 'skip'], 10],
+            [self::samplesDir() . '/custom/runtime/completion/linear_10_items_2_testparts.xml', ['ChoiceA', 'skip', 'ChoiceC', 'skip', 'ChoiceE', 'skip', 'ChoiceG', 'skip', 'ChoiceI', 'skip'], 10],
+            [self::samplesDir() . '/custom/runtime/completion/linear_10_items_2_testparts.xml', ['ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE', 'ChoiceF', 'ChoiceG', 'ChoiceH', 'ChoiceI', 'ChoiceJ'], 10],
+            [self::samplesDir() . '/custom/runtime/nonlinear_5_items.xml', ['moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext'], 0],
+            [self::samplesDir() . '/custom/runtime/nonlinear_5_items.xml', ['ChoiceA', 'moveNext', 'choiceC', 'ChoiceD', 'ChoiceE'], 4],
+            [self::samplesDir() . '/custom/runtime/nonlinear_5_items.xml', ['ChoiceA', 'ChoiceB', 'choiceC', 'ChoiceD', 'ChoiceE'], 5],
+            [self::samplesDir() . '/custom/runtime/completion/nonlinear_10_items_2_testparts.xml', ['moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext'], 0],
+            [self::samplesDir() . '/custom/runtime/completion/nonlinear_10_items_2_testparts.xml', ['ChoiceA', 'moveNext', 'ChoiceC', 'moveNext', 'ChoiceE', 'moveNext', 'ChoiceG', 'moveNext', 'ChoiceI', 'moveNext'], 5],
+            [self::samplesDir() . '/custom/runtime/completion/nonlinear_10_items_2_testparts.xml', ['ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE', 'ChoiceF', 'ChoiceG', 'ChoiceH', 'ChoiceI', 'ChoiceJ'], 10],
+            [self::samplesDir() . '/custom/runtime/completion/linearnonlinear_10_items_2_testparts.xml', ['ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE', 'ChoiceF', 'ChoiceG', 'ChoiceH', 'ChoiceI', 'ChoiceJ'], 10],
+            [self::samplesDir() . '/custom/runtime/completion/linearnonlinear_10_items_2_testparts.xml', ['skip', 'skip', 'skip', 'skip', 'skip', 'moveNext', 'moveNext', 'moveNext', 'moveNext', 'moveNext'], 5],
+            [self::samplesDir() . '/custom/runtime/completion/linearnonlinear_10_items_2_testparts.xml', ['ChoiceA', 'skip', 'ChoiceC', 'skip', 'ChoiceE', 'moveNext', 'ChoiceG', 'moveNext', 'ChoiceI', 'moveNext'], 7],
+        ];
     }
 }

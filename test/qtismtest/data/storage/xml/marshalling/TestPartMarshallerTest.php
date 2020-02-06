@@ -2,16 +2,13 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
-use qtism\data\TestPart;
+use DOMDocument;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
-use qtism\data\TestFeedback;
-use qtism\data\TestFeedbackCollection;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
-use DOMDocument;
+use qtism\data\TestPart;
+use qtismtest\QtiSmTestCase;
 
 class TestPartMarshallerTest extends QtiSmTestCase
 {
@@ -19,17 +16,17 @@ class TestPartMarshallerTest extends QtiSmTestCase
     {
         $section1 = new AssessmentSection('section1', 'My Section 1', true);
         $section2 = new AssessmentSection('section2', 'My Section 2', false);
-        
+
         $component = new TestPart(
             'part1',
-            new AssessmentSectionCollection(array($section1, $section2)),
+            new AssessmentSectionCollection([$section1, $section2]),
             NavigationMode::LINEAR,
             SubmissionMode::INDIVIDUAL
         );
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('testPart', $element->nodeName);
         $this->assertEquals('part1', $element->getAttribute('identifier'));
@@ -38,7 +35,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $this->assertEquals(2, $element->getElementsByTagName('assessmentSection')->length);
         $this->assertEquals('section2', $element->getElementsByTagName('assessmentSection')->item(1)->getAttribute('identifier'));
     }
-    
+
     public function testUnmarshallMinimal()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -51,22 +48,22 @@ class TestPartMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\TestPart', $component);
         $this->assertEquals('part1', $component->getIdentifier());
         $this->assertEquals(NavigationMode::LINEAR, $component->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $component->getSubmissionMode());
-        
+
         $assessmentSections = $component->getAssessmentSections();
         $this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section1']);
         $this->assertEquals('section1', $assessmentSections['section1']->getIdentifier());
         $this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section2']);
         $this->assertEquals('section2', $assessmentSections['section2']->getIdentifier());
     }
-    
+
     public function testUnmarshallMorderate()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -105,38 +102,38 @@ class TestPartMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
-    
+
         $this->assertInstanceOf('qtism\\data\\TestPart', $component);
         $this->assertEquals('part1', $component->getIdentifier());
         $this->assertEquals(NavigationMode::LINEAR, $component->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $component->getSubmissionMode());
         $this->assertTrue($component->hasTimeLimits());
-        
+
         $assessmentSections = $component->getAssessmentSections();
         $this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section1']);
         $this->assertEquals('section1', $assessmentSections['section1']->getIdentifier());
         $this->assertTrue($assessmentSections['section1']->hasSelection());
-        
+
         $assessmentSection = $assessmentSections['section1'];
         $this->assertEquals(3, count($assessmentSection->getSectionParts()));
-        
+
         $branchRules = $component->getBranchRules();
         $this->assertEquals(1, count($branchRules));
         $this->assertEquals('Q05', $branchRules[0]->getTarget());
         $branchRuleCondition = $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $branchRules[0]->getExpression());
-        
+
         $preConditions = $component->getPreConditions();
         $this->assertEquals(1, count($preConditions));
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\NotOperator', $preConditions[0]->getExpression());
-        
+
         $this->assertTrue($component->hasItemSessionControl());
         $this->assertEquals(0, $component->getItemSessionControl()->getMaxAttempts());
         $this->assertTrue($component->hasTimeLimits());
     }
-    
+
     public function testUnmarshallNoSections()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -147,17 +144,17 @@ class TestPartMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "A testPart element must contain at least one assessmentSection."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoSubmissionMode()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -170,17 +167,17 @@ class TestPartMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory attribute 'submissionMode' is missing from element 'testPart'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoNavigationMode()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -193,17 +190,17 @@ class TestPartMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory attribute 'navigationMode' is missing from element 'testPart'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoIdentifier()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -216,14 +213,14 @@ class TestPartMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory attribute 'identifier' is missing from element 'testPart'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
 }

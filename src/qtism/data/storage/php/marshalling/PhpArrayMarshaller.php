@@ -38,7 +38,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      * Marshall an array into PHP source code.
      *
      * @throws PhpMarshallingException If something wrong happens during marshalling.
-     * @throws StreamdAccessException
+     * @throws StreamAccessException
      */
     public function marshall()
     {

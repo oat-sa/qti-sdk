@@ -2,8 +2,8 @@
 
 namespace qtismtest\runtime\tests;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\runtime\tests\AssessmentTestPlace;
+use qtismtest\QtiSmEnumTestCase;
 
 class AssessmentTestPlaceTest extends QtiSmEnumTestCase
 {
@@ -11,34 +11,34 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
     {
         return AssessmentTestPlace::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'testPart',
             'assessmentSection',
             'assessmentItem',
-            'assessmentTest'
-        );
+            'assessmentTest',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'TEST_PART',
             'ASSESSMENT_SECTION',
             'ASSESSMENT_ITEM',
-            'ASSESSMENT_TEST'
-        );
+            'ASSESSMENT_TEST',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             AssessmentTestPlace::TEST_PART,
             AssessmentTestPlace::ASSESSMENT_SECTION,
             AssessmentTestPlace::ASSESSMENT_ITEM,
-            AssessmentTestPlace::ASSESSMENT_TEST
-        );
+            AssessmentTestPlace::ASSESSMENT_TEST,
+        ];
     }
 }

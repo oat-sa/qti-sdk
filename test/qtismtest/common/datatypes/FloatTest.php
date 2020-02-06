@@ -7,7 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 class FloatTest extends QtiSmTestCase
 {
-    
     public function testWrongValue()
     {
         $this->setExpectedException('\\InvalidArgumentException');

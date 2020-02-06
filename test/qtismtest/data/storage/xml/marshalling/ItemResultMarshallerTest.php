@@ -24,15 +24,16 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DateTime;
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\data\results\ResultTemplateVariable;
-use qtism\data\results\ResultResponseVariable;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
+use qtism\data\results\CandidateResponse;
 use qtism\data\results\ItemResult;
 use qtism\data\results\ItemVariableCollection;
+use qtism\data\results\ResultResponseVariable;
+use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\SessionStatus;
-use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\QtiInteger;
-use qtism\data\results\CandidateResponse;
 use qtismtest\QtiSmTestCase;
 
 class ItemResultMarshallerTest extends QtiSmTestCase
@@ -103,7 +104,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
             new QtiIdentifier('fixture-identifier'),
             new DateTime('2018-06-27T09:41:45.529Z'),
             1,
-            new ItemVariableCollection(array(
+            new ItemVariableCollection([
                 new ResultResponseVariable(
                     new QtiIdentifier('response-identifier'),
                     0,
@@ -112,8 +113,8 @@ class ItemResultMarshallerTest extends QtiSmTestCase
                 new ResultTemplateVariable(
                     new QtiIdentifier('response-identifier'),
                     0
-                )
-            )),
+                ),
+            ]),
             new QtiString('candidate-comment'),
             new QtiInteger(1)
         );
@@ -121,7 +122,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -147,7 +148,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -155,7 +156,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'datestamp', 'sessionStatus')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'datestamp', 'sessionStatus']));
 
         $this->assertFalse($element->hasChildNodes());
     }

@@ -1,9 +1,9 @@
 <?php
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
+use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtismtest\QtiSmTestCase;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
@@ -20,7 +20,6 @@ foreach ($branchrules as $branchrule) {
     $cloned = $branchrule->cloneNode(true);
     $newdoc->appendChild($newdoc->importNode($cloned, true));
     echo $newdoc->saveHTML();
-    ;
     echo "------------\n";
     echo $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression())
         . "\n\n";
@@ -40,13 +39,11 @@ foreach ($branchrules as $branchrule) {
     $cloned = $branchrule->cloneNode(true);
     $newdoc->appendChild($newdoc->importNode($cloned, true));
     echo $newdoc->saveHTML();
-    ;
     echo "------------\n";
     echo $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression())
         . "\n\n";
     $i++;
 }
-
 
 $doc = new XmlDocument();
 $doc->load(QtiSmTestCase::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
@@ -57,7 +54,6 @@ $newdoc = new DOMDocument();
 $cloned = $precondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentByIdentifier("Q01")->getPreConditions()[0]) . "\n\n";
 
@@ -70,7 +66,6 @@ $newdoc = new DOMDocument();
 $cloned = $branchRule[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentByIdentifier("Q2")->getBranchRules()[0]) . "\n\n";
 
@@ -83,7 +78,6 @@ $newdoc = new DOMDocument();
 $cloned = $xinclude[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("include")[0]) . "\n\n";
 
@@ -97,7 +91,6 @@ $newdoc = new DOMDocument();
 $cloned = $responseCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("responseCondition")[0]) . "\n\n";
 
@@ -110,7 +103,6 @@ $newdoc = new DOMDocument();
 $cloned = $responseCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("responseCondition")[0]) . "\n\n";
 
@@ -123,7 +115,6 @@ $newdoc = new DOMDocument();
 $cloned = $responseCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("responseCondition")[0]) . "\n\n";
 
@@ -136,7 +127,6 @@ $newdoc = new DOMDocument();
 $cloned = $responseCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("responseCondition")[0]) . "\n\n";
 
@@ -150,7 +140,6 @@ $newdoc = new DOMDocument();
 $cloned = $templateCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("templateCondition")[0]) . "\n\n";
 
@@ -163,7 +152,6 @@ $newdoc = new DOMDocument();
 $cloned = $templateCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("templateCondition")[0]) . "\n\n";
 
@@ -176,7 +164,6 @@ $newdoc = new DOMDocument();
 $cloned = $outcomeCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("outcomeCondition")[0]) . "\n\n";
 
@@ -189,6 +176,5 @@ $newdoc = new DOMDocument();
 $cloned = $outcomeCondition[0]->cloneNode(true);
 $newdoc->appendChild($newdoc->importNode($cloned, true));
 echo $newdoc->saveHTML();
-;
 echo "------------\n";
 echo $renderer->render($test->getComponentsByClassName("outcomeCondition")[0]) . "\n\n";

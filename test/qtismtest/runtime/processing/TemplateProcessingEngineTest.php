@@ -2,17 +2,16 @@
 
 namespace qtismtest\runtime\processing;
 
-use qtismtest\QtiSmTestCase;
-use qtism\runtime\common\TemplateVariable;
-use qtism\runtime\processing\TemplateProcessingEngine;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\State;
+use qtism\runtime\common\TemplateVariable;
+use qtism\runtime\processing\TemplateProcessingEngine;
+use qtismtest\QtiSmTestCase;
 
 class TemplateProcessingEngineTest extends QtiSmTestCase
 {
-    
     public function testWrongInput()
     {
         $component = $this->createComponentFromXml('
@@ -26,7 +25,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
         );
         $templateProcessing = new TemplateProcessingEngine($component);
     }
-    
+
     public function testVeryBasic()
     {
         $component = $this->createComponentFromXml('
@@ -36,17 +35,17 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
                 </setTemplateValue>
             </templateProcessing>
         ');
-        
+
         $state = new State(
-            array(new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1336)))
+            [new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1336))]
         );
-        
+
         $engine = new TemplateProcessingEngine($component, $state);
         $engine->process();
-        
+
         $this->assertEquals(1337, $state['TEMPLATE']->getValue());
     }
-    
+
     /**
      * @depends testVeryBasic
      */
@@ -63,17 +62,17 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
                 </setTemplateValue>
             </templateProcessing>
         ');
-        
+
         $state = new State(
-            array(new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER))
+            [new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER)]
         );
-        
+
         $engine = new TemplateProcessingEngine($component, $state);
         $engine->process();
-        
+
         $this->assertEquals(1336, $state['TEMPLATE']->getValue());
     }
-    
+
     /**
      * @depends testVeryBasic
      */
@@ -92,18 +91,18 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
                 </templateConstraint>
             </templateProcessing>
         ');
-        
+
         $var = new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER);
         $var->setDefaultValue(new QtiInteger(-1));
         $state = new State(
-            array($var)
+            [$var]
         );
-        
+
         // The <templateConstraint> will never be satisfied.
         // We should then find the default value in TEMPLATE.
         $engine = new TemplateProcessingEngine($component, $state);
         $engine->process();
-        
+
         $this->assertEquals(-1, $state['TEMPLATE']->getValue());
     }
 }

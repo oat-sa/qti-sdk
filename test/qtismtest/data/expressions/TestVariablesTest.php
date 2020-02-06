@@ -2,9 +2,9 @@
 
 namespace qtismtest\data\expressions;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\expressions\TestVariables;
 use qtism\common\enums\BaseType;
+use qtism\data\expressions\TestVariables;
+use qtismtest\QtiSmTestCase;
 
 class TestVariablesTest extends QtiSmTestCase
 {
@@ -15,8 +15,8 @@ class TestVariablesTest extends QtiSmTestCase
         $this->assertEquals('SCORE', $testVariables->getVariableIdentifier());
         $this->assertEquals('WEIGHT', $testVariables->getWeightIdentifier());
         $this->assertEquals(BaseType::FLOAT, $testVariables->getBaseType());
-        
-        $this->assertEquals(array(), $testVariables->getIncludeCategories()->getArrayCopy());
-        $this->assertEquals(array(), $testVariables->getExcludeCategories()->getArrayCopy());
+
+        $this->assertEquals([], $testVariables->getIncludeCategories()->getArrayCopy());
+        $this->assertEquals([], $testVariables->getExcludeCategories()->getArrayCopy());
     }
 }

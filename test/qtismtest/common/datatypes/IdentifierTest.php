@@ -7,7 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 class IdentifierTest extends QtiSmTestCase
 {
-    
     public function testWrongValue()
     {
         $this->setExpectedException(
@@ -16,7 +15,7 @@ class IdentifierTest extends QtiSmTestCase
         );
         $float = new QtiIdentifier(1337);
     }
-    
+
     public function testEmptyIdentifier()
     {
         $this->setExpectedException(

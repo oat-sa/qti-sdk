@@ -2,13 +2,12 @@
 
 namespace qtismtest\runtime\processing;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\processing\TemplateProcessing;
 use qtism\runtime\processing\Utils;
+use qtismtest\QtiSmTestCase;
 
 class ProcessingUtilsTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider impactedVariablesProvider
      *
@@ -22,19 +21,19 @@ class ProcessingUtilsTest extends QtiSmTestCase
             Utils::templateProcessingImpactedVariables($templateProcessing)
         );
     }
-    
+
     public function impactedVariablesProvider()
     {
-        $data = array();
-        
+        $data = [];
+
         $templateProcessing = $this->createComponentFromXml('
             <templateProcessing>
                 <exitTemplate/>
             </templateProcessing>
         ');
-        $identifiers = array();
-        $data[] = array($templateProcessing, $identifiers);
-        
+        $identifiers = [];
+        $data[] = [$templateProcessing, $identifiers];
+
         $templateProcessing = $this->createComponentFromXml('
             <templateProcessing>
                 <setTemplateValue identifier="TPL">
@@ -48,9 +47,9 @@ class ProcessingUtilsTest extends QtiSmTestCase
                 </setDefaultValue>
             </templateProcessing>
         ');
-        $identifiers = array('TPL', 'RESP', 'VAR');
-        $data[] = array($templateProcessing, $identifiers);
-        
+        $identifiers = ['TPL', 'RESP', 'VAR'];
+        $data[] = [$templateProcessing, $identifiers];
+
         $templateProcessing = $this->createComponentFromXml('
             <templateProcessing>
                 <templateCondition>
@@ -80,9 +79,9 @@ class ProcessingUtilsTest extends QtiSmTestCase
                 </templateCondition>
             </templateProcessing>
         ');
-        $identifiers = array('TPL', 'RESP', 'VAR');
-        $data[] = array($templateProcessing, $identifiers);
-        
+        $identifiers = ['TPL', 'RESP', 'VAR'];
+        $data[] = [$templateProcessing, $identifiers];
+
         return $data;
     }
 }

@@ -2,12 +2,11 @@
 
 namespace qtismtest\data\storage\xml;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
+use qtismtest\QtiSmTestCase;
 
 class XmlResponseProcessingDocumentTest extends QtiSmTestCase
 {
-    
     public function testLoadMatchCorrect()
     {
         $xml = new XmlDocument('2.1');
@@ -15,17 +14,17 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\data\\processing\\ResponseProcessing', $xml->getDocumentComponent());
         $this->assertFalse($xml->getDocumentComponent()->hasTemplateLocation());
         $this->assertFalse($xml->getDocumentComponent()->hasTemplate());
-        
+
         $responseRules = $xml->getDocumentComponent()->getResponseRules();
         $this->assertEquals(1, count($responseRules));
-        
+
         $responseCondition = $responseRules[0];
         $this->assertInstanceOf('qtism\\data\\rules\\ResponseCondition', $responseCondition);
-        
+
         $responseIf = $responseCondition->getResponseIf();
         $match = $responseIf->getExpression();
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $match);
-        
+
         $matchExpressions = $match->getExpressions();
         $this->assertEquals(2, count($matchExpressions));
         $variable = $matchExpressions[0];
@@ -34,10 +33,9 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
         $correct = $matchExpressions[1];
         $this->assertInstanceOf('qtism\\data\\expressions\\Correct', $correct);
         $this->assertEquals('RESPONSE', $correct->getIdentifier());
-        
         // To be continued...
     }
-    
+
     /**
      * @dataProvider testLoadProvider
      *
@@ -48,7 +46,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
         $xml = new XmlDocument();
         $xml->load($url, true);
     }
-    
+
     /**
      * Returns the location of the templates on the file system
      * WITH A TRAILING SLASH.
@@ -59,16 +57,16 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     {
         return dirname(__FILE__) . '/../../../../../src/qtism/runtime/processing/templates/';
     }
-    
+
     public function testLoadProvider()
     {
-        return array(
-            array(self::getTemplatesPath() . '2_1/match_correct.xml'),
-            array(self::getTemplatesPath() . '2_1/map_response.xml'),
-            array(self::getTemplatesPath() . '2_1/map_response_point.xml'),
-            array(self::getTemplatesPath() . '2_0/match_correct.xml'),
-            array(self::getTemplatesPath() . '2_0/map_response.xml'),
-            array(self::getTemplatesPath() . '2_0/map_response_point.xml')
-        );
+        return [
+            [self::getTemplatesPath() . '2_1/match_correct.xml'],
+            [self::getTemplatesPath() . '2_1/map_response.xml'],
+            [self::getTemplatesPath() . '2_1/map_response_point.xml'],
+            [self::getTemplatesPath() . '2_0/match_correct.xml'],
+            [self::getTemplatesPath() . '2_0/map_response.xml'],
+            [self::getTemplatesPath() . '2_0/map_response_point.xml'],
+        ];
     }
 }

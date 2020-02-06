@@ -2,39 +2,36 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
+use DOMDocument;
+use qtism\common\enums\BaseType;
+use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\AnyN;
-use qtism\data\expressions\BaseValue;
-use qtism\common\enums\BaseType;
-use DOMDocument;
+use qtismtest\QtiSmTestCase;
 
 class AnyNMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshall()
     {
-        
         $subs = new ExpressionCollection();
         $subs[] = new BaseValue(BaseType::BOOLEAN, true);
         $subs[] = new BaseValue(BaseType::BOOLEAN, true);
         $subs[] = new BaseValue(BaseType::BOOLEAN, false);
-    
+
         $min = 1;
         $max = 2;
-        
+
         $component = new AnyN($subs, 1, 2);
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('anyN', $element->nodeName);
         $this->assertEquals('' . $min, $element->getAttribute('min'));
         $this->assertEquals('' . $max, $element->getAttribute('max'));
         $this->assertEquals(3, $element->getElementsByTagName('baseValue')->length);
     }
-    
+
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -48,10 +45,10 @@ class AnyNMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\AnyN', $component);
         $this->assertEquals(1, $component->getMin());
         $this->assertEquals(2, $component->getMax());

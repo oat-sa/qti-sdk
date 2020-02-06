@@ -2,33 +2,29 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
+use DOMDocument;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\enums\BaseType;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
-use qtism\common\enums\BaseType;
-use qtism\data\state\Value;
-use qtism\common\datatypes\QtiPair;
-use DOMDocument;
+use qtismtest\QtiSmTestCase;
 
 class MatchTableMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshall()
     {
-
         $matchTableEntryCollection = new MatchTableEntryCollection();
         $matchTableEntryCollection[] = new MatchTableEntry(1, new QtiPair('A', 'B'));
         $matchTableEntryCollection[] = new MatchTableEntry(2, new QtiPair('A', 'C'));
-        
+
         $component = new MatchTable($matchTableEntryCollection);
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::PAIR));
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::PAIR]);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('matchTable', $element->nodeName);
-        
+
         $entryElements = $element->getElementsByTagName('matchTableEntry');
         $this->assertEquals(2, $entryElements->length);
         $entry = $entryElements->item(0);
@@ -36,7 +32,7 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $this->assertEquals($entry->nodeName, 'matchTableEntry');
         $this->assertEquals($entry->getAttribute('sourceValue'), '1');
     }
-    
+
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -50,9 +46,9 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::DIRECTED_PAIR));
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::DIRECTED_PAIR]);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $component);
         $matchTableEntries = $component->getMatchTableEntries();
         $this->assertEquals(2, count($matchTableEntries));

@@ -24,8 +24,8 @@
 namespace qtismtest\data;
 
 use qtism\data\storage\xml\XmlDocument;
-use qtismtest\QtiSmTestCase;
 use qtism\data\Utils as DataUtils;
+use qtismtest\QtiSmTestCase;
 
 class UtilsTest extends QtiSmTestCase
 {

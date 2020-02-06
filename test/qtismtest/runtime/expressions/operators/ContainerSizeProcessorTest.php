@@ -2,21 +2,19 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
-use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\runtime\expressions\operators\ContainerSizeProcessor;
-use qtism\data\expressions\operators\ContainerSize;
-use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\datatypes\QtiPoint;
-use qtism\runtime\common\RecordContainer;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\RecordContainer;
+use qtism\runtime\expressions\operators\ContainerSizeProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class ContainerSizeProcessorTest extends QtiSmTestCase
 {
-    
     public function testNotEnoughOperands()
     {
         $expression = $this->createFakeExpression();
@@ -24,67 +22,67 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $processor = new ContainerSizeProcessor($expression, $operands);
     }
-    
+
     public function testTooMuchOperands()
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
-        $operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(26)));
+        $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)]);
+        $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(26)]);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $processor = new ContainerSizeProcessor($expression, $operands);
     }
-    
+
     public function testNull()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(null));
+        $operands = new OperandsCollection([null]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
         $this->assertSame(0, $result->getValue());
-        
-        $operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER)));
+
+        $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
         $this->assertSame(0, $result->getValue());
     }
-    
+
     public function testWrongCardinalityOne()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiInteger(25)));
+        $operands = new OperandsCollection([new QtiInteger(25)]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testWrongCardinalityTwo()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new RecordContainer(array('1' => new QtiFloat(1.0), '2' => new QtiInteger(2)))));
+        $operands = new OperandsCollection([new RecordContainer(['1' => new QtiFloat(1.0), '2' => new QtiInteger(2)])]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testSize()
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('String!')));
+        $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('String!')]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertEquals(1, $result->getValue());
-        
+
         $operands->reset();
-        $operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)));
+        $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)]);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
         $this->assertEquals(3, $result->getValue());
     }
-    
+
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

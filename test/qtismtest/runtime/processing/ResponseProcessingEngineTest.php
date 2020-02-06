@@ -2,29 +2,25 @@
 
 namespace qtismtest\runtime\processing;
 
-use qtism\common\datatypes\QtiBoolean;
-use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
-use qtism\runtime\rules\RuleProcessingException;
-use qtism\runtime\common\ProcessingException;
-use qtism\runtime\common\State;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
+use qtismtest\QtiSmTestCase;
 
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {
-    
     public function testResponseProcessingMatchCorrect()
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
         ');
-        
+
         $responseDeclaration = $this->createComponentFromXml('
             <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                 <correctResponse>
@@ -32,7 +28,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                 </correctResponse>
             </responseDeclaration>		
         ');
-        
+
         $outcomeDeclaration = $this->createComponentFromXml('
             <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
                 <defaultValue>
@@ -40,26 +36,26 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                 </defaultValue>
             </outcomeDeclaration>
         ');
-        
+
         $respVar = ResponseVariable::createFromDataModel($responseDeclaration);
         $outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
-        $context = new State(array($respVar, $outVar));
-        
+        $context = new State([$respVar, $outVar]);
+
         $engine = new ResponseProcessingEngine($responseProcessing, $context);
-        
+
         // --> answer as a correct response.
         $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
         $engine->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
         $this->assertEquals(1.0, $context['SCORE']->getValue());
-        
+
         // --> answer as an incorrect response.
         $context['RESPONSE'] = new QtiIdentifier('ChoiceB');
         $engine->process();
         $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
         $this->assertEquals(0.0, $context['SCORE']->getValue());
     }
-    
+
     public function testResponseProcessingNoResponseRule()
     {
         $responseProcessing = $this->createComponentFromXml('
@@ -87,35 +83,35 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                 </responseCondition>
             </responseProcessing>
         ');
-        
+
         $responseDeclaration = $this->createComponentFromXml('
             <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>	
         ');
-        
+
         $outcomeDeclaration = $this->createComponentFromXml('
             <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
         ');
-        
+
         $respVar = ResponseVariable::createFromDataModel($responseDeclaration);
         $outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
-        $context = new State(array($respVar, $outVar));
-        
+        $context = new State([$respVar, $outVar]);
+
         $engine = new ResponseProcessingEngine($responseProcessing, $context);
-        
+
         $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
         $engine->process();
         $this->assertNull($context['SCORE']);
-        
+
         $context['RESPONSE'] = new QtiIdentifier('ChoiceB');
         $engine->process();
         $this->assertNull($context['SCORE']);
-        
+
         $context['RESPONSE'] = new QtiIdentifier('ChoiceC');
         $engine->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
         $this->assertEquals(1.0, $context['SCORE']->getValue());
     }
-    
+
     public function testResponseProcessingExitResponse()
     {
         $responseProcessing = $this->createComponentFromXml('
@@ -130,7 +126,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                 </setOutcomeValue>
             </responseProcessing>
         ');
-        
+
         $state = new State();
         $state->setVariable(new OutcomeVariable('OUTCOME', Cardinality::SINGLE, BaseType::INTEGER));
         $engine = new ResponseProcessingEngine($responseProcessing);
@@ -138,7 +134,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine->process();
         $this->assertEquals(1, $state['OUTCOME']->getValue());
     }
-    
+
     public function testSetOutcomeValueWithSum()
     {
         $responseProcessing = $this->createComponentFromXml('
@@ -179,38 +175,37 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                 </setOutcomeValue>
               </responseProcessing>
         ');
-        
-        
+
         $responseX = new ResponseVariable('response-X', Cardinality::MULTIPLE, BaseType::IDENTIFIER);
-        $responseX->setCorrectResponse(new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB'))));
-        
+        $responseX->setCorrectResponse(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')]));
+
         $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.));
         $maxScore = new OutcomeVariable('MAXSCORE', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.));
         $scoreX = new OutcomeVariable('score-X', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.));
         $maxScoreX = new OutcomeVariable('maxscore-X', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(1.));
-        
+
         $state = new State(
-            array(
+            [
                 $responseX,
                 $score,
                 $maxScore,
                 $scoreX,
-                $maxScoreX
-            )
+                $maxScoreX,
+            ]
         );
-        
+
         // Try correct response...
         $state['response-X'][] = new QtiIdentifier('ChoiceA');
         $state['response-X'][] = new QtiIdentifier('ChoiceB');
-        
+
         $engine = new ResponseProcessingEngine($responseProcessing, $state);
         $engine->process();
-        
+
         $this->assertEquals(1., $state['score-X']->getValue());
         $this->assertEquals(1., $state['SCORE']->getValue());
         $this->assertEquals(1., $state['MAXSCORE']->getValue());
     }
-    
+
     public function testWrongComponentType()
     {
         $responseProcessing = $this->createComponentFromXml(
@@ -223,72 +218,72 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                 </setOutcomeValue>
               </responseIf>'
         );
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             'The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.'
         );
-        
+
         $engine = new ResponseProcessingEngine($responseProcessing);
     }
-    
+
     public function testAddTemplateMappingWrongFirstParam()
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
         ');
-        
+
         $engine = new ResponseProcessingEngine($responseProcessing);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "The uri argument must be a string, 'integer' given."
         );
-        
+
         $engine->addTemplateMapping(10, 'http://taotesting.com');
     }
-    
+
     public function testAddTemplateMappingWrongSecondParam()
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
         ');
-        
+
         $engine = new ResponseProcessingEngine($responseProcessing);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "The url argument must be a string, 'string' given."
         );
-        
+
         $engine->addTemplateMapping('http://taotesting.com', 10);
     }
-    
+
     public function testRemoveTemplateMappingWrongUrl()
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
         ');
-        
+
         $engine = new ResponseProcessingEngine($responseProcessing);
-        
+
         $this->setExpectedException(
             '\\InvalidArgumentException',
             "The uri argument must be a string, 'integer' given."
         );
-        
+
         $engine->removeTemplateMapping(10);
     }
-    
+
     public function testRemoveTemplateMapping()
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
         ');
-        
+
         $engine = new ResponseProcessingEngine($responseProcessing);
         $engine->removeTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct');
-        
+
         $this->assertTrue(true, "The template mapping removal should not produce any error.");
     }
 

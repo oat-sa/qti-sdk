@@ -2,20 +2,17 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
-use qtism\data\storage\xml\marshalling\Marshaller;
+use DOMDocument;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\InlineCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\text\Div;
+use qtism\data\content\xhtml\text\P;
+use qtism\data\ShowHide;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
-use qtism\data\ShowHide;
-use qtism\data\content\TextRun;
-use qtism\data\content\InlineCollection;
-use qtism\data\content\xhtml\text\P;
-use qtism\data\content\FlowCollection;
-use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\FlowStaticCollection;
-use ReflectionClass;
-use DOMDocument;
+use qtismtest\QtiSmTestCase;
 
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
@@ -27,15 +24,15 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $showHide = ShowHide::SHOW;
         $text = new TextRun('Hello World!');
         $p = new P();
-        $p->setContent(new InlineCollection(array($text)));
+        $p->setContent(new InlineCollection([$text]));
         $div = new Div();
-        $div->setContent(new FlowCollection(array($p)));
-        $content = new FlowStaticCollection(array($div));
+        $div->setContent(new FlowCollection([$p]));
+        $content = new FlowStaticCollection([$div]);
 
         $component = new TestFeedback($identifier, $outcomeIdentifier, $content);
         $component->setAccess($access);
         $component->setShowHide($showHide);
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
@@ -46,7 +43,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $this->assertEquals('', $element->getAttribute('title'));
         $this->assertEquals('atEnd', $element->getAttribute('access'));
         $this->assertEquals('show', $element->getAttribute('showHide'));
-        
+
         $content = $element->getElementsByTagName('div');
         $this->assertEquals($content->length, 1);
         $this->assertEquals($content->item(0)->getElementsByTagName('p')->length, 1);
@@ -69,11 +66,11 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $this->assertEquals($component->getAccess(), TestFeedbackAccess::AT_END);
         $this->assertEquals($component->getShowHide(), ShowHide::SHOW);
         $this->assertEquals($component->getTitle(), 'my title');
-        
+
         $content = $component->getContent();
         $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $content[1]);
     }
-    
+
     public function testUnmarshallWrongContent()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -86,15 +83,15 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "'testFeedback' elements cannot contain 'choiceInteraction' elements."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoAccessAttribute()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -105,15 +102,15 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory 'access' attribute is missing from element 'testFeedback'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoShowHideAttribute()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -124,15 +121,15 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory 'showHide' attribute is missing from element 'testFeedback'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoOutcomeIdentifierAttribute()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -143,15 +140,15 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedback'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
-    
+
     public function testUnmarshallNoIdentifierAttribute()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -162,12 +159,12 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        
+
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
             "The mandatory 'identifier' attribute is missing from element 'testFeedback'."
         );
-        
+
         $marshaller->unmarshall($element);
     }
 }

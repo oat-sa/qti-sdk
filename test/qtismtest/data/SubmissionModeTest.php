@@ -2,8 +2,8 @@
 
 namespace qtismtest\data;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\SubmissionMode;
+use qtismtest\QtiSmEnumTestCase;
 
 class SubmissionModeTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class SubmissionModeTest extends QtiSmEnumTestCase
     {
         return SubmissionMode::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'individual',
-            'simultaneous'
-        );
+            'simultaneous',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'INDIVIDUAL',
-            'SIMULTANEOUS'
-        );
+            'SIMULTANEOUS',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             SubmissionMode::INDIVIDUAL,
-            SubmissionMode::SIMULTANEOUS
-        );
+            SubmissionMode::SIMULTANEOUS,
+        ];
     }
 }

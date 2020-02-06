@@ -23,9 +23,10 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\results\CandidateResponse;
-use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
 class CandidateResponseMarshallerTest extends QtiSmTestCase
@@ -63,16 +64,16 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $component = new CandidateResponse(
-            new ValueCollection(array(
+            new ValueCollection([
                 new Value('fixture1'),
                 new Value('fixture2'),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -90,7 +91,7 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
         $this->assertFalse($element->hasAttributes());

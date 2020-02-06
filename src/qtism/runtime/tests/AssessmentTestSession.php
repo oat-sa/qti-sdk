@@ -737,7 +737,6 @@ class AssessmentTestSession extends State
     /**
      * Begins the test session. Calling this method will make the state
      * change into AssessmentTestSessionState::INTERACTING.
-     *
      */
     public function beginTestSession()
     {
@@ -1940,7 +1939,6 @@ class AssessmentTestSession extends State
      * Please not that unsetting a variable's value keep the variable still instantiated
      * in the context with its value replaced by NULL.
      *
-     *
      * @param string $offset A simple variable identifier (no prefix, no sequence number).
      * @throws OutOfRangeException If $offset is not a simple variable identifier.
      * @throws OutOfBoundsException If $offset does not refer to an existing variable in the global scope.
@@ -2109,7 +2107,6 @@ class AssessmentTestSession extends State
      *
      * * The test is adaptive: an AssessmentItemSession will be instantiated for the current route item only.
      * * The test is not adaptive: all route items are scanned. If an AssessmentItemSession does not exist for a route item, it is instantiated.
-     *
      */
     protected function selectEligibleItems()
     {

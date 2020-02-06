@@ -2,33 +2,30 @@
 
 namespace qtismtest;
 
-use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\files\FileSystemFileManager;
-use qtism\runtime\tests\SessionManager;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;
+use qtism\runtime\tests\SessionManager;
 
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
-    
     public function setUp()
     {
         parent::setUp();
     }
-    
+
     public function tearDown()
     {
         parent::tearDown();
     }
-    
+
     protected static function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
         $element = self::createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }
-    
+
     /**
      * Instantiate a basic item session for a non-adaptive, non-timeDependent item with two variables:
      *
@@ -37,7 +34,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * The responseProcessing for item of the session is the template 'match_correct'.
      *
-     * @return \qtism\runtime\tests\AssessmentItemSession
+     * @return AssessmentItemSession
      */
     protected static function instantiateBasicAssessmentItemSession()
     {
@@ -56,10 +53,10 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
             </assessmentItemRef>
         ');
-    
+
         return new AssessmentItemSession($itemRef);
     }
-    
+
     /**
      * Instantiate a basic item session for an adaptive, non-timeDependent item with two variables:
      *
@@ -71,7 +68,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
      * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
      *
-     * @return \qtism\runtime\tests\AssessmentItemSession
+     * @return AssessmentItemSession
      */
     protected static function instantiateBasicAdaptiveAssessmentItem()
     {
@@ -115,7 +112,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
                 </responseProcessing>
             </assessmentItemRef>
         ');
-    
+
         $manager = new SessionManager(new FileSystemFileManager());
         return new AssessmentItemSession($itemRef);
     }

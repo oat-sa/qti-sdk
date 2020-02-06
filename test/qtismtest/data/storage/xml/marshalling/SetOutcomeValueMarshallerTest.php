@@ -2,31 +2,28 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
-use qtism\data\rules\SetOutcomeValue;
-use qtism\data\expressions\BaseValue;
-use qtism\common\enums\BaseType;
 use DOMDocument;
+use qtism\common\enums\BaseType;
+use qtism\data\expressions\BaseValue;
+use qtism\data\rules\SetOutcomeValue;
+use qtismtest\QtiSmTestCase;
 
 class SetOutcomeValueMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshall()
     {
-
         $identifier = 'variable1';
-        
+
         $component = new SetOutcomeValue($identifier, new BaseValue(BaseType::BOOLEAN, true));
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('setOutcomeValue', $element->nodeName);
         $this->assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
     }
-    
+
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -38,10 +35,10 @@ class SetOutcomeValueMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $component);
         $this->assertEquals('variable1', $component->getIdentifier());
         $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getExpression());

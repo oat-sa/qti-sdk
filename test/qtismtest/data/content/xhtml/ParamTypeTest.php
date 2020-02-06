@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\content\xhtml;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\content\xhtml\ParamType;
+use qtismtest\QtiSmEnumTestCase;
 
 class ParamTypeTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class ParamTypeTest extends QtiSmEnumTestCase
     {
         return ParamType::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
-            'DATA',
-            'REF'
-        );
-    }
-    
-    protected function getKeys()
-    {
-        return array(
+        return [
             'DATA',
             'REF',
-        );
+        ];
     }
-    
+
+    protected function getKeys()
+    {
+        return [
+            'DATA',
+            'REF',
+        ];
+    }
+
     protected function getConstants()
     {
-        return array(
+        return [
             ParamType::DATA,
-            ParamType::REF
-        );
+            ParamType::REF,
+        ];
     }
 }

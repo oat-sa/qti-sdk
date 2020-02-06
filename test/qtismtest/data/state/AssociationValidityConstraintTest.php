@@ -2,12 +2,11 @@
 
 namespace qtismtest\data\state;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\state\AssociationValidityConstraint;
+use qtismtest\QtiSmTestCase;
 
 class AssociationValidityConstraintTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider successfulInstantiationProvider
      *
@@ -22,18 +21,18 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
         $this->assertEquals($minConstraint, $associationValidityConstraint->getMinConstraint());
         $this->assertEquals($maxConstraint, $associationValidityConstraint->getMaxConstraint());
     }
-    
+
     public function successfulInstantiationProvider()
     {
-        return array(
-            array(0, 1),
-            array(0, 0),
-            array(2, 2),
-            array(0, 2),
-            array(1, 0)
-        );
+        return [
+            [0, 1],
+            [0, 0],
+            [2, 2],
+            [0, 2],
+            [1, 0],
+        ];
     }
-    
+
     /**
      * @dataProvider unsuccessfulInstantiationProvider
      *
@@ -47,14 +46,14 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         $associationValidityConstraint = new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);
     }
-    
+
     public function unsuccessfulInstantiationProvider()
     {
-        return array(
-            array('', 0, 0, "The 'identifier' argument must be a non-empty string."),
-            array('IDENTIFIER', 3, 2, "The 'maxConstraint' argument must be greather or equal to than the 'minConstraint' in place."),
-            array('IDENTIFIER', -1, 2, "The 'minConstraint' argument must be a non negative (>= 0) integer."),
-            array('IDENTIFIER', 2, -4, "The 'maxConstraint' argument must be a non negative (>= 0) integer."),
-        );
+        return [
+            ['', 0, 0, "The 'identifier' argument must be a non-empty string."],
+            ['IDENTIFIER', 3, 2, "The 'maxConstraint' argument must be greather or equal to than the 'minConstraint' in place."],
+            ['IDENTIFIER', -1, 2, "The 'minConstraint' argument must be a non negative (>= 0) integer."],
+            ['IDENTIFIER', 2, -4, "The 'maxConstraint' argument must be a non negative (>= 0) integer."],
+        ];
     }
 }

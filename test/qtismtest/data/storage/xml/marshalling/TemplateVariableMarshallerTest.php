@@ -23,12 +23,13 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtism\common\enums\Cardinality;
+use DOMElement;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\results\ResultTemplateVariable;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\common\datatypes\QtiIdentifier;
-use qtism\data\results\ResultTemplateVariable;
 use qtismtest\QtiSmTestCase;
 
 class TemplateVariableMarshallerTest extends QtiSmTestCase
@@ -86,16 +87,16 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
             new QtiIdentifier('fixture-identifier'),
             0,
             4,
-            new ValueCollection(array(
+            new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -116,7 +117,7 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -124,7 +125,7 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'cardinality')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
 
         $this->assertEquals(0, $element->getElementsByTagName('value')->length);
     }

@@ -48,7 +48,7 @@ class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
                     Cardinality::SINGLE,
                     BaseType::IDENTIFIER,
                     new QtiIdentifier('ChoiceA')
-                )
+                ),
             ])
         );
 

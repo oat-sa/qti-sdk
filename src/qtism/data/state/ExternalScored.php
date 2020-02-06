@@ -39,10 +39,10 @@ class ExternalScored implements Enumeration
      */
     public static function asArray()
     {
-        return array(
+        return [
             'HUMAN' => self::HUMAN,
             'EXTERNAL_MACHINE' => self::EXTERNAL_MACHINE,
-        );
+        ];
     }
 
     /**

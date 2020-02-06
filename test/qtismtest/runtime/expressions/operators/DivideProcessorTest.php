@@ -2,114 +2,113 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
-use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
+use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\DivideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class DivideProcessorTest extends QtiSmTestCase
 {
-    
     public function testDivide()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiInteger(1), new QtiInteger(1)));
+        $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(1)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(1, $result->getValue());
-        
-        $operands = new OperandsCollection(array(new QtiInteger(0), new QtiInteger(2)));
+
+        $operands = new OperandsCollection([new QtiInteger(0), new QtiInteger(2)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
-        
-        $operands = new OperandsCollection(array(new QtiInteger(-30), new QtiInteger(5)));
+
+        $operands = new OperandsCollection([new QtiInteger(-30), new QtiInteger(5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-6, $result->getValue());
-        
-        $operands = new OperandsCollection(array(new QtiInteger(30), new QtiInteger(5)));
+
+        $operands = new OperandsCollection([new QtiInteger(30), new QtiInteger(5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(6, $result->getValue());
-        
-        $operands = new OperandsCollection(array(new QtiInteger(1), new QtiFloat(0.5)));
+
+        $operands = new OperandsCollection([new QtiInteger(1), new QtiFloat(0.5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(2, $result->getValue());
     }
-    
+
     public function testDivisionByZero()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiInteger(1), new QtiInteger(0)));
+        $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(0)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertSame(null, $result);
     }
-    
+
     public function testDivisionByInfinite()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(INF)));
+        $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(INF)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(0, $result->getValue());
-        
-        $operands = new OperandsCollection(array(new QtiInteger(-1), new QtiFloat(INF)));
+
+        $operands = new OperandsCollection([new QtiInteger(-1), new QtiFloat(INF)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
         $this->assertEquals(-0, $result->getValue());
     }
-    
+
     public function testInfiniteDividedByInfinite()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiFloat(INF), new QtiFloat(INF)));
+        $operands = new OperandsCollection([new QtiFloat(INF), new QtiFloat(INF)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertSame(null, $result);
     }
-    
+
     public function testWrongBaseTypeOne()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiString('string!'), new QtiBoolean(true)));
+        $operands = new OperandsCollection([new QtiString('string!'), new QtiBoolean(true)]);
         $processor = new DivideProcessor($expression, $operands);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testWrongBaseTypeTwo()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiPoint(1, 2), new QtiBoolean(true)));
+        $operands = new OperandsCollection([new QtiPoint(1, 2), new QtiBoolean(true)]);
         $processor = new DivideProcessor($expression, $operands);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testWrongCardinality()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new RecordContainer(array('A' => new QtiInteger(1))), new QtiInteger(10)));
+        $operands = new OperandsCollection([new RecordContainer(['A' => new QtiInteger(1)]), new QtiInteger(10)]);
         $processor = new DivideProcessor($expression, $operands);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testNotEnoughOperands()
     {
         $expression = $this->createFakeExpression();
@@ -117,15 +116,15 @@ class DivideProcessorTest extends QtiSmTestCase
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $processor = new DivideProcessor($expression, $operands);
     }
-    
+
     public function testTooMuchOperands()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(11), new QtiInteger(12)));
+        $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(11), new QtiInteger(12)]);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $processor = new DivideProcessor($expression, $operands);
     }
-    
+
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

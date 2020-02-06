@@ -2,8 +2,8 @@
 
 namespace qtismtest\common\datatypes;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\common\datatypes\QtiShape;
+use qtismtest\QtiSmEnumTestCase;
 
 class ShapeTest extends QtiSmEnumTestCase
 {
@@ -11,37 +11,37 @@ class ShapeTest extends QtiSmEnumTestCase
     {
         return QtiShape::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'default',
             'rect',
             'circle',
             'poly',
-            'ellipse'
-        );
+            'ellipse',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'DEF',
             'RECT',
             'CIRCLE',
             'POLY',
-            'ELLIPSE'
-        );
+            'ELLIPSE',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             QtiShape::DEF,
             QtiShape::RECT,
             QtiShape::CIRCLE,
             QtiShape::POLY,
-            QtiShape::ELLIPSE
-        );
+            QtiShape::ELLIPSE,
+        ];
     }
 }

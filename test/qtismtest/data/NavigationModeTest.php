@@ -2,8 +2,8 @@
 
 namespace qtismtest\data;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\NavigationMode;
+use qtismtest\QtiSmEnumTestCase;
 
 class NavigationModeTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class NavigationModeTest extends QtiSmEnumTestCase
     {
         return NavigationMode::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'linear',
-            'nonlinear'
-        );
+            'nonlinear',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'LINEAR',
-            'NONLINEAR'
-        );
+            'NONLINEAR',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             NavigationMode::LINEAR,
-            NavigationMode::NONLINEAR
-        );
+            NavigationMode::NONLINEAR,
+        ];
     }
 }

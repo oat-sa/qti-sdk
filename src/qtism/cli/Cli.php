@@ -23,8 +23,8 @@
 
 namespace qtism\cli;
 
-use cli\Arguments;
 use cli as CliTools;
+use cli\Arguments;
 
 /**
  * The main class of the Command Line Interface.
@@ -60,7 +60,7 @@ abstract class Cli
      * @var integer
      */
     const EXIT_SUCCESS = 0;
-    
+
     /**
      * POSIX generic exit status (1).
      *
@@ -70,60 +70,60 @@ abstract class Cli
      * @var integer
      */
     const EXIT_FAILURE = 1;
-    
+
     /**
      * An Arguments object (from php-cli-tools) representing the input
      * arguments of the CLI module.
      *
-     * @var \cli\Arguments
+     * @var Arguments
      * @see https://github.com/wp-cli/php-cli-tools The PHP CLI Tools github repository.
      */
     private $arguments;
-    
+
     /**
      * Main CLI entry point.
      */
     public static function main()
     {
         $cli = new static();
-        
+
         // Initialize arguments from factory method.
         $arguments = $cli->setupArguments();
-        
+
         // Add help flag.
-        $arguments->addFlag(array('help', 'h'), 'Show help screen.');
-        
+        $arguments->addFlag(['help', 'h'], 'Show help screen.');
+
         // Add verbose flag.
-        $arguments->addFlag(array('verbose', 'v'), 'Verbose mode.');
-        
+        $arguments->addFlag(['verbose', 'v'], 'Verbose mode.');
+
         // Parse arguments and provide to implementation.
         $arguments->parse();
         $cli->setArguments($arguments);
-        
+
         if ($arguments['help'] === true) {
             echo $arguments->getHelpScreen() . "\n\n";
         } else {
             // Perform arguments check.
             $cli->checkArguments();
-            
+
             // Run the CLI Module implementation.
             $cli->run();
         }
     }
-    
+
     /**
      * Run the Command Line Interface.
      */
     abstract protected function run();
-    
+
     /**
      * Setup the arguments of the CLI Module.
      *
-     * @return \cli\Arguments An Arguments object (from php-cli-tools).
+     * @return Arguments An Arguments object (from php-cli-tools).
      * @see https://github.com/wp-cli/php-cli-tools The PHP CLI Tools github repository.
      */
     abstract protected function setupArguments();
-    
+
     /**
      * Check the arguments given to the CLI Module.
      *
@@ -136,7 +136,7 @@ abstract class Cli
      * @see \qtism\cli\Cli::fail()
      */
     abstract protected function checkArguments();
-    
+
     /**
      * Set the parsed arguments to the CLI Module.
      *
@@ -146,17 +146,17 @@ abstract class Cli
     {
         $this->arguments = $arguments;
     }
-    
+
     /**
      * Get the parsed arguments of the current CLI Module.
      *
-     * @return \cli\Arguments An Arguments object from php-cli-tools.
+     * @return Arguments An Arguments object from php-cli-tools.
      */
     protected function getArguments()
     {
         return $this->arguments;
     }
-    
+
     /**
      * Show an error message as a single line in stderr.
      *
@@ -168,7 +168,7 @@ abstract class Cli
     {
         $this->out("%r${message}%n", true);
     }
-    
+
     /**
      * Show a success message as a single line in stdout and return a zero POSIX exit status.
      *
@@ -182,10 +182,10 @@ abstract class Cli
         if ($this->isVerbose() === true) {
             $this->out("%g${message}%n", true);
         }
-        
+
         exit(self::EXIT_SUCCESS);
     }
-    
+
     /**
      * Show an error message as a single line and return a non zero exit status.
      *
@@ -198,24 +198,24 @@ abstract class Cli
         $this->error($message);
         exit(self::EXIT_FAILURE);
     }
-    
+
     protected function missingArgument($longName)
     {
         $arguments = $this->getArguments();
         $options = $arguments->getOptions();
-        
+
         $msg = "Missing argument";
-        
+
         if (array_key_exists($longName, $options)) {
             $msg .= " '${longName}'";
         }
-        
+
         $msg .= ".";
-        
+
         $this->error($msg);
         $this->fail("Use the --help option to see the help screen.");
     }
-    
+
     /**
      * Show an information message as a single line.
      *
@@ -229,7 +229,7 @@ abstract class Cli
             $this->out("%w${message}%n", true);
         }
     }
-    
+
     /**
      * Show raw data in console even if verbose mode is not in force.
      *
@@ -239,12 +239,12 @@ abstract class Cli
     protected function out($data, $newLine = true)
     {
         CliTools\out($data);
-        
+
         if ($newLine === true) {
             CliTools\out("\n");
         }
     }
-    
+
     /**
      * Check wheter the verbose mode is in force.
      *

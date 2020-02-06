@@ -2,9 +2,9 @@
 
 namespace qtismtest\data\content;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ShowHide;
+use qtismtest\QtiSmTestCase;
 
 class ModalFeedbackRuleTest extends QtiSmTestCase
 {
@@ -16,7 +16,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
         );
         $modalFeedbackRule = new ModalFeedbackRule(999, ShowHide::SHOW, 'IDENTIFIER', 'Title');
     }
-    
+
     public function testCreateWrongShowHide()
     {
         $this->setExpectedException(
@@ -25,7 +25,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
         );
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', true, 'IDENTIFIER', 'Title');
     }
-    
+
     public function testCreateWrongIdentifier()
     {
         $this->setExpectedException(
@@ -34,7 +34,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
         );
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', ShowHide::SHOW, 999, 'Title');
     }
-    
+
     public function testCreateWrongTitle()
     {
         $this->setExpectedException(

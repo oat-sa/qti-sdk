@@ -6,63 +6,61 @@ require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 function testAssessmentItems(array $files, $validate = false)
 {
-    
     $loaded = 0;
     $totalSpent = 0;
     foreach ($files as $f) {
         $start = microtime();
-        
+
         $itemDoc = new XmlDocument();
         $itemDoc->load($f, $validate);
 
         $end = microtime();
         $spent = spentTime($start, $end);
         $totalSpent += $spent;
-        
+
         output("Item '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
-        
+
         $outcomeDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('outcomeDeclaration'));
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
-        
+
         outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
-        outputDescription("Memory usage is " . (memory_get_usage()  / pow(1024, 2)) . " MB");
+        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
         output('');
-        
+
         $loaded++;
     }
-    
+
     outputAverage($totalSpent / $loaded);
 }
 
 function testAssessmentTests(array $files, $validate = false)
 {
-    
     $loaded = 0;
     $totalSpent = 0;
-    
+
     foreach ($files as $f) {
         $start = microtime();
         $testDoc = new XmlDocument();
         $testDoc->load($f, $validate);
-        
+
         $end = microtime();
         $spent = spentTime($start, $end);
         $totalSpent += $spent;
-        
+
         output("Test '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
-        
+
         $partCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('testPart'));
         $sectionCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentSection'));
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
-        
+
         outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
-        outputDescription("Memory usage is " . (memory_get_usage()  / pow(1024, 2)) . " MB");
-        
+        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+
         output('');
-        
+
         $loaded++;
     }
-    
+
     outputAverage($totalSpent / $loaded);
 }
 
@@ -99,7 +97,7 @@ function spentTime($start, $end)
 
 define('SAMPLES_DIR', dirname(__FILE__) . '/../samples/');
 
-$items = array(
+$items = [
     SAMPLES_DIR . 'ims/items/2_0/adaptive_template.xml',
     SAMPLES_DIR . 'ims/items/2_0/adaptive.xml',
     SAMPLES_DIR . 'ims/items/2_0/associate.xml',
@@ -128,33 +126,33 @@ $items = array(
     SAMPLES_DIR . 'ims/items/2_0/template.xml',
     SAMPLES_DIR . 'ims/items/2_0/text_entry.xml',
     SAMPLES_DIR . 'ims/items/2_0/upload_composite.xml',
-    SAMPLES_DIR . 'ims/items/2_0/upload.xml'
-);
+    SAMPLES_DIR . 'ims/items/2_0/upload.xml',
+];
 
 outputTitle("Loading QTI-XML Items 2.0 samples:");
 testAssessmentItems($items);
 
-$items = array(
-        SAMPLES_DIR . 'ims/items/2_1/associate.xml',
-        SAMPLES_DIR . 'ims/items/2_1/choice_multiple.xml',
-        SAMPLES_DIR . 'ims/items/2_1/choice.xml',
-        SAMPLES_DIR . 'ims/items/2_1/extended_text.xml',
-        SAMPLES_DIR . 'ims/items/2_1/gap_match.xml',
-        SAMPLES_DIR . 'ims/items/2_1/graphic_associate.xml',
-        SAMPLES_DIR . 'ims/items/2_1/graphic_gap_match.xml',
-        SAMPLES_DIR . 'ims/items/2_1/hotspot.xml',
-        SAMPLES_DIR . 'ims/items/2_1/inline_choice.xml',
-        SAMPLES_DIR . 'ims/items/2_1/match.xml',
-        SAMPLES_DIR . 'ims/items/2_1/order.xml',
-        //SAMPLES_DIR . 'ims/items/2_1/position_object.xml', Note: contains invalid identifiers ;)
-        SAMPLES_DIR . 'ims/items/2_1/slider.xml',
-        SAMPLES_DIR . 'ims/items/2_1/text_entry.xml'
-);
+$items = [
+    SAMPLES_DIR . 'ims/items/2_1/associate.xml',
+    SAMPLES_DIR . 'ims/items/2_1/choice_multiple.xml',
+    SAMPLES_DIR . 'ims/items/2_1/choice.xml',
+    SAMPLES_DIR . 'ims/items/2_1/extended_text.xml',
+    SAMPLES_DIR . 'ims/items/2_1/gap_match.xml',
+    SAMPLES_DIR . 'ims/items/2_1/graphic_associate.xml',
+    SAMPLES_DIR . 'ims/items/2_1/graphic_gap_match.xml',
+    SAMPLES_DIR . 'ims/items/2_1/hotspot.xml',
+    SAMPLES_DIR . 'ims/items/2_1/inline_choice.xml',
+    SAMPLES_DIR . 'ims/items/2_1/match.xml',
+    SAMPLES_DIR . 'ims/items/2_1/order.xml',
+    //SAMPLES_DIR . 'ims/items/2_1/position_object.xml', Note: contains invalid identifiers ;)
+    SAMPLES_DIR . 'ims/items/2_1/slider.xml',
+    SAMPLES_DIR . 'ims/items/2_1/text_entry.xml',
+];
 
 outputTitle("Loading QTI-XML Items 2.1 samples:");
 testAssessmentItems($items);
 
-$tests = array(
+$tests = [
     SAMPLES_DIR . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml',
     SAMPLES_DIR . 'ims/tests/arbitrary_weighting_of_item_outcomes/arbitrary_weighting_of_item_outcomes.xml',
     SAMPLES_DIR . 'ims/tests/basic_statistics_as_outcomes/basic_statistics_as_outcomes.xml',
@@ -172,8 +170,8 @@ $tests = array(
     SAMPLES_DIR . 'ims/tests/sets_of_items_with_leading_material/sets_of_items_with_leading_material.xml',
     SAMPLES_DIR . 'ims/tests/simple_feedback_test/simple_feedback_test.xml',
     SAMPLES_DIR . 'ims/tests/specifiying_the_number_of_allowed_attempts/specifiying_the_number_of_allowed_attempts.xml',
-    SAMPLES_DIR . 'custom/very_long_assessmenttest.xml'
-);
+    SAMPLES_DIR . 'custom/very_long_assessmenttest.xml',
+];
 
 outputTitle("Loading QTI-XML Tests 2.1 samples:");
 testAssessmentTests($tests);

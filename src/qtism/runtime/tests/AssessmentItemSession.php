@@ -27,8 +27,6 @@ use DateTime;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -41,6 +39,8 @@ use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\ShowHide;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ShufflingCollection;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
@@ -1411,8 +1411,8 @@ class AssessmentItemSession extends State
     /**
      * Method will determine if an item is externally scored
      * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
-     * @param OutcomeDeclarationCollection $outcomeDeclarations
      *
+     * @param OutcomeDeclarationCollection $outcomeDeclarations
      * @return bool
      */
     private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)

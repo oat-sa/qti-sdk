@@ -2,10 +2,10 @@
 
 namespace qtismtest\data\state;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
+use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtismtest\QtiSmTestCase;
 
 class QtiPLTest extends QtiSmTestCase
 {

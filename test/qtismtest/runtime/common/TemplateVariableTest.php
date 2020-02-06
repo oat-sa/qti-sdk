@@ -2,17 +2,15 @@
 
 namespace qtismtest\runtime\common;
 
-use qtismtest\QtiSmTestCase;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
+use qtismtest\QtiSmTestCase;
 
 class TemplateVariableTest extends QtiSmTestCase
 {
-
     public function testCreateFromDataModel()
     {
-        
         $decl = $this->createComponentFromXml('
             <templateDeclaration identifier="mytpl1" cardinality="single" baseType="identifier" paramVariable="true" mathVariable="false">
                 <defaultValue>
@@ -20,7 +18,7 @@ class TemplateVariableTest extends QtiSmTestCase
                 </defaultValue>
             </templateDeclaration>
         ');
-        
+
         $var = TemplateVariable::createFromDataModel($decl);
         $this->assertInstanceOf('qtism\\runtime\\common\\TemplateVariable', $var);
         $this->assertEquals('mytpl1', $var->getIdentifier());

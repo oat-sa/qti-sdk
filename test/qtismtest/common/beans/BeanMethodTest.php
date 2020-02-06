@@ -2,14 +2,13 @@
 
 namespace qtismtest\common\beans;
 
-use qtismtest\QtiSmTestCase;
-use qtism\common\beans\BeanMethod;
 use qtism\common\beans\BeanException;
+use qtism\common\beans\BeanMethod;
+use qtismtest\QtiSmTestCase;
 use ReflectionClass;
 
 class BeanMethodTest extends QtiSmTestCase
 {
-    
     public function testNoMethod()
     {
         $class = new ReflectionClass('qtismtest\\common\\beans\\mocks\\SimpleBean');

@@ -2,13 +2,12 @@
 
 namespace qtismtest\common\datatypes;
 
-use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\QtiDuration;
 use DateInterval;
+use qtism\common\datatypes\QtiDuration;
+use qtismtest\QtiSmTestCase;
 
 class DurationTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider validDurationProvider
      */
@@ -17,7 +16,7 @@ class DurationTest extends QtiSmTestCase
         $duration = new QtiDuration($intervalSpec);
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $duration);
     }
-    
+
     /**
      * @dataProvider invalidDurationProvider
      */
@@ -26,7 +25,7 @@ class DurationTest extends QtiSmTestCase
         $this->setExpectedException('\\InvalidArgumentException');
         $duration = new QtiDuration($intervalSpec);
     }
-    
+
     public function testPositiveDuration()
     {
         $duration = new QtiDuration('P3YT6H8M'); // 2 years, 0 days, 6 hours, 8 minutes.
@@ -37,20 +36,20 @@ class DurationTest extends QtiSmTestCase
         $this->assertEquals(0, $duration->getMonths());
         $this->assertEquals(0, $duration->getSeconds());
     }
-    
+
     public function testEquality()
     {
         $d1 = new QtiDuration('P1DT12H'); // 1 day + 12 hours.
         $d2 = new QtiDuration('P1DT12H');
         $d3 = new QtiDuration('PT3600S'); // 3600 seconds.
-        
+
         $this->assertTrue($d1->equals($d2));
         $this->assertTrue($d2->equals($d1));
         $this->assertFalse($d1->equals($d3));
         $this->assertFalse($d3->equals($d1));
         $this->assertTrue($d3->equals($d3));
     }
-    
+
     public function testClone()
     {
         $d = new QtiDuration('P1DT12H'); // 1 day + 12 hours.
@@ -64,7 +63,7 @@ class DurationTest extends QtiSmTestCase
         $this->assertEquals($d->getMonths(), $c->getMonths());
         $this->assertEquals($d->getYears(), $c->getYears());
     }
-    
+
     /**
      * @dataProvider toStringProvider
      *
@@ -75,60 +74,60 @@ class DurationTest extends QtiSmTestCase
     {
         $this->assertEquals($duration->__toString(), $expected);
     }
-    
+
     public function testAdd()
     {
         $d1 = new QtiDuration('PT1S');
         $d2 = new QtiDuration('PT1S');
         $d1->add($d2);
         $this->assertEquals('PT2S', $d1->__toString());
-        
+
         $d1 = new QtiDuration('PT23H59M59S');
         $d2 = new QtiDuration('PT10S');
         $d1->add($d2);
         $this->assertEquals('P1DT9S', $d1->__toString());
-        
+
         $d1 = new QtiDuration('PT1S');
         $d2 = new DateInterval('PT1S');
         $d1->add($d2);
         $this->assertEquals('PT2S', $d1->__toString());
     }
-    
+
     public function testSub()
     {
         $d1 = new QtiDuration('PT2S');
         $d2 = new QtiDuration('PT1S');
         $d1->sub($d2);
         $this->assertEquals('PT1S', $d1->__toString());
-        
+
         $d1 = new QtiDuration('PT2S');
         $d2 = new QtiDuration('PT4S');
         $d1->sub($d2);
         $this->assertEquals('PT0S', $d1->__toString());
-        
+
         $d1 = new QtiDuration('P1DT2H25M30S');
         $d2 = new QtiDuration('P1DT2H');
         $d1->sub($d2);
         $this->assertEquals('PT25M30S', $d1->__toString());
-        
+
         $d1 = new QtiDuration('PT20S');
         $d2 = new QtiDuration('PT20S');
         $d1->sub($d2);
         $this->assertEquals('PT0S', $d1->__toString());
-        
+
         $d1 = new QtiDuration('PT20S');
         $d2 = new QtiDuration('PT21S');
         $d1->sub($d2);
         $this->assertTrue($d1->isNegative());
     }
-    
+
     public function createFromDateInterval()
     {
         $interval = new DateInterval('PT5S');
         $duration = QtiDuration::createFromDateInterval($interval);
         $this->assertEquals(5, $duration->getSeconds(true));
     }
-        
+
     /**
      * @dataProvider shorterThanProvider
      *
@@ -140,7 +139,7 @@ class DurationTest extends QtiSmTestCase
     {
         $this->assertSame($expected, $duration1->shorterThan($duration2));
     }
-    
+
     /**
      * @dataProvider longerThanOrEqualsProvider
      *
@@ -152,64 +151,64 @@ class DurationTest extends QtiSmTestCase
     {
         $this->assertSame($expected, $duration1->longerThanOrEquals($duration2));
     }
-    
+
     public function shorterThanProvider()
     {
-        $returnValue = array();
-        $returnValue[] = array(new QtiDuration('P1Y'), new QtiDuration('P2Y'), true);
-        $returnValue[] = array(new QtiDuration('P1Y'), new QtiDuration('P1Y'), false);
-        $returnValue[] = array(new QtiDuration('P1Y'), new QtiDuration('P1YT2S'), true);
-        $returnValue[] = array(new QtiDuration('P2Y'), new QtiDuration('P1Y'), false);
-        $returnValue[] = array(new QtiDuration('PT0S'), new QtiDuration('PT1S'), true);
-        $returnValue[] = array(new QtiDuration('PT1H25M0S'), new QtiDuration('PT1H26M12S'), true);
-        $returnValue[] = array(new QtiDuration('PT1H26M12S'), new QtiDuration('PT1H25M0S'), false);
-        
+        $returnValue = [];
+        $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P2Y'), true];
+        $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P1Y'), false];
+        $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P1YT2S'), true];
+        $returnValue[] = [new QtiDuration('P2Y'), new QtiDuration('P1Y'), false];
+        $returnValue[] = [new QtiDuration('PT0S'), new QtiDuration('PT1S'), true];
+        $returnValue[] = [new QtiDuration('PT1H25M0S'), new QtiDuration('PT1H26M12S'), true];
+        $returnValue[] = [new QtiDuration('PT1H26M12S'), new QtiDuration('PT1H25M0S'), false];
+
         return $returnValue;
     }
-    
+
     public function longerThanOrEqualsProvider()
     {
-        $returnValue = array();
-        $returnValue[] = array(new QtiDuration('P1Y'), new QtiDuration('P2Y'), false);
-        $returnValue[] = array(new QtiDuration('P1Y'), new QtiDuration('P1Y'), true);
-        $returnValue[] = array(new QtiDuration('P1Y'), new QtiDuration('P1YT2S'), false);
-        $returnValue[] = array(new QtiDuration('P2Y'), new QtiDuration('P1Y'), true);
-        $returnValue[] = array(new QtiDuration('PT0S'), new QtiDuration('PT1S'), false);
-        $returnValue[] = array(new QtiDuration('PT1H25M0S'), new QtiDuration('PT1H26M12S'), false);
-        $returnValue[] = array(new QtiDuration('PT1H26M12S'), new QtiDuration('PT1H25M0S'), true);
-        $returnValue[] = array(new QtiDuration('PT1H26M'), new QtiDuration('PT1H26M'), true);
-        $returnValue[] = array(new QtiDuration('PT1M5S'), new QtiDuration('PT1M'), true);
-        $returnValue[] = array(new QtiDuration('PT1M15S'), new QtiDuration('PT45S'), true);
-    
+        $returnValue = [];
+        $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P2Y'), false];
+        $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P1Y'), true];
+        $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P1YT2S'), false];
+        $returnValue[] = [new QtiDuration('P2Y'), new QtiDuration('P1Y'), true];
+        $returnValue[] = [new QtiDuration('PT0S'), new QtiDuration('PT1S'), false];
+        $returnValue[] = [new QtiDuration('PT1H25M0S'), new QtiDuration('PT1H26M12S'), false];
+        $returnValue[] = [new QtiDuration('PT1H26M12S'), new QtiDuration('PT1H25M0S'), true];
+        $returnValue[] = [new QtiDuration('PT1H26M'), new QtiDuration('PT1H26M'), true];
+        $returnValue[] = [new QtiDuration('PT1M5S'), new QtiDuration('PT1M'), true];
+        $returnValue[] = [new QtiDuration('PT1M15S'), new QtiDuration('PT45S'), true];
+
         return $returnValue;
     }
-    
+
     public function validDurationProvider()
     {
-        return array(
-            array('P2D'), // 2 days
-            array('PT2S'), // 2 seconds
-            array('P6YT5M') // 6 years, 5 months
-        );
+        return [
+            ['P2D'], // 2 days
+            ['PT2S'], // 2 seconds
+            ['P6YT5M'] // 6 years, 5 months
+        ];
     }
-    
+
     public function invalidDurationProvider()
     {
-        return array(
-            array('D2P'),
-            array('PSSST'),
-            array('Invalid'),
-            array('')
-        );
+        return [
+            ['D2P'],
+            ['PSSST'],
+            ['Invalid'],
+            [''],
+        ];
     }
-    
+
     public function toStringProvider()
     {
-        return array(
-            array(new QtiDuration('P2D'), 'P2D'), // 2 days
-            array(new QtiDuration('PT2S'), 'PT2S'), // 2 seconds
-            array(new QtiDuration('P6YT5M'), 'P6YT5M'), // 6 years, 5 months
-            array(new QtiDuration('PT0S'), 'PT0S'), // 0 seconds
-        );
+        return [
+            [new QtiDuration('P2D'), 'P2D'], // 2 days
+            [new QtiDuration('PT2S'), 'PT2S'], // 2 seconds
+            [new QtiDuration('P6YT5M'), 'P6YT5M'], // 6 years, 5 months
+            [new QtiDuration('PT0S'), 'PT0S'], // 0 seconds
+        ];
     }
 }

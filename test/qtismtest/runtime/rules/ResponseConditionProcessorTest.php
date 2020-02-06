@@ -2,20 +2,16 @@
 
 namespace qtismtest\runtime\rules;
 
-use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\runtime\common\ResponseVariable;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\ResponseConditionProcessor;
-use qtism\runtime\rules\RuleProcessingException;
+use qtismtest\QtiSmTestCase;
 
 class ResponseConditionProcessorTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider responseConditionMatchCorrectProvider
      *
@@ -24,7 +20,6 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
      */
     public function testResponseConditionMatchCorrect($response, $expectedScore)
     {
-        
         $rule = $this->createComponentFromXml('
 			<responseCondition>
 				<responseIf>
@@ -43,7 +38,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 				</responseElse>
 			</responseCondition>
 		');
-        
+
         $responseVarDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 				<correctResponse>
@@ -53,10 +48,10 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 		');
         $responseVar = ResponseVariable::createFromDataModel($responseVarDeclaration);
         $this->assertTrue($responseVar->getCorrectResponse()->equals(new QtiIdentifier('ChoiceA')));
-        
+
         // Set 'ChoiceA' to 'RESPONSE' in order to get a score of 1.0.
         $responseVar->setValue($response);
-        
+
         $outcomeVarDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 				<defaultValue>
@@ -66,23 +61,23 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 		');
         $outcomeVar = OutcomeVariable::createFromDataModel($outcomeVarDeclaration);
         $this->assertEquals(0, $outcomeVar->getDefaultValue()->getValue());
-        
-        $state = new State(array($responseVar, $outcomeVar));
+
+        $state = new State([$responseVar, $outcomeVar]);
         $processor = new ResponseConditionProcessor($rule);
         $processor->setState($state);
         $processor->process();
-        
+
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['SCORE']);
         $this->assertTrue($expectedScore->equals($state['SCORE']));
     }
-    
+
     public function responseConditionMatchCorrectProvider()
     {
-        return array(
-            array(new QtiIdentifier('ChoiceA'), new QtiFloat(1.0)),
-            array(new QtiIdentifier('ChoiceB'), new QtiFloat(0.0)),
-            array(new QtiIdentifier('ChoiceC'), new QtiFloat(0.0)),
-            array(new QtiIdentifier('ChoiceD'), new QtiFloat(0.0))
-        );
+        return [
+            [new QtiIdentifier('ChoiceA'), new QtiFloat(1.0)],
+            [new QtiIdentifier('ChoiceB'), new QtiFloat(0.0)],
+            [new QtiIdentifier('ChoiceC'), new QtiFloat(0.0)],
+            [new QtiIdentifier('ChoiceD'), new QtiFloat(0.0)],
+        ];
     }
 }

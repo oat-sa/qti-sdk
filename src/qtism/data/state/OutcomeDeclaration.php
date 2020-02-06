@@ -150,6 +150,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * The externalScored attribute is determining custom way to score item
+     *
      * @var int|null
      */
     private $externalScored = null;
@@ -383,6 +384,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
+     *
      * @return string
      */
     public function getExternalScored()

@@ -2,8 +2,8 @@
 
 namespace qtismtest\runtime\common;
 
-use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\VariableIdentifier;
+use qtismtest\QtiSmTestCase;
 
 class VariableIdentifierTest extends QtiSmTestCase
 {
@@ -17,7 +17,7 @@ class VariableIdentifierTest extends QtiSmTestCase
         $this->setExpectedException('\\InvalidArgumentException');
         $v = new VariableIdentifier($identifier);
     }
-    
+
     /**
      * @dataProvider simpleIdentifiersProvider
      *
@@ -26,13 +26,13 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testSimpleIdentifiers($identifier)
     {
         $v = new VariableIdentifier($identifier);
-        
+
         $this->assertEquals($identifier, $v->getIdentifier());
         $this->assertEquals($identifier, $v->getVariableName());
         $this->assertFalse($v->hasPrefix());
         $this->assertFalse($v->hasSequenceNumber());
     }
-    
+
     /**
      * @dataProvider prefixedIdentifiersProvider
      *
@@ -43,14 +43,14 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testPrefixedIdentifiers($identifier, $expectedPrefix, $expectedVariableName)
     {
         $v = new VariableIdentifier($identifier);
-        
+
         $this->assertEquals($identifier, $v->getIdentifier());
         $this->assertTrue($v->hasPrefix());
         $this->assertFalse($v->hasSequenceNumber());
         $this->assertEquals($expectedPrefix, $v->getPrefix());
         $this->assertEquals($expectedVariableName, $v->getVariableName());
     }
-    
+
     /**
      * @dataProvider sequencedIdentifiersProvider
      *
@@ -62,7 +62,7 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testSequencedIdentifiers($identifier, $expectedPrefix, $expectedSequence, $expectedVariableName)
     {
         $v = new VariableIdentifier($identifier);
-        
+
         $this->assertEquals($identifier, $v->getIdentifier());
         $this->assertTrue($v->hasPrefix());
         $this->assertTrue($v->hasSequenceNumber());
@@ -70,7 +70,7 @@ class VariableIdentifierTest extends QtiSmTestCase
         $this->assertEquals($expectedVariableName, $v->getVariableName());
         $this->assertEquals($expectedSequence, $v->getSequenceNumber());
     }
-    
+
     public function testInvalidSequenceNumberOne()
     {
         $this->setExpectedException(
@@ -79,7 +79,7 @@ class VariableIdentifierTest extends QtiSmTestCase
         );
         new VariableIdentifier('Q01.bla.SCORE');
     }
-    
+
     public function testInvalidSequenceNumberTwo()
     {
         $this->setExpectedException(
@@ -88,7 +88,7 @@ class VariableIdentifierTest extends QtiSmTestCase
         );
         new VariableIdentifier('Q01.0.SCORE');
     }
-    
+
     public function testInvalidVariableName()
     {
         $this->setExpectedException(
@@ -97,7 +97,7 @@ class VariableIdentifierTest extends QtiSmTestCase
         );
         new VariableIdentifier('Q01.0. ');
     }
-    
+
     public function testInvalidPrefix()
     {
         $this->setExpectedException(
@@ -106,53 +106,53 @@ class VariableIdentifierTest extends QtiSmTestCase
         );
         new VariableIdentifier(' .SCORE');
     }
-    
+
     public function invalidIdentifierProvider()
     {
-        return array(
-            array('Q*01'),
-            array('_Q01'),
-            array(''),
-            array(1337),
-            array('Q01.A.SCORE'),
-            array('Qxx.12.'),
-            array('Q-2.'),
-            array('934.9.SCORE'),
-            array('Q01.1.SCORE.MAX'),
-            array('Q 01'),
-            array('Q01 . SCORE'),
-            array('Q01._SCORE'),
-            array('Q01.-1.SCORE'),
-            array('Q01..SCORE'),
-            array('Q01.'),
-            array('.1.SCORE'),
-            array('1.SCORE')
-        );
+        return [
+            ['Q*01'],
+            ['_Q01'],
+            [''],
+            [1337],
+            ['Q01.A.SCORE'],
+            ['Qxx.12.'],
+            ['Q-2.'],
+            ['934.9.SCORE'],
+            ['Q01.1.SCORE.MAX'],
+            ['Q 01'],
+            ['Q01 . SCORE'],
+            ['Q01._SCORE'],
+            ['Q01.-1.SCORE'],
+            ['Q01..SCORE'],
+            ['Q01.'],
+            ['.1.SCORE'],
+            ['1.SCORE'],
+        ];
     }
-    
+
     public function simpleIdentifiersProvider()
     {
-        return array(
-            array('Q01'),
-            array('Q_01'),
-            array('MAXSCORE3')
-        );
+        return [
+            ['Q01'],
+            ['Q_01'],
+            ['MAXSCORE3'],
+        ];
     }
-    
+
     public function prefixedIdentifiersProvider()
     {
-        return array(
-            array('Q01.SCORE', 'Q01', 'SCORE'),
-            array('Q_01.SCORE', 'Q_01', 'SCORE'),
-            array('Question.MAX', 'Question', 'MAX')
-        );
+        return [
+            ['Q01.SCORE', 'Q01', 'SCORE'],
+            ['Q_01.SCORE', 'Q_01', 'SCORE'],
+            ['Question.MAX', 'Question', 'MAX'],
+        ];
     }
-    
+
     public function sequencedIdentifiersProvider()
     {
-        return array(
-            array('Q01.1.SCORE', 'Q01', 1, 'SCORE') ,
-            array('Q_01.245.MAX', 'Q_01', 245, 'MAX')
-        );
+        return [
+            ['Q01.1.SCORE', 'Q01', 1, 'SCORE'],
+            ['Q_01.245.MAX', 'Q_01', 245, 'MAX'],
+        ];
     }
 }

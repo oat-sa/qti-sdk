@@ -2,8 +2,8 @@
 
 namespace qtismtest\common\enums;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\common\enums\BaseType;
+use qtismtest\QtiSmEnumTestCase;
 
 class BaseTypeTest extends QtiSmEnumTestCase
 {
@@ -11,10 +11,10 @@ class BaseTypeTest extends QtiSmEnumTestCase
     {
         return BaseType::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'identifier',
             'boolean',
             'integer',
@@ -27,13 +27,13 @@ class BaseTypeTest extends QtiSmEnumTestCase
             'file',
             'uri',
             'intOrIdentifier',
-            'coords'
-        );
+            'coords',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'IDENTIFIER',
             'BOOLEAN',
             'INTEGER',
@@ -46,13 +46,13 @@ class BaseTypeTest extends QtiSmEnumTestCase
             'FILE',
             'URI',
             'INT_OR_IDENTIFIER',
-            'COORDS'
-        );
+            'COORDS',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             BaseType::IDENTIFIER,
             BaseType::BOOLEAN,
             BaseType::INTEGER,
@@ -65,7 +65,7 @@ class BaseTypeTest extends QtiSmEnumTestCase
             BaseType::FILE,
             BaseType::URI,
             BaseType::INT_OR_IDENTIFIER,
-            BaseType::COORDS
-        );
+            BaseType::COORDS,
+        ];
     }
 }

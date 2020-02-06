@@ -2,9 +2,8 @@
 
 namespace qtismtest\data\expressions;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\OutcomeMaximum;
-use qtism\common\enums\BaseType;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeMaximumTest extends QtiSmTestCase
 {
@@ -14,8 +13,8 @@ class OutcomeMaximumTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\data\\expressions\\OutcomeMaximum', $outcomeMaximum);
         $this->assertEquals('SCORE', $outcomeMaximum->getOutcomeIdentifier());
         $this->assertEquals('WEIGHT', $outcomeMaximum->getWeightIdentifier());
-        
-        $this->assertEquals(array(), $outcomeMaximum->getIncludeCategories()->getArrayCopy());
-        $this->assertEquals(array(), $outcomeMaximum->getExcludeCategories()->getArrayCopy());
+
+        $this->assertEquals([], $outcomeMaximum->getIncludeCategories()->getArrayCopy());
+        $this->assertEquals([], $outcomeMaximum->getExcludeCategories()->getArrayCopy());
     }
 }

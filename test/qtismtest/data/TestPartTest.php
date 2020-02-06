@@ -2,12 +2,12 @@
 
 namespace qtismtest\data;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\TestPart;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\SectionPartCollection;
-use qtism\data\AssessmentItemRef;
+use qtism\data\TestPart;
+use qtismtest\QtiSmTestCase;
 
 class TestPartTest extends QtiSmTestCase
 {
@@ -23,7 +23,7 @@ class TestPartTest extends QtiSmTestCase
             new AssessmentSectionCollection([new AssessmentSection('S01', 'Section 01', true)])
         );
     }
-    
+
     public function testCreateNotEnoughAssessmentSections()
     {
         $this->setExpectedException(
@@ -36,7 +36,7 @@ class TestPartTest extends QtiSmTestCase
             new AssessmentSectionCollection()
         );
     }
-    
+
     public function testCreateWrongSectionTypes()
     {
         $this->setExpectedException(

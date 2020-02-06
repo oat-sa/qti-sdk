@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\expressions\operators;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\expressions\operators\Statistics;
+use qtismtest\QtiSmEnumTestCase;
 
 class StatisticsTest extends QtiSmEnumTestCase
 {
@@ -11,37 +11,37 @@ class StatisticsTest extends QtiSmEnumTestCase
     {
         return Statistics::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'mean',
             'sampleVariance',
             'sampleSD',
             'popVariance',
-            'popSD'
-        );
+            'popSD',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'MEAN',
             'SAMPLE_VARIANCE',
             'SAMPLE_SD',
             'POP_VARIANCE',
-            'POP_SD'
-        );
+            'POP_SD',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             Statistics::MEAN,
             Statistics::SAMPLE_VARIANCE,
             Statistics::SAMPLE_SD,
             Statistics::POP_VARIANCE,
-            Statistics::POP_SD
-        );
+            Statistics::POP_SD,
+        ];
     }
 }

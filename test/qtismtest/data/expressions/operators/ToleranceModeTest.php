@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\expressions\operators;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\expressions\operators\ToleranceMode;
+use qtismtest\QtiSmEnumTestCase;
 
 class ToleranceModeTest extends QtiSmEnumTestCase
 {
@@ -11,31 +11,31 @@ class ToleranceModeTest extends QtiSmEnumTestCase
     {
         return ToleranceMode::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'exact',
             'absolute',
-            'relative'
-        );
+            'relative',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'EXACT',
             'ABSOLUTE',
-            'RELATIVE'
-        );
+            'RELATIVE',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             ToleranceMode::EXACT,
             ToleranceMode::ABSOLUTE,
-            ToleranceMode::RELATIVE
-        );
+            ToleranceMode::RELATIVE,
+        ];
     }
 }

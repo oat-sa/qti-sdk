@@ -2,21 +2,20 @@
 
 namespace qtismtest\runtime\rules;
 
-use qtismtest\QtiSmTestCase;
 use qtism\runtime\rules\ExitResponseProcessor;
 use qtism\runtime\rules\RuleProcessingException;
+use qtismtest\QtiSmTestCase;
 
 class ExitResponseProcessorTest extends QtiSmTestCase
 {
-    
     public function testExitResponse()
     {
         $rule = $this->createComponentFromXml('<exitResponse/>');
         $processor = new ExitResponseProcessor($rule);
-        
+
         try {
             $processor->process();
-            
+
             // An exception must always be raised!
             $this->assertTrue(false);
         } catch (RuleProcessingException $e) {

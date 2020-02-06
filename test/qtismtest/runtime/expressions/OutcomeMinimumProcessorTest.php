@@ -2,17 +2,16 @@
 
 namespace qtismtest\runtime\expressions;
 
-use qtismtest\QtiSmItemSubsetTestCase;
-use qtism\common\datatypes\QtiFloat;
-use qtism\runtime\common\MultipleContainer;
-use qtism\common\enums\BaseType;
 use qtism\common\collections\IdentifierCollection;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\enums\BaseType;
 use qtism\data\expressions\OutcomeMinimum;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\OutcomeMinimumProcessor;
+use qtismtest\QtiSmItemSubsetTestCase;
 
 class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
 {
-    
     /**
      * @dataProvider outcomeMinimumProvider
      *
@@ -22,11 +21,11 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
     public function testOutcomeMaximum(OutcomeMinimum $expression, $expectedResult)
     {
         $session = $this->getTestSession();
-        
+
         $processor = new OutcomeMinimumProcessor($expression);
         $processor->setState($session);
         $result = $processor->process();
-        
+
         if ($expectedResult === null) {
             $this->assertSame($expectedResult, $result);
         } else {
@@ -35,32 +34,32 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
             $this->assertTrue($result->equals($expectedResult));
         }
     }
-    
+
     public function outcomeMinimumProvider()
     {
-        return array(
-            array(self::getOutcomeMinimum('SCORE'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)))),
-            array(self::getOutcomeMinimum('SCORE', '', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)))),
-            array(self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-4.0), new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0)))),
-            array(self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(array('minimum', 'maximum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-4.0), new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0)))),
-            array(self::getOutcomeMinimum('SCORE', 'W01'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-4.0), new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0)))),
-            array(self::getOutcomeMinimum('SCORE', 'W02', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)))), // Weight not found
-        );
+        return [
+            [self::getOutcomeMinimum('SCORE'), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)])],
+            [self::getOutcomeMinimum('SCORE', '', '', new IdentifierCollection(['minimum'])), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)])],
+            [self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(['minimum'])), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-4.0), new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0)])],
+            [self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(['minimum', 'maximum'])), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-4.0), new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0)])],
+            [self::getOutcomeMinimum('SCORE', 'W01'), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-4.0), new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0)])],
+            [self::getOutcomeMinimum('SCORE', 'W02', '', new IdentifierCollection(['minimum'])), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)])], // Weight not found
+        ];
     }
-    
+
     protected static function getOutcomeMinimum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $outcomeMinimum = new OutcomeMinimum($outcomeIdentifier);
         $outcomeMinimum->setSectionIdentifier($sectionIdentifier);
-        
+
         if (empty($includeCategories) === false) {
             $outcomeMinimum->setIncludeCategories($includeCategories);
         }
-        
+
         if (empty($excludeCategories) === false) {
             $outcomeMinimum->setExcludeCategories($excludeCategories);
         }
-        
+
         if (empty($weightIdentifier) === false) {
             $outcomeMinimum->setWeightIdentifier($weightIdentifier);
         }

@@ -23,6 +23,7 @@
 
 namespace qtismtest\runtime\results;
 
+use DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -48,7 +49,7 @@ class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
                     Cardinality::SINGLE,
                     BaseType::IDENTIFIER,
                     new QtiIdentifier('ChoiceB')
-                )
+                ),
             ])
         );
 
@@ -57,7 +58,7 @@ class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 
         $this->assertInstanceOf(ItemResult::class, $itemResult);
         $this->assertEquals('Q01', $itemResult->getIdentifier());
-        $this->assertInstanceOf(\DateTime::class, $itemResult->getDatestamp());
+        $this->assertInstanceOf(DateTime::class, $itemResult->getDatestamp());
         $this->assertEquals(SessionStatus::STATUS_FINAL, $itemResult->getSessionStatus());
 
         $variables = $itemResult->getItemVariables();

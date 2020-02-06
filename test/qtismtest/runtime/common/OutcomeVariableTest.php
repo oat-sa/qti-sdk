@@ -2,23 +2,23 @@
 
 namespace qtismtest\runtime\common;
 
-use qtismtest\QtiSmTestCase;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\state\DefaultValue;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\data\state\DefaultValue;
 use qtism\data\state\VariableDeclaration;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\common\MultipleContainer;
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-use InvalidArgumentException;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeVariableTest extends QtiSmTestCase
 {
@@ -272,7 +272,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     {
         $value = new Value('String!', BaseType::STRING);
         $defaultValue = new DefaultValue(
-            new ValueCollection(array($value))
+            new ValueCollection([$value])
         );
         $variableDeclaration = new VariableDeclaration('var', BaseType::INTEGER, Cardinality::MULTIPLE, $defaultValue);
 

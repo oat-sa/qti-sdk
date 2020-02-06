@@ -2,17 +2,16 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
-use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\expressions\operators\SubstringProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\SubstringProcessor;
+use qtismtest\QtiSmTestCase;
 
 class SubstringProcessorTest extends QtiSmTestCase
 {
-    
     public function testCaseSensitive()
     {
         $expression = $this->createFakeExpression(true);
@@ -23,7 +22,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertTrue($result->getValue());
-        
+
         $operands->reset();
         $operands[] = new QtiString('Hell');
         $operands[] = new QtiString('Shell');
@@ -31,7 +30,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertFalse($result->getValue());
     }
-    
+
     public function testCaseInsensitive()
     {
         $expression = $this->createFakeExpression(false);
@@ -42,28 +41,28 @@ class SubstringProcessorTest extends QtiSmTestCase
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertTrue($result->getValue());
-        
+
         $operands->reset();
         $operands[] = new QtiString('Hell');
         $operands[] = new QtiString('Shell');
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertTrue($result->getValue());
-        
+
         $operands->reset();
         $operands[] = new QtiString('Hello world!');
         $operands[] = new QtiString('Bye world!');
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertFalse($result->getValue());
-        
+
         $operands->reset();
         $operands[] = new QtiString('Hello World!');
         $operands[] = new QtiString('hello world!');
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertTrue($result->getValue());
-        
+
         // Unicode ? x)
         $operands->reset();
         $operands[] = new QtiString('界您');
@@ -71,7 +70,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $result = $processor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertTrue($result->getValue());
-        
+
         $operands->reset();
         $operands[] = new QtiString('假'); // 'Fake' in traditional chinese
         $operands[] = new QtiString('世界您好！'); // Hello World!
@@ -79,7 +78,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
         $this->assertFalse($result->getValue());
     }
-    
+
     public function testNull()
     {
         $expression = $this->createFakeExpression(false);
@@ -89,14 +88,14 @@ class SubstringProcessorTest extends QtiSmTestCase
         $processor = new SubstringProcessor($expression, $operands);
         $result = $processor->process();
         $this->assertSame(null, $result);
-        
+
         $operands->reset();
         $operands[] = new QtiString(''); // in QTI, empty string considered to be NULL.
         $operands[] = new QtiString('blah!');
         $result = $processor->process();
         $this->assertSame(null, $result);
     }
-    
+
     public function testWrongBaseType()
     {
         $expression = $this->createFakeExpression(false);
@@ -107,39 +106,38 @@ class SubstringProcessorTest extends QtiSmTestCase
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testWrongCardinality()
     {
         $expression = $this->createFakeExpression(false);
         $operands = new OperandsCollection();
         $operands[] = new QtiString('Wrong Cardinality');
-        $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('Wrong'), new QtiString('Cardinality')));
+        $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('Wrong'), new QtiString('Cardinality')]);
         $processor = new SubstringProcessor($expression, $operands);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $result = $processor->process();
     }
-    
+
     public function testNotEnoughOperands()
     {
         $expression = $this->createFakeExpression(false);
-        $operands = new OperandsCollection(array(new QtiString('only 1 operand')));
+        $operands = new OperandsCollection([new QtiString('only 1 operand')]);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $processor = new SubstringProcessor($expression, $operands);
     }
-    
+
     public function testTooMuchOperands()
     {
         $expression = $this->createFakeExpression(false);
-        $operands = new OperandsCollection(array(new QtiString('exactly'), new QtiString('three'), new QtiString('operands')));
+        $operands = new OperandsCollection([new QtiString('exactly'), new QtiString('three'), new QtiString('operands')]);
         $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
         $processor = new SubstringProcessor($expression, $operands);
     }
-    
+
     public function createFakeExpression($caseSensitive = true)
     {
-        
         $str = ($caseSensitive === true) ? 'true' : 'false';
-        
+
         return $this->createComponentFromXml('
 			<substring caseSensitive="' . $str . '">
 				<baseValue baseType="string">hell</baseValue>

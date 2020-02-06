@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\content;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\content\RubricBlockRef;
+use qtismtest\QtiSmTestCase;
 
 class RubricBlockRefTest extends QtiSmTestCase
 {
@@ -15,7 +15,7 @@ class RubricBlockRefTest extends QtiSmTestCase
         );
         $rubricBlockRef = new RubricBlockRef('999', 'href.ref');
     }
-    
+
     public function testCreateWrongHrefType()
     {
         $this->setExpectedException(

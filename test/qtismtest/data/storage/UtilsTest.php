@@ -2,18 +2,17 @@
 
 namespace qtismtest\data\storage;
 
-use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
-use qtism\data\storage\Utils;
-use qtism\common\enums\BaseType;
 use qtism\common\datatypes\QtiShape;
+use qtism\common\enums\BaseType;
+use qtism\data\storage\Utils;
+use qtismtest\QtiSmTestCase;
 use stdClass;
 
 class UtilsTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider validIntegerProvider
      */
@@ -23,7 +22,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertInternalType('integer', $value);
         $this->assertTrue($value === $expected);
     }
-    
+
     /**
      * @dataProvider invalidIntegerProvider
      */
@@ -32,7 +31,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
     }
-    
+
     /**
      * @dataProvider validFloatProvider
      */
@@ -42,7 +41,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertInternalType('float', $value);
         $this->assertTrue($value === $expected);
     }
-    
+
     /**
      * @dataProvider invalidFloatProvider
      */
@@ -51,7 +50,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
     }
-    
+
     /**
      * @dataProvider validBooleanProvider
      */
@@ -61,7 +60,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertInternalType('boolean', $value);
         $this->assertTrue($expected === $value);
     }
-    
+
     /**
      * @dataProvider validIntOrIdentifierProvider
      *
@@ -75,7 +74,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertInternalType('string', $type);
         $this->assertTrue($expected === $value);
     }
-    
+
     /**
      * @dataProvider invalidIntOrIdentifierProvider
      * @param $string
@@ -85,7 +84,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
     }
-    
+
     /**
      * @dataProvider invalidBooleanProvider
      */
@@ -94,7 +93,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
     }
-    
+
     /**
      * @dataProvider validPointProvider
      */
@@ -106,7 +105,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertEquals($expected->getX(), $value->getX());
         $this->assertEquals($expected->getY(), $value->getY());
     }
-    
+
     /**
      * @dataProvider invalidPointProvider
      */
@@ -115,7 +114,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::POINT);
     }
-    
+
     /**
      * @dataProvider validDurationProvider
      */
@@ -130,7 +129,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertEquals($value->getMonths(), $expected->getMonths());
         $this->assertEquals($value->getSeconds(), $expected->getSeconds());
     }
-    
+
     /**
      * @dataProvider invalidDurationProvider
      */
@@ -139,7 +138,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::DURATION);
     }
-    
+
     /**
      * @dataProvider validPairProvider
      */
@@ -150,7 +149,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertEquals($expected->getFirst(), $value->getFirst());
         $this->assertEquals($expected->getSecond(), $value->getSecond());
     }
-    
+
     /**
      * @dataProvider invalidPairProvider
      */
@@ -159,7 +158,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::PAIR);
     }
-    
+
     /**
      * @dataProvider validPairProvider
      */
@@ -170,7 +169,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertEquals($expected->getFirst(), $value->getFirst());
         $this->assertEquals($expected->getSecond(), $value->getSecond());
     }
-    
+
     /**
      * @dataProvider invalidPairProvider
      */
@@ -179,7 +178,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
     }
-    
+
     /**
      * @dataProvider validCoordsProvider
      */
@@ -187,15 +186,15 @@ class UtilsTest extends QtiSmTestCase
     {
         $coords = Utils::stringToCoords($string, $shape);
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiCoords', $coords);
-        
+
         $intCoords = explode(",", $string);
         $this->assertEquals(count($intCoords), count($coords));
-        
+
         for ($i = 0; $i < count($intCoords); $i++) {
             $this->assertEquals(intval($intCoords[$i]), $coords[$i]);
         }
     }
-    
+
     /**
      * @dataProvider invalidCoordsProvider
      */
@@ -204,7 +203,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\UnexpectedValueException');
         $coords = Utils::stringToCoords($string, $shape);
     }
-    
+
     /**
      * @dataProvider invalidShapeProvider
      */
@@ -213,7 +212,7 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\InvalidArgumentException');
         $coords = Utils::stringToCoords($string, $shape);
     }
-    
+
     /**
      * @dataProvider validUriToSanitizeProvider
      */
@@ -221,7 +220,7 @@ class UtilsTest extends QtiSmTestCase
     {
         $this->assertEquals($expected, Utils::sanitizeUri($uri));
     }
-    
+
     /**
      * @dataProvider invalidUriToSanitizeProvider
      */
@@ -230,222 +229,222 @@ class UtilsTest extends QtiSmTestCase
         $this->setExpectedException('\\InvalidArgumentException');
         $uri = Utils::sanitizeUri($uri);
     }
-    
+
     public function testUnsupportedFile()
     {
         $this->setExpectedException('\\RuntimeException');
         Utils::stringToDatatype('not supported', BaseType::FILE);
     }
-    
+
     public function testUnknownType()
     {
         $this->setExpectedException('\\InvalidArgumentException');
         Utils::stringToDatatype('test', 'test');
     }
-    
+
     public function validCoordsProvider()
     {
-        return array(
-            array('30, 30, 60, 30', QtiShape::RECT),
-            array('10, 10, 10', QtiShape::CIRCLE),
-            array('10,10,10', QtiShape::CIRCLE),
-            array('0,8,7,4,2,2,8,-4,-2,1', QtiShape::POLY),
-            array('30.1, 30, 50, 30.1', QtiShape::RECT),
-            array('184,237,18.38', QtiShape::CIRCLE),
-            array('-184 ,237, -18.38', QtiShape::CIRCLE)
-        );
+        return [
+            ['30, 30, 60, 30', QtiShape::RECT],
+            ['10, 10, 10', QtiShape::CIRCLE],
+            ['10,10,10', QtiShape::CIRCLE],
+            ['0,8,7,4,2,2,8,-4,-2,1', QtiShape::POLY],
+            ['30.1, 30, 50, 30.1', QtiShape::RECT],
+            ['184,237,18.38', QtiShape::CIRCLE],
+            ['-184 ,237, -18.38', QtiShape::CIRCLE],
+        ];
     }
-    
+
     public function invalidCoordsProvider()
     {
-        return array(
-            array('invalid', QtiShape::RECT),
-            array('20;40;30', QtiShape::CIRCLE),
-            array('184.456,237.,18', QtiShape::CIRCLE),
-        );
+        return [
+            ['invalid', QtiShape::RECT],
+            ['20;40;30', QtiShape::CIRCLE],
+            ['184.456,237.,18', QtiShape::CIRCLE],
+        ];
     }
-    
+
     public function invalidShapeProvider()
     {
-        return array(
-            array('10, 10, 10', QtiShape::DEF),
-            array('10', 25)
-        );
+        return [
+            ['10, 10, 10', QtiShape::DEF],
+            ['10', 25],
+        ];
     }
-    
+
     public function validIntegerProvider()
     {
-        return array(
-            array('25', 25),
-            array(' 25', 25),
-            array('25 ', 25),
-            array('0', 0),
-            array('-0', 0),
-            array('-150', -150),
-            array(' -150', -150),
-            array('-150 ', -150)
-        );
+        return [
+            ['25', 25],
+            [' 25', 25],
+            ['25 ', 25],
+            ['0', 0],
+            ['-0', 0],
+            ['-150', -150],
+            [' -150', -150],
+            ['-150 ', -150],
+        ];
     }
-    
+
     public function invalidIntegerProvider()
     {
-        return array(
-            array('25.234'),
-            array('A B'),
-            array('-'),
-            array('+'),
-            array('abcd'),
-            array('-bd'),
-            array(null)
-        );
+        return [
+            ['25.234'],
+            ['A B'],
+            ['-'],
+            ['+'],
+            ['abcd'],
+            ['-bd'],
+            [null],
+        ];
     }
-    
+
     public function validFloatProvider()
     {
-        return array(
-            array('25.234', 25.234),
-            array('25', floatval(25)),
-            array('-25', -floatval(25)),
-            array('-25.234', -25.234),
-            array('25.0', 25.0)
-        );
+        return [
+            ['25.234', 25.234],
+            ['25', floatval(25)],
+            ['-25', -floatval(25)],
+            ['-25.234', -25.234],
+            ['25.0', 25.0],
+        ];
     }
-    
+
     public function invalidFloatProvider()
     {
-        return array(
-                array('2a'),
-                array('A B'),
-                array('-'),
-                array('+'),
-                array('abcd'),
-                array('-bd'),
-                array(null)
-        );
+        return [
+            ['2a'],
+            ['A B'],
+            ['-'],
+            ['+'],
+            ['abcd'],
+            ['-bd'],
+            [null],
+        ];
     }
-    
+
     public function validBooleanProvider()
     {
-        return array(
-            array('true', true),
-            array('false', false),
-            array('  true', true),
-            array('false ', false)
-        );
+        return [
+            ['true', true],
+            ['false', false],
+            ['  true', true],
+            ['false ', false],
+        ];
     }
-    
+
     public function invalidBooleanProvider()
     {
-        return array(
-            array('tru'),
-            array(''),
-            array('f'),
-            array(null),
-            array(24)
-        );
+        return [
+            ['tru'],
+            [''],
+            ['f'],
+            [null],
+            [24],
+        ];
     }
-    
+
     public function validPointProvider()
     {
-        return array(
-            array('20 30', new QtiPoint(20, 30)),
-            array('240 30', new QtiPoint(240, 30)),
-            array('-10 3', new QtiPoint(-10, 3))
-        );
+        return [
+            ['20 30', new QtiPoint(20, 30)],
+            ['240 30', new QtiPoint(240, 30)],
+            ['-10 3', new QtiPoint(-10, 3)],
+        ];
     }
-    
+
     public function invalidPointProvider()
     {
-        return array(
-            array('20 x'),
-            array('x  y'),
-            array('xy'),
-            array('x y'),
-            array('20px 20em'),
-            array('20'),
-            array(''),
-            array(null)
-        );
+        return [
+            ['20 x'],
+            ['x  y'],
+            ['xy'],
+            ['x y'],
+            ['20px 20em'],
+            ['20'],
+            [''],
+            [null],
+        ];
     }
-    
+
     public function validDurationProvider()
     {
-        return array(
-            array('P1D', new QtiDuration('P1D')), // 1 day
-            array('P2W', new QtiDuration('P2W')), // 2 weeks
-            array('P3M', new QtiDuration('P3M')), // 3 months
-            array('P4Y', new QtiDuration('P4Y')), // 4 years
-            array('P1Y1D', new QtiDuration('P1Y1D')), // 1 year + 1 day
-            array('P1DT12H', new QtiDuration('P1DT12H')), // 1 day + 12 hours
-            array('PT3600S', new QtiDuration('PT3600S')) // 3600 seconds
-        );
+        return [
+            ['P1D', new QtiDuration('P1D')], // 1 day
+            ['P2W', new QtiDuration('P2W')], // 2 weeks
+            ['P3M', new QtiDuration('P3M')], // 3 months
+            ['P4Y', new QtiDuration('P4Y')], // 4 years
+            ['P1Y1D', new QtiDuration('P1Y1D')], // 1 year + 1 day
+            ['P1DT12H', new QtiDuration('P1DT12H')], // 1 day + 12 hours
+            ['PT3600S', new QtiDuration('PT3600S')] // 3600 seconds
+        ];
     }
-    
+
     public function invalidDurationProvider()
     {
-        return array(
-            array('D1P'),
-            array('3600'),
-            array(''),
-            array('abcdef'),
-            array(null)
-        );
+        return [
+            ['D1P'],
+            ['3600'],
+            [''],
+            ['abcdef'],
+            [null],
+        ];
     }
-    
+
     public function validPairProvider()
     {
-        return array(
-            array('Bidule Trucmuche', new QtiPair('Bidule', 'Trucmuche')),
-            array('C D', new QtiPair('C', 'D'))
-        );
+        return [
+            ['Bidule Trucmuche', new QtiPair('Bidule', 'Trucmuche')],
+            ['C D', new QtiPair('C', 'D')],
+        ];
     }
-    
+
     public function invalidPairProvider()
     {
-        return array(
-            array('Machinbrol'),
-            array('bidule 0'),
-            array(''),
-            array(null)
-        );
+        return [
+            ['Machinbrol'],
+            ['bidule 0'],
+            [''],
+            [null],
+        ];
     }
-    
+
     public function validUriToSanitizeProvider()
     {
-        return array(
-            array('http://www.taotesting.com/', 'http://www.taotesting.com'),
-            array('', ''),
-            array('http://taotesting.com', 'http://taotesting.com'),
-            array('./', '.'),
-            array('../', '..'),
-            array('/../../q01.xml', '/../../q01.xml'),
-            array('./../../q01.xml/', './../../q01.xml'),
-            array('/', '')
-        );
+        return [
+            ['http://www.taotesting.com/', 'http://www.taotesting.com'],
+            ['', ''],
+            ['http://taotesting.com', 'http://taotesting.com'],
+            ['./', '.'],
+            ['../', '..'],
+            ['/../../q01.xml', '/../../q01.xml'],
+            ['./../../q01.xml/', './../../q01.xml'],
+            ['/', ''],
+        ];
     }
-    
+
     public function invalidUriToSanitizeProvider()
     {
-        return array(
-            array(new stdClass()),
-            array(14),
-            array(true)
-        );
+        return [
+            [new stdClass()],
+            [14],
+            [true],
+        ];
     }
-    
+
     public function validIntOrIdentifierProvider()
     {
-        return array(
-            array('identifier', 'identifier', 'string'),
-            array('1337', 1337, 'integer')
-        );
+        return [
+            ['identifier', 'identifier', 'string'],
+            ['1337', 1337, 'integer'],
+        ];
     }
-    
+
     public function invalidIntOrIdentifierProvider()
     {
-        return array(
-            array(3.3),
-            array('9_xxx')
-        );
+        return [
+            [3.3],
+            ['9_xxx'],
+        ];
     }
 }

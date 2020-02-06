@@ -2,8 +2,8 @@
 
 namespace qtismtest\data;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\View;
+use qtismtest\QtiSmEnumTestCase;
 
 class ViewTest extends QtiSmEnumTestCase
 {
@@ -11,40 +11,40 @@ class ViewTest extends QtiSmEnumTestCase
     {
         return View::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'author',
             'candidate',
             'proctor',
             'scorer',
             'testConstructor',
-            'tutor'
-        );
+            'tutor',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'AUTHOR',
             'CANDIDATE',
             'PROCTOR',
             'SCORER',
             'TEST_CONSTRUCTOR',
-            'TUTOR'
-        );
+            'TUTOR',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             View::AUTHOR,
             View::CANDIDATE,
             View::PROCTOR,
             View::SCORER,
             View::TEST_CONSTRUCTOR,
-            View::TUTOR
-        );
+            View::TUTOR,
+        ];
     }
 }

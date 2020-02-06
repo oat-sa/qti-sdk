@@ -2,35 +2,32 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\state\MapEntryCollection;
-use qtism\data\storage\xml\marshalling\Marshaller;
-use qtism\data\state\Mapping;
-use qtism\data\state\MapEntry;
-use qtism\common\enums\BaseType;
 use DOMDocument;
+use qtism\common\enums\BaseType;
+use qtism\data\state\MapEntry;
+use qtism\data\state\MapEntryCollection;
+use qtism\data\state\Mapping;
+use qtismtest\QtiSmTestCase;
 
 class MappingMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshallMinimal()
     {
-
         $defaultValue = 6.66;
         $mapEntries = new MapEntryCollection();
         $mapEntries[] = new MapEntry(1337, 1.337, false);
-        
+
         $component = new Mapping($mapEntries, $defaultValue);
-        
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::INTEGER));
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('mapping', $element->nodeName);
         $this->assertEquals($defaultValue . '', $element->getAttribute('defaultValue'));
         $this->assertEquals('', $element->getAttribute('lowerBound')); // empty
         $this->assertEquals('', $element->getAttribute('upperBound'));
-        
+
         $mapEntryElts = $element->getElementsByTagName('mapEntry');
         $this->assertEquals(1, $mapEntryElts->length);
         $mapEntryElt = $mapEntryElts->item(0);
@@ -38,7 +35,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         $this->assertEquals('1.337', $mapEntryElt->getAttribute('mappedValue'));
         $this->assertEquals('false', $mapEntryElt->getAttribute('caseSensitive'));
     }
-    
+
     public function testUnmarshallMinimal()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -50,14 +47,14 @@ class MappingMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::INTEGER));
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\state\\Mapping', $component);
         $this->assertFalse($component->hasLowerBound());
         $this->assertFalse($component->hasUpperBound());
-        
+
         $mapEntries = $component->getMapEntries();
         $this->assertEquals(1, count($mapEntries));
         $this->assertInternalType('integer', $mapEntries[0]->getMapKey());

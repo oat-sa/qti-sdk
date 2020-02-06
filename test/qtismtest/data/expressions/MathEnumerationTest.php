@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\expressions;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\expressions\MathEnumeration;
+use qtismtest\QtiSmEnumTestCase;
 
 class MathEnumerationTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class MathEnumerationTest extends QtiSmEnumTestCase
     {
         return MathEnumeration::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'pi',
-            'e'
-        );
+            'e',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'PI',
-            'E'
-        );
+            'E',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             MathEnumeration::PI,
-            MathEnumeration::E
-        );
+            MathEnumeration::E,
+        ];
     }
 }

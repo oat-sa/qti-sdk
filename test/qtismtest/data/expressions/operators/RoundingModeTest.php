@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\expressions\operators;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\expressions\operators\RoundingMode;
+use qtismtest\QtiSmEnumTestCase;
 
 class RoundingModeTest extends QtiSmEnumTestCase
 {
@@ -11,28 +11,28 @@ class RoundingModeTest extends QtiSmEnumTestCase
     {
         return RoundingMode::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'significantFigures',
-            'decimalPlaces'
-        );
+            'decimalPlaces',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'SIGNIFICANT_FIGURES',
-            'DECIMAL_PLACES'
-        );
+            'DECIMAL_PLACES',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             RoundingMode::SIGNIFICANT_FIGURES,
-            RoundingMode::DECIMAL_PLACES
-        );
+            RoundingMode::DECIMAL_PLACES,
+        ];
     }
 }
