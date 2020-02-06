@@ -27,6 +27,7 @@ use DOMElement;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\View;
 use qtism\data\ViewCollection;
@@ -92,6 +93,10 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
 
+        if ($component->getExternalScored() !== null) {
+            static::setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
+        }
+
         return $element;
     }
 
@@ -111,6 +116,11 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setBaseType($baseComponent->getBaseType());
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
+
+            // Set external scored attribute
+            if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) != null) {
+                $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
+            }
 
             // deal with views.
             if (Version::compare($version, '2.1.0', '>=') === true && ($views = $this->getDOMElementAttributeAs($element, 'view')) != null) {
@@ -145,6 +155,10 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             // deal with matseryValue.
             if (Version::compare($version, '2.1.0', '>=') === true && ($masteryValue = $this->getDOMElementAttributeAs($element, 'masteryValue', 'float')) !== null) {
                 $object->setMasteryValue($masteryValue);
+            }
+
+            if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) !== null) {
+                $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
             }
 
             // deal with lookupTable.

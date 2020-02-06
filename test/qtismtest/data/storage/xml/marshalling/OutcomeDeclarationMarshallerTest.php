@@ -2,6 +2,9 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use DOMElement;
+use qtism\data\state\ExternalScored;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\View;
 use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
@@ -46,12 +49,44 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals('0.5', $element->getAttribute('masteryValue'));
     }
     
+    public function testUnmarshallExternalScoredWithIllegalValue()
+    {
+        $this->expectException(UnmarshallingException::class);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" identifier="outcomeDeclarationRec" cardinality="record" externalScored="duck"/>'
+        );
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller->unmarshall($element);
+    }
+
+    public function testMarshallExternalScored()
+    {
+        // Initialize a minimal outcomeDeclaration.
+        $identifier = 'outcome1';
+        $cardinality = Cardinality::SINGLE;
+        $baseType = BaseType::INTEGER;
+        $externalScored = ExternalScored::HUMAN;
+
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScored);
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        /** @var DOMElement $element */
+        $element = $marshaller->marshall($component);
+
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('human', $element->getAttribute('externalScored'));
+        $this->assertEquals('integer', $element->getAttribute('baseType'));
+        $this->assertEquals('outcome1', $element->getAttribute('identifier'));
+        $this->assertEquals('single', $element->getAttribute('cardinality'));
+    }
+	
     /**
      * @depends testMarshall21
      */
     public function testMarshallNoOutputViewsNormalMinimumMasteryValueView20()
     {
-        $identifier = "outcome1";
+        $identifier = 'outcome1';
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
         
@@ -74,7 +109,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     public function testMarshallDefaultValue21()
     {
         
-        $identifier = "outcome2";
+		$identifier = 'outcome2';
         $cardinality = Cardinality::MULTIPLE;
         $baseType = BaseType::DURATION;
         

@@ -2,14 +2,14 @@
 
 namespace qtismtest\runtime\tests;
 
+use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentItemTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
-use qtism\common\datatypes\QtiDuration;
-use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
@@ -19,10 +19,33 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
-use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
+    public function testExternalScored()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'ims/items/2_2/essay.xml');
+
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager(new FileSystemFileManager()));
+        $itemSessionControl = $itemSession->getItemSessionControl();
+        $itemSessionControl->setMaxAttempts(0);
+        $itemSession->beginItemSession();
+
+        $response = new ResponseVariable(
+            'RESPONSE',
+            Cardinality::SINGLE,
+            BaseType::STRING,
+            new QtiString('some string'));
+
+        $itemSession->beginAttempt();
+        $responses = new State(array($response));
+        $itemSession->endAttempt($responses);
+
+        $this->assertEquals(1, $itemSession->getState());
+        $this->assertTrue($itemSession->isResponded());
+    }
+
     public function testInstantiation()
     {
         $itemSession = self::instantiateBasicAssessmentItemSession();

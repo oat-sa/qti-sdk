@@ -149,18 +149,27 @@ class OutcomeDeclaration extends VariableDeclaration
     private $lookupTable = null;
 
     /**
+     * The externalScored attribute is determining custom way to score item
+     * @var int|null
+     */
+    private $externalScored = null;
+
+    /**
      * Create a new instanceof OutcomeDeclaration.
      *
      * @param string $identifier A QTI identifier.
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
+     * @param int|null $externalScored A ExternalScored object.
+     *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScored = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
         $this->setViews(new ViewCollection());
+        $this->setExternalScored($externalScored);
     }
 
     /**
@@ -357,5 +366,27 @@ class OutcomeDeclaration extends VariableDeclaration
         }
 
         return new QtiComponentCollection($comp);
+    }
+
+    /**
+     * Set external score attribute to determine how scoring should be proceed
+     *
+     * @param string $externalScored
+     */
+    public function setExternalScored($externalScored = null)
+    {
+        if ($externalScored !== null && !in_array($externalScored, ExternalScored::asArray(), true)) {
+            throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScored));
+        }
+        $this->externalScored = $externalScored;
+    }
+
+    /**
+     * Get externalScored attribute
+     * @return string
+     */
+    public function getExternalScored()
+    {
+        return $this->externalScored;
     }
 }
