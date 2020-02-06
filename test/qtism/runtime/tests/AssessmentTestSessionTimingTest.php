@@ -22,8 +22,6 @@ require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.p
 
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
-    
-    
     public function testTestPartAssessmentSectionsDurations()
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -72,9 +70,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $session->moveNext();
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
-        $equals3 = $timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT3S'));
-        $equals2 = $timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT2S'));
-        $this->assertTrue($equals3 || $equals2);
+        $expected3s = $timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT3S'));
+        $expected2s = $timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT2S'));
+        $this->assertTrue($expected3s || $expected2s);
          
         // Q02.
         $session->beginAttempt();

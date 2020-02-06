@@ -35,6 +35,8 @@ use qtism\data\IAssessmentItem;
 use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\common\OutcomeVariable;
@@ -647,6 +649,12 @@ class AssessmentItemSession extends State
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false)
     {
+        // We are required to check if our item does contain externalScored attribute in OutcomeDeclaration.
+        // If item have to be externally scored we are not processing response
+        if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
+            $responseProcessing = false;
+        }
+
         // End of attempt, go in SUSPEND state.
         $this->suspend();
 
@@ -1220,5 +1228,25 @@ class AssessmentItemSession extends State
         }
 
         $this->setDataPlaceHolder($newData);
+    }
+
+    /**
+     * Method will determine if an item is externally scored
+     * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
+     *
+     * @param OutcomeDeclarationCollection $outcomeDeclarations
+     *
+     * @return bool
+     */
+    private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)
+    {
+        /** @var OutcomeDeclaration $outcomeDeclaration */
+        foreach ($outcomeDeclarations as $outcomeDeclaration) {
+            if ($outcomeDeclaration->getExternalScored() !== null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

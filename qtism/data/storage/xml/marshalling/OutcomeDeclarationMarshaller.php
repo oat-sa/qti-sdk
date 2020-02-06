@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use InvalidArgumentException;
 use qtism\data\QtiComponent;
+use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\View;
 use qtism\data\ViewCollection;
@@ -90,6 +91,10 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
 
+        if ($component->getExternalScored() !== null) {
+            static::setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
+        }
+
         return $element;
     }
 
@@ -109,8 +114,13 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
+            // Set external scored attribute
+            if (($externalScoring = static::getDOMElementAttributeAs($element, 'externalScored')) != null) {
+                $object->setExternalScored(ExternalScored::getConstantByName($externalScoring));
+            }
+
             // deal with views.
-            if (($views = static::getDOMElementAttributeAs($element, 'view')) != null) {
+            if (($views = static::getDOMElementAttributeAs($element, 'view')) !== null) {
                 $viewCollection = new ViewCollection();
                 foreach (explode("\x20", $views) as $viewName) {
                     $viewCollection[] = View::getConstantByName($viewName);

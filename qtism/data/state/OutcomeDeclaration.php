@@ -149,18 +149,49 @@ class OutcomeDeclaration extends VariableDeclaration
     private $lookupTable = null;
 
     /**
+     * The externalScored attribute is determining custom way to score item
+     * @var integer|null
+     */
+    private $externalScored = null;
+
+    /**
      * Create a new instanceof OutcomeDeclaration.
      *
      * @param string $identifier A QTI identifier.
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
+     * @param int|null $externalScored A ExternalScore object.
+     *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScored = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
         $this->setViews(new ViewCollection());
+        $this->setExternalScored($externalScored);
+    }
+
+    /**
+     * Set external scored attribute to determine how scoring should be proceed
+     *
+     * @param int|null $externalScored
+     */
+    public function setExternalScored($externalScored = null)
+    {
+        if ($externalScored !== null && !in_array($externalScored, ExternalScored::asArray(), true)) {
+            throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScored));
+        }
+        $this->externalScored = $externalScored;
+    }
+
+    /**
+     * Get externalScored attribute
+     * @return string
+     */
+    public function getExternalScored()
+    {
+        return $this->externalScored;
     }
 
     /**
@@ -201,6 +232,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the human interpretation of the outcome variable's value.
      *
      * @param string $interpretation A string.
+     *
      * @throws InvalidArgumentException If $interpretation is not a string.
      */
     public function setInterpretation($interpretation)
@@ -227,6 +259,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set a link (URI) to an extended interpretation of the outcome variable's value.
      *
      * @param string $longInterpretation A string.
+     *
      * @throws InvalidArgumentException If $longInterpretation is not a string.
      */
     public function setLongInterpretation($longInterpretation)
@@ -253,6 +286,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the normal minimum.
      *
      * @param boolean|numeric $normalMinimum A numeric value.
+     *
      * @throws InvalidArgumentException If $normalMinimum is not numeric nor false.
      */
     public function setNormalMinimum($normalMinimum)
@@ -279,6 +313,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the normal maximum.
      *
      * @param boolean|number $normalMaximum A numeric value.
+     *
      * @throws InvalidArgumentException If $normalMaximum is not a numeric value nor false.
      */
     public function setNormalMaximum($normalMaximum)
@@ -305,6 +340,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the mastery value. Set to false if not specified.
      *
      * @param boolean|number $masteryValue A numeric value or false.
+     *
      * @throws InvalidArgumentException If $masteryValue is not numeric nor false.
      */
     public function setMasteryValue($masteryValue)
