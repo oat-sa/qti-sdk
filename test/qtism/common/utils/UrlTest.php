@@ -6,7 +6,6 @@ require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 class UrlTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider validRelativeUrlProvider
      * @param string $url
@@ -15,7 +14,7 @@ class UrlTest extends QtiSmTestCase
     {
         $this->assertTrue(Url::isRelative($url));
     }
-    
+
     /**
      * @dataProvider invalidRelativeUrlProvider
      * @param unknown_type $url
@@ -24,31 +23,31 @@ class UrlTest extends QtiSmTestCase
     {
         $this->assertFalse(Url::isRelative($url));
     }
-    
+
     public function validRelativeUrlProvider()
     {
-        return array(
-            array('./path'),
-            array('path'),
-            array('../my-path'),
-            array('./my-path'),
-            array('path/to/something'),
-            array('path/to/something/'),
-            array('path/./to/../something')
-        );
+        return [
+            ['./path'],
+            ['path'],
+            ['../my-path'],
+            ['./my-path'],
+            ['path/to/something'],
+            ['path/to/something/'],
+            ['path/./to/../something'],
+        ];
     }
-    
+
     public function invalidRelativeUrlProvider()
     {
-        return array(
-            array('/'),
-            array('http://www.google.com'),
-            array('my+cool://www.funk.org'),
-            array('my.cool.way://crazy.peop.le/funkmusik'),
-            array('/home/jerome/dev'),
-            array('/home/../dev'),
-            array('mailto:jerome@taotesting.com'),
-            array('mail:to/my-friend/')
-        );
+        return [
+            ['/'],
+            ['http://www.google.com'],
+            ['my+cool://www.funk.org'],
+            ['my.cool.way://crazy.peop.le/funkmusik'],
+            ['/home/jerome/dev'],
+            ['/home/../dev'],
+            ['mailto:jerome@taotesting.com'],
+            ['mail:to/my-friend/'],
+        ];
     }
 }

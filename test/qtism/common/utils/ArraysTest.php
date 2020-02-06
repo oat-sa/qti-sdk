@@ -1,11 +1,11 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\utils\Arrays;
 
 class ArraysTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider isAssocValidProvider
      */
@@ -13,7 +13,7 @@ class ArraysTest extends QtiSmTestCase
     {
         $this->assertTrue(Arrays::isAssoc($array));
     }
-    
+
     /**
      * @dataProvider isAssocInvalidProvider
      */
@@ -21,18 +21,18 @@ class ArraysTest extends QtiSmTestCase
     {
         $this->assertFalse(Arrays::isAssoc($array));
     }
-    
+
     public function isAssocValidProvider()
     {
-        return array(
-            array(array('test' => 0, 'bli' => 2))
-        );
+        return [
+            [['test' => 0, 'bli' => 2]],
+        ];
     }
-    
+
     public function isAssocInvalidProvider()
     {
-        return array(
-            array(array(0, 1))
-        );
+        return [
+            [[0, 1]],
+        ];
     }
 }

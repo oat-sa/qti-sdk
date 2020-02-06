@@ -22,8 +22,8 @@
  */
 
 use qtism\data\results\CandidateResponse;
-use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
 
 require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
 
@@ -62,10 +62,10 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $component = new CandidateResponse(
-            new ValueCollection(array(
+            new ValueCollection([
                 new Value('fixture1'),
                 new Value('fixture2'),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */

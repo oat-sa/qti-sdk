@@ -21,9 +21,10 @@
  * @license GPLv2
  */
 
-use qtism\data\results\SessionIdentifier;
-use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiUri;
+use qtism\data\results\SessionIdentifier;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -46,7 +47,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->assertEquals('fixture-id', $sessionIdentifier->getIdentifier()->getValue());
         $this->assertEquals('fixture-id', $sessionIdentifier->getIdentifier());
     }
-    
+
     public function testMarshall()
     {
         $sourceID = 'fixture-sourceID';
@@ -72,31 +73,28 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 
-    /**
-     * @expectedException \qtism\data\storage\xml\marshalling\UnmarshallingException
-     */
     public function testWrongSessionIdentifierIdentifier()
     {
+        $this->expectException(UnmarshallingException::class);
+        
         $xml = '<sessionIdentifier identifier="fixture-id"/>';
         $element = QtiSmTestCase::createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 
-    /**
-     * @expectedException \qtism\data\storage\xml\marshalling\UnmarshallingException
-     */
     public function testWrongSessionIdentifierSourceID()
     {
+        $this->expectException(UnmarshallingException::class);
+
         $xml = '<sessionIdentifier sourceID="fixture-sourceID"/>';
         $element = QtiSmTestCase::createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 
-    /**
-     * @expectedException \qtism\data\storage\xml\marshalling\UnmarshallingException
-     */
     public function testEmptySessionIdentifier()
     {
+        $this->expectException(UnmarshallingException::class);
+
         $xml = '<sessionIdentifier/>';
         $element = QtiSmTestCase::createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);

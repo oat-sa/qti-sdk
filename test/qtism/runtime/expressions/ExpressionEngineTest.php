@@ -1,4 +1,5 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiDuration;
@@ -7,7 +8,6 @@ use qtism\runtime\expressions\ExpressionEngine;
 
 class ExpressionEngineTest extends QtiSmTestCase
 {
-    
     public function testExpressionEngineBaseValue()
     {
         $expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
@@ -16,7 +16,7 @@ class ExpressionEngineTest extends QtiSmTestCase
         $this->assertInstanceOf(QtiDuration::class, $result);
         $this->assertEquals(2, $result->getDays());
     }
-    
+
     public function testExpressionEngineSum()
     {
         $expression = $this->createComponentFromXml('
@@ -31,7 +31,7 @@ class ExpressionEngineTest extends QtiSmTestCase
 				</divide>
 			</sum>
 		');
-        
+
         $engine = new ExpressionEngine($expression);
         $result = $engine->process();
         $this->assertInstanceOf(QtiFloat::class, $result);

@@ -1,13 +1,11 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
-use qtism\common\enums\BaseType;
-use qtism\runtime\common\MultipleContainer;
 
 class StringTest extends QtiSmTestCase
 {
-    
     public function testWrongValue()
     {
         $this->setExpectedException(
@@ -16,13 +14,13 @@ class StringTest extends QtiSmTestCase
         );
         $string = new QtiString(1337);
     }
-    
+
     public function testEmptyString()
     {
         $string = new QtiString('');
         $this->assertEquals('', $string->getValue());
     }
-    
+
     /**
      * @dataProvider equalProvider
      *
@@ -34,18 +32,18 @@ class StringTest extends QtiSmTestCase
         $qtiString = new QtiString($str);
         $this->assertTrue($qtiString->equals($val));
     }
-    
+
     public function equalProvider()
     {
-        return array(
-            array('', null),
-            array('', ''),
-            array('', new QtiString('')),
-            array('test', 'test'),
-            array('test', new QtiString('test'))
-        );
+        return [
+            ['', null],
+            ['', ''],
+            ['', new QtiString('')],
+            ['test', 'test'],
+            ['test', new QtiString('test')],
+        ];
     }
-    
+
     /**
      * @dataProvider notEqualProvider
      *
@@ -57,17 +55,17 @@ class StringTest extends QtiSmTestCase
         $qtiString = new QtiString($str);
         $this->assertFalse($qtiString->equals($val));
     }
-    
+
     public function notEqualProvider()
     {
-        return array(
-            array('test', null),
-            array('', 'test'),
-            array('', new QtiString('test')),
-            array('test', ''),
-            array('test', new QtiString('')),
-            array('Test', 'test'),
-            array('Test', new QtiString('test'))
-        );
+        return [
+            ['test', null],
+            ['', 'test'],
+            ['', new QtiString('test')],
+            ['test', ''],
+            ['test', new QtiString('')],
+            ['Test', 'test'],
+            ['Test', new QtiString('test')],
+        ];
     }
 }

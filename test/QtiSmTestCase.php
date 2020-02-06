@@ -1,30 +1,31 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 
 abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
 {
-    
     private $marshallerFactory;
-    
+
     public function setUp()
     {
         parent::setUp();
         $this->marshallerFactory = new MarshallerFactory();
     }
-    
+
     public function tearDown()
     {
         parent::tearDown();
         unset($this->marshallerFactory);
     }
-    
+
     public function getMarshallerFactory()
     {
         return $this->marshallerFactory;
     }
-    
+
     /**
      * Returns the canonical path to the samples directory, with the
      * trailing slash.
@@ -35,7 +36,7 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
     {
         return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
     }
-    
+
     /**
      * Create a directory in OS temp directory with a unique name.
      *
@@ -44,18 +45,18 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
     public static function tempDir()
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'qsm');
-        
+
         // Tempnam creates a file with 600 chmod. Remove
         // it and create a directory.
         if (file_exists($tmpFile) === true) {
             unlink($tmpFile);
         }
-        
+
         mkdir($tmpFile);
-        
+
         return $tmpFile;
     }
-    
+
     /**
      * Create a copy of $source to the temp directory. The copied
      * file will receive a unique file name.
@@ -66,17 +67,17 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
     public static function tempCopy($source)
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'qsm');
-        
+
         // Same as for QtiSmTestCase::tempDir...
         if (file_exists($tmpFile) === true) {
             unlink($tmpFile);
         }
-        
+
         copy($source, $tmpFile);
-        
+
         return $tmpFile;
     }
-    
+
     /**
      * Create a DOMElement from an XML string.
      *
@@ -89,12 +90,12 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
         $dom->loadXML($xmlString);
         return $dom->documentElement;
     }
-    
+
     /**
      * Create a QtiComponent object from an XML String.
      *
      * @param string $xmlString An XML String to transform in a QtiComponent object.
-     * @return \qtism\data\QtiComponent
+     * @return QtiComponent
      */
     public function createComponentFromXml($xmlString)
     {

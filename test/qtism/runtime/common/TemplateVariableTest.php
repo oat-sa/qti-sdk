@@ -6,13 +6,10 @@ use qtism\runtime\common\TemplateVariable;
 
 require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-
 class TemplateVariableTest extends QtiSmTestCase
 {
-
     public function testCreateFromDataModel()
     {
-        
         $decl = $this->createComponentFromXml('
             <templateDeclaration identifier="mytpl1" cardinality="single" baseType="identifier" paramVariable="true" mathVariable="false">
                 <defaultValue>
@@ -20,7 +17,7 @@ class TemplateVariableTest extends QtiSmTestCase
                 </defaultValue>
             </templateDeclaration>
         ');
-        
+
         $var = TemplateVariable::createFromDataModel($decl);
         $this->assertInstanceOf('qtism\\runtime\\common\\TemplateVariable', $var);
         $this->assertEquals('mytpl1', $var->getIdentifier());

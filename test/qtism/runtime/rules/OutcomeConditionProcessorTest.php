@@ -1,18 +1,16 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\OutcomeConditionProcessor;
-use qtism\runtime\rules\RuleProcessingException;
 
 class OutcomeConditionProcessorTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider testOutcomeConditionComplexProvider
      *
@@ -79,23 +77,23 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
 				</outcomeElse>
 			</outcomeCondition>
 		');
-        
+
         $state = new State();
         $state->setVariable(new OutcomeVariable('t', Cardinality::SINGLE, BaseType::INTEGER, $t));
         $state->setVariable(new OutcomeVariable('tt', Cardinality::SINGLE, BaseType::INTEGER, $tt));
         $state->setVariable(new OutcomeVariable('x', Cardinality::SINGLE, BaseType::STRING));
         $state->setVariable(new OutcomeVariable('y', Cardinality::SINGLE, BaseType::STRING));
         $state->setVariable(new OutcomeVariable('z', Cardinality::SINGLE, BaseType::STRING));
-        
+
         $processor = new OutcomeConditionProcessor($rule);
         $processor->setState($state);
         $processor->process();
-        
+
         $this->check($expectedX, $state['x']);
         $this->check($expectedY, $state['y']);
         $this->check($expectedZ, $state['z']);
     }
-    
+
     protected function check($expected, $value)
     {
         if ($expected === null) {
@@ -104,7 +102,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
             $this->assertTrue($expected === $value->getValue());
         }
     }
-    
+
     public function testWrongRuleType()
     {
         $rule = $this->createComponentFromXml('
@@ -120,19 +118,19 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
 				</responseIf>
 			</responseCondition>
 		');
-        
+
         $this->setExpectedException('\\InvalidArgumentException');
         $engine = new OutcomeConditionProcessor($rule);
     }
-    
+
     public function testOutcomeConditionComplexProvider()
     {
-        return array(
-            array(new QtiInteger(1), new QtiInteger(1), 'A', 'C', null),
-            array(new QtiInteger(1), new QtiInteger(0), 'B', 'C', null),
-            array(new QtiInteger(2), new QtiInteger(0), null, 'A', 'B'),
-            array(new QtiInteger(3), new QtiInteger(0), 'V', null, null),
-            array(new QtiInteger(4), new QtiInteger(1), 'Z', null, null)
-        );
+        return [
+            [new QtiInteger(1), new QtiInteger(1), 'A', 'C', null],
+            [new QtiInteger(1), new QtiInteger(0), 'B', 'C', null],
+            [new QtiInteger(2), new QtiInteger(0), null, 'A', 'B'],
+            [new QtiInteger(3), new QtiInteger(0), 'V', null, null],
+            [new QtiInteger(4), new QtiInteger(1), 'Z', null, null],
+        ];
     }
 }

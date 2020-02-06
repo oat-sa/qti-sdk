@@ -97,8 +97,8 @@ class ResponseVariable extends Variable
             if ($correctResponse instanceof Container) {
                 if ($correctResponse->getCardinality() === $this->getCardinality()) {
                     if (
-                        get_class($correctResponse) === 'qtism\\runtime\\common\\Container' ||
-                        $correctResponse->getBaseType() === $this->getBaseType()
+                        get_class($correctResponse) === 'qtism\\runtime\\common\\Container'
+                        || $correctResponse->getBaseType() === $this->getBaseType()
                     ) {
                         // This is a simple container with no baseType restriction
                         // or a Multiple|Record|Ordered container with a compliant

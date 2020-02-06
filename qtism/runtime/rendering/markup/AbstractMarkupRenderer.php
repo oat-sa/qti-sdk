@@ -96,10 +96,10 @@ abstract class AbstractMarkupRenderer implements Renderable
     protected function handleXmlBase(QtiComponent $component, DOMNode $node)
     {
         if (
-            $node instanceof DOMElement &&
-            $this->getRenderingEngine()->getXmlBasePolicy() === AbstractMarkupRenderingEngine::XMLBASE_KEEP &&
-            $component instanceof Flow &&
-            $component->hasXmlBase()
+            $node instanceof DOMElement
+            && $this->getRenderingEngine()->getXmlBasePolicy() === AbstractMarkupRenderingEngine::XMLBASE_KEEP
+            && $component instanceof Flow
+            && $component->hasXmlBase()
         ) {
             $node->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $component->getXmlBase());
         }

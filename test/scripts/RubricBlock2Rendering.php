@@ -1,8 +1,5 @@
 <?php
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
-use qtism\data\View;
-use qtism\data\ViewCollection;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
@@ -28,7 +25,7 @@ echo $rendering->saveXML();
 if ($separate === true) {
     echo "\n\nSeparate Stylesheets:\n";
     echo "----------------------\n\n";
-    
+
     $stylesheets = $renderer->getStylesheets();
     echo $stylesheets->ownerDocument->saveXML($stylesheets) . "\n";
 }

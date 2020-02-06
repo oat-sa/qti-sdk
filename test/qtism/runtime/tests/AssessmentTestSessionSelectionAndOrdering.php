@@ -1,4 +1,5 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
@@ -7,12 +8,12 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
-        
+
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $this->assertEquals(50, $assessmentTestSession->getRouteCount());
     }
-    
+
     public function testSelectionAndOrderingOverflow()
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering_overflow.xml');
@@ -33,7 +34,7 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
-        
+
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $this->assertEquals(5, $assessmentTestSession->getRouteCount());
@@ -44,7 +45,7 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
-         
+
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $this->assertEquals(9, $assessmentTestSession->getRouteCount());

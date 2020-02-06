@@ -23,10 +23,10 @@
 
 use oat\dtms\DateTime;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\data\results\ResultTemplateVariable;
-use qtism\data\results\ResultResponseVariable;
-use qtism\data\results\ItemVariableCollection;
 use qtism\data\results\CandidateResponse;
+use qtism\data\results\ItemVariableCollection;
+use qtism\data\results\ResultResponseVariable;
+use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\TestResult;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -83,7 +83,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $component = new TestResult(
             new QtiIdentifier('fixture-identifier'),
             new DateTime('2018-06-27T09:41:45.529'),
-            new ItemVariableCollection(array(
+            new ItemVariableCollection([
                 new ResultResponseVariable(
                     new QtiIdentifier('response-identifier'),
                     0,
@@ -92,8 +92,8 @@ class TestResultMarshallerTest extends QtiSmTestCase
                 new ResultTemplateVariable(
                     new QtiIdentifier('response-identifier'),
                     0
-                )
-            ))
+                ),
+            ])
         );
 
         /** @var DOMElement $element */
@@ -128,7 +128,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'datestamp')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'datestamp']));
 
         $this->assertFalse($element->hasChildNodes());
     }

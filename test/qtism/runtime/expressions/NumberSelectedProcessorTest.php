@@ -8,7 +8,6 @@ require_once(dirname(__FILE__) . '/../../../QtiSmItemSubsetTestCase.php');
 
 class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
 {
-    
     /**
      * @dataProvider numberSelectedProvider
      *
@@ -18,7 +17,7 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
     public function testNumberSelected(NumberSelected $expression, $expectedResult)
     {
         $session = $this->getTestSession();
-        
+
         // The test is totally linear, the selection is then complete
         // when AssessmentTestSession::beginTestSession is called.
         $processor = new NumberSelectedProcessor($expression);
@@ -26,26 +25,26 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
         $result = $processor->process();
         $this->assertEquals($expectedResult, $result->getValue());
     }
-    
+
     public function numberSelectedProvider()
     {
-        return array(
-            array(self::getNumberSelected(), 9),
-            array(self::getNumberSelected('', new IdentifierCollection(array('mathematics', 'chemistry'))), 4),
-            array(self::getNumberSelected('S01', new IdentifierCollection(array('mathematics', 'chemistry'))), 2),
-            array(self::getNumberSelected('', null, new IdentifierCollection(array('mathematics'))), 6)
-        );
+        return [
+            [self::getNumberSelected(), 9],
+            [self::getNumberSelected('', new IdentifierCollection(['mathematics', 'chemistry'])), 4],
+            [self::getNumberSelected('S01', new IdentifierCollection(['mathematics', 'chemistry'])), 2],
+            [self::getNumberSelected('', null, new IdentifierCollection(['mathematics'])), 6],
+        ];
     }
-    
+
     protected static function getNumberSelected($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $numberSelected = new NumberSelected();
         $numberSelected->setSectionIdentifier($sectionIdentifier);
-        
+
         if (empty($includeCategories) === false) {
             $numberSelected->setIncludeCategories($includeCategories);
         }
-        
+
         if (empty($excludeCategories) === false) {
             $numberSelected->setExcludeCategories($excludeCategories);
         }

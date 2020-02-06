@@ -1,20 +1,19 @@
 <?php
 
 use qtism\data\content\FlowStaticCollection;
-use qtism\data\ShowHide;
+use qtism\data\content\interactions\GapText;
 use qtism\data\content\PrintedVariable;
 use qtism\data\content\TextRun;
-use qtism\data\content\interactions\GapText;
+use qtism\data\ShowHide;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class GapTextMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshall()
     {
         $gapText = new GapText('gapText1', 1);
-        $gapText->setContent(new FlowStaticCollection(array(new TextRun('My var is '), new PrintedVariable('var1'))));
+        $gapText->setContent(new FlowStaticCollection([new TextRun('My var is '), new PrintedVariable('var1')]));
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($gapText);
         $element = $marshaller->marshall($gapText);
@@ -41,7 +40,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this->assertFalse($gapText->hasTemplateIdentifier());
         $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
     }
-    
+
     public function testUnmarshallComplexContentForQti22()
     {
         $element = $element = $this->createDOMElement('
@@ -56,7 +55,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this->assertFalse($gapText->isFixed());
         $this->assertFalse($gapText->hasTemplateIdentifier());
         $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
-        
+
         $this->assertCount(3, $gapText->getContent());
         $this->assertInstanceOf('qtism\\data\\content\\TextRun', $gapText->getContent()[0]);
         $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Strong', $gapText->getContent()[1]);

@@ -1,36 +1,34 @@
 <?php
 
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
-use qtism\common\datatypes\QtiShape;
-use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\Variable;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class InsideMarshallerTest extends QtiSmTestCase
 {
-
     public function testMarshall()
     {
-
         $subs = new ExpressionCollection();
         $subs[] = new Variable('pointVariable');
-        
+
         $shape = QtiShape::RECT;
-        $coords = new QtiCoords($shape, array(0, 0, 100, 20));
-        
+        $coords = new QtiCoords($shape, [0, 0, 100, 20]);
+
         $component = new Inside($subs, $shape, $coords);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
-        
+
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('inside', $element->nodeName);
-        $this->assertEquals(implode(",", array(0, 0, 100, 20)), $element->getAttribute('coords'));
+        $this->assertEquals(implode(",", [0, 0, 100, 20]), $element->getAttribute('coords'));
         $this->assertEquals('rect', $element->getAttribute('shape'));
         $this->assertEquals(1, $element->getElementsByTagName('variable')->length);
     }
-    
+
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -42,10 +40,10 @@ class InsideMarshallerTest extends QtiSmTestCase
 			'
         );
         $element = $dom->documentElement;
-        
+
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
-        
+
         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Inside', $component);
         $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
         $this->assertInternalType('integer', $component->getShape());

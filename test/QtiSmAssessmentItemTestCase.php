@@ -1,34 +1,32 @@
 <?php
 
 use qtism\common\datatypes\QtiDuration;
+use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\runtime\tests\AssessmentItemSession;
+use qtism\runtime\tests\SessionManager;
 
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
-use qtism\runtime\tests\SessionManager;
-use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
-use qtism\runtime\tests\AssessmentItemSession;
-
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
-    
     public function setUp()
     {
         parent::setUp();
     }
-    
+
     public function tearDown()
     {
         parent::tearDown();
     }
-    
+
     protected static function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller();
         $element = self::createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }
-    
+
     /**
      * Instantiate a basic item session for a non-adaptive, non-timeDependent item with two variables:
      *
@@ -56,16 +54,16 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
             </assessmentItemRef>
         ');
-    
+
         $manager = new SessionManager();
-        
+
         if (is_null($acceptableLatency) === false) {
             $manager->setAcceptableLatency($acceptableLatency);
         }
-        
+
         return new AssessmentItemSession($itemRef, $manager);
     }
-    
+
     /**
      * Instantiate a basic item session for an adaptive, non-timeDependent item with two variables:
      *
@@ -77,7 +75,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
      * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
      *
-     * @return \qtism\runtime\tests\AssessmentItemSession
+     * @return AssessmentItemSession
      */
     protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
     {
@@ -121,13 +119,13 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
                 </responseProcessing>
             </assessmentItemRef>
         ');
-    
+
         $manager = new SessionManager();
-        
+
         if (is_null($acceptableLatency) === false) {
             $manager->setAcceptableLatency($acceptableLatency);
         }
-        
+
         return new AssessmentItemSession($itemRef, $manager);
     }
 }

@@ -6,14 +6,13 @@ require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 class PairTest extends QtiSmTestCase
 {
-
     public function testEquality()
     {
         $p1 = new QtiPair('A', 'B');
         $p2 = new QtiPair('A', 'B');
         $p3 = new QtiPair('C', 'D');
         $p4 = new QtiPair('D', 'C');
-        
+
         $this->assertTrue($p1->equals($p2));
         $this->assertTrue($p2->equals($p1));
         $this->assertFalse($p1->equals($p3));

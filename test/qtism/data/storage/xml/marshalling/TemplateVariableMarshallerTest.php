@@ -21,12 +21,12 @@
  * @license GPLv2
  */
 
-use qtism\common\enums\Cardinality;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\results\ResultTemplateVariable;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\common\datatypes\QtiIdentifier;
-use qtism\data\results\ResultTemplateVariable;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -85,10 +85,10 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
             new QtiIdentifier('fixture-identifier'),
             0,
             4,
-            new ValueCollection(array(
+            new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */
@@ -123,7 +123,7 @@ class TemplateVariableMarshallerTest extends QtiSmTestCase
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'cardinality')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
 
         $this->assertEquals(0, $element->getElementsByTagName('value')->length);
     }

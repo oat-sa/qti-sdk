@@ -6,7 +6,6 @@ require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 class FileSystemFileTest extends QtiSmTestCase
 {
-    
     /**
      * @dataProvider retrieveProvider
      *
@@ -19,7 +18,7 @@ class FileSystemFileTest extends QtiSmTestCase
         $this->assertEquals($expectedMimeType, $pFile->getMimeType());
         $this->assertEquals($expectedData, $pFile->getData());
     }
-    
+
     /**
      * @dataProvider createFromExistingFileProvider
      *
@@ -32,9 +31,9 @@ class FileSystemFileTest extends QtiSmTestCase
     {
         $destination = tempnam('/tmp', 'qtism');
         $pFile = FileSystemFile::createFromExistingFile($source, $destination, $mimeType, $withFilename);
-        
+
         $expectedContent = file_get_contents($source);
-        
+
         if ($withFilename === true) {
             // Check if the name is the original one.
             $pathinfo = pathinfo($source);
@@ -42,16 +41,16 @@ class FileSystemFileTest extends QtiSmTestCase
         } else {
             $this->assertEquals($withFilename, $pFile->getFilename());
         }
-        
+
         $this->assertEquals($expectedContent, $pFile->getData());
         $this->assertEquals($mimeType, $pFile->getMimeType());
-        
+
         unlink($destination);
     }
-    
+
     /**
      * @dataProvider getStreamProvider
-     * @depends testRetrieve
+     * @depends      testRetrieve
      *
      * @param string $path
      * @param string $expectedData
@@ -60,48 +59,48 @@ class FileSystemFileTest extends QtiSmTestCase
     {
         $pFile = FileSystemFile::retrieveFile($path);
         $stream = $pFile->getStream();
-        
+
         $data = '';
-        
+
         while (!feof($stream)) {
             $data .= fread($stream, 2048);
         }
-        
+
         @fclose($fp);
-        
+
         $this->assertEquals($expectedData, $data);
     }
-    
+
     public function testInstantiationWrongPath()
     {
         $this->setExpectedException('\\RuntimeException');
         $pFile = new FileSystemFile('/qtism/test');
         $pFile->getFilename();
     }
-    
+
     public function retrieveProvider()
     {
-        return array(
-            array(self::samplesDir() . 'datatypes/file/text-plain_name.txt', 'yours.txt', 'text/plain', ''),
-            array(self::samplesDir() . 'datatypes/file/text-plain_noname.txt', '', 'text/plain', ''),
-            array(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt', 'text.txt', 'text/plain', 'Some text...'),
-        );
+        return [
+            [self::samplesDir() . 'datatypes/file/text-plain_name.txt', 'yours.txt', 'text/plain', ''],
+            [self::samplesDir() . 'datatypes/file/text-plain_noname.txt', '', 'text/plain', ''],
+            [self::samplesDir() . 'datatypes/file/text-plain_text_data.txt', 'text.txt', 'text/plain', 'Some text...'],
+        ];
     }
-    
+
     public function getStreamProvider()
     {
-        return array(
-            array(self::samplesDir() . 'datatypes/file/text-plain_name.txt', ''),
-            array(self::samplesDir() . 'datatypes/file/text-plain_noname.txt', ''),
-            array(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt', 'Some text...'),
-        );
+        return [
+            [self::samplesDir() . 'datatypes/file/text-plain_name.txt', ''],
+            [self::samplesDir() . 'datatypes/file/text-plain_noname.txt', ''],
+            [self::samplesDir() . 'datatypes/file/text-plain_text_data.txt', 'Some text...'],
+        ];
     }
-    
+
     public function createFromExistingFileProvider()
     {
-        return array(
-            array(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', true),
-            array(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'new-name.txt'),
-        );
+        return [
+            [self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', true],
+            [self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'new-name.txt'],
+        ];
     }
 }

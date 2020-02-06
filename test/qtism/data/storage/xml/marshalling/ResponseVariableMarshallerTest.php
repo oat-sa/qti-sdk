@@ -21,14 +21,14 @@
  * @license GPLv2
  */
 
-use qtism\data\results\ResultResponseVariable;
-use qtism\data\results\CandidateResponse;
-use qtism\common\enums\Cardinality;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\results\CandidateResponse;
+use qtism\data\results\ResultResponseVariable;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\common\datatypes\QtiIdentifier;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -110,16 +110,16 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),
             0,
-            new CandidateResponse(new ValueCollection(array(
+            new CandidateResponse(new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            ))),
+            ])),
             4,
-            new CorrectResponse(new ValueCollection(array(
+            new CorrectResponse(new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
                 new Value('fixture-value2'),
-            ))),
+            ])),
             new QtiIdentifier('value-id-1')
         );
 
@@ -147,10 +147,10 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),
             0,
-            new CandidateResponse(new ValueCollection(array(
+            new CandidateResponse(new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            )))
+            ]))
         );
 
         /** @var DOMElement $element */
@@ -164,7 +164,7 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'cardinality')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
 
         $this->assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
         $this->assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);

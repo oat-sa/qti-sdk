@@ -1,20 +1,18 @@
 <?php
 
-use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiInteger;
-use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\operators\OperatorProcessingException;
-use qtism\runtime\expressions\operators\custom\Implode;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\QtiString;
+use qtism\runtime\expressions\operators\custom\Implode;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class ImplodeProcessorTest extends QtiSmTestCase
 {
-    
     public function testNotEnoughOperandsOne()
     {
         $expression = $this->createFakeExpression();
@@ -27,11 +25,11 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
     }
-    
+
     public function testNotEnoughOperandsTwo()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiString('Hello-World!')));
+        $operands = new OperandsCollection([new QtiString('Hello-World!')]);
         $this->setExpectedException(
             'qtism\\runtime\\expressions\\ExpressionProcessingException',
             "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator takes 2 sub-expressions as parameters, 1 given.",
@@ -40,11 +38,11 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
     }
-    
+
     public function testWrongBaseType()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiInteger(2), new QtiPoint(0, 0)));
+        $operands = new OperandsCollection([new QtiInteger(2), new QtiPoint(0, 0)]);
         $processor = new Implode($expression, $operands);
         $this->setExpectedException(
             'qtism\\runtime\\expressions\\ExpressionProcessingException',
@@ -53,11 +51,11 @@ class ImplodeProcessorTest extends QtiSmTestCase
         );
         $result = $processor->process();
     }
-    
+
     public function testWrongCardinalityOne()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new QtiString('String!'))), new QtiString('Hello World!')));
+        $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiString('Hello World!')]);
         $processor = new Implode($expression, $operands);
         $this->setExpectedException(
             'qtism\\runtime\\expressions\\ExpressionProcessingException',
@@ -66,11 +64,11 @@ class ImplodeProcessorTest extends QtiSmTestCase
         );
         $result = $processor->process();
     }
-    
+
     public function testWrongCardinalityTwo()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiString('-'), new QtiString('Hello-World!')));
+        $operands = new OperandsCollection([new QtiString('-'), new QtiString('Hello-World!')]);
         $processor = new Implode($expression, $operands);
         $this->setExpectedException(
             'qtism\\runtime\\expressions\\ExpressionProcessingException',
@@ -79,28 +77,28 @@ class ImplodeProcessorTest extends QtiSmTestCase
         );
         $result = $processor->process();
     }
-    
+
     public function testNullOperands()
     {
         $expression = $this->createFakeExpression();
-        
-        $operands = new OperandsCollection(array(new QtiString(''), null));
+
+        $operands = new OperandsCollection([new QtiString(''), null]);
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
         $this->assertSame(null, $result);
     }
-    
+
     public function testImplodeOne()
     {
         $expression = $this->createFakeExpression();
-        $operands = new OperandsCollection(array(new QtiString('-'), new MultipleContainer(BaseType::STRING, array(new QtiString('Hello'), new QtiString('World')))));
+        $operands = new OperandsCollection([new QtiString('-'), new MultipleContainer(BaseType::STRING, [new QtiString('Hello'), new QtiString('World')])]);
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
-        
+
         $this->assertInstanceOf(QtiString::class, $result);
         $this->assertEquals('Hello-World', $result->getValue());
     }
-    
+
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

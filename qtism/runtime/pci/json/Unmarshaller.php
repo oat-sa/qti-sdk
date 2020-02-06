@@ -25,6 +25,7 @@ namespace qtism\runtime\pci\json;
 
 use InvalidArgumentException;
 use qtism\common\datatypes\files\FileManager;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;

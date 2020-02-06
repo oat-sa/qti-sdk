@@ -1,7 +1,7 @@
 <?php
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
