@@ -60,9 +60,6 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 
     /**
      * @dataProvider qtiVersionsToTestForExternalScored
-     * @param $qtiVersion
-     * @param $externalScored
-     * @param $expectedExternalScored
      */
     public function testMarshallExternalScored($qtiVersion, $externalScored, $expectedExternalScored)
     {

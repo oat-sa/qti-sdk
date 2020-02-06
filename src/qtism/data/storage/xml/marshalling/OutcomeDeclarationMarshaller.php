@@ -91,7 +91,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         // Deal with lookup table.
-        if ($component->getLookupTable() != null) {
+        if ($component->getLookupTable() !== null) {
             $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
