@@ -66,12 +66,12 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         // deal with interpretation.
-        if ($component->getInterpretation() != '') {
+        if ($component->getInterpretation() !== '') {
             $this->setDOMElementAttribute($element, 'interpretation', $component->getInterpretation());
         }
 
         // deal with long interpretation.
-        if ($component->getLongInterpretation() != '') {
+        if ($component->getLongInterpretation() !== '') {
             $this->setDOMElementAttribute($element, 'longInterpretation', $component->getLongInterpretation());
         }
 
