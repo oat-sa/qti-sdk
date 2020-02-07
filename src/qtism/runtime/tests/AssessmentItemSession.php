@@ -1440,7 +1440,7 @@ class AssessmentItemSession extends State
     {
         /** @var OutcomeDeclaration $outcomeDeclaration */
         foreach ($outcomeDeclarations as $outcomeDeclaration) {
-            if ($outcomeDeclaration->getExternalScored() !== null) {
+            if ($outcomeDeclaration->isExternallyScored()) {
                 return true;
             }
         }

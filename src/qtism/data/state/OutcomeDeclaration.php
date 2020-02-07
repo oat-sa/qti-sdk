@@ -374,7 +374,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set external score attribute to determine how scoring should be proceed
      *
-     * @param string $externalScored
+     * @param int|null $externalScored
      */
     public function setExternalScored($externalScored = null)
     {
@@ -386,10 +386,37 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
-     * @return string
+     * @return int|null
      */
     public function getExternalScored()
     {
         return $this->externalScored;
+    }
+
+    /**
+     * Is the outcome declaration externally scored?
+     * @return bool
+     */
+    public function isExternallyScored()
+    {
+        return $this->externalScored !== null;
+    }
+
+    /**
+     * Get externalScored attribute
+     * @return bool
+     */
+    public function isScoredByHuman()
+    {
+        return $this->externalScored === ExternalScored::HUMAN;
+    }
+
+    /**
+     * Get externalScored attribute
+     * @return bool
+     */
+    public function isScoredByExternalMachine()
+    {
+        return $this->externalScored === ExternalScored::EXTERNAL_MACHINE;
     }
 }
