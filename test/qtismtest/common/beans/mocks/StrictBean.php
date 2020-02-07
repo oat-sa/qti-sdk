@@ -1,6 +1,8 @@
 <?php
 
-class NotStrictConstructorBean
+namespace qtismtest\common\beans\mocks;
+
+class StrictBean
 {
     /**
      *
@@ -24,18 +26,18 @@ class NotStrictConstructorBean
     private $hair;
 
     /**
-     * The parameter names should be the same as the property
-     * names. $hairColor has no related bean property.
      *
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $hairColor
+     * @var boolean
+     * @qtism-bean-property
      */
-    public function __construct($firstName, $lastName, $hairColor)
+    private $cool;
+
+    public function __construct($firstName, $lastName, $hair, $cool)
     {
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
-        $this->setHair($hairColor);
+        $this->setHair($hair);
+        $this->setCool($cool);
     }
 
     public function setFirstName($firstName)
@@ -66,5 +68,15 @@ class NotStrictConstructorBean
     public function getHair()
     {
         return $this->hair;
+    }
+
+    public function setCool($cool)
+    {
+        $this->cool = $cool;
+    }
+
+    public function isCool()
+    {
+        return $this->cool;
     }
 }

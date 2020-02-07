@@ -1,6 +1,8 @@
 <?php
 
-class NotStrictMissingSetterBean
+namespace qtismtest\common\beans\mocks;
+
+class NotStrictConstructorBean
 {
     /**
      *
@@ -23,11 +25,19 @@ class NotStrictMissingSetterBean
      */
     private $hair;
 
-    public function __construct($firstName, $lastName, $hair)
+    /**
+     * The parameter names should be the same as the property
+     * names. $hairColor has no related bean property.
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $hairColor
+     */
+    public function __construct($firstName, $lastName, $hairColor)
     {
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
-        $this->setHair($hair);
+        $this->setHair($hairColor);
     }
 
     public function setFirstName($firstName)
@@ -50,12 +60,7 @@ class NotStrictMissingSetterBean
         return $this->lastName;
     }
 
-    /**
-     * The setHair method should be public.
-     *
-     * @param string $hair
-     */
-    protected function setHair($hair)
+    public function setHair($hair)
     {
         $this->hair = $hair;
     }

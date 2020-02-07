@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\common\beans\mocks;
+
 class SimpleBean
 {
     /**

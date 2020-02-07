@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../qtism/qtism.php');
+namespace qtismtest;
 
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;

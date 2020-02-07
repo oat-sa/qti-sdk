@@ -1,14 +1,15 @@
 <?php
 
+namespace qtismtest\common\beans;
+
 use qtism\common\beans\Bean;
 use qtism\common\beans\BeanException;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
-require_once(dirname(__FILE__) . '/mocks/SimpleBean.php');
-require_once(dirname(__FILE__) . '/mocks/NotStrictConstructorBean.php');
-require_once(dirname(__FILE__) . '/mocks/NotStrictMissingSetterBean.php');
-require_once(dirname(__FILE__) . '/mocks/StrictBean.php');
+use qtismtest\common\beans\mocks\NotStrictConstructorBean;
+use qtismtest\common\beans\mocks\NotStrictMissingSetterBean;
+use qtismtest\common\beans\mocks\SimpleBean;
+use qtismtest\common\beans\mocks\StrictBean;
+use qtismtest\QtiSmTestCase;
 
 class BeanTest extends QtiSmTestCase
 {

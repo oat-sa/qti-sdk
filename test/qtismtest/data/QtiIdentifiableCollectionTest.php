@@ -1,9 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
+namespace qtismtest\data;
 
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
+use qtismtest\QtiSmTestCase;
 
 class QtiIdentifiableCollectionTest extends QtiSmTestCase
 {

@@ -1,6 +1,8 @@
 <?php
 
-class StrictBean
+namespace qtismtest\common\beans\mocks;
+
+class NotStrictMissingSetterBean
 {
     /**
      *
@@ -23,19 +25,11 @@ class StrictBean
      */
     private $hair;
 
-    /**
-     *
-     * @var boolean
-     * @qtism-bean-property
-     */
-    private $cool;
-
-    public function __construct($firstName, $lastName, $hair, $cool)
+    public function __construct($firstName, $lastName, $hair)
     {
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setHair($hair);
-        $this->setCool($cool);
     }
 
     public function setFirstName($firstName)
@@ -58,7 +52,12 @@ class StrictBean
         return $this->lastName;
     }
 
-    public function setHair($hair)
+    /**
+     * The setHair method should be public.
+     *
+     * @param string $hair
+     */
+    protected function setHair($hair)
     {
         $this->hair = $hair;
     }
@@ -66,15 +65,5 @@ class StrictBean
     public function getHair()
     {
         return $this->hair;
-    }
-
-    public function setCool($cool)
-    {
-        $this->cool = $cool;
-    }
-
-    public function isCool()
-    {
-        return $this->cool;
     }
 }
