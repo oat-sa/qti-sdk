@@ -66,12 +66,12 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         // deal with interpretation.
-        if ($component->getInterpretation() != '') {
+        if ($component->getInterpretation() !== '') {
             $this->setDOMElementAttribute($element, 'interpretation', $component->getInterpretation());
         }
 
         // deal with long interpretation.
-        if ($component->getLongInterpretation() != '') {
+        if ($component->getLongInterpretation() !== '') {
             $this->setDOMElementAttribute($element, 'longInterpretation', $component->getLongInterpretation());
         }
 
@@ -91,13 +91,13 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         // Deal with lookup table.
-        if ($component->getLookupTable() != null) {
+        if ($component->getLookupTable() !== null) {
             $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
 
-        if ($component->getExternalScored() !== null) {
-            static::setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
+        if (Version::compare($version, '2.2.0', '>=') === true && $component->isExternallyScored()) {
+            $this->setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
         }
 
         return $element;
@@ -122,7 +122,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
             // Set external scored attribute
-            if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) != null) {
+            if (($externalScored = $this->getDOMElementAttributeAs($element, 'externalScored')) != null) {
                 $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
             }
 
