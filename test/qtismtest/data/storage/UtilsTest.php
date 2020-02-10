@@ -2,6 +2,8 @@
 
 namespace qtismtest\data\storage;
 
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
@@ -121,7 +123,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToDurationValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::DURATION);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $value);
+        $this->assertInstanceOf(QtiDuration::class, $value);
         $this->assertEquals($value->getDays(), $expected->getDays());
         $this->assertEquals($value->getYears(), $expected->getYears());
         $this->assertEquals($value->getHours(), $expected->getHours());
@@ -145,7 +147,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToPairValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::PAIR);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $value);
+        $this->assertInstanceOf(QtiPair::class, $value);
         $this->assertEquals($expected->getFirst(), $value->getFirst());
         $this->assertEquals($expected->getSecond(), $value->getSecond());
     }
@@ -165,7 +167,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToDirectedPairValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $value);
+        $this->assertInstanceOf(QtiDirectedPair::class, $value);
         $this->assertEquals($expected->getFirst(), $value->getFirst());
         $this->assertEquals($expected->getSecond(), $value->getSecond());
     }
@@ -185,7 +187,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToCoords($string, $shape)
     {
         $coords = Utils::stringToCoords($string, $shape);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiCoords', $coords);
+        $this->assertInstanceOf(QtiCoords::class, $coords);
 
         $intCoords = explode(",", $string);
         $this->assertEquals(count($intCoords), count($coords));

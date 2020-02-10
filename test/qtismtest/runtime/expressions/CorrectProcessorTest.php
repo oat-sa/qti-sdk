@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -55,7 +56,7 @@ class CorrectProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(20, $result->getValue());
     }
 

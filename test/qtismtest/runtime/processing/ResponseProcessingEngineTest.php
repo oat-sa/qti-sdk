@@ -46,7 +46,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         // --> answer as a correct response.
         $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
         $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
         $this->assertEquals(1.0, $context['SCORE']->getValue());
 
         // --> answer as an incorrect response.

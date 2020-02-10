@@ -24,7 +24,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(3.0)]);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertGreaterThanOrEqual(1.0, $result->getValue());
         $this->assertLessThanOrEqual(3.0, $result->getValue());
     }
@@ -36,7 +36,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('s1'), new QtiString('s2'), new QtiString('s3')]);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiString', $result);
+        $this->assertInstanceOf(QtiString::class, $result);
         $this->assertTrue($result->equals(new QtiString('s1')) || $result->equals(new QtiString('s2')) || $result->equals(new QtiString('s3')));
     }
 
@@ -47,7 +47,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::DURATION, [new QtiDuration('P1D'), new QtiDuration('P2D'), new QtiDuration('P3D')]);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $result);
+        $this->assertInstanceOf(QtiDuration::class, $result);
         $this->assertGreaterThanOrEqual(1, $result->getDays());
         $this->assertLessThanOrEqual(3, $result->getDays());
     }
@@ -59,7 +59,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 1), new QtiPoint(2, 2), new QtiPoint(3, 3)]);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPoint', $result);
+        $this->assertInstanceOf(QtiPoint::class, $result);
         $this->assertGreaterThanOrEqual(1, $result->getX());
         $this->assertLessThanOrEqual(3, $result->getY());
     }
@@ -71,7 +71,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(22, 33)]);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPoint', $result);
+        $this->assertInstanceOf(QtiPoint::class, $result);
         $this->assertEquals(22, $result->getX());
         $this->assertEquals(33, $result->getY());
     }

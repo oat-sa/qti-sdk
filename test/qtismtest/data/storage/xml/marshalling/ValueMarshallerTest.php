@@ -132,7 +132,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $component->getValue());
+        $this->assertInstanceOf(QtiPair::class, $component->getValue());
         $this->assertEquals($component->getValue()->getFirst(), 'A');
         $this->assertEquals($component->getValue()->getSecond(), 'B');
         $this->assertEquals($component->getFieldIdentifier(), 'fieldIdentifier1');

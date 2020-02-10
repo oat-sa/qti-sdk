@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
@@ -20,13 +21,13 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiDuration('P2D')]);
         $processor = new DurationLTProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiDuration('P2D'), new QtiDuration('P1D')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertFalse($result->getValue());
     }
 

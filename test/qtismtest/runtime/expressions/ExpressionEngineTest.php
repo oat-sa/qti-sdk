@@ -2,6 +2,8 @@
 
 namespace qtismtest\runtime\expressions;
 
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\ItemSessionControl;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtismtest\QtiSmTestCase;
@@ -13,7 +15,7 @@ class ExpressionEngineTest extends QtiSmTestCase
         $expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
         $engine = new ExpressionEngine($expression);
         $result = $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $result);
+        $this->assertInstanceOf(QtiDuration::class, $result);
         $this->assertEquals(2, $result->getDays());
     }
 
@@ -34,7 +36,7 @@ class ExpressionEngineTest extends QtiSmTestCase
 
         $engine = new ExpressionEngine($expression);
         $result = $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(60.0, $result->getValue());
     }
 

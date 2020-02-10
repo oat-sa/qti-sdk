@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\processing;
 
 use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
@@ -59,13 +60,13 @@ class OutcomeProcessingEngineTest extends QtiSmTestCase
 
         // After processing, the $context['SCORE'] value must be 20.0.
         $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
         $this->assertEquals(20.0, $context['SCORE']->getValue());
 
         $context['t'] = new QtiBoolean(false);
         // After processing, the $context['SCORE'] value must switch to 0.0.
         $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
         $this->assertEquals(0.0, $context['SCORE']->getValue());
     }
 

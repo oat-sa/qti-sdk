@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MatchTable;
@@ -55,6 +56,6 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $entry = $matchTableEntries[0];
         $this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $entry);
         $this->assertEquals(1, $entry->getSourceValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $entry->getTargetValue());
+        $this->assertInstanceOf(QtiDirectedPair::class, $entry->getTargetValue());
     }
 }

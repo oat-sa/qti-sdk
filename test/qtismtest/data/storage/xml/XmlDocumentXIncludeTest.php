@@ -31,7 +31,7 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
     }
 
     /**
-     * @depends      testLoadAndSaveXIncludeNsInTag
+     * @depends testLoadAndSaveXIncludeNsInTag
      * @dataProvider loadAndResolveXIncludeSameBaseProvider
      */
     public function testLoadAndResolveXIncludeSameBase($file, $filesystem)

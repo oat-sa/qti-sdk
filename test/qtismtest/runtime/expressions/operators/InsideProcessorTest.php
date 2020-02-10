@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
@@ -24,7 +25,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertTrue($result->getValue());
 
         $point = new QtiPoint(-1, -1); // -1, -1 is outside.
@@ -33,7 +34,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor->setExpression($expression);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertFalse($result->getValue());
     }
 
@@ -46,7 +47,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertTrue($result->getValue());
 
         $point = new QtiPoint(10, 9); // 10, 9 is outside.
@@ -55,7 +56,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor->setExpression($expression);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertFalse($result->getValue());
     }
 
@@ -68,7 +69,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertTrue($result->getValue());
 
         $point = new QtiPoint(1, 1); // 1,1 is outside
@@ -77,7 +78,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor->setExpression($expression);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertFalse($result->getValue());
     }
 

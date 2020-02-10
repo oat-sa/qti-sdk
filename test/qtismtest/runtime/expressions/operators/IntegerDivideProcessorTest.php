@@ -19,13 +19,13 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(5)]);
         $processor = new IntegerDivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(2, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(49), new QtiInteger(-5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(-10, $result->getValue());
     }
 

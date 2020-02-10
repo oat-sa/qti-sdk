@@ -302,7 +302,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
         $this->assertEquals(2, $itemSession['numAttempts']->getValue());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
     }
 

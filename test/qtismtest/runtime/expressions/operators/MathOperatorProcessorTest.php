@@ -643,6 +643,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
             $data[] = [new QtiFloat(-INF), new QtiFloat(INF), -M_PI_4];
             $data[] = [new QtiFloat(-INF), new QtiFloat(-INF), -3 * M_PI_4];
         }
+
         return $data;
     }
 

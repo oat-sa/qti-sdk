@@ -20,31 +20,31 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(1)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(0), new QtiInteger(2)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(0, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(-30), new QtiInteger(5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(-6, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(30), new QtiInteger(5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(6, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(1), new QtiFloat(0.5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(2, $result->getValue());
     }
 
@@ -63,13 +63,13 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(INF)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(0, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(-1), new QtiFloat(INF)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(-0, $result->getValue());
     }
 

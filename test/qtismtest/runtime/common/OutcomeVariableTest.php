@@ -53,9 +53,9 @@ class OutcomeVariableTest extends QtiSmTestCase
 
         $variable->setValue(new QtiInteger(16));
         $variable->setDefaultValue(new QtiInteger(-1));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $variable->getValue());
+        $this->assertInstanceOf(QtiInteger::class, $variable->getValue());
         $this->assertEquals(16, $variable->getValue()->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $variable->getDefaultValue());
+        $this->assertInstanceOf(QtiInteger::class, $variable->getDefaultValue());
         $this->assertEquals(-1, $variable->getDefaultValue()->getValue());
 
         // If I reinit the variable, I should see the NULL value inside.
@@ -67,7 +67,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         // was given.
         $variable->setDefaultValue(null);
         $variable->applyDefaultValue();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $variable->getValue());
+        $this->assertInstanceOf(QtiInteger::class, $variable->getValue());
         $this->assertEquals(0, $variable->getValue()->getValue());
     }
 
@@ -175,8 +175,8 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $defaultValue);
         $this->assertEquals(2, count($defaultValue));
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $defaultValue['A']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $defaultValue['B']);
+        $this->assertInstanceOf(QtiPair::class, $defaultValue['A']);
+        $this->assertInstanceOf(QtiFloat::class, $defaultValue['B']);
     }
 
     public function testCreateFromVariableDeclarationExtended()
@@ -184,13 +184,14 @@ class OutcomeVariableTest extends QtiSmTestCase
         $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
-                                identifier="outcome1" 
-                                baseType="pair" 
-                                cardinality="ordered"
-                                views="author candidate"
-                                normalMinimum="1.0"
-                                normalMaximum="2.1"
-                                masteryValue="1.5">
+                identifier="outcome1" 
+                baseType="pair" 
+                cardinality="ordered"
+                views="author candidate"
+                normalMinimum="1.0"
+                normalMaximum="2.1"
+                masteryValue="1.5"
+            >
                 <defaultValue>
                     <value>A B</value>
                     <value>B C</value>

@@ -75,13 +75,13 @@ class AndProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(true)]);
         $processor = new AndProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(true, $result->getValue());
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(true, $result->getValue());
     }
 
@@ -91,13 +91,13 @@ class AndProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(false)]);
         $processor = new AndProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(false, $result->getValue());
 
         $operands = new OperandsCollection([new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(false, $result->getValue());
     }
 

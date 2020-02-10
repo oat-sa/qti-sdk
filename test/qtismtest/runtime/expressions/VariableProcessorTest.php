@@ -44,7 +44,7 @@ class VariableProcessorTest extends QtiSmTestCase
 
         $variableProcessor->setState($state); // State is populated with var1.
         $result = $variableProcessor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(1337, $result->getValue());
 
         // multiple cardinality test.
@@ -87,7 +87,7 @@ class VariableProcessorTest extends QtiSmTestCase
 
         // -- single cardinality test.
         $result = $variableProcessor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1470.7, $result->getValue());
         // The value in the state must be intact.
         $this->assertEquals(1337, $assessmentTestSession['Q01.var1']->getValue());
@@ -155,7 +155,7 @@ class VariableProcessorTest extends QtiSmTestCase
 
         $variableProcessor->setExpression($occurenceVariableExpression);
         $result = $variableProcessor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1.0, $result->getValue());
         $session->moveNext();
 
@@ -170,13 +170,13 @@ class VariableProcessorTest extends QtiSmTestCase
         // $occurenceVariableExpression still targets Q01.1
         $variableProcessor->setExpression($occurenceVariableExpression);
         $result = $variableProcessor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1.0, $result->getValue());
 
         // $occurenceVariableExpression now targets Q01.2
         $occurenceVariableExpression->setIdentifier('Q01.2.SCORE');
         $result = $variableProcessor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(0.0, $result->getValue());
     }
 }

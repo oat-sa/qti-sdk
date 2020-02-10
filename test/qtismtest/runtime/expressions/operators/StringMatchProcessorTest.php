@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
@@ -18,18 +19,18 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('one')]);
         $processor = new StringMatchProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(true, $result->getValue());
 
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('oNe')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(false, $result->getValue());
 
         $processor->setExpression($this->createFakeExpression(false));
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(true, $result->getValue());
 
         // Binary-safe?
@@ -37,13 +38,13 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString('它的工作原理'), new QtiString('它的工作原理')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(true, $result->getValue());
 
         $operands = new OperandsCollection([new QtiString('它的工作原理'), new QtiString('它的原理')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertSame(false, $result->getValue());
     }
 

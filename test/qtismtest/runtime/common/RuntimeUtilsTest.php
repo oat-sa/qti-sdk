@@ -143,7 +143,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
         $returnValue[] = [new QtiPoint(1, 1), BaseType::POINT];
         $returnValue[] = [new QtiPair('A', 'B'), BaseType::PAIR];
         $returnValue[] = [new QtiDirectedPair('A', 'B'), BaseType::DIRECTED_PAIR];
-        $returnValue[] = [new StdClass(), false];
+        $returnValue[] = [new stdClass(), false];
         $returnValue[] = [new Container(), false];
 
         return $returnValue;

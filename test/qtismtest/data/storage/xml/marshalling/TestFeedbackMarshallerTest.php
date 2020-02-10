@@ -52,10 +52,11 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('
-		    <testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title">
+        $dom->loadXML(
+            '<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title">
                 <p>Have a nice test!</p>
-            </testFeedback>');
+            </testFeedback>'
+        );
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);

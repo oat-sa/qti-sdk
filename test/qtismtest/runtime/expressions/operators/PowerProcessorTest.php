@@ -19,42 +19,42 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(0), new QtiInteger(0)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(256);
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $operands[] = new QtiInteger(2);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(2);
         $operands[] = new QtiInteger(8);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(256, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(20);
         $operands[] = new QtiFloat(3.4);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(26515, intval($result->getValue()));
     }
 

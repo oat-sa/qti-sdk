@@ -22,61 +22,61 @@ class RoundProcessorTest extends QtiSmTestCase
         $processor = new RoundProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(7, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(6.5);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(7, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(6.49);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(6.5);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(7, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-6.5);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(-6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-6.51);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(-7, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-6.49);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(-6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-0.0);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-0.5);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(0, $result->getValue());
     }
 

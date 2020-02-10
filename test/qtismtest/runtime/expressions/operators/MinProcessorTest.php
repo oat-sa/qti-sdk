@@ -70,7 +70,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiInteger(-10), new QtiInteger(0), new QtiInteger(10), new QtiInteger(20)]);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(-20, $result->getValue());
 
         $operands = new OperandsCollection();
@@ -79,7 +79,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(100002);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(2094, $result->getValue());
     }
 
@@ -89,7 +89,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(26.4), new QtiInteger(-4), new QtiFloat(25.3)]);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(-4.0, $result->getValue());
 
         $operands->reset();
@@ -97,7 +97,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(2.4);
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(245.4), new QtiFloat(1337.1337)]);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(1.0, $result->getValue());
     }
 

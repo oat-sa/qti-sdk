@@ -3,6 +3,8 @@
 namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
@@ -29,7 +31,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
 
         // The state must be modified.
         // OutcomeVariable with identifier 'SCORE' must contain 4.3.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
         $this->assertEquals(4.3, $state['SCORE']->getValue());
     }
 
@@ -47,7 +49,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
         $this->assertEquals(4.0, $state['SCORE']->getValue());
     }
 
@@ -65,7 +67,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $state['SCORE']);
+        $this->assertInstanceOf(QtiInteger::class, $state['SCORE']);
         $this->assertEquals(4, $state['SCORE']->getValue());
     }
 
@@ -82,7 +84,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        $this->setExpectedException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -99,7 +101,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        $this->setExpectedException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -128,13 +130,13 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
     public function testSetOutcomeValueJugglingOrdered()
     {
         $rule = $this->createComponentFromXml('
-	        <setOutcomeValue identifier="SCORE">
-	            <ordered>
-	                <baseValue baseType="float">1337.1337</baseValue>
+            <setOutcomeValue identifier="SCORE">
+                <ordered>
+                    <baseValue baseType="float">1337.1337</baseValue>
                     <baseValue baseType="float">7777.7777</baseValue>
-	            </ordered>
-	        </setOutcomeValue>
-	    ');
+                </ordered>
+            </setOutcomeValue>
+        ');
 
         $processor = new SetOutcomeValueProcessor($rule);
         $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
@@ -150,13 +152,13 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
     public function testSetOutcomeValueWrongJugglingMultipleBecauseWrongBaseType()
     {
         $rule = $this->createComponentFromXml('
-	        <setOutcomeValue identifier="SCORE">
-	            <multiple>
-	                <baseValue baseType="string">hello</baseValue>
+            <setOutcomeValue identifier="SCORE">
+                <multiple>
+                    <baseValue baseType="string">hello</baseValue>
                     <baseValue baseType="string">world</baseValue>
-	            </multiple>
-	        </setOutcomeValue>
-	    ');
+                </multiple>
+            </setOutcomeValue>
+        ');
 
         $processor = new SetOutcomeValueProcessor($rule);
         $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
@@ -164,7 +166,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
+            RuleProcessingException::class,
             'Unable to set value hello to variable \'SCORE\' (cardinality = single, baseType = integer).'
         );
         $processor->process();
@@ -192,7 +194,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
 
         $processor->setState($state);
         $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $state['myBool']);
+        $this->assertInstanceOf(QtiBoolean::class, $state['myBool']);
         $this->assertTrue($state['myBool']->getValue());
     }
 

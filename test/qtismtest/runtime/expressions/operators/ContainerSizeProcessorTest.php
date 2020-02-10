@@ -39,13 +39,13 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertSame(0, $result->getValue());
 
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertSame(0, $result->getValue());
     }
 
@@ -79,7 +79,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)]);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(3, $result->getValue());
     }
 

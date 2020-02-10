@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
@@ -52,7 +53,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
         $result = $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertFalse($result->getValue());
     }
 

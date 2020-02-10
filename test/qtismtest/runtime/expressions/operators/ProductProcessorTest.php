@@ -23,7 +23,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $result = $productProcessor->process();
 
         $this->assertInstanceOf('qtism\\runtime\\common\\Processable', $productProcessor);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(1, $result->getValue());
     }
 
@@ -35,7 +35,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(-96, $result->getValue());
     }
 
@@ -49,7 +49,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(-1354.5, $result->getValue());
     }
 

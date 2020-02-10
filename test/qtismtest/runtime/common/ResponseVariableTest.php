@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
@@ -61,13 +62,13 @@ class ResponseVariableTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\data\\state\\Mapping', $mapping);
         $mapEntries = $mapping->getMapEntries();
         $this->assertEquals(3, count($mapEntries));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $mapEntries[0]->getMapKey());
+        $this->assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
 
         $areaMapping = $responseVariable->getAreaMapping();
         $this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $areaMapping);
         $areaMapEntries = $areaMapping->getAreaMapEntries();
         $this->assertEquals(3, count($areaMapEntries));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiCoords', $areaMapEntries[0]->getCoords());
+        $this->assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
 
         $this->assertTrue($responseVariable->hasCorrectResponse());
         $correctResponse = $responseVariable->getCorrectResponse();
