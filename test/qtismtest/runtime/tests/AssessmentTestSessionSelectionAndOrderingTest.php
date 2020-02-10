@@ -1,13 +1,17 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\tests;
 
-class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
+use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmTestCase;
+
+class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 {
     public function testSelectionAndOrdering()
     {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering_with_replacement.xml');
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -16,14 +20,18 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
 
     public function testSelectionAndOrderingOverflow()
     {
-        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering_overflow.xml');
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering_overflow.xml');
+
+        $sessionManager = new SessionManager();
+        $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $this->assertEquals(12, $assessmentTestSession->getRouteCount());
     }
 
     public function testOrderingBasic()
     {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/ordering_basic.xml');
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -33,7 +41,7 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     public function testOrderingBasicFixed()
     {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/ordering_basic_fixed.xml');
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -44,7 +52,7 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     public function testOrderingVisible()
     {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/ordering_visible.xml');
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -54,7 +62,7 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     public function testOrderingInvisibleDontKeepTogether()
     {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_dont_keep_together.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/ordering_invisible_dont_keep_together.xml');
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -64,7 +72,7 @@ class AssessmentTestSessionSelectionAndOrdering extends QtiSmTestCase
     public function testOrderingInvisibleKeepTogether()
     {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_keep_together.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/ordering_invisible_keep_together.xml');
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
