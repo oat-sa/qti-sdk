@@ -11,7 +11,7 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/itembodywithfeedback_1.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/itembodywithfeedback_1.xml');
 
 $outcome1 = new OutcomeVariable('outcome1', Cardinality::SINGLE, BaseType::IDENTIFIER, '');
 $outcome2 = new OutcomeVariable('outcome2', Cardinality::SINGLE, BaseType::IDENTIFIER, '');

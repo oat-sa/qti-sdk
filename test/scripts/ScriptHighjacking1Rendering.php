@@ -13,7 +13,7 @@ require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
 try {
-    $doc->load('../samples/rendering/script_highjacking_1.xml');
+    $doc->load(dirname(__FILE__) . '/../samples/rendering/script_highjacking_1.xml');
 } catch (StorageException $e) {
     do {
         echo $e->getMessage() . "\n";

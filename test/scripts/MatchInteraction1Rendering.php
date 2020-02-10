@@ -6,7 +6,7 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/matchinteraction_1.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/matchinteraction_1.xml');
 
 $renderer = new XhtmlRenderingEngine();
 if (isset($argv[1]) && $argv[1] === 'shuffle') {
