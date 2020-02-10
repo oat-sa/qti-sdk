@@ -51,7 +51,7 @@ class ExternalScored implements Enumeration
      *
      * @param string $name
      *
-     * @return integer|bool
+     * @return int|bool
      */
     public static function getConstantByName($name)
     {
