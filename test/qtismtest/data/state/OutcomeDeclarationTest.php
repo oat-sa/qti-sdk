@@ -21,11 +21,11 @@
  * @package
  */
 
-require_once (__DIR__ . '/../../../QtiSmTestCase.php');
+namespace qtismtest\data\state;
 
 use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
-
+use qtismtest\QtiSmTestCase;
 
 class OutcomeDeclarationTest extends QtiSmTestCase
 {
