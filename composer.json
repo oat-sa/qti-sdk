@@ -34,7 +34,12 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"qtism\\": "whatever"
+			"qtism\\": "."
+		}
+	},
+	"autoload-dev": {
+		"psr-0": {
+			"qtismtest": "test"
 		}
 	}
 }
