@@ -1,8 +1,9 @@
 <?php
 
-use qtism\runtime\rendering\css\Utils as CssUtils;
+namespace qtismtest\runtime\rendering\css;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\runtime\rendering\css\Utils as CssUtils;
+use qtismtest\QtiSmTestCase;
 
 class CssUtilsTest extends QtiSmTestCase
 {

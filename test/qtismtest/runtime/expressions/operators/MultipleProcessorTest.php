@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiIdentifier;
@@ -12,6 +12,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MultipleProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class MultipleProcessorTest extends QtiSmTestCase
 {

@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -10,8 +13,7 @@ use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 {

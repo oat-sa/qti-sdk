@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\runtime\common;
+
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TemplateVariableTest extends QtiSmTestCase
 {

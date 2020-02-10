@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
@@ -10,6 +10,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\DefaultProcessor;
+use qtismtest\QtiSmTestCase;
 
 class DefaultProcessorTest extends QtiSmTestCase
 {

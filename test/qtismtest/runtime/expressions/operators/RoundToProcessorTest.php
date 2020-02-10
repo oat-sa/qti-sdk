@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -9,6 +9,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RoundToProcessor;
+use qtismtest\QtiSmTestCase;
 
 class RoundToProcessorTest extends QtiSmTestCase
 {

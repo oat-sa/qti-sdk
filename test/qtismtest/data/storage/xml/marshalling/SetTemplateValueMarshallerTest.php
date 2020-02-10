@@ -1,13 +1,15 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Match;
 use qtism\data\expressions\Variable;
 use qtism\data\rules\SetTemplateValue;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class SetTemplateValueMarshallerTest extends QtiSmTestCase
 {

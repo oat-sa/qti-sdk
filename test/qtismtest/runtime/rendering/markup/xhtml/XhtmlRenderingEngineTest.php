@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\runtime\rendering\markup\xhtml;
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingContext;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class XhtmlRenderingEngineTest extends QtiSmTestCase
 {

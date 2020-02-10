@@ -1,13 +1,15 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\DefaultValue;
 use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 {

@@ -1,9 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\ExitResponseProcessor;
 use qtism\runtime\rules\RuleProcessingException;
+use qtismtest\QtiSmTestCase;
 
 class ExitResponseProcessorTest extends QtiSmTestCase
 {

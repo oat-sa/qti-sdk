@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\rendering\markup\xhtml;
+
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Abbr;
@@ -7,8 +9,7 @@ use qtism\data\content\xhtml\text\Br;
 use qtism\runtime\rendering\markup\xhtml\BodyElementRenderer;
 use qtism\runtime\rendering\markup\xhtml\TextRunRenderer;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class BodyElementRendererTest extends QtiSmTestCase
 {

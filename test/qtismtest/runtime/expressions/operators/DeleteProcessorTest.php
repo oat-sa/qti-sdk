@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\expressions\operators;
+
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
@@ -8,8 +10,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\DeleteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class DeleteProcessorTest extends QtiSmTestCase
 {

@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\content\interactions\EndAttemptInteraction;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\content\interactions\EndAttemptInteraction;
+use qtismtest\QtiSmTestCase;
 
 class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 {

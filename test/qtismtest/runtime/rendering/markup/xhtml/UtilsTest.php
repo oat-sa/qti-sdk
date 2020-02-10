@@ -1,10 +1,12 @@
 <?php
 
+namespace qtismtest\runtime\rendering\markup\xhtml;
+
+use DOMDocument;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\ShufflableCollection;
 use qtism\runtime\rendering\markup\xhtml\Utils;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 {

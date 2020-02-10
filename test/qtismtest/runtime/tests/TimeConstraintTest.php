@@ -1,12 +1,13 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\AssessmentItemRef;
 use qtism\data\NavigationMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\tests\TimeConstraint;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TimeConstraintTest extends QtiSmTestCase
 {

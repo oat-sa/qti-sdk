@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\common;
+
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
@@ -7,8 +9,7 @@ use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class OrderedContainerTest extends QtiSmTestCase
 {
@@ -38,12 +39,6 @@ class OrderedContainerTest extends QtiSmTestCase
         $this->assertEquals(Cardinality::ORDERED, $container->getCardinality());
     }
 
-    public function testEqualsNull()
-    {
-        $container = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]);
-        $this->assertFalse($container->equals(null));
-    }
-
     public function equalsValidProvider()
     {
         return [
@@ -61,5 +56,11 @@ class OrderedContainerTest extends QtiSmTestCase
             [new OrderedContainer(BaseType::URI, [new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu')]), new OrderedContainer(BaseType::URI, [new QtiUri('http://www.tao.lu'), new QtiUri('http://www.taotesting.com')])],
             [new OrderedContainer(BaseType::DIRECTED_PAIR, [new QtiDirectedPair('abc', 'def')]), new OrderedContainer(BaseType::DIRECTED_PAIR, [new QtiDirectedPair('def', 'abc')])],
         ];
+    }
+
+    public function testEqualsNull()
+    {
+        $container = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]);
+        $this->assertFalse($container->equals(null));
     }
 }

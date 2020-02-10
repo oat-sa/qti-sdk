@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
@@ -10,6 +10,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\TruncateProcessor;
+use qtismtest\QtiSmTestCase;
 
 class TruncateProcessorTest extends QtiSmTestCase
 {

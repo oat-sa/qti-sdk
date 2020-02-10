@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../qtism/qtism.php');
-require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
+namespace qtismtest;
 
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;

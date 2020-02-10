@@ -2,10 +2,13 @@
 
 namespace qtismtest;
 
+use DOMDocument;
+use DOMElement;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
+use PHPUnit_Framework_TestCase as TestCase;
 
-abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
+abstract class QtiSmTestCase extends TestCase
 {
     private $marshallerFactory;
 
@@ -34,7 +37,7 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
      */
     public static function samplesDir()
     {
-        return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
+        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -81,7 +84,7 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase
     /**
      * Create a DOMElement from an XML string.
      *
-     * @param unknown_type $xmlString A string containing XML markup
+     * @param string $xmlString A string containing XML markup
      * @return DOMElement The according DOMElement;
      */
     public static function createDOMElement($xmlString)

@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InfoControl;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Em;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class InfoControlMarshallerTest extends QtiSmTestCase
 {

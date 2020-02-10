@@ -1,7 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\common;
 
+use DateTime;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
@@ -14,6 +15,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Container;
+use qtismtest\QtiSmTestCase;
 
 class ContainerTest extends QtiSmTestCase
 {

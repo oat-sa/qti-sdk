@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\processing;
+
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
@@ -20,8 +22,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\processing\PrintedVariableEngine;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class PrintedVariableEngineTest extends QtiSmTestCase
 {
@@ -247,7 +248,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
             ['0', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 2],
             ['-25', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 3],
 
-            // -- Power form (only in force with float values.
+            // -- Power form (only in force with float values).
             ['250', 'powerFormScalarPositiveInteger', $state, '', true],
             ['0', 'powerFormScalarZeroInteger', $state, '', true],
             ['-23', 'powerFormScalarNegativeInteger', $state, '', true],

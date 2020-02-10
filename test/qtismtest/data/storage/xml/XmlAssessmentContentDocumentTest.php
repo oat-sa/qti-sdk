@@ -1,8 +1,9 @@
 <?php
 
-use qtism\data\storage\xml\XmlDocument;
+namespace qtismtest\data\storage\xml;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\data\storage\xml\XmlDocument;
+use qtismtest\QtiSmTestCase;
 
 class XmlAssessmentContentDocumentTest extends QtiSmTestCase
 {

@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class CompactMarshallerFactyoryTest extends QtiSmTestCase
 {

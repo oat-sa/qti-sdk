@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\interactions\PositionObjectInteractionCollection;
 use qtism\data\content\interactions\PositionObjectStage;
 use qtism\data\content\xhtml\QtiObject;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class PositionObjectStageMarshallerTest extends QtiSmTestCase
 {

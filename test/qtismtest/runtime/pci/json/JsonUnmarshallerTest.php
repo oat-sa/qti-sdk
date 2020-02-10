@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\pci\json;
+
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
@@ -20,8 +22,8 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\pci\json\Unmarshaller;
 use qtism\runtime\pci\json\UnmarshallingException;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class JsonUnmarshallerTest extends QtiSmTestCase
 {
@@ -62,7 +64,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @dataProvider unmarshallFileProvider
      *
-     * @param File $expectedFile
+     * @param FileSystemFile $expectedFile
      * @param string $json
      */
     public function testUnmarshallFile(FileSystemFile $expectedFile, $json)

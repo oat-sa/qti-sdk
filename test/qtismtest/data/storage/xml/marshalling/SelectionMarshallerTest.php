@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\rules\Selection;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\rules\Selection;
+use qtismtest\QtiSmTestCase;
 
 class SelectionMarshallerTest extends QtiSmTestCase
 {

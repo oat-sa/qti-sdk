@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiPoint;
@@ -9,7 +9,9 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\MapResponsePointProcessor;
+use qtismtest\QtiSmTestCase;
 
 class MapResponsePointProcessorTest extends QtiSmTestCase
 {
@@ -97,7 +99,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $processor = new MapResponsePointProcessor($expr);
-        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -151,12 +153,13 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
     public function testNoAreaMapping()
     {
+        // When no areaMapping is found, we consider a default value of 0.0.
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single"/>
@@ -179,7 +182,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

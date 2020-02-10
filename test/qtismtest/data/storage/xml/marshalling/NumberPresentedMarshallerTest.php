@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberPresented;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class NumberPresentedMarshallerTest extends QtiSmTestCase
 {

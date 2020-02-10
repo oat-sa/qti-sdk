@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
@@ -10,6 +10,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LcmProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class LcmProcessorTest extends QtiSmTestCase
 {

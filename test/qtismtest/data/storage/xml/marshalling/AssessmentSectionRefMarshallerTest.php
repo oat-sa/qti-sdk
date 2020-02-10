@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\AssessmentSectionRef;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\AssessmentSectionRef;
+use qtismtest\QtiSmTestCase;
 
 class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
 {

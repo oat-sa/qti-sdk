@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\expressions\operators;
+
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
@@ -9,8 +11,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\ContainerSizeProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ContainerSizeProcessorTest extends QtiSmTestCase
 {

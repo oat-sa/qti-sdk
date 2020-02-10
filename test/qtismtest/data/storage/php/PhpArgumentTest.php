@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\php;
+
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpVariable;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class PhpArgumentTest extends QtiSmTestCase
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\expressions\operators\custom;
+
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
@@ -9,8 +11,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\custom\Explode;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ExplodeProcessorTest extends QtiSmTestCase
 {

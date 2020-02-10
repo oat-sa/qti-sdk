@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\common;
 
 use qtism\runtime\common\VariableIdentifier;
+use qtismtest\QtiSmTestCase;
 
 class VariableIdentifierTest extends QtiSmTestCase
 {

@@ -1,10 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\ShowHide;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use ReflectionClass;
 
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {

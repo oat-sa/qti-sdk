@@ -1,11 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\tests;
 
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmTestCase;
 
 class AssessmentItemSessionStoreTest extends QtiSmTestCase
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -8,10 +10,8 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\TestResultsSubmission;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
-require_once(dirname(__FILE__) . '/mocks/SimpleResultsSubmittableTestSession.php');
-require_once(dirname(__FILE__) . '/mocks/SimpleResultsSubmittableTestSessionFactory.php');
+use qtismtest\QtiSmAssessmentTestSessionTestCase;
+use qtismtest\runtime\tests\mocks\SimpleResultsSubmittableTestSessionFactory;
 
 class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase
 {

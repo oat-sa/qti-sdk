@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -10,6 +10,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\DivideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class DivideProcessorTest extends QtiSmTestCase
 {

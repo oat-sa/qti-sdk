@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\Orientation;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\SliderInteraction;
 use qtism\data\content\TextRun;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class SliderInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -26,7 +28,10 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true"><prompt>Prompt...</prompt></sliderInteraction>', $dom->saveXML($element));
+        $this->assertEquals(
+            '<sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true"><prompt>Prompt...</prompt></sliderInteraction>',
+            $dom->saveXML($element)
+        );
     }
 
     public function testUnmarshall()

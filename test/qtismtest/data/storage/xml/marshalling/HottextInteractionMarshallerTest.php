@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\BlockStaticCollection;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStaticCollection;
@@ -9,8 +12,7 @@ use qtism\data\content\interactions\HottextInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class HottextInteractionMarshallerTest extends QtiSmTestCase
 {

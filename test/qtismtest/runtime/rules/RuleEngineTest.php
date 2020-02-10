@@ -1,12 +1,13 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\rules;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
+use qtismtest\QtiSmTestCase;
 
 class RuleEngineTest extends QtiSmTestCase
 {

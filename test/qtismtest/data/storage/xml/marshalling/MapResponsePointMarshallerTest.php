@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\expressions\MapResponsePoint;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\expressions\MapResponsePoint;
+use qtismtest\QtiSmTestCase;
 
 class MapResponsePointMarshallerTest extends QtiSmTestCase
 {

@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\rules\Ordering;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\rules\Ordering;
+use qtismtest\QtiSmTestCase;
 
 class OrderingMarshallerTest extends QtiSmTestCase
 {

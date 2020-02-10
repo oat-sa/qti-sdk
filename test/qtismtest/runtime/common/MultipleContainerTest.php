@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
@@ -10,6 +10,7 @@ use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\MultipleContainer;
+use qtismtest\QtiSmTestCase;
 
 class MultipleContainerTest extends QtiSmTestCase
 {

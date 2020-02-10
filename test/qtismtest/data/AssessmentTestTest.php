@@ -1,9 +1,10 @@
 <?php
 
+namespace qtismtest\data;
+
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\XmlDocument;
-
-require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssessmentTestTest extends QtiSmTestCase
 {

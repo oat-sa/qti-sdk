@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiIdentifier;
@@ -12,6 +12,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OrderedProcessor;
+use qtismtest\QtiSmTestCase;
 
 class OrderedProcessorTest extends QtiSmTestCase
 {

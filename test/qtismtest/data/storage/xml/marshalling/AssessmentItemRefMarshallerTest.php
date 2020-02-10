@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
@@ -17,8 +20,7 @@ use qtism\data\state\VariableMappingCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtism\data\TimeLimits;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssessmentItemRefMarshallerTest extends QtiSmTestCase
 {

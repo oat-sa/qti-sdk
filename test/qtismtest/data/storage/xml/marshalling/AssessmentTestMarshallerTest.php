@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
@@ -14,8 +17,7 @@ use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackCollection;
 use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssessmentTestMarshallerTest extends QtiSmTestCase
 {

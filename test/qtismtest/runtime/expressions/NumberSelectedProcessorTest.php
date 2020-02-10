@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\runtime\expressions;
+
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberSelected;
 use qtism\runtime\expressions\NumberSelectedProcessor;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmItemSubsetTestCase.php');
+use qtismtest\QtiSmItemSubsetTestCase;
 
 class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
 {

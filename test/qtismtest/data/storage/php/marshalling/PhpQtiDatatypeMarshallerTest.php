@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\data\storage\php\marshalling;
+
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -8,8 +10,8 @@ use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');
+use qtismtest\QtiSmPhpMarshallerTestCase;
+use stdClass;
 
 class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

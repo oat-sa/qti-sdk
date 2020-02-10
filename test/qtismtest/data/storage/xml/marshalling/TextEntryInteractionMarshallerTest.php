@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\content\interactions\TextEntryInteraction;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\content\interactions\TextEntryInteraction;
+use qtismtest\QtiSmTestCase;
 
 class TextEntryInteractionMarshallerTest extends QtiSmTestCase
 {

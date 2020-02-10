@@ -1,9 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\RandomFloatProcessor;
+use qtismtest\QtiSmTestCase;
 
 class RandomFloatProcessorTest extends QtiSmTestCase
 {

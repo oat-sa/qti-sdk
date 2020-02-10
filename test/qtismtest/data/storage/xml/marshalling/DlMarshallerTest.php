@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
@@ -7,8 +10,7 @@ use qtism\data\content\xhtml\lists\Dd;
 use qtism\data\content\xhtml\lists\Dl;
 use qtism\data\content\xhtml\lists\DlElementCollection;
 use qtism\data\content\xhtml\lists\Dt;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class DlMarshallerTest extends QtiSmTestCase
 {

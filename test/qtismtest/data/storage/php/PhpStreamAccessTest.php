@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\php;
+
 use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\PhpStreamAccess;
 use qtism\data\storage\php\PhpVariable;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class PhpStreamAccessTest extends QtiSmTestCase
 {

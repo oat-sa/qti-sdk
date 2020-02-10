@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -10,8 +13,7 @@ use qtism\data\state\Mapping;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 {
@@ -162,10 +164,10 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals(2, count($values));
 
         $this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
-        $this->assertInstanceOf(QtiDuration::class, $values[0]->getValue());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $values[0]->getValue());
 
         $this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
-        $this->assertInstanceOf(QtiDuration::class, $values[1]->getValue());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $values[1]->getValue());
     }
 
     public function testUnmarshallMatchTable()

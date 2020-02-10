@@ -4,7 +4,7 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
-use QtiSmTestCase;
+use qtismtest\QtiSmTestCase;
 
 class XmlDocumentXIncludeTest extends QtiSmTestCase
 {

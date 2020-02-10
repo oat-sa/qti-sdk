@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\common\dom;
 
 use qtism\common\dom\SerializableDomDocument;
+use qtismtest\QtiSmTestCase;
 
 class VersionTest extends QtiSmTestCase
 {

@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\datatypes\QtiPair;
+namespace qtismtest\common\datatypes;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\datatypes\QtiPair;
+use qtismtest\QtiSmTestCase;
 
 class PairTest extends QtiSmTestCase
 {

@@ -1,8 +1,9 @@
 <?php
 
-use qtism\data\storage\php\Utils as PhpUtils;
+namespace qtismtest\data\storage\php;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\data\storage\php\Utils as PhpUtils;
+use qtismtest\QtiSmTestCase;
 
 class PhpUtilsTest extends QtiSmTestCase
 {

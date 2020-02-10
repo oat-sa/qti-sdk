@@ -1,8 +1,9 @@
 <?php
 
-use qtism\data\content\RubricBlockRef;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtism\data\content\RubricBlockRef;
+use qtismtest\QtiSmTestCase;
 
 class RubricBlockRefMarshallerTest extends QtiSmTestCase
 {

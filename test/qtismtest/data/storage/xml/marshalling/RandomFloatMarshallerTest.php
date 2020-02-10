@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\expressions\RandomFloat;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\expressions\RandomFloat;
+use qtismtest\QtiSmTestCase;
 
 class RandomFloatMarshallerTest extends QtiSmTestCase
 {

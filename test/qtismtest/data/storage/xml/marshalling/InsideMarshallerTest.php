@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
 use qtism\data\expressions\Variable;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class InsideMarshallerTest extends QtiSmTestCase
 {

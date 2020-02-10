@@ -21,6 +21,9 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMElement;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
@@ -31,8 +34,7 @@ use qtism\data\results\ResultOutcomeVariable;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\View;
-
-require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
+use qtismtest\QtiSmTestCase;
 
 class OutcomeVariableMarshallerTest extends QtiSmTestCase
 {

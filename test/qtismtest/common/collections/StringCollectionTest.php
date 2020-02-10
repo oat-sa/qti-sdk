@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\collections\StringCollection;
+namespace qtismtest\common\collections;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\collections\StringCollection;
+use qtismtest\QtiSmTestCase;
 
 class StringCollectionTest extends QtiSmTestCase
 {

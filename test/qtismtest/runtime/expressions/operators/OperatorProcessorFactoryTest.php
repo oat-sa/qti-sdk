@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
-require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
@@ -9,6 +8,9 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessorFactory;
+use qtismtest\QtiSmTestCase;
+
+require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
 
 class OperatorProcessorFactoryTest extends QtiSmTestCase
 {

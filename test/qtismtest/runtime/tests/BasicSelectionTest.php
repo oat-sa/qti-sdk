@@ -1,11 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\tests;
 
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\BasicSelection;
 use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\SelectableRouteCollection;
+use qtismtest\QtiSmTestCase;
 
 class BasicSelectionTest extends QtiSmTestCase
 {

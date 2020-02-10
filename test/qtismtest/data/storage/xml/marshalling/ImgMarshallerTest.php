@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\content\xhtml\Img;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\content\xhtml\Img;
+use qtismtest\QtiSmTestCase;
 
 class ImgMarshallerTest extends QtiSmTestCase
 {

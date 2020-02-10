@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -25,6 +25,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\VariableProcessor;
 use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmTestCase;
 
 class VariableProcessorTest extends QtiSmTestCase
 {
@@ -149,6 +150,10 @@ class VariableProcessorTest extends QtiSmTestCase
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
         // Null because submission mode is individual...
+        // From IMS QTI:
+        // The value of an item variable taken from an item instantiated multiple times from the same
+        // assessmentItemRef (through the use of selection withReplacement) is taken from the last instance
+        // submitted if submission is simultaneous, otherwise it is undefined.
         $this->assertSame(null, $result);
 
         $variableProcessor->setExpression($occurenceVariableExpression);

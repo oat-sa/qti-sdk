@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -14,6 +14,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\AnyNProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class AnyNProcessorTest extends QtiSmTestCase
 {

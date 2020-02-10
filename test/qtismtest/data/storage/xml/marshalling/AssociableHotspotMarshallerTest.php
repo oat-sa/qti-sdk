@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {

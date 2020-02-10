@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\PrintedVariable;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\ShowHide;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class InlineChoiceMarshallerTest extends QtiSmTestCase
 {

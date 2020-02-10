@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
@@ -13,6 +13,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\EqualRoundedProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class EqualRoundedProcessorTest extends QtiSmTestCase
 {

@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
+namespace qtismtest\data;
 
 use qtism\common\enums\BaseType;
+use qtismtest\QtiSmTestCase;
 
 class BaseTypeTest extends QtiSmTestCase
 {

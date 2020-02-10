@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\state\InterpolationTable;
 use qtism\data\state\InterpolationTableEntry;
 use qtism\data\state\InterpolationTableEntryCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class InterpolationTableMarshallerTest extends QtiSmTestCase
 {

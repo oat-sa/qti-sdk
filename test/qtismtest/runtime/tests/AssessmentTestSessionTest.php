@@ -1,7 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\tests;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -25,6 +27,7 @@ use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmTestCase;
 
 class AssessmentTestSessionTest extends QtiSmTestCase
 {

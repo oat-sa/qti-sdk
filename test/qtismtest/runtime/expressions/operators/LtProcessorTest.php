@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LtProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class LtProcessorTest extends QtiSmTestCase
 {

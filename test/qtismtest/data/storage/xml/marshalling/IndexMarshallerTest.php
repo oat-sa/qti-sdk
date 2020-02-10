@@ -1,10 +1,12 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Variable;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class IndexMarshallerTest extends QtiSmTestCase
 {

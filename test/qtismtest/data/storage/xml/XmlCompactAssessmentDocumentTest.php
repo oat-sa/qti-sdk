@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml;
+
+use DOMDocument;
 use qtism\data\NavigationMode;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\expressions;
+
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiIdentifier;
@@ -12,8 +14,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\NumberRespondedProcessor;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmItemSubsetTestCase.php');
+use qtismtest\QtiSmItemSubsetTestCase;
 
 class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
 {

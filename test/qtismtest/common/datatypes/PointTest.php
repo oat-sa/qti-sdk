@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\datatypes\QtiPoint;
+namespace qtismtest\common\datatypes;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\datatypes\QtiPoint;
+use qtismtest\QtiSmTestCase;
 
 class PointTest extends QtiSmTestCase
 {

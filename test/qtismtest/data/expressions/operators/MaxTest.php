@@ -1,12 +1,13 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\data\expressions\operators;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Max;
+use qtismtest\QtiSmTestCase;
 
 class MaxTest extends QtiSmTestCase
 {

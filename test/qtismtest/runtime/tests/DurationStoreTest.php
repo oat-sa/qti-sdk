@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
@@ -8,8 +10,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\DurationStore;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class DurationStoreTest extends QtiSmTestCase
 {

@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\datatypes\QtiDuration;
+namespace qtismtest\common\datatypes;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\datatypes\QtiDuration;
+use qtismtest\QtiSmTestCase;
 
 class DurationTest extends QtiSmTestCase
 {

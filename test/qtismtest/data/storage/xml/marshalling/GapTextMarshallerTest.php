@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\GapText;
 use qtism\data\content\PrintedVariable;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class GapTextMarshallerTest extends QtiSmTestCase
 {
@@ -64,6 +66,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallInvalid()
     {
+        // Only textRun and/or printedVariable.
         $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
         $element = $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <div>invalid</div>!</gapText>

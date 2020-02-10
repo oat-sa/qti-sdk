@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\FlowStaticCollection;
@@ -11,8 +14,7 @@ use qtism\data\content\interactions\GraphicGapMatchInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
 {

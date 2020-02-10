@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\expressions\NullValue;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\expressions\NullValue;
+use qtismtest\QtiSmTestCase;
 
 class NullValueMarshallerTest extends QtiSmTestCase
 {

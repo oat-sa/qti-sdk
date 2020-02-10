@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\ShowHide;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class HotspotChoiceMarshallerTest extends QtiSmTestCase
 {
@@ -50,6 +52,9 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
         $this->assertTrue($component->hasHotspotLabel());
     }
 
+    /**
+     * @depends testUnmarshall
+     */
     public function testUnmarshallFloatCoords()
     {
         // Example taken from a TAO migration issue. Coordinates contain "string-float" values.

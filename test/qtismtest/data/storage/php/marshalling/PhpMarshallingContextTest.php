@@ -1,13 +1,16 @@
 <?php
 
+namespace qtismtest\data\storage\php\marshalling;
+
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
 use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
 class PhpMarshallingContextTest extends QtiSmTestCase
 {

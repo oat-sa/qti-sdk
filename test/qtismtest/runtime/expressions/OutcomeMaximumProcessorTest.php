@@ -1,13 +1,14 @@
 <?php
 
+namespace qtismtest\runtime\expressions;
+
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\OutcomeMaximum;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\OutcomeMaximumProcessor;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmItemSubsetTestCase.php');
+use qtismtest\QtiSmItemSubsetTestCase;
 
 class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
 {

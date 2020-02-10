@@ -21,7 +21,10 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
 use oat\dtms\DateTime;
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\results\AssessmentResult;
@@ -38,8 +41,7 @@ use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\results\TestResult;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
+use qtismtest\QtiSmTestCase;
 
 class AssessmentResultMarshallerTest extends QtiSmTestCase
 {

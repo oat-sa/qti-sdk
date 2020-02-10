@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -17,8 +20,7 @@ use qtism\data\rules\TemplateElseIf;
 use qtism\data\rules\TemplateElseIfCollection;
 use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TemplateConditionMarshallerTest extends QtiSmTestCase
 {

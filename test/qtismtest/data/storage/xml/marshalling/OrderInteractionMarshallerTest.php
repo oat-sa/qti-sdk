@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\OrderInteraction;
 use qtism\data\content\interactions\Orientation;
@@ -7,8 +10,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {

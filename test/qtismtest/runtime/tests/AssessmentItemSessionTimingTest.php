@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -11,8 +13,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
+use qtismtest\QtiSmAssessmentItemTestCase;
 
 class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 {
@@ -137,7 +138,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         // The total duration should have taken 5 seconds, the rest of the time was in SUSPENDED state.
         $this->assertEquals(5, $itemSession['duration']->round()->getSeconds(true));
 
-        // one more and we get an expection... :)
+        // one more and we get an exception... :)
         try {
             $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();

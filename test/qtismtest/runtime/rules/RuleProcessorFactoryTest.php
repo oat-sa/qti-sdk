@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\RuleProcessorFactory;
+use qtismtest\QtiSmTestCase;
 
 class RuleProcessorFactoryTest extends QtiSmTestCase
 {

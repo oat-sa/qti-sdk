@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\rules\ExitResponse;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\rules\ExitResponse;
+use qtismtest\QtiSmTestCase;
 
 class ExitResponseMarshallerTest extends QtiSmTestCase
 {

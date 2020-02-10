@@ -1,8 +1,10 @@
 <?php
 
-use qtism\common\datatypes\files\FileSystemFile;
+namespace qtismtest\common\datatypes\files;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\common\datatypes\files\FileSystemFile;
+use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
 class FileSystemFileTest extends QtiSmTestCase
 {
@@ -23,7 +25,6 @@ class FileSystemFileTest extends QtiSmTestCase
      * @dataProvider createFromExistingFileProvider
      *
      * @param string $source
-     * @param string $destination
      * @param string $mimeType
      * @param boolean|string $withFilename
      */
@@ -66,7 +67,7 @@ class FileSystemFileTest extends QtiSmTestCase
             $data .= fread($stream, 2048);
         }
 
-        @fclose($fp);
+        @fclose($stream);
 
         $this->assertEquals($expectedData, $data);
     }

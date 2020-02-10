@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\expressions\operators;
+
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -12,8 +14,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\ContainsProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ContainsProcessorTest extends QtiSmTestCase
 {

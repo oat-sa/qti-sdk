@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\SectionPart;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\SectionPart;
+use qtismtest\QtiSmTestCase;
 
 class SectionPartMarshallerTest extends QtiSmTestCase
 {

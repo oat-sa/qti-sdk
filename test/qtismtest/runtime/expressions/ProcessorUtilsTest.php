@@ -1,8 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\runtime\expressions\Utils;
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class ProcessorUtilsTest extends QtiSmTestCase
 {

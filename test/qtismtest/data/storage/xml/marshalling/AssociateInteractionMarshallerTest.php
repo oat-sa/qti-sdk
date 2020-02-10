@@ -1,13 +1,15 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\AssociateInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\SimpleAssociableChoice;
 use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
 use qtism\data\content\TextRun;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {

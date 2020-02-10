@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\InlineCollection;
@@ -18,8 +21,7 @@ use qtism\data\content\xhtml\tables\Thead;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\content\xhtml\text\Strong;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TableMarshallerTest extends QtiSmTestCase
 {

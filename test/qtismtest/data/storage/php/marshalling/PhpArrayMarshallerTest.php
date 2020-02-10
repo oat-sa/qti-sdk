@@ -1,8 +1,9 @@
 <?php
 
-use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
+namespace qtismtest\data\storage\php\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');
+use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
+use qtismtest\QtiSmPhpMarshallerTestCase;
 
 class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

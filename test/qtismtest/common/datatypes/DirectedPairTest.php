@@ -1,9 +1,10 @@
 <?php
 
+namespace qtismtest\common\datatypes;
+
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class DirectedPairTest extends QtiSmTestCase
 {

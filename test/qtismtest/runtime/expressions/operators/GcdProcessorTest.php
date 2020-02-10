@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\expressions\operators;
+
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
@@ -8,8 +10,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\GcdProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class GcdProcessorTest extends QtiSmTestCase
 {

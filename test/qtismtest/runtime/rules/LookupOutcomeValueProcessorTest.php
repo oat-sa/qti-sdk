@@ -1,12 +1,13 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\LookupOutcomeValueProcessor;
+use qtismtest\QtiSmTestCase;
 
 class LookupOutcomeValueProcessorTest extends QtiSmTestCase
 {

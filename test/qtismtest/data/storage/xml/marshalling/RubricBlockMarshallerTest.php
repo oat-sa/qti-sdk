@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\RubricBlock;
@@ -10,8 +13,7 @@ use qtism\data\content\xhtml\text\H3;
 use qtism\data\content\xhtml\text\P;
 use qtism\data\View;
 use qtism\data\ViewCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class RubricBlockMarshallerTest extends QtiSmTestCase
 {

@@ -1,13 +1,15 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class CorrectResponseMarshallerTest extends QtiSmTestCase
 {

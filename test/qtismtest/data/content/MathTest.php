@@ -1,8 +1,9 @@
 <?php
 
-use qtism\data\content\Math;
+namespace qtismtest\data\content;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\data\content\Math;
+use qtismtest\QtiSmTestCase;
 
 class MathTest extends QtiSmTestCase
 {

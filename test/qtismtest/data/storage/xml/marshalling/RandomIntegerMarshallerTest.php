@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\expressions\RandomInteger;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\expressions\RandomInteger;
+use qtismtest\QtiSmTestCase;
 
 class RandomIntegerMarshallerTest extends QtiSmTestCase
 {

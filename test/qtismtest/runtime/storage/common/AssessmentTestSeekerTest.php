@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\runtime\storage\common;
+
+use OutOfBoundsException;
 use qtism\data\AssessmentItemRef;
 use qtism\data\expressions\Correct;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssessmentTestSeekerTest extends QtiSmTestCase
 {

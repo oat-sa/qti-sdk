@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\common\utils;
 
 use qtism\common\utils\Arrays;
+use qtismtest\QtiSmTestCase;
 
 class ArraysTest extends QtiSmTestCase
 {

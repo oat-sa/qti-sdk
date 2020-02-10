@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\BlockCollection;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\InlineCollection;
@@ -7,8 +10,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\text\H4;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class BlockquoteMarshallerTest extends QtiSmTestCase
 {

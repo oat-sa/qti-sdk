@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\data\storage;
+
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
@@ -8,8 +10,8 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
 use qtism\common\enums\BaseType;
 use qtism\data\storage\Utils;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class UtilsTest extends QtiSmTestCase
 {

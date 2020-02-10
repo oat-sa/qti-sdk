@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
+namespace qtismtest\data;
 
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
@@ -8,6 +8,7 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Sum;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\xml\XmlCompactDocument;
+use qtismtest\QtiSmTestCase;
 
 class QtiComponentIteratorTest extends QtiSmTestCase
 {

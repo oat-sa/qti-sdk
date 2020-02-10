@@ -1,10 +1,12 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TestVariablesMarshallerTest extends QtiSmTestCase
 {

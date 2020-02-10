@@ -1,12 +1,11 @@
 <?php
 
+namespace qtismtest;
+
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
-
-require_once(dirname(__FILE__) . '/../qtism/qtism.php');
-require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {

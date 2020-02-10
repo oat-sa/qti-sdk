@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
@@ -11,8 +14,7 @@ use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreCondition;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\SectionPartCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssessmentSectionMarshallerTest extends QtiSmTestCase
 {

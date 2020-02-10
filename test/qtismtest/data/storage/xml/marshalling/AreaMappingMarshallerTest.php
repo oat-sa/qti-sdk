@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\state\AreaMapEntryCollection;
 use qtism\data\state\AreaMapping;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AreaMappingMarshallerTest extends QtiSmTestCase
 {

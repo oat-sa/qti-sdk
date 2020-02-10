@@ -1,13 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
 use qtism\data\AssessmentSectionRef;
 use qtism\data\content\RubricBlockRef;
 use qtism\data\content\RubricBlockRefCollection;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\SectionPartCollection;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {

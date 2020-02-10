@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
+namespace qtismtest\data;
 
 use qtism\data\ItemSessionControl;
+use qtismtest\QtiSmTestCase;
 
 class ItemSessionControlTest extends QtiSmTestCase
 {

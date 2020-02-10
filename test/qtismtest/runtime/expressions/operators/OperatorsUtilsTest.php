@@ -1,8 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class OperatorsUtilsTest extends QtiSmTestCase
 {

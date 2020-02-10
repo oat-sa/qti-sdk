@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\storage\binary;
+
 use qtism\common\Comparable;
 use qtism\common\datatypes\files\DefaultFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
@@ -35,8 +37,7 @@ use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class QtiBinaryStreamAccessTest extends QtiSmTestCase
 {

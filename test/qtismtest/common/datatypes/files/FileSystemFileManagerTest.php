@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\datatypes\files\FileSystemFileManager;
+namespace qtismtest\common\datatypes\files;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\common\datatypes\files\FileSystemFileManager;
+use qtismtest\QtiSmTestCase;
 
 class FileSystemFileManagerTest extends QtiSmTestCase
 {

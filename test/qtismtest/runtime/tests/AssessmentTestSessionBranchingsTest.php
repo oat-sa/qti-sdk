@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -8,8 +10,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 {

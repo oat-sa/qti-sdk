@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\processing;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -11,6 +11,7 @@ use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\runtime\rules\RuleProcessingException;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeProcessingEngineTest extends QtiSmTestCase
 {

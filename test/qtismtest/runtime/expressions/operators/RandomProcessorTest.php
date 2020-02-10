@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
@@ -13,6 +13,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RandomProcessor;
+use qtismtest\QtiSmTestCase;
 
 class RandomProcessorTest extends QtiSmTestCase
 {

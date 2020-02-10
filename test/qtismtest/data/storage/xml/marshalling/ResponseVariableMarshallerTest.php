@@ -21,6 +21,9 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -29,8 +32,7 @@ use qtism\data\results\ResultResponseVariable;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ResponseVariableMarshallerTest extends QtiSmTestCase
 {

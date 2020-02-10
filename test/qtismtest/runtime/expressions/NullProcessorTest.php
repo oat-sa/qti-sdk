@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\runtime\expressions\NullProcessor;
+use qtismtest\QtiSmTestCase;
 
 class NullProcessorTest extends QtiSmTestCase
 {

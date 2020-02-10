@@ -21,6 +21,9 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMElement;
 use oat\dtms\DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -31,8 +34,7 @@ use qtism\data\results\ItemVariableCollection;
 use qtism\data\results\ResultResponseVariable;
 use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\SessionStatus;
-
-require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
+use qtismtest\QtiSmTestCase;
 
 class ItemResultMarshallerTest extends QtiSmTestCase
 {

@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\utils\Url;
+namespace qtismtest\common\utils;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\utils\Url;
+use qtismtest\QtiSmTestCase;
 
 class UrlTest extends QtiSmTestCase
 {

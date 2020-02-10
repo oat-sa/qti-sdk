@@ -1,8 +1,10 @@
 <?php
 
-use qtism\runtime\rendering\markup\MarkupPostRenderer;
+namespace qtismtest\runtime\rendering\markup;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\runtime\rendering\markup\MarkupPostRenderer;
+use qtismtest\QtiSmTestCase;
 
 class MarkupPostRendererTest extends QtiSmTestCase
 {

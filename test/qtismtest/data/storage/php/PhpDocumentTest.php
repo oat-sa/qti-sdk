@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\php;
+
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class PhpDocumentTest extends QtiSmTestCase
 {

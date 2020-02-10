@@ -4,7 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\XInclude;
-use QtiSmTestCase;
+use qtismtest\QtiSmTestCase;
 
 class XIncludeMarshallerTest extends QtiSmTestCase
 {

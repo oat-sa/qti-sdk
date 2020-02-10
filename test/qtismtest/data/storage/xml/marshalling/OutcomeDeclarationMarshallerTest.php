@@ -1,5 +1,9 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -12,8 +16,7 @@ use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 {

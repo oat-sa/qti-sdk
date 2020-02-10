@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MapEntry;
 use qtism\data\state\MapEntryCollection;
 use qtism\data\state\Mapping;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class MappingMarshallerTest extends QtiSmTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
@@ -9,7 +9,9 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetOutcomeValueProcessor;
+use qtismtest\QtiSmTestCase;
 
 class SetOutcomeValueProcessorTest extends QtiSmTestCase
 {
@@ -82,7 +84,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        $this->setExpectedException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -99,7 +101,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        $this->setExpectedException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -165,10 +167,9 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
+            RuleProcessingException::class,
             'Unable to set value hello to variable \'SCORE\' (cardinality = single, baseType = integer).'
         );
-
         $processor->process();
     }
 

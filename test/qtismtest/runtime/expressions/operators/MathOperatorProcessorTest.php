@@ -1,12 +1,13 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class MathOperatorProcessorTest extends QtiSmTestCase
 {
@@ -496,7 +497,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
 
     public function atan2Provider()
     {
-        return [
+        $data = [
             [new QtiFloat(NAN), new QtiInteger(10), null],
             [new QtiInteger(+0), new QtiInteger(25), 0],
             [new QtiInteger(25), new QtiFloat(+INF), 0],
@@ -515,6 +516,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
             [new QtiFloat(-INF), new QtiFloat(INF), -M_PI_4],
             [new QtiFloat(-INF), new QtiFloat(-INF), -3 * M_PI_4],
         ];
+
+        return $data;
     }
 
     public function asecProvider()

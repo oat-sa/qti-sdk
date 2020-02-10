@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberCorrect;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class NumberCorrectMarshallerTest extends QtiSmTestCase
 {

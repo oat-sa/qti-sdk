@@ -21,12 +21,14 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\results\SessionIdentifier;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class SessionIdentifierMarshallerTest extends QtiSmTestCase
 {

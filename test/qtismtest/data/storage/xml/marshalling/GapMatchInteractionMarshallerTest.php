@@ -1,5 +1,8 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\BlockStaticCollection;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InlineCollection;
@@ -11,8 +14,7 @@ use qtism\data\content\interactions\GapText;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\xhtml\text\P;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 {

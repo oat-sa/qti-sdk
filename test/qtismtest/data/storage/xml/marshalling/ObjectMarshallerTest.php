@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\ObjectFlowCollection;
 use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
 use qtism\data\content\xhtml\QtiObject;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ObjectMarshallerTest extends QtiSmTestCase
 {

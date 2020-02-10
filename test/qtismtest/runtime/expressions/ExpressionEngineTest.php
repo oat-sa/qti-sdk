@@ -1,10 +1,11 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\ExpressionEngine;
+use qtismtest\QtiSmTestCase;
 
 class ExpressionEngineTest extends QtiSmTestCase
 {

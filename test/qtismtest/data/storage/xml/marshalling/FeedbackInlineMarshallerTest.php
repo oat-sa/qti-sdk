@@ -1,11 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\FeedbackInline;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class FeedbackInlineMarshallerTest extends QtiSmTestCase
 {

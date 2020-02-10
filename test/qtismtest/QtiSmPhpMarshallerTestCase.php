@@ -1,11 +1,10 @@
 <?php
 
+namespace qtismtest;
+
 use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
-
-require_once(dirname(__FILE__) . '/../qtism/qtism.php');
-require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
 abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
 {

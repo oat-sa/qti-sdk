@@ -21,11 +21,13 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMElement;
 use qtism\data\results\CandidateResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
+use qtismtest\QtiSmTestCase;
 
 class CandidateResponseMarshallerTest extends QtiSmTestCase
 {

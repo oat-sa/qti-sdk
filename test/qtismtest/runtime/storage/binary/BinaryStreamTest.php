@@ -1,9 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\storage\binary;
 
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\MemoryStreamException;
+use qtismtest\QtiSmTestCase;
 
 class BinaryStreamTest extends QtiSmTestCase
 {

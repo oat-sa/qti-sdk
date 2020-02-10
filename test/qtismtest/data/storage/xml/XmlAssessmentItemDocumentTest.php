@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\xml;
+
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlDocument;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {

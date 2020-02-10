@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\state\Weight;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\state\Weight;
+use qtismtest\QtiSmTestCase;
 
 class WeightMarshallerTest extends QtiSmTestCase
 {

@@ -1,11 +1,12 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\SessionManager;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class SessionManagerTest extends QtiSmTestCase
 {

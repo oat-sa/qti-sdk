@@ -1,13 +1,15 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\OutcomeCondition;
 use qtism\data\rules\OutcomeIf;
 use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class OutcomeConditionMarshallerTest extends QtiSmTestCase
 {

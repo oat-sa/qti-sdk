@@ -1,7 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\common;
 
+use DOMDocument;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
@@ -9,6 +10,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\RecordContainer;
+use qtismtest\QtiSmTestCase;
 
 class RecordContainerTest extends QtiSmTestCase
 {

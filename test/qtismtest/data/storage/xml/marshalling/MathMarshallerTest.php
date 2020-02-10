@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\content\Math;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\content\Math;
+use qtismtest\QtiSmTestCase;
 
 class MathMarshallerTest extends QtiSmTestCase
 {

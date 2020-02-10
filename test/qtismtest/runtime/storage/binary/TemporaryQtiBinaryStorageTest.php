@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -23,6 +23,7 @@ use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmTestCase;
 
 class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 {

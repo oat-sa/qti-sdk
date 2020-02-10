@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
@@ -11,6 +11,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\PendingResponses;
 use qtism\runtime\tests\PendingResponseStore;
+use qtismtest\QtiSmTestCase;
 
 class PendingResponseStoreTest extends QtiSmTestCase
 {

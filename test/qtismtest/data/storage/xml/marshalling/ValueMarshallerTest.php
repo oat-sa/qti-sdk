@@ -1,10 +1,12 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class ValueMarshallerTest extends QtiSmTestCase
 {
@@ -77,7 +79,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
-        $this->assertInstanceOf(QtiPair::class, $component->getValue());
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $component->getValue());
         $this->assertEquals($component->getValue()->getFirst(), 'A');
         $this->assertEquals($component->getValue()->getSecond(), 'B');
     }

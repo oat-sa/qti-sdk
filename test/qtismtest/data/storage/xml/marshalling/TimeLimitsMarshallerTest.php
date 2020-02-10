@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\TimeLimits;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class TimeLimitsMarshallerTest extends QtiSmTestCase
 {

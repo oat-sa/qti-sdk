@@ -21,13 +21,15 @@
  * @license GPLv2
  */
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
 use qtism\data\results\SessionIdentifierCollection;
-
-require_once __DIR__ . '/../../../../../QtiSmTestCase.php';
+use qtismtest\QtiSmTestCase;
 
 class ContextMarshallerTest extends QtiSmTestCase
 {

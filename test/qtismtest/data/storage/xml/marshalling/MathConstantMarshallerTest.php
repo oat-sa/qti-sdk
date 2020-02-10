@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\expressions\MathConstant;
 use qtism\data\expressions\MathEnumeration;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class MathConstantMarshallerTest extends QtiSmTestCase
 {

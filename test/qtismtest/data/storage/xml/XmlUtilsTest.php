@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\storage\xml\Utils;
+namespace qtismtest\data\storage\xml;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\storage\xml\Utils;
+use qtismtest\QtiSmTestCase;
 
 class XmlUtilsTest extends QtiSmTestCase
 {

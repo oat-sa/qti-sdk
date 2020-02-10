@@ -1,10 +1,11 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
+use qtismtest\QtiSmTestCase;
 
 class CoordsTest extends QtiSmTestCase
 {

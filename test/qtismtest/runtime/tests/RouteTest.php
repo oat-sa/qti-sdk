@@ -1,7 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmRouteTestCase.php');
+namespace qtismtest\runtime\tests;
 
+use OutOfBoundsException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
@@ -13,6 +14,7 @@ use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtism\runtime\tests\Route;
+use qtismtest\QtiSmRouteTestCase;
 
 class RouteTest extends QtiSmRouteTestCase
 {

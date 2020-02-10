@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\common;
+
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
@@ -8,8 +10,8 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class StateTest extends QtiSmTestCase
 {

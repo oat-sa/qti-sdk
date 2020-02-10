@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\pci\json;
+
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
@@ -23,8 +25,8 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\pci\json\Marshaller;
 use qtism\runtime\pci\json\MarshallingException;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class JsonMarshallerTest extends QtiSmTestCase
 {
@@ -107,7 +109,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      */
     public function testMarshallInvalidInput($input)
     {
-        $this->setExpectedException('qtism\\runtime\\pci\\json\\MarshallingException', "The 'qtism\\runtime\\pci\\json\\Marshaller::marshall' method only takes State, QtiDatatype and null values as arguments,", MarshallingException::NOT_SUPPORTED);
+        $this->setExpectedException('qtism\\runtime\\pci\\json\\MarshallingException', "The 'qtism\\runtime\\pci\\json\\Marshaller::marshall' method only takes State, QtiDatatype and null values as arguments", MarshallingException::NOT_SUPPORTED);
         $marshaller = new Marshaller();
         $marshaller->marshall($input);
     }

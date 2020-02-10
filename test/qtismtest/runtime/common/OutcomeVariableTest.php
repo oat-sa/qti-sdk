@@ -1,7 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
@@ -13,6 +14,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeVariableTest extends QtiSmTestCase
 {
@@ -116,12 +118,12 @@ class OutcomeVariableTest extends QtiSmTestCase
     {
         $factory = $this->getMarshallerFactory();
         $element = $this->createDOMElement('
-			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="single">
-				<defaultValue>
-					<value>A B</value>
-				</defaultValue>
-			</outcomeDeclaration>
-		');
+            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="single">
+                <defaultValue>
+                    <value>A B</value>
+                </defaultValue>
+            </outcomeDeclaration>
+        ');
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
@@ -133,13 +135,13 @@ class OutcomeVariableTest extends QtiSmTestCase
     {
         $factory = $this->getMarshallerFactory();
         $element = $this->createDOMElement('
-			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="multiple">
-				<defaultValue>
-					<value>A B</value>
-					<value>B C</value>
-				</defaultValue>
-			</outcomeDeclaration>
-		');
+            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="multiple">
+                <defaultValue>
+                    <value>A B</value>
+                    <value>B C</value>
+                </defaultValue>
+            </outcomeDeclaration>
+        ');
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
@@ -155,13 +157,13 @@ class OutcomeVariableTest extends QtiSmTestCase
     {
         $factory = $this->getMarshallerFactory();
         $element = $this->createDOMElement('
-			<outcomeDeclaration identifier="outcome1" cardinality="record">
-				<defaultValue>
-					<value fieldIdentifier="A" baseType="pair">A B</value>
-					<value fieldIdentifier="B" baseType="float">1.11</value>
-				</defaultValue>
-			</outcomeDeclaration>
-		');
+            <outcomeDeclaration identifier="outcome1" cardinality="record">
+                <defaultValue>
+                    <value fieldIdentifier="A" baseType="pair">A B</value>
+                    <value fieldIdentifier="B" baseType="float">1.11</value>
+                </defaultValue>
+            </outcomeDeclaration>
+        ');
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
@@ -177,24 +179,25 @@ class OutcomeVariableTest extends QtiSmTestCase
     {
         $factory = $this->getMarshallerFactory();
         $element = $this->createDOMElement('
-			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
-								identifier="outcome1" 
-								baseType="pair" 
-								cardinality="ordered"
-								views="author candidate"
-								normalMinimum="1.0"
-								normalMaximum="2.1"
-								masteryValue="1.5">
-				<defaultValue>
-					<value>A B</value>
-					<value>B C</value>
-				</defaultValue>
-				<matchTable>
-					<matchTableEntry sourceValue="0" targetValue="E F"/>
-					<matchTableEntry sourceValue="1" targetValue="G H"/>
-				</matchTable>
-			</outcomeDeclaration>
-		');
+            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
+                identifier="outcome1" 
+                baseType="pair" 
+                cardinality="ordered"
+                views="author candidate"
+                normalMinimum="1.0"
+                normalMaximum="2.1"
+                masteryValue="1.5"
+            >
+                <defaultValue>
+                    <value>A B</value>
+                    <value>B C</value>
+                </defaultValue>
+                <matchTable>
+                    <matchTableEntry sourceValue="0" targetValue="E F"/>
+                    <matchTableEntry sourceValue="1" targetValue="G H"/>
+                </matchTable>
+            </outcomeDeclaration>
+        ');
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 

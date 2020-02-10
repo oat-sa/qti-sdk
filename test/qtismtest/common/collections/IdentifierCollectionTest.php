@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\collections\IdentifierCollection;
+namespace qtismtest\common\collections;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\collections\IdentifierCollection;
+use qtismtest\QtiSmTestCase;
 
 class IdentifierCollectionTest extends QtiSmTestCase
 {
@@ -56,7 +57,7 @@ class IdentifierCollectionTest extends QtiSmTestCase
         $this->assertNotEquals($this->collection[0], $string);
     }
 
-    public function testAddIdentifierWrongType()
+    public function testAddIdentifierWrongFormat()
     {
         $identifier = '.identifier';
         $this->setExpectedException('\\InvalidArgumentException');

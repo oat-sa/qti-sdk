@@ -1,8 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\common\utils;
 
 use qtism\common\utils\Format;
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class FormatTest extends QtiSmTestCase
 {

@@ -1,11 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class MarshallerFactyoryTest extends QtiSmTestCase
 {

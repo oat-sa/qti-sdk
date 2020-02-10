@@ -1,10 +1,9 @@
 <?php
 
+namespace qtismtest;
+
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\SessionManager;
-
-require_once(dirname(__FILE__) . '/../qtism/qtism.php');
-require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
 abstract class QtiSmAssessmentTestSessionTestCase extends QtiSmTestCase
 {

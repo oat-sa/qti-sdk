@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\php\marshalling;
+
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\storage\php\marshalling\Utils as PhpMarshallingUtils;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class PhpMarshallingUtilsTest extends QtiSmTestCase
 {

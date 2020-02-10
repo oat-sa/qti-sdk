@@ -1,8 +1,9 @@
 <?php
 
-use qtism\common\datatypes\Utils;
+namespace qtismtest\common\datatypes;
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtism\common\datatypes\Utils;
+use qtismtest\QtiSmTestCase;
 
 class DatatypeUtilsTest extends QtiSmTestCase
 {

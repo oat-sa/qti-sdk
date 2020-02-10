@@ -1,12 +1,13 @@
 <?php
 
+namespace qtismtest\data\storage\php\marshalling;
+
 use qtism\data\ItemSessionControl;
 use qtism\data\rules\ExitTest;
 use qtism\data\state\Weight;
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');
+use qtismtest\QtiSmPhpMarshallerTestCase;
 
 class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

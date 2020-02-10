@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
+namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
@@ -19,6 +19,7 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmAssessmentItemTestCase;
 
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {

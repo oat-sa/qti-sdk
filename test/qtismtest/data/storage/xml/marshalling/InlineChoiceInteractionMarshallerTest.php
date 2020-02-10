@@ -1,12 +1,14 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\interactions\InlineChoiceCollection;
 use qtism\data\content\interactions\InlineChoiceInteraction;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 {

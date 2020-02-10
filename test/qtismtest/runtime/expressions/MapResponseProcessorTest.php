@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -16,6 +16,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\MapResponseProcessor;
+use qtismtest\QtiSmTestCase;
 
 class MapResponseProcessorTest extends QtiSmTestCase
 {

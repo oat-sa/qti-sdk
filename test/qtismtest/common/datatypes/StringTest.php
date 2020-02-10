@@ -1,8 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\QtiString;
+use qtismtest\QtiSmTestCase;
 
 class StringTest extends QtiSmTestCase
 {

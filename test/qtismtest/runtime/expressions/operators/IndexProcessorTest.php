@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
@@ -12,6 +12,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\IndexProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
+use qtismtest\QtiSmTestCase;
 
 class IndexProcessorTest extends QtiSmTestCase
 {

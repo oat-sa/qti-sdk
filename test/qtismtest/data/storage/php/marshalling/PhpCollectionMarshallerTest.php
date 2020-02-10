@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\data\storage\php\marshalling;
+
 use qtism\common\collections\IntegerCollection;
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');
+use qtismtest\QtiSmPhpMarshallerTestCase;
 
 class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

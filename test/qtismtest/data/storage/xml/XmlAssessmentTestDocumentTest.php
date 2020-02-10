@@ -1,9 +1,10 @@
 <?php
 
+namespace qtismtest\data\storage\xml;
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
-
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {

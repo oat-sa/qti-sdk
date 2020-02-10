@@ -1,10 +1,11 @@
 <?php
 
+namespace qtismtest\data;
+
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\SectionPartCollection;
-
-require_once(dirname(__FILE__) . '/../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class QtiComponentTest extends QtiSmTestCase
 {

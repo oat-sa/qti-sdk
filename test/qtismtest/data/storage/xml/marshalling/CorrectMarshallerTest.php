@@ -1,8 +1,10 @@
 <?php
 
-use qtism\data\expressions\Correct;
+namespace qtismtest\data\storage\xml\marshalling;
 
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use DOMDocument;
+use qtism\data\expressions\Correct;
+use qtismtest\QtiSmTestCase;
 
 class CorrectMarshallerTest extends QtiSmTestCase
 {

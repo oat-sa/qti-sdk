@@ -1,13 +1,15 @@
 <?php
 
+namespace qtismtest\data\storage\xml\marshalling;
+
+use DOMDocument;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\DefaultValue;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-
-require_once(dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class DefaultValueMarshallerTest extends QtiSmTestCase
 {
@@ -81,7 +83,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         foreach ($component->getValues() as $value) {
             $this->assertInstanceOf('qtism\\data\\state\\Value', $value);
             $this->assertEquals(BaseType::DIRECTED_PAIR, $value->getBaseType());
-            $this->assertInstanceOf(QtiDirectedPair::class, $value->getValue());
+            $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $value->getValue());
             $this->assertFalse($value->isPartOfRecord());
         }
     }

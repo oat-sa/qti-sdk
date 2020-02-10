@@ -1,9 +1,11 @@
 <?php
 
+namespace qtismtest\common\utils;
+
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\utils\Reflection;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
+use stdClass;
 
 class ReflectionTest extends QtiSmTestCase
 {

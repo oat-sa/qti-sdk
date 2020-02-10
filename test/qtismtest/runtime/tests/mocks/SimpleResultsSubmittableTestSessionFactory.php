@@ -1,5 +1,7 @@
 <?php
 
+namespace qtismtest\runtime\tests\mocks;
+
 use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\runtime\tests\AbstractSessionManager;

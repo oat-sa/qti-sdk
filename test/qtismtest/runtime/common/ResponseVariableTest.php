@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiPair;
@@ -8,6 +8,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\ResponseVariable;
+use qtismtest\QtiSmTestCase;
 
 class ResponseVariableTest extends QtiSmTestCase
 {

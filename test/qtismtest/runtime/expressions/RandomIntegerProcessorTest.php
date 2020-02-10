@@ -1,9 +1,10 @@
 <?php
 
+namespace qtismtest\runtime\expressions;
+
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\expressions\RandomIntegerProcessor;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+use qtismtest\QtiSmTestCase;
 
 class RandomIntegerProcessorTest extends QtiSmTestCase
 {

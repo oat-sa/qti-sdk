@@ -1,12 +1,13 @@
 <?php
 
+namespace qtismtest\runtime\tests;
+
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-
-require_once(dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
+use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase
 {

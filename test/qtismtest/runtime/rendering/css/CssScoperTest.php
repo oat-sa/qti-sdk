@@ -1,8 +1,9 @@
 <?php
 
-use qtism\runtime\rendering\css\CssScoper;
+namespace qtismtest\runtime\rendering\css;
 
-require_once(dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\runtime\rendering\css\CssScoper;
+use qtismtest\QtiSmTestCase;
 
 class CssScoperTest extends QtiSmTestCase
 {
@@ -19,7 +20,6 @@ class CssScoperTest extends QtiSmTestCase
         $expected = file_get_contents($outputFile);
         $actual = $cssScoper->render($inputFile, $id);
         $this->assertEquals($expected, $actual);
-        //var_dump($actual);
     }
 
     public function testOutputProvider()

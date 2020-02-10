@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+namespace qtismtest\runtime\processing;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -13,30 +13,31 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\rules\RuleProcessingException;
+use qtismtest\QtiSmTestCase;
 
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {
     public function testResponseProcessingMatchCorrect()
     {
         $responseProcessing = $this->createComponentFromXml('
-			<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-		');
+            <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+        ');
 
         $responseDeclaration = $this->createComponentFromXml('
-			<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-				<correctResponse>
-					<value>ChoiceA</value>
-				</correctResponse>
-			</responseDeclaration>		
-		');
+            <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                <correctResponse>
+                    <value>ChoiceA</value>
+                </correctResponse>
+            </responseDeclaration>		
+        ');
 
         $outcomeDeclaration = $this->createComponentFromXml('
-			<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-				<defaultValue>
-					<value>0</value>
-				</defaultValue>
-			</outcomeDeclaration>
-		');
+            <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                <defaultValue>
+                    <value>0</value>
+                </defaultValue>
+            </outcomeDeclaration>
+        ');
 
         $respVar = ResponseVariable::createFromDataModel($responseDeclaration);
         $outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
@@ -60,7 +61,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
     public function testResponseProcessingNoResponseRule()
     {
         $responseProcessing = $this->createComponentFromXml('
-			<responseProcessing>
+            <responseProcessing>
                 <responseCondition>
                     <responseIf>
                         <match>
@@ -83,15 +84,15 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                     </responseElse>
                 </responseCondition>
             </responseProcessing>
-		');
+        ');
 
         $responseDeclaration = $this->createComponentFromXml('
-			<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>	
-		');
+            <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>	
+        ');
 
         $outcomeDeclaration = $this->createComponentFromXml('
-			<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
-		');
+            <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+        ');
 
         $respVar = ResponseVariable::createFromDataModel($responseDeclaration);
         $outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
@@ -116,10 +117,10 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
     public function testResponseProcessingExitResponse()
     {
         $responseProcessing = $this->createComponentFromXml('
-	        <responseProcessing>
+            <responseProcessing>
                 <exitResponse/>
-	        </responseProcessing>
-	    ');
+            </responseProcessing>
+        ');
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
@@ -128,7 +129,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
             // An exception MUST be thrown.
             $this->assertTrue(true);
         } catch (ProcessingException $e) {
-            $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
+            $this->assertInstanceOf(RuleProcessingException::class, $e);
             $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
         }
     }
@@ -154,7 +155,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                     <setOutcomeValue identifier="score-X">
                       <variable identifier="maxscore-X" />
                     </setOutcomeValue>
-                 </responseElseIf>
+                  </responseElseIf>
                   <responseElse>
                     <setOutcomeValue identifier="score-X">
                       <baseValue baseType="integer">0</baseValue>
