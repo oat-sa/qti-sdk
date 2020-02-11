@@ -106,7 +106,8 @@ class ValueMarshallerTest extends QtiSmTestCase {
 	    $this->assertSame('<value>Hello &lt;b&gt;bold&lt;/b&gt;</value>', $element->ownerDocument->saveXML($element));
 	}
 
-	public function testUnmarshallStringBaseTypeWithNullValue() {
+    public function testUnmarshallStringBaseTypeWithNullValue()
+    {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="string"></value>');
         $element = $dom->documentElement;
