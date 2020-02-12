@@ -2,7 +2,6 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
 use qtism\common\datatypes\QtiPair;
@@ -105,6 +104,18 @@ class ValueMarshallerTest extends QtiSmTestCase {
 
 	    $this->assertSame('<value>Hello &lt;b&gt;bold&lt;/b&gt;</value>', $element->ownerDocument->saveXML($element));
 	}
+
+    public function testUnmarshallNoValue()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertSame(-1, $component->getBaseType());
+        $this->assertSame('', $component->getValue());
+    }
 
     public function testUnmarshallStringBaseTypeWithNullValue()
     {
