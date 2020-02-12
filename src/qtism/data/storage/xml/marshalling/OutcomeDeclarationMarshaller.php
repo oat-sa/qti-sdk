@@ -96,7 +96,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
 
-        if (Version::compare($version, '2.2.0', '>=') === true && $component->isExternallyScored()) {
+        // TODO: revert to '2.2.0' ASAP
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->isExternallyScored()) {
             $this->setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
         }
 
