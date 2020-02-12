@@ -85,8 +85,8 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
         return [
             ['2.0', ExternalScored::HUMAN,  ''],
             ['2.0', ExternalScored::EXTERNAL_MACHINE,  ''],
-            ['2.1.0', ExternalScored::HUMAN,  'human'],                         // qdf: revert to '' ASAP
-            ['2.1.0', ExternalScored::EXTERNAL_MACHINE, 'externalMachine'],     // qdf: revert to '' ASAP
+            ['2.1.0', ExternalScored::HUMAN,  ''],
+            ['2.1.0', ExternalScored::EXTERNAL_MACHINE,  ''],
             ['2.2.0', ExternalScored::HUMAN,  'human'],
             ['2.2.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
             ['3.0.0', ExternalScored::HUMAN,  'human'],
