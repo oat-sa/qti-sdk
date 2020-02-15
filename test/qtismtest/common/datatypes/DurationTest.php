@@ -14,7 +14,7 @@ class DurationTest extends QtiSmTestCase
     public function testValidDurationCreation($intervalSpec)
     {
         $duration = new QtiDuration($intervalSpec);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $duration);
+        $this->assertInstanceOf(QtiDuration::class, $duration);
     }
 
     /**
@@ -30,10 +30,10 @@ class DurationTest extends QtiSmTestCase
     {
         $duration = new QtiDuration('P3YT6H8M'); // 2 years, 0 days, 6 hours, 8 minutes.
         $this->assertEquals(3, $duration->getYears());
+        $this->assertEquals(0, $duration->getMonths());
         $this->assertEquals(0, $duration->getDays());
         $this->assertEquals(6, $duration->getHours());
         $this->assertEquals(8, $duration->getMinutes());
-        $this->assertEquals(0, $duration->getMonths());
         $this->assertEquals(0, $duration->getSeconds());
     }
 
