@@ -91,7 +91,7 @@ class ContainerTest extends QtiSmTestCase
     public function testCreateFromDataModelValid(ValueCollection $valueCollection)
     {
         $container = Container::createFromDataModel($valueCollection);
-        $this->assertInstanceOf('qtism\\common\\collections\\Container', $container);
+        $this->assertInstanceOf(Container::class, $container);
     }
 
     /**
