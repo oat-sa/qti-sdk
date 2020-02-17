@@ -120,7 +120,6 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
         $state = new State([$score]);
         $processor->setState($state);
-        $processor->process();
 
         // In this case, juggling will put the first entry of the multiple container
         // in the target single cardinality variable. The float value is then changed into an integer value.
@@ -197,5 +196,27 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
         $this->assertInstanceOf(QtiBoolean::class, $state['myBool']);
         $this->assertTrue($state['myBool']->getValue());
+    }
+
+    public function testSetOutcomeValueNoVariable()
+    {
+        $rule = $this->createComponentFromXml('
+	        <setOutcomeValue identifier="SCOREXXXX">
+	            <baseValue baseType="float">1337.1337</baseValue>
+	        </setOutcomeValue>
+	    ');
+
+        $processor = new SetOutcomeValueProcessor($rule);
+        $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
+        $state = new State([$score]);
+        $processor->setState($state);
+
+        $this->setExpectedException(
+            'qtism\\runtime\\rules\\RuleProcessingException',
+            "No variable with identifier 'SCOREXXXX' to be set in the current state.",
+            RuleProcessingException::NONEXISTENT_VARIABLE
+        );
+
+        $processor->process();
     }
 }

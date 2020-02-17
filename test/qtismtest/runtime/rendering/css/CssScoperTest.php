@@ -45,4 +45,24 @@ class CssScoperTest extends QtiSmTestCase
             [self::samplesDir() . 'rendering/css/css_input18.css', self::samplesDir() . 'rendering/css/css_output18.css', 'myId', true],
         ];
     }
+
+    public function testOutputIdGenerated()
+    {
+        $cssScoper = new CssScoper();
+        $actual = $cssScoper->render(self::samplesDir() . 'rendering/css/css_input1.css');
+        $pattern = "/^@CHARSET \"UTF-8\";\n\n#[0-9a-z]+ \\.myClass {\n    border:1px solid #fff;\n    background-color: white;\n}/u";
+        $this->assertSame(1, preg_match($pattern, $actual));
+    }
+
+    public function testOutputUnknownFile()
+    {
+        $cssScoper = new CssScoper();
+
+        $this->setExpectedException(
+            'qtism\\runtime\\rendering\\RenderingException',
+            "The CSS file '/root/css_input1.css' could not be open."
+        );
+
+        $cssScoper->render('/root/css_input1.css');
+    }
 }

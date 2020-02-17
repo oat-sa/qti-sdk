@@ -97,6 +97,14 @@ class FormatTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider validFileFormatProvider
+     */
+    public function testValidFile($string)
+    {
+        $this->assertTrue(Format::isFile($string));
+    }
+
+    /**
      * @dataProvider scale10Provider
      */
     public function testScale10($float, $expected, $x = 'x', $precision = false)
@@ -161,6 +169,12 @@ class FormatTest extends QtiSmTestCase
             // No precision, no X
             [2, '2.000000 x 10⁰'],
             [25, '2.500000 x 10¹'],
+            [250, '2.500000 x 10²'],
+            [2500, '2.500000 x 10³'],
+            [250000, '2.500000 x 10⁵'],
+            [2500000, '2.500000 x 10⁶'],
+            [25000000, '2.500000 x 10⁷'],
+            [250000000, '2.500000 x 10⁸'],
             [-53000, '-5.300000 x 10⁴'],
             [6720000000, '6.720000 x 10⁹'],
             [672000000000, '6.720000 x 10¹¹'],
@@ -192,6 +206,7 @@ class FormatTest extends QtiSmTestCase
             ['3bad'],
             ['.bad'],
             ['好壞好'],
+            ['ba[d'],
             [''],
         ];
     }
@@ -251,8 +266,12 @@ class FormatTest extends QtiSmTestCase
             ['a'],
             ['my-class'],
             ['my-class my-other-class'],
-            ['my-class   my-other-class'],
+            ['my-class    my-other-class'],
             ['theclass'],
+            ['MYCLASS'],
+            ['MY_CLASS'],
+            ['my_class'],
+            ['My_Class'],
         ];
     }
 
@@ -261,6 +280,7 @@ class FormatTest extends QtiSmTestCase
         return [
             ["a\tb"],
             [" "],
+            [''],
         ];
     }
 
@@ -278,6 +298,13 @@ class FormatTest extends QtiSmTestCase
     {
         return [
             ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue."],
+        ];
+    }
+
+    public function validFileFormatProvider()
+    {
+        return [
+            ['data'],
         ];
     }
 

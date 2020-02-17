@@ -262,6 +262,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
             ['com#taotesting'],
             [''],
             ['com|taotesting.custom'],
+            [false],
         ];
     }
 }

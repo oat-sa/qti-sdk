@@ -65,4 +65,37 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
         $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
+
+    public function testShuffleWithStatements()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+            <interaction>
+                <!-- qtism-if (bla) --><li class="qti-simpleChoice" data-identifier="bla">bla</li><!-- qtism-endif -->
+                <li class="qti-simpleChoice" data-identifier="bli">bli</li>
+                <!-- qtism-if (blu) --><li class="qti-simpleChoice" data-identifier="blu">blu</li><!-- qtism-endif -->
+            </interaction>
+        ');
+
+        $shufflables = new ShufflableCollection();
+        $shufflables[] = new SimpleChoice('bla');
+        $shufflables[] = new SimpleChoice('bli');
+        $shufflables[] = new SimpleChoice('blu');
+
+        Utils::shuffle($dom->documentElement, $shufflables);
+    }
+
+    public function testHasClass()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $node = $dom->createElement('root');
+
+        $node->setAttribute('class', 'hello there');
+
+        $this->assertTrue(Utils::hasClass($node, 'hello'));
+        $this->assertTrue(Utils::hasClass($node, 'there'));
+        $this->assertTrue(Utils::hasClass($node, ['hello', 'there']));
+        $this->assertFalse(Utils::hasClass($node, 'unknown'));
+        $this->assertFalse(Utils::hasClass($node, ['unknown', 'class']));
+    }
 }

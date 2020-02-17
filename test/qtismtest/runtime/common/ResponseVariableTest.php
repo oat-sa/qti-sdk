@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -90,5 +91,11 @@ class ResponseVariableTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $responseVariable->getValue());
         $this->assertEquals(3, count($responseVariable->getValue()));
         $this->assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])));
+    }
+
+    public function testIsCorrectWithNullCorrectResponse()
+    {
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($responseVariable->isCorrect());
     }
 }

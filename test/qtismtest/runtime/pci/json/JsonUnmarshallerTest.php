@@ -123,6 +123,40 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller->unmarshall($input);
     }
 
+    public function testUnmarshallNoAssociative()
+    {
+        $unmarshaller = self::createUnmarshaller();
+        $this->setExpectedException(
+            'qtism\\runtime\\pci\\json\\UnmarshallingException',
+            "The 'qtism\\runtime\\pci\\json\\Unmarshaller::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given."
+        );
+        $unmarshaller->unmarshall(true);
+    }
+
+    public function testUnmarshallListUnknownBaseType()
+    {
+        $unmarshaller = self::createUnmarshaller();
+
+        $this->setExpectedException(
+            'qtism\\runtime\\pci\\json\\UnmarshallingException',
+            "Unknown QTI baseType 'unknownbasetype'."
+        );
+
+        $unmarshaller->unmarshall('{ "list" : { "unknownbasetype" : ["_id1", "id2", "ID3"] } }');
+    }
+
+    public function testUnmarshallListNonBaseTypeCompliantValue()
+    {
+        $unmarshaller = self::createUnmarshaller();
+
+        $this->setExpectedException(
+            'qtism\\runtime\\pci\\json\\UnmarshallingException',
+            "A value does not satisfy its baseType."
+        );
+
+        $unmarshaller->unmarshall('{ "list" : { "identifier" : [true, "id2", "ID3"] } }');
+    }
+
     public function testUnmarshallState()
     {
         $json = '

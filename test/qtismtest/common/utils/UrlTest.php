@@ -25,6 +25,21 @@ class UrlTest extends QtiSmTestCase
         $this->assertFalse(Url::isRelative($url));
     }
 
+    public function testTrim()
+    {
+        $this->assertEquals("hello", Url::trim("/hello/\n"));
+    }
+
+    public function testLtrim()
+    {
+        $this->assertEquals("hello/\n", Url::ltrim("/hello/\n"));
+    }
+
+    public function testRtrim()
+    {
+        $this->assertEquals("/hello", Url::rtrim("/hello/\n"));
+    }
+
     public function validRelativeUrlProvider()
     {
         return [

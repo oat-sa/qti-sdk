@@ -22,4 +22,16 @@ class PairTest extends QtiSmTestCase
         $this->assertTrue($p3->equals($p3));
         $this->assertTrue($p4->equals($p3));
     }
+
+    public function testInvalidFirstIdentifier()
+    {
+        $this->setExpectedException('\\InvalidArgumentException');
+        $pair = new QtiPair('_33', '33tt');
+    }
+
+    public function testInvalidSecondIdentifier()
+    {
+        $this->setExpectedException('\\InvalidArgumentException');
+        $pair = new QtiPair('33tt', '_33');
+    }
 }

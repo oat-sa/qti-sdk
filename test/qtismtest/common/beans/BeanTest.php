@@ -246,4 +246,69 @@ class BeanTest extends QtiSmTestCase
         $property = $bean->getProperty('firstName');
         $this->assertTrue($bean->hasSetter($property) !== false);
     }
+
+    public function testWrongInstanciation()
+    {
+        $this->setExpectedException('\\InvalidArgumentException', "The given 'object' argument is not an object.");
+        $bean = new Bean(10);
+    }
+
+    public function testInvalidGetGetterCall()
+    {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+
+        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $bean = new Bean($mock);
+        $getter = $bean->getGetter(null);
+    }
+
+    public function testInvalidGetSetterCall()
+    {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+
+        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $bean = new Bean($mock);
+        $getter = $bean->getSetter(false);
+    }
+
+    public function testUnknownSetter()
+    {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+
+        $this->setExpectedException('qtism\\common\\beans\\BeanException', "The bean has no 'melissa' property.", BeanException::NO_METHOD);
+        $bean = new Bean($mock);
+        $getter = $bean->getSetter('melissa');
+    }
+
+    public function testInvalidHasGetterCall()
+    {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+
+        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $bean = new Bean($mock);
+        $getter = $bean->hasGetter(null);
+    }
+
+    public function testInvalidHasSetterCall()
+    {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+
+        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $bean = new Bean($mock);
+        $getter = $bean->hasSetter(null);
+    }
+
+    public function testPropertyButNoSetter()
+    {
+        $mock = new SimpleBean('Name', 'Car');
+        $bean = new Bean($mock);
+
+        $this->setExpectedException('\\qtism\\common\\beans\\BeanException', "The bean has no public setter for a 'noGetter' property.");
+        $setter = $bean->getSetter('noGetter', BeanException::NO_METHOD);
+    }
 }

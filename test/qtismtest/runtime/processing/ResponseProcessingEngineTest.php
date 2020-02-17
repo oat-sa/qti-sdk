@@ -204,4 +204,118 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $this->assertEquals(1., $state['SCORE']->getValue());
         $this->assertEquals(1., $state['MAXSCORE']->getValue());
     }
+
+    public function testWrongComponentType()
+    {
+        $responseProcessing = $this->createComponentFromXml(
+            '<responseIf>
+                <isNull>
+                  <variable identifier="response-X" />
+                </isNull>
+                <setOutcomeValue identifier="score-X">
+                  <baseValue baseType="integer">0</baseValue>
+                </setOutcomeValue>
+              </responseIf>'
+        );
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            'The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.'
+        );
+
+        $engine = new ResponseProcessingEngine($responseProcessing);
+    }
+
+    public function testAddTemplateMappingWrongFirstParam()
+    {
+        $responseProcessing = $this->createComponentFromXml('
+            <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing);
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The uri argument must be a string, 'integer' given."
+        );
+
+        $engine->addTemplateMapping(10, 'http://taotesting.com');
+    }
+
+    public function testAddTemplateMappingWrongSecondParam()
+    {
+        $responseProcessing = $this->createComponentFromXml('
+            <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing);
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The url argument must be a string, 'string' given."
+        );
+
+        $engine->addTemplateMapping('http://taotesting.com', 10);
+    }
+
+    public function testRemoveTemplateMappingWrongUrl()
+    {
+        $responseProcessing = $this->createComponentFromXml('
+            <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing);
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The uri argument must be a string, 'integer' given."
+        );
+
+        $engine->removeTemplateMapping(10);
+    }
+
+    public function testRemoveTemplateMapping()
+    {
+        $responseProcessing = $this->createComponentFromXml('
+            <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing);
+        $engine->removeTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct');
+
+        $this->assertTrue(true, "The template mapping removal should not produce any error.");
+    }
+
+    public function testNotOperator()
+    {
+        $var = new OutcomeVariable('NOTRESULT', Cardinality::SINGLE, BaseType::BOOLEAN);
+        $state = new State([$var]);
+
+        $responseProcessing = $this->createComponentFromXml('
+            <!--
+                if (isNull($NOTRESULT)) {
+                    $NOTRESULT = true;
+                }
+            -->
+            <responseProcessing>
+                <responseCondition>
+                    <responseIf>
+                        <isNull>
+                            <variable identifier="NOTRESULT"/>
+                        </isNull>
+                        <setOutcomeValue identifier="NOTRESULT">
+                            <not>
+                                <baseValue baseType="boolean">true</baseValue>
+                            </not>
+                        </setOutcomeValue>
+                    </responseIf>
+                </responseCondition>
+            </responseProcessing>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing, $state);
+        $engine->process();
+
+        $this->assertSame(false, $state['NOTRESULT']->getValue());
+    }
 }

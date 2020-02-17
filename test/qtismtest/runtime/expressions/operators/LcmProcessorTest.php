@@ -71,6 +71,7 @@ class LcmProcessorTest extends QtiSmTestCase
     {
         return [
             [[new QtiInteger(0)], 0],
+            [[new QtiInteger(0), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0)])], 0],
             [[new QtiInteger(0), new QtiInteger(0)], 0],
             [[new QtiInteger(330), new QtiInteger(0)], 0],
             [[new QtiInteger(0), new QtiInteger(330)], 0],

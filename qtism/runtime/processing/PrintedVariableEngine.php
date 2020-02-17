@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\processing;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;

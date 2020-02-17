@@ -4,6 +4,7 @@ namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
+use qtism\data\ItemSessionControl;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtismtest\QtiSmTestCase;
 
@@ -37,5 +38,17 @@ class ExpressionEngineTest extends QtiSmTestCase
         $result = $engine->process();
         $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(60.0, $result->getValue());
+    }
+
+    public function testCreateWrongExpressionType()
+    {
+        $expression = new ItemSessionControl();
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed."
+        );
+
+        $engine = new ExpressionEngine($expression);
     }
 }

@@ -33,6 +33,33 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager->delete($file);
     }
 
+    /**
+     * @depends testCreateFromFile
+     */
+    public function testCreateFromFileError()
+    {
+        $manager = new FileSystemFileManager('/root');
+
+        $this->setExpectedException(
+            'qtism\\common\\datatypes\\files\\FileManagerException',
+            "An error occured while creating a QTI FileSystemFile object."
+        );
+
+        $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
+    }
+
+    public function testCreateFromDataError()
+    {
+        $manager = new FileSystemFileManager('/root');
+
+        $this->setExpectedException(
+            'qtism\\common\\datatypes\\files\\FileManagerException',
+            "An error occured while creating a QTI FileSystemFile object."
+        );
+
+        $manager->createFromData('Some <em>text</em>...', 'text/html');
+    }
+
     public function testDelete()
     {
         $manager = new FileSystemFileManager();
@@ -55,6 +82,22 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $this->assertEquals('text/plain', $mFile->getMimeType());
         $this->assertEquals('newname.txt', $mFile->getFilename());
         $this->assertEquals('I contain some text...', $mFile->getData());
+        $manager->delete($mFile);
+    }
+
+    /**
+     * @depends testDelete
+     */
+    public function testDeleteError()
+    {
+        $manager = new FileSystemFileManager();
+        $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
+        unlink($mFile->getPath());
+
+        $this->setExpectedException(
+            'qtism\\common\\datatypes\\files\\FileManagerException'
+        );
+
         $manager->delete($mFile);
     }
 }

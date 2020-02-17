@@ -6,7 +6,10 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RoundToProcessor;
 use qtismtest\QtiSmTestCase;
@@ -57,6 +60,95 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
         $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(round(-12.1, 1), round($result->getValue(), 1));
+    }
+
+    public function testFiguresFromRef()
+    {
+        $expr = $this->createComponentFromXml('
+			<roundTo figures="nfigures">
+				<baseValue baseType="float">1239451</baseValue>
+			</roundTo>
+		');
+
+        $operands = new OperandsCollection();
+        $operands[] = new QtiInteger(1239451);
+        $processor = new RoundToProcessor($expr, $operands);
+        $processor->setState(
+            new State(
+                [
+                    new OutcomeVariable('nfigures', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(3)),
+                ]
+            )
+        );
+        $result = $processor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(round(1240000), round($result->getValue()));
+    }
+
+    public function testFiguresFromRefNoRef()
+    {
+        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+
+        $expr = $this->createComponentFromXml('
+			<roundTo figures="nfigures">
+				<baseValue baseType="float">1239451</baseValue>
+			</roundTo>
+		');
+
+        $operands = new OperandsCollection();
+        $operands[] = new QtiInteger(1239451);
+        $processor = new RoundToProcessor($expr, $operands);
+        $result = $processor->process();
+    }
+
+    public function testFiguresFromRefNonIntegerRef()
+    {
+        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+
+        $expr = $this->createComponentFromXml('
+			<roundTo figures="nfigures">
+				<baseValue baseType="float">1239451</baseValue>
+			</roundTo>
+		');
+
+        $operands = new OperandsCollection();
+        $operands[] = new QtiInteger(1239451);
+        $processor = new RoundToProcessor($expr, $operands);
+        $processor->setState(
+            new State(
+                [
+                    new OutcomeVariable('nfigures', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(3.333)),
+                ]
+            )
+        );
+        $result = $processor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(round(1240000), round($result->getValue()));
+    }
+
+    public function testFiguresFromRefNegativeWhenSignificantFigureInUse()
+    {
+        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+
+        $expr = $this->createComponentFromXml('
+			<roundTo figures="nfigures" roundingMode="significantFigures">
+				<baseValue baseType="float">1239451</baseValue>
+			</roundTo>
+		');
+
+        $operands = new OperandsCollection();
+        $operands[] = new QtiInteger(1239451);
+        $processor = new RoundToProcessor($expr, $operands);
+        $processor->setState(
+            new State(
+                [
+                    new OutcomeVariable('nfigures', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(-3)),
+                ]
+            )
+        );
+        $result = $processor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(round(1240000), round($result->getValue()));
     }
 
     public function testDecimalPlaces()
@@ -119,6 +211,20 @@ class RoundToProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
+    }
+
+    public function testOperandsContainNull()
+    {
+        $expr = $this->createComponentFromXml('
+			<roundTo figures="0" roundingMode="decimalPlaces">
+				<baseValue baseType="float">3.4</baseValue>
+			</roundTo>
+		');
+        $operands = new OperandsCollection([null]);
+        $processor = new RoundToProcessor($expr, $operands);
+        $result = $processor->process();
+
+        $this->assertNull($result);
     }
 
     public function testTooMuchOperands()

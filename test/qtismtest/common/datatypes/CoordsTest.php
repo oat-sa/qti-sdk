@@ -5,10 +5,19 @@ namespace qtismtest\common\datatypes;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtismtest\QtiSmTestCase;
 
 class CoordsTest extends QtiSmTestCase
 {
+    public function testInstantiate()
+    {
+        $coords = new QtiCoords(QtiShape::POLY, [0, 0, 0, 3, 3, 0]);
+        $this->assertEquals(BaseType::COORDS, $coords->getBaseType());
+        $this->assertEquals(Cardinality::SINGLE, $coords->getCardinality());
+    }
+
     public function testInsideCircle()
     {
         $coords = new QtiCoords(QtiShape::CIRCLE, [5, 5, 5]);
@@ -67,6 +76,13 @@ class CoordsTest extends QtiSmTestCase
         $this->assertFalse($coords->inside($point));
 
         $point = new QtiPoint(6, 4); // 6, 4 is inside.
+        $this->assertTrue($coords->inside($point));
+    }
+
+    public function testOnEdgePolygon()
+    {
+        $coords = new QtiCoords(QtiShape::POLY, [0, 0, 0, 3, 3, 0]);
+        $point = new QtiPoint(0, 2);
         $this->assertTrue($coords->inside($point));
     }
 

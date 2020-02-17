@@ -520,4 +520,36 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::URI);
         $this->assertFalse($operands->exclusivelyOrdered());
     }
+
+    public function testInvalidDataType()
+    {
+        $operands = $this->getOperands();
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The OperandsCollection only accepts QTI Runtime compliant values, '999' given."
+        );
+
+        $operands[] = 999;
+    }
+
+    public function testExclusivelySingleNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelySingle());
+    }
+
+    public function testExclusivelyStringNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelyString());
+    }
+
+    public function testExclusivelySingleOrMultipleNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelySingleOrMultiple());
+    }
+
+    public function testExclusivelySingleOrOrderedNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelySingleOrOrdered());
+    }
 }

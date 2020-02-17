@@ -71,6 +71,42 @@ class VariableIdentifierTest extends QtiSmTestCase
         $this->assertEquals($expectedSequence, $v->getSequenceNumber());
     }
 
+    public function testInvalidSequenceNumberOne()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier 'Q01.bla.SCORE' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier('Q01.bla.SCORE');
+    }
+
+    public function testInvalidSequenceNumberTwo()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier 'Q01.0.SCORE' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier('Q01.0.SCORE');
+    }
+
+    public function testInvalidVariableName()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier 'Q01.0. ' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier('Q01.0. ');
+    }
+
+    public function testInvalidPrefix()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier ' .SCORE' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier(' .SCORE');
+    }
+
     public function invalidIdentifierProvider()
     {
         return [
@@ -86,6 +122,11 @@ class VariableIdentifierTest extends QtiSmTestCase
             ['Q 01'],
             ['Q01 . SCORE'],
             ['Q01._SCORE'],
+            ['Q01.-1.SCORE'],
+            ['Q01..SCORE'],
+            ['Q01.'],
+            ['.1.SCORE'],
+            ['1.SCORE'],
         ];
     }
 

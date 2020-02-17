@@ -98,4 +98,28 @@ class StringCollectionTest extends QtiSmTestCase
         }
         $this->assertEquals(3, $i);
     }
+
+    public function testAttachNotObject()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only attach 'objects' into an AbstractCollection, 'string' given"
+        );
+        $this->collection->attach('string');
+    }
+
+    public function testResetKeys()
+    {
+        $this->collection[] = "string1";
+        $this->collection[] = "string2";
+        $this->collection[] = "string3";
+
+        unset($this->collection[1]);
+
+        $this->assertEquals($this->collection->getKeys(), [0, 2]);
+
+        $this->collection->resetKeys();
+
+        $this->assertEquals($this->collection->getKeys(), [0, 1]);
+    }
 }

@@ -5,6 +5,7 @@ namespace qtismtest\common\datatypes\files;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
+use stdClass;
 
 class FileSystemFileTest extends QtiSmTestCase
 {
@@ -49,6 +50,48 @@ class FileSystemFileTest extends QtiSmTestCase
         unlink($destination);
     }
 
+    public function testCreateFromExistingFileMalformedDestinationPath()
+    {
+        try {
+            FileSystemFile::createFromExistingFile(
+                self::samplesDir() . 'datatypes/file/text-plain_name.txt',
+                '/root/root/root/root.txt',
+                'text/plain'
+            );
+
+            $this->assertFalse(true, "Should throw an error.");
+        } catch (RuntimeException $e) {
+            $this->assertEquals("Unable to create destination directory at '/root/root/root'.", $e->getMessage());
+        }
+    }
+
+    public function testCreateFromExistingFileMalformedDestinationPathTwo()
+    {
+        try {
+            FileSystemFile::createFromExistingFile(
+                self::samplesDir() . 'datatypes/file/text-plain_name.txt',
+                sys_get_temp_dir() . '/abcd\\t/v**',
+                'text/plain'
+            );
+        } catch (RuntimeException $e) {
+            $this->assertInstanceOf('\\RuntimeException', $e);
+        }
+    }
+
+    public function testCreateFromExistingFileSourceIsNotAFile()
+    {
+        try {
+            FileSystemFile::createFromExistingFile(
+                self::samplesDir() . 'datatypes/file',
+                '/root/root/root/root.txt',
+                'text/plain'
+            );
+            $this->assertFalse(true, "Should throw an error.");
+        } catch (RuntimeException $e) {
+            $this->assertInstanceOf('\\RuntimeException', $e);
+        }
+    }
+
     /**
      * @dataProvider getStreamProvider
      * @depends      testRetrieve
@@ -70,6 +113,25 @@ class FileSystemFileTest extends QtiSmTestCase
         @fclose($stream);
 
         $this->assertEquals($expectedData, $data);
+    }
+
+    public function testGetStreamError()
+    {
+        $path = tempnam(sys_get_temp_dir(), 'qtism');
+        file_put_contents(
+            $path,
+            file_get_contents(self::samplesDir() . 'datatypes/file/text-plain_name.txt')
+        );
+
+        $pFile = FileSystemFile::retrieveFile($path);
+        @unlink($path);
+
+        try {
+            $pFile->getStream();
+            $this->assertFalse(true, "calling FileSystemFile::getStream() on a non-existing file must throw an exception!");
+        } catch (RuntimeException $e) {
+            $this->assertTrue(true);
+        }
     }
 
     public function testInstantiationWrongPath()
@@ -103,5 +165,38 @@ class FileSystemFileTest extends QtiSmTestCase
             [self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', true],
             [self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'new-name.txt'],
         ];
+    }
+
+    public function testEqualsNonQtiFile()
+    {
+        $destination = tempnam('/tmp', 'qtism');
+        $pFile = FileSystemFile::createFromExistingFile(
+            self::samplesDir() . 'datatypes/file/text-plain_name.txt',
+            $destination,
+            'text/plain'
+        );
+        $this->assertFalse($pFile->equals(new stdClass()));
+        @unlink($destination);
+    }
+
+    public function testEqualsMimeTypeDifference()
+    {
+        $destination1 = tempnam('/tmp', 'qtism');
+        $pFile1 = FileSystemFile::createFromExistingFile(
+            self::samplesDir() . 'datatypes/file/text-plain_name.txt',
+            $destination1,
+            'text/plain'
+        );
+
+        $destination2 = tempnam('/tmp', 'qtism');
+        $pFile2 = FileSystemFile::createFromExistingFile(
+            self::samplesDir() . 'datatypes/file/text-css_name.txt',
+            $destination2,
+            'text/css'
+        );
+
+        $this->assertFalse($pFile1->equals($pFile2));
+        @unlink($destination1);
+        @unlink($destination2);
     }
 }

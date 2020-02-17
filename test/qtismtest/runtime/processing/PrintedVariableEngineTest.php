@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\processing;
 
+use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
@@ -15,6 +16,7 @@ use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\content\PrintedVariable;
+use qtism\data\content\TextRun;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -22,6 +24,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\processing\PrintedVariableEngine;
+use qtism\runtime\processing\PrintedVariableProcessingException;
 use qtismtest\QtiSmTestCase;
 
 class PrintedVariableEngineTest extends QtiSmTestCase
@@ -276,6 +279,71 @@ class PrintedVariableEngineTest extends QtiSmTestCase
             ['31', 'positiveFloat', $state, '%+o'],
 
             ['-987', 'integerMinus987', $state, '%i'],
+        ];
+    }
+
+    public function testPrintedVariableWithUnknownValueType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The PrintedVariableEngine class only accepts PrintedVariable objects to be executed."
+        );
+
+        new PrintedVariableEngine(new TextRun('crash'));
+    }
+
+    public function testPrintedVariableFromFile()
+    {
+        $tmp = tempnam('/tmp', 'qtism');
+        $state = new State([new OutcomeVariable('file', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::createFromData('test', $tmp, 'text/plain'))]);
+        $printedVariable = new PrintedVariable('file');
+
+        $engine = new PrintedVariableEngine($printedVariable);
+        $engine->setContext($state);
+
+        try {
+            $engine->process();
+            $this->assertFalse(true, "Should not be able to process a printed variable rendering from a QTI File.");
+        } catch (PrintedVariableProcessingException $e) {
+            $this->assertEquals("The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.", $e->getMessage());
+        }
+
+        unlink($tmp);
+    }
+
+    /**
+     *
+     * @dataProvider newProvider
+     *
+     * @param $expected int
+     * @param $id string
+     * @param $state State
+     */
+
+    public function testForNewProvider($expected, $id, $state)
+    {
+        $printedVariable = new PrintedVariable($id);
+        $printedVariable->setFormat("%d");
+
+        $engine = new PrintedVariableEngine($printedVariable);
+        $engine->setContext($state);
+        $this->assertEquals($expected, $engine->process());
+    }
+
+    public function newProvider()
+    {
+        $state = new State();
+
+        $state->setVariable(new OutcomeVariable('test1', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(97.2)));
+        $state->setVariable(new OutcomeVariable('test2', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(97.5)));
+        $state->setVariable(new OutcomeVariable('test3', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(97.9)));
+        $state->setVariable(new OutcomeVariable('test4', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(98.0)));
+
+        return [
+            [97, "test1", $state],
+            [97, "test2", $state],
+            [97, "test3", $state],
+            [98, "test4", $state],
         ];
     }
 }

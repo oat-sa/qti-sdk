@@ -2,9 +2,12 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\MathFunctions;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
@@ -426,6 +429,38 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $this->assertTrue(!$result instanceof QtiInteger);
     }
 
+    /**
+     * @dataProvider acosProvider
+     *
+     * @param $operand
+     * @param $expected
+     */
+    public function testAcos($operand, $expected)
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ACOS);
+        $operands = new OperandsCollection([$operand]);
+        $processor = new MathOperatorProcessor($expression, $operands);
+        $result = $processor->process();
+        $this->assertEqualsRounded($expected, $result);
+        $this->assertTrue(!$result instanceof QtiInteger);
+    }
+
+    /**
+     * @dataProvider atanProvider
+     *
+     * @param $operand
+     * @param $expected
+     */
+    public function testAtan($operand, $expected)
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ATAN);
+        $operands = new OperandsCollection([$operand]);
+        $processor = new MathOperatorProcessor($expression, $operands);
+        $result = $processor->process();
+        $this->assertEqualsRounded($expected, $result);
+        $this->assertTrue(!$result instanceof QtiInteger);
+    }
+
     protected function assertEqualsRounded($expected, $value)
     {
         if (is_null($expected)) {
@@ -439,6 +474,80 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         } else {
             $this->assertEquals(round($expected, 3), round($value->getValue(), 3));
         }
+    }
+
+    public function testNonSingleCardinalityOperand()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::CEIL);
+        $operands = new OperandsCollection(
+            [
+                new MultipleContainer(BaseType::FLOAT, [new QtiFloat(1.2)]),
+            ]
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            'The MathOperator operator only accepts operands with a single cardinality.'
+        );
+
+        $result = $processor->process();
+    }
+
+    public function testNonNumericOperand()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::CEIL);
+        $operands = new OperandsCollection(
+            [
+                new QtiBoolean(true),
+            ]
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            'The MathOperator operator only accepts operands with an integer or float baseType.'
+        );
+
+        $processor->process();
+    }
+
+    public function testAtan2SingleOperator()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ATAN2);
+        $operands = new OperandsCollection(
+            [
+                new QtiFloat(0.0),
+            ]
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            "The atan2 math function of the MathOperator requires 2 operands, 1 operand given."
+        );
+
+        $processor->process();
+    }
+
+    public function testAtan2ThreeOperators()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ATAN2);
+        $operands = new OperandsCollection(
+            [
+                new QtiFloat(0.0),
+                new QtiFloat(0.0),
+                new QtiFloat(0.0),
+            ]
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            "The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given."
+        );
+
+        $processor->process();
     }
 
     public function sinProvider()
@@ -495,6 +604,20 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    public function acosProvider()
+    {
+        return [
+            [new QtiFloat(0.3), 1.266103673],
+        ];
+    }
+
+    public function atanProvider()
+    {
+        return [
+            [new QtiInteger(2), 1.107148718],
+        ];
+    }
+
     public function atan2Provider()
     {
         $data = [
@@ -511,11 +634,15 @@ class MathOperatorProcessorTest extends QtiSmTestCase
             [new QtiFloat(INF), new QtiInteger(25), M_PI_2],
             [new QtiInteger(-10), new QtiInteger(+0), -M_PI_2],
             [new QtiFloat(-INF), new QtiInteger(14), -M_PI_2],
-            [new QtiFloat(INF), new QtiFloat(INF), M_PI_4],
-            [new QtiFloat(INF), new QtiFloat(-INF), 3 * M_PI_4],
-            [new QtiFloat(-INF), new QtiFloat(INF), -M_PI_4],
-            [new QtiFloat(-INF), new QtiFloat(-INF), -3 * M_PI_4],
         ];
+
+        //Sometimes atan2 with both INF arguments returns NAN. I have no idea why it happens (PHP 5.6.13, win10).
+        if (!is_nan(atan2(INF, INF))) {
+            $data[] = [new QtiFloat(INF), new QtiFloat(INF), M_PI_4];
+            $data[] = [new QtiFloat(INF), new QtiFloat(-INF), 3 * M_PI_4];
+            $data[] = [new QtiFloat(-INF), new QtiFloat(INF), -M_PI_4];
+            $data[] = [new QtiFloat(-INF), new QtiFloat(-INF), -3 * M_PI_4];
+        }
 
         return $data;
     }

@@ -4,9 +4,11 @@ namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ResponseDeclaration;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -93,5 +95,64 @@ class StateTest extends QtiSmTestCase
         $this->assertEquals(1, count($state->getAllVariables()));
 
         $this->assertInstanceOf('qtism\\runtime\\common\\VariableCollection', $state->getAllVariables());
+    }
+
+    public function testUnsetVariableByString()
+    {
+        $state = new State(
+            [
+                new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)),
+            ]
+        );
+
+        $this->assertCount(1, $state);
+        $state->unsetVariable('RESPONSE');
+        $this->assertCount(0, $state);
+    }
+
+    public function testUnsetVariableByVariableObject()
+    {
+        $variable = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
+        $state = new State([$variable]);
+
+        $this->assertCount(1, $state);
+        $state->unsetVariable($variable);
+        $this->assertCount(0, $state);
+    }
+
+    public function testUnsetUnexistingVariable()
+    {
+        $state = new State();
+
+        $this->setExpectedException(
+            '\\OutOfBoundsException',
+            "No Variable object with identifier 'X' found in the current State object."
+        );
+
+        $state->unsetVariable('X');
+    }
+
+    public function testUnsetVariableWrongType()
+    {
+        $state = new State();
+
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The variable argument must be a Variable object or a string, '1' given"
+        );
+
+        $state->unsetVariable(true);
+    }
+
+    public function testOffsetSetWrongOffsetType()
+    {
+        $state = new State();
+
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "A State object can only be adressed by a valid string."
+        );
+
+        $state[true] = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
     }
 }

@@ -64,6 +64,30 @@ class UtilsTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider validIntOrIdentifierProvider
+     *
+     * @param $string
+     * @param $expected
+     * @param $type
+     */
+    public function testIntOrIdentifierValid($string, $expected, $type)
+    {
+        $value = Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
+        $this->assertInternalType('string', $type);
+        $this->assertTrue($expected === $value);
+    }
+
+    /**
+     * @dataProvider invalidIntOrIdentifierProvider
+     * @param $string
+     */
+    public function testIntOrIdentifierInvalid($string)
+    {
+        $this->setExpectedException('\\UnexpectedValueException');
+        Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
+    }
+
+    /**
      * @dataProvider invalidBooleanProvider
      */
     public function testStringToBooleanInvalid($string)
@@ -154,7 +178,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToDirectedPairInvalid($string)
     {
         $this->setExpectedException('\\UnexpectedValueException');
-        $value = Utils::stringToDatatype($string, BaseType::PAIR);
+        $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
     }
 
     /**
@@ -206,6 +230,18 @@ class UtilsTest extends QtiSmTestCase
     {
         $this->setExpectedException('\\InvalidArgumentException');
         $uri = Utils::sanitizeUri($uri);
+    }
+
+    public function testUnsupportedFile()
+    {
+        $this->setExpectedException('\\RuntimeException');
+        Utils::stringToDatatype('not supported', BaseType::FILE);
+    }
+
+    public function testUnknownType()
+    {
+        $this->setExpectedException('\\InvalidArgumentException');
+        Utils::stringToDatatype('test', 'test');
     }
 
     public function validCoordsProvider()
@@ -395,6 +431,22 @@ class UtilsTest extends QtiSmTestCase
             [new stdClass()],
             [14],
             [true],
+        ];
+    }
+
+    public function validIntOrIdentifierProvider()
+    {
+        return [
+            ['identifier', 'identifier', 'string'],
+            ['1337', 1337, 'integer'],
+        ];
+    }
+
+    public function invalidIntOrIdentifierProvider()
+    {
+        return [
+            [3.3],
+            ['9_xxx'],
         ];
     }
 }

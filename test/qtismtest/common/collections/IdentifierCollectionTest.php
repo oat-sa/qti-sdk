@@ -63,4 +63,21 @@ class IdentifierCollectionTest extends QtiSmTestCase
         $this->setExpectedException('\\InvalidArgumentException');
         $this->collection[] = $identifier;
     }
+
+    public function testAddIdentifierWrongType()
+    {
+        $identifier = 999;
+        $this->setExpectedException('\\InvalidArgumentException');
+        $this->collection[] = $identifier;
+    }
+
+    public function testToString()
+    {
+        $this->collection[] = 'one';
+        $this->assertEquals('one', $this->collection->__toString());
+
+        $this->collection[] = 'two';
+        $this->collection[] = 'three';
+        $this->assertEquals('one,two,three', $this->collection->__toString());
+    }
 }

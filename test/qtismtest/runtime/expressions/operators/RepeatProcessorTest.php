@@ -32,6 +32,21 @@ class RepeatProcessorTest extends QtiSmTestCase
         $this->assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
     }
 
+    public function testRepeatVariableRefNullRef()
+    {
+        $initialVal = [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)];
+        $expression = $this->createFakeExpression('repeat');
+        $operands = new OperandsCollection($initialVal);
+        $processor = new RepeatProcessor($expression, $operands);
+
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            "The variable with name 'repeat' could not be resolved."
+        );
+
+        $processor->process();
+    }
+
     public function testOrderedOnly()
     {
         $expression = $this->createFakeExpression(2);

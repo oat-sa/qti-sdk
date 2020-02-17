@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
@@ -47,6 +48,69 @@ class RuntimeUtilsTest extends QtiSmTestCase
     public function testIsValidVariableIdentifier($string, $expected)
     {
         $this->assertSame($expected, Utils::isValidVariableIdentifier($string));
+    }
+
+    /**
+     * @dataProvider isNullDataProvider
+     *
+     * @param QtiDatatype $value
+     * @param boolean $expected
+     */
+    public function testIsNull(QtiDatatype $value = null, $expected)
+    {
+        $this->assertSame($expected, Utils::isNull($value));
+    }
+
+    /**
+     * @dataProvider throwTypingErrorProvider
+     */
+    public function testThrowTypingError($value, $expectedMsg)
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            $expectedMsg
+        );
+
+        Utils::throwTypingError($value);
+    }
+
+    /**
+     * @dataProvider floatArrayToIntegerProvider
+     */
+    public function testFloatArrayToInteger($floatArray, $integerArray)
+    {
+        $this->assertEquals($integerArray, Utils::floatArrayToInteger($floatArray));
+    }
+
+    /**
+     * @dataProvider integerArrayToFloatProvider
+     */
+    public function testIntegerArrayToFloat($integerArray, $floatArray)
+    {
+        $this->assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
+    }
+
+    public function throwTypingErrorProvider()
+    {
+        return [
+            [99.9, "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'double' given."],
+            ['blah', "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'string' given."],
+            [new stdClass(), "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'stdClass' given."],
+        ];
+    }
+
+    public function floatArrayToIntegerProvider()
+    {
+        return [
+            [[10.2, 0.0], [10, 0]],
+        ];
+    }
+
+    public function integerArrayToFloatProvider()
+    {
+        return [
+            [[10, 0], [10., 0.]],
+        ];
     }
 
     public function inferBaseTypeProvider()
@@ -121,6 +185,20 @@ class RuntimeUtilsTest extends QtiSmTestCase
             ['Q_01.SCORE', true],
             ['Q01.0.SCORE', false], // non positive sequence number -> false
             ['Q01.09.SCORE', false] // prefixing sequence by zero not allowed.
+        ];
+    }
+
+    public function isNullDataProvider()
+    {
+        return [
+            [new QtiBoolean(true), false],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10), new QtiInteger(20)]), false],
+            [new QtiString('G-string!'), false],
+            [null, true],
+            [new QtiString(''), true],
+            [new MultipleContainer(BaseType::INTEGER), true],
+            [new OrderedContainer(BaseType::INTEGER), true],
+            [new RecordContainer(), true],
         ];
     }
 }

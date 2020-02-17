@@ -3,15 +3,18 @@
 namespace qtismtest\runtime\common;
 
 use DateTime;
+use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Container;
@@ -88,7 +91,7 @@ class ContainerTest extends QtiSmTestCase
     public function testCreateFromDataModelValid(ValueCollection $valueCollection)
     {
         $container = Container::createFromDataModel($valueCollection);
-        $this->assertInstanceOf('qtism\\runtime\\common\\Container', $container);
+        $this->assertInstanceOf(Container::class, $container);
     }
 
     /**
@@ -183,6 +186,7 @@ class ContainerTest extends QtiSmTestCase
             [new Container([new QtiString('null'), null]), null, 1],
             [new Container([new QtiInteger(14), new QtiInteger(15), new QtiInteger(16)]), true, 0],
             [new Container([new QtiString('string'), new QtiInteger(1), new QtiBoolean(true), new QtiFloat(14.3), new QtiPoint(20, 20), new QtiPoint(20, 21)]), new QtiPoint(20, 20), 1],
+            [new Container([null]), new QtiInteger(1), 0],
         ];
     }
 
@@ -234,6 +238,14 @@ class ContainerTest extends QtiSmTestCase
         $this->assertTrue($container->contains(new QtiPair('A', 'B')));
     }
 
+    public function testContains2()
+    {
+        $identifier = new QtiIdentifier('test');
+        $container = $this->getContainer();
+        $container[] = $identifier;
+        $this->assertTrue($container->contains(new QtiIdentifier('test')));
+    }
+
     /**
      * @dataProvider toStringProvider
      *
@@ -255,5 +267,105 @@ class ContainerTest extends QtiSmTestCase
         $returnValue[] = [new Container([new QtiDuration('P2DT2S'), new QtiPoint(10, 15), new QtiPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!')]), '[P2DT2S; 10 15; A B; C D; \'String!\']'];
 
         return $returnValue;
+    }
+
+    public function testAlwaysMultipleCardinality()
+    {
+        $container = new Container();
+        $this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
+    }
+
+    public function testDetach()
+    {
+        $object = new QtiBoolean(true);
+        $container = new Container([$object]);
+
+        $this->assertCount(1, $container);
+
+        $container->detach($object);
+
+        $this->assertCount(0, $container);
+    }
+
+    public function testDetachNotFound()
+    {
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "The object you want to detach could not be found in the collection."
+        );
+
+        $object = new QtiBoolean(true);
+        $container = new Container([$object]);
+        $container->detach(new QtiBoolean(false));
+    }
+
+    public function testDetachNotObject()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only detach 'objects' into an AbstractCollection, 'NULL' given."
+        );
+        $container = new Container();
+        $container->detach(null);
+    }
+
+    public function testReplaceNotFound()
+    {
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "The object you want to replace could not be found."
+        );
+
+        $object = new QtiBoolean(true);
+        $container = new Container([$object]);
+        $container->replace(new QtiBoolean(false), new QtiBoolean(false));
+    }
+
+    public function testReplaceToReplaceNotObject()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
+        );
+
+        $object = new QtiBoolean(true);
+        $container = new Container([$object]);
+        $container->replace(null, new QtiBoolean(false));
+    }
+
+    public function testReplaceReplacementNotObject()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
+        );
+
+        $object = new QtiBoolean(true);
+        $container = new Container([$object]);
+        $container->replace(new QtiBoolean(false), null);
+    }
+
+    public function testDiffNotCompliantTypes()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "Difference may apply only on two collections of the same type."
+        );
+
+        $container1 = new Container();
+        $container2 = new StringCollection();
+        $container1->diff($container2);
+    }
+
+    public function testIntersectNotCompliantTypes()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "Intersection may apply only on two collections of the same type."
+        );
+
+        $container1 = new Container();
+        $container2 = new StringCollection();
+        $container1->intersect($container2);
     }
 }
