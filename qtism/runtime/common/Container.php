@@ -267,17 +267,15 @@ class Container extends AbstractCollection implements Comparable
             $found = false;
 
             foreach ($newDataPlaceHolder as $newValue) {
-                if (gettype($value) === 'object' && $value instanceof Comparable && $value->equals($newValue)) {
+                if (is_object($value) && $value instanceof Comparable && $value->equals($newValue)) {
                     $found = true;
                     break;
-                } elseif (gettype($newValue) === 'object' && $newValue instanceof Comparable && $newValue->equals($value)) {
+                } elseif (is_object($newValue) && $newValue instanceof Comparable && $newValue->equals($value)) {
                     $found = true;
                     break;
-                } else {
-                    if ($value === $newValue) {
-                        $found = true;
-                        break;
-                    }
+                } elseif ($value === $newValue) {
+                    $found = true;
+                    break;
                 }
             }
 
