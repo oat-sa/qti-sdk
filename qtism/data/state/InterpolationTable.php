@@ -87,7 +87,7 @@ class InterpolationTable extends LookupTable
     }
 
     /**
-     * @see \qtism\data\state\LookupTable::getQtiClassName()
+     * @inheritDoc
      */
     public function getQtiClassName()
     {
@@ -95,7 +95,7 @@ class InterpolationTable extends LookupTable
     }
 
     /**
-     * @see \qtism\data\state\LookupTable::getComponents()
+     * @inheritDoc
      */
     public function getComponents()
     {
