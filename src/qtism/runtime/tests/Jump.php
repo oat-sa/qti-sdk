@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,24 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * The Jump class represents the a possible location in an AssessmentTestSession
  * a candidate can "jump" to. Indeed, when the NONLINEAR navigation mode is in force,
  * the candidate has the ability to "jump" to a given RouteItem
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Jump
 {
@@ -46,7 +43,7 @@ class Jump
     /**
      * The AssessmentItemRef the candidate can jump to.
      *
-     * @var \qtism\runtime\tests\RouteItem
+     * @var RouteItem
      */
     private $target;
 
@@ -54,7 +51,7 @@ class Jump
      * The AssessmentItemSession related to the $assessmentItemRef.$occurence
      * the Jump targets.
      *
-     * @var \qtism\runtime\tests\AssessmentItemSession
+     * @var AssessmentItemSession
      */
     private $itemSession;
 
@@ -62,9 +59,9 @@ class Jump
      * Create a new Jump object.
      *
      * @param integer $position The position in the assessment test session's route the jump leads to.
-     * @param \qtism\runtime\tests\RouteItem $target The RouteItem to go when following the jump.
-     * @param \qtism\runtime\tests\AssessmentItemSession $itemSession The AssessmentItemSession related to the RouteItem.
-     * @throws \InvalidArgumentException If $occurence is not an integer value or $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
+     * @param RouteItem $target The RouteItem to go when following the jump.
+     * @param AssessmentItemSession $itemSession The AssessmentItemSession related to the RouteItem.
+     * @throws InvalidArgumentException If $occurence is not an integer value or $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
     public function __construct($position, RouteItem $target, AssessmentItemSession $itemSession)
     {
@@ -98,7 +95,7 @@ class Jump
     /**
      * Set the RouteItem the candidate can jump to.
      *
-     * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItem object.
+     * @param RouteItem $routeItem A RouteItem object.
      */
     protected function setTarget(RouteItem $target)
     {
@@ -108,7 +105,7 @@ class Jump
     /**
      * Get the RouteItem the candidate can jump to.
      *
-     * @return \qtism\runtime\tests\RouteItem A RouteItem object.
+     * @return RouteItem A RouteItem object.
      */
     public function getTarget()
     {
@@ -118,8 +115,8 @@ class Jump
     /**
      * Set the AssessmentItemSession related to AssessmentItemRef.occurence.
      *
-     * @param \qtism\runtime\tests\AssessmentItemSession $itemSession An AssessmentItemSession object.
-     * @throws \InvalidArgumentException If $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
+     * @param AssessmentItemSession $itemSession An AssessmentItemSession object.
+     * @throws InvalidArgumentException If $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
     protected function setItemSession(AssessmentItemSession $itemSession)
     {
@@ -129,7 +126,7 @@ class Jump
     /**
      * Get the AssessmentItemSession related to AssessmentItemRef.occurence.
      *
-     * @return \qtism\runtime\tests\AssessmentItemSession An AssessmentItemSession object.
+     * @return AssessmentItemSession An AssessmentItemSession object.
      */
     public function getItemSession()
     {

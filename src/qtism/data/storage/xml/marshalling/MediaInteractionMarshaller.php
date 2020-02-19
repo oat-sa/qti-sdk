@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\interactions\MediaInteraction;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for MediaInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MediaInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall a MediaInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A MediaInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a MediaInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component A MediaInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
@@ -74,18 +72,16 @@ class MediaInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a MediaInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A MediaInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a MediaInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A MediaInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             if (($autostart = $this->getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
-
                 $objectElts = $this->getChildElementsByTagName($element, 'object');
                 if (count($objectElts) > 0) {
                     $objectElt = $objectElts[0];
@@ -134,8 +130,8 @@ class MediaInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'mediaInteraction';

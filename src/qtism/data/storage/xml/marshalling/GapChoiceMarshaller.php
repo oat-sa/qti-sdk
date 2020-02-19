@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +23,18 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMCharacterData;
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Version;
 use qtism\data\content\TextOrVariableCollection;
-use qtism\data\ShowHide;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \DOMCharacterData;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
+use qtism\data\ShowHide;
 
 /**
  * The Marshaller implementation for GapChoice(gapText/gapImg) elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GapChoiceMarshaller extends ContentMarshaller
 {
@@ -47,11 +45,9 @@ class GapChoiceMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $expectedGapImgName = ($this->isWebComponentFriendly()) ? 'qti-gap-img' : 'gapImg';
-        
+
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
-
                 $fqClass = $this->lookupClass($element);
 
                 if ($element->localName === $expectedGapImgName) {
@@ -82,12 +78,11 @@ class GapChoiceMarshaller extends ContentMarshaller
                 }
 
                 if ($element->localName === 'gapText') {
-                   
                     if (Version::compare($version, '2.1.0', '<') === true && $children->exclusivelyContainsComponentsWithClassName('textRun') === false) {
                         $msg = "A 'gapText' element must only contain text. Children elements found.";
                         throw new UnmarshallingException($msg, $element);
                     }
-                    
+
                     try {
                         $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
                     } catch (InvalidArgumentException $e) {
@@ -99,7 +94,7 @@ class GapChoiceMarshaller extends ContentMarshaller
                         $component->setObjectLabel($objectLabel);
                     }
                 }
-                
+
                 if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                     $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                 }
@@ -115,7 +110,6 @@ class GapChoiceMarshaller extends ContentMarshaller
             $msg = "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element.";
             throw new UnmarshallingException($msg, $element);
         }
-
     }
 
     /**
@@ -153,17 +147,15 @@ class GapChoiceMarshaller extends ContentMarshaller
         foreach ($elements as $e) {
             if ($element->localName === 'gapImg') {
                 $element->appendChild($e);
-            }
-            else {
-                // 'gapText'...   
+            } else {
+                // 'gapText'...
                 if (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
                     // In QTI 2.0, only plain text is allowed...
                     $element->appendChild($e);
                 }
-                
             }
         }
-        
+
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
@@ -179,6 +171,6 @@ class GapChoiceMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

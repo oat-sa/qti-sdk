@@ -1,9 +1,10 @@
 <?php
+
 namespace qtismtest\data\content\xhtml;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
+use qtismtest\QtiSmTestCase;
 
 class ParamTest extends QtiSmTestCase
 {
@@ -15,7 +16,7 @@ class ParamTest extends QtiSmTestCase
         );
         $param = new Param(999, 'value', ParamType::DATA);
     }
-    
+
     public function testCreateWrongValueType()
     {
         $this->setExpectedException(
@@ -24,7 +25,7 @@ class ParamTest extends QtiSmTestCase
         );
         $param = new Param('name', 999, ParamType::DATA);
     }
-    
+
     public function testCreateNotParamType()
     {
         $this->setExpectedException(
@@ -33,7 +34,7 @@ class ParamTest extends QtiSmTestCase
         );
         $param = new Param('name', 'value', true);
     }
-    
+
     public function testCreateWrongTypeType()
     {
         $this->setExpectedException(

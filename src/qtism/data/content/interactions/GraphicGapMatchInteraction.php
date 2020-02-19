@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,10 +23,11 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
-use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\state\AssociationValidityConstraint;
-use \InvalidArgumentException;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -48,9 +50,6 @@ use \InvalidArgumentException;
  * each gap can have several choices associated with it if desired, furthermore, the same
  * choice may be associated with an associableHotspot multiple times, in which case the
  * corresponding directed pair appears multiple times in the value of the response variable.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GraphicGapMatchInteraction extends GraphicInteraction
 {
@@ -60,7 +59,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * An ordered list of choices for filling the gaps. There may be
      * fewer choices than gaps if required.
      *
-     * @var \qtism\data\content\interactions\GapImgCollection
+     * @var GapImgCollection
      * @qtism-bean-property
      */
     private $gapImgs;
@@ -71,7 +70,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * The hotspots that define the gaps that are to be filled
      * by the candidate.
      *
-     * @var \qtism\data\content\interactions\AssociableHotspotCollection
+     * @var AssociableHotspotCollection
      * @qtism-bean-property
      */
     private $associableHotspots;
@@ -80,14 +79,14 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * Create a new GraphicGapMatchInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
-     * @param \qtism\data\content\xhtml\ObjectElement $object An image as an ObjectElement object.
-     * @param \qtism\data\content\interactions\GapImgCollection $gapImgs A collection of GapImg objects.
-     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
+     * @param ObjectElement $object An image as an ObjectElement object.
+     * @param GapImgCollection $gapImgs A collection of GapImg objects.
+     * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($responseIdentifier, $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -99,8 +98,8 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Set the list of choices for filling the gaps.
      *
-     * @param \qtism\data\content\interactions\GapImgCollection $gapImgs A collection of GapImg objects.
-     * @throws \InvalidArgumentException If $gapImgs is empty.
+     * @param GapImgCollection $gapImgs A collection of GapImg objects.
+     * @throws InvalidArgumentException If $gapImgs is empty.
      */
     public function setGapImgs(GapImgCollection $gapImgs)
     {
@@ -115,7 +114,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Get the list of choices for filling the gaps.
      *
-     * @return \qtism\data\content\interactions\GapImgCollection A collection of GapImg objects.
+     * @return GapImgCollection A collection of GapImg objects.
      */
     public function getGapImgs()
     {
@@ -125,8 +124,8 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Set the hotspots that define the gaps that are to be filled by the candidate.
      *
-     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot objects.
-     * @throws \InvalidArgumentException If $associableHotspots is empty.
+     * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot objects.
+     * @throws InvalidArgumentException If $associableHotspots is empty.
      */
     public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots)
     {
@@ -141,13 +140,13 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Get the hotspots that define the gaps that are to be filled by the candidate.
      *
-     * @return \qtism\data\content\interactions\AssociableHotspotCollection A collection of AssociableHotspot objects.
+     * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
     public function getAssociableHotspots()
     {
         return $this->associableHotspots;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
@@ -158,8 +157,8 @@ class GraphicGapMatchInteraction extends GraphicInteraction
             0,
             0
         );
-        
-        foreach ($this->getComponentsByClassName(array('gapImg', 'gapText')) as $gapChoice) {
+
+        foreach ($this->getComponentsByClassName(['gapImg', 'gapText']) as $gapChoice) {
             $responseValidityConstraint->addAssociationValidityConstraint(
                 new AssociationValidityConstraint(
                     $gapChoice->getIdentifier(),
@@ -168,7 +167,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
                 )
             );
         }
-        
+
         return $responseValidityConstraint;
     }
 
@@ -179,8 +178,8 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     {
         return new QtiComponentCollection(
             array_merge(
-                array($this->getPrompt()),
-                array($this->getObject()),
+                [$this->getPrompt()],
+                [$this->getObject()],
                 $this->getGapImgs()->getArrayCopy(),
                 $this->getAssociableHotspots()->getArrayCopy()
             )

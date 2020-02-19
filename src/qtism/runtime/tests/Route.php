@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,30 +15,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
-use qtism\runtime\common\VariableIdentifier;
-use qtism\data\SubmissionMode;
-use qtism\data\NavigationMode;
-use qtism\data\AssessmentItemRefCollection;
+use InvalidArgumentException;
+use Iterator;
+use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\collections\IdentifierCollection;
-use qtism\data\AssessmentTest;
-use qtism\data\TestPart;
 use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentItemRefCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
-use \Iterator;
-use \SplObjectStorage;
-use \OutOfBoundsException;
-use \OutOfRangeException;
-use \InvalidArgumentException;
+use qtism\data\AssessmentTest;
+use qtism\data\NavigationMode;
+use qtism\data\SubmissionMode;
+use qtism\data\TestPart;
+use qtism\runtime\common\VariableIdentifier;
+use SplObjectStorage;
 
 /**
  * The Route class represents a linear route to be taken accross a given
@@ -49,9 +49,6 @@ use \InvalidArgumentException;
  * * An AssessmentItemRef object.
  * * An AssessmentSection object, which is the parent section of the AssessmentItemRef.
  * * A TestPart object, which is the parent object (direct or indirect) of the AssessmentSection.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Route implements Iterator
 {
@@ -59,7 +56,7 @@ class Route implements Iterator
      * A collection that gathers all assessmentItemRefs
      * involved in the route.
      *
-     * @var \qtism\data\AssessmentItemRefCollection
+     * @var AssessmentItemRefCollection
      */
     private $assessmentItemRefs;
 
@@ -80,14 +77,14 @@ class Route implements Iterator
     /**
      * A map where each item is bound to a number of occurences.
      *
-     * @var \SplObjectStorage
+     * @var SplObjectStorage
      */
     private $assessmentItemRefOccurenceCount;
 
     /**
      * A map where each RouteItem is bound to a test part.
      *
-     * @var \SplObjectStorage
+     * @var SplObjectStorage
      */
     private $testPartMap;
 
@@ -101,7 +98,7 @@ class Route implements Iterator
     /**
      * A map where each RouteItem is bound to an assessment section.
      *
-     * @var \SplObjectStorage
+     * @var SplObjectStorage
      */
     private $assessmentSectionMap;
 
@@ -115,7 +112,7 @@ class Route implements Iterator
     /**
      * A map where each RouteItem is bound to an assessmentItemRef.
      *
-     * @var \SplObjectStorage
+     * @var SplObjectStorage
      */
     private $assessmentItemRefMap;
 
@@ -124,7 +121,7 @@ class Route implements Iterator
      *
      * @var array
      */
-    private $routeItems = array();
+    private $routeItems = [];
 
     /**
      * The current position in the route.
@@ -137,26 +134,25 @@ class Route implements Iterator
      * A collection of identifier representing all the item categories
      * involved in the route.
      *
-     * @var \qtism\common\collections\IdentifierCollection
+     * @var IdentifierCollection
      */
     private $categories;
 
     /**
      * Create a new Route object.
-     *
      */
     public function __construct()
     {
         $this->setPosition(0);
         $this->setAssessmentItemRefs(new AssessmentItemRefCollection());
-        $this->setAssessmentItemRefCategoryMap(array());
-        $this->setAssessmentItemRefSectionMap(array());
+        $this->setAssessmentItemRefCategoryMap([]);
+        $this->setAssessmentItemRefSectionMap([]);
         $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
         $this->setCategories(new IdentifierCollection());
         $this->setTestPartMap(new SplObjectStorage());
         $this->setAssessmentSectionMap(new SplObjectStorage());
-        $this->setTestPartIdentifierMap(array());
-        $this->setAssessmentSectionIdentifierMap(array());
+        $this->setTestPartIdentifierMap([]);
+        $this->setAssessmentSectionIdentifierMap([]);
         $this->setAssessmentItemRefMap(new SplObjectStorage());
     }
 
@@ -186,7 +182,8 @@ class Route implements Iterator
      *
      * @return array
      */
-    protected function &getRouteItems() {
+    protected function &getRouteItems()
+    {
         return $this->routeItems;
     }
 
@@ -194,7 +191,7 @@ class Route implements Iterator
      * Get the collection of AssessmentItemRef objects
      * that are involded in the route.
      *
-     * @return \qtism\data\AssessmentItemRefCollection A collection of AssessmentItemRef objects.
+     * @return AssessmentItemRefCollection A collection of AssessmentItemRef objects.
      */
     public function getAssessmentItemRefs()
     {
@@ -205,7 +202,7 @@ class Route implements Iterator
      * Set the collection of AssessmentItemRef objects that are involved
      * in this route.
      *
-     * @param \qtism\data\AssessmentItemRefCollection $assessmentItemRefs A collection of AssessmentItemRefObjects.
+     * @param AssessmentItemRefCollection $assessmentItemRefs A collection of AssessmentItemRefObjects.
      */
     public function setAssessmentItemRefs(AssessmentItemRefCollection $assessmentItemRefs)
     {
@@ -260,7 +257,7 @@ class Route implements Iterator
      * Get the map where AssessmentItemRef objects involved in the route are stored
      * with a number of occurence.
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     protected function getAssessmentItemRefOccurenceMap()
     {
@@ -271,7 +268,7 @@ class Route implements Iterator
      * Set the map where AssessmentItemRef objects involved in the route are stored
      * with a number of occurence.
      *
-     * @param \SplObjectStorage $assessmentItemRefOccurenceCount
+     * @param SplObjectStorage $assessmentItemRefOccurenceCount
      */
     protected function setAssessmentItemRefOccurenceMap(SplObjectStorage $assessmentItemRefOccurenceCount)
     {
@@ -281,7 +278,7 @@ class Route implements Iterator
     /**
      * Set the map where RouteItem objects are gathered by TestPart.
      *
-     * @param \SplObjectStorage $testPartMap
+     * @param SplObjectStorage $testPartMap
      */
     protected function setTestPartMap(SplObjectStorage $testPartMap)
     {
@@ -291,7 +288,7 @@ class Route implements Iterator
     /**
      * Get the map where RouteItem objects are gathered by TestPart.
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     protected function getTestPartMap()
     {
@@ -321,7 +318,7 @@ class Route implements Iterator
     /**
      * Set the map where RouteItem objects are gathered by AssessmentSection.
      *
-     * @param \SplObjectStorage $assessmentSectionMap
+     * @param SplObjectStorage $assessmentSectionMap
      */
     protected function setAssessmentSectionMap(SplObjectStorage $assessmentSectionMap)
     {
@@ -331,7 +328,7 @@ class Route implements Iterator
     /**
      * Get the map where RouteItem objects are gathered by AssessmentSection.
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     protected function getAssessmentSectionMap()
     {
@@ -361,7 +358,7 @@ class Route implements Iterator
     /**
      * Set the map where RouteItem objects are gathered by AssessmentItemRef objects.
      *
-     * @param \SplObjectStorage $assessmentItemRefMap
+     * @param SplObjectStorage $assessmentItemRefMap
      */
     protected function setAssessmentItemRefMap(SplObjectStorage $assessmentItemRefMap)
     {
@@ -371,7 +368,7 @@ class Route implements Iterator
     /**
      * Get the map where RouteItem objects are gathered by AssessmentItemRef objects.
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     protected function getAssessmentItemRefMap()
     {
@@ -381,7 +378,7 @@ class Route implements Iterator
     /**
      * Set the collection of item categories involved in the route.
      *
-     * @param \qtism\common\collections\IdentifierCollection $categories A collection of QTI Identifiers.
+     * @param IdentifierCollection $categories A collection of QTI Identifiers.
      */
     protected function setCategories(IdentifierCollection $categories)
     {
@@ -391,7 +388,7 @@ class Route implements Iterator
     /**
      * Get the collection of item categories involved in the route.
      *
-     * @return \qtism\common\collections\IdentifierCollection A collection of QTI Identifiers.
+     * @return IdentifierCollection A collection of QTI Identifiers.
      */
     public function getCategories()
     {
@@ -401,10 +398,10 @@ class Route implements Iterator
     /**
      * Add a new RouteItem object at the end of the Route.
      *
-     * @param \qtism\data\AssessmentItemRef $assessmentItemRef
-     * @param \qtism\data\AssessmentSection|\qtism\data\AssessmentSectionCollection $assessmentSections
-     * @param \qtism\data\TestPart $testPart
-     * @param \qtism\data\AssessmentTest $assessmentTest
+     * @param AssessmentItemRef $assessmentItemRef
+     * @param AssessmentSection|AssessmentSectionCollection $assessmentSections
+     * @param TestPart $testPart
+     * @param AssessmentTest $assessmentTest
      */
     public function addRouteItem(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart, AssessmentTest $assessmentTest)
     {
@@ -418,7 +415,7 @@ class Route implements Iterator
     /**
      * Add a new RouteItem object at the end of the Route.
      *
-     * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItemObject.
+     * @param RouteItem $routeItem A RouteItemObject.
      */
     public function addRouteItemObject(RouteItem $routeItem)
     {
@@ -428,7 +425,6 @@ class Route implements Iterator
     }
 
     /**
-     *
      * @see Iterator::rewind()
      */
     public function rewind()
@@ -439,7 +435,7 @@ class Route implements Iterator
     /**
      * Get the current RouteItem object.
      *
-     * @return \qtism\runtime\tests\RouteItem A RouteItem object.
+     * @return RouteItem A RouteItem object.
      */
     public function current()
     {
@@ -461,7 +457,6 @@ class Route implements Iterator
     /**
      * Set the Route as its previous position in the RouteItem sequence. If the current
      * RouteItem is the first one prior to call next(), the Route remains in the same position.
-     *
      */
     public function previous()
     {
@@ -563,12 +558,11 @@ class Route implements Iterator
      * Append all the RouteItem objects contained in $route
      * to this Route.
      *
-     * @param \qtism\runtime\tests\Route $route A Route object.
+     * @param Route $route A Route object.
      */
     public function appendRoute(Route $route)
     {
         foreach ($route as $routeItem) {
-
             // @todo find why it must be cloned, I can't remember.
             $clone = clone $routeItem;
 
@@ -588,7 +582,7 @@ class Route implements Iterator
      * * The assessmentItemRef is added to the category map.
      * * The assessmentItemRef is added to the section map.
      *
-     * @param \qtism\runtime\tests\RouteItem $routeItem
+     * @param RouteItem $routeItem
      */
     protected function registerAssessmentItemRef(RouteItem $routeItem)
     {
@@ -643,7 +637,7 @@ class Route implements Iterator
      * Register all needed information about the TestPart involved in a given
      * $routeItem.
      *
-     * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItem object.
+     * @param RouteItem $routeItem A RouteItem object.
      */
     protected function registerTestPart(RouteItem $routeItem)
     {
@@ -651,7 +645,7 @@ class Route implements Iterator
         $testPart = $routeItem->getTestPart();
 
         if (isset($this->testPartMap[$testPart]) === false) {
-            $this->testPartMap[$testPart] = array();
+            $this->testPartMap[$testPart] = [];
         }
 
         $target = $this->testPartMap[$testPart];
@@ -662,7 +656,7 @@ class Route implements Iterator
         $id = $testPart->getIdentifier();
 
         if (isset($this->testPartIdentifierMap[$id]) === false) {
-            $this->testPartIdentifierMap[$id] = array();
+            $this->testPartIdentifierMap[$id] = [];
         }
 
         $this->testPartIdentifierMap[$id][] = $routeItem;
@@ -672,14 +666,13 @@ class Route implements Iterator
      * Register all needed information about the AssessmentSection involved in a given
      * $routeItem.
      *
-     * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItem object.
+     * @param RouteItem $routeItem A RouteItem object.
      */
     protected function registerAssessmentSection(RouteItem $routeItem)
     {
         foreach ($routeItem->getAssessmentSections() as $assessmentSection) {
-
             if (isset($this->assessmentSectionMap[$assessmentSection]) === false) {
-                $this->assessmentSectionMap[$assessmentSection] = array();
+                $this->assessmentSectionMap[$assessmentSection] = [];
             }
 
             $target = $this->assessmentSectionMap[$assessmentSection];
@@ -690,7 +683,7 @@ class Route implements Iterator
             $id = $assessmentSection->getIdentifier();
 
             if (isset($this->assessmentSectionIdentifierMap[$id]) === false) {
-                $assessmentSectionIdentifierMap[$id] = array();
+                $assessmentSectionIdentifierMap[$id] = [];
             }
 
             $this->assessmentSectionIdentifierMap[$id][] = $routeItem;
@@ -702,7 +695,7 @@ class Route implements Iterator
      * assessmentItemRef object of the route, in the order they must be taken.
      *
      * @param boolean $withSequenceNumber Whether to return the sequence number in the identifier or not.
-     * @return \qtism\common\collections\IdentifierCollection
+     * @return IdentifierCollection
      */
     public function getIdentifierSequence($withSequenceNumber = true)
     {
@@ -725,12 +718,12 @@ class Route implements Iterator
      * the return AssessmentItemRefCollection is empty.
      *
      * @param string|IdentifierCollection $category A category identifier.
-     * @return \qtism\data\AssessmentItemRefCollection An collection of AssessmentItemRefCollection that belong to $category.
+     * @return AssessmentItemRefCollection An collection of AssessmentItemRefCollection that belong to $category.
      */
     public function getAssessmentItemRefsByCategory($category)
     {
         $categoryMap = $this->getAssessmentItemRefCategoryMap();
-        $categories = (gettype($category) === 'string') ? array($category) : $category->getArrayCopy();
+        $categories = (gettype($category) === 'string') ? [$category] : $category->getArrayCopy();
 
         $result = new AssessmentItemRefCollection();
 
@@ -750,7 +743,7 @@ class Route implements Iterator
      * an empty collection is returned.
      *
      * @param string $sectionIdentifier A section identifier.
-     * @return \qtism\data\AssessmentItemRefCollection A Collection of AssessmentItemRef objects that belong to the section $sectionIdentifier.
+     * @return AssessmentItemRefCollection A Collection of AssessmentItemRef objects that belong to the section $sectionIdentifier.
      */
     public function getAssessmentItemRefsBySection($sectionIdentifier)
     {
@@ -768,10 +761,9 @@ class Route implements Iterator
      * and categories to be included/excluded.
      *
      * @param string $sectionIdentifier The identifier of the section.
-     * @param \qtism\common\collections\IdentifierCollection $includeCategories A collection of category identifiers to be included in the selection.
-     * @param \qtism\common\collections\IdentifierCollection $excludeCategories A collection of category identifiers to be excluded from the selection.
-     * @return \qtism\data\AssessmentItemRefCollection A collection of filtered AssessmentItemRef objects.
-     *
+     * @param IdentifierCollection $includeCategories A collection of category identifiers to be included in the selection.
+     * @param IdentifierCollection $excludeCategories A collection of category identifiers to be excluded from the selection.
+     * @return AssessmentItemRefCollection A collection of filtered AssessmentItemRef objects.
      */
     public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
@@ -792,7 +784,7 @@ class Route implements Iterator
      * Get the number of occurences found in the route for the given $assessmentItemRef.
      * If $assessmentItemRef is not involved in the route, the returned result is 0.
      *
-     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @return integer The number of occurences found in the route for $assessmentItemRef.
      */
     public function getOccurenceCount(AssessmentItemRef $assessmentItemRef)
@@ -821,8 +813,8 @@ class Route implements Iterator
      * at position 1, ...
      *
      * @param integer $position The position of the requested RouteItem object in the route sequence.
-     * @return \qtism\runtime\tests\RouteItem The RouteItem found at $position.
-     * @throws \OutOfBoundsException If no RouteItem is found at $position.
+     * @return RouteItem The RouteItem found at $position.
+     * @throws OutOfBoundsException If no RouteItem is found at $position.
      */
     public function getRouteItemAt($position)
     {
@@ -839,8 +831,8 @@ class Route implements Iterator
     /**
      * Get the last RouteItem object composing the Route.
      *
-     * @return \qtism\runtime\tests\RouteItem The last RouteItem of the Route.
-     * @throws \OutOfBoundsException If the Route is empty.
+     * @return RouteItem The last RouteItem of the Route.
+     * @throws OutOfBoundsException If the Route is empty.
      */
     public function getLastRouteItem()
     {
@@ -858,8 +850,8 @@ class Route implements Iterator
     /**
      * Get the first RouteItem object composing the Route.
      *
-     * @throws \OutOfBoundsException If the Route is empty.
-     * @return \qtism\runtime\tests\RouteItem The first RouteItem of the Route.
+     * @return RouteItem The first RouteItem of the Route.
+     * @throws OutOfBoundsException If the Route is empty.
      */
     public function getFirstRouteItem()
     {
@@ -878,7 +870,7 @@ class Route implements Iterator
      * Whether the current RouteItem is the last of the current TestPart.
      *
      * @return boolean
-     * @throws \OutOfBoundsException If the Route is empty.
+     * @throws OutOfBoundsException If the Route is empty.
      */
     public function isLastOfTestPart()
     {
@@ -904,7 +896,7 @@ class Route implements Iterator
      * Whether the current RouteItem is the first of the current TestPart.
      *
      * @return boolean
-     * @throws \OutOfBoundsException If the Route is empty.
+     * @throws OutOfBoundsException If the Route is empty.
      */
     public function isFirstOfTestPart()
     {
@@ -928,8 +920,8 @@ class Route implements Iterator
     /**
      * Get the previous RouteItem in the route.
      *
-     * @return \qtism\runtime\tests\RouteItem The previous RouteItem in the Route.
-     * @throws \OutOfBoundsException If there is no previous RouteItem in the route. In other words, the current RouteItem in the route is the first one of the sequence.
+     * @return RouteItem The previous RouteItem in the Route.
+     * @throws OutOfBoundsException If there is no previous RouteItem in the route. In other words, the current RouteItem in the route is the first one of the sequence.
      */
     public function getPrevious()
     {
@@ -945,8 +937,8 @@ class Route implements Iterator
     /**
      * Get the next RouteItem in the route.
      *
-     * @return \qtism\runtime\tests\RouteItem The previous RouteItem in the Route.
-     * @throws \OutOfBoundsException If there is no next RouteItem in the route. In other words, the current RouteItem in the route is the last one of the sequence.
+     * @return RouteItem The previous RouteItem in the Route.
+     * @throws OutOfBoundsException If there is no next RouteItem in the route. In other words, the current RouteItem in the route is the last one of the sequence.
      */
     public function getNext()
     {
@@ -962,9 +954,9 @@ class Route implements Iterator
      * Whether the RouteItem at $position in the Route is in the given $testPart.
      *
      * @param integer $position A position in the Route sequence.
-     * @param \qtism\data\TestPart $testPart A TestPart object involved in the Route.
+     * @param TestPart $testPart A TestPart object involved in the Route.
      * @return boolean
-     * @throws <OutOfBoundsException If $position is out of the Route bounds.
+     * @throws OutOfBoundsException If $position is out of the Route bounds.
      */
     public function isInTestPart($position, TestPart $testPart)
     {
@@ -982,7 +974,7 @@ class Route implements Iterator
     /**
      * Get the RouteItem objects involved in the current TestPart.
      *
-     * @return \qtism\runtime\tests\RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
+     * @return RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
      */
     public function getCurrentTestPartRouteItems()
     {
@@ -992,10 +984,10 @@ class Route implements Iterator
     /**
      * Get the RouteItem objects involved in a given test part.
      *
-     * @param string|\qtism\data\TestPart An identifier or a TestPart object.
-     * @return \qtism\runtime\tests\RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
-     * @throws \OutOfBoundsException If $testPart is not referenced in the Route.
-     * @throws \OutOfRangeException If $testPart is not a string nor a TestPart object.
+     * @param string|TestPart An identifier or a TestPart object.
+     * @return RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
+     * @throws OutOfBoundsException If $testPart is not referenced in the Route.
+     * @throws OutOfRangeException If $testPart is not a string nor a TestPart object.
      */
     public function getRouteItemsByTestPart($testPart)
     {
@@ -1026,10 +1018,10 @@ class Route implements Iterator
     /**
      * Get the RouteItem objects involved in a given AssessmentSection.
      *
-     * @param string|\qtism\data\AssessmentSection $assessmentSection An AssessmentSection object or an identifier.
-     * @return \qtism\runtime\tests\RouteItemCollection A collection of RouteItem objects involved in $assessmentSection.
-     * @throws \OutOfBoundsException If $assessmentSection is not referenced in the Route.
-     * @throws \OutOfRangeException If $assessmentSection is not a string nor an AssessmentSection object.
+     * @param string|AssessmentSection $assessmentSection An AssessmentSection object or an identifier.
+     * @return RouteItemCollection A collection of RouteItem objects involved in $assessmentSection.
+     * @throws OutOfBoundsException If $assessmentSection is not referenced in the Route.
+     * @throws OutOfRangeException If $assessmentSection is not a string nor an AssessmentSection object.
      */
     public function getRouteItemsByAssessmentSection($assessmentSection)
     {
@@ -1061,24 +1053,21 @@ class Route implements Iterator
     /**
      * Get the RouteItem object involved in a given AssessmentItemRef.
      *
-     * @param string|\qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object or an identifier.
-     * @throws \OutOfBoundsException If $assessmentItemRef is not referenced in the Route.
-     * @throws \OutOfRangeException If $assessmentItemRef is not a string nor an AssessmentItemRef object.
-     * @return \qtism\runtime\tests\RouteItemCollection A collection of RouteItem objects involved in $assessmentItemRef.
+     * @param string|AssessmentItemRef $assessmentItemRef An AssessmentItemRef object or an identifier.
+     * @return RouteItemCollection A collection of RouteItem objects involved in $assessmentItemRef.
+     * @throws OutOfRangeException If $assessmentItemRef is not a string nor an AssessmentItemRef object.
+     * @throws OutOfBoundsException If $assessmentItemRef is not referenced in the Route.
      */
     public function getRouteItemsByAssessmentItemRef($assessmentItemRef)
     {
         if (gettype($assessmentItemRef) === 'string') {
-
             if (($ref = $this->assessmentItemRefs[$assessmentItemRef]) !== null) {
                 return $this->assessmentItemRefMap[$ref];
             } else {
                 $msg = "No AssessmentItemRef with identifier '${assessmentItemRef}' found in the Route.";
                 throw new OutOfBoundsException($msg);
             }
-
         } elseif ($assessmentItemRef instanceof AssessmentItemRef) {
-
             if (isset($this->assessmentItemRefMap[$assessmentItemRef]) === true) {
                 return $this->assessmentItemRefMap[$assessmentItemRef];
             } else {
@@ -1094,7 +1083,7 @@ class Route implements Iterator
     /**
      * Get all the RouteItem objects composing the Route.
      *
-     * @return \qtism\runtime\tests\RouteItemCollection A collection of RouteItem objects.
+     * @return RouteItemCollection A collection of RouteItem objects.
      */
     public function getAllRouteItems()
     {
@@ -1104,16 +1093,16 @@ class Route implements Iterator
     /**
      * Perform a branching on a TestPart, AssessmentSection or AssessmentItemRef with
      * the given $identifier.
-     * 
+     *
      * The target will be considered invalid if the following constraints are not fullfilled:
-     * 
+     *
      * From IMS QTI:
-     * In the case of an item or section, the target must refer to an item or section in the same 
+     * In the case of an item or section, the target must refer to an item or section in the same
      * testPart that has not yet been presented. For testParts, the target must refer to another testPart.
      *
      * @param string $identifier A QTI Identifier to be the target of the branching.
-     * @throws \OutOfBoundsException If an error occurs while branching e.g. the $identifier is not referenced in the route or the target is invalid.
-     * @throws \OutOfRangeException If $identifier is not a valid branching identifier.
+     * @throws OutOfBoundsException If an error occurs while branching e.g. the $identifier is not referenced in the route or the target is invalid.
+     * @throws OutOfRangeException If $identifier is not a valid branching identifier.
      */
     public function branch($identifier)
     {
@@ -1130,7 +1119,6 @@ class Route implements Iterator
         // Check for an assessmentItemRef.
         $assessmentItemRefs = $this->getAssessmentItemRefs();
         if (isset($assessmentItemRefs[$id]) === true) {
-
             $assessmentItemRefMap = $this->getAssessmentItemRefMap();
             $targetRouteItems = $assessmentItemRefMap[$assessmentItemRefs[$id]];
 
@@ -1150,7 +1138,6 @@ class Route implements Iterator
         // Check for an assessmentSection.
         $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
         if (isset($assessmentSectionIdentifierMap[$id]) === true) {
-
             if ($assessmentSectionIdentifierMap[$id][0]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
@@ -1168,7 +1155,6 @@ class Route implements Iterator
         // Check for a testPart.
         $testPartIdentifierMap = $this->getTestPartIdentifierMap();
         if (isset($testPartIdentifierMap[$id]) === true) {
-
             // We branch to the first RouteItem belonging to the testPart.
             if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
                 // From IMS QTI:
@@ -1191,9 +1177,9 @@ class Route implements Iterator
     /**
      * Get the position of $routeItem in the Route.
      *
-     * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItem you want to know the position.
-     * @throws \OutOfBoundsException If no such $routeItem is referenced in the Route.
+     * @param RouteItem $routeItem A RouteItem you want to know the position.
      * @return integer The position of the routeItem in the Route. The indexes begin at 0.
+     * @throws OutOfBoundsException If no such $routeItem is referenced in the Route.
      */
     public function getRouteItemPosition(RouteItem $routeItem)
     {

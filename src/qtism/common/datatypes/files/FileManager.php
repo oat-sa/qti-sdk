@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -33,7 +34,6 @@ use qtism\common\datatypes\QtiFile;
  * This interface represents the AbstractFactory interface of the
  * AbstractFactory Design Pattern.
  *
- * @author Jérôme Bogaerts <jerome@taotesing.com>
  * @see http://en.wikipedia.org/wiki/Abstract_factory_pattern The Abstract Factory Design Pattern.
  */
 interface FileManager
@@ -45,8 +45,8 @@ interface FileManager
      * @param string $path The path to the file containing the data of the returned File object.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
-     * @return \qtism\common\datatypes\QtiFile
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @return QtiFile
+     * @throws FileManagerException
      */
     public function createFromFile($path, $mimeType, $filename = '');
 
@@ -57,8 +57,8 @@ interface FileManager
      * @param string $data A binary string representing the data.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
-     * @return \qtism\common\datatypes\QtiFile
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @return QtiFile
+     * @throws FileManagerException
      */
     public function createFromData($data, $mimeType, $filename = '');
 
@@ -66,15 +66,15 @@ interface FileManager
      * Retrieve a previously created instance by $identifier.
      *
      * @param string $identifier
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function retrieve($identifier);
 
     /**
      * Delete a given AbstractPersistentFile from its storage.
      *
-     * @param \qtism\common\datatypes\QtiFile $file A persistent file to be deleted gracefully.
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @param QtiFile $file A persistent file to be deleted gracefully.
+     * @throws FileManagerException
      */
     public function delete(QtiFile $file);
 }

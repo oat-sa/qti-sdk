@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,17 +23,14 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\common\datatypes\QtiShape;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
-use \InvalidArgumentException;
+use qtism\common\datatypes\QtiShape;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The AreaMapEntry QTI class implementation.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AreaMapEntry extends QtiComponent
 {
@@ -52,7 +50,7 @@ class AreaMapEntry extends QtiComponent
      * The size and position of the area, interpreted in conjunction
      * with the shape.
      *
-     * @var \qtism\common\datatypes\QtiCoords
+     * @var QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -71,9 +69,9 @@ class AreaMapEntry extends QtiComponent
      * Create a new AreaMapEntry object.
      *
      * @param int $shape A value from the Shape enumeration.
-     * @param \qtism\common\datatypes\QtiCoords $coords A Coords object.
+     * @param QtiCoords $coords A Coords object.
      * @param float $mappedValue A mapped value.
-     * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration or if $mappedValue is not a float.
+     * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration or if $mappedValue is not a float.
      */
     public function __construct($shape, QtiCoords $coords, $mappedValue)
     {
@@ -86,7 +84,7 @@ class AreaMapEntry extends QtiComponent
      * Set the shape of the area.
      *
      * @param int $shape A value from the Shape enumeration.
-     * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration.
+     * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
      */
     public function setShape($shape)
     {
@@ -112,7 +110,7 @@ class AreaMapEntry extends QtiComponent
      * Set the size and position of the area, in conjunction with the
      * shape.
      *
-     * @param \qtism\common\datatypes\QtiCoords $coords A QtiCoords object.
+     * @param QtiCoords $coords A QtiCoords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -123,7 +121,7 @@ class AreaMapEntry extends QtiComponent
      * Get the size and position of the area, in conjunction with the
      * shape.
      *
-     * @return \qtism\common\datatypes\QtiCoords A QtiCoords object.
+     * @return QtiCoords A QtiCoords object.
      */
     public function getCoords()
     {
@@ -134,7 +132,7 @@ class AreaMapEntry extends QtiComponent
      * Set the mapped value.
      *
      * @param float $mappedValue A mapped value.
-     * @throws \InvalidArgumentException If $mappedValue is not a float value.
+     * @throws InvalidArgumentException If $mappedValue is not a float value.
      */
     public function setMappedValue($mappedValue)
     {
@@ -149,7 +147,7 @@ class AreaMapEntry extends QtiComponent
     /**
      * Get the mapped value.
      *
-     * @return \float A mapped value.
+     * @return float A mapped value.
      */
     public function getMappedValue()
     {

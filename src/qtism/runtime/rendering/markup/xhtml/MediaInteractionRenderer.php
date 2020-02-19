@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,18 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * MediaInteraction renderer. Rendered components will be transformed as
@@ -42,9 +42,6 @@ use \DOMDocumentFragment;
  * * data-min-plays = qti:mediaInteraction->minPlays
  * * data-max-plays = qti:mediaInteraction->maxPlays
  * * data-loop = qti:mediaInteraction->loop
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MediaInteractionRenderer extends InteractionRenderer
 {
@@ -53,21 +50,21 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @var array
      */
-    private $audioTypes = array();
+    private $audioTypes = [];
 
     /**
      * An array representing the supported video mime-types.
      *
      * @var array
      */
-    private $videoTypes = array();
+    private $videoTypes = [];
 
     /**
      * An array representing the supported image mime-types.
      *
      * @var array
      */
-    private $imageTypes = array();
+    private $imageTypes = [];
 
     /**
      * Set the array of supported audio mime-types.
@@ -132,14 +129,14 @@ class MediaInteractionRenderer extends InteractionRenderer
     /**
      * Create a new MediaInteractionRenderer object.
      *
-     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     * @param AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
-        $this->setVideoTypes(array('video/mp4', 'video/webm', 'video/ogg'));
-        $this->setAudioTypes(array('audio/mpeg', 'audio/ogg', 'audio/wav'));
-        $this->setImageTypes(array('image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/x-bmp'));
+        $this->setVideoTypes(['video/mp4', 'video/webm', 'video/ogg']);
+        $this->setAudioTypes(['audio/mpeg', 'audio/ogg', 'audio/wav']);
+        $this->setImageTypes(['image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/x-bmp']);
         $this->transform('div');
     }
 

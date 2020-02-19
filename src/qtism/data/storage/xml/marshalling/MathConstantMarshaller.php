@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
+use DOMElement;
 use qtism\data\expressions\MathConstant;
 use qtism\data\expressions\MathEnumeration;
-use \DOMElement;
+use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for mathConstant.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathConstantMarshaller extends Marshaller
 {
     /**
-	 * Marshall a MathConstant object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A MathConstant object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a MathConstant object into a DOMElement object.
+     *
+     * @param QtiComponent $component A MathConstant object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -51,12 +49,12 @@ class MathConstantMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI mathConstant element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A MathConstant object.
-	 * @throws \UnmarshallingException If the mandatory attribute 'name' is missing.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI mathConstant element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A MathConstant object.
+     * @throws UnmarshallingException If the mandatory attribute 'name' is missing.
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
@@ -75,8 +73,8 @@ class MathConstantMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'mathConstant';

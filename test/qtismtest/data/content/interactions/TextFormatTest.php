@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\data\content\interactions;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\content\interactions\TextFormat;
+use qtismtest\QtiSmEnumTestCase;
 
 class TextFormatTest extends QtiSmEnumTestCase
 {
@@ -10,31 +11,31 @@ class TextFormatTest extends QtiSmEnumTestCase
     {
         return TextFormat::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'plain',
             'preFormatted',
-            'xhtml'
-        );
+            'xhtml',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'PLAIN',
             'PRE_FORMATTED',
-            'XHTML'
-        );
+            'XHTML',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             TextFormat::PLAIN,
             TextFormat::PRE_FORMATTED,
-            TextFormat::XHTML
-        );
+            TextFormat::XHTML,
+        ];
     }
 }

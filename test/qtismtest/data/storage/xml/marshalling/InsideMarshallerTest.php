@@ -1,54 +1,55 @@
 <?php
+
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\Marshaller;
+use DOMDocument;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
-use qtism\common\datatypes\QtiShape;
-use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\Variable;
-use \DOMDocument;
+use qtismtest\QtiSmTestCase;
 
-class InsideMarshallerTest extends QtiSmTestCase {
+class InsideMarshallerTest extends QtiSmTestCase
+{
+    public function testMarshall()
+    {
+        $subs = new ExpressionCollection();
+        $subs[] = new Variable('pointVariable');
 
-	public function testMarshall() {
+        $shape = QtiShape::RECT;
+        $coords = new QtiCoords($shape, [0, 0, 100, 20]);
 
-		$subs = new ExpressionCollection();
-		$subs[] = new Variable('pointVariable');
-		
-		$shape = QtiShape::RECT;
-		$coords = new QtiCoords($shape, array(0, 0, 100, 20));
-		
-		$component = new Inside($subs, $shape, $coords);
-		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
-		$element = $marshaller->marshall($component);
-		
-		$this->assertInstanceOf('\\DOMElement', $element);
-		$this->assertEquals('inside', $element->nodeName);
-		$this->assertEquals(implode(",", array(0, 0, 100, 20)), $element->getAttribute('coords'));
-		$this->assertEquals('rect', $element->getAttribute('shape'));
-		$this->assertEquals(1, $element->getElementsByTagName('variable')->length);
-	}
-	
-	public function testUnmarshall() {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML(
-			'
+        $component = new Inside($subs, $shape, $coords);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+
+        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertEquals('inside', $element->nodeName);
+        $this->assertEquals(implode(",", [0, 0, 100, 20]), $element->getAttribute('coords'));
+        $this->assertEquals('rect', $element->getAttribute('shape'));
+        $this->assertEquals(1, $element->getElementsByTagName('variable')->length);
+    }
+
+    public function testUnmarshall()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
 			<inside xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" coords="0,0,100,20">
 				<variable identifier="pointVariable"/>
 			</inside>
 			'
-		);
-		$element = $dom->documentElement;
-		
-		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-		$component = $marshaller->unmarshall($element);
-		
-		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Inside', $component);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiCoords', $component->getCoords());
-		$this->assertInternalType('integer', $component->getShape());
-		$this->assertEquals(QtiShape::RECT, $component->getShape());
-		$this->assertEquals(1, count($component->getExpressions()));
-	}
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Inside', $component);
+        $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
+        $this->assertInternalType('integer', $component->getShape());
+        $this->assertEquals(QtiShape::RECT, $component->getShape());
+        $this->assertEquals(1, count($component->getExpressions()));
+    }
 }

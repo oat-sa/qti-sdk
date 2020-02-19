@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,13 @@
 
 namespace qtism\data;
 
-use qtism\data\rules\Selection;
-use qtism\data\rules\Ordering;
+use InvalidArgumentException;
 use qtism\data\content\RubricBlockCollection;
-use \InvalidArgumentException;
+use qtism\data\rules\Ordering;
+use qtism\data\rules\Selection;
 
 /**
  * The Assessment Section class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentSection extends SectionPart
 {
@@ -63,7 +61,7 @@ class AssessmentSection extends SectionPart
      * The rules used to select which children of the section are to be used for
      * each instance of the test.
      *
-     * @var \qtism\data\rules\Selection
+     * @var Selection
      * @qtism-bean-property
      */
     private $selection = null;
@@ -72,7 +70,7 @@ class AssessmentSection extends SectionPart
      * The rules used to determine the order in which the children
      * of the section are to be arranged for each instance of the test.
      *
-     * @var \qtism\data\rules\Ordering
+     * @var Ordering
      * @qtism-bean-property
      */
     private $ordering = null;
@@ -81,7 +79,7 @@ class AssessmentSection extends SectionPart
      * Section rubrics are presented to the candidate with each item contained
      * (directly or indirectly) by the section.
      *
-     * @var \qtism\data\content\RubricBlockCollection
+     * @var RubricBlockCollection
      * @qtism-bean-property
      */
     private $rubricBlocks;
@@ -89,7 +87,7 @@ class AssessmentSection extends SectionPart
     /**
      * Child elements.
      *
-     * @var \qtism\data\SectionPartCollection
+     * @var SectionPartCollection
      * @qtism-bean-property
      */
     private $sectionParts;
@@ -100,7 +98,7 @@ class AssessmentSection extends SectionPart
      * @param string $identifier A QTI Identifier.
      * @param string $title A Title.
      * @param boolean $visible If it is visible or not.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, $title is not a string, or visible is not a boolean.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, $title is not a string, or visible is not a boolean.
      */
     public function __construct($identifier, $title, $visible)
     {
@@ -125,7 +123,7 @@ class AssessmentSection extends SectionPart
      * Set the title of the Assessment Section.
      *
      * @param string $title A title.
-     * @throws \InvalidArgumentException If $title is not a string.
+     * @throws InvalidArgumentException If $title is not a string.
      */
     public function setTitle($title)
     {
@@ -151,7 +149,7 @@ class AssessmentSection extends SectionPart
      * Set the visibility of the section.
      *
      * @param boolean $visible true if it must be visible, false otherwise.
-     * @throws \InvalidArgumentException If $visible is not a boolean.
+     * @throws InvalidArgumentException If $visible is not a boolean.
      */
     public function setVisible($visible)
     {
@@ -177,7 +175,7 @@ class AssessmentSection extends SectionPart
      * Set if the items must be kept together if the section is invisible.
      *
      * @param boolean $keepTogether true if the items must be kept together, false otherwise.
-     * @throws \InvalidArgumentException If $keepTogether is not a boolean.
+     * @throws InvalidArgumentException If $keepTogether is not a boolean.
      */
     public function setKeepTogether($keepTogether)
     {
@@ -193,7 +191,7 @@ class AssessmentSection extends SectionPart
      * Get the selection rule for this section. Returns null
      * if no selection rule is applied to the section.
      *
-     * @return \qtism\data\rules\Selection A selection rule.
+     * @return Selection A selection rule.
      */
     public function getSelection()
     {
@@ -203,7 +201,7 @@ class AssessmentSection extends SectionPart
     /**
      * Set the selection rule  for this section.
      *
-     * @param \qtism\data\rules\Selection $selection A selection rule.
+     * @param Selection $selection A selection rule.
      */
     public function setSelection(Selection $selection = null)
     {
@@ -224,7 +222,7 @@ class AssessmentSection extends SectionPart
      * Get the ordering rule for this section. Returns null
      * if no ordering is applied to the section.
      *
-     * @return \qtism\data\rules\Ordering An Ordering object.
+     * @return Ordering An Ordering object.
      */
     public function getOrdering()
     {
@@ -234,7 +232,7 @@ class AssessmentSection extends SectionPart
     /**
      * Set the ordering rule for this section.
      *
-     * @param \qtism\data\rules\Ordering $ordering An Ordering object.
+     * @param Ordering $ordering An Ordering object.
      */
     public function setOrdering(Ordering $ordering = null)
     {
@@ -255,7 +253,7 @@ class AssessmentSection extends SectionPart
      * Get the section rubrics to presented to the candidate with each
      * item contained by the section.
      *
-     * @return \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
+     * @return RubricBlockCollection A collection of RubricBlock objects.
      */
     public function getRubricBlocks()
     {
@@ -266,7 +264,7 @@ class AssessmentSection extends SectionPart
      * Set the section rubrics to presented to the candidate with each
      * item contained by the section.
      *
-     * @param \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
+     * @param RubricBlockCollection A collection of RubricBlock objects.
      */
     public function setRubricBlocks(RubricBlockCollection $rubricBlocks)
     {
@@ -276,7 +274,7 @@ class AssessmentSection extends SectionPart
     /**
      * Get the child elements.
      *
-     * @return \qtism\data\SectionPartCollection A collection of SectionPart objects.
+     * @return SectionPartCollection A collection of SectionPart objects.
      */
     public function getSectionParts()
     {
@@ -286,7 +284,7 @@ class AssessmentSection extends SectionPart
     /**
      * Set the child elements.
      *
-     * @param \qtism\data\SectionPartCollection $sectionParts A collection of SectionPart objects.
+     * @param SectionPartCollection $sectionParts A collection of SectionPart objects.
      */
     public function setSectionParts(SectionPartCollection $sectionParts)
     {
@@ -307,10 +305,10 @@ class AssessmentSection extends SectionPart
     public function getComponents()
     {
         $comp = array_merge(
-                    parent::getComponents()->getArrayCopy(),
-                    $this->getRubricBlocks()->getArrayCopy(),
-                    $this->getSectionParts()->getArrayCopy()
-                );
+            parent::getComponents()->getArrayCopy(),
+            $this->getRubricBlocks()->getArrayCopy(),
+            $this->getSectionParts()->getArrayCopy()
+        );
 
         if ($this->getSelection() !== null) {
             $comp[] = $this->getSelection();

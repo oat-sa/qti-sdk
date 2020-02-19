@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\data\expressions\operators;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\expressions\operators\MathFunctions;
+use qtismtest\QtiSmEnumTestCase;
 
 class MathFunctionsTest extends QtiSmEnumTestCase
 {
@@ -10,10 +11,10 @@ class MathFunctionsTest extends QtiSmEnumTestCase
     {
         return MathFunctions::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'sin',
             'cos',
             'tan',
@@ -41,13 +42,13 @@ class MathFunctionsTest extends QtiSmEnumTestCase
             'floor',
             'ceil',
             'toDegrees',
-            'toRadians'
-        );
+            'toRadians',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'SIN',
             'COS',
             'TAN',
@@ -75,13 +76,13 @@ class MathFunctionsTest extends QtiSmEnumTestCase
             'FLOOR',
             'CEIL',
             'TO_DEGREES',
-            'TO_RADIANS'
-        );
+            'TO_RADIANS',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             MathFunctions::SIN,
             MathFunctions::COS,
             MathFunctions::TAN,
@@ -109,7 +110,7 @@ class MathFunctionsTest extends QtiSmEnumTestCase
             MathFunctions::FLOOR,
             MathFunctions::CEIL,
             MathFunctions::TO_DEGREES,
-            MathFunctions::TO_RADIANS
-        );
+            MathFunctions::TO_RADIANS,
+        ];
     }
 }

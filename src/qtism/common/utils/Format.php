@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\utils;
 
-use \DateInterval;
-use \Exception;
+use DateInterval;
+use Exception;
 
 /**
  * A utility class focusing on string format checks.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Format
 {
@@ -94,8 +93,8 @@ class Format
      *
      * @param $dirtyIdentifier string The string of the identifier to sanitize.
      *
-     * @link http://www.w3.org/TR/2000/REC-xml-20001006
      * @return string A valid  qti-identifier representation of the $identifier set as paramter
+     * @link http://www.w3.org/TR/2000/REC-xml-20001006
      */
     public static function sanitizeIdentifier($dirtyIdentifier)
     {
@@ -126,7 +125,6 @@ class Format
     private static function generateIdentifier()
     {
         $rID = "";
-
         for ($i = 0; $i < 8; $i++) {
             $rID .= chr(rand(65, 90));
         }
@@ -425,10 +423,9 @@ class Format
     {
         if (is_string($string) === true) {
             $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
-    
+
             return preg_match($pattern, $string) === 1;
         } else {
-            
             return false;
         }
     }
@@ -459,47 +456,47 @@ class Format
             switch ($mantissa[$i]) {
                 case '0':
                     $newMantissa .= json_decode('"\u2070"');
-                break;
+                    break;
 
                 case '1':
                     $newMantissa .= json_decode('"\u00b9"');
-                break;
+                    break;
 
                 case '2':
                     $newMantissa .= json_decode('"\u00b2"');
-                break;
+                    break;
 
                 case '3':
                     $newMantissa .= json_decode('"\u00b3"');
-                break;
+                    break;
 
                 case '4':
                     $newMantissa .= json_decode('"\u2074"');
-                break;
+                    break;
 
                 case '5':
                     $newMantissa .= json_decode('"\u2075"');
-                break;
+                    break;
 
                 case '6':
                     $newMantissa .= json_decode('"\u2076"');
-                break;
+                    break;
 
                 case '7':
                     $newMantissa .= json_decode('"\u2077"');
-                break;
+                    break;
 
                 case '8':
                     $newMantissa .= json_decode('"\u2078"');
-                break;
+                    break;
 
                 case '9':
                     $newMantissa .= json_decode('"\u2079"');
-                break;
+                    break;
 
                 case '-':
                     $newMantissa .= json_decode('"\u207b"');
-                break;
+                    break;
             }
         }
 
@@ -568,7 +565,7 @@ class Format
         $subPattern = self::getPrintfFormatSpecifier();
         $pattern = '/(?:(?:[^%]|^)(?:%%)+(' . $subPattern . '))|(?:(?:[^%])(' . $subPattern . '))|(?:^(' . $subPattern . '))/u';
 
-        $matches = array();
+        $matches = [];
         preg_match_all($pattern, $isoFormat, $matches);
 
         if (count($matches[1]) + count($matches[2]) + count($matches[3]) > 0) {
@@ -596,14 +593,14 @@ class Format
         // Valid format, do the modifications to be compliant with
         // PHP's printf.
         $pattern = '/' . self::getPrintfFormatSpecifier() . '/u';
-        $matches = array();
+        $matches = [];
         preg_match_all($pattern, $isoFormat, $matches);
 
         foreach ($matches[0] as $m) {
             // Don't worry, str_replace is multibyte safe!
             $newM = str_replace('#', '', $m);
-            $newM = str_replace(array('h', 'l', 'j', 'z', 't', 'L'), '', $newM);
-            $newM = str_replace(array('i', 'a', 'A', 'c', 'p', 'n', 'O'), array('d', 'x', 'X', 's', 'x', 'd', 'o'), $newM);
+            $newM = str_replace(['h', 'l', 'j', 'z', 't', 'L'], '', $newM);
+            $newM = str_replace(['i', 'a', 'A', 'c', 'p', 'n', 'O'], ['d', 'x', 'X', 's', 'x', 'd', 'o'], $newM);
             $isoFormat = str_replace($m, $newM, $isoFormat);
         }
 

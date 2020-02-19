@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,22 +23,19 @@
 
 namespace qtism\data\content\xhtml\lists;
 
-use qtism\data\content\FlowCollection;
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\FlowCollection;
 
 /**
  * The XHTML li class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Li extends BodyElement
 {
     /**
      * The Flow objects composing the Li.
      *
-     * @var \qtism\data\content\FlowCollection
+     * @var FlowCollection
      * @qtism-bean-property
      */
     private $content;
@@ -49,7 +47,7 @@ class Li extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -60,7 +58,7 @@ class Li extends BodyElement
     /**
      * Get the Flow objects composing the Li.
      *
-     * @return \qtism\data\content\FlowCollection A collection of Flow objects.
+     * @return FlowCollection A collection of Flow objects.
      */
     public function getComponents()
     {
@@ -70,7 +68,7 @@ class Li extends BodyElement
     /**
      * Set the Flow objects composing the Li.
      *
-     * @param \qtism\data\content\FlowCollection $content
+     * @param FlowCollection $content
      */
     public function setContent(FlowCollection $content)
     {
@@ -80,7 +78,7 @@ class Li extends BodyElement
     /**
      * Get the Flow objects composing the Li.
      *
-     * @return \qtism\data\content\FlowCollection
+     * @return FlowCollection
      */
     public function getContent()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,24 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *
- *
  */
+
 namespace qtism\runtime\common;
 
+use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
-use qtism\common\collections\Container;
-use qtism\data\state\ValueCollection;
 use qtism\common\utils\Arrays;
+use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Utils as RuntimeUtils;
-use \InvalidArgumentException;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * Implementation of the qti:record cardinality. It behaves as an associative
@@ -40,9 +39,6 @@ use \RuntimeException;
  * if it was a bag, and the keys are not taken into account.
  *
  * From IMS QTI:
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RecordContainer extends Container implements QtiDatatype
 {
@@ -50,9 +46,9 @@ class RecordContainer extends Container implements QtiDatatype
      * Create a new RecordContainer object.
      *
      * @param array $array An associative array.
-     * @throws \InvalidArgumentException If the given $array is not associative.
+     * @throws InvalidArgumentException If the given $array is not associative.
      */
-    public function __construct(array $array = array())
+    public function __construct(array $array = [])
     {
         if (Arrays::isAssoc($array)) {
             $dataPlaceHolder = &$this->getDataPlaceHolder();
@@ -84,7 +80,7 @@ class RecordContainer extends Container implements QtiDatatype
      * @param string $offset A string offset.
      * @param mixed $value A value.
      *
-     * @throws \RuntimeException If $offset is not a string.
+     * @throws RuntimeException If $offset is not a string.
      */
     public function offsetSet($offset, $value)
     {
@@ -101,9 +97,9 @@ class RecordContainer extends Container implements QtiDatatype
     /**
      * Create a RecordContainer object from a Data Model ValueCollection object.
      *
-     * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-     * @return \qtism\runtime\common\RecordContainer A Container object populated with the values found in $valueCollection.
-     * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
+     * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+     * @return RecordContainer A Container object populated with the values found in $valueCollection.
+     * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
      */
     public static function createFromDataModel(ValueCollection $valueCollection)
     {
@@ -128,7 +124,7 @@ class RecordContainer extends Container implements QtiDatatype
      */
     protected function getToStringBounds()
     {
-        return array('{', '}');
+        return ['{', '}'];
     }
 
     /**

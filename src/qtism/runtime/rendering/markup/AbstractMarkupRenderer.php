@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,31 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *
- *
  */
 
 namespace qtism\runtime\rendering\markup;
 
-use qtism\runtime\rendering\Renderable;
-use qtism\data\content\Flow;
+use DOMElement;
+use DOMNode;
 use qtism\common\utils\Url;
+use qtism\data\content\Flow;
 use qtism\data\QtiComponent;
-use \DOMNode;
-use \DOMElement;
+use qtism\runtime\rendering\Renderable;
 
 /**
  * Interface to implement to pretend to be a class able
  * to render a QtiComponent into another consitution such as
  * XHTML, HTML5, Canvas, ...
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractMarkupRenderer implements Renderable
 {
@@ -48,6 +43,7 @@ abstract class AbstractMarkupRenderer implements Renderable
     {
         $this->setRenderingEngine($renderingEngine);
     }
+
     public function setRenderingEngine(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         $this->renderingEngine = $renderingEngine;
@@ -83,28 +79,28 @@ abstract class AbstractMarkupRenderer implements Renderable
         $xmlBasePolicy = $this->getRenderingEngine()->getXmlBasePolicy();
 
         switch ($xmlBasePolicy) {
-
             case AbstractMarkupRenderingEngine::XMLBASE_PROCESS:
                 if (empty($baseUrl) === false) {
                     return Url::rtrim($baseUrl) . '/' . Url::ltrim($url);
                 } else {
                     return $url;
                 }
-            break;
+                break;
 
             default:
                 return $url;
-            break;
+                break;
         }
     }
 
     protected function handleXmlBase(QtiComponent $component, DOMNode $node)
     {
-        if ($node instanceof DOMElement &&
+        if (
+            $node instanceof DOMElement &&
             $this->getRenderingEngine()->getXmlBasePolicy() === AbstractMarkupRenderingEngine::XMLBASE_KEEP &&
             $component instanceof Flow &&
-            $component->hasXmlBase()) {
-
+            $component->hasXmlBase()
+        ) {
             $node->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $component->getXmlBase());
         }
     }

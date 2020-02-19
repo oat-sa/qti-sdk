@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,17 +23,14 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\common\datatypes\QtiShape;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * The QTI HotspotChoice class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class HotspotChoice extends Choice implements Hotspot
 {
@@ -41,7 +39,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var \qtism\common\datatypes\QtiShape
+     * @var QtiShape
      * @qtism-bean-property
      */
     private $shape;
@@ -51,7 +49,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * The size and position of the hotspot, interpreted in conjunction with the shape.
      *
-     * @var \qtism\common\datatypes\QtiCoords
+     * @var QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -73,12 +71,12 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @param string $identifier The identifier of the choice.
      * @param integer $shape A value from the Shape enumeration
-     * @param \qtism\common\datatypes\QtiCoords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
+     * @param QtiCoords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $shape, QtiCoords $coords, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -115,7 +113,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Set the coords of the associableHotspot.
      *
-     * @param \qtism\common\datatypes\QtiCoords $coords A QtiCoords object.
+     * @param QtiCoords $coords A QtiCoords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -125,7 +123,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Get the coords of the associableHotspot.
      *
-     * @return \qtism\common\datatypes\QtiCoords A QtiCoords object.
+     * @return QtiCoords A QtiCoords object.
      */
     public function getCoords()
     {
@@ -136,7 +134,7 @@ class HotspotChoice extends Choice implements Hotspot
      * Set the hotspotLabel of the associableHotspot.
      *
      * @param string $hotspotLabel A string with at most 256 characters.
-     * @throws \InvalidArgumentException If $hotspotLabel has more than 256 characters.
+     * @throws InvalidArgumentException If $hotspotLabel has more than 256 characters.
      */
     public function setHotspotLabel($hotspotLabel)
     {
@@ -172,7 +170,7 @@ class HotspotChoice extends Choice implements Hotspot
      * HotspotChoice components are not composite. Then, this method
      * systematically returns an empty collection.
      *
-     * @return \qtism\data\QtiComponentCollection An empty collection.
+     * @return QtiComponentCollection An empty collection.
      */
     public function getComponents()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\interactions\DrawingInteraction;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for DrawingInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DrawingInteractionMarshaller extends Marshaller
 {
     /**
      * Marshall a DrawingInteraction object into a DOMElement object.
      *
-     * @param \qtism\data\QtiComponent $component A DrawingInteraction object.
-     * @return \DOMElement The according DOMElement object.
-     * @throws \qtism\data\storage\xml\marshalling\MarshallingException
+     * @param QtiComponent $component A DrawingInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -63,14 +61,13 @@ class DrawingInteractionMarshaller extends Marshaller
     /**
      * Unmarshall a DOMElement object corresponding to a DrawingInteraction element.
      *
-     * @param \DOMElement $element A DOMElement object.
-     * @return \qtism\data\QtiComponent A DrawingInteraction object.
-     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A DrawingInteraction object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
                 $objectElt = $objectElts[0];

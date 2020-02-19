@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +23,13 @@
 
 namespace qtism\data\content;
 
+use InvalidArgumentException;
+
 /**
  * From IMS QTI:
  *
  * Elements that can appear inside list items, table cells, etc.
  * which includes block-type and inline-type elements.
- *
- * @authorJérôme Bogaerts <jerome@taotesting.com>
- *
  */
 interface Flow extends ObjectFlow
 {
@@ -38,7 +38,7 @@ interface Flow extends ObjectFlow
      * URIs for the scope of this object.
      *
      * @param string $base A URI or an empty string if the there is no base set.
-     * @throws \InvalidArgumentException If $base is not a valid URI nor an empty string.
+     * @throws InvalidArgumentException If $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($base = '');
 

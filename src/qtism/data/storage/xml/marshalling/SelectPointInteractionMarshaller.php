@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,33 +23,30 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\SelectPointInteraction;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for SelectPointInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SelectPointInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall a SelectPointInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A SelectPointInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a SelectPointInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component A SelectPointInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        
+
         if ($component->getMaxChoices() !== 0) {
             $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
@@ -71,27 +69,25 @@ class SelectPointInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a selectPointInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A SelectPointInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a selectPointInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A SelectPointInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
-
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 $component = new SelectPointInteraction($responseIdentifier, $object);
 
                 if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
                 }
-                
+
                 if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                     $component->setMaxChoices($maxChoices);
                 } elseif (Version::compare($version, '2.1.0', '<') === true) {
@@ -113,7 +109,6 @@ class SelectPointInteractionMarshaller extends Marshaller
                 $this->fillBodyElement($component, $element);
 
                 return $component;
-
             } else {
                 $msg = "A 'selectPointInteraction' element must contain exactly one 'object' element, none given.";
                 throw new UnmarshallingException($msg, $element);
@@ -125,8 +120,8 @@ class SelectPointInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'selectPointInteraction';

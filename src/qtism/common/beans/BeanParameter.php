@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +23,18 @@
 
 namespace qtism\common\beans;
 
-use \ReflectionParameter;
-use \ReflectionException;
+use ReflectionException;
+use ReflectionParameter;
 
 /**
  * Represents a Bean method parameter.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BeanParameter
 {
     /**
      * The wrapped ReflectionParameter.
      *
-     * @var \ReflectionParameter
+     * @var ReflectionParameter
      */
     private $parameter;
 
@@ -46,12 +44,12 @@ class BeanParameter
      * @param string $class The class name.
      * @param string $method The method name.
      * @param string $name The parameter name.
-     * @throws \qtism\common\beans\BeanException If no such parameter exists in $class::$method.
+     * @throws BeanException If no such parameter exists in $class::$method.
      */
     public function __construct($class, $method, $name)
     {
         try {
-            $this->setParameter(new ReflectionParameter(array($class, $method), $name));
+            $this->setParameter(new ReflectionParameter([$class, $method], $name));
         } catch (ReflectionException $e) {
             $msg = "No such parameter '${name}' for method '${method}' of class '${class}'.";
             throw new BeanException($msg, BeanException::NO_PARAMETER, $e);
@@ -61,7 +59,7 @@ class BeanParameter
     /**
      * Set the wrapped ReflectionParameter object.
      *
-     * @param \ReflectionParameter $parameter A ReflectionParameter object.
+     * @param ReflectionParameter $parameter A ReflectionParameter object.
      */
     protected function setParameter(ReflectionParameter $parameter)
     {
@@ -71,7 +69,7 @@ class BeanParameter
     /**
      * Get the wrapped ReflectionParameter object.
      *
-     * @return \ReflectionParameter A ReflectionParameter object.
+     * @return ReflectionParameter A ReflectionParameter object.
      */
     public function getParameter()
     {

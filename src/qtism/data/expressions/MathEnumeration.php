@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,36 +27,33 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The class of Mathematical constants provided by QTI.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathEnumeration implements Enumeration
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The number π, the ratio of the circumference of a circle to its diameter.
-	 *
-	 * @var float
-	 */
+     * From IMS QTI:
+     *
+     * The number π, the ratio of the circumference of a circle to its diameter.
+     *
+     * @var float
+     */
     const PI = 0;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The number e, exp(1).
-	 *
-	 * @var float
-	 */
+     * From IMS QTI:
+     *
+     * The number e, exp(1).
+     *
+     * @var float
+     */
     const E = 1;
 
     public static function asArray()
     {
-        return array(
+        return [
             'PI' => self::PI,
-            'E' => self::E
-        );
+            'E' => self::E,
+        ];
     }
 
     public static function getNameByConstant($constant)
@@ -63,15 +61,15 @@ class MathEnumeration implements Enumeration
         switch ($constant) {
             case self::PI:
                 return 'pi';
-            break;
+                break;
 
             case self::E:
                 return 'e';
-            break;
-            
+                break;
+
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -80,15 +78,15 @@ class MathEnumeration implements Enumeration
         switch (strtolower($name)) {
             case 'pi':
                 return self::PI;
-            break;
+                break;
 
             case 'e':
                 return self::E;
-            break;
-            
+                break;
+
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

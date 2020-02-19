@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,32 +15,32 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
-
 
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DateTime;
-use qtism\data\results\AssessmentResult;
-use qtism\data\results\Context;
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
+use qtism\data\results\AssessmentResult;
+use qtism\data\results\CandidateResponse;
+use qtism\data\results\Context;
+use qtism\data\results\ItemResult;
+use qtism\data\results\ItemResultCollection;
+use qtism\data\results\ItemVariableCollection;
+use qtism\data\results\ResultOutcomeVariable;
+use qtism\data\results\ResultResponseVariable;
+use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\SessionIdentifier;
 use qtism\data\results\SessionIdentifierCollection;
 use qtism\data\results\TestResult;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\data\results\ItemResultCollection;
-use qtism\data\results\ResultResponseVariable;
-use qtism\data\results\ResultTemplateVariable;
-use qtism\data\results\ResultOutcomeVariable;
-use qtism\data\results\ItemResult;
-use qtism\data\results\CandidateResponse;
-use qtism\data\results\ItemVariableCollection;
 use qtismtest\QtiSmTestCase;
 
 class AssessmentResultMarshallerTest extends QtiSmTestCase
@@ -155,7 +156,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
                 </itemResult>
             </assessmentResult>
         ';
-        
+
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $this->createComponentFromXml($xml);
         $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
@@ -173,7 +174,6 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this->assertTrue($assessmentResult->getItemResults()[0]->hasCandidateComment());
         $this->assertEquals(2, $assessmentResult->getItemResults()[1]->getItemVariables()->count());
         $this->assertFalse($assessmentResult->getItemResults()[1]->hasCandidateComment());
-
 
         $assessmentResult = $this->createComponentFromXml($xml);
         $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
@@ -231,100 +231,102 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $component = new AssessmentResult(
             new Context(
                 new QtiIdentifier('fixture-sourcedId'),
-                new SessionIdentifierCollection(array(
+                new SessionIdentifierCollection([
                     new SessionIdentifier(
-                        new QtiUri('http://sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')
+                        new QtiUri('http://sessionIdentifier1-sourceID'),
+                        new QtiIdentifier('sessionIdentifier1-id')
                     ),
                     new SessionIdentifier(
-                        new QtiUri('http://sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')
-                    )
-                ))
+                        new QtiUri('http://sessionIdentifier2-sourceID'),
+                        new QtiIdentifier('sessionIdentifier2-id')
+                    ),
+                ])
             ),
             new TestResult(
                 new QtiIdentifier('fixture-identifier'),
                 new DateTime('2018-06-27T09:41:45.529'),
-                new ItemVariableCollection(array(
+                new ItemVariableCollection([
                     new ResultResponseVariable(
                         new QtiIdentifier('response-identifier'),
                         0,
-                        new CandidateResponse(new ValueCollection(array(
-                            new Value('fixture-test-value1')
-                        )))
+                        new CandidateResponse(new ValueCollection([
+                            new Value('fixture-test-value1'),
+                        ]))
                     ),
                     new ResultTemplateVariable(
                         new QtiIdentifier('fixture-identifier'),
                         0,
                         4,
-                        new ValueCollection(array(
+                        new ValueCollection([
                             new Value('fixture-test-value1'),
-                            new Value('fixture-test-value2')
-                        ))
-                    )
-                ))
+                            new Value('fixture-test-value2'),
+                        ])
+                    ),
+                ])
             ),
-            new ItemResultCollection(array(
+            new ItemResultCollection([
                 new ItemResult(
                     new QtiIdentifier('fixture-identifier'),
                     new DateTime('2018-06-27T09:41:45.529'),
                     1,
-                    new ItemVariableCollection(array(
+                    new ItemVariableCollection([
                         new ResultResponseVariable(
                             new QtiIdentifier('response-identifier'),
                             0,
-                            new CandidateResponse(new ValueCollection(array(
-                                new Value('fixture-test-value1')
-                            )))
+                            new CandidateResponse(new ValueCollection([
+                                new Value('fixture-test-value1'),
+                            ]))
                         ),
                         new ResultTemplateVariable(
                             new QtiIdentifier('response-identifier'),
                             0,
                             4,
-                            new ValueCollection(array(
-                                    new Value('fixture-test-value1'),
-                                    new Value('fixture-test-value2')
-                                )
-                            )),
-                        new ResultOutcomeVariable(
-                            new QtiIdentifier('response-identifier'),
-                            0,
-                            4,
-                            new ValueCollection(array(
-                                    new Value('fixture-test-value1'),
-                                    new Value('fixture-test-value2')
-                                )
-                            ))
-                    ))
-                ),
-                new ItemResult(
-                    new QtiIdentifier('fixture-identifier'),
-                    new DateTime('2018-06-27T09:41:45.529'),
-                    1,
-                    new ItemVariableCollection(array(
-                        new ResultResponseVariable(
-                            new QtiIdentifier('response-identifier'),
-                            0,
-                            new CandidateResponse(new ValueCollection(array(
-                                new Value('fixture-test-value1')
-                            )))
+                            new ValueCollection([
+                                new Value('fixture-test-value1'),
+                                new Value('fixture-test-value2'),
+                            ])
                         ),
                         new ResultOutcomeVariable(
                             new QtiIdentifier('response-identifier'),
                             0,
                             4,
-                            new ValueCollection(array(
-                                    new Value('fixture-test-value1'),
-                                    new Value('fixture-test-value2')
-                                )
-                            ))
-                    ))
-                )
-            ))
+                            new ValueCollection([
+                                new Value('fixture-test-value1'),
+                                new Value('fixture-test-value2'),
+                            ])
+                        ),
+                    ])
+                ),
+                new ItemResult(
+                    new QtiIdentifier('fixture-identifier'),
+                    new DateTime('2018-06-27T09:41:45.529'),
+                    1,
+                    new ItemVariableCollection([
+                        new ResultResponseVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            new CandidateResponse(new ValueCollection([
+                                new Value('fixture-test-value1'),
+                            ]))
+                        ),
+                        new ResultOutcomeVariable(
+                            new QtiIdentifier('response-identifier'),
+                            0,
+                            4,
+                            new ValueCollection([
+                                new Value('fixture-test-value1'),
+                                new Value('fixture-test-value2'),
+                            ])
+                        ),
+                    ])
+                ),
+            ])
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -342,7 +344,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -350,5 +352,4 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this->assertEquals(0, $element->getElementsByTagName('testResult')->length);
         $this->assertEquals(0, $element->getElementsByTagName('itemResult')->length);
     }
-
 }

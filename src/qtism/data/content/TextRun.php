@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\content;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -31,9 +32,6 @@ use qtism\data\QtiComponent;
  * A text run is simply a run of characters. Unlike all other elements in the
  * content model it is not a sub-class of bodyElement. To assign attributes to a
  * run of text you must use the span element instead.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVariable
 {
@@ -79,7 +77,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
 
     /**
      *
-     * @return \qtism\data\QtiComponentCollection
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

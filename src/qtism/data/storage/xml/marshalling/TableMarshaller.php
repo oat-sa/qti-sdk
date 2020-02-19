@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,25 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\xhtml\tables\ColgroupCollection;
+use DOMElement;
 use qtism\data\content\xhtml\tables\ColCollection;
-use qtism\data\content\xhtml\tables\TbodyCollection;
+use qtism\data\content\xhtml\tables\ColgroupCollection;
 use qtism\data\content\xhtml\tables\Table;
+use qtism\data\content\xhtml\tables\TbodyCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for Table.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TableMarshaller extends Marshaller
 {
     /**
-	 * Marshall a Table object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A Table object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a Table object into a DOMElement object.
+     *
+     * @param QtiComponent $component A Table object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('table');
@@ -101,18 +99,17 @@ class TableMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to an XHTML table element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A Table object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to an XHTML table element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A Table object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $tbodyElts = $this->getChildElementsByTagName($element, 'tbody');
 
         if (count($tbodyElts) > 0) {
-
             $tbodies = new TbodyCollection();
 
             foreach ($tbodyElts as $tbodyElt) {
@@ -178,8 +175,8 @@ class TableMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'table';

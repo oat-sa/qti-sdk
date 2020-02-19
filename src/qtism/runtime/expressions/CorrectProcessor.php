@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
@@ -36,30 +36,27 @@ use qtism\runtime\common\ResponseVariable;
  * associated correctResponse or NULL if no correct value was declared. When used
  * in outcomes processing item identifier prefixing (see variable) may be used to
  * obtain the correct response from an individual item.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class CorrectProcessor extends ExpressionProcessor
 {
     /**
-	 * Returns the related correstResponse as a QTI Runtime compliant value.
-	 *
-	 * * If no variable can be matched, null is returned.
-	 * * If the target variable has no correctResponse, null is returned.
-	 *
-	 * An ExpressionProcessingException is thrown if:
-	 *
-	 * * The targeted variable is not a ResponseVariable.
-	 *
-	 * @return mixed A QTI Runtime compliant value or null.
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Returns the related correstResponse as a QTI Runtime compliant value.
+     *
+     * * If no variable can be matched, null is returned.
+     * * If the target variable has no correctResponse, null is returned.
+     *
+     * An ExpressionProcessingException is thrown if:
+     *
+     * * The targeted variable is not a ResponseVariable.
+     *
+     * @return mixed A QTI Runtime compliant value or null.
+     * @throws ExpressionProcessingException
+     */
     public function process()
     {
         $expr = $this->getExpression();
         $state = $this->getState();
-        $identifier=  $expr->getIdentifier();
+        $identifier = $expr->getIdentifier();
 
         $var = $state->getVariable($identifier);
 
@@ -72,7 +69,7 @@ class CorrectProcessor extends ExpressionProcessor
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,13 @@
 
 namespace qtism\data\content;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Stylesheet class used to associate an external stylesheet with
  * an AssessmentItem.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Stylesheet extends QtiComponent
 {
@@ -106,7 +104,7 @@ class Stylesheet extends QtiComponent
      * Set the hypertext reference to the stylesheet.
      *
      * @param string $href An hypertext reference (as a URI).
-     * @throws \InvalidArgumentException If $href is not a string.
+     * @throws InvalidArgumentException If $href is not a string.
      */
     public function setHref($href)
     {
@@ -132,7 +130,7 @@ class Stylesheet extends QtiComponent
      * Set the mime-type of the stylesheet.
      *
      * @param string $type A mime-type.
-     * @throws \InvalidArgumentException If $type is not a string.
+     * @throws InvalidArgumentException If $type is not a string.
      */
     public function setType($type)
     {
@@ -158,7 +156,7 @@ class Stylesheet extends QtiComponent
      * Set the media to apply the stylesheet on.
      *
      * @param string $media A media.
-     * @throws \InvalidArgumentException If $media is not a string.
+     * @throws InvalidArgumentException If $media is not a string.
      */
     public function setMedia($media)
     {
@@ -194,7 +192,7 @@ class Stylesheet extends QtiComponent
      * Set the title of the stylesheet.
      *
      * @param string $title A title.
-     * @throws \InvalidArgumentException If $title is not a string.
+     * @throws InvalidArgumentException If $title is not a string.
      */
     public function setTitle($title)
     {

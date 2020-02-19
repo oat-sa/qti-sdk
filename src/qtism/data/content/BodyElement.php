@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,15 @@
 
 namespace qtism\data\content;
 
-use qtism\data\QtiComponent;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
+use qtism\data\QtiComponent;
 
 /**
  * From IMS QTI:
  *
  * The root class of all content objects in the item content model is the bodyElement.
  * It defines a number of attributes that are common to all elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class BodyElement extends QtiComponent
 {
@@ -45,7 +43,7 @@ abstract class BodyElement extends QtiComponent
      * @var string
      * @qtism-bean-property
      */
-    private $id  = '';
+    private $id = '';
 
     /**
      * From IMS QTI:
@@ -84,10 +82,10 @@ abstract class BodyElement extends QtiComponent
      * @qtism-bean-property
      */
     private $label = '';
-    
+
     /**
      * The direction in which body elements must be displayed.
-     * 
+     *
      * @var integer
      * @qtism-bean-property
      */
@@ -124,7 +122,7 @@ abstract class BodyElement extends QtiComponent
      * Set the unique identifier of the body element.
      *
      * @param string $id A QTI Identifier.
-     * @throws \InvalidArgumentException If $id is not a valid QTI identifier.
+     * @throws InvalidArgumentException If $id is not a valid QTI identifier.
      */
     public function setId($id = '')
     {
@@ -160,7 +158,7 @@ abstract class BodyElement extends QtiComponent
      * Set the classes assigned to the body element.
      *
      * @param string $class One or more class names separated by spaces.
-     * @throws \InvalidArgumentException If $class does not represent valid class name(s).
+     * @throws InvalidArgumentException If $class does not represent valid class name(s).
      */
     public function setClass($class = '')
     {
@@ -227,7 +225,7 @@ abstract class BodyElement extends QtiComponent
      * Set the label of the body element.
      *
      * @param string $label A string of 256 characters maximum.
-     * @throws \InvalidArgumentException If $label is not or a string or contains more than 256 characters.
+     * @throws InvalidArgumentException If $label is not or a string or contains more than 256 characters.
      */
     public function setLabel($label = '')
     {
@@ -248,10 +246,10 @@ abstract class BodyElement extends QtiComponent
     {
         return $this->getLabel() !== '';
     }
-    
+
     /**
      * Set the direction in which body elements must be displayed.
-     * 
+     *
      * @param integer $dir A value from the Direction enumeration.
      * @throws InvalidArgumentException If $dir is not a value from the Direction enumeration.
      */
@@ -264,10 +262,10 @@ abstract class BodyElement extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the direction in which body elements must be displayed.
-     * 
+     *
      * @return integer A value from the Direction enumeration.
      */
     public function getDir()

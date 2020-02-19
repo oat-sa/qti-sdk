@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -39,18 +39,15 @@ use qtism\data\expressions\operators\Lcm;
  * which require division by the lcm of random values. If any of the sub-expressions is
  * NULL, the result is NULL. If any of the sub-expressions is not a numerical value,
  * then the result is NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class LcmProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Lcm operator.
-	 *
-	 * @return QtiInteger|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Lcm operator.
+     *
+     * @return QtiInteger|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -74,7 +71,6 @@ class LcmProcessor extends OperatorProcessor
 
         foreach ($operands as $operand) {
             if ($operand instanceof QtiScalar) {
-
                 if ($operand->getValue() !== 0) {
                     $flatCollection[] = $operand;
                 } else {
@@ -88,7 +84,6 @@ class LcmProcessor extends OperatorProcessor
             } else {
                 // Container with no null values.
                 foreach ($operand as $o) {
-
                     if ($o->getValue() !== 0) {
                         $flatCollection[] = $o;
                     } else {
@@ -110,7 +105,7 @@ class LcmProcessor extends OperatorProcessor
 
         return $g;
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

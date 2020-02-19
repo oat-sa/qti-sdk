@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\qtipl;
@@ -27,11 +26,9 @@ namespace qtism\runtime\rendering\qtipl;
 /**
  * Allows to specify options to choose the rendering
  * of the if/else loops.
- * @author Tom Verhoof <tomv@taotesting.com>
  */
 class ConditionRenderingOptions
 {
-
     /**
      * @var int The number spaces of indentation in an if/else loop
      */
@@ -42,7 +39,6 @@ class ConditionRenderingOptions
      */
 
     private static $defaultIdentation = 4;
-
 
     /**
      * @return ConditionRenderingOptions The format by default for the
@@ -55,6 +51,7 @@ class ConditionRenderingOptions
 
     /**
      * Creates a new instance of a ConditionRenderingOptions.
+     *
      * @param $indentation int The number spaces of indentation in an if/else loop
      */
 
@@ -62,8 +59,7 @@ class ConditionRenderingOptions
     {
         if ($indentation > 0) {
             $this->indentation = $indentation;
-        }
-        else {
+        } else {
             $this->indentation = 0;
         }
     }

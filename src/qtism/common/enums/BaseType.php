@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\enums;
 
 /**
@@ -32,9 +34,6 @@ namespace qtism\common\enums;
  * in the specification itself. The use of an enumeration to define the set of baseTypes
  * used in the runtime model, as opposed to the use of classes with similar names, is
  * designed to help distinguish between these two distinct levels of modelling.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BaseType implements Enumeration
 {
@@ -49,13 +48,13 @@ class BaseType implements Enumeration
     const IDENTIFIER = 0;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The set of boolean values is the same as the set of values defined
-	 * by the boolean class.
-	 *
-	 * @var int
-	 */
+     * From IMS QTI:
+     *
+     * The set of boolean values is the same as the set of values defined
+     * by the boolean class.
+     *
+     * @var int
+     */
     const BOOLEAN = 1;
 
     /**
@@ -69,13 +68,13 @@ class BaseType implements Enumeration
     const INTEGER = 2;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The set of float values is the same as the set of values defined by the
-	 * float class.
-	 *
-	 * @var int
-	 */
+     * From IMS QTI:
+     *
+     * The set of float values is the same as the set of values defined by the
+     * float class.
+     *
+     * @var int
+     */
     const FLOAT = 3;
 
     /**
@@ -174,7 +173,7 @@ class BaseType implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'IDENTIFIER' => self::IDENTIFIER,
             'BOOLEAN' => self::BOOLEAN,
             'INTEGER' => self::INTEGER,
@@ -187,8 +186,8 @@ class BaseType implements Enumeration
             'FILE' => self::FILE,
             'URI' => self::URI,
             'INT_OR_IDENTIFIER' => self::INT_OR_IDENTIFIER,
-            'COORDS' => self::COORDS
-        );
+            'COORDS' => self::COORDS,
+        ];
     }
 
     /**
@@ -216,59 +215,59 @@ class BaseType implements Enumeration
         switch (trim(strtolower($name))) {
             case 'identifier':
                 return self::IDENTIFIER;
-            break;
+                break;
 
             case 'boolean':
                 return self::BOOLEAN;
-            break;
+                break;
 
             case 'integer':
                 return self::INTEGER;
-            break;
+                break;
 
             case 'float':
                 return self::FLOAT;
-            break;
+                break;
 
             case 'string':
                 return self::STRING;
-            break;
+                break;
 
             case 'point':
                 return self::POINT;
-            break;
+                break;
 
             case 'pair':
                 return self::PAIR;
-            break;
+                break;
 
             case 'directedpair':
                 return self::DIRECTED_PAIR;
-            break;
+                break;
 
             case 'duration':
                 return self::DURATION;
-            break;
+                break;
 
             case 'file':
                 return self::FILE;
-            break;
+                break;
 
             case 'uri':
                 return self::URI;
-            break;
+                break;
 
             case 'intoridentifier':
                 return self::INT_OR_IDENTIFIER;
-            break;
+                break;
 
             case 'coords':
                 return self::COORDS;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -283,59 +282,59 @@ class BaseType implements Enumeration
         switch ($constant) {
             case self::IDENTIFIER:
                 return 'identifier';
-            break;
+                break;
 
             case self::BOOLEAN:
                 return 'boolean';
-            break;
+                break;
 
             case self::INTEGER:
                 return 'integer';
-            break;
+                break;
 
             case self::FLOAT:
                 return 'float';
-            break;
+                break;
 
             case self::STRING:
                 return 'string';
-            break;
+                break;
 
             case self::POINT:
                 return 'point';
-            break;
+                break;
 
             case self::PAIR:
                 return 'pair';
-            break;
+                break;
 
             case self::DIRECTED_PAIR:
                 return 'directedPair';
-            break;
+                break;
 
             case self::DURATION:
                 return 'duration';
-            break;
+                break;
 
             case self::FILE:
                 return 'file';
-            break;
+                break;
 
             case self::URI:
                 return 'uri';
-            break;
+                break;
 
             case self::INT_OR_IDENTIFIER:
                 return 'intOrIdentifier';
-            break;
+                break;
 
             case self::COORDS:
                 return 'coords';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

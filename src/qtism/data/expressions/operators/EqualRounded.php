@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,10 +23,10 @@
 
 namespace qtism\data\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -35,55 +36,52 @@ use \InvalidArgumentException;
  * a value of true if the two expressions are numerically equal after rounding and
  * false if they are not. If either sub-expression is NULL then the operator results
  * in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class EqualRounded extends Operator implements Pure
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * Numbers are rounded to a given number of significantFigures or decimalPlaces.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Numbers are rounded to a given number of significantFigures or decimalPlaces.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $roundingMode = RoundingMode::SIGNIFICANT_FIGURES;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The number of figures to round to.
-	 * If roundingMode= "significantFigures", the value of figures must be a non-zero positive integer.
-	 * If roundingMode= "decimalPlaces", the value of figures must be an integer greater than or equal to zero.
-	 *
-	 * @var string|integer
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The number of figures to round to.
+     * If roundingMode= "significantFigures", the value of figures must be a non-zero positive integer.
+     * If roundingMode= "decimalPlaces", the value of figures must be an integer greater than or equal to zero.
+     *
+     * @var string|integer
+     * @qtism-bean-property
+     */
     private $figures;
 
     /**
-	 * Create a new EqualRounded object.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
-	 * @param string|integer $figures The number of figures to round to. It must be an integer or a variable reference.
-	 * @param integer $roundingMode A value from the RoundingMode enumeration.
-	 * @throws \InvalidArgumentException If $figures is not an integer nor a variable reference, if $roundingMode is not a value from the RoundingMode enumeration, or if the $expressions count exceeds 2.
-	 */
+     * Create a new EqualRounded object.
+     *
+     * @param ExpressionCollection $expressions A collection of Expression objects.
+     * @param string|integer $figures The number of figures to round to. It must be an integer or a variable reference.
+     * @param integer $roundingMode A value from the RoundingMode enumeration.
+     * @throws InvalidArgumentException If $figures is not an integer nor a variable reference, if $roundingMode is not a value from the RoundingMode enumeration, or if the $expressions count exceeds 2.
+     */
     public function __construct(ExpressionCollection $expressions, $figures, $roundingMode = RoundingMode::SIGNIFICANT_FIGURES)
     {
-        parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
+        parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
         $this->setFigures($figures);
         $this->setRoundingMode($roundingMode);
     }
 
     /**
-	 * Set the rounding mode.
-	 *
-	 * @param integer $roundingMode A value from the RoundingMode enumeration.
-	 * @throws \InvalidArgumentException If $roundingMode is not a value from the RoundingMode enumeration.
-	 */
+     * Set the rounding mode.
+     *
+     * @param integer $roundingMode A value from the RoundingMode enumeration.
+     * @throws InvalidArgumentException If $roundingMode is not a value from the RoundingMode enumeration.
+     */
     public function setRoundingMode($roundingMode)
     {
         if (in_array($roundingMode, RoundingMode::asArray())) {
@@ -95,21 +93,21 @@ class EqualRounded extends Operator implements Pure
     }
 
     /**
-	 * Get the rounding mode.
-	 *
-	 * @return integer A value from the RoundingMode enumeration.
-	 */
+     * Get the rounding mode.
+     *
+     * @return integer A value from the RoundingMode enumeration.
+     */
     public function getRoundingMode()
     {
         return $this->roundingMode;
     }
 
     /**
-	 * Set the number of figures to round to.
-	 *
-	 * @param integer|string $figures An integer value or a variable reference.
-	 * @throws \InvalidArgumentException If $figures is not an integer nor a variable reference.
-	 */
+     * Set the number of figures to round to.
+     *
+     * @param integer|string $figures An integer value or a variable reference.
+     * @throws InvalidArgumentException If $figures is not an integer nor a variable reference.
+     */
     public function setFigures($figures)
     {
         if (is_int($figures) || (gettype($figures) === 'string' && Format::isVariableRef($figures))) {
@@ -121,18 +119,18 @@ class EqualRounded extends Operator implements Pure
     }
 
     /**
-	 * Get the number of figures to round to.
-	 *
-	 * @return integer|string An integer value or a variable reference.
-	 */
+     * Get the number of figures to round to.
+     *
+     * @return integer|string An integer value or a variable reference.
+     */
     public function getFigures()
     {
         return $this->figures;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'equalRounded';
@@ -140,6 +138,7 @@ class EqualRounded extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

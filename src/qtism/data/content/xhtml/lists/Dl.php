@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,14 @@
 
 namespace qtism\data\content\xhtml\lists;
 
-use qtism\data\content\FlowStatic;
+use InvalidArgumentException;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\FlowStatic;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The dl XHTML class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Dl extends BodyElement implements BlockStatic, FlowStatic
 {
@@ -46,7 +45,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * The DlElement objects composing the Dl.
      *
-     * @var \qtism\data\content\xhtml\lists\DlElementCollection
+     * @var DlElementCollection
      * @qtism-bean-property
      */
     private $content;
@@ -58,7 +57,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -69,7 +68,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the DlElement objects composing the Dl.
      *
-     * @param \qtism\data\content\xhtml\lists\DlElementCollection $content A collection of DlElement objects.
+     * @param DlElementCollection $content A collection of DlElement objects.
      */
     public function setContent(DlElementCollection $content)
     {
@@ -79,7 +78,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the DlElement objects composing the Dl.
      *
-     * @return \qtism\data\content\xhtml\lists\DlElementCollection
+     * @return DlElementCollection
      */
     public function getContent()
     {
@@ -89,7 +88,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the DlElement objects composing the Dl.
      *
-     * @return \qtism\data\QtiComponentCollection A collection of DlElement objects.
+     * @return QtiComponentCollection A collection of DlElement objects.
      */
     public function getComponents()
     {
@@ -108,7 +107,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
      * Set the base URI of the Dl.
      *
      * @param string $xmlBase A URI.
-     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '')
     {

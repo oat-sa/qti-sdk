@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,11 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\data\expressions\Expression;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
+use qtism\data\expressions\Expression;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -39,40 +40,37 @@ use \InvalidArgumentException;
  * Special care is required when using the numeric base-types because floating point values
  * can not be assigned to integer variables and vice-versa. The truncate, round or
  * integerToFloat operators must be used to achieve numeric type conversion.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The outcome variable to set.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The outcome variable to set.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * An expression which must have an effective baseType and cardinality that matches
-	 * the base-type and cardinality of the outcome variable being set.
-	 *
-	 * @var \qtism\data\expressions\Expression
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * An expression which must have an effective baseType and cardinality that matches
+     * the base-type and cardinality of the outcome variable being set.
+     *
+     * @var Expression
+     * @qtism-bean-property
+     */
     private $expression;
 
     /**
-	 * Create a new instance of SetOutcomeValue.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Create a new instance of SetOutcomeValue.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @param Expression $expression A QTI Expression.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function __construct($identifier, Expression $expression)
     {
         $this->setIdentifier($identifier);
@@ -80,21 +78,21 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
     }
 
     /**
-	 * Get the identifier of the outcome variable to set.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the identifier of the outcome variable to set.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the identifier of the oucome variable to set.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the oucome variable to set.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -106,38 +104,38 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
     }
 
     /**
-	 * Set the expression used to set the variable targeted by the identifier attribute.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
-	 */
+     * Set the expression used to set the variable targeted by the identifier attribute.
+     *
+     * @param Expression $expression A QTI Expression.
+     */
     public function setExpression(Expression $expression)
     {
         $this->expression = $expression;
     }
 
     /**
-	 * Get the expression used to set the variabled targeted by the identifier attribute.
-	 *
-	 * @return \qtism\data\expressions\Expression
-	 */
+     * Get the expression used to set the variabled targeted by the identifier attribute.
+     *
+     * @return Expression
+     */
     public function getExpression()
     {
         return $this->expression;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'setOutcomeValue';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
-        return new QtiComponentCollection(array($this->getExpression()));
+        return new QtiComponentCollection([$this->getExpression()]);
     }
 }

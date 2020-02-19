@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -33,9 +34,6 @@ use \InvalidArgumentException;
  * to modify a given graphical image (the canvas). It must be bound to a response
  * variable with base-type file and single cardinality. The result is a file in the
  * same format as the original image.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DrawingInteraction extends BlockInteraction
 {
@@ -46,7 +44,7 @@ class DrawingInteraction extends BlockInteraction
      * place is given as an object which must be of an image type, as
      * specified by the type attribute.
      *
-     * @var \qtism\data\content\xhtml\ObjectElement
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -60,7 +58,7 @@ class DrawingInteraction extends BlockInteraction
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any argument is invalid.
+     * @throws InvalidArgumentException If any argument is invalid.
      */
     public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -71,7 +69,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * Set the image that acts as a canvas for drawing.
      *
-     * @param \qtism\data\content\xhtml\ObjectElement $object An ObjectElement object representing an image.
+     * @param ObjectElement $object An ObjectElement object representing an image.
      */
     public function setObject(ObjectElement $object)
     {
@@ -81,7 +79,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * Get the image that acts as a canvas for drawing.
      *
-     * @return \qtism\data\content\xhtml\ObjectElement An ObjectElement object representing an image.
+     * @return ObjectElement An ObjectElement object representing an image.
      */
     public function getObject()
     {
@@ -95,7 +93,7 @@ class DrawingInteraction extends BlockInteraction
     {
         $parentComponents = parent::getComponents();
 
-        return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), array($this->getObject())));
+        return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), [$this->getObject()]));
     }
 
     /**

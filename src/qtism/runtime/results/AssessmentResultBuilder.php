@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,20 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2019-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Bogaerts Jérôme, <jerome@taotesting.com>
+ * @author Bogaerts Jérôme <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\runtime\results;
 
+use DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\AssessmentItemRef;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\ItemResultCollection;
 use qtism\data\results\TestResult;
+use qtism\runtime\common\VariableCollection;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentTestSession;
 
@@ -39,7 +42,6 @@ use qtism\runtime\tests\AssessmentTestSession;
  */
 class AssessmentResultBuilder extends AbstractResultBuilder
 {
-
     /**
      * Build Result
      *
@@ -55,7 +57,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
 
         $testResult = new TestResult(
             new QtiIdentifier($state->getSessionId()),
-            new \DateTime()
+            new DateTime()
         );
 
         $testResult->setItemVariables($this->buildVariables());
@@ -84,7 +86,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
      *
      * Get the variables representing the intrinsic state of the AssessmentTestSession.
      *
-     * @return \qtism\runtime\common\VariableCollection
+     * @return VariableCollection
      */
     protected function getAllVariables()
     {

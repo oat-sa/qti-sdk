@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,13 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data;
+
+use InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -41,32 +44,29 @@ namespace qtism\data;
  * referenced section. That is to say, branching rules should treat referred sections as
  * leaf nodes, that have no children that are amenable to branching separately from their
  * immediate parent.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentSectionRef extends SectionPart
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The uri is used to refer to the assessmentSection document file (e.g., elsewhere
-	 * in the same content package). There is no requirement that this be unique. A test may
-	 * refer to the same item multiple times within a test. Note however that each reference
-	 * must have a unique identifier.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The uri is used to refer to the assessmentSection document file (e.g., elsewhere
+     * in the same content package). There is no requirement that this be unique. A test may
+     * refer to the same item multiple times within a test. Note however that each reference
+     * must have a unique identifier.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $href;
 
     /**
-	 * Create a new instance of AssessmentSectionRef.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @param string $href A URI.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Create a new instance of AssessmentSectionRef.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @param string $href A URI.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function __construct($identifier, $href)
     {
         parent::__construct($identifier);
@@ -74,28 +74,28 @@ class AssessmentSectionRef extends SectionPart
     }
 
     /**
-	 * Set the hyper-text reference of the section.
-	 *
-	 * @param string $href A URI.
-	 */
+     * Set the hyper-text reference of the section.
+     *
+     * @param string $href A URI.
+     */
     public function setHref($href)
     {
         $this->href = $href;
     }
 
     /**
-	 * Get the hyper-text reference of the section.
-	 *
-	 * @return string A URI.
-	 */
+     * Get the hyper-text reference of the section.
+     *
+     * @return string A URI.
+     */
     public function getHref()
     {
         return $this->href;
     }
 
     /**
-	 * @see \qtism\data\SectionPart::getQtiClassName()
-	 */
+     * @see \qtism\data\SectionPart::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'assessmentSectionRef';

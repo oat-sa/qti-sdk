@@ -15,27 +15,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\qtipl\expressions\operators;
 
-use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtism\runtime\rendering\qtipl\AbstractQtiPLRenderer;
+use qtism\runtime\rendering\qtipl\QtiPLRenderer;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * The Not operator's QtiPLRenderer. Transforms the Not's
  * expression into QtiPL.
- *
- * @author Tom Verhoof <tomv@taotesting.com>
  */
 class NotQtiPLRenderer extends AbstractQtiPLRenderer
 {
-
     private $signAsOperator = "!";
 
     /**
@@ -43,21 +40,21 @@ class NotQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rendering the component.
+     * @throws RenderingException If something goes wrong while rendering the component.
      */
     public function render($something)
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $orenderer = new OperatorQtiPLRenderer($this->getCRO());
-        $needsparenthesis0 = array_key_exists($something->getExpressions()[0]->getQtiClassName(),
-                $orenderer->getSignAsOperatorMap())
+        $needsparenthesis0 = array_key_exists(
+            $something->getExpressions()[0]->getQtiClassName(),
+            $orenderer->getSignAsOperatorMap()
+        )
             && $something->getExpressions()[0]->getExpressions()->count() == 2;
 
         if ($needsparenthesis0) {
-
             return $this->signAsOperator . $renderer->writeChildElements($something->getExpressions());
-        }
-        else {
+        } else {
             return $this->signAsOperator . $renderer->render($something->getExpressions()[0]);
         }
     }

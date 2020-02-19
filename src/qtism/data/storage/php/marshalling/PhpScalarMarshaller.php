@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,22 @@
 
 namespace qtism\data\storage\php\marshalling;
 
+use InvalidArgumentException;
 use qtism\common\storage\StreamAccessException;
 use qtism\data\storage\php\Utils as PhpUtils;
 
 /**
  * This implementation of PhpMarshaller focuses on marshalling PHP scalar
  * values (including the null value) into PHP source code.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpScalarMarshaller extends PhpMarshaller
 {
     /**
      * Create a new PhpScalarMarshaller objec.
      *
-     * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
+     * @param PhpMarshallingContext $context A PhpMarshallingContext object.
      * @param mixed PHP scalar value (including null value) to be marshalled.
-     * @throws \InvalidArgumentException If $toMarshall is not considered to be a marshallable PHP scalar value.
+     * @throws InvalidArgumentException If $toMarshall is not considered to be a marshallable PHP scalar value.
      */
     public function __construct(PhpMarshallingContext $context, $toMarshall)
     {
@@ -59,7 +58,7 @@ class PhpScalarMarshaller extends PhpMarshaller
     /**
      * Marshall the PHP scalar value to be marshalled into PHP source code.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs while marshalling.
+     * @throws PhpMarshallingException If an error occurs while marshalling.
      */
     public function marshall()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,26 +23,23 @@
 
 namespace qtism\data\content;
 
-use qtism\data\QtiIdentifiable;
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\data\QtiIdentifiableTrait;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \SplObjectStorage;
-use \InvalidArgumentException;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
+use qtism\data\QtiIdentifiable;
+use qtism\data\QtiIdentifiableTrait;
+use SplObjectStorage;
 
 /**
  * An extension of QTI that represents a reference
  * to an external QTI rubricBlock. It works in a similar
  * way than QTI's assessmentSectionRef.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RubricBlockRef extends QtiComponent implements QtiIdentifiable
 {
     use QtiIdentifiableTrait;
-    
+
     /**
      * The identifier of the rubricBlockRef.
      *
@@ -64,7 +62,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      *
      * @param string $identifier A QTI identifier.
      * @param string $href A URI locating the external rubrickBlock definition.
-     * @throws \InvalidArgumentException If any argument is invalid.
+     * @throws InvalidArgumentException If any argument is invalid.
      */
     public function __construct($identifier, $href)
     {
@@ -77,7 +75,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      * Set the identifier of the rubricBlockRef.
      *
      * @param string $identifier A QTI identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier)
     {
@@ -103,7 +101,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      * Set the URI locating the external rubricBlock definition.
      *
      * @param string $href A URI.
-     * @throws \InvalidArgumentException If $href is not a valid URI.
+     * @throws InvalidArgumentException If $href is not a valid URI.
      */
     public function setHref($href)
     {
@@ -134,7 +132,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
     {
         return 'rubricBlockRef';
     }
-    
+
     public function __clone()
     {
         $this->setObservers(new SplObjectStorage());

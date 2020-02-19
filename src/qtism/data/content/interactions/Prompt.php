@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,12 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\FlowStaticCollection;
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\FlowStaticCollection;
 
 /**
  * The prompt QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Prompt extends BodyElement
 {
@@ -39,7 +37,7 @@ class Prompt extends BodyElement
      *
      * A prompt must not contain any nested interactions.
      *
-     * @var \qtism\data\content\FlowStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -51,7 +49,7 @@ class Prompt extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the arguments is invalid.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -62,7 +60,7 @@ class Prompt extends BodyElement
     /**
      * Set the content of the prompt.
      *
-     * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
     public function setContent(FlowStaticCollection $content)
     {
@@ -72,7 +70,7 @@ class Prompt extends BodyElement
     /**
      * Get the content of the prompt.
      *
-     * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
+     * @return FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getContent()
     {

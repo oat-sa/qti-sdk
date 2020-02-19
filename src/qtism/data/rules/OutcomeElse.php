@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,22 +23,19 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The OutcomeElse class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeElse extends QtiComponent
 {
     /**
      * A collection of OutcomeRule objects to be evaluated.
      *
-     * @var \qtism\data\rules\OutcomeRuleCollection
+     * @var OutcomeRuleCollection
      * @qtism-bean-property
      */
     private $outcomeRules;
@@ -45,8 +43,8 @@ class OutcomeElse extends QtiComponent
     /**
      * Create a new instance of OutcomeElse.
      *
-     * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-     * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
+     * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     * @throws InvalidArgumentException If $outcomeRules is an empty collection.
      */
     public function __construct(OutcomeRuleCollection $outcomeRules)
     {
@@ -56,7 +54,7 @@ class OutcomeElse extends QtiComponent
     /**
      * Get the OutcomeRule objects to be evaluated.
      *
-     * @return \qtism\data\rules\OutcomeRuleCollection A collection of OutcomeRule objects.
+     * @return OutcomeRuleCollection A collection of OutcomeRule objects.
      */
     public function getOutcomeRules()
     {
@@ -66,7 +64,7 @@ class OutcomeElse extends QtiComponent
     /**
      * Set the OutcomeRule objects to be evaluated.
      *
-     * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
      */
     public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
     {

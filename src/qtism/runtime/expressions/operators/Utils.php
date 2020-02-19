@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -27,23 +27,20 @@ use qtism\common\utils\Format;
 
 /**
  * A utility class for all sub-classes of the OperatorProcessor class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Utils
 {
     /**
-	 * Compute the GCD (Greatest Common Divider) of $a and $b.
-	 *
-	 * If either $a or $b is negative, its absolute value will be used
-	 * instead.
-	 *
-	 * @param integer $a A positive integer
-	 * @param integer $b A positive integer
-	 * @return integer The GCD of $a and $b.
-	 */
-    static public function gcd($a, $b)
+     * Compute the GCD (Greatest Common Divider) of $a and $b.
+     *
+     * If either $a or $b is negative, its absolute value will be used
+     * instead.
+     *
+     * @param integer $a A positive integer
+     * @param integer $b A positive integer
+     * @return integer The GCD of $a and $b.
+     */
+    public static function gcd($a, $b)
     {
         $a = abs($a);
         $b = abs($b);
@@ -61,13 +58,13 @@ class Utils
     }
 
     /**
-	 * Compute LCM (Least Common Multiple) of $a and $b.
-	 *
-	 * @param integer $a
-	 * @param integer $b
-	 * @return integer the LCM of $a and $b.
-	 */
-    static public function lcm($a, $b)
+     * Compute LCM (Least Common Multiple) of $a and $b.
+     *
+     * @param integer $a
+     * @param integer $b
+     * @return integer the LCM of $a and $b.
+     */
+    public static function lcm($a, $b)
     {
         $a = abs($a);
         $b = abs($b);
@@ -82,12 +79,12 @@ class Utils
     }
 
     /**
-	 * Compute the arithmetic mean of $sample.
-	 *
-	 * @param array An array of numeric values.
-	 * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or if $sample is empty.
-	 */
-    static public function mean(array $sample)
+     * Compute the arithmetic mean of $sample.
+     *
+     * @param array An array of numeric values.
+     * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or if $sample is empty.
+     */
+    public static function mean(array $sample)
     {
         $count = count($sample);
         if ($count === 0) {
@@ -110,21 +107,21 @@ class Utils
     }
 
     /**
-	 * Compute the variance of $sample.
-	 *
-	 * * To compute the population variance: $sample is considered as a population if $correction equals false.
-	 * * To compute the sample variance: $sample is considered as sample if $correction equals true.
-	 *
-	 * IMPORTANT:
-	 * If $correction is true, $sample must contain more than 1 value, otherwise this method
-	 * returns false.
-	 *
-	 * @param array $sample An array of numeric values.
-	 * @param boolean $correction (optional) Apply the Bessel's correction on the computed variance.
-	 * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
-	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
-	 */
-    static public function variance(array $sample, $correction = true)
+     * Compute the variance of $sample.
+     *
+     * * To compute the population variance: $sample is considered as a population if $correction equals false.
+     * * To compute the sample variance: $sample is considered as sample if $correction equals true.
+     *
+     * IMPORTANT:
+     * If $correction is true, $sample must contain more than 1 value, otherwise this method
+     * returns false.
+     *
+     * @param array $sample An array of numeric values.
+     * @param boolean $correction (optional) Apply the Bessel's correction on the computed variance.
+     * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
+     * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
+     */
+    public static function variance(array $sample, $correction = true)
     {
         $mean = static::mean($sample);
 
@@ -155,21 +152,21 @@ class Utils
     }
 
     /**
-	 * Compute the standard deviation of $sample.
-	 *
-	 * * To compute the population standard deviation: $sample is considered as a population if $correction equals false.
-	 * * To compute the sample standard deviation: $sample is considered as sample if $correction equals true.
-	 *
-	 * IMPORTANT:
-	 * If $correction is true, $sample must contain more than 1 value, otherwise this method
-	 * returns false.
-	 *
-	 * @param array $sample An array of numeric values.
-	 * @param boolean $correction (optional) Whether to apply Bessel's correction.
-	 * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
-	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
-	 */
-    static public function standardDeviation(array $sample, $correction = true)
+     * Compute the standard deviation of $sample.
+     *
+     * * To compute the population standard deviation: $sample is considered as a population if $correction equals false.
+     * * To compute the sample standard deviation: $sample is considered as sample if $correction equals true.
+     *
+     * IMPORTANT:
+     * If $correction is true, $sample must contain more than 1 value, otherwise this method
+     * returns false.
+     *
+     * @param array $sample An array of numeric values.
+     * @param boolean $correction (optional) Whether to apply Bessel's correction.
+     * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
+     * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
+     */
+    public static function standardDeviation(array $sample, $correction = true)
     {
         $sampleVariance = static::variance($sample, $correction);
 
@@ -183,25 +180,25 @@ class Utils
     }
 
     /**
-	 * Add an appropriate delimiter (/) to a regular expression that has no delimiters. This
-	 * method is multi-byte safe safe.
+     * Add an appropriate delimiter (/) to a regular expression that has no delimiters. This
+     * method is multi-byte safe safe.
      *
      * @param string $string
-	 * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
-	 */
-    static public function pregAddDelimiter($string)
+     * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
+     */
+    public static function pregAddDelimiter($string)
     {
         return '/' . static::escapeSymbols($string, '/') . '/';
     }
 
     /**
-	 * Get the amout of backslash (\) characters in $string that precede $offset.
-	 *
-	 * @param string $string
-	 * @param integer $offset
-	 * @return integer
-	 */
-    static public function getPrecedingBackslashesCount($string, $offset)
+     * Get the amout of backslash (\) characters in $string that precede $offset.
+     *
+     * @param string $string
+     * @param integer $offset
+     * @return integer
+     */
+    public static function getPrecedingBackslashesCount($string, $offset)
     {
         $count = 0;
 
@@ -219,16 +216,16 @@ class Utils
     }
 
     /**
-	 * Escape with a backslash (\) the $symbols in $string.
-	 *
-	 * @param string $string
-	 * @param array|string $symbols An array of symbols or a single symbol.
-	 * @return string The escaped string.
-	 */
-    static public function escapeSymbols($string, $symbols)
+     * Escape with a backslash (\) the $symbols in $string.
+     *
+     * @param string $string
+     * @param array|string $symbols An array of symbols or a single symbol.
+     * @return string The escaped string.
+     */
+    public static function escapeSymbols($string, $symbols)
     {
         if (!is_array($symbols)) {
-            $symbols = array($symbols);
+            $symbols = [$symbols];
         }
 
         $len = mb_strlen($string, 'UTF-8');
@@ -237,7 +234,6 @@ class Utils
         for ($i = 0; $i < $len; $i++) {
             $char = mb_substr($string, $i, 1); // get a multi-byte char.
             if (in_array($char, $symbols) === true) {
-
                 // Check escaping.
                 // If the amount of preceding backslashes is odd, it is escaped.
                 // If the amount of preceding backslashes is even, it is not escaped.
@@ -254,13 +250,13 @@ class Utils
     }
 
     /**
-	 * Transform a custom operator class e.g. 'org.qtism.custom.explode' into a PHP
-	 * fully qualified class name e.g. 'org\qtism\custom\Explode'.
-	 *
-	 * @param string $class A custom operator class name where namespace separator is '.' (dot).
-	 * @return boolean|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
-	 */
-    static public function customOperatorClassToPhpClass($class)
+     * Transform a custom operator class e.g. 'org.qtism.custom.explode' into a PHP
+     * fully qualified class name e.g. 'org\qtism\custom\Explode'.
+     *
+     * @param string $class A custom operator class name where namespace separator is '.' (dot).
+     * @return boolean|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
+     */
+    public static function customOperatorClassToPhpClass($class)
     {
         if (is_string($class) === false) {
             return false;
@@ -283,26 +279,25 @@ class Utils
 
         return implode("\\", $tokens);
     }
-    
+
     /**
      * Get a meaningful message for the last PREG error that occured.
-     * 
+     *
      * The following PREG error codes are considered by this method:
-     * 
+     *
      * * PREG_BACKTRACK_LIMIT_ERROR
      * * PREG_RECURSION_LIMIT_ERROR
      * * PREG_BAD_UTF8_ERROR
      * * PREG_BAD_UTF8_OFFSET_ERROR
-     * 
+     *
      * @return string
      */
-    static public function lastPregErrorMessage()
+    public static function lastPregErrorMessage()
     {
         $error = preg_last_error();
         $errorType = 'PCRE Engine error';
 
         switch ($error) {
-
             case PREG_BACKTRACK_LIMIT_ERROR:
                 $errorType = "PCRE Engine backtrack limit exceeded";
                 break;
@@ -311,31 +306,32 @@ class Utils
                 $errorType = "PCRE Engine recursion limit exceeded";
                 break;
 
-            case PREG_BAD_UTF8_ERROR:case PREG_BAD_UTF8_OFFSET_ERROR:
+            case PREG_BAD_UTF8_ERROR:
+            case PREG_BAD_UTF8_OFFSET_ERROR:
                 $errorType = "PCRE Engine malformed UTF-8 error";
                 break;
         }
-        
+
         return $errorType;
     }
-    
+
     /**
      * Prepare an XSD Regular Expression pattern into a PCRE compliant one.
      *
      * @param string $pattern
      * @return string
      */
-    static public function prepareXsdPatternForPcre($pattern)
+    public static function prepareXsdPatternForPcre($pattern)
     {
         // XML schema always implicitly anchors the entire regular expression
         // because there is no carret (^) nor dollar ($) signs.
         // see http://www.regular-expressions.info/xml.html
-        $pattern = self::escapeSymbols($pattern, array('$', '^'));
+        $pattern = self::escapeSymbols($pattern, ['$', '^']);
         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
         $pattern .= 's';
-        
+
         return $pattern;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,23 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
-use qtism\common\enums\Enumeration;
-
 /**
  * The AssessmentItemSessionState enumeration describes the possible
  * states an item session can get during its lifecycle.
- *
- * @author Jérôme Bogaerts
- *
  */
 class AssessmentItemSessionState extends AssessmentTestSessionState
 {
@@ -42,11 +37,14 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
 
     public static function asArray()
     {
-        return array_merge(AssessmentTestSessionState::asArray(), array(
-            'NOT_SELECTED' => self::NOT_SELECTED,
-            'SOLUTION' => self::SOLUTION,
-            'REVIEW' => self::REVIEW
-        ));
+        return array_merge(
+            AssessmentTestSessionState::asArray(),
+            [
+                'NOT_SELECTED' => self::NOT_SELECTED,
+                'SOLUTION' => self::SOLUTION,
+                'REVIEW' => self::REVIEW,
+            ]
+        );
     }
 
     public static function getConstantByName($name)
@@ -54,19 +52,19 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
         switch (strtolower($name)) {
             case 'notselected':
                 return self::NOT_SELECTED;
-            break;
+                break;
 
             case 'solution':
                 return self::SOLUTION;
-            break;
+                break;
 
             case 'review':
                 return self::REVIEW;
-            break;
+                break;
 
             default:
                 return AssessmentTestSessionState::getConstantByName($name);
-            break;
+                break;
         }
     }
 
@@ -75,19 +73,19 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
         switch ($constant) {
             case self::NOT_SELECTED:
                 return 'notSelected';
-            break;
+                break;
 
             case self::SOLUTION:
                 return 'solution';
-            break;
+                break;
 
             case self::REVIEW:
                 return 'review';
-            break;
+                break;
 
             default:
                 return AssessmentTestSessionState::getNameByConstant($constant);
-            break;
+                break;
         }
     }
 }

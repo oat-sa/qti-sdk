@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\expressions;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -41,37 +42,34 @@ use \InvalidArgumentException;
  *
  * If a container contains multiple instances of the same value then that value is counted
  * once only. To continue the example above {B,B,C} would still map to 1.5 and not 2.5.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MapResponse extends Expression implements Pure
 {
     /**
-	 * The QTI identifier of the associated mapping.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The QTI identifier of the associated mapping.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * Create a new instance of MapResponse.
-	 *
-	 * @param string $identifier The QTI Identifier of the associated mapping.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Create a new instance of MapResponse.
+     *
+     * @param string $identifier The QTI Identifier of the associated mapping.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function __construct($identifier)
     {
         $this->setIdentifier($identifier);
     }
 
     /**
-	 * Set the identifier of the associated mapping.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the associated mapping.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -83,18 +81,18 @@ class MapResponse extends Expression implements Pure
     }
 
     /**
-	 * Get the identifier of the associated mapping.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the identifier of the associated mapping.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'mapResponse';
@@ -102,6 +100,7 @@ class MapResponse extends Expression implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

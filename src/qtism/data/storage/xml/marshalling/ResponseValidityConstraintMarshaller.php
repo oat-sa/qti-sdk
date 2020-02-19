@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
 use qtism\data\state\ResponseValidityConstraint;
-use qtism\data\state\AssociationValidityConstraintCollection;
-use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * Marshalling implementation for ResponseValididtyMarshaller extended QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ResponseValidityConstraintMarshaller extends Marshaller
 {
     /**
      * Marshall a ResponseValidityConstraint object to its XML counterpart.
      *
-     * @param \qtism\data\QtiComponent $component
-     * @return \DOMElement
+     * @param QtiComponent $component
+     * @return DOMElement
      */
     public function marshall(QtiComponent $component)
     {
@@ -48,11 +45,11 @@ class ResponseValidityConstraintMarshaller extends Marshaller
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         $this->setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
         $this->setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
-        
+
         if (($patternMask = $component->getPatternMask()) !== '') {
             $this->setDOMElementAttribute($element, 'patternMask', $patternMask);
         }
-        
+
         foreach ($component->getAssociationValidityConstraints() as $associationValidityConstraint) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($associationValidityConstraint);
             $element->appendChild($marshaller->marshall($associationValidityConstraint));
@@ -64,32 +61,29 @@ class ResponseValidityConstraintMarshaller extends Marshaller
     /**
      * Unmarshall a DOMElement to its ResponseValidityConstraint data model representation.
      *
-     * @param \DOMElement $element
-     * @return \qtism\data\QtiComponent A ResponseValidityConstraint object.
-     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
+     * @param DOMElement $element
+     * @return QtiComponent A ResponseValidityConstraint object.
+     * @throws UnmarshallingException
      */
     public function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            
             if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
-                
                 if (($maxConstraint = $this->getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
-                    
                     if (($patternMask = $this->getDOMElementAttributeAs($element, 'patternMask')) === null) {
                         $patternMask = '';
                     }
                     try {
                         $component = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
-                    
+
                         // Find child associationValidityConstraint elements if any.
                         $associationValidityConstraintElts = $this->getChildElementsByTagName($element, 'associationValidityConstraint');
-                            
+
                         foreach ($associationValidityConstraintElts as $associationValidityConstraintElt) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($associationValidityConstraintElt);
                             $component->addAssociationValidityConstraint($marshaller->unmarshall($associationValidityConstraintElt));
                         }
-                        
+
                         return $component;
                     } catch (InvalidArgumentException $e) {
                         throw new UnmarshallingException(
@@ -98,7 +92,6 @@ class ResponseValidityConstraintMarshaller extends Marshaller
                             $e
                         );
                     }
-                    
                 } else {
                     throw new UnmarshallingException(
                         "The mandatory 'maxConstraint' attribute is missing from element 'responseValididtyConstraint'.",

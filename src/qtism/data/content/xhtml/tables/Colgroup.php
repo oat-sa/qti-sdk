@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +23,11 @@
 
 namespace qtism\data\content\xhtml\tables;
 
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
 
 /**
  * The XHTML colgroup class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Colgroup extends BodyElement
 {
@@ -57,9 +55,9 @@ class Colgroup extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '' , $lang = '', $label = '')
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new ColCollection());
@@ -70,7 +68,7 @@ class Colgroup extends BodyElement
      * Set the value for the span attribute.
      *
      * @param integer $span A strictly positive (> 0) integer.
-     * @throws \InvalidArgumentException If $span is not a strictly positive integer.
+     * @throws InvalidArgumentException If $span is not a strictly positive integer.
      */
     public function setSpan($span)
     {
@@ -103,7 +101,7 @@ class Colgroup extends BodyElement
     /**
      * Set the collection of Col objects composing the ColGroup.
      *
-     * @param \qtism\data\content\xhtml\tables\ColCollection $content A collection of Col objects.
+     * @param ColCollection $content A collection of Col objects.
      */
     public function setContent(ColCollection $content)
     {
@@ -113,7 +111,7 @@ class Colgroup extends BodyElement
     /**
      * Get the collection of Col objects composing the ColGroup.
      *
-     * @return \qtism\data\content\xhtml\tables\ColCollection
+     * @return ColCollection
      */
     public function getContent()
     {

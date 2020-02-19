@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,10 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\state\AssociationValidityConstraint;
-use qtism\data\state\AssociationValidityConstraintCollection;
-use \InvalidArgumentException;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -37,9 +37,6 @@ use \InvalidArgumentException;
  *
  * The associateInteraction must be bound to a response variable with
  * base-type pair and either single or multiple cardinality.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssociateInteraction extends BlockInteraction
 {
@@ -83,7 +80,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * An ordered set of choices.
      *
-     * @var \qtism\data\content\interactions\SimpleAssociableChoiceCollection
+     * @var SimpleAssociableChoiceCollection
      * @qtism-bean-property
      */
     private $simpleAssociableChoices;
@@ -97,7 +94,7 @@ class AssociateInteraction extends BlockInteraction
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the arguments is invalid.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, SimpleAssociableChoiceCollection $simpleAssociableChoices, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -113,7 +110,7 @@ class AssociateInteraction extends BlockInteraction
      * the choices are displayed.
      *
      * @param boolean $shuffle
-     * @throws \InvalidArgumentException If $shuffle is not a boolean value.
+     * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
     {
@@ -141,7 +138,7 @@ class AssociateInteraction extends BlockInteraction
      * is 0, there is no maximum number of associations.
      *
      * @param integer $maxAssociations A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $maxAssociations is not a positive integer.
+     * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
     {
@@ -179,12 +176,11 @@ class AssociateInteraction extends BlockInteraction
      * $minAssociations is 0, there is no minimum number of associations required.
      *
      * @param integer $minAssociations A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by 'maxAssociations'.
+     * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by 'maxAssociations'.
      */
     public function setMinAssociations($minAssociations)
     {
         if (is_int($minAssociations) === true && $minAssociations >= 0) {
-
             if ($this->hasMaxAssociations() === true && $minAssociations > $this->getMaxAssociations()) {
                 $msg = "The 'minAssociation' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
                 throw new InvalidArgumentException($msg);
@@ -221,8 +217,8 @@ class AssociateInteraction extends BlockInteraction
     /**
      * Set the choices.
      *
-     * @param \qtism\data\content\interactions\SimpleAssociableChoiceCollection $simpleAssociableChoices A collection of at least one SimpleAssociableChoice object.
-     * @throws \InvalidArgumentException If $simpleAssociableChoices is empty.
+     * @param SimpleAssociableChoiceCollection $simpleAssociableChoices A collection of at least one SimpleAssociableChoice object.
+     * @throws InvalidArgumentException If $simpleAssociableChoices is empty.
      */
     public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices)
     {
@@ -237,13 +233,13 @@ class AssociateInteraction extends BlockInteraction
     /**
      * Get the choices.
      *
-     * @return \qtism\data\content\interactions\SimpleAssociableChoiceCollection A collection of at least one SimpleAssociableChoice.
+     * @return SimpleAssociableChoiceCollection A collection of at least one SimpleAssociableChoice.
      */
     public function getSimpleAssociableChoices()
     {
         return $this->simpleAssociableChoices;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
@@ -254,7 +250,7 @@ class AssociateInteraction extends BlockInteraction
             $this->getMinAssociations(),
             $this->getMaxAssociations()
         );
-        
+
         $simpleAssociableChoices = $this->getComponentsByClassName('simpleAssociableChoice');
         foreach ($simpleAssociableChoices as $simpleAssociableChoice) {
             $responseValidityConstraint->addAssociationValidityConstraint(
@@ -265,7 +261,7 @@ class AssociateInteraction extends BlockInteraction
                 )
             );
         }
-        
+
         return $responseValidityConstraint;
     }
 

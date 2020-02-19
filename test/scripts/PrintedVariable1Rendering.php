@@ -1,10 +1,11 @@
 <?php
+
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\runtime\common\TemplateVariable;
-use qtism\runtime\common\State;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\common\State;
+use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
@@ -24,12 +25,10 @@ $state->setVariable(new TemplateVariable('TPL_Cl', Cardinality::SINGLE, BaseType
 if (isset($argv[1]) && trim(strtolower($argv[1])) === 'context_aware') {
     $renderer->setPrintedVariablePolicy(XhtmlRenderingEngine::CONTEXT_AWARE);
     $renderer->setState($state);
-}
-else if (isset($argv[1]) && trim(strtolower($argv[1])) === 'template_oriented') {
+} elseif (isset($argv[1]) && trim(strtolower($argv[1])) === 'template_oriented') {
     $renderer->setPrintedVariablePolicy(XhtmlRenderingEngine::TEMPLATE_ORIENTED);
     $renderer->setState($state);
-}
-else {
+} else {
     $renderer->setPrintedVariablePolicy(XhtmlRenderingEngine::CONTEXT_STATIC);
 }
 

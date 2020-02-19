@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,19 +23,16 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
+use DOMElement;
+use qtism\common\utils\Format;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
-use qtism\common\utils\Format;
-use \DOMElement;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A complex Operator marshaller focusing on the marshalling/unmarshalling process
  * of equal QTI operators.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class EqualMarshaller extends OperatorMarshaller
 {
@@ -67,8 +65,8 @@ class EqualMarshaller extends OperatorMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $object = new Equal($children);
@@ -88,7 +86,7 @@ class EqualMarshaller extends OperatorMarshaller
                 $msg = "'tolerance' attribute not correctly formatted in element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             } else {
-                $finalTolerance = array();
+                $finalTolerance = [];
                 foreach ($tolerance as $t) {
                     $finalTolerance[] = (Format::isFloat($t)) ? floatval($t) : $t;
                 }

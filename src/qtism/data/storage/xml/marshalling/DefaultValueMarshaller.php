@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,19 +23,15 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
+use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
 use qtism\data\state\DefaultValue;
-use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\common\enums\BaseType;
-use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * Marshalling/Unmarshalling implementation for defaultValue.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DefaultValueMarshaller extends Marshaller
 {
@@ -57,7 +54,7 @@ class DefaultValueMarshaller extends Marshaller
 
     /**
      * Create a new DefaultValueMarshaller object.
-     * 
+     *
      * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
      * @param integer $baseType The baseType of the Variable holding this DefaultValue.
      */
@@ -68,11 +65,11 @@ class DefaultValueMarshaller extends Marshaller
     }
 
     /**
-	 * Marshall a DefaultValue object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A DefaultValue object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a DefaultValue object into a DOMElement object.
+     *
+     * @param QtiComponent $component A DefaultValue object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -84,7 +81,7 @@ class DefaultValueMarshaller extends Marshaller
 
         // A DefaultValue contains 1..* Value objects
         foreach ($component->getValues() as $value) {
-            $valueMarshaller = $this->getMarshallerFactory()->createMarshaller($value, array($this->getBaseType()));
+            $valueMarshaller = $this->getMarshallerFactory()->createMarshaller($value, [$this->getBaseType()]);
             $valueElement = $valueMarshaller->marshall($value);
             $element->appendChild($valueElement);
         }
@@ -93,12 +90,12 @@ class DefaultValueMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI defaultValue element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A DefaultValue object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI defaultValue element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A DefaultValue object.
+     * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
@@ -109,9 +106,8 @@ class DefaultValueMarshaller extends Marshaller
         $valueElements = $element->getElementsByTagName('value');
 
         if ($valueElements->length > 0) {
-
             for ($i = 0; $i < $valueElements->length; $i++) {
-                $valueMarshaller = $this->getMarshallerFactory()->createMarshaller($valueElements->item($i), array($this->getBaseType()));
+                $valueMarshaller = $this->getMarshallerFactory()->createMarshaller($valueElements->item($i), [$this->getBaseType()]);
                 $values[] = $valueMarshaller->unmarshall($valueElements->item($i));
             }
 
@@ -122,12 +118,11 @@ class DefaultValueMarshaller extends Marshaller
             $msg = "A 'defaultValue' QTI element must contain at least one 'value' QTI element.";
             throw new UnmarshallingException($msg, $element);
         }
-
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'defaultValue';

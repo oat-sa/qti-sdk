@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,13 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\common\datatypes;
+
+use RuntimeException;
 
 /**
  * The interface to implement to create a new QTI File datatype
@@ -33,9 +36,6 @@ namespace qtism\common\datatypes;
  * (for example, by the candidate when uploading it as part
  * of an interaction). The content type of the file is one
  * of the MIME types defined by [RFC2045].
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 interface QtiFile extends QtiDatatype
 {
@@ -71,8 +71,8 @@ interface QtiFile extends QtiDatatype
      * Get a brand new stream resource on the file. It is the responsibility of the
      * client code to close the stream when it not needed anymore.
      *
-     * @throws \RuntimeException If the stream on the file cannot be open.
      * @return resource An open stream.
+     * @throws RuntimeException If the stream on the file cannot be open.
      */
     public function getStream();
 
@@ -80,8 +80,8 @@ interface QtiFile extends QtiDatatype
      * Get the unique identifier of the file in the storage system it
      * is stored.
      *
-     * @throws \RuntimeException If an error occurs while retrieving the file.
      * @return string A unique identifier.
+     * @throws RuntimeException If an error occurs while retrieving the file.
      */
     public function getIdentifier();
 }

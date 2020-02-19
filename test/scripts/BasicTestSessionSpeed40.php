@@ -1,68 +1,73 @@
 <?php
-use qtism\runtime\storage\common\AbstractStorage;
-use qtism\runtime\tests\AssessmentTestSession;
-use qtism\data\storage\xml\XmlCompactDocument;
-use qtism\data\storage\xml\XmlDocument;
-use qtism\common\datatypes\QtiIdentifier;
+
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\AssessmentTest;
+use qtism\data\storage\php\PhpDocument;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-use qtism\data\AssessmentTest;
-use qtism\runtime\tests\SessionManager;
 use qtism\runtime\storage\binary\LocalQtiBinaryStorage;
-use qtism\data\storage\php\PhpDocument;
+use qtism\runtime\storage\common\AbstractStorage;
+use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\SessionManager;
 
 date_default_timezone_set('UTC');
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
-function loadTestDefinition(array &$average = null) {
+function loadTestDefinition(array &$average = null)
+{
     $start = microtime();
-    
+
     $phpDoc = new PhpDocument();
     $phpDoc->load(dirname(__FILE__) . '/../../test/samples/custom/php/linear_40_items.php');
-    
+
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);
     }
-    
+
     return $phpDoc->getDocumentComponent();
 }
 
-function createFactory() {
+function createFactory()
+{
     return new SessionManager(new FileSystemFileManager());
 }
 
-function createStorage(SessionManager $factory, AssessmentTest $test) {
+function createStorage(SessionManager $factory, AssessmentTest $test)
+{
     return new LocalQtiBinaryStorage($factory, $test);
 }
 
-function spentTime($start, $end, array &$registration = null) {
+function spentTime($start, $end, array &$registration = null)
+{
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
     $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
-    
+
     if (!is_null($registration)) {
         $registration[] = $time;
     }
-    
+
     return $time;
 }
 
-function attempt(AssessmentTestSession $session, $identifier, array &$average = null) {
+function attempt(AssessmentTestSession $session, $identifier, array &$average = null)
+{
     $start = microtime();
 
     $session->beginAttempt();
-    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier)))));
+    $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier))]));
 
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);
     }
 }
 
-function retrieve(AbstractStorage $storage, $sessionId, array &$average = null) {
+function retrieve(AbstractStorage $storage, $sessionId, array &$average = null)
+{
     $start = microtime();
 
     $session = $storage->retrieve($sessionId);
@@ -74,7 +79,8 @@ function retrieve(AbstractStorage $storage, $sessionId, array &$average = null) 
     return $session;
 }
 
-function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null) {
+function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null)
+{
     $start = microtime();
 
     $storage->persist($session);
@@ -84,7 +90,8 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
     }
 }
 
-function moveNext(AssessmentTestSession $session, array &$average) {
+function moveNext(AssessmentTestSession $session, array &$average)
+{
     $start = microtime();
 
     $session->moveNext();
@@ -94,7 +101,8 @@ function moveNext(AssessmentTestSession $session, array &$average) {
     }
 }
 
-function neighbourhood(AssessmentTestSession $session, array &$average = null) {
+function neighbourhood(AssessmentTestSession $session, array &$average = null)
+{
     $start = microtime();
     $neighbourhood = $session->getPossibleJumps();
 
@@ -103,13 +111,13 @@ function neighbourhood(AssessmentTestSession $session, array &$average = null) {
     }
 }
 
-$averageAttempt = array();
-$effectiveAverageAttempt = array();
-$averageRetrieve = array();
-$averagePersist = array();
-$averageNext = array();
-$averageLoad = array();
-$averageNeighbourhood = array();
+$averageAttempt = [];
+$effectiveAverageAttempt = [];
+$averageRetrieve = [];
+$averagePersist = [];
+$averageNext = [];
+$averageLoad = [];
+$averageNeighbourhood = [];
 
 // Beginning of the session + persistance.
 $start = microtime();

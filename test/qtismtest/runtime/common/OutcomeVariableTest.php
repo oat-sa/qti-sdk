@@ -1,23 +1,24 @@
 <?php
+
 namespace qtismtest\runtime\common;
 
-use qtismtest\QtiSmTestCase;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\state\DefaultValue;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\data\state\DefaultValue;
 use qtism\data\state\VariableDeclaration;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\common\MultipleContainer;
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeVariableTest extends QtiSmTestCase
 {
@@ -52,9 +53,9 @@ class OutcomeVariableTest extends QtiSmTestCase
 
         $variable->setValue(new QtiInteger(16));
         $variable->setDefaultValue(new QtiInteger(-1));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $variable->getValue());
+        $this->assertInstanceOf(QtiInteger::class, $variable->getValue());
         $this->assertEquals(16, $variable->getValue()->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $variable->getDefaultValue());
+        $this->assertInstanceOf(QtiInteger::class, $variable->getDefaultValue());
         $this->assertEquals(-1, $variable->getDefaultValue()->getValue());
 
         // If I reinit the variable, I should see the NULL value inside.
@@ -66,7 +67,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         // was given.
         $variable->setDefaultValue(null);
         $variable->applyDefaultValue();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $variable->getValue());
+        $this->assertInstanceOf(QtiInteger::class, $variable->getValue());
         $this->assertEquals(0, $variable->getValue()->getValue());
     }
 
@@ -83,8 +84,7 @@ class OutcomeVariableTest extends QtiSmTestCase
             $variable->setValue(new MultipleContainer(BaseType::DURATION));
             // This code portion should not be reached.
             $this->assertTrue(false, 'Developer: Exception not thrown but not compliant baseType?!');
-        }
-        catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
 
@@ -92,8 +92,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         try {
             $variable->setValue(new OrderedContainer(BaseType::INTEGER));
             $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
-        }
-        catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
 
@@ -101,8 +100,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         try {
             $variable->setValue(new QtiInteger(25));
             $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
-        }
-        catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
     }
@@ -137,7 +135,8 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertTrue($pair->equals($outcomeVariable->getDefaultValue()));
     }
 
-    public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality() {
+    public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality()
+    {
         $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="pair" cardinality="multiple">
@@ -176,8 +175,8 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $defaultValue);
         $this->assertEquals(2, count($defaultValue));
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $defaultValue['A']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $defaultValue['B']);
+        $this->assertInstanceOf(QtiPair::class, $defaultValue['A']);
+        $this->assertInstanceOf(QtiFloat::class, $defaultValue['B']);
     }
 
     public function testCreateFromVariableDeclarationExtended()
@@ -185,13 +184,14 @@ class OutcomeVariableTest extends QtiSmTestCase
         $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
-                                identifier="outcome1" 
-                                baseType="pair" 
-                                cardinality="ordered"
-                                views="author candidate"
-                                normalMinimum="1.0"
-                                normalMaximum="2.1"
-                                masteryValue="1.5">
+                identifier="outcome1" 
+                baseType="pair" 
+                cardinality="ordered"
+                views="author candidate"
+                normalMinimum="1.0"
+                normalMaximum="2.1"
+                masteryValue="1.5"
+            >
                 <defaultValue>
                     <value>A B</value>
                     <value>B C</value>
@@ -273,7 +273,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     {
         $value = new Value('String!', BaseType::STRING);
         $defaultValue = new DefaultValue(
-            new ValueCollection(array($value))
+            new ValueCollection([$value])
         );
         $variableDeclaration = new VariableDeclaration('var', BaseType::INTEGER, Cardinality::MULTIPLE, $defaultValue);
 

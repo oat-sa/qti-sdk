@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\data\content\xhtml\tables;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\content\xhtml\tables\TableCellScope;
+use qtismtest\QtiSmEnumTestCase;
 
 class TableCellScopeTest extends QtiSmEnumTestCase
 {
@@ -10,34 +11,34 @@ class TableCellScopeTest extends QtiSmEnumTestCase
     {
         return TableCellScope::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'row',
             'col',
             'rowgroup',
-            'colgroup'
-        );
+            'colgroup',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'ROW',
             'COL',
             'ROWGROUP',
-            'COLGROUP'
-        );
+            'COLGROUP',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             TableCellScope::ROW,
             TableCellScope::COL,
             TableCellScope::ROWGROUP,
             TableCellScope::COLGROUP,
-        );
+        ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,12 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
 /**
  * Represents the String QTI datatype.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiString extends QtiScalar
 {
@@ -38,7 +36,7 @@ class QtiString extends QtiScalar
      * Checks whether or not $value is a valid string.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not a valid string.
+     * @throws InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)
     {
@@ -69,10 +67,10 @@ class QtiString extends QtiScalar
     {
         return Cardinality::SINGLE;
     }
-    
+
     /**
-     * Wheter or not the current QtiString object is equal to $obj. 
-     * 
+     * Wheter or not the current QtiString object is equal to $obj.
+     *
      * Two QtiString objects are considered to be identical if their intrinsic
      * values are equals. If the current QtiString is an empty string, and $obj
      * is NULL, the values are considered equal.

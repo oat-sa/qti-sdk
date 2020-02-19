@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,22 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\Cardinality;
-use qtism\common\collections\Container;
 use qtism\data\expressions\operators\Repeat;
+use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\Utils as ExprUtils;
-use qtism\runtime\common\OrderedContainer;
 
 /**
  * The RepeatProcessor class aims at processing Repeat operators.
@@ -47,21 +48,18 @@ use qtism\runtime\common\OrderedContainer;
  *
  * Any sub-expressions evaluating to NULL are ignored. If all sub-expressions are
  * NULL then the result is NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RepeatProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Repeat operator.
-	 *
-	 * Note: NULL values are simply ignored. If all sub-expressions are NULL, NULL is
-	 * returned.
-	 *
-	 * @return \qtism\runtime\common\OrderedContainer An ordered container filled sequentially by evaluating each sub-expressions, repeated a 'numberRepeats' of times. NULL is returned if all sub-expressions are NULL or numberRepeats < 1.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Repeat operator.
+     *
+     * Note: NULL values are simply ignored. If all sub-expressions are NULL, NULL is
+     * returned.
+     *
+     * @return OrderedContainer An ordered container filled sequentially by evaluating each sub-expressions, repeated a 'numberRepeats' of times. NULL is returned if all sub-expressions are NULL or numberRepeats < 1.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -96,7 +94,6 @@ class RepeatProcessor extends OperatorProcessor
             $refType = null;
 
             foreach ($operands as $operand) {
-
                 // If null, ignore
                 if (is_null($operand) || ($operand instanceof Container && $operand->isNull())) {
                     continue;
@@ -122,7 +119,7 @@ class RepeatProcessor extends OperatorProcessor
                 // Okay we are good...
                 $operandCardinality = RuntimeUtils::inferCardinality($operand);
                 if ($operandCardinality !== Cardinality::ORDERED) {
-                    $operand = new OrderedContainer($currentType, array($operand));
+                    $operand = new OrderedContainer($currentType, [$operand]);
                 }
 
                 foreach ($operand as $o) {
@@ -137,7 +134,7 @@ class RepeatProcessor extends OperatorProcessor
             return null;
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

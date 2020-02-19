@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
-use \DOMElement;
+use qtism\data\QtiComponent;
 
 /**
  * A marshalling/unmarshalling implementation for the QTI TesVariable expression.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestVariablesMarshaller extends ItemSubsetMarshaller
 {
     /**
-	 * Marshall a TestVariable object in its DOMElement equivalent.
-	 *
-	 * @param \qtism\data\QtiComponent A TestVariable object.
-	 * @return \DOMElement The corresponding testVariable QTI element.
-	 */
+     * Marshall a TestVariable object in its DOMElement equivalent.
+     *
+     * @param QtiComponent A TestVariable object.
+     * @return DOMElement The corresponding testVariable QTI element.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
@@ -61,11 +59,11 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-	 * Marshall a testVariable QTI element in its TestVariable object equivalent.
-	 *
-	 * @param \DOMElement A DOMElement object.
-	 * @return \qtism\data\QtiComponent The corresponding TestVariable object.
-	 */
+     * Marshall a testVariable QTI element in its TestVariable object equivalent.
+     *
+     * @param DOMElement A DOMElement object.
+     * @return QtiComponent The corresponding TestVariable object.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
@@ -92,8 +90,8 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'testVariables';

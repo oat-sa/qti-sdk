@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
 use qtism\data\ShowHide;
-use \DOMDocumentFragment;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * The renderer for ModalFeedback elements. Rendered elements
@@ -38,9 +38,6 @@ use \DOMDocumentFragment;
  * * data-outcome-identifier = qti:modalFeedback->outcomeIdentifier
  * * data-show-hide = qti:modalFeedback->showHide
  * * data-identifier = qti:modalFeedback->identifier
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ModalFeedbackRenderer extends AbstractXhtmlRenderer
 {

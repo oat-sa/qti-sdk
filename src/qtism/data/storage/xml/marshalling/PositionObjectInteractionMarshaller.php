@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,27 +23,24 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\utils\Format;
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for PositionObjectInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PositionObjectInteractionMarshaller extends Marshaller
 {
     /**
      * Marshall an PositionObjectInteraction object into a DOMElement object.
      *
-     * @param \qtism\data\QtiComponent $component A PositionObjectInteraction object.
-     * @return \DOMElement The according DOMElement object.
-     * @throws \qtism\data\storage\xml\marshalling\MarshallingException
+     * @param QtiComponent $component A PositionObjectInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -50,7 +48,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
         $element = $this->createElement($component);
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        
+
         if ($component->getMaxChoices() > 0) {
             $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
@@ -72,18 +70,16 @@ class PositionObjectInteractionMarshaller extends Marshaller
     /**
      * Unmarshall a DOMElement object corresponding to an positionObjectInteraction element.
      *
-     * @param \DOMElement $element A DOMElement object.
-     * @return \qtism\data\QtiComponent A PositionObjectInteraction object.
-     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A PositionObjectInteraction object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
-
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 $component = new PositionObjectInteraction($responseIdentifier, $object);
 
@@ -100,11 +96,8 @@ class PositionObjectInteractionMarshaller extends Marshaller
                     $pointsCount = count($points);
 
                     if ($pointsCount === 2) {
-
                         if (Format::isInteger($points[0]) === true) {
-
                             if (Format::isInteger($points[1]) === true) {
-
                                 $component->setCenterPoint(new QtiPoint(intval($points[0]), intval($points[1])));
                             } else {
                                 $msg = "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.";

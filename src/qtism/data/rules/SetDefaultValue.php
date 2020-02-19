@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,15 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\expressions\Expression;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A rule aiming at setting a given response variable or outcome variable
  * a default value.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SetDefaultValue extends QtiComponent implements TemplateRule
 {
@@ -50,7 +48,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
     /**
      * The expression to be executed to get the default value to be set.
      *
-     * @var \qtism\data\expressions\Expression
+     * @var Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -59,8 +57,8 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      * Create a new SetDefaultValue object.
      *
      * @param string $identifier The identifier of the response variable or outcome variable to have its default value set.
-     * @param \qtism\data\expressions\Expression $expression An expression to be executed to get the value to assign to the variable.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @param Expression $expression An expression to be executed to get the value to assign to the variable.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function __construct($identifier, Expression $expression)
     {
@@ -73,7 +71,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      * default value set.
      *
      * @param string $identifier A valid QTI identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier)
     {
@@ -99,7 +97,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
     /**
      * Get the expression to be executed to get the default value to be set.
      *
-     * @param \qtism\data\expressions\Expression $expression An Expression object.
+     * @param Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression)
     {
@@ -109,7 +107,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
     /**
      * Get the expression to be executed to get the default value to be set.
      *
-     * @return \qtism\data\expressions\Expression An Expression object.
+     * @return Expression An Expression object.
      */
     public function getExpression()
     {
@@ -129,6 +127,6 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array($this->getExpression()));
+        return new QtiComponentCollection([$this->getExpression()]);
     }
 }
