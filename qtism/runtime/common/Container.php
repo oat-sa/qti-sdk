@@ -34,13 +34,8 @@ use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Utils as RuntimeUtils;
 
 /**
- * A Collection which is able to contain any PHP datatypes compliant
- * with the QTI Specification + QTIStateMachine equivalents which are:
- *
- * * Duration (qti:duration)
- * * Pair (qti:pair)
- * * DirectedPair (qti:directedPair)
- * * Point (qti:point)
+ * A generic Collection which is able to contain any QTI Scalar Datatype in
+ * addition with the null value.
  *
  * From IMS QTI:
  *
@@ -83,10 +78,13 @@ class Container extends AbstractCollection implements Comparable
         parent::__construct($array);
     }
 
+    /**
+     * @see AbstractCollection::checkType()
+     */
     protected function checkType($value)
     {
-        if (!Utils::isRuntimeCompliant($value)) {
-            Utils::throwTypingError($value);
+        if (!RuntimeUtils::isRuntimeCompliant($value)) {
+            RuntimeUtils::throwTypingError($value);
         }
     }
 
@@ -126,7 +124,7 @@ class Container extends AbstractCollection implements Comparable
      */
     public function equals($obj)
     {
-        if (gettype($obj) === 'object' && $obj instanceof static && count($obj) === count($this)) {
+        if (is_object($obj) && $obj instanceof static && count($obj) === count($this)) {
             foreach (array_keys($this->getDataPlaceHolder()) as $key) {
                 $t = $this[$key];
                 $occurencesA = $this->occurences($t);
@@ -136,11 +134,12 @@ class Container extends AbstractCollection implements Comparable
                     return false;
                 }
             }
+
             return true;
-        } else {
-            // Not the same type or different item count.
-            return false;
         }
+
+        // Not the same type or different item count.
+        return false;
     }
 
     /**
@@ -158,22 +157,20 @@ class Container extends AbstractCollection implements Comparable
 
         foreach (array_keys($this->getDataPlaceHolder()) as $key) {
             $t = $this[$key];
-            if (gettype($obj) === 'object' && $obj instanceof Comparable) {
+            if (is_object($obj) && $obj instanceof Comparable) {
                 // try to use Comparable.
                 if ($obj->equals($t)) {
                     $occurences++;
                 }
+            } elseif (is_object($t) && $t instanceof Comparable) {
+                // Again, use Comparable.
+                if ($t->equals($obj)) {
+                    $occurences++;
+                }
             } else {
-                if (gettype($t) === 'object' && $t instanceof Comparable) {
-                    // Again, use Comparable.
-                    if ($t->equals($obj)) {
-                        $occurences++;
-                    }
-                } else {
-                    // Both primitive.
-                    if ($obj === $t) {
-                        $occurences++;
-                    }
+                // Both primitive.
+                if ($obj === $t) {
+                    $occurences++;
                 }
             }
         }
@@ -194,6 +191,7 @@ class Container extends AbstractCollection implements Comparable
         foreach ($valueCollection as $value) {
             $container[] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
         }
+
         return $container;
     }
 
@@ -211,6 +209,11 @@ class Container extends AbstractCollection implements Comparable
         return ['[', ']'];
     }
 
+    /**
+     * Obtain a string representation of the container.
+     *
+     * @return string
+     */
     public function __toString()
     {
         $bounds = $this->getToStringBounds();
@@ -227,22 +230,16 @@ class Container extends AbstractCollection implements Comparable
 
             if (is_null($d) === true) {
                 $strings[] = 'NULL';
+            } elseif ($d instanceof QtiString) {
+                $strings[] = "'${d}'";
+            } elseif ($d instanceof QtiBoolean) {
+                // PHP boolean primitive type.
+                $strings[] = ($d->getValue() === true) ? 'true' : 'false';
+            } elseif ($d instanceof QtiFile) {
+                $strings[] = $d->getFilename();
             } else {
-                if ($d instanceof QtiString) {
-                    $strings[] = "'${d}'";
-                } else {
-                    if ($d instanceof QtiBoolean) {
-                        // PHP boolean primitive type.
-                        $strings[] = ($d->getValue() === true) ? 'true' : 'false';
-                    } else {
-                        if ($d instanceof QtiFile) {
-                            $strings[] = $d->getFilename();
-                        } else {
-                            // Other PHP primitive/object type.
-                            $strings[] = '' . $d;
-                        }
-                    }
-                }
+                // Other PHP primitive/object type.
+                $strings[] = '' . $d;
             }
         }
 
@@ -259,7 +256,7 @@ class Container extends AbstractCollection implements Comparable
      * Please note that the container copy is a shallow copy of the original, not
      * a deep copy.
      *
-     * @return \qtism\common\collections\Container
+     * @return Container
      */
     public function distinct()
     {
