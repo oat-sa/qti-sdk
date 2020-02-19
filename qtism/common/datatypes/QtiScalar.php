@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,83 +15,98 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\common\datatypes;
 
+use InvalidArgumentException;
 use qtism\common\Comparable;
 
 /**
- * The base class for all Scalar wrappers.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * The base class for all Scalar QTI datatypes. The following QTI datatypes
+ * are considered to be Scalar values:
  *
+ * * Boolean
+ * * Float
+ * * Identifier
+ * * Integer
+ * * IntOrIdentifier
+ * * String
+ * * Uri
  */
-abstract class QtiScalar implements Comparable {
-    
+abstract class QtiScalar implements Comparable
+{
     /**
      * The value of the Scalar object.
-     * 
+     *
      * @var mixed
      */
     private $value;
-    
+
     /**
      * Create a new Scalar object with a given $value as its content.
-     * 
+     *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
-    public function __construct($value) {
+    public function __construct($value)
+    {
         $this->setValue($value);
     }
-    
+
     /**
      * Set the PHP value to be encapsulated within the Scalar object.
-     * 
+     *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->checkType($value);
         $this->value = $value;
     }
-    
+
     /**
      * Get the encapsulated value from the Scalar object, representing its intrinsic value.
-     * 
+     *
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
-    
-    public function isNull() {
+
+    public function isNull()
+    {
         return $this->getValue() === null;
     }
-    
-    public function equals($obj) {
+
+    /**
+     * Whether or not $this is equal to $obj. Two Scalar
+     * objects are considered to be identical if their intrinsic
+     * values are strictly (===) equal.
+     *
+     * @return boolean
+     */
+    public function equals($obj)
+    {
         if ($obj instanceof QtiScalar) {
             return $obj->getValue() === $this->getValue();
-        }
-        else {
+        } else {
             return $this->getValue() === $obj;
         }
     }
-    
+
     /**
      * Checks if $value has the correct PHP datatype to
      * be encapsulated withing the Scalar object.
-     * 
+     *
      * @param mixed $value A value to be encapsulated within the Scalar object.
-     * @throws \InvalidArgumentException If $value has a not compliant PHP datatype.
+     * @throws InvalidArgumentException If $value has a not compliant PHP datatype.
      */
     abstract protected function checkType($value);
 }

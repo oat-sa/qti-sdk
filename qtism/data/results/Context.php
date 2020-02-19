@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,9 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -27,11 +29,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
 /**
- * Class Context
- *
  * This is the context for the 'assessmentResult'. It provides the corresponding set of identifiers.
- *
- * @package qtism\data\results
  */
 class Context extends QtiComponent
 {
@@ -39,6 +37,7 @@ class Context extends QtiComponent
      * A unique identifier for the test candidate. The attribute is defined by the IMS Learning Information Services specification [LIS, 13].
      *
      * Multiplicity [0,1]
+     *
      * @var QtiIdentifier
      */
     protected $sourcedId;
@@ -49,6 +48,7 @@ class Context extends QtiComponent
      * to the session which should be added to the context if the result is modified and exported for transport again.
      *
      * Multiplicity [0,*]
+     *
      * @var SessionIdentifierCollection
      */
     protected $sessionIdentifiers;
@@ -61,9 +61,12 @@ class Context extends QtiComponent
      * @param QtiIdentifier|null $sourcedId
      * @param SessionIdentifierCollection|null $sessionIdentifiers
      */
-    public function __construct(QtiIdentifier $sourcedId=null, SessionIdentifierCollection $sessionIdentifiers=null)
+    public function __construct(QtiIdentifier $sourcedId = null, SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->setSourcedId($sourcedId);
+        if ($sessionIdentifiers === null) {
+            $sessionIdentifiers = new SessionIdentifierCollection();
+        }
         $this->setSessionIdentifiers($sessionIdentifiers);
     }
 
@@ -95,7 +98,7 @@ class Context extends QtiComponent
     /**
      * Get the sourcedId of the context
      *
-     * @return QtiIdentifier
+     * @return QtiIdentifier|null
      */
     public function getSourcedId()
     {
@@ -108,7 +111,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier $sourcedId
      * @return $this
      */
-    public function setSourcedId(QtiIdentifier $sourcedId=null)
+    public function setSourcedId(QtiIdentifier $sourcedId = null)
     {
         $this->sourcedId = $sourcedId;
         return $this;
@@ -121,7 +124,7 @@ class Context extends QtiComponent
      */
     public function hasSourcedId()
     {
-        return !is_null($this->sourcedId);
+        return $this->sourcedId !== null;
     }
 
     /**
@@ -137,10 +140,10 @@ class Context extends QtiComponent
     /**
      * Set the Session identifiers
      *
-     * @param $sessionIdentifiers
+     * @param SessionIdentifierCollection $sessionIdentifiers
      * @return $this
      */
-    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers=null)
+    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->sessionIdentifiers = $sessionIdentifiers;
         return $this;
@@ -153,7 +156,6 @@ class Context extends QtiComponent
      */
     public function hasSessionIdentifiers()
     {
-        return !is_null($this->sessionIdentifiers);
+        return (bool)$this->sessionIdentifiers->count();
     }
-
 }

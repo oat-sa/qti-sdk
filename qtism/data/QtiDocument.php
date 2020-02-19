@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,26 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data;
 
 use qtism\data\storage\StorageException;
 
-abstract class QtiDocument {
-
+abstract class QtiDocument
+{
     /**
+     * The version of the document.
      *
      * @var string
      */
     private $version = '2.1';
 
     /**
+     * The root QTI Component of the document.
      *
      * @var QtiComponent
      */
@@ -45,36 +47,60 @@ abstract class QtiDocument {
      */
     private $url;
 
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
+    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    {
         $this->setVersion($version);
         $this->setDocumentComponent($documentComponent);
     }
 
-    public function setVersion($version) {
+    /**
+     * Set the QTI $version in use for this document.
+     *
+     * @param string $version A QTI version number e.g. '2.1.1'.
+     * @throws InvalidArgumentException If $version is unknown regarding existing QTI versions.
+     */
+    public function setVersion($version)
+    {
         $this->version = $version;
     }
 
-    public function getVersion() {
+    /**
+     * The QTI version in use within the document.
+     *
+     * @return string A Semantic Versioning version number with major, minor and patch version e.g. '2.1.0'.
+     */
+    public function getVersion()
+    {
         return $this->version;
     }
 
-    public function setDocumentComponent(QtiComponent $documentComponent = null) {
+    /**
+     * Set the root component of the document.
+     *
+     * @param QtiComponent $documentComponent A QTI Component object.
+     */
+    public function setDocumentComponent(QtiComponent $documentComponent = null)
+    {
         $this->documentComponent = $documentComponent;
     }
 
     /**
+     * Get the root component of the document.
      *
      * @return QtiComponent
      */
-    public function getDocumentComponent() {
+    public function getDocumentComponent()
+    {
         return $this->documentComponent;
     }
 
-    protected function setUrl($url) {
+    protected function setUrl($url)
+    {
         $this->url = $url;
     }
 
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
     }
 

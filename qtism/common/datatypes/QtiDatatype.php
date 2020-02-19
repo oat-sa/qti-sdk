@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,35 +15,44 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\common\datatypes;
 
 /**
- * A simple interface aiming at tagging QTI Complex Datatypes such as
- * Pair, Duration, Point, ...
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * A simple interface aiming at implementing QTI datatypes. The following
+ * QTI datatypes are implemented.
+ *
+ * * Boolean
+ * * Coords
+ * * DirectedPair
+ * * Duration
+ * * File
+ * * Float
+ * * Identifier
+ * * Integer
+ * * IntOrIdentifier
+ * * Pair
+ * * Point
+ * * String
+ * * Uri
  */
-interface QtiDatatype {
-    
+interface QtiDatatype
+{
     /**
-     * Get the QTI baseType of the Datatype instance.
-     * 
+     * Get the QTI baseType of the datatype instance.
+     *
      * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType();
-    
+
     /**
-     * Get the QTI cardinality of the Datatype instance.
-     * 
+     * Get the QTI cardinality of the datatype instance.
+     *
      * @return integer A value from the Cardinality enumeration.
      */
     public function getCardinality();

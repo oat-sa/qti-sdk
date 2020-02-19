@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,25 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
 
-use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\common\MultipleContainer;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
-use qtism\runtime\common\VariableIdentifier;
-use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\runtime\tests\AssessmentTestSession;
+use qtism\common\enums\Cardinality;
 use qtism\data\expressions\Variable;
-use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
+use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\common\VariableIdentifier;
+use qtism\runtime\tests\AssessmentTestSession;
 
 /**
  * This class aims at processing Variable expressions. In a test context,
@@ -69,21 +68,18 @@ use \InvalidArgumentException;
  * the same assessmentItemRef (through the use of selection withReplacement) is
  * taken from the last instance submitted if submission is simultaneous, otherwise
  * it is undefined.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class VariableProcessor extends ExpressionProcessor
 {
     /**
-	 * Process the Variable expression.
-	 *
-	 * * If the requested variable does not exist, NULL is returned.
-	 * * In a test context, if the requested weight does not exist, the raw value of the variable is returned.
-	 *
-	 * @returns null|mixed The value of the target variable or NULL if the variable does not exist.
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Process the Variable expression.
+     *
+     * * If the requested variable does not exist, NULL is returned.
+     * * In a test context, if the requested weight does not exist, the raw value of the variable is returned.
+     *
+     * @returns null|mixed The value of the target variable or NULL if the variable does not exist.
+     * @throws ExpressionProcessingException
+     */
     public function process()
     {
         $state = $this->getState();
@@ -103,7 +99,6 @@ class VariableProcessor extends ExpressionProcessor
 
         // We have a value for this variable, is it weighted?
         if ($state instanceof AssessmentTestSession) {
-
             try {
                 $vIdentifier = new VariableIdentifier($variableIdentifier);
                 if ($vIdentifier->hasPrefix() === true && empty($weightIdentifier) === false) {
@@ -115,17 +110,15 @@ class VariableProcessor extends ExpressionProcessor
                     // Weights only apply to item variables with base types integer and float.
                     // If the item variable is of any other type the weight is ignored.
                     if (!empty($weight) && ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT)) {
-
                         if ($cardinality === Cardinality::SINGLE) {
                             return new QtiFloat($variableValue->getValue() * $weight->getValue());
                         } elseif ($cardinality === Cardinality::MULTIPLE || $cardinality === Cardinality::ORDERED) {
-
                             // variableValue is an object, the weighting should not
                             // affect the content of the state so a new container is created.
                             $finalValue = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer(BaseType::FLOAT) : new OrderedContainer(BaseType::FLOAT);
                             for ($i = 0; $i < count($variableValue); $i++) {
                                 if ($variableValue[$i] !== null) {
-                                    $finalValue[] = new QtiFloat($variableValue[$i]->getValue() * $weight->getValue()) ;
+                                    $finalValue[] = new QtiFloat($variableValue[$i]->getValue() * $weight->getValue());
                                 } else {
                                     $finalValue[] = null;
                                 }
@@ -144,17 +137,16 @@ class VariableProcessor extends ExpressionProcessor
                 $msg = "Invalid identifier '${variableIdentifier}' given for variable identifier.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE, $e);
             }
-
         } else {
             return $variableValue;
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\Variable';
+        return Variable::class;
     }
 }

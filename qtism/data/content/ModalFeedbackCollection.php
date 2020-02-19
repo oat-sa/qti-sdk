@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,32 +15,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * A specialized collection aiming at storing ModalFeedback objects.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class ModalFeedbackCollection extends QtiComponentCollection {
-    
+class ModalFeedbackCollection extends QtiComponentCollection
+{
     /**
      * Checks whether or not $value is an instance of ModalFeedback.
-     * 
+     *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of ModalFeedback.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof ModalFeedback) {
             $msg = "ModalFeedbackCollection only accept to store ModalFeedback objects.";
             throw new InvalidArgumentException($msg);

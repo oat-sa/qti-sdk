@@ -1,5 +1,7 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../../../qtism/qtism.php');
+
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlCompactDocument;
 

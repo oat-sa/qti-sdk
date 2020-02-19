@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,143 +15,164 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data;
 
 use qtism\common\dom\SerializableDomDocument;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * Represents a gateway to a component from an external (non-QTI) particular namespace.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class ExternalQtiComponent extends QtiComponent implements IExternal {
-    
+class ExternalQtiComponent extends QtiComponent implements IExternal
+{
     /**
      * @var string
      * @qtism-bean-property
      */
     private $xmlString = '';
-    
+
     private $xml = null;
-    
+
     /**
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $targetNamespace = '';
-    
+
     /**
      * Create a new ExternalQtiComponent from its $xml string representation. The constructor
      * takes the content representation of the external component as a string because of performance
      * issues. Indeed, the related DOMDocument object will be generated on demand via the getXml() method.
-     * 
+     *
      * @param string $xmlString An XML string.
      */
-    public function __construct($xmlString) {
+    public function __construct($xmlString)
+    {
         $this->buildTargetNamespace();
         $this->setXmlString($xmlString);
     }
-    
+
     /**
      * Returns the XML representation of the external component as
      * a DOMDocument object.
-     * 
-     * @return \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object representing the content of the external component.
+     *
+     * @return SerializableDomDocument A DOMDocument (serializable) object representing the content of the external component.
      * @throws RuntimeException If the root element of the XML representation is not from the target namespace or the XML could not be parsed.
      */
-    public function getXml() {
+    public function getXml()
+    {
         // Build the DOMDocument object only on demand.
         if ($this->xml === null) {
-            
             $xml = new SerializableDomDocument('1.0', 'UTF-8');
             if (@$xml->loadXML($this->getXmlString()) === false) {
                 $msg = "The XML content '" . $this->getXmlString() . "' of the '" . $this->getQtiClassName() . "' external component could not be parsed correctly.";
                 throw new RuntimeException($msg);
             }
-            
+
             if (($targetNamespace = $this->getTargetNamespace()) !== '' && $xml->documentElement->namespaceURI !== $this->getTargetNamespace()) {
                 $msg = "The XML content' " . $this->getXmlString() . "' of the '" . $this->getQtiClassName() . "' external component is not referenced into target namespace '" . $this->getTargetNamespace() . "'.";
                 throw new RuntimeException($msg);
             }
-            
+
             $this->setXml($xml);
         }
-        
+
         return $this->xml;
     }
-    
+
     /**
      * Set the XML representation of the external component.
-     * 
-     * @param \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object.
+     *
+     * @param SerializableDomDocument $xml An XML Document
      */
-    protected function setXml(SerializableDomDocument $xml) {
+    protected function setXml(SerializableDomDocument $xml)
+    {
         $this->xml = $xml;
     }
-    
+
     /**
      * Get the XML String representation of the external component.
-     * 
+     *
      * @return string
      */
-    public function getXmlString() {
+    public function getXmlString()
+    {
         return $this->xmlString;
     }
-    
+
     /**
      * Set the XML String representation of the external component.
-     * 
+     *
      * @param string $xmlString
      */
-    public function setXmlString($xmlString) {
+    public function setXmlString($xmlString)
+    {
         $this->xmlString = $xmlString;
-        
+
         // Force DOM rebuild.
         $this->xml = null;
     }
-    
+
     /**
      * Whether or not a target namespace is defined.
-     * 
+     *
      * @return boolean
      */
-    public function hasTargetNamespace() {
+    public function hasTargetNamespace()
+    {
         return $this->getTargetNamespace() !== '';
     }
-    
+
     /**
      * Get the namespace URI the XML content must belong to. Returns
      * an empty string is no particular namespace is defined.
-     * 
+     *
      * @return string
      */
-    public function getTargetNamespace() {
+    public function getTargetNamespace()
+    {
         return $this->targetNamespace;
     }
-    
-    public function setTargetNamespace($targetNamespace) {
+
+    /**
+     * Set the namespace URI the XML content must belong to.
+     *
+     * @param string $targetNamespace A URI (Uniform Resource Locator).
+     */
+    public function setTargetNamespace($targetNamespace)
+    {
         $this->targetNamespace = $targetNamespace;
     }
-    
-    protected function buildTargetNamespace() {
+
+    /**
+     * Method to be overloaded by subclasses to setup a default
+     * target namespace.
+     */
+    protected function buildTargetNamespace()
+    {
         return '';
     }
-    
-    public function getComponents() {
+
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
-    
-    public function getQtiClassName() {
+
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
         return 'external';
     }
 }

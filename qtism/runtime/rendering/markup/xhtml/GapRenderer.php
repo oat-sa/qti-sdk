@@ -1,36 +1,34 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; under version 2
-* of the License (non-upgradable).
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-* Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
-*
-* @author Jérôme Bogaerts, <jerome@taotesting.com>
-* @license GPLv2
-* @package qtism
-* 
-*
-*/
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @license GPLv2
+ */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
- * Gap renderer. This renderer will transform the gapChoice into a 'span' 
+ * Gap renderer. This renderer will transform the gapChoice into a 'span'
  * element with an additional 'qti-gap' CSS class.
  *
  * Depending on the value of the qti:choice->showHide attribute and only if
@@ -45,18 +43,25 @@ use \DOMDocumentFragment;
  * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
  * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * * data-required = qti:gap->required
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class GapRenderer extends ChoiceRenderer {
-
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+class GapRenderer extends ChoiceRenderer
+{
+    /**
+     * Create a new GapRenderer object.
+     *
+     * @param AbstractMarkupRenderingEngine $renderingEngine
+     */
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }
-    
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
+     */
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gap');
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');

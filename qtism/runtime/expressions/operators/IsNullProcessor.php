@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,63 +15,58 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\operators\IsNull;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
+use qtism\data\expressions\operators\IsNull;
 
 /**
  * The IsNullProcessor class aims at processing IsNull QTI Data Model Expression objects.
- * 
- * From IMS QTI:
- * 
- * The isNull operator takes a sub-expression with any base-type and cardinality. 
- * The result is a single boolean with a value of true if the sub-expression is NULL 
- * and false otherwise. Note that empty containers and empty strings are both 
- * treated as NULL.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
+ * From IMS QTI:
+ *
+ * The isNull operator takes a sub-expression with any base-type and cardinality.
+ * The result is a single boolean with a value of true if the sub-expression is NULL
+ * and false otherwise. Note that empty containers and empty strings are both
+ * treated as NULL.
  */
-class IsNullProcessor extends OperatorProcessor {
-	
-	/**
-	 * Set the Expression object to be processed.
-	 * 
-	 * @param Expression An IsNull object.
-	 * @throws InvalidArgumentException If the $expression is not an IsNull QTI Data Model Expression object.
-	 */
-	public function setExpression(Expression $expression) {
-		if ($expression instanceof IsNull) {
-			parent::setExpression($expression);
-		}
-		else {
-			$msg = "The IsNullProcessor class only accept IsNull Operator objects to be processed.";
-			throw new InvalidArgumentException($expression);
-		}
-	}
-	
-	/**
-	 * Process the IsNullExpression object from the QTI Data Model.
-	 * 
-	 * @return boolean Whether the sub-expression is considered to be NULL.
-	 * @throws OperatorProcessingException If something goes wrong.
-	 */
-	public function process() {
-		$operands = $this->getOperands();
-		$expression = $this->getExpression();
-		
-		return new QtiBoolean($operands->containsNull());
-	}
-	
+class IsNullProcessor extends OperatorProcessor
+{
+    /**
+     * Set the Expression object to be processed.
+     *
+     * @param Expression An IsNull object.
+     * @throws InvalidArgumentException If the $expression is not an IsNull QTI Data Model Expression object.
+     */
+    public function setExpression(Expression $expression)
+    {
+        if ($expression instanceof IsNull) {
+            parent::setExpression($expression);
+        } else {
+            $msg = "The IsNullProcessor class only accept IsNull Operator objects to be processed.";
+            throw new InvalidArgumentException($expression);
+        }
+    }
+
+    /**
+     * Process the IsNullExpression object from the QTI Data Model.
+     *
+     * @return boolean Whether the sub-expression is considered to be NULL.
+     * @throws OperatorProcessingException If something goes wrong.
+     */
+    public function process()
+    {
+        $operands = $this->getOperands();
+        $expression = $this->getExpression();
+
+        return new QtiBoolean($operands->containsNull());
+    }
 }

@@ -6,7 +6,7 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/math_1.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/math_1.xml');
 
 $renderer = new XhtmlRenderingEngine();
 $rendering = $renderer->render($doc->getDocumentComponent());

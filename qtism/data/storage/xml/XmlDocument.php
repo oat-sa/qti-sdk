@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,360 +15,389 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
-
 
 namespace qtism\data\storage\xml;
 
+use DOMDocument;
+use DOMElement;
+use DOMException;
+use InvalidArgumentException;
+use LogicException;
 use qtism\common\utils\Url;
+use qtism\data\content\Flow;
+use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
-use qtism\data\AssessmentTest;
-use qtism\data\AssessmentSectionRef;
-use qtism\data\TestPart;
-use qtism\data\content\Flow;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use qtism\data\QtiComponent;
-use qtism\data\storage\Utils as StorageUtils;
 use qtism\data\storage\xml\Utils as XmlUtils;
-use \ReflectionClass;
-use \DOMDocument;
-use \DOMElement;
-use \DOMException;
-use \RuntimeException;
-use \InvalidArgumentException;
-use \LogicException;
+use qtism\data\TestPart;
+use ReflectionClass;
+use RuntimeException;
 
 /**
  * This class represents a QTI-XML Document.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class XmlDocument extends QtiDocument {
+class XmlDocument extends QtiDocument
+{
+    /**
+     * The produced domDocument after a successful call to
+     * XmlDocument::load or XmlDocument::save.
+     *
+     * @var DOMDocument
+     */
+    private $domDocument = null;
 
-	/**
-	 * The produced domDocument after a successful call to
-	 * XmlDocument::load or XmlDocument::save.
-	 *
-	 * @var DOMDocument
-	 */
-	private $domDocument = null;
+    /**
+     * Create a new XmlDocument.
+     *
+     * If the given QTI $version number is given with no patch version (c.f. Semantic Versioning), 0 will be used as the patch
+     * version.
+     *
+     * @param string $version The version number of the QTI specfication to use in order to load or save an AssessmentTest.
+     * @param QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
+     * @throws InvalidArgumentException If $version is not a known QTI version.
+     */
+    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    {
+        parent::__construct($version, $documentComponent);
+    }
 
-	/**
-	 * Create a new XmlDocument.
-	 *
-	 * @param string $version The version of the QTI specfication to use in order to load or save an AssessmentTest.
-	 * @param QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
-	 */
-	public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
-		parent::__construct($version, $documentComponent);
-	}
+    /**
+     * Set the DOMDocument object in use.
+     *
+     * @param DOMDocument $domDocument A DOMDocument object.
+     */
+    protected function setDomDocument(DOMDocument $domDocument)
+    {
+        $this->domDocument = $domDocument;
+    }
 
-	/**
-	 * Set the DOMDocument object in use.
-	 *
-	 * @param DOMDocument $domDocument A DOMDocument object.
-	 */
-	protected function setDomDocument(DOMDocument $domDocument) {
-		$this->domDocument = $domDocument;
-	}
+    /**
+     * Get the DOMDocument object in use.
+     *
+     * @return DOMDocument
+     */
+    public function getDomDocument()
+    {
+        return $this->domDocument;
+    }
 
-	/**
-	 * Get the DOMDocument object in use.
-	 *
-	 * @return DOMDocument
-	 */
-	public function getDomDocument() {
-		return $this->domDocument;
-	}
+    /**
+     * Load a QTI-XML assessment file. The file will be loaded and represented in
+     * an AssessmentTest object.
+     *
+     * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
+     * @param boolean $validate Whether or not the file must be validated unsing XML Schema? Default is false.
+     * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
+     */
+    public function load($uri, $validate = false)
+    {
+        $this->loadImplementation($uri, $validate, false);
 
-	/**
-	 * Load a QTI-XML assessment file. The file will be loaded and represented in
-	 * an AssessmentTest object.
-	 *
-	 * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
-	 * @param boolean $validate XML Schema validation? Default is false.
-	 * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
-	 */
-	public function load($uri, $validate = false) {
-	    $this->loadImplementation($uri, $validate, false);
+        // We now are sure that the URI is valid.
+        $this->setUrl($uri);
+    }
 
-	    // We now are sure that the URI is valid.
-	    $this->setUrl($uri);
-	}
+    /**
+     * Load QTI-XML from string.
+     *
+     * @param string $string The QTI-XML string.
+     * @param boolean $validate XML Schema validation? Default is false.
+     * @throws XmlStorageException If an error occurs while parsing $string.
+     */
+    public function loadFromString($string, $validate = false)
+    {
+        $this->loadImplementation($string, $validate, true);
+    }
 
-	/**
-	 * Load QTI-XML from string.
-	 *
-	 * @param string $string The QTI-XML string.
-	 * @param boolean $validate XML Schema validation? Default is false.
-	 * @throws XmlStorageException If an error occurs while parsing $string.
-	 */
-	public function loadFromString($string, $validate = false) {
-	    $this->loadImplementation($string, $validate, true);
-	}
+    /**
+     * Implementation of load.
+     *
+     * @param mixed $data
+     * @param boolean $validate
+     * @param boolean $fromString
+     * @throws XmlStorageException
+     */
+    protected function loadImplementation($data, $validate = false, $fromString = false)
+    {
+        try {
+            $this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
+            $this->getDomDocument()->preserveWhiteSpace = true;
 
-	protected function loadImplementation($data, $validate = false, $fromString = false) {
-		try {
-			$this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
-			$this->getDomDocument()->preserveWhiteSpace = true;
+            // Disable xml warnings and errors and fetch error information as needed.
+            $oldErrorConfig = libxml_use_internal_errors(true);
 
-			// disable xml warnings and errors and fetch error information as needed.
-			$oldErrorConfig = libxml_use_internal_errors(true);
-			$loadMethod = ($fromString === true) ? 'loadXML' : 'load';
-			$doc = $this->getDomDocument();
+            // Determine which way to load (from string or from file).
+            $loadMethod = ($fromString === true) ? 'loadXML' : 'load';
 
-			if (call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
+            $doc = $this->getDomDocument();
 
-				// Infer the QTI version.
-				if (($version = XmlUtils::inferQTIVersion($this->getDomDocument())) !== false) {
-					$this->setVersion($version);
-				}
-				else {
-					$msg = "Cannot infer QTI version. Is it well formed?";
-					throw new XmlStorageException($msg);
-				}
+            if (call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
+                // Infer the QTI version.
+                if (($version = XmlUtils::inferQTIVersion($this->getDomDocument())) !== false) {
+                    $this->setVersion($version);
+                } else {
+                    $msg = "Cannot infer QTI version. Is it well formed?";
+                    throw new XmlStorageException($msg);
+                }
 
-				if ($validate === true) {
-					$this->schemaValidate();
-				}
+                if ($validate === true) {
+                    $this->schemaValidate();
+                }
 
-				try {
-					// Get the root element and unmarshall.
-					$element = $this->getDomDocument()->documentElement;
-					$factory = $this->createMarshallerFactory();
-					$marshaller = $factory->createMarshaller($element);
-					$this->setDocumentComponent($marshaller->unmarshall($element));
-				}
-				catch (UnmarshallingException $e) {
-					$line = $e->getDOMElement()->getLineNo();
-					$msg = "An error occured while processing QTI-XML at line ${line}.";
-					throw new XmlStorageException($msg, $e);
-				}
-				catch (RuntimeException $e) {
-				    $msg = "Unmarshallable element '" . $element->localName . "' in QTI-XML.";
-				    throw new XmlStorageException($msg, $e);
-				}
-			}
-			else {
-				$libXmlErrors = libxml_get_errors();
-				$formattedErrors = self::formatLibXmlErrors($libXmlErrors);
+                try {
+                    // Get the root element and unmarshall.
+                    $element = $this->getDomDocument()->documentElement;
+                    $factory = $this->createMarshallerFactory();
+                    $marshaller = $factory->createMarshaller($element);
+                    $this->setDocumentComponent($marshaller->unmarshall($element));
+                } catch (UnmarshallingException $e) {
+                    $line = $e->getDOMElement()->getLineNo();
+                    $msg = "An error occured while processing QTI-XML at line ${line}.";
+                    throw new XmlStorageException($msg, $e);
+                } catch (RuntimeException $e) {
+                    $msg = "Unmarshallable element '" . $element->localName . "' in QTI-XML.";
+                    throw new XmlStorageException($msg, $e);
+                }
+            } else {
+                $libXmlErrors = libxml_get_errors();
+                $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
 
-				libxml_clear_errors();
-				libxml_use_internal_errors($oldErrorConfig);
+                libxml_clear_errors();
+                libxml_use_internal_errors($oldErrorConfig);
 
-				$msg = "An internal occured while parsing QTI-XML:\n${formattedErrors}";
-				throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
-			}
-		}
-		catch (DOMException $e) {
-			$line = $e->getLine();
-			$msg = "An error occured while parsing QTI-XML at line ${line}.";
-			throw new XmlStorageException($msg, $e);
-		}
-	}
+                $msg = "An internal error occured while parsing QTI-XML:\n${formattedErrors}";
+                throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
+            }
+        } catch (DOMException $e) {
+            $line = $e->getLine();
+            $msg = "An error occured while parsing QTI-XML at line ${line}.";
+            throw new XmlStorageException($msg, $e);
+        }
+    }
 
-	/**
-	 * This method can be overriden by subclasses in order to alter a last
-	 * time the data model prior to be saved.
-	 *
-	 * @param QtiComponent $documentComponent The root component of the model that will be saved.
-	 * @param string $uri The URI where the saved file is supposed to be stored.
-	 * @throws XmlStorageException If something wrong occurs.
-	 */
-	protected function beforeSave(QtiComponent $documentComponent, $uri) {
-	    return;
-	}
+    /**
+     * This method can be overriden by subclasses in order to alter a last
+     * time the data model prior to be saved.
+     *
+     * @param QtiComponent $documentComponent The root component of the model that will be saved.
+     * @param string $uri The URI where the saved file is supposed to be stored.
+     * @throws XmlStorageException If something wrong occurs.
+     */
+    protected function beforeSave(QtiComponent $documentComponent, $uri)
+    {
+        return;
+    }
 
-	/**
-	 * Save the Assessment Document at the location described by $uri. Please be carefull
-	 * to provide an AssessmentTest object to save before calling this method.
-	 *
-	 * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
-	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
-	 * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
-	 */
-	public function save($uri, $formatOutput = true) {
-	    $this->saveImplementation($uri, $formatOutput);
-	}
+    /**
+     * Save the Assessment Document at the location described by $uri. Please be carefull
+     * to provide an AssessmentTest object to save before calling this method.
+     *
+     * In case of a Filesystem object being injected prior to the call, data will be stored on through
+     * this Filesystem implementation. Otherwise, it will be stored on the local filesystem.
+     *
+     * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
+     * @param boolean $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
+     * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+     */
+    public function save($uri, $formatOutput = true)
+    {
+        $this->saveImplementation($uri, $formatOutput);
+    }
 
-	/**
-	 * Save the Assessment Document as an XML string.
-	 *
-	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
-	 * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
-	 */
-	public function saveToString($formatOutput = true) {
-	    return $this->saveImplementation('', $formatOutput);
-	}
+    /**
+     * Save the Assessment Document as an XML string.
+     *
+     * @param boolean $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
+     * @return string The XML string.
+     * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+     */
+    public function saveToString($formatOutput = true)
+    {
+        return $this->saveImplementation('', $formatOutput);
+    }
 
-	protected function saveImplementation($uri = '', $formatOutput = true) {
-		$assessmentTest = $this->getDocumentComponent();
+    /**
+     * Implementation of save.
+     *
+     * @param string $uri
+     * @param boolean $formatOutput
+     * @return string
+     * @throws XmlStorageException
+     */
+    protected function saveImplementation($uri = '', $formatOutput = true)
+    {
+        $assessmentTest = $this->getDocumentComponent();
 
-		if (!empty($assessmentTest)) {
-			$this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
+        if (!empty($assessmentTest)) {
+            $this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
 
-			if ($formatOutput == true) {
-				$this->getDomDocument()->formatOutput = true;
-			}
+            if ($formatOutput == true) {
+                $this->getDomDocument()->formatOutput = true;
+            }
 
-			try {
-			    // If overriden, beforeSave may alter a last time
-			    // the documentComponent prior serialization.
-			    // Note: in use only when saving to a file.
-			    if (empty($uri) === false) {
-			        $this->beforeSave($this->getDocumentComponent(), $uri);
-			    }
+            try {
+                // If overriden, beforeSave may alter a last time
+                // the documentComponent prior serialization.
+                // Note: in use only when saving to a file.
+                if (empty($uri) === false) {
+                    $this->beforeSave($this->getDocumentComponent(), $uri);
+                }
 
-				$factory = $this->createMarshallerFactory();
-				$marshaller = $factory->createMarshaller($this->getDocumentComponent());
-				$element = $marshaller->marshall($this->getDocumentComponent());
+                $factory = $this->createMarshallerFactory();
+                $marshaller = $factory->createMarshaller($this->getDocumentComponent());
+                $element = $marshaller->marshall($this->getDocumentComponent());
 
-				$rootElement = $this->getDomDocument()->importNode($element, true);
-				$this->getDomDocument()->appendChild($rootElement);
-				$this->decorateRootElement($rootElement);
+                $rootElement = $this->getDomDocument()->importNode($element, true);
+                $this->getDomDocument()->appendChild($rootElement);
+                $this->decorateRootElement($rootElement);
 
-				if (empty($uri) === false) {
+                if (empty($uri) === false) {
+                    if ($this->getDomDocument()->save($uri) === false) {
+                        // An error occured while saving.
+                        $msg = "An internal error occured while saving QTI-XML file at '${uri}'.";
+                        throw new XmlStorageException($msg);
 
-				    if ($this->getDomDocument()->save($uri) === false) {
-				        // An error occured while saving.
-				        $msg = "An internal error occured while saving QTI-XML file at '${uri}'.";
-				        throw new XmlStorageException($msg);
+                        $this->setUrl($uri);
+                    }
+                } else {
+                    if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
+                        return $strXml;
+                    } else {
+                        // An error occured while saving.
+                        $msg = "An internal error occured while exporting QTI-XML as string.";
+                        throw new XmlStorageException($msg);
+                    }
+                }
+            } catch (DOMException $e) {
+                $msg = "An internal error occured while saving QTI-XML data.";
+                throw new XmlStorageException($msg, $e);
+            } catch (XmlStorageException $e) {
+                $msg = "An error occured before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
+                throw new XmlStorageException($msg, $e);
+            }
+        } else {
+            $msg = "The Assessment Document cannot be saved. No AssessmentTest object provided.";
+            throw new XmlStorageException($msg);
+        }
+    }
 
-				        $this->setUrl($uri);
-				    }
-				}
-				else {
-				    if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
-				        return $strXml;
-				    }
-				    else {
-				        // An error occured while saving.
-				        $msg = "An internal error occured while exporting QTI-XML as string.";
-				        throw new XmlStorageException($msg);
-				    }
-				}
-			}
-			catch (DOMException $e) {
-				$msg = "An internal error occured while saving QTI-XML data.";
-				throw new XmlStorageException($msg, $e);
-			}
-			catch (XmlStorageException $e) {
-			    $msg = "An error occured before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
-			    throw new XmlStorageException($msg, $e);
-			}
-		}
-		else {
-			$msg = "The Assessment Document cannot be saved. No AssessmentTest object provided.";
-			throw new XmlStorageException($msg);
-		}
-	}
+    /**
+     * Validate the document against a schema.
+     *
+     * @param string $filename An optional filename of a given schema the document should validate against.
+     * @throws XmlStorageException
+     * @throws InvalidArgumentException
+     */
+    public function schemaValidate($filename = '')
+    {
+        if (empty($filename)) {
+            $filename = XmlUtils::getSchemaLocation($this->getVersion());
+        }
 
-	public function schemaValidate($filename = '') {
-		if (empty($filename)) {
-			$filename = XmlUtils::getSchemaLocation($this->getVersion());
-		}
+        if (is_readable($filename)) {
+            $oldErrorConfig = libxml_use_internal_errors(true);
 
-		if (is_readable($filename)) {
+            $doc = $this->getDomDocument();
+            if (@$doc->schemaValidate($filename) === false) {
+                $libXmlErrors = libxml_get_errors();
+                $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
 
-			$oldErrorConfig = libxml_use_internal_errors(true);
+                libxml_clear_errors();
+                libxml_use_internal_errors($oldErrorConfig);
 
-			$doc = $this->getDomDocument();
-			if (@$doc->schemaValidate($filename) === false) {
+                $msg = "The document could not be validated with XML Schema '${filename}':\n${formattedErrors}";
+                throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
+            }
+        } else {
+            $msg = "Schema '${filename}' cannot be read. Does this file exist? Is it readable?";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 
-				$libXmlErrors = libxml_get_errors();
-				$formattedErrors = self::formatLibXmlErrors($libXmlErrors);
+    /**
+     * Resolve include components.
+     *
+     * After the item has been loaded using the load or loadFromString method,
+     * the include components can be resolved by calling this method. Files will
+     * be included following the rules described by the XInclude specification.
+     *
+     * @param boolean $validate Whether or not validate files being included. Default is false.
+     * @throws LogicException If the method is called prior the load or loadFromString method was called.
+     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     */
+    public function xInclude($validate = false)
+    {
+        if (($root = $this->getDocumentComponent()) !== false) {
+            $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+            $pathinfo = pathinfo($baseUri);
+            $basePath = $pathinfo['dirname'];
 
-				libxml_clear_errors();
-				libxml_use_internal_errors($oldErrorConfig);
+            $iterator = new QtiComponentIterator($root, ['include']);
+            foreach ($iterator as $include) {
+                $parent = $iterator->parent();
 
-				$msg = "The document could not be validated with schema '${filename}':\n${formattedErrors}";
-				throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
-			}
-		}
-		else {
-			$msg = "Schema '${filename}' cannot be read. Does this file exist? Is it readable?";
-			throw new InvalidArgumentException($msg);
-		}
-	}
+                // Is the parent something we can deal with for replacement?
+                $reflection = new ReflectionClass($parent);
 
+                if ($reflection->hasMethod('getContent') === true && $parent->getContent() instanceof QtiComponentCollection) {
+                    $href = $include->getHref();
 
-	/**
-	 * Resolve include components.
-	 *
-	 * After the item has been loaded using the load or loadFromString method,
-	 * the include components can be resolved by calling this method. Files will
-	 * be included following the rules described by the XInclude specification.
-	 *
-	 * @param boolean $validate Whether or not validate files being included.
-	 * @throws \LogicException If the method is called prior the load or loadFromString method was called.
-	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occured while parsing or validating files to be included.
-	 */
-	public function xInclude($validate = false) {
+                    if (Url::isRelative($href) === true) {
+                        $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
 
-	    if (($root = $this->getDocumentComponent()) !== false) {
+                        $doc = new XmlDocument();
+                        $doc->load($href, $validate);
+                        $includeRoot = $doc->getDocumentComponent();
 
-	        $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
-	        $pathinfo = pathinfo($baseUri);
-	        $basePath = $pathinfo['dirname'];
+                        if ($includeRoot instanceof Flow) {
+                            // Derive xml:base...
+                            $xmlBase = Url::ltrim(str_replace($basePath, '', $href));
+                            $xmlBasePathInfo = pathinfo($xmlBase);
 
-	        $iterator = new QtiComponentIterator($root, array('include'));
-	        foreach ($iterator as $include) {
-	            $parent = $iterator->parent();
+                            if ($xmlBasePathInfo['dirname'] !== '.') {
+                                $includeRoot->setXmlBase($xmlBasePathInfo['dirname'] . '/');
+                            }
+                        }
 
-	            // Is the parent something we can deal with for replacement?
-	            $reflection = new ReflectionClass($parent);
+                        $parent->getContent()->replace($include, $includeRoot);
+                    }
+                }
+            }
+        } else {
+            $msg = "Cannot include fragments via XInclude before loading any file.";
+            throw new LogicException($msg);
+        }
+    }
 
-	            if ($reflection->hasMethod('getContent') === true && $parent->getContent() instanceof QtiComponentCollection) {
-	                $href = $include->getHref();
-
-	                if (Url::isRelative($href) === true) {
-	                    $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
-
-	                    $doc = new XmlDocument();
-	                    $doc->load($href, $validate);
-	                    $includeRoot = $doc->getDocumentComponent();
-
-	                    if ($includeRoot instanceof Flow) {
-	                        // Derive xml:base...
-	                        $xmlBase = Url::ltrim(str_replace($basePath, '', $href));
-	                        $xmlBasePathInfo = pathinfo($xmlBase);
-
-	                        if ($xmlBasePathInfo['dirname'] !== '.') {
-	                            $includeRoot->setXmlBase($xmlBasePathInfo['dirname'] . '/');
-	                        }
-	                    }
-
-	                    $parent->getContent()->replace($include, $includeRoot);
-	                }
-	            }
-	        }
-	    } else {
-	        $msg = "Cannot include fragments prior to loading any file.";
-	        throw new LogicException($msg);
-	    }
-	}
-
+    /**
+     * Include assessmentSectionRefs component in the current document.
+     *
+     * This method includes the assessmentSectionRefs components in the current document. The references
+     * to assessmentSections are resolved. assessmentSectionRefs will be replaced with their assessmentSection
+     * content.
+     *
+     * @param boolean $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
+     * @throws LogicException If the method is called prior the load or loadFromString method was called.
+     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     */
     public function includeAssessmentSectionRefs($validate = false)
     {
         if (($root = $this->getDocumentComponent()) !== null) {
-
             $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
             $pathinfo = pathinfo($baseUri);
             $basePath = $pathinfo['dirname'];
 
             $count = count($root->getComponentsByClassName('assessmentSectionRef'));
             while ($count > 0) {
-                $iterator = new QtiComponentIterator($root, array('assessmentSectionRef'));
+                $iterator = new QtiComponentIterator($root, ['assessmentSectionRef']);
                 foreach ($iterator as $assessmentSectionRef) {
                     $parent = $iterator->parent();
                     $href = $assessmentSectionRef->getHref();
@@ -377,9 +407,10 @@ class XmlDocument extends QtiDocument {
 
                         $doc = new XmlDocument();
                         $doc->load($href, $validate);
+
                         $sectionRoot = $doc->getDocumentComponent();
 
-                        foreach ($sectionRoot->getComponentsByClassName(array('assessmentSectionRef', 'assessmentItemRef')) as $sectionPart) {
+                        foreach ($sectionRoot->getComponentsByClassName(['assessmentSectionRef', 'assessmentItemRef']) as $sectionPart) {
                             $newBasePath = Url::ltrim(str_replace($basePath, '', $href));
                             $pathinfo = pathinfo($newBasePath);
                             $newHref = $pathinfo['dirname'] . '/' . Url::ltrim($sectionPart->getHref());
@@ -404,20 +435,21 @@ class XmlDocument extends QtiDocument {
         }
     }
 
-	/**
-	 * Decorate the root element of the XmlAssessmentDocument with the appropriate
-	 * namespaces and schema definition.
-	 *
-	 * @param DOMElement $rootElement The root DOMElement object of the document to decorate.
-	 */
-	protected function decorateRootElement(DOMElement $rootElement) {
-		$qtiSuffix = 'v2p1';
-		$xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-		switch (trim($this->getVersion())) {
-			case '2.0':
-				$qtiSuffix = 'v2p0';
-				$xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-			break;
+    /**
+     * Decorate the root element of the XmlAssessmentDocument with the appropriate
+     * namespaces and schema definition.
+     *
+     * @param DOMElement $rootElement The root DOMElement object of the document to decorate.
+     */
+    protected function decorateRootElement(DOMElement $rootElement)
+    {
+        $qtiSuffix = 'v2p1';
+        $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+        switch (trim($this->getVersion())) {
+            case '2.0':
+                $qtiSuffix = 'v2p0';
+                $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
+                break;
 
             case '2.1.0':
                 $qtiSuffix = 'v2p1';
@@ -427,43 +459,52 @@ class XmlDocument extends QtiDocument {
             case '2.2':
                 $qtiSuffix = 'v2p2';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-            break;
-		}
+                break;
+        }
 
-		$rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
-		$rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-		$rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
-	}
+        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+    }
 
-	protected static function formatLibXmlErrors(array $libXmlErrors) {
-		$formattedErrors = array();
+    /**
+     * Format some $libXmlErrors into an array of strings instead of an array of arrays.
+     *
+     * @param LibXMLError[] $libXmlErrors
+     * @return string
+     */
+    protected static function formatLibXmlErrors(array $libXmlErrors)
+    {
+        $formattedErrors = [];
 
-		foreach ($libXmlErrors as $error) {
-			switch ($error->level) {
-				case LIBXML_ERR_WARNING:
-					$formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
-					break;
+        foreach ($libXmlErrors as $error) {
+            switch ($error->level) {
+                case LIBXML_ERR_WARNING:
+                    $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    break;
 
-				case LIBXML_ERR_ERROR:
-					$formattedErrors[] = "Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
-					break;
+                case LIBXML_ERR_ERROR:
+                    $formattedErrors[] = "Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    break;
 
-				case LIBXML_ERR_FATAL:
-					$formattedErrors[] = "Fatal Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
-					break;
-			}
-		}
+                case LIBXML_ERR_FATAL:
+                    $formattedErrors[] = "Fatal Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    break;
+            }
+        }
 
-		$formattedErrors = implode("\n", $formattedErrors);
-		return $formattedErrors;
-	}
+        $formattedErrors = implode("\n", $formattedErrors);
 
-	/**
-	 * MarshallerFactory factory method (see gang of four).
-	 *
-	 * @return MarshallerFactory An appropriate MarshallerFactory object.
-	 */
-	protected function createMarshallerFactory() {
-		return new MarshallerFactory();
-	}
+        return $formattedErrors;
+    }
+
+    /**
+     * MarshallerFactory factory method (see gang of four).
+     *
+     * @return MarshallerFactory An appropriate MarshallerFactory object.
+     */
+    protected function createMarshallerFactory()
+    {
+        return new MarshallerFactory();
+    }
 }

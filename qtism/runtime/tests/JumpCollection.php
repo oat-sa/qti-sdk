@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,32 +15,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
 
 /**
  * A collection implementation aiming at storing Jump objects.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class JumpCollection extends AbstractCollection {
-    
+class JumpCollection extends AbstractCollection
+{
     /**
      * Check the type of $value to ensure it has the correct datatype.
-     * 
+     *
      * @throws InvalidArgumentException If $value is not a Jump object.
+     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Jump) {
             $msg = "JumpCollection objects only accept to store Jump objects.";
             throw new InvalidArgumentException($msg);

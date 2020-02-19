@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,29 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data;
 
+use qtism\common\dom\SerializableDomDocument;
+
 /**
  * Represents a gateway to external data.
- * 
- * In case of there is no external data, the implementation may return the null value.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-interface IExternal {
-    
+interface IExternal
+{
     /**
      * Get the external XML content.
-     * 
-     * @return \qtism\common\dom\SerializableDomDocument
+     *
+     * In case of there is no external data, the implementation may return the null value.
+     *
+     * @return SerializableDomDocument
      */
     public function getXml();
 }

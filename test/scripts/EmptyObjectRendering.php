@@ -11,7 +11,7 @@ require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
  */
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/empty_object.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/empty_object.xml');
 
 $renderer = new XhtmlRenderingEngine();
 

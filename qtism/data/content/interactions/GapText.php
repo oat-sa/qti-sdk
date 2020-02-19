@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,29 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\FlowStaticCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * A simple run of text to be inserted into a gap by the user, may be subject
  * to variable value substitution with printedVariable.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class GapText extends GapChoice {
-
+class GapText extends GapChoice
+{
     /**
      * The flowStaticCollection objects composing the GapText.
      *
@@ -54,8 +51,10 @@ class GapText extends GapChoice {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws InvalidArgumentException
      */
-    public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
         $this->setContent(new FlowStaticCollection());
     }
@@ -65,7 +64,8 @@ class GapText extends GapChoice {
      *
      * @return FlowStaticCollection
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
 
@@ -74,7 +74,8 @@ class GapText extends GapChoice {
      *
      * @param FlowStaticCollection $content
      */
-    public function setContent(FlowStaticCollection $content) {
+    public function setContent(FlowStaticCollection $content)
+    {
         $this->content = $content;
     }
 
@@ -83,11 +84,16 @@ class GapText extends GapChoice {
      *
      * @return FlowStaticCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
-    public function getQtiClassName() {
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
         return 'gapText';
     }
 }

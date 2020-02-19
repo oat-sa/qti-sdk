@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,37 +15,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\xhtml\tables;
 
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
 
 /**
  * The tbody XHTML class.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
-class Tbody extends BodyElement {
-    
+class Tbody extends BodyElement
+{
     /**
      * The Tr objects composing the Tbody.
-     * 
+     *
      * @var TrCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Tbody object.
-     * 
+     *
      * @param TrCollection $content A non-empty TrCollection object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -52,41 +49,51 @@ class Tbody extends BodyElement {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent($content);
     }
-    
+
     /**
      * Set the collection of Tr objects composing the Tbody.
-     * 
+     *
      * @param TrCollection $content A non-empty TrCollection object.
      * @throws InvalidArgumentException If $components is empty.
      */
-    public function setContent(TrCollection $content) {
+    public function setContent(TrCollection $content)
+    {
         if (count($content) > 0) {
             $this->content = $content;
-        }
-        else {
+        } else {
             $msg = "A Tbody object must be composed of at least 1 Tr object, none given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
-    public function getContent() {
+
+    /**
+     * Get the content of the object as a collection of Tr objects.
+     *
+     * @return TrCollection
+     */
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
-     * Get the collection of Tr objects composing the Tbody.
-     * 
-     * @return TrCollection A collection of Tr objects.
+     * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
-    public function getQtiClassName() {
+
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
         return 'tbody';
     }
 }

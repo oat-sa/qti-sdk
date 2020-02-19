@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,41 +15,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
- * 
- * The exit template rule terminates template processing immediately.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
+ * The exit template rule terminates template processing immediately.
  */
-class ExitTemplate extends QtiComponent implements TemplateRule {
-    
+class ExitTemplate extends QtiComponent implements TemplateRule
+{
     /**
      * Create a new ExitTemplate object.
-     * 
+     *
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
     }
-    
-    public function getQtiClassName() {
+
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
         return 'exitTemplate';
     }
-    
-    public function getComponents() {
+
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
 }

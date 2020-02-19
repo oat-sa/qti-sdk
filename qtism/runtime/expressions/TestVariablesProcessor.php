@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\runtime\common\MultipleContainer;
-use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\expressions\TestVariables;
-use qtism\data\expressions\Expression;
+use qtism\runtime\common\MultipleContainer;
 
 /**
  * The TestVariablesProcessor aims at processing TestVariables
@@ -58,18 +58,15 @@ use qtism\data\expressions\Expression;
  * of the expression always has base-type float. Note that this option is incomptable with
  * baseType integer. This restriction ensures that the value of the baseType attribute
  * remains consistent with the resulting container type.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestVariablesProcessor extends ItemSubsetProcessor
 {
     /**
-	 * Process the related TestVariables expression.
-	 *
-	 * @return \qtism\runtime\common\MultipleContainer
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Process the related TestVariables expression.
+     *
+     * @return MultipleContainer
+     * @throws ExpressionProcessingException
+     */
     public function process()
     {
         $testSession = $this->getState();
@@ -77,16 +74,16 @@ class TestVariablesProcessor extends ItemSubsetProcessor
         $baseTypes = $this->getExpression()->getBaseType();
         $variableIdentifier = $this->getExpression()->getVariableIdentifier();
         $weightIdentifier = $this->getExpression()->getWeightIdentifier();
-        $values = array();
+        $values = [];
         $integerCount = 0;
 
         // Which baseTypes are we going to accept?
         if ($baseTypes === -1) {
             // baseType ommited. only integer and float values are matched.
-            $baseTypes = array(BaseType::INTEGER, BaseType::FLOAT);
+            $baseTypes = [BaseType::INTEGER, BaseType::FLOAT];
         } else {
             // The base type is provided by the TestVariable expression.
-            $baseTypes = array($baseTypes);
+            $baseTypes = [$baseTypes];
         }
 
         foreach ($itemSubset as $item) {
@@ -94,34 +91,32 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
             if ($itemSessions !== false) {
                 foreach ($itemSessions as $itemSession) {
-                
                     // Variable mapping takes place.
                     $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItem(), $variableIdentifier);
                     if ($id === false) {
                         // variable name conflict.
                         continue;
                     }
-                
+
                     // For each variable of the item session matching $outcomeIdentifier...
                     foreach ($itemSession->getKeys() as $identifier) {
-                
                         $itemRefIdentifier = $itemSession->getAssessmentItem()->getIdentifier();
-                        
+
                         if ($identifier === $id) {
                             $var = $itemSession->getVariable($id);
                             $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
-                
+
                             // Single cardinality? Does it match the baseType?
                             if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
                                 $val = clone($var->getValue());
-                
+
                                 if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true && ($val instanceof QtiInteger || $val instanceof QtiFloat)) {
                                     // A weight has to be applied.
                                     $val->setValue($val->getValue() * $weight->getValue());
                                 }
-                
+
                                 $values[] = $val;
-                
+
                                 if (gettype($val->getValue()) === 'integer') {
                                     $integerCount++;
                                 }
@@ -153,12 +148,12 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
         return $result;
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\TestVariables';
+        return TestVariables::class;
     }
 }

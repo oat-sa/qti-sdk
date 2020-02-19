@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -27,15 +28,12 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
-
 /**
  * Class TestResult
  *
  * The container for the Test result. When a test result is given the following item results must relate only to items
  * that were selected for presentation as part of the corresponding test session.
  * Furthermore, all items selected for presentation should be reported with a corresponding itemResult.
- *
- * @package qtism\data\results
  */
 class TestResult extends QtiComponent
 {
@@ -43,6 +41,7 @@ class TestResult extends QtiComponent
      * The identifier of the test for which this is a result.
      *
      * Multiplicity [1]
+     *
      * @var QtiIdentifier
      */
     protected $identifier;
@@ -51,6 +50,7 @@ class TestResult extends QtiComponent
      * The date stamp of when this result was recorded.
      *
      * Multiplicity [1]
+     *
      * @var DateTime
      */
     protected $datestamp;
@@ -63,9 +63,10 @@ class TestResult extends QtiComponent
      * This is an abstract attribute and so a child named 'itemVariable' will not appear in an instance.
      *
      * Multiplicity [0,*]
+     *
      * @var ItemVariable
      */
-    protected $itemVariables=null;
+    protected $itemVariables = null;
 
     /**
      * TestResult constructor.
@@ -74,7 +75,7 @@ class TestResult extends QtiComponent
      * @param DateTime $datestamp The timestamp when testResult has been registered
      * @param ItemVariableCollection|null $itemVariables All variables
      */
-    public function __construct($identifier, DateTime $datestamp, ItemVariableCollection $itemVariables=null)
+    public function __construct($identifier, DateTime $datestamp, ItemVariableCollection $itemVariables = null)
     {
         $this->setIdentifier($identifier);
         $this->setDatestamp($datestamp);
@@ -166,7 +167,7 @@ class TestResult extends QtiComponent
      * @param ItemVariableCollection $itemVariables
      * @return $this
      */
-    public function setItemVariables(ItemVariableCollection $itemVariables=null)
+    public function setItemVariables(ItemVariableCollection $itemVariables = null)
     {
         $this->itemVariables = $itemVariables;
         return $this;
@@ -181,5 +182,4 @@ class TestResult extends QtiComponent
     {
         return !is_null($this->itemVariables);
     }
-
 }

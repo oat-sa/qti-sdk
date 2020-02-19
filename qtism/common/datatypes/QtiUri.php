@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,39 +15,68 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- * 
- *
  */
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
-class QtiUri extends QtiString {
-    
-    protected function checkType($value) {
+/**
+ * Represents the Uri QTI datatype.
+ */
+class QtiUri extends QtiString
+{
+    /**
+     * Checks whether or not $value is a string.
+     *
+     * @param mixed $value
+     * @throws InvalidArgumentException If $value is not a valid string.
+     */
+    protected function checkType($value)
+    {
         if (is_string($value) !== true) {
             $msg = "The Uri Datatype only accepts to store URI values.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
-    public function getBaseType() {
+
+    /**
+     * Get the baseType of the value. This method systematically returns
+     * the BaseType::URI value.
+     *
+     * @return integer A value from the BaseType enumeration.
+     */
+    public function getBaseType()
+    {
         return BaseType::URI;
     }
-    
-    public function getCardinality() {
+
+    /**
+     * Get the cardinality of the value. This method systematically returns
+     * the Cardinality::SINGLE value.
+     *
+     * @return integer A value from the Cardinality enumeration.
+     */
+    public function getCardinality()
+    {
         return Cardinality::SINGLE;
     }
-    
-    public function __toString() {
+
+    /**
+     * QtiUri to string
+     *
+     * Returns the QtiUri as a string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
         return $this->getValue();
     }
 }

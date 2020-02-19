@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
-
 
 namespace qtism\data\state;
 
+use InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 use qtism\data\QtiComponentCollection;
 use qtism\data\ViewCollection;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -57,13 +55,9 @@ use \InvalidArgumentException;
  * values prior to each invocation of responseProcessing. For Adaptive Items the outcome
  * variables retain the values that were assigned to them during the previous invocation of
  * response processing. For more information, see Response Processing.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeDeclaration extends VariableDeclaration
 {
-
     /**
      * From IMS QTI:
      *
@@ -79,7 +73,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * be able to view an outcome variable the view attribute should contain a
      * comma delimited list.
      *
-     * @var Viewcollection
+     * @var ViewCollection
      * @qtism-bean-property
      */
     private $views;
@@ -183,7 +177,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * collection is empty, it means that the outcomeDeclaration is relevant to
      * all views.
      *
-     * @return Viewcollection A Collection of values that are values from the View enumeration.
+     * @return ViewCollection A Collection of values that are values from the View enumeration.
      */
     public function getViews()
     {
@@ -357,11 +351,17 @@ class OutcomeDeclaration extends VariableDeclaration
         $this->lookupTable = $lookupTable;
     }
 
+    /**
+     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'outcomeDeclaration';
     }
 
+    /**
+     * @see \qtism\data\state\VariableDeclaration::getComponents()
+     */
     public function getComponents()
     {
         $comp = parent::getComponents()->getArrayCopy();
