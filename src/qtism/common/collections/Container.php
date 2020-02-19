@@ -79,7 +79,7 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::checkType()
+     * @see AbstractCollection::checkType()
      */
     protected function checkType($value)
     {
@@ -129,7 +129,7 @@ class Container extends AbstractCollection implements Comparable
      */
     public function equals($obj)
     {
-        if (gettype($obj) === 'object' && $obj instanceof static && count($obj) === count($this)) {
+        if (is_object($obj) && $obj instanceof static && count($obj) === count($this)) {
             foreach (array_keys($this->getDataPlaceHolder()) as $key) {
                 $t = $this[$key];
                 $occurencesA = $this->occurences($t);
@@ -141,10 +141,10 @@ class Container extends AbstractCollection implements Comparable
             }
 
             return true;
-        } else {
-            // Not the same type or different item count.
-            return false;
         }
+
+        // Not the same type or different item count.
+        return false;
     }
 
     /**
@@ -162,12 +162,12 @@ class Container extends AbstractCollection implements Comparable
 
         foreach (array_keys($this->getDataPlaceHolder()) as $key) {
             $t = $this[$key];
-            if (gettype($obj) === 'object' && $obj instanceof Comparable) {
+            if (is_object($obj) && $obj instanceof Comparable) {
                 // try to use Comparable.
                 if ($obj->equals($t)) {
                     $occurences++;
                 }
-            } elseif (gettype($t) === 'object' && $t instanceof Comparable) {
+            } elseif (is_object($t) && $t instanceof Comparable) {
                 // Again, use Comparable.
                 if ($t->equals($obj)) {
                     $occurences++;
@@ -281,17 +281,15 @@ class Container extends AbstractCollection implements Comparable
             $found = false;
 
             foreach ($newDataPlaceHolder as $newValue) {
-                if (gettype($value) === 'object' && $value instanceof Comparable && $value->equals($newValue)) {
+                if (is_object($value) && $value instanceof Comparable && $value->equals($newValue)) {
                     $found = true;
                     break;
-                } elseif (gettype($newValue) === 'object' && $newValue instanceof Comparable && $newValue->equals($value)) {
+                } elseif (is_object($newValue) && $newValue instanceof Comparable && $newValue->equals($value)) {
                     $found = true;
                     break;
-                } else {
-                    if ($value === $newValue) {
-                        $found = true;
-                        break;
-                    }
+                } elseif ($value === $newValue) {
+                    $found = true;
+                    break;
                 }
             }
 
