@@ -82,7 +82,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @see \qtism\data\state\LookupTable::getQtiClassName()
+     * @inheritDoc
      */
     public function getQtiClassName()
     {
@@ -90,7 +90,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @see \qtism\data\state\LookupTable::getComponents()
+     * @inheritDoc
      */
     public function getComponents()
     {

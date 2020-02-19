@@ -130,10 +130,9 @@ abstract class Cli
      * It is the responsibility of the implementer to check the arguments
      * and their values. If any of the arguments is missing or contains
      * invalid data, it must display an appropriate message and terminate
-     * the execution of the CLI Module by calling \qtism\cli\Cli::fail()
-     * method.
+     * the execution of the CLI Module by calling fail method below.
      *
-     * @see \qtism\cli\Cli::fail()
+     * @see fail()
      */
     abstract protected function checkArguments();
 

@@ -81,7 +81,7 @@ abstract class LookupTable extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @inheritDoc
      */
     public function getQtiClassName()
     {
@@ -89,7 +89,7 @@ abstract class LookupTable extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @inheritDoc
      */
     public function getComponents()
     {
