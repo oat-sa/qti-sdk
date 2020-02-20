@@ -246,6 +246,15 @@ class Container extends AbstractCollection implements Comparable
         return $bounds[0] . implode('; ', $strings) . $bounds[1];
     }
 
+    public function __clone()
+    {
+        foreach ($this->dataPlaceHolder as $key => $value) {
+            if (gettype($value) === 'object') {
+                $this[$key] = clone $value;
+            }
+        }
+    }
+
     /**
      * Get Distinct Container Copy.
      *
@@ -291,14 +300,5 @@ class Container extends AbstractCollection implements Comparable
         $container->setDataPlaceHolder($newDataPlaceHolder);
 
         return $container;
-    }
-
-    public function __clone()
-    {
-        foreach ($this->dataPlaceHolder as $key => $value) {
-            if (gettype($value) === 'object') {
-                $this[$key] = clone $value;
-            }
-        }
     }
 }
