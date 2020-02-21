@@ -21,12 +21,16 @@
  * @license GPLv2
  */
 
-namespace qtism\runtime\common;
+namespace qtism\common\collections;
 
 use InvalidArgumentException;
-use qtism\common\collections\Container as baseContainer;
+use qtism\common\Comparable;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFile;
+use qtism\common\datatypes\QtiString;
+use qtism\common\enums\Cardinality;
 use qtism\data\state\ValueCollection;
-use qtism\DeprecatedTrait;
+use qtism\runtime\common\Utils as RuntimeUtils;
 
 /**
  * A generic Collection which is able to contain any QTI Scalar Datatype in
@@ -60,36 +64,17 @@ use qtism\DeprecatedTrait;
  * customOperators to return more complex values, in addition
  * to the use for detailed information about numeric responses
  * described in the stringInteraction abstract class.
- *
- * @deprecated since 0.20.0. Use \qtism\common\collections\Container instead.
  */
-class Container extends baseContainer
+class Container extends AbstractCollection implements Comparable
 {
-    use DeprecatedTrait;
-
-    const DEPRECATED_SINCE = '0.20.0';
-    const DEPRECATED_REPLACE_CLASS = baseContainer::class;
-
-    /**
-     * Create a new Container object.
-     *
-     * @param array $array An array of values to be set in the container.
-     */
-    public function __construct(array $array = [])
-    {
-        $this->deprecateClass();
-
-        parent::__construct($array);
-    }
-
     /**
      * @see AbstractCollection::checkType()
      */
     protected function checkType($value)
     {
-        $this->deprecateClass();
-
-        parent::checkType($value);
+        if (!RuntimeUtils::isRuntimeCompliant($value)) {
+            RuntimeUtils::throwTypingError($value);
+        }
     }
 
     /**
@@ -101,9 +86,8 @@ class Container extends baseContainer
      */
     public function isNull()
     {
-        $this->deprecateClass();
-
-        return parent::isNull();
+        $data = $this->getDataPlaceHolder();
+        return empty($data);
     }
 
     /**
@@ -113,9 +97,7 @@ class Container extends baseContainer
      */
     public function getCardinality()
     {
-        $this->deprecateClass();
-
-        return parent::getCardinality();
+        return Cardinality::MULTIPLE;
     }
 
     /**
@@ -131,9 +113,22 @@ class Container extends baseContainer
      */
     public function equals($obj)
     {
-        $this->deprecateClass();
+        if (is_object($obj) && $obj instanceof static && count($obj) === count($this)) {
+            foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+                $t = $this[$key];
+                $occurencesA = $this->occurences($t);
+                $occurencesB = $obj->occurences($t);
 
-        return parent::equals($obj);
+                if ($occurencesA !== $occurencesB) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Not the same type or different item count.
+        return false;
     }
 
     /**
@@ -147,23 +142,46 @@ class Container extends baseContainer
      */
     public function occurences($obj)
     {
-        $this->deprecateClass();
+        $occurences = 0;
 
-        return parent::occurences($obj);
+        foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+            $t = $this[$key];
+            if (is_object($obj) && $obj instanceof Comparable) {
+                // try to use Comparable.
+                if ($obj->equals($t)) {
+                    $occurences++;
+                }
+            } elseif (is_object($t) && $t instanceof Comparable) {
+                // Again, use Comparable.
+                if ($t->equals($obj)) {
+                    $occurences++;
+                }
+            } else {
+                // Both primitive.
+                if ($obj === $t) {
+                    $occurences++;
+                }
+            }
+        }
+
+        return $occurences;
     }
 
     /**
      * Create a Container object from a Data Model ValueCollection object.
      *
      * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-     * @return BaseContainer A Container object populated with the values found in $valueCollection.
+     * @return Container A Container object populated with the values found in $valueCollection.
      * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
      */
     public static function createFromDataModel(ValueCollection $valueCollection)
     {
-        self::deprecateClassStatic();
+        $container = new static();
+        foreach ($valueCollection as $value) {
+            $container[] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
+        }
 
-        return parent::createFromDataModel($valueCollection);
+        return $container;
     }
 
     /**
@@ -177,9 +195,7 @@ class Container extends baseContainer
      */
     protected function getToStringBounds()
     {
-        $this->deprecateClass();
-
-        return parent::getToStringBounds();
+        return ['[', ']'];
     }
 
     /**
@@ -189,16 +205,43 @@ class Container extends baseContainer
      */
     public function __toString()
     {
-        $this->deprecateClass();
+        $bounds = $this->getToStringBounds();
+        $data = &$this->getDataPlaceHolder();
 
-        return parent::__toString();
+        if (count($data) === 0) {
+            // Empty container.
+            return $bounds[0] . $bounds[1];
+        }
+        $strings = [];
+
+        foreach (array_keys($data) as $k) {
+            $d = $data[$k];
+
+            if (is_null($d) === true) {
+                $strings[] = 'NULL';
+            } elseif ($d instanceof QtiString) {
+                $strings[] = "'${d}'";
+            } elseif ($d instanceof QtiBoolean) {
+                // PHP boolean primitive type.
+                $strings[] = ($d->getValue() === true) ? 'true' : 'false';
+            } elseif ($d instanceof QtiFile) {
+                $strings[] = $d->getFilename();
+            } else {
+                // Other PHP primitive/object type.
+                $strings[] = '' . $d;
+            }
+        }
+
+        return $bounds[0] . implode('; ', $strings) . $bounds[1];
     }
 
     public function __clone()
     {
-        $this->deprecateClass();
-
-        parent::__clone();
+        foreach ($this->dataPlaceHolder as $key => $value) {
+            if (gettype($value) === 'object') {
+                $this[$key] = clone $value;
+            }
+        }
     }
 
     /**
@@ -211,12 +254,40 @@ class Container extends baseContainer
      * Please note that the container copy is a shallow copy of the original, not
      * a deep copy.
      *
-     * @return BaseContainer
+     * @return Container
      */
     public function distinct()
     {
-        $this->deprecateClass();
+        $container = clone $this;
+        $newDataPlaceHolder = [];
 
-        return parent::distinct();
+        foreach ($this->getDataPlaceHolder() as $key => $value) {
+            $found = false;
+
+            foreach ($newDataPlaceHolder as $newValue) {
+                if (is_object($value) && $value instanceof Comparable && $value->equals($newValue)) {
+                    $found = true;
+                    break;
+                } elseif (is_object($newValue) && $newValue instanceof Comparable && $newValue->equals($value)) {
+                    $found = true;
+                    break;
+                } elseif ($value === $newValue) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ($found === false) {
+                if (is_string($key) === true) {
+                    $newDataPlaceHolder[$key] = $value;
+                } else {
+                    $newDataPlaceHolder[] = $value;
+                }
+            }
+        }
+
+        $container->setDataPlaceHolder($newDataPlaceHolder);
+
+        return $container;
     }
 }

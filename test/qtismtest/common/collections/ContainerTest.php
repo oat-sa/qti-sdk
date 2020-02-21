@@ -1,8 +1,9 @@
 <?php
 
-namespace qtismtest\runtime\common;
+namespace qtismtest\common\collections;
 
 use DateTime;
+use qtism\common\collections\Container;
 use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -17,7 +18,6 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\runtime\common\Container;
 use qtismtest\QtiSmTestCase;
 
 class ContainerTest extends QtiSmTestCase

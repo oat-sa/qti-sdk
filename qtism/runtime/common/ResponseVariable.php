@@ -24,7 +24,10 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\Comparable;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\Mapping;
 use qtism\data\state\ResponseDeclaration;
@@ -97,7 +100,7 @@ class ResponseVariable extends Variable
             if ($correctResponse instanceof Container) {
                 if ($correctResponse->getCardinality() === $this->getCardinality()) {
                     if (
-                        get_class($correctResponse) === 'qtism\\runtime\\common\\Container'
+                        get_class($correctResponse) === Container::class
                         || $correctResponse->getBaseType() === $this->getBaseType()
                     ) {
                         // This is a simple container with no baseType restriction

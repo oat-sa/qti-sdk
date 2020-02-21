@@ -24,10 +24,10 @@
 namespace qtism\runtime\expressions\operators;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
-use qtism\runtime\common\Container;
 
 /**
  * The OrProcessor class aims at processing OrOperator QTI Data Model Expression objects.

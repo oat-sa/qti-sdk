@@ -24,12 +24,12 @@
 namespace qtism\runtime\expressions\operators;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Min;
-use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 
 /**

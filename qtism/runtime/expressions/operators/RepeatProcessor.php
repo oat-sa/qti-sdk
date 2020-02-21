@@ -24,12 +24,12 @@
 namespace qtism\runtime\expressions\operators;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Repeat;
-use qtism\runtime\common\Container;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\Utils as ExprUtils;

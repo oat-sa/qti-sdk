@@ -24,6 +24,7 @@
 namespace qtism\runtime\processing;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -32,7 +33,6 @@ use qtism\data\content\PrintedVariable;
 use qtism\data\content\TextRun;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\AbstractEngine;
-use qtism\runtime\common\Container;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;

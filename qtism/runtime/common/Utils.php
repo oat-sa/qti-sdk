@@ -24,6 +24,7 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiFloat;

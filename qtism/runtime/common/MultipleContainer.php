@@ -24,6 +24,7 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -87,7 +88,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::checkType()
+     * @see Container::checkType()
      */
     protected function checkType($value)
     {
@@ -117,7 +118,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getToStringBounds()
+     * @see Container::getToStringBounds()
      */
     protected function getToStringBounds()
     {
@@ -125,7 +126,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getCardinality()
+     * @see Container::getCardinality()
      */
     public function getCardinality()
     {

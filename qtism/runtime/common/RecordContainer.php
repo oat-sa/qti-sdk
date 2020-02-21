@@ -24,6 +24,7 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Arrays;
@@ -65,7 +66,7 @@ class RecordContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getCardinality()
+     * @see Container::getCardinality()
      */
     public function getCardinality()
     {
@@ -119,7 +120,7 @@ class RecordContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getToStringBounds()
+     * @see Container::getToStringBounds()
      */
     protected function getToStringBounds()
     {
