@@ -25,6 +25,7 @@ namespace qtism\runtime\rendering\markup;
 
 use DOMDocument;
 use DOMDocumentFragment;
+use qtism\common\collections\Container;
 use qtism\common\utils\Url;
 use qtism\data\content\FeedbackElement;
 use qtism\data\content\Flow;
@@ -864,7 +865,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $val = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']";
         $identifier = $component->getIdentifier();
         $identifierType = 'qtism\\common\\datatypes\\QtiIdentifier';
-        $containerType = 'qtism\\runtime\\common\\Container';
+        $containerType = Container::class;
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
         $valCheck = "(${scalarCheck} || ${containerCheck})";
