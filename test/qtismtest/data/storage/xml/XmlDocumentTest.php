@@ -210,7 +210,7 @@ class XmlDocumentTest extends QtiSmTestCase {
     public function testLoadFromMalformedString() {
         $doc = new XmlDocument('2.1');
         
-        $expectedMsg = "An internal error occured while parsing QTI-XML:\nFatal Error: Premature end of data in tag assessmentItem line 1 at 1:17.";
+        $expectedMsg = "An internal error occured while parsing QTI-XML:\nFatal Error: EndTag: '</' not found at 1:17.";
         $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::READ);
         
         $doc->loadFromString('<assessmentItem>');
