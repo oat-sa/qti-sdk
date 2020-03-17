@@ -130,7 +130,8 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
             // - Transform coordinates in vertices.
             // -- Use of the "point in polygon" algorithm.
             $vertices = [];
-            for ($i = 0; $i < count($this); $i++) {
+            $limit = count($this);
+            for ($i = 0; $i < $limit; $i++) {
                 $vertex = [];
                 $vertex[] = $this[$i]; //x
                 $i++;
@@ -140,9 +141,11 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
             }
 
             $intersects = 0;
-            for ($i = 1; $i < count($vertices); $i++) {
-                $vertex1 = $vertices[$i - 1];
-                $vertex2 = $vertices[$i];
+            $limit = count($vertices);
+            $j = $limit - 1;
+            for ($i = 0; $i < $limit; $i++) {
+                $vertex1 = $vertices[$i];
+                $vertex2 = $vertices[$j];
 
                 if ($vertex1[1] === $vertex2[1] && $vertex1[1] === $point->getY() && $point->getX() > min($vertex1[0], $vertex2[0]) && $point->getX() < max($vertex1[0], $vertex2[0])) {
                     // we are on a boundary.
@@ -162,6 +165,8 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
                         $intersects++;
                     }
                 }
+                
+                $j = $i;
             }
 
             // If we passed through an odd number of edges, we are in the polygon!
