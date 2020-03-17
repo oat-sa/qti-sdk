@@ -121,57 +121,61 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
     {
         if ($this->getShape() === QtiShape::DEF) {
             return true;
-        } elseif ($this->getShape() === QtiShape::RECT) {
-            return $point->getX() >= $this[0] && $point->getX() <= $this[2] && $point->getY() >= $this[1] && $point->getY() <= $this[3];
-        } elseif ($this->getShape() === QtiShape::CIRCLE) {
-            return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
-        } else {
-            // we consider it is a polygon.
-            // - Transform coordinates in vertices.
-            // -- Use of the "point in polygon" algorithm.
-            $vertices = [];
-            $limit = count($this);
-            for ($i = 0; $i < $limit; $i++) {
-                $vertex = [];
-                $vertex[] = $this[$i]; //x
-                $i++;
-                $vertex[] = $this[$i]; //y
+        }
 
-                $vertices[] = $vertex;
+        if ($this->getShape() === QtiShape::RECT) {
+            return $point->getX() >= $this[0] && $point->getX() <= $this[2] && $point->getY() >= $this[1] && $point->getY() <= $this[3];
+        }
+
+        if ($this->getShape() === QtiShape::CIRCLE) {
+            return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
+        }
+
+        // we consider it is a polygon.
+        // - Transform coordinates in vertices.
+        // -- Use of the "point in polygon" algorithm.
+        $vertices = [];
+        $limit = count($this);
+        for ($i = 0; $i < $limit; $i++) {
+            $vertex = [];
+            $vertex[] = $this[$i]; //x
+            $i++;
+            $vertex[] = $this[$i]; //y
+
+            $vertices[] = $vertex;
+        }
+
+        $intersects = 0;
+        $limit = count($vertices);
+        $j = $limit - 1;
+        for ($i = 0; $i < $limit; $i++) {
+            $vertex1 = $vertices[$i];
+            $vertex2 = $vertices[$j];
+
+            if ($vertex1[1] === $vertex2[1] && $vertex1[1] === $point->getY() && $point->getX() > min($vertex1[0], $vertex2[0]) && $point->getX() < max($vertex1[0], $vertex2[0])) {
+                // we are on a boundary.
+                return true;
             }
 
-            $intersects = 0;
-            $limit = count($vertices);
-            $j = $limit - 1;
-            for ($i = 0; $i < $limit; $i++) {
-                $vertex1 = $vertices[$i];
-                $vertex2 = $vertices[$j];
+            if ($point->getY() > min($vertex1[1], $vertex2[1]) && $point->getY() <= max($vertex1[1], $vertex2[1]) && $point->getX() <= max($vertex1[0], $vertex2[0]) && $vertex1[1] !== $vertex2[1]) {
+                $xinters = ($point->getY() - $vertex1[1]) * ($vertex2[0] - $vertex1[0]) / ($vertex2[1] - $vertex1[1]) + $vertex1[0];
 
-                if ($vertex1[1] === $vertex2[1] && $vertex1[1] === $point->getY() && $point->getX() > min($vertex1[0], $vertex2[0]) && $point->getX() < max($vertex1[0], $vertex2[0])) {
-                    // we are on a boundary.
+                if ($xinters === $point->getX()) {
+                    // Again, we are on a boundary.
                     return true;
                 }
 
-                if ($point->getY() > min($vertex1[1], $vertex2[1]) && $point->getY() <= max($vertex1[1], $vertex2[1]) && $point->getX() <= max($vertex1[0], $vertex2[0]) && $vertex1[1] !== $vertex2[1]) {
-                    $xinters = ($point->getY() - $vertex1[1]) * ($vertex2[0] - $vertex1[0]) / ($vertex2[1] - $vertex1[1]) + $vertex1[0];
-
-                    if ($xinters === $point->getX()) {
-                        // Again, we are on a boundary.
-                        return true;
-                    }
-
-                    if ($vertex1[0] === $vertex2[0] || $point->getX() <= $xinters) {
-                        // We have a single intersection.
-                        $intersects++;
-                    }
+                if ($vertex1[0] === $vertex2[0] || $point->getX() <= $xinters) {
+                    // We have a single intersection.
+                    $intersects++;
                 }
-                
-                $j = $i;
             }
-
-            // If we passed through an odd number of edges, we are in the polygon!
-            return $intersects % 2 !== 0;
+            
+            $j = $i;
         }
+
+        // If we passed through an odd number of edges, we are in the polygon!
+        return $intersects % 2 !== 0;
     }
 
     /**
