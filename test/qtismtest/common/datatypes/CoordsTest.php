@@ -77,6 +77,9 @@ class CoordsTest extends QtiSmTestCase
 
         $point = new QtiPoint(6, 4); // 6, 4 is inside.
         $this->assertTrue($coords->inside($point));
+
+        $point = new QtiPoint(-3, 6); // -3, 6 is outside, and the horizontal line intersects the edge between the first and the last vertices.
+        $this->assertFalse($coords->inside($point));
     }
 
     public function testOnEdgePolygon()
