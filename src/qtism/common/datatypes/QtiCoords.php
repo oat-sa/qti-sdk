@@ -134,7 +134,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
         // - Transform coordinates in vertices.
         // -- Use of the "point in polygon" algorithm.
         $vertices = [];
-        for ($i = 0; $i < count($this); $i++) {
+        for ($i = 0, $limit = $this->count(); $i < $limit; $i++) {
             $vertex = [];
             $vertex[] = $this[$i]; //x
             $i++;
