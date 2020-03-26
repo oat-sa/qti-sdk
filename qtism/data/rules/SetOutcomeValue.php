@@ -44,6 +44,13 @@ use qtism\data\QtiComponentCollection;
 class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
 {
     /**
+     * FIXME: This constant is accessed directly in Tao ImportService.
+     * Every other places are using hard-coded string, which is even worse.
+     * It shouldn't be disclosed and another way of selecting elements must be found.
+     */
+    const CLASS_NAME = 'setOutcomeValue';
+
+    /**
      * From IMS QTI:
      *
      * The outcome variable to set.
