@@ -443,28 +443,41 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $qtiSuffix = 'v2p1';
-        $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
         switch (trim($this->getVersion())) {
             case '2.0':
                 $qtiSuffix = 'v2p0';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
                 break;
 
+            case '2.2':
+                $qtiSuffix = 'v2p2';
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2p1/imsqti_v2p2p1.xsd';
+                break;
+
+            case '2.1':
             case '2.1.0':
+            default:
                 $qtiSuffix = 'v2p1';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
                 break;
-
-            case '2.2':
-                $qtiSuffix = 'v2p2';
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                break;
         }
-
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
+        
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+    }
+
+    /**
+     * Changes to Qti version of the root element.
+     *
+     * @param string $toVersion
+     * @return self
+     */
+    public function changeVersion(string $toVersion)
+    {
+        $this->setVersion($toVersion);
+        $this->decorateRootElement($this->domDocument->documentElement);
+        return $this;
     }
 
     /**

@@ -116,7 +116,7 @@ class XmlCompactDocument extends XmlDocument
      */
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null)
     {
-        $compactAssessmentTest = new XmlCompactDocument();
+        $compactAssessmentTest = new XmlCompactDocument($xmlAssessmentTestDocument->getVersion());
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
 
@@ -313,9 +313,26 @@ class XmlCompactDocument extends XmlDocument
      */
     public function decorateRootElement(DOMElement $rootElement)
     {
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
+        $namespaces = [
+            '2.1' => 'v2p1',
+            '2.2' => 'v2p2',
+        ];
+        $compactLocations = [
+            '2.1' => 'v1p0',
+            '2.2' => 'v1p1',
+        ];
+
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', sprintf('http://www.imsglobal.org/xsd/imsqti_%s', $namespaces[$this->getVersion()]));
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
+        $rootElement->setAttributeNS(
+            'http://www.w3.org/2001/XMLSchema-instance',
+            'xsi:schemaLocation',
+            sprintf(
+                'http://www.imsglobal.org/xsd/imsqti_%s http://www.taotesting.com/xsd/qticompact_%s.xsd',
+                $namespaces[$this->getVersion()],
+                $compactLocations[$this->getVersion()]
+            )
+        );
     }
 
     /**

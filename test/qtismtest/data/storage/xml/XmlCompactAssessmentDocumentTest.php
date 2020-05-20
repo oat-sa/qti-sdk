@@ -248,4 +248,20 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->load($file);
         $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
     }
+
+    public function testChangeVersion()
+    {
+        $file10 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_1.0.xml';
+        $file11 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_1.1.xml';
+
+        $doc = new XmlCompactDocument('1.0');
+        $doc->load($file10);
+
+        $doc->changeVersion('2.2');
+
+        $expected = new XmlCompactDocument('1.1');
+        $expected->load($file11);
+
+        $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
 }

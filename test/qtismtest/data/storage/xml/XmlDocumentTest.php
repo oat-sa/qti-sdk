@@ -189,4 +189,20 @@ class XmlDocumentTest extends QtiSmTestCase
         $divText = $divContent[0];
         $this->assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
     }
+
+    public function testChangeVersion()
+    {
+        $file21 = self::samplesDir() . 'ims/tests/empty_test/empty_test_qti_2.1.xml';
+        $file22 = self::samplesDir() . 'ims/tests/empty_test/empty_test_qti_2.2.xml';
+        
+        $doc = new XmlDocument('2.1');
+        $doc->load($file21);
+
+        $doc->changeVersion('2.2');
+
+        $expected = new XmlDocument('2.2');
+        $expected->load($file22);
+
+        $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
 }
