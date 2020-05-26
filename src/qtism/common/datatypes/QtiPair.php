@@ -128,6 +128,11 @@ class QtiPair implements QtiDatatype
         return $this->getFirst() . ' ' . $this->getSecond();
     }
 
+    public function getValue()
+    {
+        return (string) $this;
+    }
+
     /**
      * Whether a given $obj is equal to this Pair. Two Pair objects
      * are considered to be identical if the first and second values
