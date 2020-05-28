@@ -32,8 +32,10 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QtiCoords extends IntegerCollection implements QtiDatatype
+class QtiCoords extends IntegerCollection implements QtiDatatype, QtiNonScalar
 {
+    use QtiNonScalarTrait;
+
     /**
      * A value from the Shape enumeration.
      *

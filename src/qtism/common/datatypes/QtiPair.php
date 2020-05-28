@@ -37,8 +37,10 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QtiPair implements QtiDatatype
+class QtiPair implements QtiNonScalar
 {
+    use QtiNonScalarTrait;
+    
     /**
      * The first identifier of the Pair.
      *

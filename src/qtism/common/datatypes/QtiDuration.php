@@ -38,8 +38,10 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QtiDuration implements QtiDatatype
+class QtiDuration implements QtiNonScalar
 {
+    use QtiNonScalarTrait;
+    
     /**
      * Internally, the Duration class always
      * uses the UTC reference time zone.

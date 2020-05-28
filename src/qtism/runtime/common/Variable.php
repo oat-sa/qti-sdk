@@ -335,7 +335,7 @@ abstract class Variable
     /**
 	 * Has Multiple or Ordered Cardinality.
 	 *
-	 * Whether the variable stores multiple values. 
+	 * Whether the variable stores multiple values.
 	 *
 	 * @return boolean Returns true in case of the cardinality is Multiple or Ordered. Otherwise the method returns false.
 	 */
@@ -532,7 +532,7 @@ abstract class Variable
                 }
             }
         }
-        
+
         return $values;
     }
 

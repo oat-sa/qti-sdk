@@ -22,6 +22,7 @@
 
 namespace qtism\common\datatypes\files;
 
+use qtism\common\datatypes\QtiNonScalarTrait;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiFile;
@@ -36,6 +37,8 @@ use \RuntimeException;
  */
 class FileSystemFile implements QtiFile
 {
+    use QtiNonScalarTrait;
+    
     /**
      * The path to the file on the persistent storage.
      *
