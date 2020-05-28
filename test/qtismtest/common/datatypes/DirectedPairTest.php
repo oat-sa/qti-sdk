@@ -13,6 +13,8 @@ class DirectedPairTest extends QtiSmTestCase {
 		$p3 = new QtiDirectedPair('C', 'D');
 		$p4 = new QtiPair('A', 'B');
 		$p5 = new QtiDirectedPair('D', 'C');
+
+        $this->assertEquals('A B', $p1->getValue());
 		
 		$this->assertTrue($p1->equals($p2));
 		$this->assertTrue($p2->equals($p1));
@@ -27,5 +29,7 @@ class DirectedPairTest extends QtiSmTestCase {
 		$p8 = new QtiDirectedPair('def', 'abc');
 		$this->assertFalse($p7->equals($p8));
 		$this->assertFalse($p8->equals($p7));
+		
+		$this->assertEquals('abc def', $p7->getValue());
 	}
 }

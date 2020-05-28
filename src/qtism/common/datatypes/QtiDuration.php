@@ -259,6 +259,17 @@ class QtiDuration implements QtiDatatype
     }
 
     /**
+     * Get the encapsulated value from the Non-Scalar object, represented as a string.
+     * This is what we can find in result report variables for example.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return (string) $this;
+    }
+
+    /**
      * Whether a given $obj is equal to this Duration.
      *
      * @param mixed $obj A given value.

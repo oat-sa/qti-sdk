@@ -129,6 +129,17 @@ class QtiPair implements QtiDatatype
     }
 
     /**
+     * Get the encapsulated value from the Non-Scalar object, represented as a string.
+     * This is what we can find in result report variables for example.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return (string) $this;
+    }
+
+    /**
      * Whether a given $obj is equal to this Pair. Two Pair objects
      * are considered to be identical if the first and second values
      * of $obj are the same as the ones of $obj.

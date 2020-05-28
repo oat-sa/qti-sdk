@@ -14,6 +14,7 @@ class CoordsTest extends QtiSmTestCase {
         $coords = new QtiCoords(QtiShape::POLY, array(0, 0, 0, 3, 3, 0));
         $this->assertEquals(BaseType::COORDS, $coords->getBaseType());
         $this->assertEquals(Cardinality::SINGLE, $coords->getCardinality());
+        $this->assertEquals('0,0,0,3,3,0', $coords->getValue());
     }
     
 	public function testInsideCircle() {

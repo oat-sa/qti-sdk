@@ -180,6 +180,17 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     }
 
     /**
+     * Get the encapsulated value from the Non-Scalar object, represented as a string.
+     * This is what we can find in result report variables for example.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return (string) $this;
+    }
+
+    /**
      * Whether or not $obj is equals to $this. Two Coords objects are
      * considered to be equal if they have the same coordinates and shape.
      *

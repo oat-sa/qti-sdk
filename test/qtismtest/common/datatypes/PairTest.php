@@ -11,8 +11,13 @@ class PairTest extends QtiSmTestCase {
 		$p2 = new QtiPair('A', 'B');
 		$p3 = new QtiPair('C', 'D');
 		$p4 = new QtiPair('D', 'C');
-		
-		$this->assertTrue($p1->equals($p2));
+
+        $this->assertEquals('A B', $p1->getValue());
+        $this->assertEquals('A B', $p2->getValue());
+        $this->assertEquals('C D', $p3->getValue());
+        $this->assertEquals('D C', $p4->getValue());
+
+        $this->assertTrue($p1->equals($p2));
 		$this->assertTrue($p2->equals($p1));
 		$this->assertFalse($p1->equals($p3));
 		$this->assertFalse($p3->equals($p1));
