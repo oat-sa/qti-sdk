@@ -147,6 +147,17 @@ class QtiPoint implements QtiDatatype
     }
 
     /**
+     * Get the encapsulated value from the Non-Scalar object, represented as a string.
+     * This is what we can find in result report variables for example.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return (string) $this;
+    }
+
+    /**
      * Get the BaseType of the value. This method systematically returns
      * the BaseType::POINT value.
      *
