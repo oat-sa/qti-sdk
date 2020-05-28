@@ -37,7 +37,7 @@ namespace qtism\common\datatypes;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface QtiFile extends QtiDatatype
+interface QtiFile extends QtiDatatype, QtiNonScalar
 {
     /**
      * Get the sequence of bytes composing the file.

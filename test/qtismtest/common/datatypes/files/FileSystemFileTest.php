@@ -16,6 +16,7 @@ class FileSystemFileTest extends QtiSmTestCase {
         $this->assertEquals($expectedFilename, $pFile->getFilename());
         $this->assertEquals($expectedMimeType, $pFile->getMimeType());
         $this->assertEquals($expectedData, $pFile->getData());
+        $this->assertEquals($expectedFilename, $pFile->getValue());
     }
     
     /**

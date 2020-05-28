@@ -38,8 +38,10 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QtiPoint implements QtiDatatype
+class QtiPoint implements QtiNonScalar
 {
+    use QtiNonScalarTrait;
+    
     /**
      * The position on the x-axis.
      *
@@ -104,7 +106,7 @@ class QtiPoint implements QtiDatatype
         if (is_int($y)) {
             $this->y = $y;
         } else {
-            $msg = "The Y argument must be an integer value, '" . gettype($x) . "' given.";
+            $msg = "The Y argument must be an integer value, '" . gettype($y) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
