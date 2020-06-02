@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -48,6 +49,9 @@ use SplObjectStorage;
  */
 abstract class AbstractQtiBinaryStorage extends AbstractStorage
 {
+    /** @var QtiBinaryVersion */
+    private $version;
+
     /**
      * The AssessmentTestSeeker object used by this implementation.
      *
@@ -60,12 +64,22 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      *
      * @param AbstractSessionManager $manager
      * @param BinaryAssessmentTestSeeker $seeker
+     * @param QtiBinaryVersion|null $version
+     *
      * @throws InvalidArgumentException If $assessmentTest does not implement the Document interface.
      */
-    public function __construct(AbstractSessionManager $manager, BinaryAssessmentTestSeeker $seeker)
-    {
+    public function __construct(
+        AbstractSessionManager $manager,
+        BinaryAssessmentTestSeeker $seeker,
+        QtiBinaryVersion $version = null
+    ) {
         parent::__construct($manager);
         $this->setSeeker($seeker);
+
+        if ($version === null) {
+            $version = new QtiBinaryVersion();
+        }
+        $this->version = $version;
     }
 
     /**
@@ -94,6 +108,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @param AssessmentTest $test
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
      * @return AssessmentTestSession An AssessmentTestSession object.
+     * @throws StorageException
      */
     public function instantiate(AssessmentTest $test, $sessionId = '')
     {
@@ -129,8 +144,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
 
-            // write the QTI Binary Storage version in use to persist the test session.
-            $access->writeTinyInt(QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION);
+            // Write the QTI Binary Storage version in use to persist the test session.
+            $this->version->persist($access);
+
+            // Deal with intrinsic values of the Test Session.
             $access->writeTinyInt($assessmentTestSession->getState());
 
             $route = $assessmentTestSession->getRoute();
@@ -223,29 +240,47 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
 
-            $version = $access->readTinyInt();
+            // Read the QTI Binary Storage version.
+            $this->version->retrieve($access);
+
+            // Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
-            $currentPosition = ($version <= 8) ? $access->readTinyInt() : $access->readInteger();
+            $currentPosition = $this->version->storesPositionAndRouteCountAsInteger()
+                ? $access->readInteger()
+                : $access->readTinyInt();
 
             // Build the route and the item sessions.
             $route = new Route();
             $lastOccurenceUpdate = new SplObjectStorage();
             $itemSessionStore = new AssessmentItemSessionStore();
             $pendingResponseStore = new PendingResponseStore();
-            $routeCount = ($version <= 8) ? $access->readTinyInt() : $access->readInteger();
+            $routeCount = $this->version->storesPositionAndRouteCountAsInteger()
+                ? $access->readInteger()
+                : $access->readTinyInt();
 
-            $forceBranching = ($version >= 6) ? $access->readBoolean() : false;
-            $forcePreconditions = ($version >= 6) ? $access->readBoolean() : false;
-            $mustTrackPath = ($version >= 7) ? $access->readBoolean() : false;
-            $mustAlwaysAllowJumps = ($version >= 8) ? $access->readBoolean() : false;
-            $path = ($version >= 7) ? $access->readPath() : [];
+            // Reads configuration.
+            $forceBranching = $this->version->storesForceBranchingAndPreconditions()
+                ? $access->readBoolean()
+                : false;
+            $forcePreconditions = $this->version->storesForceBranchingAndPreconditions()
+                ? $access->readBoolean()
+                : false;
+            $mustTrackPath = $this->version->storesTrackPath()
+                ? $access->readBoolean() 
+                : false;
+            $mustAlwaysAllowJumps = $this->version->storesAlwaysAllowJumps()
+                ? $access->readBoolean() 
+                : false;
+            $path = $this->version->storesTrackPath() 
+                ? $access->readPath() 
+                : [];
 
             // Create the item session factory that will be used to instantiate
             // new item sessions.
 
             for ($i = 0; $i < $routeCount; $i++) {
-                $routeItem = $access->readRouteItem($this->getSeeker());
-                $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker());
+                $routeItem = $access->readRouteItem($this->getSeeker(), $this->version);
+                $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker(), $this->version);
 
                 // last-update
                 if ($access->readBoolean() === true) {
@@ -289,7 +324,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             // Build the duration store.
             $durationStore = new DurationStore();
 
-            if ($version >= 4) {
+            if ($this->version->storesDurations()) {
                 $durationCount = $access->readShort();
                 for ($i = 0; $i < $durationCount; $i++) {
                     $varName = $access->readString();
