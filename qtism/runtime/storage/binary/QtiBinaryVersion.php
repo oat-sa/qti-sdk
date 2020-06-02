@@ -45,7 +45,7 @@ class QtiBinaryVersion
     /**
      * These constants make the different versions a bit more self explanatory.
      */
-    const VERSION_BOTH_BRANCHES = 10;
+    const VERSION_FIRST_MASTER = 10;
     const VERSION_POSITION_INTEGER = 9;
     const VERSION_ALWAYS_ALLOW_JUMPS = 8;
     const VERSION_TRACK_PATH = 7;
@@ -102,9 +102,14 @@ class QtiBinaryVersion
         return $this->branch === 'L';
     }
 
+    public function isCurrentVersion(): bool
+    {
+        return $this->version = self::CURRENT_VERSION;
+    }
+    
     public function isInBothBranches(): bool
     {
-        return $this->version >= self::VERSION_BOTH_BRANCHES;
+        return $this->version >= self::VERSION_FIRST_MASTER;
     }
 
     public function storesPositionAndRouteCountAsInteger(): bool
