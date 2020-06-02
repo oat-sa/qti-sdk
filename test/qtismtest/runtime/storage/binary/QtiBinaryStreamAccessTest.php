@@ -39,6 +39,7 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use ReflectionProperty;
 
 class QtiBinaryStreamAccessTest extends QtiSmTestCase
 {
@@ -490,8 +491,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
 
-        /** @var QtiBinaryVersion $version */
-        $version = $this->createConfiguredMock(QtiBinaryVersion::class, ['storesAttempting' => true]);
+        $version = $this->createVersionMock(2);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
 
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
@@ -527,9 +527,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $stream->rewind();
         
-        /** @var QtiBinaryVersion $version */
-        $version = $this->createConfiguredMock(QtiBinaryVersion::class, ['storesAttempting' => true]);
+        $version = $this->createVersionMock(2);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
+
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -560,8 +560,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
-        /** @var QtiBinaryVersion $version */
-        $version = $this->createConfiguredMock(QtiBinaryVersion::class, ['storesMultipleSections' => true]);
+        $version = $this->createVersionMock(3);
         $routeItem = $access->readRouteItem($seeker, $version);
         
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
@@ -592,8 +591,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access->writeRouteItem($seeker, $routeItem);
         $stream->rewind();
 
-        /** @var QtiBinaryVersion $version */
-        $version = $this->createConfiguredMock(QtiBinaryVersion::class, ['storesMultipleSections' => true]);
+        $version = $this->createVersionMock(3);
         $routeItem = $access->readRouteItem($seeker, $version);
 
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
@@ -664,5 +662,16 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals('Q01', $pendingResponses->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals(0, $pendingResponses->getOccurence());
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
+    }
+    
+    public function createVersionMock(int $versionNumber): QtiBinaryVersion
+    {
+        $version = new QtiBinaryVersion();
+        $property = new ReflectionProperty(QtiBinaryVersion::class, 'version');
+        $property->setAccessible(true);
+        $property->setValue($version, $versionNumber);
+        $property->setAccessible(false);
+        
+        return $version;
     }
 }
