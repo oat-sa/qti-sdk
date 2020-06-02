@@ -18,12 +18,14 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\runtime\storage\binary;
 
 use Exception;
+use InvalidArgumentException;
 use OutOfBoundsException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -33,6 +35,7 @@ use qtism\common\storage\MemoryStream;
 use qtism\data\AssessmentTest;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\storage\common\AbstractStorage;
+use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentItemSessionStore;
@@ -48,7 +51,8 @@ use SplObjectStorage;
  */
 abstract class AbstractQtiBinaryStorage extends AbstractStorage
 {
-    const VERSION = 1;
+    /** @var QtiBinaryVersion */
+    private $version;
 
     /**
      * The AssessmentTestSeeker object used by this implementation.
@@ -62,11 +66,20 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      *
      * @param AbstractSessionManager $manager
      * @param AssessmentTest $test
+     * @param QtiBinaryVersion|null $version
      */
-    public function __construct(AbstractSessionManager $manager, AssessmentTest $test)
-    {
+    public function __construct(
+        AbstractSessionManager $manager,
+        AssessmentTest $test,
+        QtiBinaryVersion $version = null
+    ) {
         parent::__construct($manager, $test);
         $this->setSeeker(new BinaryAssessmentTestSeeker($test));
+
+        if ($version === null) {
+            $version = new QtiBinaryVersion();
+        }
+        $this->version = $version;
     }
 
     /**
@@ -128,10 +141,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
 
-            // -- Tag version.
-            $access->writeTinyInt(self::VERSION);
+            // Write the QTI Binary Storage version in use to persist the test session.
+            $this->version->persist($access);
 
-            // -- Deal with intrinsic values of the Test Session.
+            // Deal with intrinsic values of the Test Session.
             $access->writeTinyInt($assessmentTestSession->getState());
 
             // Write the current position in the route.
@@ -237,10 +250,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
 
-            // -- Consume version (not used yet).
-            $access->readTinyInt();
+            // Read the QTI Binary Storage version.
+            $this->version->retrieve($access);
 
-            // -- Deal with intrinsic values of the Test Session.
+            // Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
 
