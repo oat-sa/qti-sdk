@@ -61,8 +61,8 @@ class QtiBinaryVersionTest extends QtiSmTestCase
 
         $this->assertTrue($subject->isLegacy());
         $this->assertFalse($subject->isMaster());
-        
-        foreach($expectedFeatures as $featureMethod => $expectedSupported) {
+
+        foreach ($expectedFeatures as $featureMethod => $expectedSupported) {
             $this->assertEquals($expectedSupported, $subject->$featureMethod());
         }
     }
@@ -97,7 +97,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $this->assertFalse($subject->isLegacy());
         $this->assertTrue($subject->isMaster());
 
-        foreach($expectedFeatures as $featureMethod => $expectedSupported) {
+        foreach ($expectedFeatures as $featureMethod => $expectedSupported) {
             $this->assertEquals($expectedSupported, $subject->$featureMethod());
         }
     }

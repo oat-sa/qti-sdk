@@ -46,13 +46,21 @@ class QtiBinaryVersion
      * These constants make the different versions a bit more self explanatory.
      */
     const VERSION_FIRST_MASTER = 10;
+
     const VERSION_POSITION_INTEGER = 9;
+
     const VERSION_ALWAYS_ALLOW_JUMPS = 8;
+
     const VERSION_TRACK_PATH = 7;
+
     const VERSION_FORCE_BRANCHING_PRECONDITIONS = 6;
+
     const VERSION_LAST_ACTION = 5;
+
     const VERSION_DURATIONS = 4;
+
     const VERSION_MULTIPLE_SECTIONS = 3;
+
     const VERSION_ATTEMPTING = 2;
 
     /**
@@ -67,7 +75,7 @@ class QtiBinaryVersion
 
     /**
      * Writes version into binary storage.
-     * 
+     *
      * @param QtiBinaryStreamAccess $access
      * @throws BinaryStreamAccessException
      */
@@ -79,7 +87,7 @@ class QtiBinaryVersion
 
     /**
      * Reads version from binary storage.
-     * 
+     *
      * @param QtiBinaryStreamAccess $access
      * @throws BinaryStreamAccessException
      */
@@ -107,27 +115,27 @@ class QtiBinaryVersion
         return $this->version = self::CURRENT_VERSION;
     }
 
-    public function isInBothBranches(): bool 
+    public function isInBothBranches(): bool
     {
         return $this->version >= self::VERSION_FIRST_MASTER;
     }
-    
-    public function storesPositionAndRouteCountAsInteger(): bool 
+
+    public function storesPositionAndRouteCountAsInteger(): bool
     {
         return $this->version >= self::VERSION_POSITION_INTEGER;
     }
-    
-    public function storesTrackPath(): bool 
+
+    public function storesTrackPath(): bool
     {
         return $this->version >= self::VERSION_TRACK_PATH;
     }
-    
-    public function storesAlwaysAllowJumps(): bool 
+
+    public function storesAlwaysAllowJumps(): bool
     {
         return $this->version >= self::VERSION_ALWAYS_ALLOW_JUMPS;
     }
-    
-    public function storesForceBranchingAndPreconditions(): bool 
+
+    public function storesForceBranchingAndPreconditions(): bool
     {
         return $this->version >= self::VERSION_FORCE_BRANCHING_PRECONDITIONS;
     }
@@ -137,17 +145,17 @@ class QtiBinaryVersion
         return $this->version >= self::VERSION_LAST_ACTION;
     }
 
-    public function storesDurations(): bool 
+    public function storesDurations(): bool
     {
         return $this->version >= self::VERSION_DURATIONS;
     }
-    
-    public function storesMultipleSections(): bool 
+
+    public function storesMultipleSections(): bool
     {
         return $this->version >= self::VERSION_MULTIPLE_SECTIONS;
     }
-    
-    public function storesAttempting(): bool 
+
+    public function storesAttempting(): bool
     {
         return $this->version >= self::VERSION_ATTEMPTING;
     }
