@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,11 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\content\xhtml\ObjectElement;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiPoint;
+use qtism\data\content\xhtml\ObjectElement;
+use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -40,9 +41,6 @@ use \InvalidArgumentException;
  * The position object interaction must be bound to a response variable with a baseType
  * of point and single or multiple cardinality. The point records the coordinates,
  * with respect to the stage, of the centre point of the image being positioned.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PositionObjectInteraction extends Interaction
 {
@@ -58,7 +56,7 @@ class PositionObjectInteraction extends Interaction
      * several position object interactions and is therefore defined in a class
      * of its own: positionObjectStage.
      *
-     * @var \qtism\common\datatypes\QtiPoint
+     * @var QtiPoint
      * @qtism-bean-property
      */
     private $centerPoint = null;
@@ -93,7 +91,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * The image to be positioned on the stage by the candidate.
      *
-     * @var \qtism\data\content\xhtml\ObjectElement
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -102,12 +100,12 @@ class PositionObjectInteraction extends Interaction
      * Create a new PositionObjectInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param \qtism\data\content\xhtml\ObjectElement $object An image as an ObjectElement object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -119,7 +117,7 @@ class PositionObjectInteraction extends Interaction
      * Set the centerPoint attribute. Give the null value if there is no centerPoint
      * specified.
      *
-     * @param \qtism\common\datatypes\QtiPoint $centerPoint A Point object or null.
+     * @param QtiPoint $centerPoint A Point object or null.
      */
     public function setCenterPoint(QtiPoint $centerPoint = null)
     {
@@ -130,7 +128,7 @@ class PositionObjectInteraction extends Interaction
      * Get the centerPoint attribute. The null value is returned if there is no centerPoint
      * specified.
      *
-     * @return \qtism\common\datatypes\QtiPoint A Point object or null.
+     * @return QtiPoint A Point object or null.
      */
     public function getCenterPoint()
     {
@@ -151,7 +149,7 @@ class PositionObjectInteraction extends Interaction
      * Set the maximum number of positions (on the stage) that the image can be placed.
      *
      * @param integer $maxChoices A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $maxChoices is not a positive integer.
+     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
@@ -178,12 +176,11 @@ class PositionObjectInteraction extends Interaction
      * to the interaction.
      *
      * @param integer $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
-     * @throws \InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
+     * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
     public function setMinChoices($minChoices)
     {
         if (is_int($minChoices) && $minChoices >= 0) {
-
             if (($maxChoices = $this->getMaxChoices()) > 0 && $minChoices > $maxChoices) {
                 $msg = "The 'minChoices' argument must be less than or equal to the limits imposed by 'maxChoices'.";
                 throw new InvalidArgumentException($msg);
@@ -220,7 +217,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Set the image to be positioned on the stage by the candidate.
      *
-     * @param \qtism\data\content\xhtml\ObjectElement $object An image as an ObjectElement object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      */
     public function setObject(ObjectElement $object)
     {
@@ -230,13 +227,13 @@ class PositionObjectInteraction extends Interaction
     /**
      * Get the image to be positioned on the stage by the candidate.
      *
-     * @return \qtism\data\content\xhtml\ObjectElement An image as an ObjectElement object.
+     * @return ObjectElement An image as an ObjectElement object.
      */
     public function getObject()
     {
         return $this->object;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
@@ -254,7 +251,7 @@ class PositionObjectInteraction extends Interaction
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array($this->getObject()));
+        return new QtiComponentCollection([$this->getObject()]);
     }
 
     /**

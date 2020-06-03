@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -34,18 +34,15 @@ use qtism\common\datatypes\QtiBoolean;
  * cardinality. The result is a single boolean with a value obtained by the logical
  * negation of the sub-expression's value. If the sub-expression is NULL then the not
  * operator also results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class NotProcessor extends OperatorProcessor
 {
     /**
-	 * Returns the logical negation of the sub-expressions.
-	 *
-	 * @return QtiBoolean
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Returns the logical negation of the sub-expressions.
+     *
+     * @return QtiBoolean
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -68,7 +65,7 @@ class NotProcessor extends OperatorProcessor
 
         return new QtiBoolean(!$operand->getValue());
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

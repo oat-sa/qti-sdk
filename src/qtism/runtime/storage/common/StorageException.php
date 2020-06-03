@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,23 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\storage\common;
 
-use \Exception;
+use Exception;
 
 /**
  * The StorageException class represents exceptions that AssessmentTestSession
  * Storage Services encounter an error.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class StorageException extends Exception
 {
@@ -61,10 +58,10 @@ class StorageException extends Exception
      * @var integer
      */
     const RETRIEVAL = 3;
-    
+
     /**
      * Error code to use when an error occurs while deleting an AssessmentTestSession.
-     * 
+     *
      * @var integer
      */
     const DELETION = 4;
@@ -74,7 +71,7 @@ class StorageException extends Exception
      *
      * @param string $message A human-readable message describing the encountered error.
      * @param integer $code A code enabling client-code to identify the cause of the error.
-     * @param \Exception $previous An optional previous Exception that was thrown and catched.
+     * @param Exception $previous An optional previous Exception that was thrown and catched.
      */
     public function __construct($message, $code = 0, Exception $previous = null)
     {

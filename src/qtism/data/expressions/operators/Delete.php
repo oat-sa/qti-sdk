@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -38,25 +39,22 @@ use qtism\data\expressions\Pure;
  *
  * The restrictions that apply to the member operator also apply to the
  * delete operator.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Delete extends Operator implements Pure
 {
     /**
      * Create a new Delete object.
      *
-     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     * @param ExpressionCollection $expressions
      */
     public function __construct(ExpressionCollection $expressions)
     {
-        parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::SAME));
+        parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED], [OperatorBaseType::SAME]);
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'delete';
@@ -64,6 +62,7 @@ class Delete extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

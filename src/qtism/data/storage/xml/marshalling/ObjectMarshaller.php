@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,13 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\ObjectFlowCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for object elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ObjectMarshaller extends ContentMarshaller
 {
@@ -47,7 +45,6 @@ class ObjectMarshaller extends ContentMarshaller
         }
 
         if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
-
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass($data, $type);
             $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
@@ -108,6 +105,6 @@ class ObjectMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\xhtml");
+        $this->lookupClasses = ["qtism\\data\\content\\xhtml"];
     }
 }

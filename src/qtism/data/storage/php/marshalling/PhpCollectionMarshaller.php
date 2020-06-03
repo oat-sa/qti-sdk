@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\php\marshalling;
 
+use qtism\common\collections\AbstractCollection;
 use qtism\common\storage\StreamAccessException;
-use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
-use qtism\common\collections\AbstractCollection;
+use qtism\data\storage\php\PhpVariable;
 
 /**
  * Implements the logic of marshalling AbstractCollection objects into
  * PHP source code.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpCollectionMarshaller extends PhpMarshaller
 {
     /**
      * Marshall AbstractCollection objects into PHP source code.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If something wrong happens during marshalling.
+     * @throws PhpMarshallingException If something wrong happens during marshalling.
      */
     public function marshall()
     {
@@ -67,7 +65,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
             $collectionVarName = $ctx->generateVariableName($collection);
             $access->writeVariable($collectionVarName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $collectionArgs = new PhpArgumentCollection(array(new PhpArgument(new PhpVariable($valueArrayVarName))));
+            $collectionArgs = new PhpArgumentCollection([new PhpArgument(new PhpVariable($valueArrayVarName))]);
             $access->writeInstantiation(get_class($collection), $collectionArgs);
             $access->writeSemicolon($ctx->mustFormatOutput());
 

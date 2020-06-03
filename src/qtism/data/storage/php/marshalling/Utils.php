@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,12 @@
 
 namespace qtism\data\storage\php\marshalling;
 
-use \ReflectionObject;
-use \InvalidArgumentException;
+use InvalidArgumentException;
+use ReflectionObject;
 
 /**
  * Utility class aiming at providing utility methods for the PHP Marshalling
  * package.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Utils
 {
@@ -57,7 +55,7 @@ class Utils
      * @param mixed $value A value.
      * @param integer $occurence An occurence number.
      * @return string A variable name.
-     * @throws \InvalidArgumentException If $occurence is not a positive integer or if $value cannot be handled by this method.
+     * @throws InvalidArgumentException If $occurence is not a positive integer or if $value cannot be handled by this method.
      */
     public static function variableName($value, $occurence = 0)
     {
@@ -77,9 +75,8 @@ class Utils
                 return gettype($value) . '_' . $occurence;
             } elseif (is_array($value) === true) {
                 return 'array_' . $occurence;
-            }
-            // null value?
-            elseif (is_null($value) === true) {
+            } elseif (is_null($value) === true) {
+                // null value?
                 // To avoid conflict with NullValue QTI expression object!!!
                 return 'scalarnullvalue_' . $occurence;
             } else {

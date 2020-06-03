@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -37,18 +37,15 @@ use qtism\data\expressions\operators\Subtract;
  * are of integer type, a single integer that corresponds to the first value minus
  * the second. If either of the sub-expressions is NULL then the operator results in
  * NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SubtractProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Subtract operator.
-	 *
-	 * @return QtiFloat|QtiInteger|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Subtract operator.
+     *
+     * @return QtiFloat|QtiInteger|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -74,7 +71,7 @@ class SubtractProcessor extends OperatorProcessor
 
         return (is_int($subtract) === true) ? new QtiInteger($subtract) : new QtiFloat($subtract);
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

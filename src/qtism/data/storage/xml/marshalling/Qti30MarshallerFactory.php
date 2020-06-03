@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,22 +24,19 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
-use \ReflectionClass;
+use ReflectionClass;
 
 /**
  * A QTI 3.0.0 (aQTI) MarshallerFactory
  *
  * It is focusing on instantiating and configuring Marshallers for QTI 3.0.0 (aQTI).
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Qti30MarshallerFactory extends Qti221MarshallerFactory
 {
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->setWebComponentFriendly(true);
         $this->removeMappingEntry('associableHotspot');
         $this->removeMappingEntry('gap');
@@ -78,7 +76,7 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
         $this->removeMappingEntry('templateBlock');
         $this->removeMappingEntry('templateInline');
         $this->removeMappingEntry('infoControl');
-    
+
         $this->addMappingEntry('qti-associable-hotspot', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
         $this->addMappingEntry('qti-gap', 'qtism\\data\\storage\\xml\\marshalling\\GapMarshaller');
         $this->addMappingEntry('qti-gap-img', 'qtism\\data\\storage\\xml\\marshalling\\GapChoiceMarshaller');
@@ -117,19 +115,19 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
         $this->addMappingEntry('qti-template-block', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
         $this->addMappingEntry('qti-template-inline', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
         $this->addMappingEntry('qti-info-control', 'qtism\\data\\storage\\xml\\marshalling\\InfoControlMarshaller');
-    
+
         $this->addMappingEntry('sub', 'qtism\\data\\storage\\xml\\marshalling\\SsmlSubMarshaller', 'http://www.w3.org/2010/10/synthesis');
     }
-    
+
     /**
      * Instantiate a Marshaller
      *
      * Instantiate a Marshaller in this MarshallerFactory context.
      *
-     * @param \ReflectionClass $class
+     * @param ReflectionClass $class
      * @param array $args
+     * @return Marshaller
      * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
-     * @return \qtism\data\storage\xml\marshalling\Marshaller
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

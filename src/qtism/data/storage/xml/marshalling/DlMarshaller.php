@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,13 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\xhtml\lists\DlElementCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for dl elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DlMarshaller extends ContentMarshaller
 {
@@ -78,6 +76,6 @@ class DlMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\xhtml\\lists");
+        $this->lookupClasses = ["qtism\\data\\content\\xhtml\\lists"];
     }
 }

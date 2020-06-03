@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,17 +23,14 @@
 
 namespace qtism\data;
 
-use qtism\common\collections\AbstractCollection;
 use InvalidArgumentException;
+use qtism\common\collections\AbstractCollection;
 use RuntimeException;
 
 /**
  * A collection that aims at storing QtiComponent objects. The QtiComponentCollection
  * class must be used as a bag. Thus, no specific key must be set when setting a value
  * in the collection. If a specific key is provided, a RuntimeException will be thrown.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiComponentCollection extends AbstractCollection
 {
@@ -40,7 +38,7 @@ class QtiComponentCollection extends AbstractCollection
      * Check if $value is a QtiComponent object.
      *
      * @param mixed $value The value of which we want to test the type.
-     * 
+     *
      * @throws InvalidArgumentException If $value is not a QtiComponent object.
      */
     protected function checkType($value)
@@ -78,10 +76,10 @@ class QtiComponentCollection extends AbstractCollection
             throw new RuntimeException($msg);
         }
     }
-    
+
     /**
      * Whether the collection contains exclusively QtiComponent objects having a given $className.
-     * 
+     *
      * @param string $className A QTI class name.
      * @param bool $recursive Whether to check children QtiComponent objects.
      * @return bool
@@ -92,7 +90,7 @@ class QtiComponentCollection extends AbstractCollection
         foreach ($data as $component) {
             if ($component->getQtiClassName() !== $className) {
                 return false;
-            } 
+            }
             if ($recursive === true) {
                 foreach ($component->getIterator() as $subComponent) {
                     if ($subComponent->getQtiClassName() !== $className) {
@@ -101,7 +99,7 @@ class QtiComponentCollection extends AbstractCollection
                 }
             }
         }
-        
+
         return true;
     }
 }

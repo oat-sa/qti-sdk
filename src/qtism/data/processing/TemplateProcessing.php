@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\data\processing;
 
-use qtism\data\rules\TemplateRuleCollection;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\rules\TemplateRuleCollection;
 
 /**
  * From IMS QTI:
@@ -33,9 +34,6 @@ use \InvalidArgumentException;
  * the cloning engine or delivery system in order to assign values to the template
  * variables. Template processing is identical in form to responseProcessing except
  * that the purpose is to assign values to template variables, not outcome variables.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateProcessing extends QtiComponent
 {
@@ -43,7 +41,7 @@ class TemplateProcessing extends QtiComponent
      * The collection of TemplateRule objects composing
      * the template processing.
      *
-     * @var \qtism\data\rules\TemplateRuleCollection
+     * @var TemplateRuleCollection
      * @qtism-bean-property
      */
     private $templateRules;
@@ -51,8 +49,8 @@ class TemplateProcessing extends QtiComponent
     /**
      * Create a new TemplateProcessing object.
      *
-     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
-     * @throws \InvalidArgumentException If $templateRules is an empty collection.
+     * @param TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
+     * @throws InvalidArgumentException If $templateRules is an empty collection.
      */
     public function __construct(TemplateRuleCollection $templateRules)
     {
@@ -63,8 +61,8 @@ class TemplateProcessing extends QtiComponent
      * Set the collection of TemplateRule objects composing
      * the template processing.
      *
-     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
-     * @throws \InvalidArgumentException If $templateRules is an empty collection.
+     * @param TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
+     * @throws InvalidArgumentException If $templateRules is an empty collection.
      */
     public function setTemplateRules(TemplateRuleCollection $templateRules)
     {
@@ -80,7 +78,7 @@ class TemplateProcessing extends QtiComponent
      * Get the collection of TemplatRule objects composing
      * the template processing.
      *
-     * @return \qtism\data\rules\TemplateRuleCollection A collection of at least one TemplateRule object.
+     * @return TemplateRuleCollection A collection of at least one TemplateRule object.
      */
     public function getTemplateRules()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,10 +23,10 @@
 
 namespace qtism\data\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -68,48 +69,45 @@ use \InvalidArgumentException;
  * * If the first argument is positive infinity and the second argument is negative infinity, then the result is the double value closest to 3*π/4.
  * * If the first argument is negative infinity and the second argument is positive infinity, then the result is the double value closest to -π/4.
  * * If both arguments are negative infinity, then the result is the double value closest to -3*π/4.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathOperator extends Operator implements Pure
 {
     /**
-	 * The name of the mathematical function.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * The name of the mathematical function.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $name;
 
     /**
-	 * Create a new instance of MathOperator.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
-	 * @param integer $name The math functions to use as a value from the MathFunctions enumeration.
-	 */
+     * Create a new instance of MathOperator.
+     *
+     * @param ExpressionCollection $expressions A collection of Expression objects.
+     * @param integer $name The math functions to use as a value from the MathFunctions enumeration.
+     */
     public function __construct(ExpressionCollection $expressions, $name)
     {
-        parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
+        parent::__construct($expressions, 1, -1, [Cardinality::SINGLE], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
         $this->setName($name);
     }
 
     /**
-	 * Get the name of the math function to use.
-	 *
-	 * @return integer A value from the MathFunctions enumeration.
-	 */
+     * Get the name of the math function to use.
+     *
+     * @return integer A value from the MathFunctions enumeration.
+     */
     public function getName()
     {
         return $this->name;
     }
 
     /**
-	 * Set the name of the math function to use.
-	 *
-	 * @param integer $name A value from the MathFunctions enumeration.
-	 * @throws \InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
-	 */
+     * Set the name of the math function to use.
+     *
+     * @param integer $name A value from the MathFunctions enumeration.
+     * @throws InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
+     */
     public function setName($name)
     {
         if (in_array($name, MathFunctions::asArray())) {
@@ -121,8 +119,8 @@ class MathOperator extends Operator implements Pure
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'mathOperator';
@@ -130,6 +128,7 @@ class MathOperator extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

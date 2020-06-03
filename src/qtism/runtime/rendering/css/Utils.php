@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,20 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\css;
 
 /**
  * A collection of utility methods focusing on Cascading Style Sheets.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Utils
 {
@@ -45,13 +42,10 @@ class Utils
      *
      * @param string $selector A Cascading Style Sheet selector.
      * @param array $map A QTI to XHTML CSS class map.
-     * @param array
      * @return string
      */
     public static function mapSelector($selector, array $map)
     {
-        
-        
         foreach ($map as $k => $v) {
             $pattern = "/(?:(^|\s|\+|,|~|>)(${k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";
             $count = 1;
@@ -62,13 +56,13 @@ class Utils
 
         return $selector;
     }
-    
+
     public static function mapPseudoClasses($selector, array $map)
     {
         foreach ($map as $k => $v) {
             $selector = str_replace(":-${k}", ".${v}", $selector);
         }
-        
+
         return $selector;
     }
 }

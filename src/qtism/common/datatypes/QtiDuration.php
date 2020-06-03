@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,29 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
+use Exception;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \DateInterval;
-use \DateTimeZone;
-use \DateTime;
-use \Exception;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
 /**
  * Implementation of the QTI duration datatype.
  *
  * The duration datatype enables you to express time duration as specified
  * by ISO8601.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiDuration implements QtiDatatype
 {
@@ -52,7 +51,7 @@ class QtiDuration implements QtiDatatype
 
     /**
      *
-     * @var \DateInterval
+     * @var DateInterval
      */
     private $interval;
 
@@ -79,7 +78,7 @@ class QtiDuration implements QtiDatatype
      * Please note that this datatype does not support negative durations.
      *
      * @param string $intervalSpec A duration as in ISO8601.
-     * @throws \InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
+     * @throws InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
      */
     public function __construct($intervalSpec)
     {
@@ -101,14 +100,13 @@ class QtiDuration implements QtiDatatype
             $msg = "The intervalSpec argument must be a non-empty string.";
             throw new InvalidArgumentException($msg);
         }
-
     }
 
     /**
      * Create a Duration object from a DateInterval object.
      *
-     * @param \DateInterval $interval
-     * @return \qtism\common\datatypes\QtiDuration
+     * @param DateInterval $interval
+     * @return QtiDuration
      */
     public static function createFromDateInterval(DateInterval $interval)
     {
@@ -121,7 +119,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the PHP DateInterval object corresponding to the duration.
      *
-     * @return \DateInterval A DateInterval PHP object.
+     * @return DateInterval A DateInterval PHP object.
      */
     protected function getInterval()
     {
@@ -131,7 +129,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Set the PHP DateInterval object corresponding to the duration.
      *
-     * @param \DateInterval $interval A DateInterval PHP object.
+     * @param DateInterval $interval A DateInterval PHP object.
      */
     protected function setInterval(DateInterval $interval)
     {
@@ -267,15 +265,15 @@ class QtiDuration implements QtiDatatype
     public function equals($obj)
     {
         return (gettype($obj) === 'object' &&
-                $obj instanceof self &&
-                '' . $obj === '' . $this);
+            $obj instanceof self &&
+            '' . $obj === '' . $this);
     }
 
     /**
      * Whether the duration described by this Duration object is shorter
      * than the one described by $duration.
      *
-     * @param \qtism\common\datatypes\QtiDuration $duration A Duration object to compare with this one.
+     * @param QtiDuration $duration A Duration object to compare with this one.
      * @return boolean
      */
     public function shorterThan(QtiDuration $duration)
@@ -287,7 +285,7 @@ class QtiDuration implements QtiDatatype
      * Whether the duration described by this Duration object is longer than or
      * equal to the one described by $duration.
      *
-     * @param \qtism\common\datatypes\QtiDuration $duration A Duration object to compare with this one.
+     * @param QtiDuration $duration A Duration object to compare with this one.
      * @return boolean
      */
     public function longerThanOrEquals(QtiDuration $duration)
@@ -300,7 +298,7 @@ class QtiDuration implements QtiDatatype
      *
      * For instance, PT1S + PT1S = PT2S.
      *
-     * @param \qtism\common\datatypes\QtiDuration|\DateInterval $duration A QtiDuration or DateInterval object.
+     * @param QtiDuration|DateInterval $duration A QtiDuration or DateInterval object.
      */
     public function add($duration)
     {
@@ -352,7 +350,7 @@ class QtiDuration implements QtiDatatype
     {
         // ... :'( ... https://bugs.php.net/bug.php?id=50559
         $tz = new DateTimeZone(self::TIMEZONE);
-        
+
         // - This section is critical. Creating
         // a new DateTime object as 'now' for $d2 is extremely
         // dangerous. If the current PHP process goes to sleep
@@ -362,7 +360,7 @@ class QtiDuration implements QtiDatatype
         $d1 = new DateTime('now', $tz);
         $d2 = clone $d1;
         // - End of the critical section.
-        
+
         $d2->add(new DateInterval($this->__toString()));
         $interval = $d2->diff($d1);
         $interval->invert = ($interval->invert === 1) ? 0 : 1;

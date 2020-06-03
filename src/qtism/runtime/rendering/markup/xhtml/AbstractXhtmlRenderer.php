@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,27 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use DOMDocumentFragment;
 use qtism\data\content\Stylesheet;
-use qtism\runtime\rendering\RenderingException;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
-use \DOMDocumentFragment;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * Base class of all XHTML renderers.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
 {
@@ -52,20 +49,20 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @var array
      */
-    private $additionalClasses = array();
-    
+    private $additionalClasses = [];
+
     /**
      * A set of additional user specific classes to be added to the
      * rendered element.
-     * 
+     *
      * @var array
      */
-    private $additionalUserClasses = array();
+    private $additionalUserClasses = [];
 
     /**
      * Create a new AbstractXhtmlRenderer object.
      *
-     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     * @param AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
@@ -76,8 +73,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      *
-     * @return \DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
-     * @throws \qtism\runtime\rendering\RenderingException If an error occurs while rendering $component.
+     * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
+     * @throws RenderingException If an error occurs while rendering $component.
      */
     public function render($component, $base = '')
     {
@@ -104,8 +101,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * A default rendering implementation focusing on a given $fragment and $component.
      *
-     * @param \DOMDocumentFragment $fragment
-     * @param \qtism\data\QtiComponent $component
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
      * @param string $base An optional base path to be used for rendering.
      */
     protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
@@ -130,25 +127,25 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
                 $fragment->firstChild->setAttribute('class', $class);
             }
         }
-        
-        // Add user specific CSS classes e.g. 'my-class' to rendering. 
+
+        // Add user specific CSS classes e.g. 'my-class' to rendering.
         if ($this->hasAdditionalUserClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalUserClasses());
             $currentClasses = $fragment->firstChild->getAttribute('class');
             $glue = ($currentClasses !== '') ? "\x20" : "";
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
-        
+
         // Reset additional user classes for next rendering with this implementation.
-        $this->setAdditionalUserClasses(array());
+        $this->setAdditionalUserClasses([]);
     }
 
     /**
      * Append a new DOMElement to the currently rendered $fragment which is suitable
      * to $component.
      *
-     * @param \DOMDocumentFragment $fragment
-     * @param \qtism\data\QtiComponent $component
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -159,8 +156,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Append the children renderings of $components to the currently rendered $fragment.
      *
-     * @param \DOMDocumentFragment $fragment
-     * @param \qtism\data\QtiComponent $component
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -172,8 +169,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Append the necessary attributes of $component to the currently rendered $fragment.
      *
-     * @param \DOMDocumentFragment $fragment
-     * @param \qtism\data\QtiComponent $component
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -262,58 +259,58 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     public function additionalClass($additionalClass)
     {
         $additionalClasses = $this->getAdditionalClasses();
-        
+
         if (($key = array_search($additionalClass, $additionalClasses)) !== false) {
             unset($additionalClasses[$key]);
         }
-        
+
         $additionalClasses[] = $additionalClass;
         $this->setAdditionalClasses($additionalClasses);
     }
-    
+
     /**
      * Set the array of additional user CSS classes.
-     * 
+     *
      * @param array $additionalUserClasses
      */
     public function setAdditionalUserClasses(array $additionalUserClasses)
     {
         $this->additionalUserClasses = $additionalUserClasses;
     }
-    
+
     /**
      * Get the array of additional user CSS classes.
-     * 
+     *
      * @return array
      */
     public function getAdditionalUserClasses()
     {
         return $this->additionalUserClasses;
     }
-    
+
     /**
      * Whether additional user CSS classes are defined for rendering.
-     * 
+     *
      * @return boolean
      */
     public function hasAdditionalUserClasses()
     {
         return count($this->getAdditionalUserClasses()) > 0;
     }
-    
+
     /**
      * Add an additional user CSS class to be rendered.
-     * 
+     *
      * @param string $additionalUserClass
      */
     public function additionalUserClass($additionalUserClass)
     {
         $additionalClasses = $this->getAdditionalUserClasses();
-        
+
         if (($key = array_search($additionalUserClass, $additionalClasses)) !== false) {
             unset($additionalClasses[$key]);
         }
-        
+
         $additionalClasses[] = $additionalUserClass;
         $this->setAdditionalUserClasses($additionalClasses);
     }

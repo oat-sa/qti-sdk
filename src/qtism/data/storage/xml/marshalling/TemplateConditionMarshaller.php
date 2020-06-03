@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,23 +23,20 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use DOMNode;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\rules\TemplateRuleCollection;
 use qtism\data\rules\TemplateCondition;
-use qtism\data\rules\TemplateIf;
+use qtism\data\rules\TemplateElse;
 use qtism\data\rules\TemplateElseIf;
 use qtism\data\rules\TemplateElseIfCollection;
-use qtism\data\rules\TemplateElse;
-use \DOMElement;
-use \DOMNode;
+use qtism\data\rules\TemplateIf;
+use qtism\data\rules\TemplateRuleCollection;
 
 /**
  * Marshalling/Unmarshalling implementation focusing on TemplateCondition
  * QTI components.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateConditionMarshaller extends RecursiveMarshaller
 {
@@ -79,8 +77,8 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -93,45 +91,45 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     */
     protected function isElementFinal(DOMNode $element)
     {
-        return !in_array($element->localName, array('templateIf', 'templateElseIf', 'templateElse', 'templateCondition'));
+        return !in_array($element->localName, ['templateIf', 'templateElseIf', 'templateElse', 'templateCondition']);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     */
     protected function isComponentFinal(QtiComponent $component)
     {
         return (!$component instanceof TemplateIf &&
-                 !$component instanceof TemplateElseIf &&
-                 !$component instanceof TemplateElse &&
-                 !$component instanceof TemplateCondition);
+            !$component instanceof TemplateElseIf &&
+            !$component instanceof TemplateElse &&
+            !$component instanceof TemplateCondition);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     */
     protected function getChildrenElements(DOMElement $element)
     {
-        return $this->getChildElementsByTagName($element, array(
-                'templateIf',
-                'templateElseIf',
-                'templateElse',
-                'exitTemplate',
-                'templateConstraint',
-                'setTemplateValue',
-                'setCorrectResponse',
-                'setDefaultValue',
-                'templateCondition'
-        ));
+        return $this->getChildElementsByTagName($element, [
+            'templateIf',
+            'templateElseIf',
+            'templateElse',
+            'exitTemplate',
+            'templateConstraint',
+            'setTemplateValue',
+            'setCorrectResponse',
+            'setDefaultValue',
+            'templateCondition',
+        ]);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     */
     protected function getChildrenComponents(QtiComponent $component)
     {
         if ($component instanceof TemplateIf || $component instanceof TemplateElseIf || $component instanceof TemplateElse) {
@@ -139,7 +137,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
             return $component->getTemplateRules()->getArrayCopy();
         } else {
             // TemplateCondition
-            $returnValue = array($component->getTemplateIf());
+            $returnValue = [$component->getTemplateIf()];
 
             if (count($component->getTemplateElseIfs()) > 0) {
                 $returnValue = array_merge($returnValue, $component->getTemplateElseIfs()->getArrayCopy());
@@ -154,8 +152,8 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     */
     protected function createCollection(DOMElement $currentNode)
     {
         if ($currentNode->localName != 'templateCondition') {
@@ -166,8 +164,8 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return '';

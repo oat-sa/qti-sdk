@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,13 +24,10 @@
 namespace qtism\common\datatypes\files;
 
 use qtism\common\datatypes\QtiFile;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * This implementation of FileManager is the default one of QTISM.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class FileSystemFileManager implements FileManager
 {
@@ -69,8 +67,8 @@ class FileSystemFileManager implements FileManager
      * @param string $path The canonical path to the file.
      * @param string $mimeType The mime-type of the file (if you want to force it).
      * @param string $filename The file name of the file (if you want to force it).
-     * @throws \qtism\common\datatypes\files\FileManagerException
-     * @return \qtism\common\datatypes\files\FileSystemFile
+     * @return FileSystemFile
+     * @throws FileManagerException
      */
     public function createFromFile($path, $mimeType, $filename = '')
     {
@@ -90,8 +88,8 @@ class FileSystemFileManager implements FileManager
      * @param string $data The binary data of the FileSystemFile object to be created.
      * @param string $mimeType A mime-type.
      * @param string $filename A file name e.g. "myfile.txt".
-     * @throws \qtism\common\datatypes\files\FileManagerException
-     * @return \qtism\common\datatypes\files\FileSystemFile
+     * @return FileSystemFile
+     * @throws FileManagerException
      */
     public function createFromData($data, $mimeType, $filename = '')
     {
@@ -109,8 +107,8 @@ class FileSystemFileManager implements FileManager
      * Retrieve a FileSystemFile object from its unique identifier.
      *
      * @param string identifier
-     * @throws \qtism\common\datatypes\files\FileManagerException
-     * @return \qtism\common\datatypes\files\FileSystemFile
+     * @return FileSystemFile
+     * @throws FileManagerException
      */
     public function retrieve($identifier)
     {
@@ -126,7 +124,7 @@ class FileSystemFileManager implements FileManager
      * Delete a FileSystemFile object from the persistence.
      *
      * @param QtiFile $file
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function delete(QtiFile $file)
     {

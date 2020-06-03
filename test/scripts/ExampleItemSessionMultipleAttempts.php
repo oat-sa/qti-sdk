@@ -1,12 +1,13 @@
 <?php
+
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\ItemSessionControl;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\runtime\common\State;
-use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSession;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
@@ -25,20 +26,20 @@ $itemSession->beginItemSession();
 $itemSession->beginAttempt();
 
 $responses = new State(
-    array(
+    [
         new ResponseVariable(
             'RESPONSE',
             Cardinality::MULTIPLE,
             BaseType::IDENTIFIER,
             new MultipleContainer(
                 BaseType::IDENTIFIER,
-                array(
+                [
                     new QtiIdentifier('H'),
-                    new QtiIdentifier('Cl')
-                )
+                    new QtiIdentifier('Cl'),
+                ]
             )
-        )
-    )
+        ),
+    ]
 );
 
 $itemSession->endAttempt($responses);

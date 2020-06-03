@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,8 @@
 
 namespace qtism\data\expressions;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use qtism\common\enums\Cardinality;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -34,39 +34,36 @@ use \InvalidArgumentException;
  * items referred to in a test. Only variables with single cardinality are considered.
  * Items with no declared minimum are ignored. The result has cardinality multiple
  * and base-type float.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeMinimum extends ItemSubset
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * As per the variableIdentifier attribute of testVariables.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * As per the variableIdentifier attribute of testVariables.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $outcomeIdentifier;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * As per the weightIdentifier attribute of testVariables.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * As per the weightIdentifier attribute of testVariables.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $weightIdentifier;
 
     /**
-	 * Create a new instance of OutcomeMinimum.
-	 *
-	 * @param string $outcomeIdentifier A QTI Identifier.
-	 * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
-	 * @throws \InvalidArgumentException If one of the arguments is not a valid QTI Identifier.
-	 */
+     * Create a new instance of OutcomeMinimum.
+     *
+     * @param string $outcomeIdentifier A QTI Identifier.
+     * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
+     * @throws InvalidArgumentException If one of the arguments is not a valid QTI Identifier.
+     */
     public function __construct($outcomeIdentifier, $weightIdentifier = '')
     {
         parent::__construct();
@@ -75,11 +72,11 @@ class OutcomeMinimum extends ItemSubset
     }
 
     /**
-	 * Set the outcome identifier.
-	 *
-	 * @param string $outcomeIdentifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
-	 */
+     * Set the outcome identifier.
+     *
+     * @param string $outcomeIdentifier A QTI Identifier.
+     * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
+     */
     public function setOutcomeIdentifier($outcomeIdentifier)
     {
         if (Format::isIdentifier($outcomeIdentifier)) {
@@ -91,21 +88,21 @@ class OutcomeMinimum extends ItemSubset
     }
 
     /**
-	 * Get the outcome identifier.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the outcome identifier.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getOutcomeIdentifier()
     {
         return $this->outcomeIdentifier;
     }
 
     /**
-	 * Set the weight identifier. Can be '' (empty string) if no weight specified.
-	 *
-	 * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
-	 * @throws \InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier nor '' (empty string).
-	 */
+     * Set the weight identifier. Can be '' (empty string) if no weight specified.
+     *
+     * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
+     * @throws InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier nor '' (empty string).
+     */
     public function setWeightIdentifier($weightIdentifier)
     {
         if (Format::isIdentifier($weightIdentifier) || $weightIdentifier == '') {
@@ -117,18 +114,18 @@ class OutcomeMinimum extends ItemSubset
     }
 
     /**
-	 * Get the weight identifier. Can be '' (empty string) if no weight was specified.
-	 *
-	 * @return string A QTI Identifier or '' (empty string).
-	 */
+     * Get the weight identifier. Can be '' (empty string) if no weight was specified.
+     *
+     * @return string A QTI Identifier or '' (empty string).
+     */
     public function getWeightIdentifier()
     {
         return $this->weightIdentifier;
     }
 
     /**
-	 * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
-	 */
+     * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'outcomeMinimum';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,25 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\data\expressions\operators\StatsOperator;
+use DOMElement;
 use qtism\data\expressions\operators\Statistics;
-use \DOMElement;
+use qtism\data\expressions\operators\StatsOperator;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A complex Operator marshaller focusing on the marshalling/unmarshalling process
  * of StatOperators QTI operators.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class StatsOperatorMarshaller extends OperatorMarshaller
 {
     /**
-	 * Unmarshall a StatsOperator object into a QTI statsOperator element.
-	 *
-	 * @param \qtism\data\QtiComponent $component The StatsOperator object to marshall.
-	 * @param array $elements An array of child DOMEelement objects.
-	 * @return \DOMElement The marshalled QTI statsOperator element.
-	 */
+     * Unmarshall a StatsOperator object into a QTI statsOperator element.
+     *
+     * @param QtiComponent $component The StatsOperator object to marshall.
+     * @param array $elements An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI statsOperator element.
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -58,17 +56,16 @@ class StatsOperatorMarshaller extends OperatorMarshaller
     }
 
     /**
-	 * Unmarshall a QTI statsOperator operator element into a StatsOperator object.
-	 *
-	 * @param \DOMElement The statsOperator element to unmarshall.
-	 * @param \qtism\data\QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return \qtism\data\QtiComponent A StatsOperator object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a QTI statsOperator operator element into a StatsOperator object.
+     *
+     * @param DOMElement The statsOperator element to unmarshall.
+     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent A StatsOperator object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
-
             $object = new StatsOperator($children, Statistics::getConstantByName($name));
 
             return $object;

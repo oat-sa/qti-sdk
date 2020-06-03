@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -36,63 +37,60 @@ use qtism\data\QtiComponent;
  *
  * The transformation takes place using the lookupOutcomeValue rule within responseProcessing
  * or outcomeProcessing.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class LookupTable extends QtiComponent
 {
     /**
-	 * The default outcome value to be used when no matching table entry is found. If omitted,
-	 * the NULL value is used. (QTI valueType attribute).
-	 *
-	 * @var mixed
-	 * @qtism-bean-property
-	 */
+     * The default outcome value to be used when no matching table entry is found. If omitted,
+     * the NULL value is used. (QTI valueType attribute).
+     *
+     * @var mixed
+     * @qtism-bean-property
+     */
     private $defaultValue = null;
 
     /**
-	 * Create a new instance of LookupTable.
-	 *
-	 * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
-	 */
+     * Create a new instance of LookupTable.
+     *
+     * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
+     */
     public function __construct($defaultValue = null)
     {
         $this->setDefaultValue($defaultValue);
     }
 
     /**
-	 * Get the default outcome value to be used when no matching table entry is found. If omitted,
-	 * the NULL value is returned.
-	 *
-	 * @return mixed A value.
-	 */
+     * Get the default outcome value to be used when no matching table entry is found. If omitted,
+     * the NULL value is returned.
+     *
+     * @return mixed A value.
+     */
     public function getDefaultValue()
     {
         return $this->defaultValue;
     }
 
     /**
-	 * Get the default outcome value to be used when no matching table entry is found.
-	 *
-	 * @param mixed $defaultValue A value.
-	 */
+     * Get the default outcome value to be used when no matching table entry is found.
+     *
+     * @param mixed $defaultValue A value.
+     */
     public function setDefaultValue($defaultValue)
     {
         $this->defaultValue = $defaultValue;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @inheritDoc
+     */
     public function getQtiClassName()
     {
         return 'lookupTable';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @inheritDoc
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

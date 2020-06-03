@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -35,16 +36,13 @@ use qtism\data\QtiComponent;
  * If the expression given in the templateIf or templateElseIf does not evaluate to true
  * then consideration passes to the next templateElseIf or, if there are no more
  * templateElseIf parts then the sub-rules of the templateElse are followed (if specified).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateCondition extends QtiComponent implements TemplateRule
 {
     /**
      * The TemplateIf object composing the template condition.
      *
-     * @var \qtism\data\rules\TemplateIf
+     * @var TemplateIf
      * @qtism-bean-property
      */
     private $templateIf;
@@ -52,7 +50,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * The collection of TemplateElseIf objects composing the template condition.
      *
-     * @var \qtism\data\rules\TemplateElseIfCollection
+     * @var TemplateElseIfCollection
      * @qtism-bean-property
      */
     private $templateElseIfs;
@@ -60,7 +58,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * An optional TemplateElse object composing the complate condition.
      *
-     * @var \qtism\data\rules\TemplateElse
+     * @var TemplateElse
      * @qtism-bean-property
      */
     private $templateElse = null;
@@ -68,9 +66,9 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Create a new TemplateCondition object.
      *
-     * @param \qtism\data\rules\TemplateIf $templateIf The TemplateIf object composing the template condition.
-     * @param \qtism\data\rules\TemplateElseIfCollection $templateElseIfs The collection of TemplateElseIf objects composing the template condition.
-     * @param \qtism\data\rules\TemplateElse $templateElse An optional TemplateElse object composing the template condition.
+     * @param TemplateIf $templateIf The TemplateIf object composing the template condition.
+     * @param TemplateElseIfCollection $templateElseIfs The collection of TemplateElseIf objects composing the template condition.
+     * @param TemplateElse $templateElse An optional TemplateElse object composing the template condition.
      */
     public function __construct(TemplateIf $templateIf, TemplateElseIfCollection $templateElseIfs = null, TemplateElse $templateElse = null)
     {
@@ -82,7 +80,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Set the TemplateIf object composing the template condition.
      *
-     * @param \qtism\data\rules\TemplateIf $templateIf A TemplateIf object.
+     * @param TemplateIf $templateIf A TemplateIf object.
      */
     public function setTemplateIf(TemplateIf $templateIf)
     {
@@ -92,7 +90,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Get the TemplateIf object composing the template condition;
      *
-     * @return \qtism\data\rules\TemplateIf A TemplateIf object.
+     * @return TemplateIf A TemplateIf object.
      */
     public function getTemplateIf()
     {
@@ -102,7 +100,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Set the collection of TemplateElseIf objects composing the template condition.
      *
-     * @param \qtism\data\rules\TemplateElseIfCollection $templateElseIfs A collection of TemplateElseIf objects.
+     * @param TemplateElseIfCollection $templateElseIfs A collection of TemplateElseIf objects.
      */
     public function setTemplateElseIfs(TemplateElseIfCollection $templateElseIfs)
     {
@@ -112,7 +110,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Get the collection of TemplateElseIf objects composing the template condition.
      *
-     * @return \qtism\data\rules\TemplateElseIfCollection A collection of TemplateElseIf objects.
+     * @return TemplateElseIfCollection A collection of TemplateElseIf objects.
      */
     public function getTemplateElseIfs()
     {
@@ -122,7 +120,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Set the TemplateElse object composing the template condition.
      *
-     * @param \qtism\data\rules\TemplateElse $templateElse A TemplateElse object.
+     * @param TemplateElse $templateElse A TemplateElse object.
      */
     public function setTemplateElse(TemplateElse $templateElse = null)
     {
@@ -132,7 +130,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Get the TemplateElse object composing the template condition.
      *
-     * @return \qtism\data\rules\TemplateElse A TemplateElse object.
+     * @return TemplateElse A TemplateElse object.
      */
     public function getTemplateElse()
     {
@@ -154,7 +152,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
      */
     public function getComponents()
     {
-        $merge = array_merge(array($this->getTemplateIf()), $this->getTemplateElseIfs()->getArrayCopy());
+        $merge = array_merge([$this->getTemplateIf()], $this->getTemplateElseIfs()->getArrayCopy());
         $components = new QtiComponentCollection($merge);
         if (($else = $this->getTemplateElse()) !== null) {
             $components[] = $else;

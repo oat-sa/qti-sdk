@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
-use qtism\data\expressions\RandomInteger;
+use DOMElement;
 use qtism\common\utils\Format;
-use \DOMElement;
+use qtism\data\expressions\RandomInteger;
+use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for randomInteger.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RandomIntegerMarshaller extends Marshaller
 {
     /**
-	 * Marshall a RandomInteger object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A RandomInteger object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a RandomInteger object into a DOMElement object.
+     *
+     * @param QtiComponent $component A RandomInteger object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -56,12 +54,12 @@ class RandomIntegerMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI randomInteger element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A RandomInteger object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attributes 'min' or 'max' are missing from $element.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI randomInteger element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A RandomInteger object.
+     * @throws UnmarshallingException If the mandatory attributes 'min' or 'max' are missing from $element.
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($max = $this->getDOMElementAttributeAs($element, 'max', 'string')) !== null) {
@@ -85,8 +83,8 @@ class RandomIntegerMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'randomInteger';

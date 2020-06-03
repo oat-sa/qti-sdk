@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\runtime\tests\AssessmentItemSessionState;
+use qtismtest\QtiSmEnumTestCase;
 
 class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
 {
@@ -10,10 +11,10 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
     {
         return AssessmentItemSessionState::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'initial',
             'interacting',
             'modalFeedback',
@@ -21,13 +22,13 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
             'closed',
             'notSelected',
             'solution',
-            'review'
-        );
+            'review',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'INITIAL',
             'INTERACTING',
             'MODAL_FEEDBACK',
@@ -35,13 +36,13 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
             'CLOSED',
             'NOT_SELECTED',
             'SOLUTION',
-            'REVIEW'
-        );
+            'REVIEW',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             AssessmentItemSessionState::INITIAL,
             AssessmentItemSessionState::INTERACTING,
             AssessmentItemSessionState::MODAL_FEEDBACK,
@@ -49,7 +50,7 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
             AssessmentItemSessionState::CLOSED,
             AssessmentItemSessionState::NOT_SELECTED,
             AssessmentItemSessionState::SOLUTION,
-            AssessmentItemSessionState::REVIEW
-        );
+            AssessmentItemSessionState::REVIEW,
+        ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,52 +15,46 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rules;
 
-use qtism\runtime\common\State;
-use qtism\runtime\expressions\ExpressionEngine;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\rules\OutcomeCondition;
-use qtism\data\rules\Rule;
+use qtism\runtime\expressions\ExpressionEngine;
 
 /**
  * The AbstractConditionProcessor implements the common logic
  * of OutcomeCondition and ResponseCondition processors.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractConditionProcessor extends RuleProcessor
 {
     /**
-	 * The trail stack, an array of Rule objects.
-	 *
-	 * @var array
-	 */
-    private $trail = array();
+     * The trail stack, an array of Rule objects.
+     *
+     * @var array
+     */
+    private $trail = [];
 
     /**
-	 * The RuleProcessorFactory object used to create
-	 * appropriate rule processors.
-	 *
-	 * @var \qtism\runtime\rules\RuleProcessorFactory
-	 */
+     * The RuleProcessorFactory object used to create
+     * appropriate rule processors.
+     *
+     * @var RuleProcessorFactory
+     */
     private $ruleProcessorFactory;
 
     /**
-	 * Create a new OutcomeConditionProcessor.
-	 *
-	 * @param \qtism\data\QtiComponent $rule An OutcomeCondition/ResponseCondition rule object.
-	 * @throws \InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
-	 */
+     * Create a new OutcomeConditionProcessor.
+     *
+     * @param QtiComponent $rule An OutcomeCondition/ResponseCondition rule object.
+     * @throws InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
+     */
     public function __construct(QtiComponent $rule)
     {
         parent::__construct($rule);
@@ -67,38 +62,39 @@ abstract class AbstractConditionProcessor extends RuleProcessor
     }
 
     /**
-	 * Get the QTI nature of the condition type to take care of e.g. 'outcome'
-	 * in case of an implementation for OutcomeCondition objects or 'response' in
-	 * case of an implementation for ResponseCondition.
-	 *
-	 * @return string the QTI nature of the condition type to take care of.
-	 */
+     * Get the QTI nature of the condition type to take care of e.g. 'outcome'
+     * in case of an implementation for OutcomeCondition objects or 'response' in
+     * case of an implementation for ResponseCondition.
+     *
+     * @return string the QTI nature of the condition type to take care of.
+     */
     abstract public function getQtiNature();
 
     /**
-	 * Set the trail stack.
-	 *
-	 * @param array $trail An array of trailed QtiComponent objects.
-	 */
+     * Set the trail stack.
+     *
+     * @param array $trail An array of trailed QtiComponent objects.
+     */
     public function setTrail(array &$trail)
     {
         $this->trail = $trail;
     }
 
     /**
-	 * Get the trail stack.
-	 *
-	 * @return array An array of trailed Rule objects.
-	 */
-    public function &getTrail() {
+     * Get the trail stack.
+     *
+     * @return array An array of trailed Rule objects.
+     */
+    public function &getTrail()
+    {
         return $this->trail;
     }
 
     /**
-	 * Push some Rule objects on the trail stack.
-	 *
-	 * @param \qtism\data\QtiComponentCollection|\qtism\data\QtiComponent $components A collection of Rule objects.
-	 */
+     * Push some Rule objects on the trail stack.
+     *
+     * @param QtiComponentCollection|QtiComponent $components A collection of Rule objects.
+     */
     public function pushTrail($components)
     {
         $trail = &$this->getTrail();
@@ -116,10 +112,10 @@ abstract class AbstractConditionProcessor extends RuleProcessor
     }
 
     /**
-	 * Pop a Rule object from the trail.
-	 *
-	 * @return \qtism\data\QtiComponent A Rule object.
-	 */
+     * Pop a Rule object from the trail.
+     *
+     * @return QtiComponent A Rule object.
+     */
     public function popTrail()
     {
         $trail = &$this->getTrail();
@@ -128,30 +124,30 @@ abstract class AbstractConditionProcessor extends RuleProcessor
     }
 
     /**
-	 * Set the RuleProcessorFactory object used to create appropriate rule processors.
-	 *
-	 * @param \qtism\runtime\rules\RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
-	 */
+     * Set the RuleProcessorFactory object used to create appropriate rule processors.
+     *
+     * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
+     */
     public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory)
     {
         $this->ruleProcessorFactory = $ruleProcessorFactory;
     }
 
     /**
-	 * Get the RuleProcessorFactory object used to create appropriate rule processors.
-	 *
-	 * @return \qtism\runtime\rules\RuleProcessorFactory A RuleProcessorFactory object.
-	 */
+     * Get the RuleProcessorFactory object used to create appropriate rule processors.
+     *
+     * @return RuleProcessorFactory A RuleProcessorFactory object.
+     */
     public function getRuleProcessorFactory()
     {
         return $this->ruleProcessorFactory;
     }
 
     /**
-	 * Process the OutcomeCondition/ResponseCondition according to the current state.
-	 *
-	 * @throws \qtism\runtime\rules\RuleProcessingException
-	 */
+     * Process the OutcomeCondition/ResponseCondition according to the current state.
+     *
+     * @throws RuleProcessingException
+     */
     public function process()
     {
         $state = $this->getState();
@@ -163,24 +159,22 @@ abstract class AbstractConditionProcessor extends RuleProcessor
         $statementGetter = "get${className}"; // + 'If'|'ElseIf'|'Else'
 
         while (count($this->getTrail()) > 0) {
-
             $rule = $this->popTrail();
 
             if (get_class($rule) === $nsClass) {
-
                 // Let's try for if.
-                $ifStatement = call_user_func(array($rule, $statementGetter . 'If'));
+                $ifStatement = call_user_func([$rule, $statementGetter . 'If']);
                 $ifExpression = $ifStatement->getExpression();
                 $exprEngine = new ExpressionEngine($ifExpression, $state);
                 $value = $exprEngine->process();
 
                 if ($value !== null && $value->getValue() === true) {
                     // Follow the if.
-                    $this->pushTrail(call_user_func(array($ifStatement, $ruleGetter)));
+                    $this->pushTrail(call_user_func([$ifStatement, $ruleGetter]));
                 } else {
                     // Let's try for else ifs.
                     $followElseIf = false;
-                    $elseIfStatements = call_user_func(array($rule, $statementGetter . 'ElseIfs'));
+                    $elseIfStatements = call_user_func([$rule, $statementGetter . 'ElseIfs']);
 
                     foreach ($elseIfStatements as $elseIfStatement) {
                         $elseIfExpression = $elseIfStatement->getExpression();
@@ -189,17 +183,17 @@ abstract class AbstractConditionProcessor extends RuleProcessor
 
                         if ($value !== null && $value->getValue() === true) {
                             // Follow the current else if.
-                            $this->pushTrail(call_user_func(array($elseIfStatement, $ruleGetter)));
+                            $this->pushTrail(call_user_func([$elseIfStatement, $ruleGetter]));
                             $followElseIf = true;
                             break;
                         }
                     }
 
-                    $elseStatement = call_user_func(array($rule, $statementGetter . 'Else'));
+                    $elseStatement = call_user_func([$rule, $statementGetter . 'Else']);
 
                     if ($followElseIf === false && is_null($elseStatement) === false) {
                         // No else if followed, the last resort is the else.
-                        $this->pushTrail(call_user_func(array($elseStatement, $ruleGetter)));
+                        $this->pushTrail(call_user_func([$elseStatement, $ruleGetter]));
                     }
                 }
             } else {

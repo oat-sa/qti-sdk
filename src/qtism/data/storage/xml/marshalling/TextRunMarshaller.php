@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\TextRun;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for TextRun.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TextRunMarshaller extends Marshaller
 {
     /**
-	 * Marshall a TextRun object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A TextRun object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a TextRun object into a DOMElement object.
+     *
+     * @param QtiComponent $component A TextRun object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createTextNode($component->getContent());
@@ -48,12 +46,12 @@ class TextRunMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI textRun element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A TextRun object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI textRun element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A TextRun object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $object = new TextRun($element->nodeValue);
@@ -62,8 +60,8 @@ class TextRunMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'textRun';

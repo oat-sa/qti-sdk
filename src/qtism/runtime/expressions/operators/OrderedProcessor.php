@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,18 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiScalar;
 use qtism\data\expressions\operators\Ordered;
-use qtism\runtime\common\Utils as CommonUtils;
 use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\common\Utils as CommonUtils;
 
 /**
  * The OrderedProcessor class aims at processing Ordered QTI Data Model Expression objects.
@@ -43,18 +44,15 @@ use qtism\runtime\common\OrderedContainer;
  * operator never results in an empty container. All sub-expressions
  * with NULL values are ignored. If no sub-expressions are given
  * (or all are NULL) then the result is NULL
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OrderedProcessor extends OperatorProcessor
 {
     /**
-	 * Process the current expression.
-	 *
-	 * @return \qtism\runtime\common\OrderedContainer|null An OrderedContainer object or NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the current expression.
+     *
+     * @return OrderedContainer|null An OrderedContainer object or NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -72,7 +70,6 @@ class OrderedProcessor extends OperatorProcessor
         $returnValue = null;
 
         foreach ($operands as $operand) {
-
             if (is_null($operand) || ($operand instanceof OrderedContainer && $operand->isNull())) {
                 // As per specs, ignore.
                 continue;
@@ -100,11 +97,11 @@ class OrderedProcessor extends OperatorProcessor
     }
 
     /**
-	 * Append a value (An orderedContainer or a primitive datatype) to a given $container.
-	 *
-	 * @param \qtism\runtime\common\OrderedContainer $container An OrderedContainer object you want to append something to.
-	 * @param QtiScalar|\qtism\runtime\common\OrderedContainer $value A value to append to the $container.
-	 */
+     * Append a value (An orderedContainer or a primitive datatype) to a given $container.
+     *
+     * @param OrderedContainer $container An OrderedContainer object you want to append something to.
+     * @param QtiScalar|OrderedContainer $value A value to append to the $container.
+     */
     protected static function appendValue(OrderedContainer $container, $value)
     {
         if ($value instanceof OrderedContainer) {
@@ -116,7 +113,7 @@ class OrderedProcessor extends OperatorProcessor
             $container[] = $value;
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,15 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\result;
 
-
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
 class TestResultCollection extends QtiComponentCollection
@@ -36,7 +37,7 @@ class TestResultCollection extends QtiComponentCollection
     {
         if (!$value instanceof TestResult) {
             $msg = "TestResultCollection only accepts to store TestResult objects, '" . gettype($value) . "' given.";
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
     }
 }

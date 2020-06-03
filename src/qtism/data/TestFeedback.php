@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,12 @@
 
 namespace qtism\data;
 
-use qtism\data\content\FlowStaticCollection;
-
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\content\FlowStaticCollection;
 
 /**
  * The TestFeedback class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestFeedback extends QtiComponent
 {
@@ -102,7 +99,7 @@ class TestFeedback extends QtiComponent
      *
      * The content of the testFeedback must not contain any interactions.
      *
-     * @var \qtism\data\content\FlowStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -115,9 +112,9 @@ class TestFeedback extends QtiComponent
      *
      * @param string $identifier The identifier of the feedback.
      * @param string $outcomeIdentifier The identifier of the outcome variable bound to the feedback.
-     * @param \qtism\data\content\FlowStaticCollection $content The content of the feedback.
+     * @param FlowStaticCollection $content The content of the feedback.
      * @param string $title The title of the feedback. An empty string means that no title is specified.
-     * @throws \InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
+     * @throws InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
      */
     public function __construct($identifier, $outcomeIdentifier, FlowStaticCollection $content, $title = '')
     {
@@ -147,7 +144,7 @@ class TestFeedback extends QtiComponent
      * * TestFeedbackAccess:AT_END = At the end of the TestPart or AssessmentTest.
      *
      * @param int $access A value of the TestFeedbackAccess enumeration.
-     * @throws \InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
+     * @throws InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
      */
     public function setAccess($access)
     {
@@ -173,7 +170,7 @@ class TestFeedback extends QtiComponent
      * Set the QTI Identifier of the outcome variable bound to this TestFeedback.
      *
      * @param string $outcomeIdentifier A QTI Identifier.
-     * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
      */
     public function setOutcomeIdentifier($outcomeIdentifier)
     {
@@ -199,7 +196,7 @@ class TestFeedback extends QtiComponent
      * Set how the feedback should be displayed.
      *
      * @param boolean $showHide A value from the ShowHide enumeration.
-     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
@@ -225,7 +222,7 @@ class TestFeedback extends QtiComponent
      * Set the QTI identifier of this TestFeedback.
      *
      * @param string $identifier A QTI Identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
     public function setIdentifier($identifier)
     {
@@ -251,7 +248,7 @@ class TestFeedback extends QtiComponent
      * Set the title of this TestFeedback. Empty string means no title specified.
      *
      * @param string $title A title.
-     * @throws \InvalidArgumentException If $title is not a string.
+     * @throws InvalidArgumentException If $title is not a string.
      */
     public function setTitle($title)
     {
@@ -266,7 +263,7 @@ class TestFeedback extends QtiComponent
     /**
      * Get the XML stream of the content of the TestFeedback.
      *
-     * @return \qtism\data\content\FlowStaticCollection The content of the TestFeedback.
+     * @return FlowStaticCollection The content of the TestFeedback.
      */
     public function getContent()
     {
@@ -277,7 +274,7 @@ class TestFeedback extends QtiComponent
      * Set the XML stream of the content of the TestFeedback.
      *
      * @param FlowStaticCollection $content XML markup binary stream as a string.
-     * @throws \InvalidArgumentException If $content is not a string.
+     * @throws InvalidArgumentException If $content is not a string.
      */
     public function setContent(FlowStaticCollection $content)
     {

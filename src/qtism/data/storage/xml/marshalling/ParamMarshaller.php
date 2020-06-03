@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,26 +23,23 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\xhtml\ParamType;
+use DOMElement;
 use qtism\data\content\xhtml\Param;
+use qtism\data\content\xhtml\ParamType;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for Param.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ParamMarshaller extends Marshaller
 {
     /**
-	 * Marshall a Param object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A Param object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a Param object into a DOMElement object.
+     *
+     * @param QtiComponent $component A Param object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('param');
@@ -57,12 +55,12 @@ class ParamMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to an XHTML param element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A Param object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to an XHTML param element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A Param object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) === null) {
@@ -76,7 +74,6 @@ class ParamMarshaller extends Marshaller
         }
 
         if (($valueType = $this->getDOMElementAttributeAs($element, 'valuetype')) !== null) {
-
             $component = new Param($name, $value, ParamType::getConstantByName($valueType));
 
             if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
@@ -91,8 +88,8 @@ class ParamMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'param';

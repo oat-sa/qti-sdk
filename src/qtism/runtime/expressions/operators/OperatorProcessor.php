@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,34 +15,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\runtime\expressions\ExpressionProcessor;
+use InvalidArgumentException;
 use qtism\data\expressions\Expression;
+use qtism\runtime\expressions\ExpressionProcessor;
 
 abstract class OperatorProcessor extends ExpressionProcessor
 {
     /**
-	 * A collection of QTI Runtime compliant values.
-	 *
-	 * @var \qtism\runtime\expressions\operators\OperandsCollection
-	 */
+     * A collection of QTI Runtime compliant values.
+     *
+     * @var OperandsCollection
+     */
     private $operands;
 
     /**
-	 * Create a new OperatorProcessor object.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression A QTI Data Model Operator object.
-	 * @param \qtism\runtime\expressions\operators\OperandsCollection $operands A collection of QTI Runtime compliant values.
-	 * @throws \InvalidArgumentException If $expression is not a QTI Data Model Operator object.
-	 */
+     * Create a new OperatorProcessor object.
+     *
+     * @param Expression $expression A QTI Data Model Operator object.
+     * @param OperandsCollection $operands A collection of QTI Runtime compliant values.
+     * @throws InvalidArgumentException If $expression is not a QTI Data Model Operator object.
+     */
     public function __construct(Expression $expression, OperandsCollection $operands)
     {
         parent::__construct($expression);
@@ -49,12 +50,12 @@ abstract class OperatorProcessor extends ExpressionProcessor
     }
 
     /**
-	 * Set the collection of QTI Runtime compliant values
-	 * to be used as the operands of the Operator to be processed.
-	 *
-	 * @param \qtism\runtime\expressions\operators\OperandsCollection $operands A collection of QTI Runtime compliant values.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If The operands are not compliant with minimum or maximum amount of operands the operator can take.
-	 */
+     * Set the collection of QTI Runtime compliant values
+     * to be used as the operands of the Operator to be processed.
+     *
+     * @param OperandsCollection $operands A collection of QTI Runtime compliant values.
+     * @throws OperatorProcessingException If The operands are not compliant with minimum or maximum amount of operands the operator can take.
+     */
     public function setOperands(OperandsCollection $operands)
     {
         // Check minimal operand count.
@@ -63,7 +64,7 @@ abstract class OperatorProcessor extends ExpressionProcessor
 
         if ($given < $min) {
             $msg = "The Operator to be processed '" . get_class($this) . "' requires at least ${min} operand(s). ";
-            $msg.= "${given} operand(s) given.";
+            $msg .= "${given} operand(s) given.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         }
 
@@ -73,7 +74,7 @@ abstract class OperatorProcessor extends ExpressionProcessor
 
         if ($max !== -1 && $given > $max) {
             $msg = "The Operator to be processed '" . get_class($this) . "' requires at most ${max} operand(s). ";
-            $msg.= "${given} operand(s) given.";
+            $msg .= "${given} operand(s) given.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::TOO_MUCH_OPERANDS);
         }
 
@@ -81,11 +82,11 @@ abstract class OperatorProcessor extends ExpressionProcessor
     }
 
     /**
-	 * Get the collection of QTI Runtime compliant values to be used
-	 * as the operands of the Operator to be processed.
-	 *
-	 * @return \qtism\runtime\expressions\operators\OperandsCollection A collection of QTI Runtime compliant values.
-	 */
+     * Get the collection of QTI Runtime compliant values to be used
+     * as the operands of the Operator to be processed.
+     *
+     * @return OperandsCollection A collection of QTI Runtime compliant values.
+     */
     public function getOperands()
     {
         return $this->operands;

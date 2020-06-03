@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The QTI toleranceMode enumeration.
- *
- * @author Jérôme Bogaerts
- *
  */
 class ToleranceMode implements Enumeration
 {
@@ -40,11 +38,11 @@ class ToleranceMode implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'EXACT' => self::EXACT,
             'ABSOLUTE' => self::ABSOLUTE,
-            'RELATIVE' => self::RELATIVE
-        );
+            'RELATIVE' => self::RELATIVE,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -52,19 +50,19 @@ class ToleranceMode implements Enumeration
         switch (strtolower($name)) {
             case 'exact':
                 return self::EXACT;
-            break;
+                break;
 
             case 'absolute':
                 return self::ABSOLUTE;
-            break;
+                break;
 
             case 'relative':
                 return self::RELATIVE;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -73,19 +71,19 @@ class ToleranceMode implements Enumeration
         switch ($constant) {
             case self::EXACT:
                 return 'exact';
-            break;
+                break;
 
             case self::ABSOLUTE:
                 return 'absolute';
-            break;
+                break;
 
             case self::RELATIVE:
                 return 'relative';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

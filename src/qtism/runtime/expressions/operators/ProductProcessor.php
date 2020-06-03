@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
@@ -37,18 +38,15 @@ use qtism\data\expressions\operators\Product;
  * a single float or, if all sub-expressions are of integer type, a single integer
  * that corresponds to the product of the numerical values of the sub-expressions.
  * If any of the sub-expressions are NULL then the operator results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ProductProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Product operator.
-	 *
+     * Process the Product operator.
+     *
      * @return QtiInteger|QtiFloat
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If invalid operands are given.
-	 */
+     * @throws OperatorProcessingException If invalid operands are given.
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -77,7 +75,7 @@ class ProductProcessor extends OperatorProcessor
 
         return (is_int($returnValue)) ? new QtiInteger($returnValue) : new QtiFloat($returnValue);
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

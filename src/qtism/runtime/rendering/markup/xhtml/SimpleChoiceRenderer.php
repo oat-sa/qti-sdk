@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,18 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\ShowHide;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
 
 /**
  * SimpleChoice renderer. This renderer will transform the prompt into a 'li' element with an
@@ -42,9 +41,6 @@ use \DOMDocumentFragment;
  * * data-fixed = qti:choice->fixed
  * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
  * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SimpleChoiceRenderer extends ChoiceRenderer
 {
@@ -58,7 +54,7 @@ class SimpleChoiceRenderer extends ChoiceRenderer
         parent::__construct($renderingEngine);
         $this->transform('li');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */

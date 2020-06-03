@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\storage;
 
-use \Exception;
+use Exception;
 
 /**
  * The StreamException class represents the exception that might occur while
  * dealing with data streams.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class StreamException extends Exception
 {
@@ -100,7 +99,7 @@ abstract class StreamException extends Exception
      * @param string $message The human-readable message describing the error.
      * @param IStream $source The IStream object where in the error occured.
      * @param integer $code A code describing the error.
-     * @param \Exception $previous An optional previous exception.
+     * @param Exception $previous An optional previous exception.
      */
     public function __construct($message, IStream $source, $code = 0, Exception $previous = null)
     {
@@ -111,7 +110,7 @@ abstract class StreamException extends Exception
     /**
      * Get the IStream object where the error occured.
      *
-     * @return \qtism\common\storage\IStream An IStream object.
+     * @return IStream An IStream object.
      */
     public function getSource()
     {
@@ -121,7 +120,7 @@ abstract class StreamException extends Exception
     /**
      * Set the IStream object where the error occured.
      *
-     * @param \qtism\common\storage\IStream $source An IStream object.
+     * @param IStream $source An IStream object.
      */
     protected function setSource(IStream $source)
     {

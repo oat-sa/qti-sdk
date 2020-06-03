@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,19 +23,14 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\xhtml\A;
-use qtism\data\content\xhtml\text\Q;
+use DOMElement;
 use qtism\data\content\InlineCollection;
-use qtism\data\QtiComponentCollection;
+use qtism\data\content\xhtml\text\Q;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for SimpleInline elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SimpleInlineMarshaller extends ContentMarshaller
 {
@@ -46,7 +42,6 @@ class SimpleInlineMarshaller extends ContentMarshaller
         $fqClass = $this->lookupClass($element);
 
         if ($element->localName === 'a') {
-
             if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
 
@@ -57,10 +52,9 @@ class SimpleInlineMarshaller extends ContentMarshaller
                 $msg = "The mandatory 'href' attribute of the 'a' element is missing.";
                 throw new UnmarshallingException($msg, $element);
             }
-
         } else {
             $component = new $fqClass();
-            
+
             if (($xmlBase = self::getXmlBase($element)) !== false) {
                 $component->setXmlBase($xmlBase);
             }
@@ -111,8 +105,10 @@ class SimpleInlineMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\xhtml",
-                                      "qtism\\data\\content\\xhtml\\text",
-                                      "qtism\\data\\content\\xhtml\\presentation");
+        $this->lookupClasses = [
+            "qtism\\data\\content\\xhtml",
+            "qtism\\data\\content\\xhtml\\text",
+            "qtism\\data\\content\\xhtml\\presentation",
+        ];
     }
 }

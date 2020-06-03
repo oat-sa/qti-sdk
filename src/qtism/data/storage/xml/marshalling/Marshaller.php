@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,15 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMDocument;
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
+use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
 use qtism\data\QtiComponent;
-use qtism\data\content\BodyElement;
 use qtism\data\storage\xml\Utils as XmlUtils;
-use \DOMDocument;
-use \DOMElement;
-use \RuntimeException;
-use \InvalidArgumentException;
+use RuntimeException;
 
 abstract class Marshaller
 {
@@ -53,18 +54,18 @@ abstract class Marshaller
 
     /**
      * The version on which the Marshaller operates.
-     * 
+     *
      * @var string
      */
     private $version;
-    
+
     /**
      * An array containing the name of classes
      * that are allowed to have their 'dir' attribute set.
-     * 
+     *
      * @var array
      */
-    private static $dirClasses = array(
+    private static $dirClasses = [
         'associateInteraction',
         'choiceInteraction',
         'drawingInteraction',
@@ -149,15 +150,15 @@ abstract class Marshaller
         'table',
         'templateBlock',
         'templateInline',
-        'hottext'
-    );
-    
+        'hottext',
+    ];
+
     /**
      * An array containing the QTI class names that are allowed to be Web Component friendly.
-     * 
+     *
      * @var array
      */
-    public static $webComponentFriendlyClasses = array(
+    public static $webComponentFriendlyClasses = [
         'associableHotspot',
         'gap',
         'gapImg',
@@ -196,19 +197,19 @@ abstract class Marshaller
         'rubricBlock',
         'templateBlock',
         'templateInline',
-        'infoControl'
-    );
-    
+        'infoControl',
+    ];
+
     /**
      * Create a new Marshaller object.
-     * 
+     *
      * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
      */
     public function __construct($version)
     {
         $this->setVersion($version);
     }
-    
+
     /**
      * Get a DOMDocument to be used by marshaller implementations in order to create
      * new nodes to be imported in a currenlty exported document.
@@ -249,20 +250,20 @@ abstract class Marshaller
 
         return $this->marshallerFactory;
     }
-    
+
     /**
      * Set the version on which the Marshaller operates.
-     * 
+     *
      * @param string $version A QTI version number e.g. '2.1'.
      */
     protected function setVersion($version)
     {
         $this->version = $version;
     }
-    
+
     /**
      * Get the version on which the Marshaller operates.
-     * 
+     *
      * @return string A QTI version number e.g. '2.1'.
      */
     public function getVersion()
@@ -285,7 +286,7 @@ abstract class Marshaller
                 } else {
                     $element = $args[0];
                     if ($element instanceof DOMElement && ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName()))) {
-                        return call_user_func_array(array($this, 'unmarshall'), $args);
+                        return call_user_func_array([$this, 'unmarshall'], $args);
                     } else {
                         $nodeName = $this->getElementName($element);
                         throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
@@ -298,7 +299,7 @@ abstract class Marshaller
 
         throw new RuntimeException("Unknown method Marshaller::'${method}'.");
     }
-    
+
     /**
      * Get Attribute Name to Use for Marshalling
      *
@@ -316,7 +317,7 @@ abstract class Marshaller
      * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
      * "response-identifier" value is returned.
      *
-     * @param \DOMElement $element
+     * @param DOMElement $element
      * @param $attribute
      * @return string
      */
@@ -324,12 +325,12 @@ abstract class Marshaller
     {
         if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
             $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
-        
+
             if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses) === true) {
                 return XmlUtils::webComponentFriendlyAttributeName($attribute);
             }
         }
-        
+
         return $attribute;
     }
 
@@ -339,8 +340,8 @@ abstract class Marshaller
      * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
      * @param string $attribute The attribute name.
      * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
-     * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
+     * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
     public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
@@ -370,11 +371,11 @@ abstract class Marshaller
         switch (gettype($value)) {
             case 'boolean':
                 $element->nodeValue = ($value === true) ? 'true' : 'false';
-            break;
+                break;
 
             default:
                 $element->nodeValue = $value;
-            break;
+                break;
         }
     }
 
@@ -418,8 +419,8 @@ abstract class Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-     * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
-     * @param boolean $withText (optional) Wether text nodes must be returned or not.
+     * @param boolean $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param boolean $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
     public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
@@ -427,7 +428,7 @@ abstract class Marshaller
         if (is_array($tagName) === false) {
             $tagName = [$tagName];
         }
-        
+
         if ($this->isWebComponentFriendly() === true) {
             foreach ($tagName as $key => $name) {
                 if (in_array($name, self::$webComponentFriendlyClasses) === true) {
@@ -435,7 +436,7 @@ abstract class Marshaller
                 }
             }
         }
-        
+
         return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
@@ -490,7 +491,7 @@ abstract class Marshaller
             $bodyElement->setClass($element->getAttribute('class'));
             $bodyElement->setLang($element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
             $bodyElement->setLabel($element->getAttribute('label'));
-            
+
             $version = $this->getVersion();
             if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
                 $bodyElement->setDir(Direction::getConstantByName($dir));
@@ -524,24 +525,24 @@ abstract class Marshaller
         if (($label = $bodyElement->getLabel()) != '') {
             $element->setAttribute('label', $label);
         }
-        
+
         $version = $this->getVersion();
         if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
             $element->setAttribute('dir', Direction::getNameByConstant($dir));
         }
     }
-    
+
     protected function createElement(QtiComponent $component)
     {
         $localName = $component->getQtiClassName();
-        
+
         if ($this->isWebComponentFriendly() === true && in_array($localName, self::$webComponentFriendlyClasses) === true) {
             $localName = XmlUtils::webComponentFriendlyClassName($localName);
         }
-        
+
         return self::getDOMCradle()->createElement($localName);
     }
-    
+
     /**
      * Is Web Component Friendly
      *

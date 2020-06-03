@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,75 +15,70 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
-use qtism\data\TestFeedbackRefCollection;
-use qtism\data\content\RubricBlockRefCollection;
-use qtism\data\content\RubricBlockCollection;
-use qtism\data\AssessmentTest;
-use qtism\data\rules\PreConditionCollection;
-use qtism\data\rules\PreCondition;
-use qtism\data\rules\BranchRule;
-use qtism\data\rules\BranchRuleCollection;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
+use qtism\data\AssessmentTest;
+use qtism\data\content\RubricBlockCollection;
+use qtism\data\content\RubricBlockRefCollection;
+use qtism\data\rules\BranchRule;
+use qtism\data\rules\BranchRuleCollection;
+use qtism\data\rules\PreCondition;
+use qtism\data\rules\PreConditionCollection;
 use qtism\data\TestPart;
-use qtism\data\AssessmentItemRef;
 
 /**
  * The RouteItem class describes the composite items of a Route object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RouteItem
 {
     /**
      * The AssessmentTest the RouteItem is bound to.
      *
-     * @var \qtism\data\AssessmentTest
+     * @var AssessmentTest
      */
     private $assessmentTest;
 
     /**
      * The AssessmentItemRef object bound to the RouteItem.
      *
-     * @var \qtism\data\AssessmentItemRef
+     * @var AssessmentItemRef
      */
     private $assessmentItemRef;
 
     /**
      * The TestPart object bound to the RouteItem.
      *
-     * @var \qtism\data\TestPart
+     * @var TestPart
      */
     private $testPart;
 
     /**
      * The AssessmentSectionCollection object bound to the RouteItem.
      *
-     * @var \qtism\data\AssessmentSectionCollection
+     * @var AssessmentSectionCollection
      */
     private $assessmentSections;
 
     /**
      * The BranchRule objects to be applied after the RouteItem.
      *
-     * @var \qtism\data\rules\BranchRuleCollection
+     * @var BranchRuleCollection
      */
     private $branchRules;
 
     /**
      * The PreCondition objects to be applied prior to the RouteItem.
      *
-     * @var \qtism\data\rules\PreConditionCollection
+     * @var PreConditionCollection
      */
     private $preConditions;
 
@@ -96,10 +92,10 @@ class RouteItem
     /**
      * Create a new RouteItem object.
      *
-     * @param \qtism\data\AssessmentItemRef $assessmentItemRef The AssessmentItemRef object bound to the RouteItem.
-     * @param \qtism\data\AssessmentSection|\qtism\data\AssessmentSectionCollection $assessmentSection The AssessmentSection object bound to the RouteItem.
-     * @param \qtism\data\TestPart $testPart The TestPart object bound to the RouteItem.
-     * @param \qtism\data\AssessmentTest $assessmentTest The AssessmentTest object bound to the RouteItem.
+     * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef object bound to the RouteItem.
+     * @param AssessmentSection|AssessmentSectionCollection $assessmentSection The AssessmentSection object bound to the RouteItem.
+     * @param TestPart $testPart The TestPart object bound to the RouteItem.
+     * @param AssessmentTest $assessmentTest The AssessmentTest object bound to the RouteItem.
      */
     public function __construct(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart, AssessmentTest $assessmentTest)
     {
@@ -123,7 +119,7 @@ class RouteItem
     /**
      * Set the AssessmentTest object bound to the RouteItem.
      *
-     * @param \qtism\data\AssessmentTest $assessmentTest An AssessmentTest object.
+     * @param AssessmentTest $assessmentTest An AssessmentTest object.
      */
     public function setAssessmentTest(AssessmentTest $assessmentTest)
     {
@@ -133,7 +129,7 @@ class RouteItem
     /**
      * Get the AssessmentTest object bound to the RouteItem.
      *
-     * @return \qtism\data\AssessmentTest An AssessmentTest object.
+     * @return AssessmentTest An AssessmentTest object.
      */
     public function getAssessmentTest()
     {
@@ -143,7 +139,7 @@ class RouteItem
     /**
      * Set the AssessmentItemRef object bound to the RouteItem.
      *
-     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      */
     public function setAssessmentItemRef(AssessmentItemRef $assessmentItemRef)
     {
@@ -153,7 +149,7 @@ class RouteItem
     /**
      * Get the AssessmentItemRef object bound to the RouteItem.
      *
-     * @return \qtism\data\AssessmentItemRef An AssessmentItemRef object.
+     * @return AssessmentItemRef An AssessmentItemRef object.
      */
     public function getAssessmentItemRef()
     {
@@ -163,7 +159,7 @@ class RouteItem
     /**
      * Set the TestPart object bound to the RouteItem.
      *
-     * @param \qtism\data\TestPart $testPart A TestPart object.
+     * @param TestPart $testPart A TestPart object.
      */
     public function setTestPart(TestPart $testPart)
     {
@@ -173,7 +169,7 @@ class RouteItem
     /**
      * Get the TestPart object bound to the RouteItem.
      *
-     * @return \qtism\data\TestPart A TestPart object.
+     * @return TestPart A TestPart object.
      */
     public function getTestPart()
     {
@@ -183,17 +179,17 @@ class RouteItem
     /**
      * Set the AssessmentSection object bound to the RouteItem.
      *
-     * @param \qtism\data\AssessmentSection $assessmentSection An AssessmentSection object.
+     * @param AssessmentSection $assessmentSection An AssessmentSection object.
      */
     public function setAssessmentSection(AssessmentSection $assessmentSection)
     {
-        $this->assessmentSections = new AssessmentSectionCollection(array($assessmentSection));
+        $this->assessmentSections = new AssessmentSectionCollection([$assessmentSection]);
     }
 
     /**
      * Set the AssessmentSection objects bound to the RouteItem.
      *
-     * @param \qtism\data\AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
+     * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
      */
     public function setAssessmentSections(AssessmentSectionCollection $assessmentSections)
     {
@@ -223,7 +219,7 @@ class RouteItem
     /**
      * Get the BranchRule objects to be applied after the RouteItem.
      *
-     * @return \qtism\data\rules\BranchRuleCollection A collection of BranchRule objects.
+     * @return BranchRuleCollection A collection of BranchRule objects.
      */
     public function getBranchRules()
     {
@@ -233,7 +229,7 @@ class RouteItem
     /**
      * Set the BranchRule objects to be applied after the RouteItem.
      *
-     * @param \qtism\data\rules\BranchRuleCollection $branchRules A collection of BranchRule objects.
+     * @param BranchRuleCollection $branchRules A collection of BranchRule objects.
      */
     public function setBranchRules(BranchRuleCollection $branchRules)
     {
@@ -243,7 +239,7 @@ class RouteItem
     /**
      * Add a BranchRule object to be applied after the RouteItem.
      *
-     * @param \qtism\data\rules\BranchRule $branchRule A BranchRule object to be added.
+     * @param BranchRule $branchRule A BranchRule object to be added.
      */
     public function addBranchRule(BranchRule $branchRule)
     {
@@ -253,7 +249,7 @@ class RouteItem
     /**
      * Add some BranchRule objects to be applied after the RouteItem.
      *
-     * @param \qtism\data\rules\BranchRuleCollection $branchRules A collection of BranchRule object.
+     * @param BranchRuleCollection $branchRules A collection of BranchRule object.
      */
     public function addBranchRules(BranchRuleCollection $branchRules)
     {
@@ -265,7 +261,7 @@ class RouteItem
     /**
      * Get the PreCondition objects to be applied prior to the RouteItem.
      *
-     * @return \qtism\data\rules\PreConditionCollection A collection of PreCondition objects.
+     * @return PreConditionCollection A collection of PreCondition objects.
      */
     public function getPreConditions()
     {
@@ -275,7 +271,7 @@ class RouteItem
     /**
      * Set the PreCondition objects to be applied prior to the RouteItem.
      *
-     * @param \qtism\data\rules\PreConditionCollection $preConditions A collection of PreCondition objects.
+     * @param PreConditionCollection $preConditions A collection of PreCondition objects.
      */
     public function setPreConditions(PreConditionCollection $preConditions)
     {
@@ -285,7 +281,7 @@ class RouteItem
     /**
      * Add a PreCondition object to be applied prior to the RouteItem.
      *
-     * @param \qtism\data\rules\PreCondition $preCondition A PreCondition object to be added.
+     * @param PreCondition $preCondition A PreCondition object to be added.
      */
     public function addPreCondition(PreCondition $preCondition)
     {
@@ -295,7 +291,7 @@ class RouteItem
     /**
      * Add some PreConditon objects to be applied prior to the RouteItem.
      *
-     * @param \qtism\data\rules\PreConditionCollection $preConditions A collection of PreCondition object.
+     * @param PreConditionCollection $preConditions A collection of PreCondition object.
      */
     public function addPreConditions(PreConditionCollection $preConditions)
     {
@@ -318,7 +314,7 @@ class RouteItem
      * is bound to multiple assessment sections, the nearest parent of the RouteItem's item's assessment section
      * will be returned.
      *
-     * @return \qtism\data\AssessmentSection An AssessmentSection object.
+     * @return AssessmentSection An AssessmentSection object.
      */
     public function getAssessmentSection()
     {
@@ -330,7 +326,7 @@ class RouteItem
     /**
      * Get the AssessmentSection objects bound to the RouteItem.
      *
-     * @return \qtism\data\AssessmentSectionCollection An AssessmentSectionCollection object.
+     * @return AssessmentSectionCollection An AssessmentSectionCollection object.
      */
     public function getAssessmentSections()
     {
@@ -340,7 +336,7 @@ class RouteItem
     /**
      * Get the ItemSessionControl in force for this RouteItem as a RouteItemSessionControl object.
      *
-     * @return \qtism\runtime\tests\RouteItemSessionControl|null The ItemSessionControl in force or null if the RouteItem is not under ItemSessionControl.
+     * @return RouteItemSessionControl|null The ItemSessionControl in force or null if the RouteItem is not under ItemSessionControl.
      */
     public function getItemSessionControl()
     {
@@ -370,7 +366,7 @@ class RouteItem
      * rubricBlocks are be ordered from the top most to the bottom of
      * the assessmentTest hierarchy.
      *
-     * @return \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
+     * @return RubricBlockCollection A collection of RubricBlock objects.
      */
     public function getRubricBlocks()
     {
@@ -388,7 +384,7 @@ class RouteItem
      * rubricBlockRefs are ordered from the top most to the bottom of
      * the assessmentTest hierarchy.
      *
-     * @return \qtism\data\content\RubricBlockRefCollection A collection of RubricBlockRef objects.
+     * @return RubricBlockRefCollection A collection of RubricBlockRef objects.
      */
     public function getRubricBlockRefs()
     {
@@ -404,7 +400,7 @@ class RouteItem
     /**
      * Get the TimeLimits in force for the RouteItem.
      *
-     * @param \qtism\runtime\tests\RouteTimeLimitsCollection $excludeItem Whether or not include the TimeLimits in force for the assessment item of the RouteItem.
+     * @param RouteTimeLimitsCollection $excludeItem Whether or not include the TimeLimits in force for the assessment item of the RouteItem.
      */
     public function getTimeLimits($excludeItem = false)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,31 +23,28 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\state\TemplateDeclaration;
-use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * Marshalling/Unmarshalling implementation for templateDeclaration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
 {
     /**
-	 * Marshall a TemplateDeclaration object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A TemplateDeclaration object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a TemplateDeclaration object into a DOMElement object.
+     *
+     * @param QtiComponent $component A TemplateDeclaration object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
         $version = $this->getVersion();
-        
+
         if ($component->isParamVariable() === true) {
             $this->setDOMElementAttribute($element, 'paramVariable', true);
         } elseif (Version::compare($version, '2.0.0', '==') === true && $component->isParamVariable() === false) {
@@ -63,12 +61,12 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI templateDeclaration element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A TemplateDeclaration object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI templateDeclaration element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A TemplateDeclaration object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         try {
@@ -79,7 +77,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
             $version = $this->getVersion();
-            
+
             if (($paramVariable = $this->getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
                 $object->setParamVariable($paramVariable);
             } elseif (Version::compare($version, '2.0.0', '==') === true) {
@@ -102,8 +100,8 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'templateDeclaration';

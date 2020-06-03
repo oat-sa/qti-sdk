@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,12 @@
 
 namespace qtism\data\content;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * The templateBlock QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
 {
@@ -39,7 +37,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
     /**
      * The content of the TemplateBlock.
      *
-     * @var \qtism\data\content\FlowStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -53,7 +51,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the argument is invalid.
+     * @throws InvalidArgumentException If any of the argument is invalid.
      */
     public function __construct($identifier, $templateIdentifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -64,7 +62,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
     /**
      * Set the content of the templateBlock.
      *
-     * @param \qtism\data\content\FlowStaticCollection $content A collection of BlockStatic objects.
+     * @param FlowStaticCollection $content A collection of BlockStatic objects.
      */
     public function setContent(FlowStaticCollection $content)
     {
@@ -74,7 +72,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
     /**
      * Get the content of the templateBlock.
      *
-     * @return \qtism\data\content\FlowStaticCollection A collection of BlockStatic objects.
+     * @return FlowStaticCollection A collection of BlockStatic objects.
      */
     public function getContent()
     {

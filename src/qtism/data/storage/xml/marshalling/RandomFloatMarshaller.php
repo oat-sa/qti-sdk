@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
-use qtism\data\expressions\RandomFloat;
+use DOMElement;
 use qtism\common\utils\Format;
-use \DOMElement;
+use qtism\data\expressions\RandomFloat;
+use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for randomFloat.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RandomFloatMarshaller extends Marshaller
 {
     /**
-	 * Marshall a RandomFloat object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A RandomFloat object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a RandomFloat object into a DOMElement object.
+     *
+     * @param QtiComponent $component A RandomFloat object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -52,12 +50,12 @@ class RandomFloatMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI randomFloat element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A RandomFloat object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attributes min or max ar missing.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI randomFloat element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A RandomFloat object.
+     * @throws UnmarshallingException If the mandatory attributes min or max ar missing.
+     */
     protected function unmarshall(DOMElement $element)
     {
         // max attribute is mandatory.
@@ -79,8 +77,8 @@ class RandomFloatMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'randomFloat';

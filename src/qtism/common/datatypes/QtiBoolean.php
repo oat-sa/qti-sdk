@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,12 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
 /**
  * Represents the Boolean QTI Datatype.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiBoolean extends QtiScalar
 {
@@ -38,7 +36,7 @@ class QtiBoolean extends QtiScalar
      * Check whether or not the intrinsic $value is a PHP boolean.
      *
      * @param mixed $value A given value.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function checkType($value)
     {

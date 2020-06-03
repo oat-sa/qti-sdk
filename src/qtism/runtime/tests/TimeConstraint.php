@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,25 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
-use qtism\data\SectionPart;
+use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\NavigationMode;
 use qtism\data\QtiComponent;
+use qtism\data\SectionPart;
 
 /**
  * Represents a time constraint during an AssessmentTestSession.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TimeConstraint
 {
@@ -40,7 +38,7 @@ class TimeConstraint
      * The source of the TimeConstraint. Can be
      * an AssessmentTest, TestPart, or SectionPart.
      *
-     * @var \qtism\data\QtiComponent
+     * @var QtiComponent
      */
     private $source;
 
@@ -48,7 +46,7 @@ class TimeConstraint
      * The Duration spent by the candidate on the source of
      * the TimeConstraint.
      *
-     * @var \qtism\common\datatypes\Duration
+     * @var Duration
      */
     private $duration;
 
@@ -65,8 +63,8 @@ class TimeConstraint
     /**
      * Create a new TimeConstraint object.
      *
-     * @param \qtism\data\QtiComponent $source The TestPart or SectionPart the constraint applies on.
-     * @param \qtism\common\datatypes\Duration $duration The already spent duration by the candidate on $source.
+     * @param QtiComponent $source The TestPart or SectionPart the constraint applies on.
+     * @param Duration $duration The already spent duration by the candidate on $source.
      * @param integer $navigationMode The current navigation mode.
      */
     public function __construct(QtiComponent $source, QtiDuration $duration, $navigationMode = NavigationMode::LINEAR)
@@ -79,7 +77,7 @@ class TimeConstraint
     /**
      * Set the TestPart or SectionPart object the constraint applies on.
      *
-     * @param \qtism\data\QtiComponent $source A TestPart or SectionPart object.
+     * @param QtiComponent $source A TestPart or SectionPart object.
      */
     protected function setSource(QtiComponent $source)
     {
@@ -89,7 +87,7 @@ class TimeConstraint
     /**
      * Get the TestPart or SectionPart object the constraint applies on.
      *
-     * @return \qtism\data\QtiComponent A TestPart or SectionPart object.
+     * @return QtiComponent A TestPart or SectionPart object.
      */
     public function getSource()
     {
@@ -100,7 +98,7 @@ class TimeConstraint
      * Set the Duration object representing the time already spent by the candidate
      * on the source of the time constraint.
      *
-     * @param \qtism\common\datatypes\Duration $duration A Duration object.
+     * @param Duration $duration A Duration object.
      */
     protected function setDuration(QtiDuration $duration)
     {
@@ -111,7 +109,7 @@ class TimeConstraint
      * Get the Duration object representing the time already spent by the candidate
      * on the source of the time constraint.
      *
-     * @return \qtism\common\datatypes\Duration A Duration object.
+     * @return Duration A Duration object.
      */
     public function getDuration()
     {
@@ -142,7 +140,7 @@ class TimeConstraint
      * Get the time remaining to be spent by the candidate on the source of the time
      * constraint. Please note that this method will never return negative durations.
      *
-     * @return \qtism\common\datatypes\Duration|boolean A Duration object or false if there is no maxTime constraint running for the source of the time constraint.
+     * @return Duration|boolean A Duration object or false if there is no maxTime constraint running for the source of the time constraint.
      */
     public function getMaximumRemainingTime()
     {
@@ -161,7 +159,7 @@ class TimeConstraint
      * from/for the source of the minimum time constraint. Please note that this method
      * will never return negative durations.
      *
-     * @return \qtism\common\datatypes\Duration|boolean A duration object or false if there is no minTime constraint running for the source of the time constraint.
+     * @return Duration|boolean A duration object or false if there is no minTime constraint running for the source of the time constraint.
      */
     public function getMinimumRemainingTime()
     {

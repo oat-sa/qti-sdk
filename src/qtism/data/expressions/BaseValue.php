@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +23,7 @@
 
 namespace qtism\data\expressions;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 
 /**
@@ -31,35 +32,32 @@ use qtism\common\enums\BaseType;
  * From IMS QTI:
  *
  * The simplest expression returns a single value from the set defined by the given baseType.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BaseValue extends Expression implements Pure
 {
     /**
-	 * The baseType of the value.
-	 *
-	 * @var int
-	 * @qtism-bean-property
-	 */
+     * The baseType of the value.
+     *
+     * @var int
+     * @qtism-bean-property
+     */
     private $baseType;
 
     /**
-	 * The actual value.
-	 *
-	 * @var mixed
-	 * @qtism-bean-property
-	 */
+     * The actual value.
+     *
+     * @var mixed
+     * @qtism-bean-property
+     */
     private $value;
 
     /**
-	 * Create a new instance of BaseValue.
-	 *
-	 * @param int $baseType The base type of the value.
-	 * @param mixed $value The actual value.
-	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
-	 */
+     * Create a new instance of BaseValue.
+     *
+     * @param int $baseType The base type of the value.
+     * @param mixed $value The actual value.
+     * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+     */
     public function __construct($baseType, $value)
     {
         $this->setBaseType($baseType);
@@ -67,21 +65,21 @@ class BaseValue extends Expression implements Pure
     }
 
     /**
-	 * Get the base type.
-	 *
-	 * @return int A value from the BaseType enumeration.
-	 */
+     * Get the base type.
+     *
+     * @return int A value from the BaseType enumeration.
+     */
     public function getBaseType()
     {
         return $this->baseType;
     }
 
     /**
-	 * Set the base type.
-	 *
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
-	 */
+     * Set the base type.
+     *
+     * @param int $baseType A value from the BaseType enumeration.
+     * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+     */
     public function setBaseType($baseType)
     {
         if (in_array($baseType, BaseType::asArray())) {
@@ -93,28 +91,28 @@ class BaseValue extends Expression implements Pure
     }
 
     /**
-	 * Get the actual value.
-	 *
-	 * @return mixed A value.
-	 */
+     * Get the actual value.
+     *
+     * @return mixed A value.
+     */
     public function getValue()
     {
         return $this->value;
     }
 
     /**
-	 * Set the actual value.
-	 *
-	 * @param mixed $value The actual value.
-	 */
+     * Set the actual value.
+     *
+     * @param mixed $value The actual value.
+     */
     public function setValue($value)
     {
         $this->value = $value;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'baseValue';
@@ -122,6 +120,7 @@ class BaseValue extends Expression implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

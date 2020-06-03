@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\runtime\tests\AssessmentTestSessionState;
+use qtismtest\QtiSmEnumTestCase;
 
 class AssessmentTestSessionStateTest extends QtiSmEnumTestCase
 {
@@ -10,37 +11,37 @@ class AssessmentTestSessionStateTest extends QtiSmEnumTestCase
     {
         return AssessmentTestSessionState::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'initial',
             'interacting',
             'modalFeedback',
             'suspended',
-            'closed'
-        );
+            'closed',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'INITIAL',
             'INTERACTING',
             'MODAL_FEEDBACK',
             'SUSPENDED',
-            'CLOSED'
-        );
+            'CLOSED',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             AssessmentTestSessionState::INITIAL,
             AssessmentTestSessionState::INTERACTING,
             AssessmentTestSessionState::MODAL_FEEDBACK,
             AssessmentTestSessionState::SUSPENDED,
-            AssessmentTestSessionState::CLOSED
-        );
+            AssessmentTestSessionState::CLOSED,
+        ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\collections;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\utils\Format as Format;
 
 /**
  * A collection that aims at storing string values.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class IdentifierCollection extends StringCollection
 {
@@ -36,7 +35,7 @@ class IdentifierCollection extends StringCollection
      * Check if $value is a valid QTI Identifier.
      *
      * @param mixed $value A given value.
-     * @throws \InvalidArgumentException If $value is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $value is not a valid QTI Identifier.
      */
     protected function checkType($value)
     {
@@ -58,7 +57,7 @@ class IdentifierCollection extends StringCollection
      */
     public function __toString()
     {
-        $strArray = array();
+        $strArray = [];
         $dataPlaceHolder = &$this->getDataPlaceHolder();
 
         foreach (array_keys($dataPlaceHolder) as $k) {

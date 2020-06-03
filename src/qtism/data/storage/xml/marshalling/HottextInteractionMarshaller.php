@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,15 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\BlockStaticCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for HottextInteraction elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class HottextInteractionMarshaller extends ContentMarshaller
 {
@@ -43,9 +41,8 @@ class HottextInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        
-        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $fqClass = $this->lookupClass($element);
             try {
                 $content = new BlockStaticCollection($children->getArrayCopy());
@@ -127,6 +124,6 @@ class HottextInteractionMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

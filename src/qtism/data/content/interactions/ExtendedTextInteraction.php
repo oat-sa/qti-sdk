@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\state\ResponseValidityConstraint;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -36,9 +37,6 @@ use \InvalidArgumentException;
  * integer or float. When bound to response variable with single cardinality a single string
  * of text is required from the candidate. When bound to a response variable with multiple or
  * ordered cardinality several separate text strings may be required, see maxStrings below.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ExtendedTextInteraction extends BlockInteraction implements StringInteraction
 {
@@ -171,7 +169,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the arguments is invalid.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -183,7 +181,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * to interpret the value entered by the candidate.
      *
      * @param integer $base A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $base is not a positive integer.
+     * @throws InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base)
     {
@@ -212,7 +210,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * there is no value for the stringIdentifier attribute.
      *
      * @param string $stringIdentifier A QTI Identifier or an empty string.
-     * @throws \InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
+     * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
     public function setStringIdentifier($stringIdentifier)
     {
@@ -251,7 +249,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * is -1, it means that no value is defined for the expectedLength attribute.
      *
      * @param integer $expectedLength A strictly positive (> 0) integer or -1.
-     * @throws \InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
      */
     public function setExpectedLength($expectedLength)
     {
@@ -289,7 +287,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * match with. If $patternMask is an empty string, it means that there is no value defined for patternMask.
      *
      * @param string $patternMask An XML Schema 2 regular expression or an empty string.
-     * @throws \InvalidArgumentException If $patternMask is not a string value.
+     * @throws InvalidArgumentException If $patternMask is not a string value.
      */
     public function setPatternMask($patternMask)
     {
@@ -328,7 +326,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * for the placeholderText attribute.
      *
      * @param string $placeholderText A placeholder text or an empty string.
-     * @throws \InvalidArgumentException If $placeholderText is not a string value.
+     * @throws InvalidArgumentException If $placeholderText is not a string value.
      */
     public function setPlaceholderText($placeholderText)
     {
@@ -366,7 +364,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * accepted from the candidate. If $maxStrings is -1, it means no value is defined for the attribute.
      *
      * @param integer $maxStrings A strictly positive (> 0) integer or -1.
-     * @throws \InvalidArgumentException If $maxStrings is not a strictly positive integer nor -1.
+     * @throws InvalidArgumentException If $maxStrings is not a strictly positive integer nor -1.
      */
     public function setMaxStrings($maxStrings)
     {
@@ -403,7 +401,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the minimum separate (non-empty) strings required from the candidate.
      *
      * @param string $minStrings A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $minStrings is not a positive integer.
+     * @throws InvalidArgumentException If $minStrings is not a positive integer.
      */
     public function setMinStrings($minStrings)
     {
@@ -430,7 +428,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * $expectedLines is -1, it means that no value is defined for the expectedLines attribute.
      *
      * @param integer $expectedLines A strictly positive (> 0) integer or -1.
-     * @throws \InvalidArgumentException If $expectedLines is not a strictly positive integer nor -1.
+     * @throws InvalidArgumentException If $expectedLines is not a strictly positive integer nor -1.
      */
     public function setExpectedLines($expectedLines)
     {
@@ -467,7 +465,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the format of the text entered by the candidate.
      *
      * @param integer $format A value from the TextFormat enumeration.
-     * @throws \InvalidArgumentException If $format is not a value from the TextFormat enumeration.
+     * @throws InvalidArgumentException If $format is not a value from the TextFormat enumeration.
      */
     public function setFormat($format)
     {
@@ -488,7 +486,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     {
         return $this->format;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */

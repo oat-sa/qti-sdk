@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,35 +23,32 @@
 
 namespace qtism\data\storage;
 
-use qtism\common\datatypes\QtiPoint;
-use qtism\data\state\Value;
-use qtism\common\enums\BaseType;
-use qtism\common\utils\Format;
-use qtism\common\datatypes\QtiPair;
+use InvalidArgumentException;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\QtiCoords;
-use \InvalidArgumentException;
-use \UnexpectedValueException;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\enums\BaseType;
+use qtism\common\utils\Format;
+use RuntimeException;
+use UnexpectedValueException;
 
 /**
  * XML Storage Utility class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Utils
 {
     /**
-	 * Transform a string representing a QTI valueType value in a
-	 * the correct datatype.
-	 *
-	 * @param string $string The QTI valueType value as a string.
-	 * @param integer $baseType The QTI baseType that defines the datatype of $string.
-	 * @return mixed A converted object/primitive type.
-	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
-	 * @throws \UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.
-	 */
+     * Transform a string representing a QTI valueType value in a
+     * the correct datatype.
+     *
+     * @param string $string The QTI valueType value as a string.
+     * @param integer $baseType The QTI baseType that defines the datatype of $string.
+     * @return mixed A converted object/primitive type.
+     * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+     * @throws UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.
+     */
     public static function stringToDatatype($string, $baseType)
     {
         if (in_array($baseType, BaseType::asArray(), true)) {
@@ -66,7 +64,7 @@ class Utils
                         $msg = "'${string}' cannot be transformed into boolean.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::INTEGER:
                     if (Format::isInteger($string)) {
@@ -77,7 +75,7 @@ class Utils
                         $msg = "'${string}' cannot be transformed into integer.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::FLOAT:
                     if (Format::isFloat($string)) {
@@ -88,7 +86,7 @@ class Utils
                         $msg = "'${string}' cannot be transformed into float.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::URI:
                     if (Format::isUri($string)) {
@@ -97,7 +95,7 @@ class Utils
                         $msg = "'${string}' is not a valid URI.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::IDENTIFIER:
                     if (Format::isIdentifier($string)) {
@@ -106,7 +104,7 @@ class Utils
                         $msg = "'${string}' is not a valid QTI Identifier.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::INT_OR_IDENTIFIER:
                     if (Format::isIdentifier($string)) {
@@ -117,7 +115,7 @@ class Utils
                         $msg = "'${string}' is not a valid QTI Identifier nor a valid integer.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::PAIR:
                     if (Format::isPair($string)) {
@@ -128,7 +126,7 @@ class Utils
                         $msg = "'${string}' is not a valid pair.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::DIRECTED_PAIR:
                     if (Format::isDirectedPair($string)) {
@@ -139,7 +137,7 @@ class Utils
                         $msg = "'${string}' is not a valid directed pair.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::DURATION:
                     if (Format::isDuration($string)) {
@@ -148,15 +146,15 @@ class Utils
                         $msg = "'${string}' is not a valid duration.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
 
                 case BaseType::FILE:
-                    throw new \RuntimeException("Unsupported baseType: file.");
-                break;
+                    throw new RuntimeException("Unsupported baseType: file.");
+                    break;
 
                 case BaseType::STRING:
                     return '' . $string;
-                break;
+                    break;
 
                 case BaseType::POINT:
                     if (Format::isPoint($string)) {
@@ -167,7 +165,7 @@ class Utils
                         $msg = "'${string}' is not valid point.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
+                    break;
             }
         } else {
             $msg = "BaseType must be a value from the BaseType enumeration.";
@@ -176,20 +174,19 @@ class Utils
     }
 
     /**
-	 * Transforms a string to a Coord object according to a given shape.
-	 *
-	 * @param string $string Coordinates as a string.
-	 * @param int $shape A value from the Shape enumeration.
-	 * @throws \InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
-	 * @throws \UnexpectedValueException If $string cannot be converted to a Coords object.
-	 * @return \qtism\common\datatypes\QtiCoords A Coords object.
-	 */
+     * Transforms a string to a Coord object according to a given shape.
+     *
+     * @param string $string Coordinates as a string.
+     * @param int $shape A value from the Shape enumeration.
+     * @return QtiCoords A Coords object.
+     * @throws UnexpectedValueException If $string cannot be converted to a Coords object.
+     * @throws InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
+     */
     public static function stringToCoords($string, $shape)
     {
         if (Format::isCoords($string)) {
-
             $stringCoords = explode(",", $string);
-            $intCoords = array();
+            $intCoords = [];
 
             foreach ($stringCoords as $sC) {
                 $intCoords[] = intval($sC);
@@ -204,16 +201,16 @@ class Utils
     }
 
     /**
-	 * Sanitize a URI (Uniform Resource Identifier).
-	 *
-	 * The following processings will be applied:
-	 *
-	 * * If there is/are trailing slashe(s), they will be removed.
-	 *
-	 * @param string $uri A Uniform Resource Identifier.
-	 * @throws \InvalidArgumentException If $uri is not a string.
-	 * @return string A sanitized Uniform Resource Identifier.
-	 */
+     * Sanitize a URI (Uniform Resource Identifier).
+     *
+     * The following processings will be applied:
+     *
+     * * If there is/are trailing slashe(s), they will be removed.
+     *
+     * @param string $uri A Uniform Resource Identifier.
+     * @return string A sanitized Uniform Resource Identifier.
+     * @throws InvalidArgumentException If $uri is not a string.
+     */
     public static function sanitizeUri($uri)
     {
         if (gettype($uri) === 'string') {

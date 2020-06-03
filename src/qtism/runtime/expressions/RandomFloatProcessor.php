@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
@@ -32,20 +32,17 @@ use qtism\data\expressions\RandomFloat;
  * From IMS QTI:
  *
  * Selects a random float from the specified range [min,max].
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RandomFloatProcessor extends ExpressionProcessor
 {
     /**
-	 * Process the RandomFloat expression.
-	 *
-	 * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
-	 *
-	 * @return QtiFloat A Random float value.
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Process the RandomFloat expression.
+     *
+     * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
+     *
+     * @return QtiFloat A Random float value.
+     * @throws ExpressionProcessingException
+     */
     public function process()
     {
         $expr = $this->getExpression();
@@ -58,7 +55,6 @@ class RandomFloatProcessor extends ExpressionProcessor
         $max = (is_float($max)) ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
 
         if (is_float($min) && is_float($max)) {
-
             if ($min <= $max) {
                 return new QtiFloat(($min + lcg_value() * (abs($max - $min))));
             } else {
@@ -70,7 +66,7 @@ class RandomFloatProcessor extends ExpressionProcessor
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

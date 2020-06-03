@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -44,18 +45,15 @@ use qtism\data\expressions\operators\DurationLT;
  * seconds to complete a task in a system that reports durations to a
  * resolution of epsilon seconds (epsilon<1) then a value equal to 10 would
  * cover all durations in the range [10,10+epsilon).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DurationLTProcessor extends OperatorProcessor
 {
     /**
-	 * Process the DurationLT operator.
-	 *
-	 * @return QtiBoolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the DurationLT operator.
+     *
+     * @return QtiBoolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -76,7 +74,7 @@ class DurationLTProcessor extends OperatorProcessor
 
         return new QtiBoolean($operands[0]->shorterThan($operands[1]));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

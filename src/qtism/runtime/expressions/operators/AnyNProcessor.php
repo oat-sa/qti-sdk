@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -45,18 +45,15 @@ use qtism\runtime\expressions\Utils;
  * NULL whereas {true,false,false,NULL} results in false and {true,true,true,NULL}
  * results in true. The result NULL indicates that the correct value for the operator
  * cannot be determined.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AnyNProcessor extends OperatorProcessor
 {
     /**
-	 * Process the AnyN processor.
-	 *
-	 * @return QtiBoolean|null A boolean value of true if at least min of the sub-expressions are true and at most max of the sub-expressions are true. NULL is returned if the correct value for the operator cannot be determined.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the AnyN processor.
+     *
+     * @return QtiBoolean|null A boolean value of true if at least min of the sub-expressions are true and at most max of the sub-expressions are true. NULL is returned if the correct value for the operator cannot be determined.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -131,7 +128,7 @@ class AnyNProcessor extends OperatorProcessor
             }
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

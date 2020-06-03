@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
+use InvalidArgumentException;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -34,9 +35,6 @@ use \InvalidArgumentException;
  * the sum of the mapped values from the target set. See mapResponsePoint
  * for details. The attributes have the same meaning as the similarly named
  * attributes on mapping.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AreaMapping extends QtiComponent
 {
@@ -67,7 +65,7 @@ class AreaMapping extends QtiComponent
     /**
      * A collection of AreaMapEntry objects.
      *
-     * @var \qtism\data\state\AreaMapEntryCollection
+     * @var AreaMapEntryCollection
      * @qtism-bean-property
      */
     private $areaMapEntries;
@@ -75,11 +73,11 @@ class AreaMapping extends QtiComponent
     /**
      * Create a new AreaMapping object.
      *
-     * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
+     * @param AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
      * @param float $defaultValue A default value. Default is 0.
      * @param boolean|float $lowerBound A lower bound. Give false if no lower bound.
      * @param boolean|float $upperBound An upper bound. Give false if no upper bound.
-     * @throws \InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
+     * @throws InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
      */
     public function __construct(AreaMapEntryCollection $areaMapEntries, $defaultValue = 0.0, $lowerBound = false, $upperBound = false)
     {
@@ -93,7 +91,7 @@ class AreaMapping extends QtiComponent
      * Set the lower bound.
      *
      * @param boolean|float $lowerBound A lower bound.
-     * @throws \InvalidArgumentException If $lowerBound is not a float value nor false.
+     * @throws InvalidArgumentException If $lowerBound is not a float value nor false.
      */
     public function setLowerBound($lowerBound)
     {
@@ -119,7 +117,7 @@ class AreaMapping extends QtiComponent
      * Set the upper bound.
      *
      * @param boolean|float $upperBound An upper bound.
-     * @throws \InvalidArgumentException If $upperBound is not a float value nor false.
+     * @throws InvalidArgumentException If $upperBound is not a float value nor false.
      */
     public function setUpperBound($upperBound)
     {
@@ -145,7 +143,7 @@ class AreaMapping extends QtiComponent
      * Set the default value.
      *
      * @param float $defaultValue A default value.
-     * @throws \InvalidArgumentException If $defaultValue is not a float value.
+     * @throws InvalidArgumentException If $defaultValue is not a float value.
      */
     public function setDefaultValue($defaultValue)
     {
@@ -170,7 +168,7 @@ class AreaMapping extends QtiComponent
     /**
      * Set the collection of AreaMapEntry objects composing the AreaMapping.
      *
-     * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
+     * @param AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
      */
     public function setAreaMapEntries(AreaMapEntryCollection $areaMapEntries)
     {
@@ -185,7 +183,7 @@ class AreaMapping extends QtiComponent
     /**
      * Get the collection of AreaMapEntry objects composing the AreaMapping.
      *
-     * @return \qtism\data\state\AreaMapEntryCollection A collection of AreaMapEntry objects.
+     * @return AreaMapEntryCollection A collection of AreaMapEntry objects.
      */
     public function getAreaMapEntries()
     {

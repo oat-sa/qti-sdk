@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\interactions\UploadInteraction;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for UploadInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class UploadInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall an UploadInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An UploadInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall an UploadInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component An UploadInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
@@ -63,16 +61,15 @@ class UploadInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to an uploadInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent An UploadInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to an uploadInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent An UploadInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $component = new UploadInteraction($responseIdentifier);
 
             $promptElts = $this->getChildElementsByTagName($element, 'prompt');
@@ -93,7 +90,6 @@ class UploadInteractionMarshaller extends Marshaller
             $this->fillBodyElement($component, $element);
 
             return $component;
-
         } else {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'uploadInteraction' element.";
             throw new UnmarshallingException($msg, $element);
@@ -101,8 +97,8 @@ class UploadInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'uploadInteraction';

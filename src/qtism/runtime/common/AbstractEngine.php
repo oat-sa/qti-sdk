@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\common;
@@ -27,41 +27,38 @@ use qtism\data\QtiComponent;
 
 /**
  * The AbstractEngine class is the common sub-class to all engines.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractEngine implements Processable
 {
     /**
-	 * The QtiComponent that will be the object of the
-	 * processing.
-	 *
-	 * @var \qtism\data\QtiComponent
-	 */
+     * The QtiComponent that will be the object of the
+     * processing.
+     *
+     * @var QtiComponent
+     */
     private $component;
 
     /**
-	 * The StackTrace of the processing, giving some
-	 * information about the running processing.
-	 *
-	 * @var \qtism\runtime\common\StackTrace
-	 */
+     * The StackTrace of the processing, giving some
+     * information about the running processing.
+     *
+     * @var StackTrace
+     */
     private $stackTrace;
 
     /**
-	 * A Context for the ExpressionEngine.
-	 *
-	 * @var \qtism\runtime\common\State
-	 */
+     * A Context for the ExpressionEngine.
+     *
+     * @var State
+     */
     private $context;
 
     /**
-	 * Create a new AbstractEngine object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A QtiComponent object to process.
-	 * @param \qtism\runtime\common\State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
-	 */
+     * Create a new AbstractEngine object.
+     *
+     * @param QtiComponent $component A QtiComponent object to process.
+     * @param State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
+     */
     public function __construct(QtiComponent $component, State $context = null)
     {
         $this->setComponent($component);
@@ -70,73 +67,73 @@ abstract class AbstractEngine implements Processable
     }
 
     /**
-	 * Set the QtiComponent object to be processed by the Engine.
-	 *
-	 * @param \qtism\data\QtiComponent $component A QtiComponent object.
-	 */
+     * Set the QtiComponent object to be processed by the Engine.
+     *
+     * @param QtiComponent $component A QtiComponent object.
+     */
     public function setComponent(QtiComponent $component)
     {
         $this->component = $component;
     }
 
     /**
-	 * Get the QtiComponent object to be processed by the Engine.
-	 *
-	 * @return \qtism\data\QtiComponent A QtiComponent object.
-	 */
+     * Get the QtiComponent object to be processed by the Engine.
+     *
+     * @return QtiComponent A QtiComponent object.
+     */
     public function getComponent()
     {
         return $this->component;
     }
 
     /**
-	 * Set the execution context of the ExpressionEngine.
-	 *
-	 * @param \qtism\runtime\common\State $context A State object representing the execution context.
-	 */
+     * Set the execution context of the ExpressionEngine.
+     *
+     * @param State $context A State object representing the execution context.
+     */
     public function setContext(State $context)
     {
         $this->context = $context;
     }
 
     /**
-	 * Get the execution context of the ExpressionEngine.
-	 *
-	 * @return \qtism\runtime\common\State A State object representing the execution context.
-	 */
+     * Get the execution context of the ExpressionEngine.
+     *
+     * @return State A State object representing the execution context.
+     */
     public function getContext()
     {
         return $this->context;
     }
 
     /**
-	 * Set the StackTrace object that will hold information
-	 * about the running processing.
-	 *
-	 * @param \qtism\runtime\common\StackTrace $stackTrace A StackTrace object.
-	 */
+     * Set the StackTrace object that will hold information
+     * about the running processing.
+     *
+     * @param StackTrace $stackTrace A StackTrace object.
+     */
     protected function setStackTrace(StackTrace $stackTrace)
     {
         $this->stackTrace = $stackTrace;
     }
 
     /**
-	 * Get the StackTrace object that will hold information
-	 * about the running processing.
-	 *
-	 * @return \qtism\runtime\common\StackTrace A StackTrace object.
-	 */
+     * Get the StackTrace object that will hold information
+     * about the running processing.
+     *
+     * @return StackTrace A StackTrace object.
+     */
     public function getStackTrace()
     {
         return $this->stackTrace;
     }
 
     /**
-	 * Add an entry in the stack trace about the QtiComponent being
-	 * processed.
-	 *
-	 * @param string $message A trace message.
-	 */
+     * Add an entry in the stack trace about the QtiComponent being
+     * processed.
+     *
+     * @param string $message A trace message.
+     */
     protected function trace($message)
     {
         $item = new StackTraceItem($this->getComponent(), $message);

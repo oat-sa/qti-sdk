@@ -1,14 +1,15 @@
 <?php
+
 namespace qtismtest\data\state;
 
-use qtism\data\state\ExternalScored;
-use qtismtest\QtiSmTestCase;
-use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\MatchTable;
-use qtism\data\state\MatchTableEntryCollection;
-use qtism\data\state\MatchTableEntry;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\state\ExternalScored;
+use qtism\data\state\MatchTable;
+use qtism\data\state\MatchTableEntry;
+use qtism\data\state\MatchTableEntryCollection;
+use qtism\data\state\OutcomeDeclaration;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeDeclarationTest extends QtiSmTestCase
 {
@@ -29,7 +30,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $this->subject->setInterpretation(999);
     }
-    
+
     public function testSetLongInterpretationWrongType()
     {
         $this->setExpectedException(
@@ -39,7 +40,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $this->subject->setLongInterpretation(999);
     }
-    
+
     public function testSetNormalMinimumWrongType()
     {
         $this->setExpectedException(
@@ -49,7 +50,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $this->subject->setNormalMinimum('string');
     }
-    
+
     public function testSetNormalMaximumWrongType()
     {
         $this->setExpectedException(
@@ -59,7 +60,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $this->subject->setNormalMaximum('string');
     }
-    
+
     public function testSetMasteryValueWrongType()
     {
         $this->setExpectedException(
@@ -69,7 +70,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $this->subject->setMasteryValue('string');
     }
-    
+
     public function getComponentsWithLookupTable()
     {
         $this->subject->setLookupTable(
@@ -79,7 +80,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
                 )
             )
         );
-        
+
         $components = $this->getComponents();
         $last = $components[count($components) - 1];
         $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $last);

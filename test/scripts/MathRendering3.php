@@ -1,12 +1,12 @@
 <?php
 
-use qtism\data\storage\xml\XmlDocument;
-use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
-use qtism\runtime\common\State;
-use qtism\runtime\common\TemplateVariable;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\QtiString;
+use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\common\State;
+use qtism\runtime\common\TemplateVariable;
+use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
@@ -20,11 +20,11 @@ $tpl_c = new TemplateVariable('TPL_c', Cardinality::SINGLE, BaseType::STRING, ne
 $renderer = new XhtmlRenderingEngine();
 $renderer->setState(
     new State(
-        array(
+        [
             $tpl_E,
             $tpl_m,
-            $tpl_c
-        )
+            $tpl_c,
+        ]
     )
 );
 

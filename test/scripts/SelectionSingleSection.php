@@ -1,8 +1,9 @@
 <?php
+
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\XmlCompactDocument;
-use qtism\runtime\tests\SessionManager;
 use qtism\runtime\tests\AssessmentTestSessionState;
+use qtism\runtime\tests\SessionManager;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
@@ -11,13 +12,13 @@ $iterations = intval($argv[1]);
 $doc = new XmlCompactDocument();
 $doc->load(dirname(__FILE__) . '/../samples/custom/runtime/selection_single_section.xml');
 
-$sectionsDistribution = array();
+$sectionsDistribution = [];
 
 for ($i = 0; $i < $iterations; $i++) {
     $manager = new SessionManager(new FileSystemFileManager());
-    
+
     echo "Taking test ${i}...\n";
-    $sections = array();
+    $sections = [];
 
     $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
     $session->beginTestSession();
@@ -32,10 +33,10 @@ for ($i = 0; $i < $iterations; $i++) {
         if (isset($sectionsDistribution[$section]) === false) {
             $sectionsDistribution[$section] = 0;
         }
-        
+
         $sectionsDistribution[$section]++;
     }
-    
+
     unset($manager);
     unset($session);
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,9 +25,9 @@ namespace qtism\data\storage\xml\marshalling;
 
 /**
  * A specialized marshaller factory focusing on components involved in CompactXml documents.
- * 
+ *
  * In addition with the QTI 2.1 related marshallers, the following marshallers are mapped to this factory:
- * 
+ *
  * * ExtendedAssessmentItemRefMarshaller
  * * ExtendedAssessmentSectionMarshaller
  * * ExtendedTestPartMarshaller
@@ -38,9 +39,6 @@ namespace qtism\data\storage\xml\marshalling;
  * * ShufflingGroupMarshaller
  * * ResponseValidityConstraintMarshaller
  * * AssociationValidityConstraintMarshaller
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class CompactMarshallerFactory extends Qti21MarshallerFactory
 {

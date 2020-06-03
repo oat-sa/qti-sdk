@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,27 +23,24 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\interactions\SliderInteraction;
+use DOMElement;
+use InvalidArgumentException;
 use qtism\data\content\interactions\Orientation;
+use qtism\data\content\interactions\SliderInteraction;
 use qtism\data\QtiComponent;
-use \InvalidArgumentException;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for SliderInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SliderInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall a SliderInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A SliderInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a SliderInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component A SliderInteraction object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
@@ -79,20 +77,17 @@ class SliderInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a SliderInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A SliderInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a SliderInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A SliderInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             if (($lowerBound = $this->getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
-
                 if (($upperBound = $this->getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
-
                     $component = new SliderInteraction($responseIdentifier, $lowerBound, $upperBound);
 
                     $promptElts = $this->getChildElementsByTagName($element, 'prompt');
@@ -145,8 +140,8 @@ class SliderInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'sliderInteraction';

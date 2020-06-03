@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,122 +23,119 @@
 
 namespace qtism\data;
 
+use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
-use qtism\common\utils\Format;
-use \InvalidArgumentException;
-use \SplObjectStorage;
+use SplObjectStorage;
 
 /**
  *
  * The TestPart class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestPart extends QtiComponent implements QtiIdentifiable
 {
     use QtiIdentifiableTrait;
-    
+
     /**
-	 * From IMS QTI:
-	 *
-	 * The identifier of the test part must be unique within the test and must not be
-	 * the identifier of any assessmentSection or assessmentItemRef.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The identifier of the test part must be unique within the test and must not be
+     * the identifier of any assessmentSection or assessmentItemRef.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * The navigation mode, a value of the NavigationMode enumeration.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * The navigation mode, a value of the NavigationMode enumeration.
+     *
+     * @var int
+     * @qtism-bean-property
+     */
     private $navigationMode = NavigationMode::LINEAR;
 
     /**
-	 * The submission mode, a value of the SubmissionMode enumeration.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * The submission mode, a value of the SubmissionMode enumeration.
+     *
+     * @var int
+     * @qtism-bean-property
+     */
     private $submissionMode = SubmissionMode::INDIVIDUAL;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * A set of conditions evaluated during the test, that determine
-	 * if this part is to be skipped.
-	 *
-	 * @var \qtism\data\rules\PreConditionCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * A set of conditions evaluated during the test, that determine
+     * if this part is to be skipped.
+     *
+     * @var PreConditionCollection
+     * @qtism-bean-property
+     */
     private $preConditions;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * A set of rules, evaluated during the test, for setting an alternative
-	 * target as the next part of the test.
-	 *
-	 * @var \qtism\data\rules\BranchRuleCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * A set of rules, evaluated during the test, for setting an alternative
+     * target as the next part of the test.
+     *
+     * @var BranchRuleCollection
+     * @qtism-bean-property
+     */
     private $branchRules;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Parameters used to control the allowable states of each item session in this part.
-	 * These values may be overridden at section and item level.
-	 *
-	 * @var \qtism\data\ItemSessionControl
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Parameters used to control the allowable states of each item session in this part.
+     * These values may be overridden at section and item level.
+     *
+     * @var ItemSessionControl
+     * @qtism-bean-property
+     */
     private $itemSessionControl = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Optionally controls the amount of time a candidate is allowed for this part of the test.
-	 *
-	 * @var \qtism\data\TimeLimits
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Optionally controls the amount of time a candidate is allowed for this part of the test.
+     *
+     * @var TimeLimits
+     * @qtism-bean-property
+     */
     private $timeLimits = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The items contained in each testPart are arranged into sections and sub-sections.
-	 *
-	 * @var \qtism\data\SectionPartCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The items contained in each testPart are arranged into sections and sub-sections.
+     *
+     * @var SectionPartCollection
+     * @qtism-bean-property
+     */
     private $assessmentSections;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Test-level feedback specific to this part of the test.
-	 *
-	 * @var \qtism\data\TestFeedbackCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Test-level feedback specific to this part of the test.
+     *
+     * @var TestFeedbackCollection
+     * @qtism-bean-property
+     */
     private $testFeedbacks;
 
     /**
-	 * Create a new instance of TestPart.
-	 *
-	 * @param string $identifier A QTI Identifier;
-	 * @param SectionPartCollection $assessmentSections A collection of AssessmentSection or AssessmentSectionRef objects objects.
-	 * @param int $navigationMode A value of the NavigationMode enumeration.
-	 * @param int $submissionMode A value of the SubmissionMode enumeration.
-	 * @throws \InvalidArgumentException If an argument has the wrong type or format.
-	 */
+     * Create a new instance of TestPart.
+     *
+     * @param string $identifier A QTI Identifier;
+     * @param SectionPartCollection $assessmentSections A collection of AssessmentSection or AssessmentSectionRef objects objects.
+     * @param int $navigationMode A value of the NavigationMode enumeration.
+     * @param int $submissionMode A value of the SubmissionMode enumeration.
+     * @throws InvalidArgumentException If an argument has the wrong type or format.
+     */
     public function __construct($identifier, SectionPartCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
     {
         $this->setObservers(new SplObjectStorage());
@@ -152,25 +150,24 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the identifier of the Test Part.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the identifier of the Test Part.
+     *
+     * @return string A QTI identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the identifier of the Test Part.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the Test Part.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
-
             $this->identifier = $identifier;
             $this->notify();
         } else {
@@ -180,21 +177,21 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the navigation mode of the Test Part.
-	 *
-	 * @return integer A value of the Navigation enumeration.
-	 */
+     * Get the navigation mode of the Test Part.
+     *
+     * @return int A value of the Navigation enumeration.
+     */
     public function getNavigationMode()
     {
         return $this->navigationMode;
     }
 
     /**
-	 * Set the navigation mode of the Test Part.
-	 *
-	 * @param integer $navigationMode A value of the Navigation enumaration.
-	 * @throws \InvalidArgumentException If $navigation mode is not a value from the Navigation enumeration.
-	 */
+     * Set the navigation mode of the Test Part.
+     *
+     * @param int $navigationMode A value of the Navigation enumaration.
+     * @throws InvalidArgumentException If $navigation mode is not a value from the Navigation enumeration.
+     */
     public function setNavigationMode($navigationMode)
     {
         if (in_array($navigationMode, NavigationMode::asArray())) {
@@ -206,21 +203,21 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the submission mode of the Test Part.
-	 *
-	 * @return integer A value of the SubmissionMode enumeration.
-	 */
+     * Get the submission mode of the Test Part.
+     *
+     * @return int A value of the SubmissionMode enumeration.
+     */
     public function getSubmissionMode()
     {
         return $this->submissionMode;
     }
 
     /**
-	 * Set the submission mode of the Test Part.
-	 *
-	 * @param integer $submissionMode A value of the SubmissionMode enumeration.
-	 * @throws \InvalidArgumentException If $submissionMode is not a value from the SubmissionMode enumeration.
-	 */
+     * Set the submission mode of the Test Part.
+     *
+     * @param int $submissionMode A value of the SubmissionMode enumeration.
+     * @throws InvalidArgumentException If $submissionMode is not a value from the SubmissionMode enumeration.
+     */
     public function setSubmissionMode($submissionMode)
     {
         if (in_array($submissionMode, SubmissionMode::asArray())) {
@@ -232,124 +229,124 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the PreConditions that must be applied to this Test Part.
-	 *
-	 * @return \qtism\data\rules\PreConditionCollection A collection of PreCondition objects.
-	 */
+     * Get the PreConditions that must be applied to this Test Part.
+     *
+     * @return PreConditionCollection A collection of PreCondition objects.
+     */
     public function getPreConditions()
     {
         return $this->preConditions;
     }
 
     /**
-	 * Set the PreConditions that must be applied to this Test Part.
-	 *
-	 * @param \qtism\data\rules\PreConditionCollection $preConditions A collection of PreCondition objects.
-	 */
+     * Set the PreConditions that must be applied to this Test Part.
+     *
+     * @param PreConditionCollection $preConditions A collection of PreCondition objects.
+     */
     public function setPreConditions(PreConditionCollection $preConditions)
     {
         $this->preConditions = $preConditions;
     }
 
     /**
-	 * Get the BranchRules that must be applied to this Test Part.
-	 *
-	 * @return \qtism\data\rules\BranchRuleCollection A collection of BranchRule objects.
-	 */
+     * Get the BranchRules that must be applied to this Test Part.
+     *
+     * @return BranchRuleCollection A collection of BranchRule objects.
+     */
     public function getBranchRules()
     {
         return $this->branchRules;
     }
 
     /**
-	 * Set the BranchRules that must be applied to this Test Part.
-	 *
-	 * @param \qtism\data\rules\BranchRuleCollection $branchRules A collection of BranchRule objects.
-	 */
+     * Set the BranchRules that must be applied to this Test Part.
+     *
+     * @param BranchRuleCollection $branchRules A collection of BranchRule objects.
+     */
     public function setBranchRules(BranchRuleCollection $branchRules)
     {
         $this->branchRules = $branchRules;
     }
 
     /**
-	 * Get the ItemSessionControl applied to this Test Part. Returns null if there
-	 * is no ItemSessionControl to apply.
-	 *
-	 * @return \qtism\data\ItemSessionControl An ItemSessionControl object.
-	 */
+     * Get the ItemSessionControl applied to this Test Part. Returns null if there
+     * is no ItemSessionControl to apply.
+     *
+     * @return ItemSessionControl An ItemSessionControl object.
+     */
     public function getItemSessionControl()
     {
         return $this->itemSessionControl;
     }
 
     /**
-	 * Set the ItemSessionControl applied to this Test Part.
-	 *
-	 * @param \qtism\data\ItemSessionControl $itemSessionControl An ItemSessionControl object.
-	 */
+     * Set the ItemSessionControl applied to this Test Part.
+     *
+     * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
+     */
     public function setItemSessionControl(ItemSessionControl $itemSessionControl = null)
     {
         $this->itemSessionControl = $itemSessionControl;
     }
 
     /**
-	 * Whether the TestPart holds an ItemSessionControl object.
-	 *
-	 * @return boolean
-	 */
+     * Whether the TestPart holds an ItemSessionControl object.
+     *
+     * @return boolean
+     */
     public function hasItemSessionControl()
     {
         return is_null($this->getItemSessionControl()) === false;
     }
 
     /**
-	 * Get the TimeLimits applied to this Test Part. Returns null if there is no
-	 * TimeLimits to apply.
-	 *
-	 * @return \qtism\data\TimeLimits A TimeLimits object.
-	 */
+     * Get the TimeLimits applied to this Test Part. Returns null if there is no
+     * TimeLimits to apply.
+     *
+     * @return TimeLimits A TimeLimits object.
+     */
     public function getTimeLimits()
     {
         return $this->timeLimits;
     }
 
     /**
-	 * Set the TimeLimits applied to this Test Part. Returns null if there is no
-	 * TimeLimits to apply.
-	 *
-	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
-	 */
+     * Set the TimeLimits applied to this Test Part. Returns null if there is no
+     * TimeLimits to apply.
+     *
+     * @param TimeLimits $timeLimits A TimeLimits object.
+     */
     public function setTimeLimits(TimeLimits $timeLimits = null)
     {
         $this->timeLimits = $timeLimits;
     }
 
     /**
-	 * Whether the TestPart holds a TimeLimits object.
-	 *
-	 * @return boolean
-	 */
+     * Whether the TestPart holds a TimeLimits object.
+     *
+     * @return boolean
+     */
     public function hasTimeLimits()
     {
         return is_null($this->getTimeLimits()) === false;
     }
 
     /**
-	 * Get the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
-	 *
-	 * @return \qtism\data\SectionPartCollection A collection of AssessmentSection and/or AssessmentSectionRef objects.
-	 */
+     * Get the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
+     *
+     * @return SectionPartCollection A collection of AssessmentSection and/or AssessmentSectionRef objects.
+     */
     public function getAssessmentSections()
     {
         return $this->assessmentSections;
     }
 
     /**
-	 * Set the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
-	 *
-	 * @param SectionPartCollection $assessmentSections A collection of AssessmentSection and/or AssessmentSectionRef objects.
-	 * @throws \InvalidArgumentException If $assessmentSections is an empty collection or contains something else than AssessmentSection and/or AssessmentSectionRef objects.
-	 */
+     * Set the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
+     *
+     * @param SectionPartCollection $assessmentSections A collection of AssessmentSection and/or AssessmentSectionRef objects.
+     * @throws InvalidArgumentException If $assessmentSections is an empty collection or contains something else than AssessmentSection and/or AssessmentSectionRef objects.
+     */
     public function setAssessmentSections(SectionPartCollection $assessmentSections)
     {
         if (count($assessmentSections) > 0) {
@@ -360,7 +357,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
                     throw new InvalidArgumentException($msg);
                 }
             }
-            
+
             $this->assessmentSections = $assessmentSections;
         } else {
             $msg = 'A TestPart must contain at least one AssessmentSection.';
@@ -369,20 +366,20 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the feedbacks that are part of this Test Part.
-	 *
-	 * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
-	 */
+     * Get the feedbacks that are part of this Test Part.
+     *
+     * @return TestFeedbackCollection A collection of TestFeedback objects.
+     */
     public function getTestFeedbacks()
     {
         return $this->testFeedbacks;
     }
 
     /**
-	 * Set the feedbacks that are part of this Test Part.
-	 *
-	 * @param \qtism\data\TestFeedbackCollection $testFeedbacks A collection of TestFeedback objects.
-	 */
+     * Set the feedbacks that are part of this Test Part.
+     *
+     * @param TestFeedbackCollection $testFeedbacks A collection of TestFeedback objects.
+     */
     public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks)
     {
         $this->testFeedbacks = $testFeedbacks;
@@ -396,11 +393,11 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     public function getComponents()
     {
         $comp = array_merge(
-                    $this->getAssessmentSections()->getArrayCopy(),
-                    $this->getBranchRules()->getArrayCopy(),
-                    $this->getPreConditions()->getArrayCopy(),
-                    $this->getTestFeedbacks()->getArrayCopy()
-                );
+            $this->getAssessmentSections()->getArrayCopy(),
+            $this->getBranchRules()->getArrayCopy(),
+            $this->getPreConditions()->getArrayCopy(),
+            $this->getTestFeedbacks()->getArrayCopy()
+        );
 
         if ($this->getItemSessionControl() !== null) {
             $comp[] = $this->getItemSessionControl();
@@ -412,7 +409,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
 
         return new QtiComponentCollection($comp);
     }
-    
+
     public function __clone()
     {
         $this->setObservers(new SplObjectStorage());

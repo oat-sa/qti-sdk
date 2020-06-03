@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,20 +15,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DateTime;
+use DOMElement;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\data\results\ResultTemplateVariable;
-use qtism\data\results\ResultResponseVariable;
-use qtism\data\results\ItemVariableCollection;
 use qtism\data\results\CandidateResponse;
+use qtism\data\results\ItemVariableCollection;
+use qtism\data\results\ResultResponseVariable;
+use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\TestResult;
 use qtismtest\QtiSmTestCase;
 
@@ -83,20 +85,23 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $component = new TestResult(
             new QtiIdentifier('fixture-identifier'),
             new DateTime('2018-06-27T09:41:45.529Z'),
-            new ItemVariableCollection(array(
+            new ItemVariableCollection([
                 new ResultResponseVariable(
-                    new QtiIdentifier('response-identifier'), 0, new CandidateResponse()
+                    new QtiIdentifier('response-identifier'),
+                    0,
+                    new CandidateResponse()
                 ),
                 new ResultTemplateVariable(
-                    new QtiIdentifier('response-identifier'), 0
-                )
-            ))
+                    new QtiIdentifier('response-identifier'),
+                    0
+                ),
+            ])
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -104,8 +109,8 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $this->assertTrue($element->hasAttribute('datestamp'));
         $this->assertEquals('2018-06-27T09:41:45+00:00', $element->getAttribute('datestamp'));
 
-        $this->assertEquals(1,$element->getElementsByTagName('responseVariable')->length);
-        $this->assertEquals(1,$element->getElementsByTagName('templateVariable')->length);
+        $this->assertEquals(1, $element->getElementsByTagName('responseVariable')->length);
+        $this->assertEquals(1, $element->getElementsByTagName('templateVariable')->length);
     }
 
     public function testMarshallMinimal()
@@ -118,15 +123,15 @@ class TestResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
         $attributes = [];
-        for ($i=0; $i<2; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'datestamp')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'datestamp']));
 
         $this->assertFalse($element->hasChildNodes());
     }

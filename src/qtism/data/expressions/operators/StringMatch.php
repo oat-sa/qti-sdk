@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\data\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\Pure;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -34,55 +35,52 @@ use \InvalidArgumentException;
  * two strings match according to the comparison rules defined by the attributes
  * below and false if they don't. If either sub-expression is NULL then the operator
  * results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class StringMatch extends Operator implements Pure
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * Whether or not the match is to be carried out case sensitively.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Whether or not the match is to be carried out case sensitively.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $caseSensitive;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * This attribute is now deprecated, the substring operator should be used instead.
-	 * If true, then the comparison returns true if the first string contains the
-	 * second one, otherwise it returns true only if they match entirely.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * This attribute is now deprecated, the substring operator should be used instead.
+     * If true, then the comparison returns true if the first string contains the
+     * second one, otherwise it returns true only if they match entirely.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $substring = false;
 
     /**
-	 * Create a new instance of StringMatch.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
-	 * @param boolean $caseSensitive Whether or not the match to be carried out case sensitively.
-	 * @param boolean $substring Deprecated argument, use the substring operator instead.
-	 * @throws \InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.
-	 */
+     * Create a new instance of StringMatch.
+     *
+     * @param ExpressionCollection $expressions A collection of Expression objects.
+     * @param boolean $caseSensitive Whether or not the match to be carried out case sensitively.
+     * @param boolean $substring Deprecated argument, use the substring operator instead.
+     * @throws InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.
+     */
     public function __construct(ExpressionCollection $expressions, $caseSensitive, $substring = false)
     {
-        parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::STRING));
+        parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::STRING]);
         $this->setCaseSensitive($caseSensitive);
         $this->setSubstring($substring);
     }
 
     /**
-	 * Set Wheter or not the match is to be carried out case sensitively.
-	 *
-	 * @param boolean $caseSensitive Case sensitiveness.
-	 * @throws \InvalidArgumentException If $caseSensitive is not a boolean.
-	 */
+     * Set Wheter or not the match is to be carried out case sensitively.
+     *
+     * @param boolean $caseSensitive Case sensitiveness.
+     * @throws InvalidArgumentException If $caseSensitive is not a boolean.
+     */
     public function setCaseSensitive($caseSensitive)
     {
         if (is_bool($caseSensitive)) {
@@ -94,22 +92,22 @@ class StringMatch extends Operator implements Pure
     }
 
     /**
-	 * Wether or not the match is to be carried out case sensitively.
-	 *
-	 * @return boolean True if it has to, false otherwise.
-	 */
+     * Wether or not the match is to be carried out case sensitively.
+     *
+     * @return boolean True if it has to, false otherwise.
+     */
     public function isCaseSensitive()
     {
         return $this->caseSensitive;
     }
 
     /**
-	 * Set the substring attribute.
-	 *
-	 * @param boolean $substring A boolean value.
-	 * @throws \InvalidArgumentException If $substring is not a boolean.
-	 * @deprecated
-	 */
+     * Set the substring attribute.
+     *
+     * @param boolean $substring A boolean value.
+     * @throws InvalidArgumentException If $substring is not a boolean.
+     * @deprecated
+     */
     public function setSubstring($substring)
     {
         if (is_bool($substring)) {
@@ -121,19 +119,19 @@ class StringMatch extends Operator implements Pure
     }
 
     /**
-	 * Get the substring attribute.
-	 *
-	 * @return boolean
-	 * @deprecated
-	 */
+     * Get the substring attribute.
+     *
+     * @return boolean
+     * @deprecated
+     */
     public function mustSubstring()
     {
         return $this->substring;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'stringMatch';
@@ -141,6 +139,7 @@ class StringMatch extends Operator implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise

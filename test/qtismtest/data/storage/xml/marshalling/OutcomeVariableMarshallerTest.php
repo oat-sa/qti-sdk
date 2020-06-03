@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,24 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-use qtism\data\state\ValueCollection;
-use qtism\data\results\ResultOutcomeVariable;
-use qtism\data\View;
+use DOMElement;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
-use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiFloat;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\results\ResultOutcomeVariable;
 use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
+use qtism\data\View;
 use qtismtest\QtiSmTestCase;
 
 class OutcomeVariableMarshallerTest extends QtiSmTestCase
@@ -129,17 +131,16 @@ class OutcomeVariableMarshallerTest extends QtiSmTestCase
         $this->assertNull($resultOutcomeVariable->getValues());
     }
 
-
     public function testMarshall()
     {
         $component = new ResultOutcomeVariable(
             new QtiIdentifier('fixture-identifier'),
             0,
             4,
-            new ValueCollection(array(
+            new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            )),
+            ]),
             1,
             new QtiString('fixture-interpretation'),
             new QtiUri('http://long-interpretation'),
@@ -151,7 +152,7 @@ class OutcomeVariableMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -159,7 +160,7 @@ class OutcomeVariableMarshallerTest extends QtiSmTestCase
         $this->assertEquals('single', $element->getAttribute('cardinality'));
         $this->assertEquals('string', $element->getAttribute('baseType'));
 
-        $this->assertEquals(2,$element->getElementsByTagName('value')->length);
+        $this->assertEquals(2, $element->getElementsByTagName('value')->length);
     }
 
     public function testMarshallMinimal()
@@ -172,17 +173,17 @@ class OutcomeVariableMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
         $attributes = [];
-        for ($i=0; $i<2; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'cardinality')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
 
-        $this->assertEquals(0,$element->getElementsByTagName('value')->length);
+        $this->assertEquals(0, $element->getElementsByTagName('value')->length);
     }
 
     public function testGetExpectedQtiClassName()

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,20 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\data\results\Context;
-use qtism\data\results\SessionIdentifierCollection;
-use qtism\data\results\SessionIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
+use qtism\data\results\Context;
+use qtism\data\results\SessionIdentifier;
+use qtism\data\results\SessionIdentifierCollection;
 use qtismtest\QtiSmTestCase;
 
 class ContextMarshallerTest extends QtiSmTestCase
@@ -74,10 +75,10 @@ class ContextMarshallerTest extends QtiSmTestCase
 
         $component = new Context(
             new QtiIdentifier($sourcedId),
-            new SessionIdentifierCollection(array(
+            new SessionIdentifierCollection([
                 new SessionIdentifier(new QtiUri('sessionIdentifier1-sourceID'), new QtiIdentifier('sessionIdentifier1-id')),
                 new SessionIdentifier(new QtiUri('sessionIdentifier2-sourceID'), new QtiIdentifier('sessionIdentifier2-id')),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */

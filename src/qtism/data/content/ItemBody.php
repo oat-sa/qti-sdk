@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +23,7 @@
 
 namespace qtism\data\content;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -43,16 +44,13 @@ use \InvalidArgumentException;
  * Finally, the body may be presented to the candidate in the solution
  * state, in which case the correct values of the response variables must
  * be visible and the associated interactions disabled.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ItemBody extends BodyElement
 {
     /**
      * The blocks composing the itemBody.
      *
-     * @var \qtism\data\content\BlockCollection
+     * @var BlockCollection
      * @qtism-bean-property
      */
     private $content;
@@ -64,7 +62,7 @@ class ItemBody extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -75,7 +73,7 @@ class ItemBody extends BodyElement
     /**
      * Set the Block objects composing the ItemBody.
      *
-     * @param \qtism\data\content\BlockCollection $content The collection of blocks composing the itemBody.
+     * @param BlockCollection $content The collection of blocks composing the itemBody.
      */
     public function setContent(BlockCollection $content)
     {
@@ -85,7 +83,7 @@ class ItemBody extends BodyElement
     /**
      * Get the Block objects the ItemBody.
      *
-     * @return \qtism\data\content\BlockCollection
+     * @return BlockCollection
      */
     public function getContent()
     {
@@ -95,7 +93,7 @@ class ItemBody extends BodyElement
     /**
      * Get the Block objects composing the ItemBody.
      *
-     * @return \qtism\data\content\BlockCollection A collection of Block objects.
+     * @return BlockCollection A collection of Block objects.
      */
     public function getComponents()
     {

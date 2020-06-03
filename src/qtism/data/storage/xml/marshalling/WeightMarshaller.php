@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,26 +23,23 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\state\Weight;
-use qtism\common\utils\Format;
-use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * Marshalling/Unmarshalling implementation for weight.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class WeightMarshaller extends Marshaller
 {
     /**
-	 * Marshall a Weight object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A Weight object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a Weight object into a DOMElement object.
+     *
+     * @param QtiComponent $component A Weight object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -53,12 +51,12 @@ class WeightMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI weight element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A Weight object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attributes 'identifier' or 'value' are missing from $element but also if 'value' cannot be converted to a float value or 'identifier' is not a valid QTI Identifier.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI weight element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A Weight object.
+     * @throws UnmarshallingException If the mandatory attributes 'identifier' or 'value' are missing from $element but also if 'value' cannot be converted to a float value or 'identifier' is not a valid QTI Identifier.
+     */
     protected function unmarshall(DOMElement $element)
     {
         // identifier is a mandatory value.
@@ -88,8 +86,8 @@ class WeightMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'weight';

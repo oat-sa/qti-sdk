@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,12 @@
 
 namespace qtism\data\content\xhtml;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\content\AtomicInline;
-use \InvalidArgumentException;
 
 /**
  * The XHTML img class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Img extends AtomicInline
 {
@@ -95,7 +93,7 @@ class Img extends AtomicInline
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($src, $alt, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -111,7 +109,7 @@ class Img extends AtomicInline
      * Set the src attribute.
      *
      * @param string $src A URI.
-     * @throws \InvalidArgumentException If $src is not a valid URI.
+     * @throws InvalidArgumentException If $src is not a valid URI.
      */
     public function setSrc($src)
     {
@@ -137,7 +135,7 @@ class Img extends AtomicInline
      * Set the alt attribute.
      *
      * @param string $alt A string
-     * @throws \InvalidArgumentException If $alt is not a string.
+     * @throws InvalidArgumentException If $alt is not a string.
      */
     public function setAlt($alt)
     {
@@ -163,7 +161,7 @@ class Img extends AtomicInline
      * Get the longdesc attribute.
      *
      * @param string $longdesc A valid URI.
-     * @throws \InvalidArgumentException If $longdesc is not a valid URI.
+     * @throws InvalidArgumentException If $longdesc is not a valid URI.
      */
     public function setLongdesc($longdesc)
     {
@@ -200,7 +198,7 @@ class Img extends AtomicInline
      * is no height indicated.
      *
      * @param integer|string $height An integer (pixels) or a string (percentage).
-     * @throws \InvalidArgumentException If $height is not a valid integer or string value.
+     * @throws InvalidArgumentException If $height is not a valid integer or string value.
      */
     public function setHeight($height)
     {
@@ -238,7 +236,7 @@ class Img extends AtomicInline
      * is no width indicated.
      *
      * @param integer $width An integer (pixels) or a string (percentage).
-     * @throws \InvalidArgumentException If $width is not an integer value.
+     * @throws InvalidArgumentException If $width is not an integer value.
      */
     public function setWidth($width)
     {

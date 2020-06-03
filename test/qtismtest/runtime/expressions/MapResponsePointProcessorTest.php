@@ -1,22 +1,24 @@
 <?php
+
 namespace qtismtest\runtime\expressions;
 
-use qtism\runtime\expressions\ExpressionProcessingException;
-
-use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\State;
+use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\MapResponsePointProcessor;
+use qtismtest\QtiSmTestCase;
 
-class MapResponsePointProcessorTest extends QtiSmTestCase {
-	
-	public function testSingleCardinality() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+class MapResponsePointProcessorTest extends QtiSmTestCase
+{
+    public function testSingleCardinality()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="single">
 				<areaMapping defaultValue="666.666">
 					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="1"/>
@@ -25,37 +27,38 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$variable->setValue(new QtiPoint(1, 1)); // in rect, poly
-		
-		$processor = new MapResponsePointProcessor($expr);
-		$state = new State(array($variable));
-		
-		$processor->setState($state);
-		
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(3.0, $result->getValue());
-		
-		$state['response1'] = new QtiPoint(3, 3); // in rect, circle, poly
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(6, $result->getValue());
-		
-		$state['response1'] = new QtiPoint(19, 9); // in rect
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(1, $result->getValue());
-		
-		$state['response1'] = new QtiPoint(25, 25); // outside everything.
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(666.666, $result->getValue());
-	}
-	
-	public function testMultipleCardinality() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $variable->setValue(new QtiPoint(1, 1)); // in rect, poly
+
+        $processor = new MapResponsePointProcessor($expr);
+        $state = new State([$variable]);
+
+        $processor->setState($state);
+
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(3.0, $result->getValue());
+
+        $state['response1'] = new QtiPoint(3, 3); // in rect, circle, poly
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(6, $result->getValue());
+
+        $state['response1'] = new QtiPoint(19, 9); // in rect
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(1, $result->getValue());
+
+        $state['response1'] = new QtiPoint(25, 25); // outside everything.
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(666.666, $result->getValue());
+    }
+
+    public function testMultipleCardinality()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="multiple">
 				<areaMapping defaultValue="666.666">
 					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="1"/>
@@ -64,122 +67,129 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$points = new MultipleContainer(BaseType::POINT);
-		$points[] = new QtiPoint(1, 1); // in rect, poly
-		$points[] = new QtiPoint(3, 3); // in rect, circle, poly
-		$variable->setValue($points);
-		
-		// because 1, 1 falls in 2 times in rect and poly, it is added to the total
-		// just once only as per QTI 2.1 specification.
-		// result = 1 + 2 + 3 = 6
-		$processor = new MapResponsePointProcessor($expr);
-		$state = new State(array($variable));
-		$processor->setState($state);
-		
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(6, $result->getValue());
-		
-		// Nothing matches... defaultValue returned.
-		$points = new MultipleContainer(BaseType::POINT);
-		$points[] = new QtiPoint(-1, -1);
-		$points[] = new QtiPoint(21, 20);
-		$state['response1'] = $points;
-		
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(666.666, $result->getValue());
-	}
-	
-	public function testNoVariable() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$processor = new MapResponsePointProcessor($expr);
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
-		$result = $processor->process();
-	}
-	
-	public function testNoVariableValue() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $points = new MultipleContainer(BaseType::POINT);
+        $points[] = new QtiPoint(1, 1); // in rect, poly
+        $points[] = new QtiPoint(3, 3); // in rect, circle, poly
+        $variable->setValue($points);
+
+        // because 1, 1 falls in 2 times in rect and poly, it is added to the total
+        // just once only as per QTI 2.1 specification.
+        // result = 1 + 2 + 3 = 6
+        $processor = new MapResponsePointProcessor($expr);
+        $state = new State([$variable]);
+        $processor->setState($state);
+
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(6, $result->getValue());
+
+        // Nothing matches... defaultValue returned.
+        $points = new MultipleContainer(BaseType::POINT);
+        $points[] = new QtiPoint(-1, -1);
+        $points[] = new QtiPoint(21, 20);
+        $state['response1'] = $points;
+
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(666.666, $result->getValue());
+    }
+
+    public function testNoVariable()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $processor = new MapResponsePointProcessor($expr);
+        $this->setExpectedException(ExpressionProcessingException::class);
+        $result = $processor->process();
+    }
+
+    public function testNoVariableValue()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="single">
 				<areaMapping>
 					<areaMapEntry shape="rect" coords="0 , 0 , 20 , 10" mappedValue="1"/>
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$processor->setState(new State(array($variable)));
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(0.0, $result->getValue());
-	}
-	
-	public function testDefaultValue() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(0.0, $result->getValue());
+    }
+
+    public function testDefaultValue()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="single">
 				<areaMapping defaultValue="2">
 					<areaMapEntry shape="rect" coords="0 , 0 , 20 , 10" mappedValue="1"/>
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$processor->setState(new State(array($variable)));
-		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(2.0, $result->getValue());
-	}
-	
-	public function testWrongBaseType() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+        $result = $processor->process();
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(2.0, $result->getValue());
+    }
+
+    public function testWrongBaseType()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single">
 				<areaMapping>
 					<areaMapEntry shape="rect" coords="0 , 0 , 20 , 10" mappedValue="1"/>
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$processor->setState(new State(array($variable)));
-		
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
-		$result = $processor->process();
-	}
-	
-	public function testNoAreaMapping() {
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+
+        $this->setExpectedException(ExpressionProcessingException::class);
+        $result = $processor->process();
+    }
+
+    public function testNoAreaMapping()
+    {
         // When no areaMapping is found, we consider a default value of 0.0.
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single"/>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$processor->setState(new State(array($variable)));
-		
-		$result = $processor->process();
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+
+        $result = $processor->process();
         $this->assertEquals(0.0, $result->getValue());
-	}
-	
-	public function testWrongVariableType() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+    }
+
+    public function testWrongVariableType()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="response1" baseType="point" cardinality="single"/>
 		');
-		$variable = OutcomeVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$processor->setState(new State(array($variable)));
-		
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
-		$result = $processor->process();
-	}
-	
-	public function testLowerBoundOverflow() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = OutcomeVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+
+        $this->setExpectedException(ExpressionProcessingException::class);
+        $result = $processor->process();
+    }
+
+    public function testLowerBoundOverflow()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="single">
 				<areaMapping lowerBound="1">
 					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="-3"/>
@@ -187,19 +197,20 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$variable->setValue(new QtiPoint(3, 3)); // inside everything.
-		$processor->setState(new State(array($variable)));
-		$result = $processor->process();
-		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(1, $result->getValue());
-	}
-	
-	public function testUpperBoundOverflow() {
-		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-		$variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $variable->setValue(new QtiPoint(3, 3)); // inside everything.
+        $processor->setState(new State([$variable]));
+        $result = $processor->process();
+
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(1, $result->getValue());
+    }
+
+    public function testUpperBoundOverflow()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="single">
 				<areaMapping lowerBound="1" upperBound="5">
 					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="4"/>
@@ -207,19 +218,20 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 				</areaMapping>
 			</responseDeclaration>
 		');
-		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$processor = new MapResponsePointProcessor($expr);
-		$variable->setValue(new QtiPoint(3, 3)); // inside everything.
-		$processor->setState(new State(array($variable)));
-		$result = $processor->process();
-		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
-		$this->assertEquals(5, $result->getValue());
-	}
-	
-	public function testWithRecord() {
-	    $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
-	    $variableDeclaration = $this->createComponentFromXml('
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $variable->setValue(new QtiPoint(3, 3)); // inside everything.
+        $processor->setState(new State([$variable]));
+        $result = $processor->process();
+
+        $this->assertInstanceOf(QtiFloat::class, $result);
+        $this->assertEquals(5, $result->getValue());
+    }
+
+    public function testWithRecord()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" cardinality="record">
 	            <areaMapping lowerBound="1" upperBound="5">
 					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="4"/>
@@ -227,12 +239,12 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 				</areaMapping>
 	        </responseDeclaration>
 		');
-	    
-	    $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-	    $processor = new MapResponsePointProcessor($expr);
-	    $processor->setState(new State(array($variable)));
-	    
-	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException', 'The MapResponsePoint expression cannot be applied to RECORD variables.', ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
-	    $result = $processor->process();
-	}
+
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+
+        $this->setExpectedException(ExpressionProcessingException::class, 'The MapResponsePoint expression cannot be applied to RECORD variables.', ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
+        $result = $processor->process();
+    }
 }

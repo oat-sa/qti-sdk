@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\content;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -34,9 +35,6 @@ use \InvalidArgumentException;
  *
  * Unlike endAttemptInteraction, triggering infoControl has no consequence for response processing.
  * That means that its triggering won't be recorded, nor the candidate penalised for triggering it.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InfoControl extends BodyElement implements BlockStatic, FlowStatic
 {
@@ -45,14 +43,14 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * The content of the InfoControl.
      *
-     * @var \qtism\data\content\FlowStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * The title of the InfoControl
-     * 
+     *
      * @var string
      */
     private $title = '';
@@ -64,7 +62,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the above arguments is invalid.
+     * @throws InvalidArgumentException If any of the above arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -75,7 +73,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Set the content of the InfoControl.
      *
-     * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
     public function setContent(FlowStaticCollection $content)
     {
@@ -85,16 +83,16 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the content of the InfoControl.
      *
-     * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
+     * @return FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getContent()
     {
         return $this->content;
     }
-    
+
     /**
      * Set the title of the InfoControl.
-     * 
+     *
      * @param string $title The title of the InfoControl.
      * @throws InvalidArgumentException If $title is not a string.
      */
@@ -107,10 +105,10 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the title of the InfoControl.
-     * 
+     *
      * @return string The title of the InfoControl.
      */
     public function getTitle()

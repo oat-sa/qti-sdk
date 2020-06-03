@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,26 +23,20 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\rules\SetOutcomeValue;
-use qtism\data\rules\LookupOutcomeValue;
-use qtism\data\rules\ExitResponse;
+use DOMElement;
+use DOMNode;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\rules\ResponseRuleCollection;
 use qtism\data\rules\ResponseCondition;
-use qtism\data\rules\ResponseIf;
+use qtism\data\rules\ResponseElse;
 use qtism\data\rules\ResponseElseIf;
 use qtism\data\rules\ResponseElseIfCollection;
-use qtism\data\rules\ResponseElse;
-use \DOMElement;
-use \DOMNode;
+use qtism\data\rules\ResponseIf;
+use qtism\data\rules\ResponseRuleCollection;
 
 /**
  * Marshalling/Unmarshalling implementation of ResponseCondition
  * QTI components.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ResponseConditionMarshaller extends RecursiveMarshaller
 {
@@ -82,8 +77,8 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -96,45 +91,45 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     */
     protected function isElementFinal(DOMNode $element)
     {
-        $exclusion = array('responseIf', 'responseElseIf', 'responseElse', 'responseCondition');
+        $exclusion = ['responseIf', 'responseElseIf', 'responseElse', 'responseCondition'];
 
         return !in_array($element->localName, $exclusion);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     */
     protected function isComponentFinal(QtiComponent $component)
     {
         return (!$component instanceof ResponseIf &&
-                 !$component instanceof ResponseElseIf &&
-                 !$component instanceof ResponseElse &&
-                 !$component instanceof ResponseCondition);
+            !$component instanceof ResponseElseIf &&
+            !$component instanceof ResponseElse &&
+            !$component instanceof ResponseCondition);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     */
     protected function getChildrenElements(DOMElement $element)
     {
-        return $this->getChildElementsByTagName($element, array(
-                'responseIf',
-                'responseElseIf',
-                'responseElse',
-                'exitResponse',
-                'lookupOutcomeValue',
-                'setOutcomeValue',
-                'responseCondition'
-        ));
+        return $this->getChildElementsByTagName($element, [
+            'responseIf',
+            'responseElseIf',
+            'responseElse',
+            'exitResponse',
+            'lookupOutcomeValue',
+            'setOutcomeValue',
+            'responseCondition',
+        ]);
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     */
     protected function getChildrenComponents(QtiComponent $component)
     {
         if ($component instanceof ResponseIf || $component instanceof ResponseElseIf || $component instanceof ResponseElse) {
@@ -142,7 +137,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
             return $component->getResponseRules()->getArrayCopy();
         } else {
             // ResponseCondition
-            $returnValue = array($component->getResponseIf());
+            $returnValue = [$component->getResponseIf()];
 
             if (count($component->getResponseElseIfs()) > 0) {
                 $returnValue = array_merge($returnValue, $component->getResponseElseIfs()->getArrayCopy());
@@ -157,8 +152,8 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     */
     protected function createCollection(DOMElement $currentNode)
     {
         if ($currentNode->localName != 'responseCondition') {
@@ -169,8 +164,8 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return '';

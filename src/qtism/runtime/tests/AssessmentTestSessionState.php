@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
@@ -28,9 +28,6 @@ use qtism\common\enums\Enumeration;
 /**
  * The AssessmentTestSessionState enumeration describe the possible state
  * a test session can get during its lifecycle.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentTestSessionState implements Enumeration
 {
@@ -46,72 +43,70 @@ class AssessmentTestSessionState implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'INITIAL' => self::INITIAL,
             'INTERACTING' => self::INTERACTING,
             'MODAL_FEEDBACK' => self::MODAL_FEEDBACK,
             'SUSPENDED' => self::SUSPENDED,
-            'CLOSED' => self::CLOSED
-        );
+            'CLOSED' => self::CLOSED,
+        ];
     }
 
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
-
             case 'initial':
                 return self::INITIAL;
-            break;
+                break;
 
             case 'interacting':
                 return self::INTERACTING;
-            break;
+                break;
 
             case 'modalfeedback':
                 return self::MODAL_FEEDBACK;
-            break;
+                break;
 
             case 'suspended':
                 return self::SUSPENDED;
-            break;
+                break;
 
             case 'closed':
                 return self::CLOSED;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
-
             case self::INITIAL:
                 return 'initial';
-            break;
+                break;
 
             case self::INTERACTING:
                 return 'interacting';
-            break;
+                break;
 
             case self::MODAL_FEEDBACK:
                 return 'modalFeedback';
-            break;
+                break;
 
             case self::SUSPENDED:
                 return 'suspended';
-            break;
+                break;
 
             case self::CLOSED:
                 return 'closed';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

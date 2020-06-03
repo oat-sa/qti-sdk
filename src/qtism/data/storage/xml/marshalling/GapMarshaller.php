@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,25 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Version;
-use qtism\data\ShowHide;
 use qtism\data\content\interactions\Gap;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\ShowHide;
 
 /**
  * Marshalling/Unmarshalling implementation for Gap.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class GapMarshaller extends Marshaller
 {
     /**
-	 * Marshall a Gap object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A Gap object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall a Gap object into a DOMElement object.
+     *
+     * @param QtiComponent $component A Gap object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
@@ -51,7 +49,7 @@ class GapMarshaller extends Marshaller
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
-            $this->setDOMElementAttribute($element, 'fixed' , true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
@@ -65,7 +63,7 @@ class GapMarshaller extends Marshaller
         if (Version::compare($version, '2.1.0', '>=') === true && $component->isRequired() === true) {
             $this->setDOMElementAttribute($element, 'required', true);
         }
-        
+
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
@@ -79,17 +77,16 @@ class GapMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to an XHTML gap element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A Gap object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to an XHTML gap element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A Gap object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             $component = new Gap($identifier);
 
             if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
@@ -107,7 +104,7 @@ class GapMarshaller extends Marshaller
             if (Version::compare($version, '2.1.0', '>=') === true && ($required = $this->getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $component->setRequired($required);
             }
-            
+
             if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                 $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
             }
@@ -115,7 +112,6 @@ class GapMarshaller extends Marshaller
             $this->fillBodyElement($component, $element);
 
             return $component;
-
         } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'gap' element.";
             throw new UnmarshallingException($msg, $element);
@@ -123,8 +119,8 @@ class GapMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'gap';

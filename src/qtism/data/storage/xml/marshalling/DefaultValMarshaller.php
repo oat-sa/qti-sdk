@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
+use DOMElement;
 use qtism\data\expressions\DefaultVal;
-use \DOMElement;
+use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for default.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DefaultValMarshaller extends Marshaller
 {
     /**
-	 * Marshall a DefaultVal object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A DefaultVal object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a DefaultVal object into a DOMElement object.
+     *
+     * @param QtiComponent $component A DefaultVal object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -50,12 +48,12 @@ class DefaultValMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI default element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A DefaultVal object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attributes 'identifier' is missing.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI default element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A DefaultVal object.
+     * @throws UnmarshallingException If the mandatory attributes 'identifier' is missing.
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
@@ -69,8 +67,8 @@ class DefaultValMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'default';

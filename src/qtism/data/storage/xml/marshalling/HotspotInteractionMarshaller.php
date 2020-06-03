@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,14 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\HotspotChoiceCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for HotspotInteraction elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class HotspotInteractionMarshaller extends ContentMarshaller
 {
@@ -44,22 +41,19 @@ class HotspotInteractionMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
-
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 $choices = new HotspotChoiceCollection($children->getArrayCopy());
 
                 if (count($choices) > 0) {
-
                     $fqClass = $this->lookupClass($element);
                     $component = new $fqClass($responseIdentifier, $object, $choices);
 
                     if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                         $component->setMinChoices($minChoices);
                     }
-                    
+
                     if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                         $component->setMaxChoices($maxChoices);
                     } elseif (Version::compare($version, '2.1.0', '<') === true) {
@@ -85,7 +79,6 @@ class HotspotInteractionMarshaller extends ContentMarshaller
                     $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
                     throw new UnmarshallingException($msg, $element);
                 }
-
             } else {
                 $msg = "A 'hotspotInteraction' element must contain exactly one 'object' element, none given.";
                 throw new UnmarshallingException($msg, $element);
@@ -116,7 +109,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinChoices() !== 0) {
             $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
-        
+
         $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
         if ($component->hasXmlBase() === true) {
@@ -135,6 +128,6 @@ class HotspotInteractionMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

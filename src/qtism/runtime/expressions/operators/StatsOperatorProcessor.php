@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -51,18 +51,16 @@ use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
  *
  * * popSD: The standard deviation of the argument, which must be a container of numerical base type with containerSize greater than 1.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @link http://en.wikipedia.org/wiki/Variance#Sample_variance
- *
  */
 class StatsOperatorProcessor extends OperatorProcessor
 {
     /**
-	 * Process the StatsOperator.
-	 *
-	 * @return QtiFloat A single float or NULL if the sub-expression or any value contained therein is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the StatsOperator.
+     *
+     * @return QtiFloat A single float or NULL if the sub-expression or any value contained therein is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -84,13 +82,13 @@ class StatsOperatorProcessor extends OperatorProcessor
         $qtiFuncName = Statistics::getNameByConstant($this->getExpression()->getName());
         $methodName = 'process' . ucfirst($qtiFuncName);
 
-        return call_user_func_array(array($this, $methodName), array());
+        return call_user_func_array([$this, $methodName], []);
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processMean()
     {
         $operands = $this->getOperands();
@@ -102,9 +100,9 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null, \qtism\common\datatypes\Float
-	 */
+     *
+     * @return null, \qtism\common\datatypes\Float
+     */
     protected function processSampleVariance()
     {
         $operands = $this->getOperands();
@@ -116,9 +114,9 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null, \qtism\common\datatypes\Float
-	 */
+     *
+     * @return null, \qtism\common\datatypes\Float
+     */
     protected function processSampleSD()
     {
         $operands = $this->getOperands();
@@ -130,9 +128,9 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null, \qtism\common\datatypes\Float
-	 */
+     *
+     * @return null, \qtism\common\datatypes\Float
+     */
     protected function processPopVariance()
     {
         $operands = $this->getOperands();
@@ -144,9 +142,9 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null, \qtism\common\datatypes\Float
-	 */
+     *
+     * @return null, \qtism\common\datatypes\Float
+     */
     protected function processPopSD()
     {
         $operands = $this->getOperands();
@@ -158,15 +156,15 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 * Filter the $data array by transforming
-	 * Float and Integer object into PHP runtime values.
-	 *
-	 * @param array $data An array of Float and/or Integer values.
-	 * @return array A filtered array with PHP float and integers.
-	 */
+     * Filter the $data array by transforming
+     * Float and Integer object into PHP runtime values.
+     *
+     * @param array $data An array of Float and/or Integer values.
+     * @return array A filtered array with PHP float and integers.
+     */
     protected static function filterValues(array $data)
     {
-        $returnValue = array();
+        $returnValue = [];
         foreach ($data as $d) {
             if ($d !== null) {
                 $returnValue[] = $d->getValue();
@@ -177,7 +175,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         return $returnValue;
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

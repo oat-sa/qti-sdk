@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -26,8 +26,8 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\Member;
-use qtism\runtime\common\Utils as CommonUtils;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\Utils as CommonUtils;
 
 /**
  * The MemberProcessor class aims at processing Member operators.
@@ -41,18 +41,15 @@ use qtism\runtime\common\MultipleContainer;
  *
  * The member operator should not be used on sub-expressions with a base-type of float because of the poorly defined comparison of values.
  * It must not be used on sub-expressions with a base-type of duration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MemberProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Member operator.
-	 *
-	 * @return QtiBoolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Member operator.
+     *
+     * @return QtiBoolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -76,9 +73,10 @@ class MemberProcessor extends OperatorProcessor
         }
 
         // The second expression must have multiple or ordered cardinality.
+        // Extended to single cardinality to be a little bit less greedy.
         $cardinality = CommonUtils::inferCardinality($operand2);
         if ($cardinality === Cardinality::SINGLE) {
-            $operand2 = new MultipleContainer($operand1->getBaseType(), array($operand2));
+            $operand2 = new MultipleContainer($operand1->getBaseType(), [$operand2]);
         } elseif ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
             $msg = "The second operand of the Member operator must have a single, multiple or ordered cardinality.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
@@ -86,7 +84,7 @@ class MemberProcessor extends OperatorProcessor
 
         return new QtiBoolean($operand2->contains($operand1));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

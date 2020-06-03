@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators\custom;
 
-use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiString;
-use qtism\runtime\expressions\operators\OperatorProcessingException;
+use qtism\common\enums\Cardinality;
 use qtism\runtime\expressions\operators\CustomOperatorProcessor;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 /**
  * A custom operator implementing PHP core's implode function.
@@ -37,17 +37,16 @@ use qtism\runtime\expressions\operators\CustomOperatorProcessor;
  *
  * If either sub-expressions is NULL, then the result of this operator is NULL.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://www.php.net/manual/en/function.implode.php PHP implode manual
  */
 class Implode extends CustomOperatorProcessor
 {
     /**
-	 * Process the expression by implementing PHP core's implode function.
-	 *
-	 * @return String The split value of the second sub-expression given as a parameter.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If something goes wrong.
-	 */
+     * Process the expression by implementing PHP core's implode function.
+     *
+     * @return String The split value of the second sub-expression given as a parameter.
+     * @throws OperatorProcessingException If something goes wrong.
+     */
     public function process()
     {
         $operands = $this->getOperands();

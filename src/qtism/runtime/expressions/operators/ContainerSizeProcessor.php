@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -35,18 +35,15 @@ use qtism\data\expressions\operators\ContainerSize;
  * The result is an integer giving the number of values in the sub-expression, in other words, the size of the container.
  * If the sub-expression is NULL the result is 0. This operator can be used for determining how many choices were selected
  * in a multiple-response choiceInteraction, for example.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ContainerSizeProcessor extends OperatorProcessor
 {
     /**
-	 * Process the current expression.
-	 *
-	 * @return QtiInteger|null The size of the container or null if it contains NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the current expression.
+     *
+     * @return QtiInteger|null The size of the container or null if it contains NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -62,7 +59,7 @@ class ContainerSizeProcessor extends OperatorProcessor
 
         return new QtiInteger(count($operands[0]));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

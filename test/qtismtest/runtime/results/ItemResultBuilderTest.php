@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,14 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2019-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Bogaerts Jérôme, <jerome@taotesting.com>
+ * @author Bogaerts Jérôme <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\runtime\results;
 
+use DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -47,7 +49,7 @@ class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
                     Cardinality::SINGLE,
                     BaseType::IDENTIFIER,
                     new QtiIdentifier('ChoiceB')
-                )
+                ),
             ])
         );
 
@@ -56,7 +58,7 @@ class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 
         $this->assertInstanceOf(ItemResult::class, $itemResult);
         $this->assertEquals('Q01', $itemResult->getIdentifier());
-        $this->assertInstanceOf(\DateTime::class, $itemResult->getDatestamp());
+        $this->assertInstanceOf(DateTime::class, $itemResult->getDatestamp());
         $this->assertEquals(SessionStatus::STATUS_FINAL, $itemResult->getSessionStatus());
 
         $variables = $itemResult->getItemVariables();

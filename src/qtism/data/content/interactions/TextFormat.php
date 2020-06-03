@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -68,55 +69,52 @@ class TextFormat implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'PLAIN' => self::PLAIN,
             'PRE_FORMATTED' => self::PRE_FORMATTED,
-            'XHTML' => self::XHTML
-        );
+            'XHTML' => self::XHTML,
+        ];
     }
 
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
-
             case 'plain':
                 return self::PLAIN;
-            break;
+                break;
 
             case 'preformatted':
                 return self::PRE_FORMATTED;
-            break;
+                break;
 
             case 'xhtml':
                 return self::XHTML;
-            break;
+                break;
 
             default:
                 return false;
-            break;
-
+                break;
         }
     }
 
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
-
             case self::PLAIN:
                 return 'plain';
-            break;
+                break;
 
             case self::PRE_FORMATTED:
                 return 'preFormatted';
-            break;
+                break;
 
             case self::XHTML:
                 return 'xhtml';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,9 +23,9 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
 /**
  * Represents the Integer QTI datatype.
@@ -33,9 +34,6 @@ use \InvalidArgumentException;
  *
  * An integer value is a whole number in the range [-2147483648,2147483647].
  * This is the range of a twos-complement 32-bit integer.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiInteger extends QtiScalar
 {
@@ -45,7 +43,7 @@ class QtiInteger extends QtiScalar
      * its contained into [-2147483648,2147483647].
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not an integer value compliant with the QTI Integer datatype.
+     * @throws InvalidArgumentException If $value is not an integer value compliant with the QTI Integer datatype.
      */
     protected function checkType($value)
     {

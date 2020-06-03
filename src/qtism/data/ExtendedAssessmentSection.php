@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +23,12 @@
 
 namespace qtism\data;
 
+use InvalidArgumentException;
 use qtism\data\content\RubricBlockRefCollection;
 
 /**
  * An extension of the assessmentSection QTI class aiming at storing
  * references to external rubricBlock definitions.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ExtendedAssessmentSection extends AssessmentSection
 {
@@ -37,7 +36,7 @@ class ExtendedAssessmentSection extends AssessmentSection
      * The rubrickBlockRefs components referenced by the
      * extendedAssessmentSection.
      *
-     * @var \qtism\data\content\RubricBlockRefCollection
+     * @var RubricBlockRefCollection
      * @qtism-bean-property
      */
     private $rubricBlockRefs;
@@ -48,7 +47,7 @@ class ExtendedAssessmentSection extends AssessmentSection
      * @param string $identifier A QTI identifier.
      * @param string $title A title.
      * @param boolean $visible The visibility of the section.
-     * @throws \InvalidArgumentException If any argument is invalid.
+     * @throws InvalidArgumentException If any argument is invalid.
      */
     public function __construct($identifier, $title, $visible)
     {
@@ -59,7 +58,7 @@ class ExtendedAssessmentSection extends AssessmentSection
     /**
      * Set the RubricBlockRef objects held by the section.
      *
-     * @param \qtism\data\content\RubricBlockRefCollection $rubricBlockRefs A collection of RubricBlockRef objects.
+     * @param RubricBlockRefCollection $rubricBlockRefs A collection of RubricBlockRef objects.
      */
     public function setRubricBlockRefs(RubricBlockRefCollection $rubricBlockRefs)
     {
@@ -69,7 +68,7 @@ class ExtendedAssessmentSection extends AssessmentSection
     /**
      * Get the RubricBlockRef objects held by the section.
      *
-     * @return \qtism\data\content\RubricBlockRefCollection A collection of RubricBlockRef objects.
+     * @return RubricBlockRefCollection A collection of RubricBlockRef objects.
      */
     public function getRubricBlockRefs()
     {
@@ -80,8 +79,8 @@ class ExtendedAssessmentSection extends AssessmentSection
      * Create a new ExtendedAssessmentSection object from an existing
      * AssessmentSection object.
      *
-     * @param \qtism\data\AssessmentSection $assessmentSection An AssessmentSection object.
-     * @return \qtism\data\ExtendedAssessmentSection An ExtendedAssessmentSection object built from $assessmentSection.
+     * @param AssessmentSection $assessmentSection An AssessmentSection object.
+     * @return ExtendedAssessmentSection An ExtendedAssessmentSection object built from $assessmentSection.
      */
     public static function createFromAssessmentSection(AssessmentSection $assessmentSection)
     {

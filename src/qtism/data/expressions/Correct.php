@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\expressions;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -32,37 +33,34 @@ use \InvalidArgumentException;
  * correctResponse or NULL if no correct value was declared. When used in outcomes processing
  * item identifier prefixing (see variable) may be used to obtain the correct response from
  * an individual item.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Correct extends Expression implements Pure
 {
     /**
-	 * The identifier of the response variable you want the correct value.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The identifier of the response variable you want the correct value.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * Create a new instance of Correct.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Create a new instance of Correct.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function __construct($identifier)
     {
         $this->setIdentifier($identifier);
     }
 
     /**
-	 * Set the identifier of the response variable you want the correct value.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the response variable you want the correct value.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -74,18 +72,18 @@ class Correct extends Expression implements Pure
     }
 
     /**
-	 * Get the identifier of the response variable you want the correct value.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the identifier of the response variable you want the correct value.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'correct';
@@ -93,6 +91,7 @@ class Correct extends Expression implements Pure
 
     /**
      * Checks whether this expression is pure.
+     *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
      * @return boolean True if the expression is pure, false otherwise
