@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -527,10 +528,15 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param AbstractSessionManager $manager
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @param QtiBinaryVersion $version
+     * @return AssessmentItemSession
      * @throws QtiBinaryStreamAccessException
      */
-    public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker)
-    {
+    public function readAssessmentItemSession(
+        AbstractSessionManager $manager,
+        AssessmentTestSeeker $seeker,
+        QtiBinaryVersion $version
+    ) {
         try {
             $itemRefPosition = $this->readShort();
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
@@ -542,7 +548,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $session->setSubmissionMode($this->readTinyInt());
 
             // The is-attempting field was added in Binary Storage v2.
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 2) {
+            if ($version->storesAttempting()) {
                 $session->setAttempting($this->readBoolean());
             }
 
@@ -664,26 +670,26 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a route item from the current binary stream.
      *
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object where components will be pulled out by position.
+     * @param QtiBinaryVersion $version
+     *
      * @return RouteItem
      * @throws QtiBinaryStreamAccessException
      */
-    public function readRouteItem(AssessmentTestSeeker $seeker)
+    public function readRouteItem(AssessmentTestSeeker $seeker, QtiBinaryVersion $version)
     {
         try {
             $occurence = $this->readTinyInt();
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
-                // Prior to version 3, only a singe assessmentSection might be bound
-                // to the RouteItem.
+            // Prior to version 3, only a singe assessmentSection might be bound to the RouteItem.
+            if (!$version->storesMultipleSections()) {
                 $sections = $seeker->seekComponent('assessmentSection', $this->readShort());
             }
 
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 3) {
-                // From version 3, multiple assessmentSections might be bound
-                // to the RouteItem.
+            // From version 3, multiple assessmentSections might be bound to the RouteItem.
+            if ($version->storesMultipleSections()) {
                 $sectionsCount = $this->readTinyInt();
                 $sections = new AssessmentSectionCollection();
 
@@ -734,23 +740,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeTinyInt($routeItem->getOccurence());
             $this->writeShort($seeker->seekPosition($routeItem->getAssessmentItemRef()));
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
-                // Prior to version 3, only a single assessmentSection might be bound
-                // to the RouteItem.
-                $this->writeShort($seeker->seekPosition($routeItem->getAssessmentSection()));
-            }
-
             $this->writeShort($seeker->seekPosition($routeItem->getTestPart()));
+            $assessmentSections = $routeItem->getAssessmentSections();
+            $this->writeTinyInt(count($assessmentSections));
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 3) {
-                $assessmentSections = $routeItem->getAssessmentSections();
-                // From version 3, multiple assessmentSections might be bound
-                // to the RouteItem.
-                $this->writeTinyInt(count($assessmentSections));
-
-                foreach ($assessmentSections as $assessmentSection) {
-                    $this->writeShort($seeker->seekPosition($assessmentSection));
-                }
+            foreach ($assessmentSections as $assessmentSection) {
+                $this->writeShort($seeker->seekPosition($assessmentSection));
             }
 
             $branchRules = $routeItem->getBranchRules();
