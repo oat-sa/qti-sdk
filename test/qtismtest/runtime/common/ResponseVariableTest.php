@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
@@ -102,17 +103,37 @@ class ResponseVariableTest extends QtiSmTestCase
 
     public function testGetDataModelValuesSingleCardinality()
     {
+        // -- Test some Scalar datatypes
+        // QtiInteger
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(10));
         $values = $responseVariable->getDataModelValues();
 
         $this->assertCount(1, $values);
         $this->assertSame(10, $values[0]->getValue());
 
+        // QtiFloat
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(10.1));
         $values = $responseVariable->getDataModelValues();
 
         $this->assertCount(1, $values);
         $this->assertSame(10.1, $values[0]->getValue());
+
+        // -- Tet some Non Scalar datatypes
+        // QtiPair
+        $qtiPair = new QtiPair('identifier1', 'identifier2');
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::PAIR, $qtiPair);
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(1, $values);
+        $this->assertTrue($values[0]->getValue()->equals($qtiPair));
+
+        // QtiPoint
+        $qtiPoint = new QtiPoint(0, 0);
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::POINT, $qtiPoint);
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(1, $values);
+        $this->assertTrue($values[0]->getValue()->equals($qtiPoint));
     }
 
     public function testClone()
