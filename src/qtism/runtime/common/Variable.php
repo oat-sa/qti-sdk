@@ -26,6 +26,7 @@ namespace qtism\runtime\common;
 use InvalidArgumentException;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\QtiScalar;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
@@ -523,8 +524,9 @@ abstract class Variable
             if ($this->getCardinality() === Cardinality::SINGLE) {
                 $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($this->getValue() . '', $this->getBaseType()));
             } elseif ($this->getValue() !== null && ($this->getCardinality() === Cardinality::MULTIPLE || $this->getCardinality() === Cardinality::ORDERED)) {
+                // Iterate on container...
                 foreach ($this->getValue() as $v) {
-                    $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($v->getValue() . '', $this->getBaseType()));
+                    $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype(($v instanceof QtiScalar) ? $v->getValue() . '' : $v . '', $this->getBaseType()));
                 }
             }
         }
