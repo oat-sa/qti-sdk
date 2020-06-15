@@ -118,11 +118,12 @@ class ResponseVariableTest extends QtiSmTestCase
 
     public function testGetNonScalarDataModelValuesSingleCardinality()
     {
-        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::PAIR, new QtiPair('A', 'B'));
+        $qtiPair = new QtiPair('A', 'B');
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::PAIR, $qtiPair);
         $values = $responseVariable->getDataModelValues();
 
         $this->assertCount(1, $values);
-        $this->assertEquals(new QtiPair('A', 'B'), $values[0]->getValue());
+        $this->assertTrue($qtiPair->equals($values[0]->getValue()));
     }
 
     public function testGetScalarDataModelValuesMultipleCardinality()
@@ -145,20 +146,23 @@ class ResponseVariableTest extends QtiSmTestCase
 
     public function testGetNonScalarDataModelValuesMultipleCardinality()
     {
+        $qtiPair1 = new QtiPair('A', 'B');
+        $qtiPair2 = new QtiPair('C', 'D');
+        
         $responseVariable = new ResponseVariable(
             'MYVAR', 
             Cardinality::MULTIPLE, 
             BaseType::PAIR,
             new MultipleContainer(
                 BaseType::PAIR, 
-                [new QtiPair('A', 'B'), new QtiPair('C', 'D')]
+                [$qtiPair1, $qtiPair2]
             )
         );
         $values = $responseVariable->getDataModelValues();
 
         $this->assertCount(2, $values);
-        $this->assertEquals(new QtiPair('A', 'B'), $values[0]->getValue());
-        $this->assertEquals(new QtiPair('C', 'D'), $values[1]->getValue());
+        $this->assertTrue($qtiPair1->equals($values[0]->getValue()));
+        $this->assertTrue($qtiPair2->equals($values[1]->getValue()));
     }
 
     public function testClone()
