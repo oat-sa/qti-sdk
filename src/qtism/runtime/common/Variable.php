@@ -31,6 +31,7 @@ use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
+use qtism\data\storage\Utils as StorageUtils;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use UnexpectedValueException;
 
@@ -517,19 +518,35 @@ abstract class Variable
      */
     public function getDataModelValues()
     {
-        $values = new ValueCollection();
+        if ($this->getValue() === null) {
+            return new ValueCollection();
+        }
 
-        if ($this->getValue() !== null) {
-            if ($this->getCardinality() === Cardinality::SINGLE) {
-                $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($this->getValue() . '', $this->getBaseType()));
-            } elseif ($this->getValue() !== null && ($this->getCardinality() === Cardinality::MULTIPLE || $this->getCardinality() === Cardinality::ORDERED)) {
+        $values = new ValueCollection();
+        $cardinality = $this->getCardinality();
+
+        switch ($cardinality) {
+            case Cardinality::SINGLE:
+                $values[] = $this->createValue($this->getValue());
+                break;
+
+            case Cardinality::MULTIPLE:
+            case Cardinality::ORDERED:
                 foreach ($this->getValue() as $v) {
-                    $values[] = new Value(\qtism\data\storage\Utils::stringToDatatype($v->getValue() . '', $this->getBaseType()));
+                    $values[] = $this->createValue($v);
                 }
-            }
+                break;
         }
 
         return $values;
+    }
+
+    private function createValue(QtiDatatype $value): Value
+    {
+        return new Value(StorageUtils::stringToDatatype(
+            (string)$value,
+            $this->getBaseType())
+        );
     }
 
     /**
