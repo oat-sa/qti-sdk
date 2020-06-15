@@ -176,10 +176,15 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      */
     public function getComponents()
     {
+        $prompt = $this->getPrompt();
+        $components = $prompt
+            ? [$prompt]
+            : [];
+                
         return new QtiComponentCollection(
             array_merge(
-                [$this->getPrompt()],
-                [$this->getObject()],
+                $components,
+                array($this->getObject()),
                 $this->getGapImgs()->getArrayCopy(),
                 $this->getAssociableHotspots()->getArrayCopy()
             )
