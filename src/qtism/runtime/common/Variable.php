@@ -31,6 +31,7 @@ use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
+use qtism\data\storage\Utils as StorageUtils;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use UnexpectedValueException;
 
@@ -542,7 +543,10 @@ abstract class Variable
 
     private function createValue(QtiDatatype $value): Value
     {
-        return new Value(\qtism\data\storage\Utils::stringToDatatype((string)$value, $this->getBaseType()));
+        return new Value(StorageUtils::stringToDatatype(
+            (string)$value,
+            $this->getBaseType())
+        );
     }
 
     /**
