@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtismtest\QtiSmTestCase;
@@ -100,7 +101,7 @@ class ResponseVariableTest extends QtiSmTestCase
         $this->assertFalse($responseVariable->isCorrect());
     }
 
-    public function testGetDataModelValuesSingleCardinality()
+    public function testGetScalarDataModelValuesSingleCardinality()
     {
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(10));
         $values = $responseVariable->getDataModelValues();
@@ -113,6 +114,51 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this->assertCount(1, $values);
         $this->assertSame(10.1, $values[0]->getValue());
+    }
+
+    public function testGetNonScalarDataModelValuesSingleCardinality()
+    {
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::PAIR, new QtiPair('A', 'B'));
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(1, $values);
+        $this->assertEquals(new QtiPair('A', 'B'), $values[0]->getValue());
+    }
+
+    public function testGetScalarDataModelValuesMultipleCardinality()
+    {
+        $responseVariable = new ResponseVariable(
+            'MYVAR',
+            Cardinality::MULTIPLE,
+            BaseType::INTEGER,
+            new MultipleContainer(
+                BaseType::INTEGER,
+                [new QtiInteger(10), new QtiInteger(12)]
+            )
+        );
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(2, $values);
+        $this->assertEquals(10, $values[0]->getValue());
+        $this->assertEquals(12, $values[1]->getValue());
+    }
+
+    public function testGetNonScalarDataModelValuesMultipleCardinality()
+    {
+        $responseVariable = new ResponseVariable(
+            'MYVAR', 
+            Cardinality::MULTIPLE, 
+            BaseType::PAIR,
+            new MultipleContainer(
+                BaseType::PAIR, 
+                [new QtiPair('A', 'B'), new QtiPair('C', 'D')]
+            )
+        );
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(2, $values);
+        $this->assertEquals(new QtiPair('A', 'B'), $values[0]->getValue());
+        $this->assertEquals(new QtiPair('C', 'D'), $values[1]->getValue());
     }
 
     public function testClone()
