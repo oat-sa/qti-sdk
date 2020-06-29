@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content;
 
+use qtism\data\common\collections\AriaAttributeCollection;
 use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 
@@ -53,5 +54,17 @@ class BodyElementTest extends QtiSmTestCase
         );
 
         $span->setDir(true);
+    }
+
+    public function testAriaAttributes()
+    {
+        $span = new Span();
+        $ariaAttributes = $span->getAriaAttributes();
+
+        $this->assertInstanceOf(AriaAttributeCollection::class, $ariaAttributes);
+        $this->assertCount(0, $ariaAttributes);
+
+        $span->setAriaAttributes(new AriaAttributeCollection());
+        $this->assertNotSame($ariaAttributes, $span->getAriaAttributes());
     }
 }

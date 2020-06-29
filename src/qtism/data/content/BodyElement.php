@@ -25,6 +25,7 @@ namespace qtism\data\content;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\common\collections\AriaAttributeCollection;
 use qtism\data\QtiComponent;
 
 /**
@@ -92,6 +93,14 @@ abstract class BodyElement extends QtiComponent
     private $dir;
 
     /**
+     * The set of aria-* attribues for the body element.
+     *
+     * @var AriaAttributeCollection
+     * @qtism-bean-property
+     */
+    private $ariaAttributes;
+
+    /**
      * Create a new BodyElement object.
      *
      * @param string $id A QTI identifier.
@@ -106,6 +115,7 @@ abstract class BodyElement extends QtiComponent
         $this->setLang($lang);
         $this->setLabel($label);
         $this->setDir(Direction::AUTO);
+        $this->setAriaAttributes(new AriaAttributeCollection());
     }
 
     /**
@@ -271,5 +281,31 @@ abstract class BodyElement extends QtiComponent
     public function getDir()
     {
         return $this->dir;
+    }
+
+    /**
+     * Get Aria Attribues.
+     *
+     * Returns an AriaAttributeCollection describing the aria-* attributes
+     * of this body element.
+     *
+     * @return AriaAttributeCollection
+     */
+    public function getAriaAttributes()
+    {
+        return $this->ariaAttributes;
+    }
+
+    /**
+     * Set Aria Attributes.
+     *
+     * Set the AriaAttributeCollection object describing the aria-* attributes
+     * of this bodyElement.
+     *
+     * @param AriaAttributeCollection $ariaAttributes
+     */
+    public function setAriaAttributes(AriaAttributeCollection $ariaAttributes)
+    {
+        $this->ariaAttributes = $ariaAttributes;
     }
 }
