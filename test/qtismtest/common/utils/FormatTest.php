@@ -163,6 +163,36 @@ class FormatTest extends QtiSmTestCase
         $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 
+    /**
+     * @param $input
+     * @param $expected
+     * @dataProvider isAriaLevelProvider
+     */
+    public function testIsAriaLevel($input, $expected)
+    {
+        $this->assertSame($expected, Format::isAriaLevel($input));
+    }
+
+    /**
+     * @param $input
+     * @param $expected
+     * @dataProvider isAriaLiveProvider
+     */
+    public function testIsAriaLive($input, $expected)
+    {
+        $this->assertSame($expected, Format::isAriaLive($input));
+    }
+
+    /**
+     * @param $input
+     * @param $expected
+     * @dataProvider isAriaOrientationProvider
+     */
+    public function testIsAriaOrientation($input, $expected)
+    {
+        $this->assertSame($expected, Format::isAriaOrientation($input));
+    }
+
     public function scale10Provider()
     {
         return [
@@ -428,6 +458,70 @@ class FormatTest extends QtiSmTestCase
             [true],
             [[]],
             [new stdClass()],
+        ];
+    }
+
+    public function isAriaLevelProvider()
+    {
+        // input, expected
+        return [
+            [false, false],
+            [true, false],
+            ['-1', false],
+            ['0', false],
+            ['-20.4532', false],
+            ['abc', false],
+            [null, false],
+            [new \stdClass(), false],
+            [-1, false],
+            [0, false],
+            [-20.5432, false],
+            [1, true],
+            ['1', true],
+            [1000, true],
+            ['1000', true],
+            [1.453, true],
+            [2.453, true],
+            ['1.453', true],
+            ['2.453', true],
+        ];
+    }
+
+    public function isAriaLiveProvider()
+    {
+        // input, expected
+        return [
+            ['test', false],
+            ['', false],
+            [null, false],
+            [false, false],
+            [true, false],
+            [2.2, false],
+            [new \stdClass(), false],
+            ['Off', false],
+            ['pOlite', false],
+            ['assertivE', false],
+            ['off', true],
+            ['polite', true],
+            ['assertive', true]
+        ];
+    }
+
+    public function isAriaOrientationProvider()
+    {
+        // input, expected
+        return [
+            ['test', false],
+            ['', false],
+            [null, false],
+            [false, false],
+            [true, false],
+            [2.2, false],
+            [new \stdClass(), false],
+            ['Horizontal', false],
+            ['verticaL', false],
+            ['horizontal', true],
+            ['vertical', true]
         ];
     }
 }
