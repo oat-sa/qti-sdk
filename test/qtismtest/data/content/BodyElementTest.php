@@ -3,7 +3,6 @@
 namespace qtismtest\data\content;
 
 use InvalidArgumentException;
-use qtism\data\common\collections\AriaAttributeCollection;
 use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 use stdClass;
