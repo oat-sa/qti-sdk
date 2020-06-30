@@ -4,12 +4,14 @@ namespace qtismtest\data\storage\php;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\content\xhtml\text\Span;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\NavigationMode;
 use qtism\data\storage\php\PhpDocument;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
@@ -341,5 +343,45 @@ class PhpDocumentTest extends QtiSmTestCase
         );
 
         $phpDoc->load('/root/root.php');
+    }
+
+    /**
+     * @throws PhpStorageException
+     */
+    public function testBodyElement()
+    {
+        $span = new Span('myid', 'myclass');
+        $span->setAriaControls('IDREF1 IDREF2');
+        $span->setAriaDescribedBy('IDREF3');
+        $span->setAriaFlowTo('IDREF4');
+        $span->setAriaLabel('My Label');
+        $span->setAriaLabelledBy('IDREF5');
+        $span->setAriaLevel(5);
+        $span->setAriaLive('off');
+        $span->setAriaOrientation('horizontal');
+        $span->setAriaOwns('IDREF6');
+
+        $file = tempnam('/tmp', 'qsm');
+        $phpDoc = new PhpDocument('2.2', $span);
+        $phpDoc->save($file);
+
+        $phpDoc2 = new PhpDocument('2.2');
+        $phpDoc2->load($file);
+        unlink($file);
+
+        /** @var Span $span */
+        $span = $phpDoc2->getDocumentComponent();
+
+        $this->assertEquals('myid', $span->getId());
+        $this->assertEquals('myclass', $span->getClass());
+        $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
+        $this->assertEquals('IDREF3', $span->getAriaDescribedBy());
+        $this->assertEquals('IDREF4', $span->getAriaFlowTo());
+        $this->assertEquals('My Label', $span->getAriaLabel());
+        $this->assertEquals('IDREF5', $span->getAriaLabelledBy());
+        $this->assertEquals('5', $span->getAriaLevel());
+        $this->assertEquals('off', $span->getAriaLive());
+        $this->assertEquals('horizontal', $span->getAriaOrientation());
+        $this->assertEquals('IDREF6', $span->getAriaOwns());
     }
 }
