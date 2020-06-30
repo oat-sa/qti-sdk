@@ -4,14 +4,30 @@ namespace qtismtest\data\content;
 
 use InvalidArgumentException;
 use qtism\data\common\collections\AriaAttributeCollection;
-use qtism\data\content\BodyElement;
 use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 use stdClass;
-use function GuzzleHttp\Psr7\str;
 
 class BodyElementTest extends QtiSmTestCase
 {
+    public function testRawInstantiation()
+    {
+        $span = new Span();
+        $this->assertSame('', $span->getAriaControls());
+        $this->assertSame('', $span->getAriaDescribedBy());
+        $this->assertSame('', $span->getAriaFlowTo());
+        $this->assertSame('', $span->getAriaLabel());
+        $this->assertSame('', $span->getAriaLabelledBy());
+        $this->assertSame('', $span->getAriaLevel());
+        $this->assertSame('', $span->getAriaLive());
+        $this->assertSame('', $span->getAriaOrientation());
+        $this->assertSame('', $span->getAriaOwns());
+        $this->assertSame('', $span->getId());
+        $this->assertSame('', $span->getClass());
+        $this->assertSame('', $span->getLang());
+        $this->assertSame('', $span->getLabel());
+    }
+
     public function testSetId()
     {
         $span = new Span();
