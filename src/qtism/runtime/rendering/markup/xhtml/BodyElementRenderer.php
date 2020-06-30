@@ -24,6 +24,7 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
+use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
@@ -72,6 +73,42 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
 
         if ($component->getDir() !== Direction::AUTO) {
             $fragment->firstChild->setAttribute('dir', Direction::getNameByConstant($component->getDir()));
+        }
+
+        if (($ariaControls = $component->getAriaControls()) !== '') {
+            $fragment->firstChild->setAttribute('aria-controls', $ariaControls);
+        }
+
+        if (($ariaDescribedBy = $component->getAriaDescribedBy()) !== '') {
+            $fragment->firstChild->setAttribute('aria-describedby', $ariaDescribedBy);
+        }
+
+        if (($ariaFlowTo = $component->getAriaFlowTo()) !== '') {
+            $fragment->firstChild->setAttribute('aria-flowto', $ariaFlowTo);
+        }
+
+        if (($ariaLabelledBy = $component->getAriaLabelledBy()) !== '') {
+            $fragment->firstChild->setAttribute('aria-labelledby', $ariaLabelledBy);
+        }
+
+        if (($ariaOwns = $component->getAriaOwns()) !== '') {
+            $fragment->firstChild->setAttribute('aria-owns', $ariaOwns);
+        }
+
+        if (($ariaLevel = $component->getAriaLevel()) !== '') {
+            $fragment->firstChild->setAttribute('aria-level', $ariaLevel);
+        }
+
+        if (($ariaLive = $component->getAriaLive()) !== '') {
+            $fragment->firstChild->setAttribute('aria-live', $ariaLive);
+        }
+
+        if (($ariaOrientation = $component->getAriaOrientation()) !== '') {
+            $fragment->firstChild->setAttribute('aria-orientation', $ariaOrientation);
+        }
+
+        if (($ariaLabel = $component->getAriaLabel()) !== '') {
+            $fragment->firstChild->setAttribute('aria-label', $ariaLabel);
         }
     }
 }

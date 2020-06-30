@@ -500,40 +500,43 @@ abstract class Marshaller
                 }
 
                 // aria-* attributes
-                if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
-                    $bodyElement->setAriaControls($ariaControls);
-                }
+                if ($element->localName !== 'printedVariable') {
+                    // All QTI classes deal with aria-* except printedVariable.
+                    if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
+                        $bodyElement->setAriaControls($ariaControls);
+                    }
 
-                if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
-                    $bodyElement->setAriaDescribedBy($ariaDescribedBy);
-                }
+                    if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
+                        $bodyElement->setAriaDescribedBy($ariaDescribedBy);
+                    }
 
-                if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, 'aria-flowto')) !== null) {
-                    $bodyElement->setAriaFlowTo($ariaFlowTo);
-                }
+                    if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, 'aria-flowto')) !== null) {
+                        $bodyElement->setAriaFlowTo($ariaFlowTo);
+                    }
 
-                if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
-                    $bodyElement->setAriaLabelledBy($ariaLabelledBy);
-                }
+                    if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
+                        $bodyElement->setAriaLabelledBy($ariaLabelledBy);
+                    }
 
-                if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
-                    $bodyElement->setAriaOwns($ariaOwns);
-                }
+                    if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
+                        $bodyElement->setAriaOwns($ariaOwns);
+                    }
 
-                if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
-                    $bodyElement->setAriaLevel($ariaLevel);
-                }
+                    if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
+                        $bodyElement->setAriaLevel($ariaLevel);
+                    }
 
-                if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
-                    $bodyElement->setAriaLive($ariaLive);
-                }
+                    if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
+                        $bodyElement->setAriaLive($ariaLive);
+                    }
 
-                if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
-                    $bodyElement->setAriaOrientation($ariaOrientation);
-                }
+                    if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
+                        $bodyElement->setAriaOrientation($ariaOrientation);
+                    }
 
-                if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
-                    $bodyElement->setAriaLabel($ariaLabel);
+                    if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
+                        $bodyElement->setAriaLabel($ariaLabel);
+                    }
                 }
             }
         } catch (InvalidArgumentException $e) {
@@ -574,40 +577,43 @@ abstract class Marshaller
             }
 
             // aria-* attributes
-            if (($ariaControls = $bodyElement->getAriaControls()) !== '') {
-                $element->setAttribute('aria-controls', $ariaControls);
-            }
+            if ($bodyElement->getQtiClassName() !== 'printedVariable') {
+                // All BodyElement objects deal with aria-* except PrintedVariable.
+                if (($ariaControls = $bodyElement->getAriaControls()) !== '') {
+                    $element->setAttribute('aria-controls', $ariaControls);
+                }
 
-            if (($ariaDescribedBy = $bodyElement->getAriaDescribedBy()) !== '') {
-                $element->setAttribute('aria-describedby', $ariaDescribedBy);
-            }
+                if (($ariaDescribedBy = $bodyElement->getAriaDescribedBy()) !== '') {
+                    $element->setAttribute('aria-describedby', $ariaDescribedBy);
+                }
 
-            if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
-                $element->setAttribute('aria-flowto', $ariaFlowTo);
-            }
+                if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
+                    $element->setAttribute('aria-flowto', $ariaFlowTo);
+                }
 
-            if (($ariaLabelledBy = $bodyElement->getAriaLabelledBy()) !== '') {
-                $element->setAttribute('aria-labelledby', $ariaLabelledBy);
-            }
+                if (($ariaLabelledBy = $bodyElement->getAriaLabelledBy()) !== '') {
+                    $element->setAttribute('aria-labelledby', $ariaLabelledBy);
+                }
 
-            if (($ariaOwns = $bodyElement->getAriaOwns()) !== '') {
-                $element->setAttribute('aria-owns', $ariaOwns);
-            }
+                if (($ariaOwns = $bodyElement->getAriaOwns()) !== '') {
+                    $element->setAttribute('aria-owns', $ariaOwns);
+                }
 
-            if (($ariaLevel = $bodyElement->getAriaLevel()) !== '') {
-                $element->setAttribute('aria-level', $ariaLevel);
-            }
+                if (($ariaLevel = $bodyElement->getAriaLevel()) !== '') {
+                    $element->setAttribute('aria-level', $ariaLevel);
+                }
 
-            if (($ariaLive = $bodyElement->getAriaLive()) !== '') {
-                $element->setAttribute('aria-live', $ariaLive);
-            }
+                if (($ariaLive = $bodyElement->getAriaLive()) !== '') {
+                    $element->setAttribute('aria-live', $ariaLive);
+                }
 
-            if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== '') {
-                $element->setAttribute('aria-orientation', $ariaOrientation);
-            }
+                if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== '') {
+                    $element->setAttribute('aria-orientation', $ariaOrientation);
+                }
 
-            if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {
-                $element->setAttribute('aria-label', $ariaLabel);
+                if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {
+                    $element->setAttribute('aria-label', $ariaLabel);
+                }
             }
         }
     }
