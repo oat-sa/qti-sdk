@@ -265,6 +265,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         return [
             // -- 2.2.1
+            [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
             [self::decorateUri('choice.xml', '2.2.1'), '2.2.1'],
             [self::decorateUri('graphic_order.xml', '2.2.1'), '2.2.1'],
 

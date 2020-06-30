@@ -63,7 +63,7 @@ abstract class Marshaller
      * An array containing the name of classes
      * that are allowed to have their 'dir' attribute set.
      *
-     * @var array
+     * @var string[]
      */
     private static $dirClasses = [
         'associateInteraction',
@@ -156,7 +156,7 @@ abstract class Marshaller
     /**
      * An array containing the QTI class names that are allowed to be Web Component friendly.
      *
-     * @var array
+     * @var string[]
      */
     public static $webComponentFriendlyClasses = [
         'associableHotspot',
@@ -198,6 +198,37 @@ abstract class Marshaller
         'templateBlock',
         'templateInline',
         'infoControl',
+    ];
+
+    /**
+     * An array containing QTI class names preferring aria-flowsto instead of aria-flowto.
+     *
+     * @var string[]
+     */
+    private static $flowsToClasses = [
+        'associateInteraction',
+        'choiceInteraction',
+        'drawingInteraction',
+        'extendedTextInteraction',
+        'gapMatchInteraction',
+        'graphicAssociateInteraction',
+        'hotspotInteraction',
+        'hottextInteraction',
+        'matchInteraction',
+        'mediaInteraction',
+        'orderInteraction',
+        'selectPointInteraction',
+        'sliderInteraction',
+        'uploadInteraction',
+        'associableHotspot',
+        'br',
+        'col',
+        'endAttemptInteraction',
+        'gap',
+        'hotspotChoice',
+        'hr',
+        'img',
+        'textEntryInteraction'
     ];
 
     /**
@@ -472,6 +503,27 @@ abstract class Marshaller
     }
 
     /**
+     * @param BodyElement $bodyElement
+     * @param DOMElement $element
+     */
+    protected function fillBodyElementFlowTo(BodyElement $bodyElement, DOMElement $element)
+    {
+        $scan = ['aria-flowto'];
+
+        if (in_array($bodyElement->getQtiClassName(), self::$flowsToClasses, true)) {
+            array_unshift($scan, 'aria-flowsto');
+        }
+
+        foreach ($scan as $s) {
+            if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, $s)) !== null) {
+                $bodyElement->setAriaFlowTo($ariaFlowTo);
+
+                break;
+            }
+        }
+    }
+
+    /**
      * Fill $bodyElement with the following bodyElement attributes:
      *
      * * id
@@ -510,9 +562,18 @@ abstract class Marshaller
                         $bodyElement->setAriaDescribedBy($ariaDescribedBy);
                     }
 
-                    if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, 'aria-flowto')) !== null) {
-                        $bodyElement->setAriaFlowTo($ariaFlowTo);
-                    }
+                    /*
+                     * There is a little glitch in the QTI 2.2.X XSDs. Indeed, the following elements do not
+                     * consider aria-flowto (the official one) but aria-flowsto which is an error: associateInteraction,
+                     * choiceInteraction, drawingInteraction, extendedTextInteraction, gapMatchInteraction,
+                     * graphicAssociateInteraction, hotspotInteraction, matchInteraction, mediaInteraction,
+                     * orderInteraction, selectPointInteraction, sliderInteraction, uploadInteraction, associableHotspot,
+                     * br, col, endAttemptInteraction, gap, hotspotChoice, hr, img, textEntryInteraction.
+                     *
+                     * In such a context, at unmarshalling time, for the elements described above, we prefer
+                     * aria-flowsto (as described in the XSDs) as a first choice and then aria-flowto as a backup.
+                     */
+                    $this->fillBodyElementFlowTo($bodyElement, $element);
 
                     if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
                         $bodyElement->setAriaLabelledBy($ariaLabelledBy);
@@ -542,6 +603,21 @@ abstract class Marshaller
         } catch (InvalidArgumentException $e) {
             $msg = "An error occurred while filling the bodyElement attributes (id, class, lang, label, dir, aria-*).";
             throw new UnmarshallingException($msg, $element, $e);
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param BodyElement $bodyElement
+     */
+    protected function fillElementFlowto(DOMElement $element, BodyElement $bodyElement)
+    {
+        if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
+            if (in_array($element->localName, self::$flowsToClasses, true)) {
+                $element->setAttribute('aria-flowsto', $bodyElement->getAriaFlowTo());
+            } else {
+                $element->setAttribute('aria-flowto', $bodyElement->getAriaFlowTo());
+            }
         }
     }
 
@@ -579,16 +655,27 @@ abstract class Marshaller
             // aria-* attributes
             if ($bodyElement->getQtiClassName() !== 'printedVariable') {
                 // All BodyElement objects deal with aria-* except PrintedVariable.
+
+                /*
+                 * There is a little glitch in the QTI 2.2.X XSDs. Indeed, the following elements do not
+                 * consider aria-flowto (the official one) but aria-flowsto which is an error: associateInteraction,
+                 * choiceInteraction, drawingInteraction, extendedTextInteraction, gapMatchInteraction,
+                 * graphicAssociateInteraction, hotspotInteraction, matchInteraction, mediaInteraction,
+                 * orderInteraction, selectPointInteraction, sliderInteraction, uploadInteraction, associableHotspot,
+                 * br, col, endAttemptInteraction, gap, hotspotChoice, hr, img, textEntryInteraction.
+                 *
+                 * In such a context, at marshalling time, for the QTI classes described above, we populate data
+                 * for the aria-flowsto attribute. Otherwise, we populate aria-flowto. This makes us able to honnor
+                 * the XSD contract.
+                 */
+                $this->fillElementFlowto($element, $bodyElement);
+
                 if (($ariaControls = $bodyElement->getAriaControls()) !== '') {
                     $element->setAttribute('aria-controls', $ariaControls);
                 }
 
                 if (($ariaDescribedBy = $bodyElement->getAriaDescribedBy()) !== '') {
                     $element->setAttribute('aria-describedby', $ariaDescribedBy);
-                }
-
-                if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
-                    $element->setAttribute('aria-flowto', $ariaFlowTo);
                 }
 
                 if (($ariaLabelledBy = $bodyElement->getAriaLabelledBy()) !== '') {
