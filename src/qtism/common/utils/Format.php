@@ -667,4 +667,24 @@ class Format
     {
         return in_array($orientation, ['vertical', 'horizontal'], true);
     }
+
+    /**
+     * @param $ariaIdRefs
+     * @return bool
+     */
+    public static function isAriaIdRefs($ariaIdRefs)
+    {
+        if (!is_string($ariaIdRefs)) {
+            return false;
+        }
+
+        $ariaValues = explode("\x20", $ariaIdRefs);
+        foreach ($ariaValues as $ariaValue) {
+            if (!Format::isIdentifier($ariaValue, false)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
