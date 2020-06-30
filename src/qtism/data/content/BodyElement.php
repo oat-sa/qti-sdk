@@ -354,6 +354,14 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
+     * @return bool
+     */
+    public function hasAriaControls()
+    {
+        return $this->ariaControls !== '';
+    }
+
+    /**
      * @param $ariaDescribedBy
      * @throws InvalidArgumentException
      */
@@ -375,6 +383,14 @@ abstract class BodyElement extends QtiComponent
     public function getAriaDescribedBy()
     {
         return $this->ariaDescribedBy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaDescribedBy()
+    {
+        return $this->ariaDescribedBy !== '';
     }
 
     /**
@@ -402,6 +418,14 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
+     * @return bool
+     */
+    public function hasAriaFlowTo()
+    {
+        return $this->ariaFlowTo !== '';
+    }
+
+    /**
      * @param $ariaLabelledBy
      * @throws InvalidArgumentException
      */
@@ -423,6 +447,14 @@ abstract class BodyElement extends QtiComponent
     public function getAriaLabelledBy()
     {
         return $this->ariaLabelledBy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLabelledBy()
+    {
+        return $this->ariaLabelledBy !== '';
     }
 
     /**
@@ -450,6 +482,14 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
+     * @return bool
+     */
+    public function hasAriaOwns()
+    {
+        return $this->ariaOwns !== '';
+    }
+
+    /**
      * @param $ariaLevel
      * @throws InvalidArgumentException
      */
@@ -471,6 +511,14 @@ abstract class BodyElement extends QtiComponent
     public function getAriaLevel()
     {
         return $this->ariaLevel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLevel()
+    {
+        return $this->ariaLevel !== '';
     }
 
     /**
@@ -498,6 +546,14 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
+     * @return bool
+     */
+    public function hasAriaLive()
+    {
+        return $this->ariaLive !== '';
+    }
+
+    /**
      * @param $ariaOrientation
      * @throws InvalidArgumentException
      */
@@ -517,6 +573,14 @@ abstract class BodyElement extends QtiComponent
     public function getAriaOrientation()
     {
         return $this->ariaOrientation;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaOrientation()
+    {
+        return $this->ariaOrientation !== '';
     }
 
     /**
@@ -541,5 +605,13 @@ abstract class BodyElement extends QtiComponent
     public function getAriaLabel()
     {
         return $this->ariaLabel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLabel()
+    {
+        return $this->ariaLabel !== '';
     }
 }

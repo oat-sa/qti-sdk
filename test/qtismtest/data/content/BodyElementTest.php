@@ -26,6 +26,18 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertSame('', $span->getClass());
         $this->assertSame('', $span->getLang());
         $this->assertSame('', $span->getLabel());
+        $this->assertFalse($span->hasId());
+        $this->assertFalse($span->hasClass());
+        $this->assertFalse($span->hasLang());
+        $this->assertFalse($span->hasLabel());
+        $this->assertFalse($span->hasAriaControls());
+        $this->assertFalse($span->hasAriaDescribedBy());
+        $this->assertFalse($span->hasAriaFlowTo());
+        $this->assertFalse($span->hasAriaLabel());
+        $this->assertFalse($span->hasAriaLabelledBy());
+        $this->assertFalse($span->hasAriaLive());
+        $this->assertFalse($span->hasAriaOrientation());
+        $this->assertFalse($span->hasAriaOwns());
     }
 
     public function testSetId()
