@@ -10,7 +10,10 @@ use qtism\data\content\xhtml\A;
 use qtism\data\content\xhtml\text\Bdo;
 use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\xhtml\text\Q;
+use qtism\data\content\xhtml\text\Span;
 use qtism\data\content\xhtml\text\Strong;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 
 class SimpleInlineMarshallerTest extends QtiSmTestCase
@@ -236,5 +239,111 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $content = $bdo->getContent();
         $this->assertSame(1, count($content));
         $this->assertEquals('I am reversed!', $content[0]->getContent());
+    }
+
+    /**
+     * @throws MarshallerNotFoundException|MarshallingException
+     */
+    public function testMarshallSpan21()
+    {
+        $span = new Span('myspan', 'myclass');
+        $span->setAriaControls('IDREF1');
+        $span->setAriaDescribedBy('IDREF2');
+        $span->setAriaFlowTo('IDREF3');
+        $span->setAriaLabelledBy('IDREF4');
+        $span->setAriaOwns('IDREF5');
+        $span->setAriaLevel('5');
+        $span->setAriaLive('off');
+        $span->setAriaOrientation('horizontal');
+        $span->setAriaLabel('my aria label');
+        $span->setDir(Direction::LTR);
+
+        // aria-* and dir must be ignored in QTI 2.1
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($span);
+        $element = $marshaller->marshall($span);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+
+        $this->assertEquals('<span id="myspan" class="myclass"/>', $dom->saveXML($element));
+    }
+
+    public function testUnmarshallSpan21()
+    {
+        // In QTI 2.1, aria-* and dir must be ignored.
+
+        /** @var Span $span */
+        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" dir="rtl" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label">I am a span</span>', '2.1.0');
+        $this->assertInstanceOf(Span::class, $span);
+        $this->assertEquals(Direction::AUTO, $span->getDir());
+        $this->assertEquals('', $span->getAriaControls());
+        $this->assertFalse($span->hasAriaControls());
+        $this->assertEquals('', $span->getAriaDescribedBy());
+        $this->assertFalse($span->hasAriaDescribedBy());
+        $this->assertEquals('', $span->getAriaFlowTo());
+        $this->assertFalse($span->hasAriaFlowTo());
+        $this->assertEquals('', $span->getAriaLabelledBy());
+        $this->assertFalse($span->hasAriaLabelledBy());
+        $this->assertEquals('', $span->getAriaOwns());
+        $this->assertFalse($span->hasAriaOwns());
+        $this->assertEquals('', $span->getAriaLive());
+        $this->assertFalse($span->hasAriaLive());
+        $this->assertEquals('', $span->getAriaOrientation());
+        $this->assertFalse($span->hasAriaOrientation());
+        $this->assertEquals('', $span->getAriaLabel());
+        $this->assertFalse($span->hasAriaLabel());
+        $this->assertEquals('', $span->getAriaLevel());
+        $this->assertFalse($span->hasAriaLevel());
+
+        $content = $span->getContent();
+        $this->assertSame(1, count($content));
+        $this->assertEquals('I am a span', $content[0]->getContent());
+    }
+
+    /**
+     * @throws MarshallerNotFoundException|MarshallingException
+     */
+    public function testMarshallSpan22()
+    {
+        $span = new Span('myspan', 'myclass');
+        $span->setAriaLabel('my aria label');
+        $span->setDir(Direction::LTR);
+
+        // aria-* and dir must NOT be ignored in QTI 2.2
+        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($span);
+        $element = $marshaller->marshall($span);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+
+        $this->assertEquals('<span id="myspan" class="myclass" dir="ltr" aria-label="my aria label"/>', $dom->saveXML($element));
+    }
+
+    public function testUnmarshallSpan22()
+    {
+        /** @var Span $span */
+        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label">I am a span</span>', '2.2.0');
+        $this->assertInstanceOf(Span::class, $span);
+        $this->assertEquals(Direction::AUTO, $span->getDir());
+        $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
+        $this->assertTrue($span->hasAriaControls());
+        $this->assertEquals('IDREF3', $span->getAriaDescribedBy());
+        $this->assertTrue($span->hasAriaDescribedBy());
+        $this->assertEquals('IDREF4', $span->getAriaFlowTo());
+        $this->assertTrue($span->hasAriaFlowTo());
+        $this->assertEquals('IDREF5', $span->getAriaLabelledBy());
+        $this->assertTrue($span->hasAriaLabelledBy());
+        $this->assertEquals('IDREF6', $span->getAriaOwns());
+        $this->assertTrue($span->hasAriaOwns());
+        $this->assertEquals('off', $span->getAriaLive());
+        $this->assertTrue($span->hasAriaLive());
+        $this->assertEquals('horizontal', $span->getAriaOrientation());
+        $this->assertTrue($span->hasAriaOrientation());
+        $this->assertEquals('my aria label', $span->getAriaLabel());
+        $this->assertTrue($span->hasAriaLabel());
+        $this->assertEquals('5', $span->getAriaLevel());
+        $this->assertTrue($span->hasAriaLevel());
+
+        $content = $span->getContent();
+        $this->assertSame(1, count($content));
+        $this->assertEquals('I am a span', $content[0]->getContent());
     }
 }

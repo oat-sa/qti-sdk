@@ -493,11 +493,51 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
 
             $version = $this->getVersion();
-            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
-                $bodyElement->setDir(Direction::getConstantByName($dir));
+            if (Version::compare($version, '2.2.0', '>=') === true) {
+                // dir attribute
+                if (($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
+                    $bodyElement->setDir(Direction::getConstantByName($dir));
+                }
+
+                // aria-* attributes
+                if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
+                    $bodyElement->setAriaControls($ariaControls);
+                }
+
+                if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
+                    $bodyElement->setAriaDescribedBy($ariaDescribedBy);
+                }
+
+                if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, 'aria-flowto')) !== null) {
+                    $bodyElement->setAriaFlowTo($ariaFlowTo);
+                }
+
+                if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
+                    $bodyElement->setAriaLabelledBy($ariaLabelledBy);
+                }
+
+                if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
+                    $bodyElement->setAriaOwns($ariaOwns);
+                }
+
+                if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
+                    $bodyElement->setAriaLevel($ariaLevel);
+                }
+
+                if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
+                    $bodyElement->setAriaLive($ariaLive);
+                }
+
+                if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
+                    $bodyElement->setAriaOrientation($ariaOrientation);
+                }
+
+                if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
+                    $bodyElement->setAriaLabel($ariaLabel);
+                }
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label, dir).";
+            $msg = "An error occurred while filling the bodyElement attributes (id, class, lang, label, dir, aria-*).";
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
@@ -505,7 +545,7 @@ abstract class Marshaller
     /**
      * Fill $element with the attributes of $bodyElement.
      *
-     * @param DOMElement $element The element from where the atribute values will be
+     * @param DOMElement $element The element from where the attribute values will be
      * @param BodyElement $bodyElement The bodyElement to be fill.
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
@@ -527,8 +567,48 @@ abstract class Marshaller
         }
 
         $version = $this->getVersion();
-        if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
-            $element->setAttribute('dir', Direction::getNameByConstant($dir));
+        if (Version::compare($version, '2.2.0', '>=') === true) {
+            // dir attribute
+            if (($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
+                $element->setAttribute('dir', Direction::getNameByConstant($dir));
+            }
+
+            // aria-* attributes
+            if (($ariaControls = $bodyElement->getAriaControls()) !== '') {
+                $element->setAttribute('aria-controls', $ariaControls);
+            }
+
+            if (($ariaDescribedBy = $bodyElement->getAriaDescribedBy()) !== '') {
+                $element->setAttribute('aria-describedby', $ariaDescribedBy);
+            }
+
+            if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
+                $element->setAttribute('aria-flowto', $ariaFlowTo);
+            }
+
+            if (($ariaLabelledBy = $bodyElement->getAriaLabelledBy()) !== '') {
+                $element->setAttribute('aria-labelledby', $ariaLabelledBy);
+            }
+
+            if (($ariaOwns = $bodyElement->getAriaOwns()) !== '') {
+                $element->setAttribute('aria-owns', $ariaOwns);
+            }
+
+            if (($ariaLevel = $bodyElement->getAriaLevel()) !== '') {
+                $element->setAttribute('aria-level', $ariaLevel);
+            }
+
+            if (($ariaLive = $bodyElement->getAriaLive()) !== '') {
+                $element->setAttribute('aria-live', $ariaLive);
+            }
+
+            if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== '') {
+                $element->setAttribute('aria-orientation', $ariaOrientation);
+            }
+
+            if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {
+                $element->setAttribute('aria-label', $ariaLabel);
+            }
         }
     }
 
