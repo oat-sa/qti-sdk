@@ -3,6 +3,7 @@
 namespace qtismtest\data\content;
 
 use InvalidArgumentException;
+use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
@@ -19,7 +20,7 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertSame('', $span->getAriaLabel());
         $this->assertSame('', $span->getAriaLabelledBy());
         $this->assertSame('', $span->getAriaLevel());
-        $this->assertSame('', $span->getAriaLive());
+        $this->assertSame(false, $span->getAriaLive());
         $this->assertSame(false, $span->getAriaOrientation());
         $this->assertSame('', $span->getAriaOwns());
         $this->assertSame('', $span->getId());
@@ -231,10 +232,9 @@ class BodyElementTest extends QtiSmTestCase
     public function validAriaLiveAttributesProvider()
     {
         return [
-            [''],
-            ['polite'],
-            ['off'],
-            ['assertive']
+            [AriaLive::OFF],
+            [AriaLive::POLITE],
+            [AriaLive::ASSERTIVE]
         ];
     }
 
@@ -483,9 +483,37 @@ class BodyElementTest extends QtiSmTestCase
     {
         return [
             ['ABCD 999999'],
-            [false],
+            [''],
             [null],
             [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-live'."]
+        ];
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $msg
+     * @dataProvider invalidAriaOrientationAttributesProvider
+     */
+    public function testInvalidAriaOrientationAttributes($value, $msg = null)
+    {
+        $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-orientation'.";
+
+        $this->setExpectedException(
+            InvalidArgumentException::class,
+            $msg
+        );
+
+        $span = new Span();
+        $span->setAriaOrientation($value);
+    }
+
+    public function invalidAriaOrientationAttributesProvider()
+    {
+        return [
+            ['ABCD 999999'],
+            [''],
+            [null],
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-orientation'."]
         ];
     }
 

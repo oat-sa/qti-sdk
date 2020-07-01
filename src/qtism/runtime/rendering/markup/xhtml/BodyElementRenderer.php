@@ -26,6 +26,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 use DOMDocumentFragment;
 use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
+use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
@@ -100,8 +101,8 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
             $fragment->firstChild->setAttribute('aria-level', $ariaLevel);
         }
 
-        if (($ariaLive = $component->getAriaLive()) !== '') {
-            $fragment->firstChild->setAttribute('aria-live', $ariaLive);
+        if (($ariaLive = $component->getAriaLive()) !== false) {
+            $fragment->firstChild->setAttribute('aria-live', AriaLive::getNameByConstant($ariaLive));
         }
 
         if (($ariaOrientation = $component->getAriaOrientation()) !== false) {

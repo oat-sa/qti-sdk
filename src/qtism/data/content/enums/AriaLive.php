@@ -26,21 +26,26 @@ namespace qtism\data\content\enums;
 use qtism\common\enums\Enumeration;
 
 /**
- * AriaOrientation Enumeration.
+ * AriaLive Enumeration.
  *
- * Contains the possible values for the aria-orientation attribute ('horizontal', 'vertical').
+ * Contains the possible values for the aria-live attribute ('off', 'polite', 'assertive').
  */
-class AriaOrientation implements Enumeration
+class AriaLive implements Enumeration
 {
     /**
      * @var int
      */
-    const HORIZONTAL = 0;
+    const OFF = 0;
 
     /**
      * @var int
      */
-    const VERTICAL = 1;
+    const POLITE = 1;
+
+    /**
+     * @var int
+     */
+    const ASSERTIVE = 2;
 
     /**
      * As Array
@@ -53,16 +58,18 @@ class AriaOrientation implements Enumeration
     public static function asArray()
     {
         return [
-            'HORIZONTAL' => self::HORIZONTAL,
-            'VERTICAL' => self::VERTICAL
+            'OFF' => self::OFF,
+            'POLITE' => self::POLITE,
+            'ASSERTIVE' => self::ASSERTIVE
         ];
     }
 
     /**
-     * Get a constant value from the AriaOrientative enumeration by name.
+     * Get a constant value from the AriaLive enumeration by name.
      *
-     * * 'horizontal' -> AriaOrientation::HORIZONTAL
-     * * 'vertical' -> AriaOrientation::VERTICAL
+     * * 'off' -> AriaLive::OFF
+     * * 'polite' -> AriaLive::POLITE
+     * * 'assertive' -> ArioLive::ASSERTIVE
      *
      * @param string $name
      * @return false|int The related constant value or false.
@@ -70,12 +77,16 @@ class AriaOrientation implements Enumeration
     public static function getConstantByName($name)
     {
         switch (trim(strtolower($name))) {
-            case 'horizontal':
-                return self::HORIZONTAL;
+            case 'off':
+                return self::OFF;
                 break;
 
-            case 'vertical':
-                return self::VERTICAL;
+            case 'polite':
+                return self::POLITE;
+                break;
+
+            case 'assertive':
+                return self::ASSERTIVE;
                 break;
 
             default:
@@ -87,18 +98,22 @@ class AriaOrientation implements Enumeration
     /**
      * Get the QTI name of a AriaEnumeration value.
      *
-     * @param int $constant A value from the AriaOrientation constant.
+     * @param int $constant A value from the AriaLive constant.
      * @return false|string
      */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
-            case self::HORIZONTAL:
-                return 'horizontal';
+            case self::OFF:
+                return 'off';
                 break;
 
-            case self::VERTICAL:
-                return 'vertical';
+            case self::POLITE:
+                return 'polite';
+                break;
+
+            case self::ASSERTIVE:
+                return 'assertive';
                 break;
 
             default:

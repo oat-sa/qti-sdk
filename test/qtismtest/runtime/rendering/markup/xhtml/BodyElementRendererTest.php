@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use DOMElement;
+use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
@@ -84,7 +85,7 @@ class BodyElementRendererTest extends QtiSmTestCase
 
         $span = new Span('myspan');
         $span->setAriaOrientation(AriaOrientation::HORIZONTAL);
-        $span->setAriaLive('off');
+        $span->setAriaLive(AriaLive::POLITE);
         $span->setAriaLevel(5);
         $span->setAriaOwns('IDREF1');
         $span->setAriaLabelledBy('IDREF2');
@@ -101,7 +102,7 @@ class BodyElementRendererTest extends QtiSmTestCase
 
         $this->assertEquals('span', $element->nodeName);
         $this->assertEquals('horizontal', $element->getAttribute('aria-orientation'));
-        $this->assertEquals('off', $element->getAttribute('aria-live'));
+        $this->assertEquals('polite', $element->getAttribute('aria-live'));
         $this->assertEquals('5', $element->getAttribute('aria-level'));
         $this->assertEquals('IDREF1', $element->getAttribute('aria-owns'));
         $this->assertEquals('IDREF2', $element->getAttribute('aria-labelledby'));

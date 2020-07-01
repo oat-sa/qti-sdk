@@ -26,6 +26,7 @@ namespace qtism\data\content;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\common\collections\AriaAttributeCollection;
+use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 
@@ -131,13 +132,13 @@ abstract class BodyElement extends QtiComponent
     private $ariaLevel = '';
 
     /**
-     * @var string
+     * @var int|bool
      * @qtism-bean-property
      */
-    private $ariaLive = '';
+    private $ariaLive = false;
 
     /**
-     * @var string|bool
+     * @var int|bool
      * @qtism-bean-property
      */
     private $ariaOrientation = false;
@@ -523,23 +524,22 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param string $ariaLive
+     * @param int $ariaLive A value from the AriaLive enumeration or false for no value.
      * @throws InvalidArgumentException
      */
     public function setAriaLive($ariaLive)
     {
-        if ($ariaLive !== '' && !Format::isAriaLive($ariaLive)) {
+        if ($ariaLive === false || in_array($ariaLive, AriaLive::asArray(), true)) {
+            $this->ariaLive = $ariaLive;
+        } else {
             $val = (is_object($ariaLive)) ? ('instance of ' . get_class($ariaLive)) : $ariaLive;
-
             $msg = "'${val}' is not a valid value for attribute 'aria-live'.";
             throw new InvalidArgumentException($msg);
         }
-
-        $this->ariaLive = $ariaLive;
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getAriaLive()
     {
@@ -551,7 +551,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function hasAriaLive()
     {
-        return $this->ariaLive !== '';
+        return $this->ariaLive !== false;
     }
 
     /**
@@ -563,7 +563,8 @@ abstract class BodyElement extends QtiComponent
         if ($ariaOrientation === false || in_array($ariaOrientation, AriaOrientation::asArray(), true)) {
             $this->ariaOrientation = $ariaOrientation;
         } else {
-            $msg = "'${ariaOrientation}' is not a valid value for attribute 'aria-orientation'.";
+            $val = (is_object($ariaOrientation)) ? ('instance of ' . get_class($ariaOrientation)) : $ariaOrientation;
+            $msg = "'${val}' is not a valid value for attribute 'aria-orientation'.";
             throw new InvalidArgumentException($msg);
         }
     }

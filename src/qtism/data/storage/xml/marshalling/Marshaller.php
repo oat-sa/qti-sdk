@@ -29,6 +29,7 @@ use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
+use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
@@ -589,7 +590,7 @@ abstract class Marshaller
                     }
 
                     if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
-                        $bodyElement->setAriaLive($ariaLive);
+                        $bodyElement->setAriaLive(AriaLive::getConstantByName($ariaLive));
                     }
 
                     if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
@@ -691,8 +692,8 @@ abstract class Marshaller
                     $element->setAttribute('aria-level', $ariaLevel);
                 }
 
-                if (($ariaLive = $bodyElement->getAriaLive()) !== '') {
-                    $element->setAttribute('aria-live', $ariaLive);
+                if (($ariaLive = $bodyElement->getAriaLive()) !== false) {
+                    $element->setAttribute('aria-live', AriaLive::getNameByConstant($ariaLive));
                 }
 
                 if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== false) {
