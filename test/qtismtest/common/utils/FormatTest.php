@@ -173,26 +173,6 @@ class FormatTest extends QtiSmTestCase
         $this->assertSame($expected, Format::isAriaLevel($input));
     }
 
-    /**
-     * @param $input
-     * @param $expected
-     * @dataProvider isAriaLiveProvider
-     */
-    public function testIsAriaLive($input, $expected)
-    {
-        $this->assertSame($expected, Format::isAriaLive($input));
-    }
-
-    /**
-     * @param $input
-     * @param $expected
-     * @dataProvider isAriaOrientationProvider
-     */
-    public function testIsAriaOrientation($input, $expected)
-    {
-        $this->assertSame($expected, Format::isAriaOrientation($input));
-    }
-
     public function scale10Provider()
     {
         return [
@@ -484,44 +464,6 @@ class FormatTest extends QtiSmTestCase
             [2.453, true],
             ['1.453', true],
             ['2.453', true],
-        ];
-    }
-
-    public function isAriaLiveProvider()
-    {
-        // input, expected
-        return [
-            ['test', false],
-            ['', false],
-            [null, false],
-            [false, false],
-            [true, false],
-            [2.2, false],
-            [new \stdClass(), false],
-            ['Off', false],
-            ['pOlite', false],
-            ['assertivE', false],
-            ['off', true],
-            ['polite', true],
-            ['assertive', true]
-        ];
-    }
-
-    public function isAriaOrientationProvider()
-    {
-        // input, expected
-        return [
-            ['test', false],
-            ['', false],
-            [null, false],
-            [false, false],
-            [true, false],
-            [2.2, false],
-            [new \stdClass(), false],
-            ['Horizontal', false],
-            ['verticaL', false],
-            ['horizontal', true],
-            ['vertical', true]
         ];
     }
 }

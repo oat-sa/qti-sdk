@@ -643,32 +643,6 @@ class Format
     }
 
     /**
-     * Is Aria Live.
-     *
-     * Whether or not a given value is compliant with aria-live attributes.
-     *
-     * @param string $live
-     * @return bool
-     */
-    public static function isAriaLive($live)
-    {
-        return in_array($live, ['off', 'polite', 'assertive'], true);
-    }
-
-    /**
-     * Is Aria Orientation.
-     *
-     * Whether or not a given value is compliant with the aria-orientation attributes.
-     *
-     * @param string $orientation
-     * @return bool
-     */
-    public static function isAriaOrientation($orientation)
-    {
-        return in_array($orientation, ['vertical', 'horizontal'], true);
-    }
-
-    /**
      * @param $ariaIdRefs
      * @return bool
      */
