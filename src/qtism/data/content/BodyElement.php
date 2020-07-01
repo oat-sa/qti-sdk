@@ -26,6 +26,7 @@ namespace qtism\data\content;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\common\collections\AriaAttributeCollection;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 
 /**
@@ -136,10 +137,10 @@ abstract class BodyElement extends QtiComponent
     private $ariaLive = '';
 
     /**
-     * @var string
+     * @var string|bool
      * @qtism-bean-property
      */
-    private $ariaOrientation = '';
+    private $ariaOrientation = false;
 
     /**
      * @var string
@@ -330,7 +331,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaControls
+     * @param string $ariaControls
      * @throws InvalidArgumentException
      */
     public function setAriaControls($ariaControls)
@@ -362,7 +363,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaDescribedBy
+     * @param string $ariaDescribedBy
      * @throws InvalidArgumentException
      */
     public function setAriaDescribedBy($ariaDescribedBy)
@@ -394,7 +395,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaFlowTo
+     * @param string $ariaFlowTo
      * @throws InvalidArgumentException
      */
     public function setAriaFlowTo($ariaFlowTo)
@@ -426,7 +427,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaLabelledBy
+     * @param string $ariaLabelledBy
      * @throws InvalidArgumentException
      */
     public function setAriaLabelledBy($ariaLabelledBy)
@@ -458,7 +459,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaOwns
+     * @param string $ariaOwns
      * @throws InvalidArgumentException
      */
     public function setAriaOwns($ariaOwns)
@@ -490,7 +491,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaLevel
+     * @param string $ariaLevel
      * @throws InvalidArgumentException
      */
     public function setAriaLevel($ariaLevel)
@@ -522,7 +523,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaLive
+     * @param string $ariaLive
      * @throws InvalidArgumentException
      */
     public function setAriaLive($ariaLive)
@@ -554,21 +555,21 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @param $ariaOrientation
+     * @param int $ariaOrientation A value from the AriaOrientation enumeration or false for no orientation.
      * @throws InvalidArgumentException
      */
     public function setAriaOrientation($ariaOrientation)
     {
-        if ($ariaOrientation !== '' && !Format::isAriaOrientation($ariaOrientation)) {
+        if ($ariaOrientation === false || in_array($ariaOrientation, AriaOrientation::asArray(), true)) {
+            $this->ariaOrientation = $ariaOrientation;
+        } else {
             $msg = "'${ariaOrientation}' is not a valid value for attribute 'aria-orientation'.";
             throw new InvalidArgumentException($msg);
         }
-
-        $this->ariaOrientation = $ariaOrientation;
     }
 
     /**
-     * @return string
+     * @return false|int A value from the AriaOrientation enumeration or false if not orientation defined.
      */
     public function getAriaOrientation()
     {
@@ -580,7 +581,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function hasAriaOrientation()
     {
-        return $this->ariaOrientation !== '';
+        return $this->ariaOrientation !== false;
     }
 
     /**

@@ -29,6 +29,7 @@ use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use RuntimeException;
@@ -592,7 +593,7 @@ abstract class Marshaller
                     }
 
                     if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
-                        $bodyElement->setAriaOrientation($ariaOrientation);
+                        $bodyElement->setAriaOrientation(AriaOrientation::getConstantByName($ariaOrientation));
                     }
 
                     if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
@@ -694,8 +695,8 @@ abstract class Marshaller
                     $element->setAttribute('aria-live', $ariaLive);
                 }
 
-                if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== '') {
-                    $element->setAttribute('aria-orientation', $ariaOrientation);
+                if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== false) {
+                    $element->setAttribute('aria-orientation', AriaOrientation::getNameByConstant($ariaOrientation));
                 }
 
                 if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {

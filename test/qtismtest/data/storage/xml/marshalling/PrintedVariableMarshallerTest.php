@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\PrintedVariable;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
@@ -39,7 +40,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
     public function testMarshall22()
     {
         $component = new PrintedVariable('PRID');
-        $component->setAriaOrientation('horizontal');
+        $component->setAriaOrientation(AriaOrientation::VERTICAL);
 
         $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);

@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\php;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\xhtml\text\Span;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -358,7 +359,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $span->setAriaLabelledBy('IDREF5');
         $span->setAriaLevel(5);
         $span->setAriaLive('off');
-        $span->setAriaOrientation('horizontal');
+        $span->setAriaOrientation(AriaOrientation::VERTICAL);
         $span->setAriaOwns('IDREF6');
 
         $file = tempnam('/tmp', 'qsm');
@@ -381,7 +382,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $this->assertEquals('IDREF5', $span->getAriaLabelledBy());
         $this->assertEquals('5', $span->getAriaLevel());
         $this->assertEquals('off', $span->getAriaLive());
-        $this->assertEquals('horizontal', $span->getAriaOrientation());
+        $this->assertEquals(AriaOrientation::VERTICAL, $span->getAriaOrientation());
         $this->assertEquals('IDREF6', $span->getAriaOwns());
     }
 }

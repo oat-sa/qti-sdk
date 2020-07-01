@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use DOMElement;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Abbr;
@@ -34,6 +35,9 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertEquals('', $element->getAttribute('label'));
     }
 
+    /**
+     * @throws RenderingException
+     */
     public function testRenderChildren()
     {
         $ctx = new XhtmlRenderingEngine();
@@ -51,12 +55,24 @@ class BodyElementRendererTest extends QtiSmTestCase
 
         $abbr->setContent(new InlineCollection([$textRun]));
 
+        /** @var DOMElement $element */
         $element = $abbrRenderer->render($abbr)->firstChild;
 
         $this->assertEquals('abbr', $element->nodeName);
         $this->assertEquals('my-abbr', $element->getAttribute('id'));
         $this->assertEquals('qti-bodyElement qti-abbr qti qti-abbr', $element->getAttribute('class'));
         $this->assertEquals('abbreviation...', $element->firstChild->wholeText);
+
+        // no aria-* attributes should be found...
+        $this->assertSame('', $element->getAttribute('aria-orientation'));
+        $this->assertSame('', $element->getAttribute('aria-live'));
+        $this->assertSame('', $element->getAttribute('aria-level'));
+        $this->assertSame('', $element->getAttribute('aria-owns'));
+        $this->assertSame('', $element->getAttribute('aria-labelledby'));
+        $this->assertSame('', $element->getAttribute('aria-flowto'));
+        $this->assertSame('', $element->getAttribute('aria-label'));
+        $this->assertSame('', $element->getAttribute('aria-describedby'));
+        $this->assertSame('', $element->getAttribute('aria-controls'));
     }
 
     /**
@@ -67,7 +83,7 @@ class BodyElementRendererTest extends QtiSmTestCase
         $ctx = new XhtmlRenderingEngine();
 
         $span = new Span('myspan');
-        $span->setAriaOrientation('horizontal');
+        $span->setAriaOrientation(AriaOrientation::HORIZONTAL);
         $span->setAriaLive('off');
         $span->setAriaLevel(5);
         $span->setAriaOwns('IDREF1');

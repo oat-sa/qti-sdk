@@ -3,6 +3,7 @@
 namespace qtismtest\data\content;
 
 use InvalidArgumentException;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 use stdClass;
@@ -19,7 +20,7 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertSame('', $span->getAriaLabelledBy());
         $this->assertSame('', $span->getAriaLevel());
         $this->assertSame('', $span->getAriaLive());
-        $this->assertSame('', $span->getAriaOrientation());
+        $this->assertSame(false, $span->getAriaOrientation());
         $this->assertSame('', $span->getAriaOwns());
         $this->assertSame('', $span->getId());
         $this->assertSame('', $span->getClass());
@@ -252,9 +253,8 @@ class BodyElementTest extends QtiSmTestCase
     public function validAriaOrientationAttributesProvider()
     {
         return [
-            [''],
-            ['horizontal'],
-            ['vertical']
+            [AriaOrientation::HORIZONTAL],
+            [AriaOrientation::VERTICAL]
         ];
     }
 

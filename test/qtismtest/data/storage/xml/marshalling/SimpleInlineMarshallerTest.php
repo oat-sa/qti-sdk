@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\content\Direction;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\A;
@@ -254,7 +255,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $span->setAriaOwns('IDREF5');
         $span->setAriaLevel('5');
         $span->setAriaLive('off');
-        $span->setAriaOrientation('horizontal');
+        $span->setAriaOrientation(AriaOrientation::VERTICAL);
         $span->setAriaLabel('my aria label');
         $span->setDir(Direction::LTR);
 
@@ -312,7 +313,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $span->setAriaLabelledBy('IDREF4');
         $span->setAriaLevel('1');
         $span->setAriaLive('off');
-        $span->setAriaOrientation('horizontal');
+        $span->setAriaOrientation(AriaOrientation::HORIZONTAL);
         $span->setAriaOwns('IDREF5');
         $span->setDir(Direction::LTR);
 
@@ -343,7 +344,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this->assertTrue($span->hasAriaOwns());
         $this->assertEquals('off', $span->getAriaLive());
         $this->assertTrue($span->hasAriaLive());
-        $this->assertEquals('horizontal', $span->getAriaOrientation());
+        $this->assertEquals(AriaOrientation::HORIZONTAL, $span->getAriaOrientation());
         $this->assertTrue($span->hasAriaOrientation());
         $this->assertEquals('my aria label', $span->getAriaLabel());
         $this->assertTrue($span->hasAriaLabel());
