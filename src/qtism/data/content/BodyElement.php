@@ -25,7 +25,6 @@ namespace qtism\data\content;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
-use qtism\data\common\collections\AriaAttributeCollection;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
