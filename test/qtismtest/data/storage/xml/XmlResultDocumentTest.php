@@ -40,7 +40,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result.xml', true);
 
-        $this->assertEquals('2.1', $xmlDoc->getVersion());
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
 
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $xmlDoc->getDocumentComponent();

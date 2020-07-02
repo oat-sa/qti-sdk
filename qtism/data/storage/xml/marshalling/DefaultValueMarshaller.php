@@ -55,10 +55,12 @@ class DefaultValueMarshaller extends Marshaller
     /**
      * Create a new DefaultValueMarshaller object.
      *
+     * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
      * @param integer $baseType The baseType of the Variable holding this DefaultValue.
      */
-    public function __construct($baseType = -1)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 

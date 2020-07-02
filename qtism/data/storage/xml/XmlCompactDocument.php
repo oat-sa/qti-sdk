@@ -380,4 +380,9 @@ class XmlCompactDocument extends XmlDocument
 
         return $references;
     }
+
+    protected function inferVersion()
+    {
+        return '2.1';
+    }
 }

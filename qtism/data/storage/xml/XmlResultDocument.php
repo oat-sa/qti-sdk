@@ -56,12 +56,14 @@ class XmlResultDocument extends XmlDocument
     {
         $version = trim($this->getVersion());
         switch ($version) {
-            case '2.1':
+            case '2.1.0':
+            case '2.1.1':
                 $qtiSuffix = 'result_v2p1';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
                 break;
 
-            case '2.2':
+            case '2.2.0':
+            case '2.2.1':
                 $qtiSuffix = 'result_v2p2';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
                 break;

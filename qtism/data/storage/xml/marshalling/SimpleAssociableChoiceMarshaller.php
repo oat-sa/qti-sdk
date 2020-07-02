@@ -61,7 +61,7 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
                 }
 
                 $component->setContent(new FlowStaticCollection($children->getArrayCopy()));
-                self::fillBodyElement($component, $element);
+                $this->fillBodyElement($component, $element);
 
                 return $component;
             } else {

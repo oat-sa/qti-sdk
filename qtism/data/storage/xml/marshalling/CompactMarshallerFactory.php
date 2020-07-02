@@ -30,17 +30,8 @@ namespace qtism\data\storage\xml\marshalling;
  *
  * * ExtendedAssessmentItemRefMarshaller
  * * ExtendedAssessmentSectionMarshaller
- * * ExtendedTestPartMarshaller
- * * ExtendedAssessmentTestMarshaller
- * * RubricBlockRefMarshaller
- * * TestFeedbackRefMarshaller
- * * ModalFeedbackRuleMarshaller
- * * ShufflingMarshaller
- * * ShufflingGroupMarshaller
- * * ResponseValidityConstraintMarshaller
- * * AssociationValidityConstraintMarshaller
  */
-class CompactMarshallerFactory extends MarshallerFactory
+class CompactMarshallerFactory extends Qti21MarshallerFactory
 {
     /**
      * Create a new CompactMarshallerFactory object.

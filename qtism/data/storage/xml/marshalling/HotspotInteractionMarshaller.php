@@ -71,7 +71,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
                             $component->setPrompt($prompt);
                         }
 
-                        self::fillBodyElement($component, $element);
+                        $this->fillBodyElement($component, $element);
                         return $component;
                     } else {
                         $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";

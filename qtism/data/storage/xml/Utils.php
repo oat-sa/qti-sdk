@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\utils\Version;
 use SplStack;
 
 /**
@@ -35,18 +36,23 @@ class Utils
     /**
      * Get the XML schema to use for a given QTI version.
      *
+     * @param string $version
      * @return string A filename pointing at an XML Schema file.
      */
     public static function getSchemaLocation($version = '2.1')
     {
-        $dS = DIRECTORY_SEPARATOR;
+        $version = Version::appendPatchVersion($version);
 
-        if ($version === '2.1') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1' . $dS . 'imsqti_v2p1.xsd';
-        } elseif ($version === '2.2') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2' . $dS . 'imsqti_v2p2.xsd';
+        if ($version === '2.1.0') {
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
+        } elseif ($version === '2.1.1') {
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
+        } elseif ($version === '2.2.0') {
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
+        } elseif ($version === '2.2.1') {
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
         } else {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
+            $filename = dirname(__FILE__) . '/schemes/imsqti_v2p0.xsd';
         }
 
         return $filename;
@@ -59,34 +65,74 @@ class Utils
      * @param DOMDocument $document A DOMDocument object.
      * @return string|boolean A QTI version number if it could be infered, false otherwise.
      */
-    public static function inferQTIVersion(DOMDocument $document)
+    public static function inferVersion(DOMDocument $document)
     {
         $root = $document->documentElement;
-        if (empty($root)) {
-            return false;
-        } else {
-            switch (trim($root->lookupNamespaceURI(null))) {
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
-                case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
-                case 'http://www.imsglobal.org/xsd/imsqti_result_v2p1':
-                    return '2.1';
-                    break;
+        $version = false;
 
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p2':
-                case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p2':
-                case 'http://www.imsglobal.org/xsd/imsqti_result_v2p2':
-                    return '2.2';
-                    break;
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
 
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
-                    return '2.0';
-                    break;
+            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
+                $version = '2.0.0';
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p1');
 
-                default:
-                    return false;
-                    break;
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
+                    $version = '2.1.1';
+                } else {
+                    $version = '2.1.0';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p2');
+
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                    $version = '2.2.1';
+                } else {
+                    $version = '2.2.0';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+                $version = '2.1.0';
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
+                $version = '2.2.0';
             }
         }
+
+        return $version;
+    }
+
+    /**
+     * Get the location of an XML Schema Definition file from a given namespace.
+     *
+     * This utility method enables you to know what is the location of an XML Schema Definition
+     * file to be used to validate a $document for a given target namespace.
+     *
+     * @param DOMDocument $document A DOMDocument object.
+     * @param string $namespaceUri A Namespace URI you want to know the related XSD file location.
+     * @return boolean|string False if no location can be found for $namespaceUri, otherwise the location of the XSD file.
+     */
+    public static function getXsdLocation(DOMDocument $document, $namespaceUri)
+    {
+        $root = $document->documentElement;
+        $location = false;
+
+        if (empty($root) === false) {
+            $schemaLocation = $root->getAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation');
+            if (empty($schemaLocation) === false) {
+                $parts = preg_split('/\s+/', $schemaLocation);
+
+                // Look at pairs...
+                $partsCount = count($parts);
+                for ($i = 0; $i < $partsCount; $i += 2) {
+                    if (isset($parts[$i + 1]) && $parts[$i] === $namespaceUri) {
+                        $location = $parts[$i + 1];
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $location;
     }
 
     /**

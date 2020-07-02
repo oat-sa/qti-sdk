@@ -77,7 +77,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
                 $component->setPrompt($prompt);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
             return $component;
         } else {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element.";

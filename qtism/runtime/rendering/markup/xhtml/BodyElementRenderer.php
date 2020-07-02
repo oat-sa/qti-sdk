@@ -26,6 +26,8 @@ namespace qtism\runtime\rendering\markup\xhtml;
 use DOMDocumentFragment;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use qtism\data\content\enums\AriaLive;
+use qtism\data\content\enums\AriaOrientation;
 
 /**
  * BodyElement renderer.
@@ -64,6 +66,42 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
 
         if ($component->hasLang() === true) {
             $fragment->firstChild->setAttribute('lang', $component->getLang());
+        }
+
+        if (($ariaControls = $component->getAriaControls()) !== '') {
+            $fragment->firstChild->setAttribute('aria-controls', $ariaControls);
+        }
+
+        if (($ariaDescribedBy = $component->getAriaDescribedBy()) !== '') {
+            $fragment->firstChild->setAttribute('aria-describedby', $ariaDescribedBy);
+        }
+
+        if (($ariaFlowTo = $component->getAriaFlowTo()) !== '') {
+            $fragment->firstChild->setAttribute('aria-flowto', $ariaFlowTo);
+        }
+
+        if (($ariaLabelledBy = $component->getAriaLabelledBy()) !== '') {
+            $fragment->firstChild->setAttribute('aria-labelledby', $ariaLabelledBy);
+        }
+
+        if (($ariaOwns = $component->getAriaOwns()) !== '') {
+            $fragment->firstChild->setAttribute('aria-owns', $ariaOwns);
+        }
+
+        if (($ariaLevel = $component->getAriaLevel()) !== '') {
+            $fragment->firstChild->setAttribute('aria-level', $ariaLevel);
+        }
+
+        if (($ariaLive = $component->getAriaLive()) !== false) {
+            $fragment->firstChild->setAttribute('aria-live', AriaLive::getNameByConstant($ariaLive));
+        }
+
+        if (($ariaOrientation = $component->getAriaOrientation()) !== false) {
+            $fragment->firstChild->setAttribute('aria-orientation', AriaOrientation::getNameByConstant($ariaOrientation));
+        }
+
+        if (($ariaLabel = $component->getAriaLabel()) !== '') {
+            $fragment->firstChild->setAttribute('aria-label', $ariaLabel);
         }
     }
 }

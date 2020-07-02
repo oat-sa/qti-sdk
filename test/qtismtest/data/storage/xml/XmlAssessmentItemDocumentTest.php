@@ -9,25 +9,29 @@ use qtismtest\QtiSmTestCase;
 
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {
+
     /**
      * @dataProvider validFileProvider
      */
-    public function testLoad($uri, $version = '2.1')
+    public function testLoad($uri, $expectedVersion)
     {
-        $doc = new XmlDocument($version);
+        $doc = new XmlDocument();
         $doc->load($uri);
+        $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
     }
 
+
     /**
      * @dataProvider validFileProvider
      */
-    public function testLoadFromString($uri, $version = '2.1')
+    public function testLoadFromString($uri, $expectedVersion)
     {
-        $doc = new XmlDocument($version);
+        $doc = new XmlDocument($expectedVersion);
         $doc->loadFromString(file_get_contents($uri));
+        $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
@@ -36,10 +40,11 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     /**
      * @dataProvider validFileProvider
      */
-    public function testWrite($uri, $version = '2.1')
+    public function testWrite($uri, $expectedVersion)
     {
-        $doc = new XmlDocument($version);
+        $doc = new XmlDocument();
         $doc->load($uri);
+        $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
@@ -48,7 +53,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc->save($file);
 
         $this->assertTrue(file_exists($file));
-        $this->testLoad($file);
+        $this->testLoad($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
@@ -58,10 +63,11 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     /**
      * @dataProvider validFileProvider
      */
-    public function testSaveToString($uri, $version = '2.1')
+    public function testSaveToString($uri, $expectedVersion)
     {
-        $doc = new XmlDocument($version);
+        $doc = new XmlDocument();
         $doc->load($uri);
+        $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
@@ -70,7 +76,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         file_put_contents($file, $doc->saveToString());
 
         $this->assertTrue(file_exists($file));
-        $this->testLoadFromString($file);
+        //$this->testLoadFromString($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
@@ -83,7 +89,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file);
 
-        $this->assertEquals('2.1', $doc->getVersion());
+        $this->assertEquals('2.1.0', $doc->getVersion());
     }
 
     public function testLoad20()
@@ -92,7 +98,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file);
 
-        $this->assertEquals('2.0', $doc->getVersion());
+        $this->assertEquals('2.0.0', $doc->getVersion());
     }
 
     public function testLoadTemplate($uri = '')
@@ -247,127 +253,134 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function validFileProvider()
     {
         return [
-            // QTI 2.2
-            [self::decorateUri('adaptive_template.xml', '2.2')],
-            [self::decorateUri('adaptive.xml', '2.2')],
-            [self::decorateUri('associate.xml', '2.2')],
-            [self::decorateUri('choice_fixed.xml', '2.2')],
-            [self::decorateUri('choice_multiple.xml', '2.2')],
-            [self::decorateUri('choice.xml', '2.2')],
-            [self::decorateUri('extended_text_rubric.xml', '2.2')],
-            [self::decorateUri('extended_text.xml', '2.2')],
+            // -- 2.2.1
+            [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
+
+            // -- 2.2.0
+            [self::decorateUri('adaptive_template.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('adaptive.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('associate.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('choice_fixed.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('choice_multiple.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('choice.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('extended_text_rubric.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('extended_text.xml', '2.2.0'), '2.2.0'],
             // Removed because the 2.2.0 XSD is now looking correctly at the feedback->id atomicity!
             //array(self::decorateUri('feedbackblock_adaptive.xml', '2.2')),
-            [self::decorateUri('feedbackblock_solution_random.xml', '2.2')],
+            [self::decorateUri('feedbackblock_solution_random.xml', '2.2.0'), '2.2.0'],
             //array(self::decorateUri('feedbackblock_templateblock.xml', '2.2')),
-            [self::decorateUri('feedbackInline.xml', '2.2')],
-            [self::decorateUri('gap_match.xml', '2.2')],
-            [self::decorateUri('graphic_associate.xml', '2.2')],
-            [self::decorateUri('graphic_gap_match.xml', '2.2')],
-            [self::decorateUri('hotspot.xml', '2.2')],
-            [self::decorateUri('hottext.xml', '2.2')],
-            [self::decorateUri('inline_choice.xml', '2.2')],
-            [self::decorateUri('likert.xml', '2.2')],
-            [self::decorateUri('match.xml', '2.2')],
-            [self::decorateUri('math.xml', '2.2')],
-            [self::decorateUri('mc_calc3.xml', '2.2')],
-            [self::decorateUri('mc_calc5.xml', '2.2')],
-            [self::decorateUri('mc_stat2.xml', '2.2')],
-            [self::decorateUri('modalFeedback.xml', '2.2')],
-            [self::decorateUri('multi-input.xml', '2.2')],
-            [self::decorateUri('nested_object.xml', '2.2')],
-            [self::decorateUri('order.xml', '2.2')],
-            [self::decorateUri('orkney1.xml', '2.2')],
-            [self::decorateUri('orkney2.xml', '2.2')],
-            [self::decorateUri('position_object.xml', '2.2')],
-            [self::decorateUri('slider.xml', '2.2')],
-            [self::decorateUri('template.xml', '2.2')],
-            [self::decorateUri('text_entry.xml', '2.2')],
-            [self::decorateUri('essay.xml', '2.2')],
+            [self::decorateUri('feedbackInline.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('gap_match.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('graphic_associate.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('graphic_gap_match.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('hotspot.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('hottext.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('inline_choice.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('likert.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('match.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('math.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('mc_calc3.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('mc_calc5.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('mc_stat2.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('modalFeedback.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('multi-input.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('nested_object.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('order.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('orkney1.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('orkney2.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('position_object.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('slider.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('template.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('text_entry.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('essay.xml', '2.2.0'), '2.2.0'],
 
-            // QTI 2.1
-            [self::decorateUri('adaptive.xml')],
-            [self::decorateUri('adaptive_template.xml')],
-            [self::decorateUri('mc_stat2.xml')],
-            [self::decorateUri('mc_calc3.xml')],
-            [self::decorateUri('mc_calc5.xml')],
-            [self::decorateUri('associate.xml')],
-            [self::decorateUri('choice_fixed.xml')],
+            // -- 2.1.0
+            [self::decorateUri('adaptive.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('adaptive_template.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('mc_stat2.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('mc_calc3.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('mc_calc5.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('associate.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('choice_fixed.xml', '2.1.0'), '2.1.0'],
             // @todo C10 is invalid identifier? Double check! (Actually it seems the example is fucked up... we'll see).
             //array(self::decorateUri('choice_multiple_chocolade.xml')),
-            [self::decorateUri('modalFeedback.xml')],
-            [self::decorateUri('feedbackInline.xml')],
-            [self::decorateUri('choice_multiple.xml')],
-            [self::decorateUri('choice.xml')],
-            [self::decorateUri('extended_text_rubric.xml')],
-            [self::decorateUri('extended_text.xml')],
-            [self::decorateUri('gap_match.xml')],
-            [self::decorateUri('graphic_associate.xml')],
-            [self::decorateUri('graphic_gap_match.xml')],
-            [self::decorateUri('hotspot.xml')],
-            [self::decorateUri('hottext.xml')],
-            [self::decorateUri('inline_choice.xml')],
-            [self::decorateUri('match.xml')],
-            [self::decorateUri('multi-input.xml')],
-            [self::decorateUri('order.xml')],
-            [self::decorateUri('position_object.xml')],
-            [self::decorateUri('select_point.xml')],
-            [self::decorateUri('slider.xml')],
-            [self::decorateUri('text_entry.xml')],
-            [self::decorateUri('template.xml')],
-            [self::decorateUri('math.xml')],
-            [self::decorateUri('feedbackblock_solution_random.xml')],
-            [self::decorateUri('feedbackblock_adaptive.xml')],
-            [self::decorateUri('orkney1.xml')],
-            [self::decorateUri('orkney2.xml')],
-            [self::decorateUri('nested_object.xml')],
-            [self::decorateUri('likert.xml')],
+            [self::decorateUri('modalFeedback.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackInline.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('choice_multiple.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('choice.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('extended_text_rubric.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('extended_text.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('gap_match.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('graphic_associate.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('graphic_gap_match.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('hotspot.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('hottext.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('inline_choice.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('match.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('multi-input.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('order.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('position_object.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('select_point.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('slider.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('text_entry.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('template.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('math.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackblock_solution_random.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackblock_adaptive.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('orkney1.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('orkney2.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('nested_object.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('likert.xml', '2.1.0'), '2.1.0'],
             //array(self::decorateUri('feedbackblock_templateblock.xml')),
 
-            // QTI 2.0
-            [self::decorateUri('associate.xml', '2.0')],
-            [self::decorateUri('associate_lang.xml', '2.0')],
-            [self::decorateUri('adaptive.xml', '2.0')],
-            [self::decorateUri('choice_multiple.xml', '2.0')],
-            [self::decorateUri('choice.xml', '2.0')],
-            [self::decorateUri('drawing.xml', '2.0')],
-            [self::decorateUri('extended_text.xml', '2.0')],
-            [self::decorateUri('feedback.xml', '2.0')],
-            [self::decorateUri('gap_match.xml', '2.0')],
-            [self::decorateUri('graphic_associate.xml', '2.0')],
-            [self::decorateUri('graphic_gap_match.xml', '2.0')],
-            [self::decorateUri('graphic_order.xml', '2.0')],
-            [self::decorateUri('hint.xml', '2.0')],
-            [self::decorateUri('hotspot.xml', '2.0')],
+            // -- 2.0.0
+            [self::decorateUri('associate.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('associate_lang.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('adaptive.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('choice_multiple.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('choice.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('drawing.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('extended_text.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('feedback.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('gap_match.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('graphic_associate.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('graphic_gap_match.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('graphic_order.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('hint.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('hotspot.xml', '2.0.0'), '2.0.0'],
             //array(self::decorateUri('hottext.xml', '2.0')),
-            [self::decorateUri('inline_choice.xml', '2.0')],
-            [self::decorateUri('likert.xml', '2.0')],
-            [self::decorateUri('match.xml', '2.0')],
-            [self::decorateUri('nested_object.xml', '2.0')],
-            [self::decorateUri('order_partial_scoring.xml', '2.0')],
-            [self::decorateUri('order.xml', '2.0')],
-            [self::decorateUri('orkney1.xml', '2.0')],
+            [self::decorateUri('inline_choice.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('likert.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('match.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('nested_object.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('order_partial_scoring.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('order.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('orkney1.xml', '2.0'), '2.0.0'],
             //array(self::decorateUri('position_object.xml', '2.0')),
-            [self::decorateUri('select_point.xml', '2.0')],
-            [self::decorateUri('slider.xml', '2.0')],
-            [self::decorateUri('template_image.xml', '2.0')],
-            [self::decorateUri('template.xml', '2.0')],
-            [self::decorateUri('text_entry.xml', '2.0')],
-            [self::decorateUri('upload_composite.xml', '2.0')],
-            [self::decorateUri('upload.xml', '2.0')],
+            [self::decorateUri('select_point.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('slider.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('template_image.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('template.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('text_entry.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('upload_composite.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('upload.xml', '2.0.0'), '2.0.0'],
 
             // Other miscellaneous items...
-            [self::samplesDir() . 'custom/items/custom_operator_item.xml'],
-            [self::samplesDir() . 'custom/items/rich_gap_text.xml'],
+            [self::samplesDir() . 'custom/items/custom_operator_item.xml', '2.1.0'],
+            [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0']
         ];
     }
 
     private static function decorateUri($uri, $version = '2.1')
     {
-        if ($version === '2.1') {
+        if ($version === '2.1' || $version === '2.1.0') {
             return self::samplesDir() . 'ims/items/2_1/' . $uri;
-        } elseif ($version === '2.2') {
+        } elseif ($version === '2.1.1') {
+            return self::samplesDir() . 'ims/items/2_1_1/' . $uri;
+        } elseif ($version === '2.2' || $version === '2.2.0') {
             return self::samplesDir() . 'ims/items/2_2/' . $uri;
+        } elseif ($version === '2.2.1') {
+            return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
         } else {
             return self::samplesDir() . 'ims/items/2_0/' . $uri;
         }

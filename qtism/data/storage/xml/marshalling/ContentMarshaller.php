@@ -76,8 +76,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     /**
      * Create a new ContentMarshaller object.
      */
-    public function __construct()
+    public function __construct($version)
     {
+        parent::__construct($version);
         $this->setLookupClasses();
     }
 

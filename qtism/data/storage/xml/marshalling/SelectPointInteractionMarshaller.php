@@ -95,7 +95,7 @@ class SelectPointInteractionMarshaller extends Marshaller
                         $component->setPrompt($prompt);
                     }
 
-                    self::fillBodyElement($component, $element);
+                    $this->fillBodyElement($component, $element);
 
                     return $component;
                 } else {

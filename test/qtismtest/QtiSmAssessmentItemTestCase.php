@@ -21,7 +21,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 
     protected static function createExtendedAssessmentItemRefFromXml($xmlString)
     {
-        $marshaller = new ExtendedAssessmentItemRefMarshaller();
+        $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
         $element = self::createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }

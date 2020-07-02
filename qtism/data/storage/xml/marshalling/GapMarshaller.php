@@ -93,7 +93,7 @@ class GapMarshaller extends Marshaller
                 $component->setRequired($required);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
             return $component;
         } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'gap' element.";

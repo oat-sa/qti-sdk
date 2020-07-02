@@ -62,7 +62,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
         }
 
         $component->setContent(new InlineCollection($children->getArrayCopy()));
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         // The q class has a specific cite (URI) attribute.
         if ($component instanceof Q && ($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {

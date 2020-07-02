@@ -69,7 +69,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {

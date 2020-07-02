@@ -75,11 +75,13 @@ class MatchTableMarshaller extends Marshaller
     /**
      * Create a new instance of MatchTableMarshaller.
      *
+     * @param string $version
      * @param integer $baseType The baseType of the variableDeclaration the MatchTable belongs to.
      * @throws InvalidArgumentException If $baseType is an invalid value.
      */
-    public function __construct($baseType = -1)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 

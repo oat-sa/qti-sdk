@@ -42,7 +42,7 @@ class ItemBodyMarshaller extends ContentMarshaller
         $component = new $fqClass();
         $component->setContent(new BlockCollection($children->getArrayCopy()));
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }
