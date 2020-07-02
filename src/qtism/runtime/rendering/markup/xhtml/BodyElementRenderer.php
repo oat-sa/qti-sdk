@@ -24,7 +24,6 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
-use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;

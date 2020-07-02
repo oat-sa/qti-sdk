@@ -636,7 +636,7 @@ class Format
     public static function isAriaLevel($level)
     {
         if (is_string($level) || is_numeric($level)) {
-            return intval($level) >= 1;
+            return (int)$level >= 1;
         } else {
             return false;
         }
