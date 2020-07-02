@@ -616,9 +616,9 @@ abstract class Marshaller
     {
         if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
             if (in_array($element->localName, self::$flowsToClasses, true)) {
-                $element->setAttribute('aria-flowsto', $bodyElement->getAriaFlowTo());
+                $element->setAttribute('aria-flowsto', $ariaFlowTo);
             } else {
-                $element->setAttribute('aria-flowto', $bodyElement->getAriaFlowTo());
+                $element->setAttribute('aria-flowto', $ariaFlowTo);
             }
         }
     }
