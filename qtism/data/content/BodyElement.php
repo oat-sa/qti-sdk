@@ -141,6 +141,12 @@ abstract class BodyElement extends QtiComponent
     private $ariaLabel = '';
 
     /**
+     * @var bool
+     * @qtism-bean-property
+     */
+    private $ariaHidden = false;
+
+    /**
      * Create a new BodyElement object.
      *
      * @param string $id A QTI identifier.
@@ -579,5 +585,37 @@ abstract class BodyElement extends QtiComponent
     public function hasAriaLabel()
     {
         return $this->ariaLabel !== '';
+    }
+
+    /**
+     * @param bool $ariaHidden
+     * @throws InvalidArgumentException
+     */
+    public function setAriaHidden($ariaHidden)
+    {
+        if (!is_bool($ariaHidden)) {
+            $val = (is_object($ariaHidden)) ? ('instance of ' . get_class($ariaHidden)) : $ariaHidden;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-hidden'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaHidden = $ariaHidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAriaHidden()
+    {
+        return $this->ariaHidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaHidden()
+    {
+        return $this->ariaHidden !== false;
     }
 }

@@ -137,6 +137,8 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this->assertFalse($span->hasAriaLabel());
         $this->assertEquals('', $span->getAriaLevel());
         $this->assertFalse($span->hasAriaLevel());
+        $this->assertFalse($span->hasAriaHidden());
+        $this->assertFalse($span->getAriaHidden());
 
         $content = $span->getContent();
         $this->assertSame(1, count($content));
@@ -158,6 +160,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $span->setAriaLive(AriaLive::OFF);
         $span->setAriaOrientation(AriaOrientation::HORIZONTAL);
         $span->setAriaOwns('IDREF5');
+        $span->setAriaHidden(true);
 
         // aria-* and dir must NOT be ignored in QTI 2.2
         $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($span);
@@ -165,13 +168,13 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<span id="myspan" class="myclass" aria-flowto="IDREF1" aria-controls="IDREF2" aria-describedby="IDREF3" aria-labelledby="IDREF4" aria-owns="IDREF5" aria-level="1" aria-live="off" aria-orientation="horizontal" aria-label="my aria label"/>', $dom->saveXML($element));
+        $this->assertEquals('<span id="myspan" class="myclass" aria-flowto="IDREF1" aria-controls="IDREF2" aria-describedby="IDREF3" aria-labelledby="IDREF4" aria-owns="IDREF5" aria-level="1" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-hidden="true"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshallSpan22()
     {
         /** @var Span $span */
-        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-flowsto="not-considered-here">I am a span</span>', '2.2.0');
+        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-flowsto="not-considered-here" aria-hidden="true">I am a span</span>', '2.2.0');
         $this->assertInstanceOf(Span::class, $span);
         $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
         $this->assertTrue($span->hasAriaControls());
@@ -191,6 +194,8 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this->assertTrue($span->hasAriaLabel());
         $this->assertEquals('5', $span->getAriaLevel());
         $this->assertTrue($span->hasAriaLevel());
+        $this->assertTrue($span->hasAriaHidden());
+        $this->assertTrue($span->getAriaHidden());
 
         $content = $span->getContent();
         $this->assertSame(1, count($content));

@@ -92,6 +92,16 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals('2.1.0', $doc->getVersion());
     }
 
+    public function testLoad221()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
+        $doc = new XmlDocument();
+        $doc->load($file, true);
+
+        $this->assertEquals('2.2.1', $doc->getVersion());
+        $this->assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
+    }
+
     public function testLoad20()
     {
         $file = self::samplesDir() . 'ims/items/2_0/associate.xml';

@@ -307,6 +307,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $span->setAriaLive(AriaLive::ASSERTIVE);
         $span->setAriaOrientation(AriaOrientation::VERTICAL);
         $span->setAriaOwns('IDREF6');
+        $span->setAriaHidden(true);
 
         $file = tempnam('/tmp', 'qsm');
         $phpDoc = new PhpDocument('2.2', $span);
@@ -330,5 +331,6 @@ class PhpDocumentTest extends QtiSmTestCase
         $this->assertEquals(AriaLive::ASSERTIVE, $span->getAriaLive());
         $this->assertEquals(AriaOrientation::VERTICAL, $span->getAriaOrientation());
         $this->assertEquals('IDREF6', $span->getAriaOwns());
+        $this->assertTrue($span->getAriaHidden());
     }
 }
