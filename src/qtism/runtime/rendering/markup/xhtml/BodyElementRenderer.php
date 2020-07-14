@@ -111,5 +111,9 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
         if (($ariaLabel = $component->getAriaLabel()) !== '') {
             $fragment->firstChild->setAttribute('aria-label', $ariaLabel);
         }
+
+        if (($ariaHidden = $component->getAriaHidden()) !== false) {
+            $fragment->firstChild->setAttribute('aria-hidden', 'true');
+        }
     }
 }

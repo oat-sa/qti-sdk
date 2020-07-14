@@ -600,6 +600,10 @@ abstract class Marshaller
                     if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
                         $bodyElement->setAriaLabel($ariaLabel);
                     }
+
+                    if (($ariaHidden = $this->getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
+                        $bodyElement->setAriaHidden($ariaHidden);
+                    }
                 }
             }
         } catch (InvalidArgumentException $e) {
@@ -702,6 +706,10 @@ abstract class Marshaller
 
                 if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {
                     $element->setAttribute('aria-label', $ariaLabel);
+                }
+
+                if (($ariaHidden = $bodyElement->getAriaHidden()) !== false) {
+                    $element->setAttribute('aria-hidden', 'true');
                 }
             }
         }

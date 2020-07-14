@@ -74,6 +74,7 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertSame('', $element->getAttribute('aria-label'));
         $this->assertSame('', $element->getAttribute('aria-describedby'));
         $this->assertSame('', $element->getAttribute('aria-controls'));
+        $this->assertSame('', $element->getAttribute('aria-hidden'));
     }
 
     /**
@@ -93,6 +94,7 @@ class BodyElementRendererTest extends QtiSmTestCase
         $span->setAriaLabel('my label');
         $span->setAriaDescribedBy('IDREF4');
         $span->setAriaControls('IDREF5');
+        $span->setAriaHidden(true);
 
         $renderer = new BodyElementRenderer();
         $renderer->setRenderingEngine($ctx);
@@ -110,5 +112,6 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertEquals('my label', $element->getAttribute('aria-label'));
         $this->assertEquals('IDREF4', $element->getAttribute('aria-describedby'));
         $this->assertEquals('IDREF5', $element->getAttribute('aria-controls'));
+        $this->assertEquals('true', $element->getAttribute('aria-hidden'));
     }
 }

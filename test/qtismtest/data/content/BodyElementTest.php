@@ -20,13 +20,14 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertSame('', $span->getAriaLabel());
         $this->assertSame('', $span->getAriaLabelledBy());
         $this->assertSame('', $span->getAriaLevel());
-        $this->assertSame(false, $span->getAriaLive());
-        $this->assertSame(false, $span->getAriaOrientation());
+        $this->assertFalse($span->getAriaLive());
+        $this->assertFalse($span->getAriaOrientation());
         $this->assertSame('', $span->getAriaOwns());
         $this->assertSame('', $span->getId());
         $this->assertSame('', $span->getClass());
         $this->assertSame('', $span->getLang());
         $this->assertSame('', $span->getLabel());
+        $this->assertFalse($span->getAriaHidden());
         $this->assertFalse($span->hasId());
         $this->assertFalse($span->hasClass());
         $this->assertFalse($span->hasLang());
@@ -39,6 +40,7 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertFalse($span->hasAriaLive());
         $this->assertFalse($span->hasAriaOrientation());
         $this->assertFalse($span->hasAriaOwns());
+        $this->assertFalse($span->hasAriaHidden());
     }
 
     public function testSetId()
@@ -275,6 +277,26 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [''],
             ['A normalized string!']
+        ];
+    }
+
+    /**
+     * @param $value
+     * @dataProvider validAriaHiddenAttributesProvider
+     */
+    public function testValidAriaHiddenAttributes($value)
+    {
+        $span = new Span();
+        $span->setAriaHidden($value);
+
+        $this->assertSame($value, $span->getAriaHidden());
+    }
+
+    public function validAriaHiddenAttributesProvider()
+    {
+        return [
+            [false],
+            [true]
         ];
     }
 
@@ -544,6 +566,36 @@ class BodyElementTest extends QtiSmTestCase
             [55.55],
             [null],
             [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-label'."]
+        ];
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $msg
+     * @dataProvider invalidAriaHiddenAttributesProvider
+     */
+    public function testInvalidAriaHiddenAttributes($value, $msg = null)
+    {
+        $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-hidden'.";
+
+        $this->setExpectedException(
+            InvalidArgumentException::class,
+            $msg
+        );
+
+        $span = new Span();
+        $span->setAriaHidden($value);
+    }
+
+    public function invalidAriaHiddenAttributesProvider()
+    {
+        return [
+            ['false'],
+            [10],
+            [-5],
+            [55.55],
+            [null],
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-hidden'."]
         ];
     }
 }
