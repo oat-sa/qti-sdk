@@ -56,6 +56,24 @@ use SplObjectStorage;
 class XmlCompactDocument extends XmlDocument
 {
     /**
+     * XmlCompactDocument constructor.
+     *
+     * Create a new XmlCompactDocument object.
+     *
+     * @param string $version
+     * @param QtiComponent|null $documentComponent
+     */
+    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    {
+        // Version 1.0 was used in legacy code, let's keep it BC.
+        if ($version === '1.0') {
+            $version = '2.1.0';
+        }
+
+        parent::__construct($version, $documentComponent);
+    }
+
+    /**
      * Whether or not the rubricBlock elements
      * must be separated from the core document.
      *
@@ -379,5 +397,10 @@ class XmlCompactDocument extends XmlDocument
         }
 
         return $references;
+    }
+
+    protected function inferVersion()
+    {
+        return '2.1';
     }
 }

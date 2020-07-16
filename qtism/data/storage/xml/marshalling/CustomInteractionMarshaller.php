@@ -72,7 +72,7 @@ class CustomInteractionMarshaller extends Marshaller
             $xmlString = $frag->ownerDocument->saveXML($frag);
 
             $component = new CustomInteraction($responseIdentifier, $xmlString);
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
         }
 
         return $component;

@@ -74,11 +74,13 @@ class ValueMarshaller extends Marshaller
     /**
      * Create a new instance of ValueMarshaller.
      *
+     * @param string $version
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration nor -1.
      */
-    public function __construct($baseType = -1)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 

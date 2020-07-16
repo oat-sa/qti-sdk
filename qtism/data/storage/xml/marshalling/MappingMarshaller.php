@@ -74,11 +74,13 @@ class MappingMarshaller extends Marshaller
     /**
      * Create a new instance of MappingMarshaller.
      *
+     * @param string $version
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
      */
-    public function __construct($baseType)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 

@@ -9,21 +9,21 @@ use qtismtest\QtiSmTestCase;
 class XmlUtilsTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider validInferQTIVersionProvider
+     * @dataProvider validInferVersionProvider
      */
-    public function testInferQTIVersionValid($file, $expectedVersion)
+    public function testInferVersionValid($file, $expectedVersion)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $this->assertEquals($expectedVersion, Utils::inferQTIVersion($dom));
+        $this->assertEquals($expectedVersion, Utils::inferVersion($dom));
     }
 
-    public function validInferQTIVersionProvider()
+    public function validInferVersionProvider()
     {
         return [
-            [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1'],
-            [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0'],
-            [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1'],
+            [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1.0'],
+            [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0.0'],
+            [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
         ];
     }
 

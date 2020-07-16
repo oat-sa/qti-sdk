@@ -41,7 +41,7 @@ class AtomicBlockMarshaller extends ContentMarshaller
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
         $component->setContent(new InlineCollection($children->getArrayCopy()));
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         if (($xmlBase = self::getXmlBase($element)) !== false) {
             $component->setXmlBase($xmlBase);

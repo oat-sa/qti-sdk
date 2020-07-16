@@ -27,6 +27,7 @@ use DOMDocument;
 use DOMElement;
 use DOMException;
 use InvalidArgumentException;
+use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
 use qtism\data\content\Flow;
@@ -35,6 +36,11 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\TestPart;
@@ -141,7 +147,7 @@ class XmlDocument extends QtiDocument
 
             if (call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
                 // Infer the QTI version.
-                if (($version = XmlUtils::inferQTIVersion($this->getDomDocument())) !== false) {
+                if (($version = XmlUtils::inferVersion($this->getDomDocument())) !== false) {
                     $this->setVersion($version);
                 } else {
                     $msg = "Cannot infer QTI version. Is it well formed?";
@@ -443,28 +449,39 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $qtiSuffix = 'v2p1';
         $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+        $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+
         switch (trim($this->getVersion())) {
-            case '2.0':
-                $qtiSuffix = 'v2p0';
+            case '2.0.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
                 break;
 
             case '2.1.0':
-                $qtiSuffix = 'v2p1';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
                 break;
 
-            case '2.2':
-                $qtiSuffix = 'v2p2';
+            case '2.1.1':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                break;
+
+            case '2.2.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                break;
+
+            case '2.2.1':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
                 break;
         }
 
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
+        $rootElement->setAttribute('xmlns', $xmlns);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "${xmlns} ${xsdLocation}");
     }
 
     /**
@@ -480,7 +497,12 @@ class XmlDocument extends QtiDocument
         foreach ($libXmlErrors as $error) {
             switch ($error->level) {
                 case LIBXML_ERR_WARNING:
-                    $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    // Since QTI 2.2, some schemas are imported multiple times.
+                    // Xerces does not produce errors, but libxml does...
+                    if (preg_match('/Skipping import of schema located/ui', $error->message) === 0) {
+                        $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    }
+
                     break;
 
                 case LIBXML_ERR_ERROR:
@@ -505,6 +527,30 @@ class XmlDocument extends QtiDocument
      */
     protected function createMarshallerFactory()
     {
-        return new MarshallerFactory();
+        $version = $this->getVersion();
+        if ($version === '2.0.0') {
+            return new Qti20MarshallerFactory();
+        } elseif ($version === '2.1.0') {
+            return new Qti21MarshallerFactory();
+        } elseif ($version === '2.1.1') {
+            return new Qti211MarshallerFactory();
+        } elseif ($version === '2.2.0') {
+            return new Qti22MarshallerFactory();
+        } elseif ($version === '2.2.1') {
+            return new Qti221MarshallerFactory();
+        } else {
+            $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
+            throw new RuntimeException($msg);
+        }
+    }
+
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     *
+     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     */
+    protected function inferVersion()
+    {
+        return XmlUtils::inferVersion($this->getDomDocument());
     }
 }

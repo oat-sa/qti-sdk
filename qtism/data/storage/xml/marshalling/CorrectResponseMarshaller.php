@@ -65,10 +65,12 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * Create a new CorrectResponseMarshaller object.
      *
+     * @param $version
      * @param integer $baseType The base type of the Variable referencing this CorrectResponse.
      */
-    public function __construct($baseType = -1)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 

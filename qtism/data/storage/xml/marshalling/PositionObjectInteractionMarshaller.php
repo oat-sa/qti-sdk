@@ -107,7 +107,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
                     }
                 }
 
-                self::fillBodyElement($component, $element);
+                $this->fillBodyElement($component, $element);
 
                 return $component;
             } else {

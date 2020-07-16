@@ -67,7 +67,7 @@ class ColMarshaller extends Marshaller
             $component->setSpan($span);
         }
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

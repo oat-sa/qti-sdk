@@ -77,7 +77,7 @@ class ColgroupMarshaller extends Marshaller
         }
         $component->setContent($cols);
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

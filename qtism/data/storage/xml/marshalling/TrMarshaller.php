@@ -42,7 +42,7 @@ class TrMarshaller extends ContentMarshaller
     {
         try {
             $component = new Tr(new TableCellCollection($children->getArrayCopy()));
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } catch (InvalidArgumentException $e) {

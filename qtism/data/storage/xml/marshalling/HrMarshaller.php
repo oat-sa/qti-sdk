@@ -67,7 +67,7 @@ class HrMarshaller extends Marshaller
             $component->setXmlBase($xmlBase);
         }
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

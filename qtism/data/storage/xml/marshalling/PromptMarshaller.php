@@ -68,7 +68,7 @@ class PromptMarshaller extends ContentMarshaller
 
         $component->setContent($content);
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

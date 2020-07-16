@@ -25,6 +25,8 @@ namespace qtism\data\content;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\content\enums\AriaLive;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 
 /**
@@ -82,6 +84,67 @@ abstract class BodyElement extends QtiComponent
      * @qtism-bean-property
      */
     private $label = '';
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaControls = '';
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaDescribedBy = '';
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaFlowTo = '';
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaLabelledBy = '';
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaOwns = '';
+
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaLevel = '';
+
+    /**
+     * @var int|bool
+     * @qtism-bean-property
+     */
+    private $ariaLive = false;
+
+    /**
+     * @var int|bool
+     * @qtism-bean-property
+     */
+    private $ariaOrientation = false;
+
+    /**
+     * @var string
+     * @qtism-bean-property
+     */
+    private $ariaLabel = '';
+
+    /**
+     * @var bool
+     * @qtism-bean-property
+     */
+    private $ariaHidden = false;
 
     /**
      * Create a new BodyElement object.
@@ -236,5 +299,323 @@ abstract class BodyElement extends QtiComponent
     public function hasLabel()
     {
         return $this->getLabel() !== '';
+    }
+
+    /**
+     * @param string $ariaControls
+     * @throws InvalidArgumentException
+     */
+    public function setAriaControls($ariaControls)
+    {
+        if ($ariaControls !== '' && !Format::isAriaIdRefs($ariaControls)) {
+            $val = (is_object($ariaControls)) ? ('instance of ' . get_class($ariaControls)) : $ariaControls;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-controls'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaControls = $ariaControls;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaControls()
+    {
+        return $this->ariaControls;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaControls()
+    {
+        return $this->ariaControls !== '';
+    }
+
+    /**
+     * @param string $ariaDescribedBy
+     * @throws InvalidArgumentException
+     */
+    public function setAriaDescribedBy($ariaDescribedBy)
+    {
+        if ($ariaDescribedBy !== '' && !Format::isAriaIdRefs($ariaDescribedBy)) {
+            $val = (is_object($ariaDescribedBy)) ? ('instance of ' . get_class($ariaDescribedBy)) : $ariaDescribedBy;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-describedby'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaDescribedBy = $ariaDescribedBy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaDescribedBy()
+    {
+        return $this->ariaDescribedBy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaDescribedBy()
+    {
+        return $this->ariaDescribedBy !== '';
+    }
+
+    /**
+     * @param string $ariaFlowTo
+     * @throws InvalidArgumentException
+     */
+    public function setAriaFlowTo($ariaFlowTo)
+    {
+        if ($ariaFlowTo !== '' && !Format::isAriaIdRefs($ariaFlowTo)) {
+            $val = (is_object($ariaFlowTo)) ? ('instance of ' . get_class($ariaFlowTo)) : $ariaFlowTo;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-flowto'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaFlowTo = $ariaFlowTo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaFlowTo()
+    {
+        return $this->ariaFlowTo;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaFlowTo()
+    {
+        return $this->ariaFlowTo !== '';
+    }
+
+    /**
+     * @param string $ariaLabelledBy
+     * @throws InvalidArgumentException
+     */
+    public function setAriaLabelledBy($ariaLabelledBy)
+    {
+        if ($ariaLabelledBy !== '' && !Format::isAriaIdRefs($ariaLabelledBy)) {
+            $val = (is_object($ariaLabelledBy)) ? ('instance of ' . get_class($ariaLabelledBy)) : $ariaLabelledBy;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-labelledby'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaLabelledBy = $ariaLabelledBy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaLabelledBy()
+    {
+        return $this->ariaLabelledBy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLabelledBy()
+    {
+        return $this->ariaLabelledBy !== '';
+    }
+
+    /**
+     * @param string $ariaOwns
+     * @throws InvalidArgumentException
+     */
+    public function setAriaOwns($ariaOwns)
+    {
+        if ($ariaOwns !== '' && !Format::isAriaIdRefs($ariaOwns)) {
+            $val = (is_object($ariaOwns)) ? ('instance of ' . get_class($ariaOwns)) : $ariaOwns;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-owns'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaOwns = $ariaOwns;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaOwns()
+    {
+        return $this->ariaOwns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaOwns()
+    {
+        return $this->ariaOwns !== '';
+    }
+
+    /**
+     * @param string $ariaLevel
+     * @throws InvalidArgumentException
+     */
+    public function setAriaLevel($ariaLevel)
+    {
+        if ($ariaLevel !== '' && !Format::isAriaLevel($ariaLevel)) {
+            $val = (is_object($ariaLevel)) ? ('instance of ' . get_class($ariaLevel)) : $ariaLevel;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-level'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaLevel = strval($ariaLevel);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaLevel()
+    {
+        return $this->ariaLevel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLevel()
+    {
+        return $this->ariaLevel !== '';
+    }
+
+    /**
+     * @param int $ariaLive A value from the AriaLive enumeration or false for no value.
+     * @throws InvalidArgumentException
+     */
+    public function setAriaLive($ariaLive)
+    {
+        if ($ariaLive === false || in_array($ariaLive, AriaLive::asArray(), true)) {
+            $this->ariaLive = $ariaLive;
+        } else {
+            $val = (is_object($ariaLive)) ? ('instance of ' . get_class($ariaLive)) : $ariaLive;
+            $msg = "'${val}' is not a valid value for attribute 'aria-live'.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getAriaLive()
+    {
+        return $this->ariaLive;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLive()
+    {
+        return $this->ariaLive !== false;
+    }
+
+    /**
+     * @param int $ariaOrientation A value from the AriaOrientation enumeration or false for no orientation.
+     * @throws InvalidArgumentException
+     */
+    public function setAriaOrientation($ariaOrientation)
+    {
+        if ($ariaOrientation === false || in_array($ariaOrientation, AriaOrientation::asArray(), true)) {
+            $this->ariaOrientation = $ariaOrientation;
+        } else {
+            $val = (is_object($ariaOrientation)) ? ('instance of ' . get_class($ariaOrientation)) : $ariaOrientation;
+            $msg = "'${val}' is not a valid value for attribute 'aria-orientation'.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
+     * @return false|int A value from the AriaOrientation enumeration or false if not orientation defined.
+     */
+    public function getAriaOrientation()
+    {
+        return $this->ariaOrientation;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaOrientation()
+    {
+        return $this->ariaOrientation !== false;
+    }
+
+    /**
+     * @param $ariaLabel
+     * @throws InvalidArgumentException
+     */
+    public function setAriaLabel($ariaLabel)
+    {
+        if (!is_string($ariaLabel)) {
+            $val = (is_object($ariaLabel)) ? ('instance of ' . get_class($ariaLabel)) : $ariaLabel;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-label'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaLabel = $ariaLabel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAriaLabel()
+    {
+        return $this->ariaLabel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaLabel()
+    {
+        return $this->ariaLabel !== '';
+    }
+
+    /**
+     * @param bool $ariaHidden
+     * @throws InvalidArgumentException
+     */
+    public function setAriaHidden($ariaHidden)
+    {
+        if (!is_bool($ariaHidden)) {
+            $val = (is_object($ariaHidden)) ? ('instance of ' . get_class($ariaHidden)) : $ariaHidden;
+
+            $msg = "'${val}' is not a valid value for attribute 'aria-hidden'.";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->ariaHidden = $ariaHidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAriaHidden()
+    {
+        return $this->ariaHidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAriaHidden()
+    {
+        return $this->ariaHidden !== false;
     }
 }

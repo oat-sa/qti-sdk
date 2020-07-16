@@ -24,7 +24,8 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     public function testLoad(XmlCompactDocument $doc = null)
     {
         if (empty($doc)) {
-            $doc = new XmlCompactDocument('1.0');
+            $doc = new XmlCompactDocument('2.1');
+            $this->assertEquals('2.1.0', $doc->getVersion());
 
             $file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
             $doc->load($file);
@@ -64,6 +65,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     public function testSave()
     {
+        // Version 1.0 for XmlCompactDocuments was in use by legacy code. Let's make it BC.
         $doc = new XmlCompactDocument('1.0');
         $file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
         $doc->load($file);
@@ -72,7 +74,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->save($file);
         $this->assertTrue(file_exists($file));
 
-        $doc = new XmlCompactDocument('1.0');
+        $doc = new XmlCompactDocument('2.1');
         $doc->load($file);
 
         // retest content...
@@ -94,7 +96,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $compactDoc->save($file);
         $this->assertTrue(file_exists($file));
 
-        $compactDoc = new XmlCompactDocument('1.0');
+        $compactDoc = new XmlCompactDocument('2.1');
         $compactDoc->load($file);
         $this->testLoad($compactDoc);
         unlink($file);
@@ -149,7 +151,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $compactDoc->save($file);
         $this->assertTrue(file_exists($file));
 
-        $compactDoc = new XmlCompactDocument('1.0');
+        $compactDoc = new XmlCompactDocument('2.1');
         $compactDoc->load($file);
         $compactDoc->schemaValidate();
 

@@ -23,6 +23,8 @@
 
 namespace qtism\data;
 
+use InvalidArgumentException;
+use qtism\common\utils\Version;
 use qtism\data\storage\StorageException;
 
 abstract class QtiDocument
@@ -61,7 +63,12 @@ abstract class QtiDocument
      */
     public function setVersion($version)
     {
-        $this->version = $version;
+        if (Version::isKnown($version) === true) {
+            $this->version = Version::appendPatchVersion($version);
+        } else {
+            $msg = "Version '{$version}' is not a known QTI version. Known versions are '" . implode(', ', Version::knownVersions()) . "'";
+            throw new InvalidArgumentException($msg);
+        }
     }
 
     /**

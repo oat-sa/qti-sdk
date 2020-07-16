@@ -129,7 +129,7 @@ class GapChoiceMarshaller extends ContentMarshaller
                     }
                 }
 
-                self::fillBodyElement($component, $element);
+                $this->fillBodyElement($component, $element);
                 return $component;
             } else {
                 $msg = "The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element.";

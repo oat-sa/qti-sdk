@@ -142,7 +142,7 @@ class HotspotMarshaller extends Marshaller
                         }
                     }
 
-                    self::fillBodyElement($component, $element);
+                    $this->fillBodyElement($component, $element);
                     return $component;
                 } else {
                     $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";

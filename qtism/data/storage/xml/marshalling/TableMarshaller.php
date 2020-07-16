@@ -165,7 +165,7 @@ class TableMarshaller extends Marshaller
                 $component->setTfoot($marshaller->unmarshall($tfootElts[0]));
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {

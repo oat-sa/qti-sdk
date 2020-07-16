@@ -76,7 +76,7 @@ class TablePartMarshaller extends Marshaller
         $class = "qtism\\data\\content\\xhtml\\tables\\" . ucfirst($element->localName);
         $component = new $class($trs);
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

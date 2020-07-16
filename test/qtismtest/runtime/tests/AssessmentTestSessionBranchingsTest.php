@@ -16,7 +16,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 {
     public function testInstantiationSample1()
     {
-        $doc = new XmlCompactDocument('1.0');
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
 
         $manager = new SessionManager();
@@ -49,7 +49,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
     public function testBranchingSingleSectionLinear1()
     {
-        $doc = new XmlCompactDocument('1.0');
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
 
         $manager = new SessionManager();
@@ -90,7 +90,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
     public function testBranchingSingleSectionLinear2()
     {
-        $doc = new XmlCompactDocument('1.0');
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
 
         $manager = new SessionManager();
@@ -122,7 +122,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
     {
         // This test only aims at testing if branch rules
         // are correctly ignored when the navigation mode is non linear.
-        $doc = new XmlCompactDocument('1.0');
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml');
 
         // Q01 - We answer correct. In linear mode we should go to Q03.
@@ -169,7 +169,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
     {
         // This test aims at testing the possibility to jump
         // on a particular item ref occurence.
-        $doc = new XmlCompactDocument('1.0');
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml');
 
         $manager = new SessionManager();

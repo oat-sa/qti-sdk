@@ -74,7 +74,7 @@ class HottextInteractionMarshaller extends ContentMarshaller
                 $component->setPrompt($prompt);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {

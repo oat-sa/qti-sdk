@@ -42,7 +42,7 @@ class LiMarshaller extends ContentMarshaller
         $component = new $fqClass();
         $component->setContent(new FlowCollection($children->getArrayCopy()));
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

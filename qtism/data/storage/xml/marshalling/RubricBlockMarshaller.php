@@ -139,7 +139,7 @@ class RubricBlockMarshaller extends Marshaller
             $object->setStylesheets($stylesheets);
             $object->setContent($content);
 
-            self::fillBodyElement($object, $element);
+            $this->fillBodyElement($object, $element);
 
             return $object;
         } else {

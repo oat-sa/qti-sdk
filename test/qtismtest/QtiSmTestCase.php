@@ -4,29 +4,40 @@ namespace qtismtest;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use PHPUnit_Framework_TestCase as TestCase;
+use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 
 abstract class QtiSmTestCase extends TestCase
 {
-    private $marshallerFactory;
-
     public function setUp()
     {
         parent::setUp();
-        $this->marshallerFactory = new MarshallerFactory();
     }
 
     public function tearDown()
     {
         parent::tearDown();
-        unset($this->marshallerFactory);
     }
 
-    public function getMarshallerFactory()
+    public function getMarshallerFactory($version = '2.1')
     {
-        return $this->marshallerFactory;
+        if (Version::compare($version, '2.0.0', '==') === true) {
+            return new Qti20MarshallerFactory();
+        } elseif (Version::compare($version, '2.1.1', '==') === true) {
+            return new Qti211MarshallerFactory();
+        } elseif (Version::compare($version, '2.2.0', '==') === true) {
+            return new Qti22MarshallerFactory();
+        } elseif (Version::compare($version, '2.2.1', '==') === true) {
+            return new Qti221MarshallerFactory();
+        } else {
+            return new Qti21MarshallerFactory();
+        }
     }
 
     /**
@@ -98,12 +109,13 @@ abstract class QtiSmTestCase extends TestCase
      * Create a QtiComponent object from an XML String.
      *
      * @param string $xmlString An XML String to transform in a QtiComponent object.
+     * @param string $version A QTI version rule the creation of the component.
      * @return QtiComponent
      */
-    public function createComponentFromXml($xmlString)
+    public function createComponentFromXml($xmlString, $version = '2.1.0')
     {
         $element = QtiSmTestCase::createDOMElement($xmlString);
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory($version);
         $marshaller = $factory->createMarshaller($element);
         return $marshaller->unmarshall($element);
     }
