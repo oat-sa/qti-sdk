@@ -26,6 +26,7 @@ __This implementation of QTI is under constant enhancement. The API of the maste
 * PreConditions & Branching
 * Selection and Ordering
 * Response, Outcome and Template Processing
+* aria-* attributes
 * Unit test driven
 
 ## Installation (developers)

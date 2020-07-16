@@ -1,15 +1,40 @@
 <?php
 
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @license GPLv2
+ */
+
 namespace qtismtest\data\storage\php;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\content\enums\AriaLive;
+use qtism\data\content\enums\AriaOrientation;
+use qtism\data\content\xhtml\text\Span;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\NavigationMode;
 use qtism\data\storage\php\PhpDocument;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
@@ -341,5 +366,47 @@ class PhpDocumentTest extends QtiSmTestCase
         );
 
         $phpDoc->load('/root/root.php');
+    }
+
+    /**
+     * @throws PhpStorageException
+     */
+    public function testBodyElement()
+    {
+        $span = new Span('myid', 'myclass');
+        $span->setAriaControls('IDREF1 IDREF2');
+        $span->setAriaDescribedBy('IDREF3');
+        $span->setAriaFlowTo('IDREF4');
+        $span->setAriaLabel('My Label');
+        $span->setAriaLabelledBy('IDREF5');
+        $span->setAriaLevel(5);
+        $span->setAriaLive(AriaLive::ASSERTIVE);
+        $span->setAriaOrientation(AriaOrientation::VERTICAL);
+        $span->setAriaOwns('IDREF6');
+        $span->setAriaHidden(true);
+
+        $file = tempnam('/tmp', 'qsm');
+        $phpDoc = new PhpDocument('2.2', $span);
+        $phpDoc->save($file);
+
+        $phpDoc2 = new PhpDocument('2.2');
+        $phpDoc2->load($file);
+        unlink($file);
+
+        /** @var Span $span */
+        $span = $phpDoc2->getDocumentComponent();
+
+        $this->assertEquals('myid', $span->getId());
+        $this->assertEquals('myclass', $span->getClass());
+        $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
+        $this->assertEquals('IDREF3', $span->getAriaDescribedBy());
+        $this->assertEquals('IDREF4', $span->getAriaFlowTo());
+        $this->assertEquals('My Label', $span->getAriaLabel());
+        $this->assertEquals('IDREF5', $span->getAriaLabelledBy());
+        $this->assertEquals('5', $span->getAriaLevel());
+        $this->assertEquals(AriaLive::ASSERTIVE, $span->getAriaLive());
+        $this->assertEquals(AriaOrientation::VERTICAL, $span->getAriaOrientation());
+        $this->assertEquals('IDREF6', $span->getAriaOwns());
+        $this->assertTrue($span->getAriaHidden());
     }
 }
