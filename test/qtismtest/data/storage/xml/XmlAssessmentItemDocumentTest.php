@@ -58,11 +58,12 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
     public function testLoad221()
     {
-        $file = self::samplesDir() . 'ims/items/2_2_1/choice.xml';
+        $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
         $doc = new XmlDocument();
         $doc->load($file, true);
 
         $this->assertEquals('2.2.1', $doc->getVersion());
+        $this->assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
     }
 
     public function testLoad22()
@@ -265,6 +266,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         return [
             // -- 2.2.1
+            [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
             [self::decorateUri('choice.xml', '2.2.1'), '2.2.1'],
             [self::decorateUri('graphic_order.xml', '2.2.1'), '2.2.1'],
 

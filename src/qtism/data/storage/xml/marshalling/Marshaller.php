@@ -29,6 +29,8 @@ use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
+use qtism\data\content\enums\AriaLive;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use RuntimeException;
@@ -63,7 +65,7 @@ abstract class Marshaller
      * An array containing the name of classes
      * that are allowed to have their 'dir' attribute set.
      *
-     * @var array
+     * @var string[]
      */
     private static $dirClasses = [
         'associateInteraction',
@@ -156,7 +158,7 @@ abstract class Marshaller
     /**
      * An array containing the QTI class names that are allowed to be Web Component friendly.
      *
-     * @var array
+     * @var string[]
      */
     public static $webComponentFriendlyClasses = [
         'associableHotspot',
@@ -198,6 +200,37 @@ abstract class Marshaller
         'templateBlock',
         'templateInline',
         'infoControl',
+    ];
+
+    /**
+     * An array containing QTI class names preferring aria-flowsto instead of aria-flowto.
+     *
+     * @var string[]
+     */
+    private static $flowsToClasses = [
+        'associateInteraction',
+        'choiceInteraction',
+        'drawingInteraction',
+        'extendedTextInteraction',
+        'gapMatchInteraction',
+        'graphicAssociateInteraction',
+        'hotspotInteraction',
+        'hottextInteraction',
+        'matchInteraction',
+        'mediaInteraction',
+        'orderInteraction',
+        'selectPointInteraction',
+        'sliderInteraction',
+        'uploadInteraction',
+        'associableHotspot',
+        'br',
+        'col',
+        'endAttemptInteraction',
+        'gap',
+        'hotspotChoice',
+        'hr',
+        'img',
+        'textEntryInteraction'
     ];
 
     /**
@@ -472,6 +505,27 @@ abstract class Marshaller
     }
 
     /**
+     * @param BodyElement $bodyElement
+     * @param DOMElement $element
+     */
+    protected function fillBodyElementFlowTo(BodyElement $bodyElement, DOMElement $element)
+    {
+        $scan = ['aria-flowto'];
+
+        if (in_array($bodyElement->getQtiClassName(), self::$flowsToClasses, true)) {
+            array_unshift($scan, 'aria-flowsto');
+        }
+
+        foreach ($scan as $s) {
+            if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, $s)) !== null) {
+                $bodyElement->setAriaFlowTo($ariaFlowTo);
+
+                break;
+            }
+        }
+    }
+
+    /**
      * Fill $bodyElement with the following bodyElement attributes:
      *
      * * id
@@ -493,19 +547,90 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
 
             $version = $this->getVersion();
-            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
-                $bodyElement->setDir(Direction::getConstantByName($dir));
+            if (Version::compare($version, '2.2.0', '>=') === true) {
+                // dir attribute
+                if (($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
+                    $bodyElement->setDir(Direction::getConstantByName($dir));
+                }
+
+                // aria-* attributes
+                if ($element->localName !== 'printedVariable') {
+                    // All QTI classes deal with aria-* except printedVariable.
+                    if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
+                        $bodyElement->setAriaControls($ariaControls);
+                    }
+
+                    if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
+                        $bodyElement->setAriaDescribedBy($ariaDescribedBy);
+                    }
+
+                    /*
+                     * There is a little glitch in the QTI 2.2.X XSDs. Indeed, the following elements do not
+                     * consider aria-flowto (the official one) but aria-flowsto which is an error: associateInteraction,
+                     * choiceInteraction, drawingInteraction, extendedTextInteraction, gapMatchInteraction,
+                     * graphicAssociateInteraction, hotspotInteraction, matchInteraction, mediaInteraction,
+                     * orderInteraction, selectPointInteraction, sliderInteraction, uploadInteraction, associableHotspot,
+                     * br, col, endAttemptInteraction, gap, hotspotChoice, hr, img, textEntryInteraction.
+                     *
+                     * In such a context, at unmarshalling time, for the elements described above, we prefer
+                     * aria-flowsto (as described in the XSDs) as a first choice and then aria-flowto as a backup.
+                     */
+                    $this->fillBodyElementFlowTo($bodyElement, $element);
+
+                    if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
+                        $bodyElement->setAriaLabelledBy($ariaLabelledBy);
+                    }
+
+                    if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
+                        $bodyElement->setAriaOwns($ariaOwns);
+                    }
+
+                    if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
+                        $bodyElement->setAriaLevel($ariaLevel);
+                    }
+
+                    if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
+                        $bodyElement->setAriaLive(AriaLive::getConstantByName($ariaLive));
+                    }
+
+                    if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
+                        $bodyElement->setAriaOrientation(AriaOrientation::getConstantByName($ariaOrientation));
+                    }
+
+                    if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
+                        $bodyElement->setAriaLabel($ariaLabel);
+                    }
+
+                    if (($ariaHidden = $this->getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
+                        $bodyElement->setAriaHidden($ariaHidden);
+                    }
+                }
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label, dir).";
+            $msg = "An error occurred while filling the bodyElement attributes (id, class, lang, label, dir, aria-*).";
             throw new UnmarshallingException($msg, $element, $e);
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param BodyElement $bodyElement
+     */
+    protected function fillElementFlowto(DOMElement $element, BodyElement $bodyElement)
+    {
+        if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
+            if (in_array($element->localName, self::$flowsToClasses, true)) {
+                $element->setAttribute('aria-flowsto', $ariaFlowTo);
+            } else {
+                $element->setAttribute('aria-flowto', $ariaFlowTo);
+            }
         }
     }
 
     /**
      * Fill $element with the attributes of $bodyElement.
      *
-     * @param DOMElement $element The element from where the atribute values will be
+     * @param DOMElement $element The element from where the attribute values will be
      * @param BodyElement $bodyElement The bodyElement to be fill.
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
@@ -527,8 +652,66 @@ abstract class Marshaller
         }
 
         $version = $this->getVersion();
-        if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
-            $element->setAttribute('dir', Direction::getNameByConstant($dir));
+        if (Version::compare($version, '2.2.0', '>=') === true) {
+            // dir attribute
+            if (($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
+                $element->setAttribute('dir', Direction::getNameByConstant($dir));
+            }
+
+            // aria-* attributes
+            if ($bodyElement->getQtiClassName() !== 'printedVariable') {
+                // All BodyElement objects deal with aria-* except PrintedVariable.
+
+                /*
+                 * There is a little glitch in the QTI 2.2.X XSDs. Indeed, the following elements do not
+                 * consider aria-flowto (the official one) but aria-flowsto which is an error: associateInteraction,
+                 * choiceInteraction, drawingInteraction, extendedTextInteraction, gapMatchInteraction,
+                 * graphicAssociateInteraction, hotspotInteraction, matchInteraction, mediaInteraction,
+                 * orderInteraction, selectPointInteraction, sliderInteraction, uploadInteraction, associableHotspot,
+                 * br, col, endAttemptInteraction, gap, hotspotChoice, hr, img, textEntryInteraction.
+                 *
+                 * In such a context, at marshalling time, for the QTI classes described above, we populate data
+                 * for the aria-flowsto attribute. Otherwise, we populate aria-flowto. This makes us able to honnor
+                 * the XSD contract.
+                 */
+                $this->fillElementFlowto($element, $bodyElement);
+
+                if (($ariaControls = $bodyElement->getAriaControls()) !== '') {
+                    $element->setAttribute('aria-controls', $ariaControls);
+                }
+
+                if (($ariaDescribedBy = $bodyElement->getAriaDescribedBy()) !== '') {
+                    $element->setAttribute('aria-describedby', $ariaDescribedBy);
+                }
+
+                if (($ariaLabelledBy = $bodyElement->getAriaLabelledBy()) !== '') {
+                    $element->setAttribute('aria-labelledby', $ariaLabelledBy);
+                }
+
+                if (($ariaOwns = $bodyElement->getAriaOwns()) !== '') {
+                    $element->setAttribute('aria-owns', $ariaOwns);
+                }
+
+                if (($ariaLevel = $bodyElement->getAriaLevel()) !== '') {
+                    $element->setAttribute('aria-level', $ariaLevel);
+                }
+
+                if (($ariaLive = $bodyElement->getAriaLive()) !== false) {
+                    $element->setAttribute('aria-live', AriaLive::getNameByConstant($ariaLive));
+                }
+
+                if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== false) {
+                    $element->setAttribute('aria-orientation', AriaOrientation::getNameByConstant($ariaOrientation));
+                }
+
+                if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {
+                    $element->setAttribute('aria-label', $ariaLabel);
+                }
+
+                if (($ariaHidden = $bodyElement->getAriaHidden()) !== false) {
+                    $element->setAttribute('aria-hidden', 'true');
+                }
+            }
         }
     }
 

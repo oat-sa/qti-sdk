@@ -163,6 +163,16 @@ class FormatTest extends QtiSmTestCase
         $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 
+    /**
+     * @param $input
+     * @param $expected
+     * @dataProvider isAriaLevelProvider
+     */
+    public function testIsAriaLevel($input, $expected)
+    {
+        $this->assertSame($expected, Format::isAriaLevel($input));
+    }
+
     public function scale10Provider()
     {
         return [
@@ -428,6 +438,32 @@ class FormatTest extends QtiSmTestCase
             [true],
             [[]],
             [new stdClass()],
+        ];
+    }
+
+    public function isAriaLevelProvider()
+    {
+        // input, expected
+        return [
+            [false, false],
+            [true, false],
+            ['-1', false],
+            ['0', false],
+            ['-20.4532', false],
+            ['abc', false],
+            [null, false],
+            [new \stdClass(), false],
+            [-1, false],
+            [0, false],
+            [-20.5432, false],
+            [1, true],
+            ['1', true],
+            [1000, true],
+            ['1000', true],
+            [1.453, true],
+            [2.453, true],
+            ['1.453', true],
+            ['2.453', true],
         ];
     }
 }

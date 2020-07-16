@@ -624,4 +624,41 @@ class Format
             return false;
         }
     }
+
+    /**
+     * Is Aria Level.
+     *
+     * Whether or not a given value is compliant with aria-level attributes.
+     *
+     * @param string|int|float $level
+     * @return bool
+     */
+    public static function isAriaLevel($level)
+    {
+        if (is_string($level) || is_numeric($level)) {
+            return (int)$level >= 1;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $ariaIdRefs
+     * @return bool
+     */
+    public static function isAriaIdRefs($ariaIdRefs)
+    {
+        if (!is_string($ariaIdRefs)) {
+            return false;
+        }
+
+        $ariaValues = explode("\x20", $ariaIdRefs);
+        foreach ($ariaValues as $ariaValue) {
+            if (!Format::isIdentifier($ariaValue, false)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
