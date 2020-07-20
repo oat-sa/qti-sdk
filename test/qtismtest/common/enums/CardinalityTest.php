@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\common\enums;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\common\enums\Cardinality;
+use qtismtest\QtiSmEnumTestCase;
 
 class CardinalityTest extends QtiSmEnumTestCase
 {
@@ -10,34 +11,34 @@ class CardinalityTest extends QtiSmEnumTestCase
     {
         return Cardinality::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'single',
             'multiple',
             'ordered',
-            'record'
-        );
+            'record',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'SINGLE',
             'MULTIPLE',
             'ORDERED',
-            'RECORD'
-        );
+            'RECORD',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             Cardinality::SINGLE,
             Cardinality::MULTIPLE,
             Cardinality::ORDERED,
-            Cardinality::RECORD
-        );
+            Cardinality::RECORD,
+        ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,24 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
-use qtism\data\SectionPart;
-use qtism\data\AssessmentSection;
-use \SplObjectStorage;
+use SplObjectStorage;
 
 /**
  * The BasicSelection class implements the basic Selection logic described by QTI.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BasicSelection extends AbstractSelection
 {
@@ -39,7 +34,7 @@ class BasicSelection extends AbstractSelection
      * Select the child elements of the AssessmentSection object
      * held by the Selection object.
      *
-     * @return \qtism\runtime\tests\SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
+     * @return SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
      */
     public function select()
     {
@@ -51,7 +46,6 @@ class BasicSelection extends AbstractSelection
         $routesSelection = new SelectableRouteCollection();
 
         if (is_null($selection) === false) {
-
             $select = $selection->getSelect();
             $childCount = count($selectableRoutes);
             $withReplacement = $selection->isWithReplacement();
@@ -88,7 +82,6 @@ class BasicSelection extends AbstractSelection
             }
 
             for ($i = 0; $i < $select; $i++) {
-
                 $selectedIndex = mt_rand(0, $selectionBagCount - 1);
                 $selectedSectionPart = $selectionBag[$selectedIndex];
 

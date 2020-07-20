@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\EqualRounded;
 use qtism\data\expressions\operators\RoundTo;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -53,18 +53,15 @@ use qtism\runtime\expressions\Utils;
  * are 3.175 and 3.183, the result is true, but for 3.175 and 3.1749, the result
  * is false; if decimalPlaces mode is used with figures=2, 1.68572 and 1.69 the
  * result is true, but for 1.68572 and 1.68432, the result is false.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class EqualRoundedProcessor extends OperatorProcessor
 {
     /**
-	 * Process the EqualRounded operator.
-	 *
-	 * @return QtiBoolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the EqualRounded operator.
+     *
+     * @return QtiBoolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -110,8 +107,8 @@ class EqualRoundedProcessor extends OperatorProcessor
         foreach ($operands as $operand) {
             $baseType = RuntimeUtils::inferBaseType($operand);
             $subExpression = new BaseValue($baseType, $operand);
-            $roundToExpression = new RoundTo(new ExpressionCollection(array($subExpression)), $figures, $roundingMode);
-            $roundToProcessor = new RoundToProcessor($roundToExpression, new OperandsCollection(array($operand)));
+            $roundToExpression = new RoundTo(new ExpressionCollection([$subExpression]), $figures, $roundingMode);
+            $roundToProcessor = new RoundToProcessor($roundToExpression, new OperandsCollection([$operand]));
 
             try {
                 $rounded[] = $roundToProcessor->process();
@@ -123,7 +120,7 @@ class EqualRoundedProcessor extends OperatorProcessor
 
         return new QtiBoolean($rounded[0]->getValue() == $rounded[1]->getValue());
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

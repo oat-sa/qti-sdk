@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,27 +23,24 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\Shufflable;
+use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
 use qtism\data\QtiIdentifiable;
-use qtism\data\ShowHide;
-use qtism\common\utils\Format;
 use qtism\data\QtiIdentifiableTrait;
-use \SplObjectStorage;
-use \InvalidArgumentException;
+use qtism\data\ShowHide;
+use qtism\data\Shufflable;
+use SplObjectStorage;
 
 /**
  * From IMS QTI:
  *
  * Many of the interactions involve choosing one or more predefined choices.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 {
     use QtiIdentifiableTrait;
-    
+
     /**
      * From IMS QTI:
      *
@@ -103,7 +101,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * @param string $class The class of the body element.
      * @param string $lang The language of the body element.
      * @param string $label The label of the body element.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -129,7 +127,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * Set the identifier of the choice.
      *
      * @param string $identifier A QTI identifier.
-     * @throws \InvalidArgumentException If the given $identifier is not valid.
+     * @throws InvalidArgumentException If the given $identifier is not valid.
      */
     public function setIdentifier($identifier)
     {
@@ -145,7 +143,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * Set whether the choice is fixed.
      *
      * @param boolean $fixed
-     * @throws \InvalidArgumentException If $fixed is not a boolean value.
+     * @throws InvalidArgumentException If $fixed is not a boolean value.
      */
     public function setFixed($fixed)
     {
@@ -171,7 +169,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * Set the template identifier of the choice.
      *
      * @param string $templateIdentifier An empty string if no identifier is provided or a QTI identifier.
-     * @throws \InvalidArgumentException If the given $templateIdentifier is not a valid QTI identifier.
+     * @throws InvalidArgumentException If the given $templateIdentifier is not a valid QTI identifier.
      */
     public function setTemplateIdentifier($templateIdentifier)
     {
@@ -207,7 +205,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * Set the visibility of the choice.
      *
      * @param integer $showHide A value from the ShowHide enumeration.
-     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
@@ -228,7 +226,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     {
         return $this->showHide;
     }
-    
+
     public function __clone()
     {
         $this->setObservers(new SplObjectStorage());

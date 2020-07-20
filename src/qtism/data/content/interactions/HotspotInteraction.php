@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,10 +23,10 @@
 
 namespace qtism\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -44,9 +45,6 @@ use \InvalidArgumentException;
  *
  * The hotspot interaction must be bound to a response variable with a baseType
  * of identifier and single or multiple cardinality.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class HotspotInteraction extends GraphicInteraction
 {
@@ -79,7 +77,7 @@ class HotspotInteraction extends GraphicInteraction
     /**
      * The hotspotChoice components of the hotspotInteraction.
      *
-     * @var \qtism\data\content\interactions\HotspotChoiceCollection
+     * @var HotspotChoiceCollection
      * @qtism-bean-property
      */
     private $hotspotChoices;
@@ -88,13 +86,13 @@ class HotspotInteraction extends GraphicInteraction
      * Create a new HotspotInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param \qtism\data\content\xhtml\ObjectElement $object The associated image given as an ObjectElement object.
-     * @param \qtism\data\content\interactions\HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
+     * @param ObjectElement $object The associated image given as an ObjectElement object.
+     * @param HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($responseIdentifier, ObjectElement $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -107,7 +105,7 @@ class HotspotInteraction extends GraphicInteraction
      * to select.
      *
      * @param integer $maxChoices A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $maxChoices is not a positive integer.
+     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
@@ -135,7 +133,7 @@ class HotspotInteraction extends GraphicInteraction
      * select.
      *
      * @param integer $minChoices A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $minChoices is not a positive integer.
+     * @throws InvalidArgumentException If $minChoices is not a positive integer.
      */
     public function setMinChoices($minChoices)
     {
@@ -161,8 +159,8 @@ class HotspotInteraction extends GraphicInteraction
     /**
      * Set the hotspotChoices composing the interaction.
      *
-     * @param \qtism\data\content\interactions\HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
-     * @throws \InvalidArgumentException If the given collection is empty.
+     * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
+     * @throws InvalidArgumentException If the given collection is empty.
      */
     public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices)
     {
@@ -177,13 +175,13 @@ class HotspotInteraction extends GraphicInteraction
     /**
      * Get the hotspotChoices composing the interaction.
      *
-     * @return \qtism\data\content\interactions\HotspotChoiceCollection A collection of HotspotChoice objects.
+     * @return HotspotChoiceCollection A collection of HotspotChoice objects.
      */
     public function getHotspotChoices()
     {
         return $this->hotspotChoices;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
@@ -201,13 +199,13 @@ class HotspotInteraction extends GraphicInteraction
      */
     public function getComponents()
     {
-        $array = array();
+        $array = [];
         if ($this->hasPrompt() === true) {
             $array[] = $this->getPrompt();
         }
-        
+
         $array[] = $this->getObject();
-        
+
         return new QtiComponentCollection(array_merge($array, $this->getHotspotChoices()->getArrayCopy()));
     }
 

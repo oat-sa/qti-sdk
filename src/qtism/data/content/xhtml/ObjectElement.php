@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +23,18 @@
 
 namespace qtism\data\content\xhtml;
 
+use InvalidArgumentException;
+use qtism\common\utils\Format;
+use qtism\data\content\BodyElement;
+use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
-use qtism\data\content\FlowStatic;
-use qtism\data\content\BodyElement;
 use qtism\data\content\ObjectFlowCollection;
-use qtism\common\utils\Format;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * The object QTI class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
 {
@@ -45,7 +43,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The content elements of the object.
      *
-     * @var \qtism\data\content\ObjectFlowCollection
+     * @var ObjectFlowCollection
      */
     private $content;
 
@@ -93,7 +91,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the arguments above is invalid.
+     * @throws InvalidArgumentException If any of the arguments above is invalid.
      */
     public function __construct($data, $type, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -109,7 +107,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * Set the URI for locating the data of the object.
      *
      * @param string $data The URI for locating the data of the object.
-     * @throws \InvalidArgumentException If $data is not a URI.
+     * @throws InvalidArgumentException If $data is not a URI.
      */
     public function setData($data)
     {
@@ -135,7 +133,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * Set the mime-type of the object.
      *
      * @param string $type A mime-type.
-     * @throws \InvalidArgumentException If $type is not a valid mime-type.
+     * @throws InvalidArgumentException If $type is not a valid mime-type.
      */
     public function setType($type)
     {
@@ -163,7 +161,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * A negative value describes that no width is provided.
      *
      * @param integer $width A width.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setWidth($width)
     {
@@ -203,7 +201,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * A negative value describes that no height is provided.
      *
      * @param integer $height A height.
-     * @throws \InvalidArgumentException If $height is not an integer value.
+     * @throws InvalidArgumentException If $height is not an integer value.
      */
     public function setHeight($height)
     {
@@ -246,7 +244,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * Set the components composing the ObjectElement.
      *
-     * @param \qtism\data\content\ObjectFlowCollection $content
+     * @param ObjectFlowCollection $content
      */
     public function setContent(ObjectFlowCollection $content)
     {
@@ -256,7 +254,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * Get the components composing the ObjectElement.
      *
-     * @return \qtism\data\content\ObjectFlowCollection
+     * @return ObjectFlowCollection
      */
     public function getContent()
     {

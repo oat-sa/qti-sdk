@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,39 +23,36 @@
 
 namespace qtism\data;
 
+use InvalidArgumentException;
+use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Format;
-use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\content\ModalFeedbackRule;
-use qtism\data\state\ResponseDeclaration;
-use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\ResponseDeclarationCollection;
-use qtism\data\state\OutcomeDeclarationCollection;
-use qtism\data\state\TemplateDeclaration;
-use qtism\data\state\TemplateDeclarationCollection;
-use qtism\data\state\Shuffling;
-use qtism\data\state\ShufflingCollection;
-use qtism\data\state\ResponseValidityConstraint;
-use qtism\data\state\ResponseValidityConstraintCollection;
+use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\processing\TemplateProcessing;
-use qtism\common\collections\IdentifierCollection;
-use \InvalidArgumentException;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\state\ResponseDeclaration;
+use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\ResponseValidityConstraintCollection;
+use qtism\data\state\Shuffling;
+use qtism\data\state\ShufflingCollection;
+use qtism\data\state\TemplateDeclaration;
+use qtism\data\state\TemplateDeclarationCollection;
 
 /**
- * The ExtendedAssessmentItemRef class is an extended representation of the QTI assessmentItemRef class. 
- * 
- * It gathers together the assessmentItemRef + the outcome/responseDeclarations of the referenced item 
+ * The ExtendedAssessmentItemRef class is an extended representation of the QTI assessmentItemRef class.
+ *
+ * It gathers together the assessmentItemRef + the outcome/responseDeclarations of the referenced item
  * in a single component.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessmentItem
 {
     /**
      * The outcomeDeclarations found in the referenced assessmentItem.
      *
-     * @var \qtism\data\state\OutcomeDeclarationCollection
+     * @var OutcomeDeclarationCollection
      * @qtism-bean-property
      */
     private $outcomeDeclarations;
@@ -62,15 +60,15 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * The responseDeclarations found in the referenced assessmentItem.
      *
-     * @var \qtism\data\state\ResponseDeclarationCollection
+     * @var ResponseDeclarationCollection
      * @qtism-bean-property
      */
     private $responseDeclarations;
-    
+
     /**
      * The templateDeclarations found in the referenced assessmentItem.
-     * 
-     * @var \qtism\data\state\TemplateDeclarationCollection
+     *
+     * @var TemplateDeclarationCollection
      * @qtism-bean-property
      */
     private $templateDeclarations;
@@ -78,7 +76,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * The responseProcessing found in the referenced assessmentItem.
      *
-     * @var \qtism\data\processing\ResponseProcessing
+     * @var ResponseProcessing
      * @qtism-bean-property
      */
     private $responseProcessing = null;
@@ -98,45 +96,45 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @qtism-bean-property
      */
     private $timeDependent = false;
-    
+
     /**
      * A collection of QTI identifiers identifying response variables bound to endAttemptInteractions contained in the item content.
-     * 
-     * @var \qtism\common\collections\IdentifierCollection
+     *
+     * @var IdentifierCollection
      * @qtism-bean-property
      */
     private $endAttemptIdentifiers = null;
-    
+
     /**
      * The modalFeedbackRules found in the referenced assessmentItem.
-     * 
-     * @var \qtism\data\content\ModalFeedbackRuleCollection
+     *
+     * @var ModalFeedbackRuleCollection
      * @qtism-bean-property
      */
     private $modalFeedbackRules;
-    
+
     /**
      * The template processing found in the referenced assessmentItem.
-     * 
-     * @var \qtism\data\processing\TemplateProcessing
+     *
+     * @var TemplateProcessing
      * @qtism-bean-property
      */
     private $templateProcessing = null;
-    
+
     /**
      * The Shuffling components.
-     * 
+     *
      * The Shuffling components indicate what are the identifiers involved in interaction's choice shuffling.
-     * 
-     * @var \qtism\data\state\ShufflingCollection
+     *
+     * @var ShufflingCollection
      * @qtism-bean-property
      */
     private $shufflings;
-    
+
     /**
      * The response validity constraints related to the item content.
-     * 
-     * @var \qtism\data\state\ResponseValidityConstraintCollection
+     *
+     * @var ResponseValidityConstraintCollection
      * @qtism-bean-property
      */
     private $responseValidityConstraints;
@@ -162,8 +160,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param string $identifier A QTI Identifier.
      * @param string $href The URL to locate the referenced assessmentItem.
-     * @param \qtism\common\collections\IdentifierCollection $categories Optional categories.
-     * @throws \InvalidArgumentException if $identifier is not a valid QTI Identifier or $href is not a valid URI.
+     * @param IdentifierCollection $categories Optional categories.
+     * @throws InvalidArgumentException if $identifier is not a valid QTI Identifier or $href is not a valid URI.
      */
     public function __construct($identifier, $href, IdentifierCollection $categories = null)
     {
@@ -181,7 +179,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set the outcomeDeclarations found in the referenced assessmentItem.
      *
-     * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+     * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
     {
@@ -191,7 +189,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Get the outcomeDeclarations found in the referenced assessmentItem.
      *
-     * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+     * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
      */
     public function getOutcomeDeclarations()
     {
@@ -201,7 +199,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set the responseProcessing found in the referenced assessmentItem.
      *
-     * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
+     * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
      */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null)
     {
@@ -211,7 +209,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Get the responseProcessing found in the referenced assessmentItem.
      *
-     * @return \qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no response processing described.
+     * @return ResponseProcessing A ResponseProcessing object or null if no response processing described.
      */
     public function getResponseProcessing()
     {
@@ -227,30 +225,30 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     {
         return $this->getResponseProcessing() !== null;
     }
-    
+
     /**
      * Set the templateProcessing found in the referenced assessmentItem.
-     * 
-     * @param \qtism\data\processing\TemplateProcessing $templateProcessing
+     *
+     * @param TemplateProcessing $templateProcessing
      */
     public function setTemplateProcessing(TemplateProcessing $templateProcessing = null)
     {
         $this->templateProcessing = $templateProcessing;
     }
-    
+
     /**
      * Get the templateProcessing found in the referenced assessmentItem.
-     * 
-     * @return \qtism\data\processing\TemplateProcessing
+     *
+     * @return TemplateProcessing
      */
     public function getTemplateProcessing()
     {
         return $this->templateProcessing;
     }
-    
+
     /**
      * Whether the referenced assessmentItem has a templateProcessing entry.
-     * 
+     *
      * @return boolean
      */
     public function hasTemplateProcessing()
@@ -261,7 +259,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Add an OutcomeDeclaration object.
      *
-     * @param \qtism\data\state\OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
+     * @param OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
      */
     public function addOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration)
     {
@@ -271,7 +269,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Remove an OutcomeDeclaration object from the current one.
      *
-     * @param \qtism\data\state\OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
+     * @param OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
      */
     public function removeOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration)
     {
@@ -281,7 +279,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set the responseDeclarations found in the referenced assessmentItem.
      *
-     * @param \qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects.
+     * @param ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects.
      */
     public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations)
     {
@@ -291,7 +289,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Get the responseDeclarations found in the referenced assessmentItem.
      *
-     * @return \qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
+     * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
      */
     public function getResponseDeclarations()
     {
@@ -301,7 +299,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Add a ResponseDeclaration object.
      *
-     * @param \qtism\data\state\ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
+     * @param ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
      */
     public function addResponseDeclaration(ResponseDeclaration $responseDeclaration)
     {
@@ -311,126 +309,130 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Remove a ResponseDeclaration object.
      *
-     * @param \qtism\data\state\ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
+     * @param ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
      */
     public function removeResponseDeclaration(ResponseDeclaration $responseDeclaration)
     {
         $this->getResponseDeclarations()->detach($responseDeclaration);
     }
-    
+
     /**
      * Set the templateDeclarations found in the referenced item.
-     * 
-     * @param \qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
+     *
+     * @param TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
      */
     public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations)
     {
         $this->templateDeclarations = $templateDeclarations;
     }
-    
+
     /**
      * Get the templateDeclarations found in the referenced item.
-     * 
-     * @return \qtism\data\state\TemplateDeclarationCollection
+     *
+     * @return TemplateDeclarationCollection
      */
     public function getTemplateDeclarations()
     {
         return $this->templateDeclarations;
     }
-    
+
     /**
      * Add a TemplateDeclaration object.
-     * 
-     * @param \qtism\data\state\TemplateDeclaration $templateDeclaration
+     *
+     * @param TemplateDeclaration $templateDeclaration
      */
     public function addTemplateDeclaration(TemplateDeclaration $templateDeclaration)
     {
         $this->templateDeclarations->attach($templateDeclaration);
     }
-    
+
     /**
      * Remove a TemplateDeclaration object.
-     * 
-     * @param \qtism\data\state\TemplateDeclaration $templateDeclaration
+     *
+     * @param TemplateDeclaration $templateDeclaration
      */
     public function removeTemplateDeclaration(TemplateDeclaration $templateDeclaration)
     {
         $this->templateDeclarations->detach($templateDeclaration);
     }
-    
+
     /**
      * Set the collection of ModalFeedbackRule objects.
-     * 
-     * @param \qtism\data\content\ModalFeedbackRuleCollection $modalFeedbackRules
+     *
+     * @param ModalFeedbackRuleCollection $modalFeedbackRules
      */
     public function setModalFeedbackRules(ModalFeedbackRuleCollection $modalFeedbackRules)
     {
         $this->modalFeedbackRules = $modalFeedbackRules;
     }
-    
+
     /**
      * Get the collection of ModalFeedbackRule objects.
-     * 
-     * @return \qtism\data\content\ModalFeedbackRuleCollection
+     *
+     * @return ModalFeedbackRuleCollection
      */
     public function getModalFeedbackRules()
     {
         return $this->modalFeedbackRules;
     }
-    
+
     /**
      * Add a ModalFeedbackRule object to this AssessmentItemRef.
-     * 
-     * @param \qtism\data\content\ModalFeedbackRule $modalFeedbackRule
+     *
+     * @param ModalFeedbackRule $modalFeedbackRule
      */
     public function addModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule)
     {
         $this->getModalFeedbackRules()->attach($modalFeedbackRule);
     }
-    
+
     /**
      * Remove a given $modalFeedbackRule from the AssessmentItemRef.
-     * 
-     * @param \qtism\data\content\ModalFeedbackRule $modalFeedbackRule
+     *
+     * @param ModalFeedbackRule $modalFeedbackRule
      */
     public function removeModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule)
     {
         $this->getModalFeedbackRules()->detach($modalFeedbackRule);
     }
-    
+
     /**
      * Set the Shuffling components.
-     * 
-     * @param \qtism\data\state\ShufflingCollection $shufflings
+     *
+     * @param ShufflingCollection $shufflings
      */
-    public function setShufflings(ShufflingCollection $shufflings) {
+    public function setShufflings(ShufflingCollection $shufflings)
+    {
         $this->shufflings = $shufflings;
     }
-    
+
     /**
      * Get the Shuffling components.
-     * 
-     * @return \qtism\data\state\ShufflingCollection
+     *
+     * @return ShufflingCollection
      */
-    public function getShufflings() {
+    public function getShufflings()
+    {
         return $this->shufflings;
     }
-    
+
     /**
      * Add a Shuffling component.
-     * 
-     * @param \qtism\data\state\Shuffling $shuffling
+     *
+     * @param Shuffling $shuffling
      */
-    public function addShuffling(Shuffling $shuffling) {
+    public function addShuffling(Shuffling $shuffling)
+    {
         $this->getShufflings()->attach($shuffling);
     }
-    
+
     /*
      * Remove a Shuffling component.
-     * 
+     *
      * @param \qtism\data\state\Shuffling $shuffling
      */
-    public function removeShuffling(Shuffling $shuffling) {
+    public function removeShuffling(Shuffling $shuffling)
+    {
         $this->getShufflings()->detach($shuffling);
     }
 
@@ -448,7 +450,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * Set if the referenced Item is considered to be adaptive or not.
      *
      * @param boolean $adaptive Whether the referenced Item is adaptive.
-     * @throws \InvalidArgumentException If $adaptive is not a boolean value.
+     * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
     public function setAdaptive($adaptive)
     {
@@ -464,7 +466,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * Set if the referenced Item is considered to be time dependent or not.
      *
      * @param boolean $timeDependent Whether the referenced item is time dependent.
-     * @throws \InvalidArgumentException If $timeDependent is not a boolean value.
+     * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
     public function setTimeDependent($timeDependent)
     {
@@ -489,7 +491,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set the response identifiers related to endAttemptInteractions in the item content.
      *
-     * @param \qtism\common\collections\IdentifierCollection $endAttemptIdentifiers
+     * @param IdentifierCollection $endAttemptIdentifiers
      */
     public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers)
     {
@@ -499,7 +501,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Get the response identifiers related to endAttemptInteractions in the item content.
      *
-     * @return \qtism\common\collections\IdentifierCollection
+     * @return IdentifierCollection
      */
     public function getEndAttemptIdentifiers()
     {
@@ -509,7 +511,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set the response validity constraints related to the item content.
      *
-     * @param \qtism\data\state\ResponseValidityConstraintCollection $responseValidityConstraints
+     * @param ResponseValidityConstraintCollection $responseValidityConstraints
      */
     public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints)
     {
@@ -519,7 +521,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Get the response validity constraints related to the item content.
      *
-     * @return \qtism\data\state\ResponseValidityConstraintCollection
+     * @return ResponseValidityConstraintCollection
      */
     public function getResponseValidityConstraints()
     {
@@ -529,7 +531,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Add a response validity constraint related to item content.
      *
-     * @param \qtism\data\state\ResponseValidityConstraint $responseValidityConstraint
+     * @param ResponseValidityConstraint $responseValidityConstraint
      */
     public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
     {
@@ -539,7 +541,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Remove a response validity constraint related to item content.
      *
-     * @param \qtism\data\state\ResponseValidityConstraint $responseValidityConstraint
+     * @param ResponseValidityConstraint $responseValidityConstraint
      */
     public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
     {
@@ -549,8 +551,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Create a new ExtendedAssessmentItemRef object from an AssessmentItemRef object.
      *
-     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @return \qtism\data\ExtendedAssessmentItemRef An ExtendedAssessmentItemRef object.
+     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @return ExtendedAssessmentItemRef An ExtendedAssessmentItemRef object.
      */
     public static function createFromAssessmentItemRef(AssessmentItemRef $assessmentItemRef)
     {
@@ -590,7 +592,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
             $components[] = $this->getResponseProcessing();
         }
 
-        $components = array_merge($components,
+        $components = array_merge(
+            $components,
             $this->getModalFeedbackRules()->getArrayCopy(),
             $this->getShufflings()->getArrayCopy(),
             $this->getResponseValidityConstraints()->getArrayCopy()

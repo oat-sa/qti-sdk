@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -27,7 +28,6 @@ use qtism\common\enums\Enumeration;
 /**
  * The MathFunctions enumeration.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see \qtism\data\expressions\operators\MathOperator
  */
 class MathFunctions implements Enumeration
@@ -90,7 +90,7 @@ class MathFunctions implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'SIN' => self::SIN,
             'COS' => self::COS,
             'TAN' => self::TAN,
@@ -118,8 +118,8 @@ class MathFunctions implements Enumeration
             'FLOOR' => self::FLOOR,
             'CEIL' => self::CEIL,
             'TO_DEGREES' => self::TO_DEGREES,
-            'TO_RADIANS' => self::TO_RADIANS
-        );
+            'TO_RADIANS' => self::TO_RADIANS,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -127,119 +127,119 @@ class MathFunctions implements Enumeration
         switch (strtolower($name)) {
             case 'sin':
                 return self::SIN;
-            break;
+                break;
 
             case 'cos':
                 return self::COS;
-            break;
+                break;
 
             case 'tan':
                 return self::TAN;
-            break;
+                break;
 
             case 'sec':
                 return self::SEC;
-            break;
+                break;
 
             case 'csc':
                 return self::CSC;
-            break;
+                break;
 
             case 'cot':
                 return self::COT;
-            break;
+                break;
 
             case 'asin':
                 return self::ASIN;
-            break;
+                break;
 
             case 'acos':
                 return self::ACOS;
-            break;
+                break;
 
             case 'atan':
                 return self::ATAN;
-            break;
+                break;
 
             case 'atan2':
                 return self::ATAN2;
-            break;
+                break;
 
             case 'asec':
                 return self::ASEC;
-            break;
+                break;
 
             case 'acsc':
                 return self::ACSC;
-            break;
+                break;
 
             case 'acot':
                 return self::ACOT;
-            break;
+                break;
 
             case 'sinh':
                 return self::SINH;
-            break;
+                break;
 
             case 'cosh':
                 return self::COSH;
-            break;
+                break;
 
             case 'tanh':
                 return self::TANH;
-            break;
+                break;
 
             case 'sech':
                 return self::SECH;
-            break;
+                break;
 
             case 'csch':
                 return self::CSCH;
-            break;
+                break;
 
             case 'coth':
                 return self::COTH;
-            break;
+                break;
 
             case 'log':
                 return self::LOG;
-            break;
+                break;
 
             case 'ln':
                 return self::LN;
-            break;
+                break;
 
             case 'exp':
                 return self::EXP;
-            break;
+                break;
 
             case 'abs':
                 return self::ABS;
-            break;
+                break;
 
             case 'signum':
                 return self::SIGNUM;
-            break;
+                break;
 
             case 'floor':
                 return self::FLOOR;
-            break;
+                break;
 
             case 'ceil':
                 return self::CEIL;
-            break;
+                break;
 
             case 'todegrees':
                 return self::TO_DEGREES;
-            break;
+                break;
 
             case 'toradians':
                 return self::TO_RADIANS;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -248,119 +248,119 @@ class MathFunctions implements Enumeration
         switch ($constant) {
             case self::SIN:
                 return 'sin';
-            break;
+                break;
 
             case self::COS:
                 return 'cos';
-            break;
+                break;
 
             case self::TAN:
                 return 'tan';
-            break;
+                break;
 
             case self::SEC:
                 return 'sec';
-            break;
+                break;
 
             case self::CSC:
                 return 'csc';
-            break;
+                break;
 
             case self::COT:
                 return 'cot';
-            break;
+                break;
 
             case self::ASIN:
                 return 'asin';
-            break;
+                break;
 
             case self::ACOS:
                 return 'acos';
-            break;
+                break;
 
             case self::ATAN:
                 return 'atan';
-            break;
+                break;
 
             case self::ATAN2:
                 return 'atan2';
-            break;
+                break;
 
             case self::ASEC:
                 return 'asec';
-            break;
+                break;
 
             case self::ACSC:
                 return 'acsc';
-            break;
+                break;
 
             case self::ACOT:
                 return 'acot';
-            break;
+                break;
 
             case self::SINH:
                 return 'sinh';
-            break;
+                break;
 
             case self::COSH:
                 return 'cosh';
-            break;
+                break;
 
             case self::TANH:
                 return 'tanh';
-            break;
+                break;
 
             case self::SECH:
                 return 'sech';
-            break;
+                break;
 
             case self::CSCH:
                 return 'csch';
-            break;
+                break;
 
             case self::COTH:
                 return 'coth';
-            break;
+                break;
 
             case self::LOG:
                 return 'log';
-            break;
+                break;
 
             case self::LN:
                 return 'ln';
-            break;
+                break;
 
             case self::EXP:
                 return 'exp';
-            break;
+                break;
 
             case self::ABS:
                 return 'abs';
-            break;
+                break;
 
             case self::SIGNUM:
                 return 'signum';
-            break;
+                break;
 
             case self::FLOOR:
                 return 'floor';
-            break;
+                break;
 
             case self::CEIL:
                 return 'ceil';
-            break;
+                break;
 
             case self::TO_DEGREES:
                 return 'toDegrees';
-            break;
+                break;
 
             case self::TO_RADIANS:
                 return 'toRadians';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

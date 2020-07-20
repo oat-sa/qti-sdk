@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,32 +23,29 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use \Exception;
-use \DOMElement;
+use DOMElement;
+use Exception;
 
 /**
  * Exception to be thrown when an error occurs during the unmarshalling process
  * of a DOMElement object.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class UnmarshallingException extends Exception
 {
     /**
-	 * The DOMElement object that caused the exception to be thrown.
-	 *
-	 * @var \DOMElement
-	 */
+     * The DOMElement object that caused the exception to be thrown.
+     *
+     * @var DOMElement
+     */
     private $DOMElement;
 
     /**
-	 * Create a new instance of UnmarshallingException.
-	 *
-	 * @param string $message A human-readable message which describe the exception.
-	 * @param \DOMElement $element The DOMElement object that caused the exception to be thrown.
-	 * @param \Exception $previous A previous Exception that caused the exception to be thrown.
-	 */
+     * Create a new instance of UnmarshallingException.
+     *
+     * @param string $message A human-readable message which describe the exception.
+     * @param DOMElement $element The DOMElement object that caused the exception to be thrown.
+     * @param Exception $previous A previous Exception that caused the exception to be thrown.
+     */
     public function __construct($message, DOMElement $element, Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
@@ -55,20 +53,20 @@ class UnmarshallingException extends Exception
     }
 
     /**
-	 * Get the DOMElement object that caused the exception to be thrown.
-	 *
-	 * @return \DOMElement A DOMElement object.
-	 */
+     * Get the DOMElement object that caused the exception to be thrown.
+     *
+     * @return DOMElement A DOMElement object.
+     */
     public function getDOMElement()
     {
         return $this->DOMElement;
     }
 
     /**
-	 * Set the DOMElement object that caused the exception to be thrown.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 */
+     * Set the DOMElement object that caused the exception to be thrown.
+     *
+     * @param DOMElement $element A DOMElement object.
+     */
     protected function setDOMElement(DOMElement $element)
     {
         $this->DOMElement = $element;

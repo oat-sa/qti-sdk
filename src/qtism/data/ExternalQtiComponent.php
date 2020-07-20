@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2014-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,13 +24,10 @@
 namespace qtism\data;
 
 use qtism\common\dom\SerializableDomDocument;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * Represents a gateway to a component from an external (non-QTI) particular namespace.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ExternalQtiComponent extends QtiComponent implements IExternal
 {
@@ -65,14 +63,13 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
      * Returns the XML representation of the external component as
      * a DOMDocument object.
      *
-     * @return \qtism\common\dom\SerializableDomDocument A DOMDocument (serializable) object representing the content of the external component.
-     * @throws \RuntimeException If the root element of the XML representation is not from the target namespace or the XML could not be parsed.
+     * @return SerializableDomDocument A DOMDocument (serializable) object representing the content of the external component.
+     * @throws RuntimeException If the root element of the XML representation is not from the target namespace or the XML could not be parsed.
      */
     public function getXml()
     {
         // Build the DOMDocument object only on demand.
         if ($this->xml === null) {
-
             $xml = new SerializableDomDocument('1.0', 'UTF-8');
             if (@$xml->loadXML($this->getXmlString()) === false) {
                 $msg = "The XML content '" . $this->getXmlString() . "' of the '" . $this->getQtiClassName() . "' external component could not be parsed correctly.";
@@ -93,7 +90,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     /**
      * Set the XML representation of the external component.
      *
-     * @param \qtism\common\dom\SerializableDomDocument $xml An XML Document
+     * @param SerializableDomDocument $xml An XML Document
      */
     protected function setXml(SerializableDomDocument $xml)
     {

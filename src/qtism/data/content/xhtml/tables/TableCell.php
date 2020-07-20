@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,19 +23,16 @@
 
 namespace qtism\data\content\xhtml\tables;
 
-use qtism\data\content\FlowCollection;
+use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\FlowCollection;
 
 /**
  * From IMS QTI:
  *
  * In XHTML, table cells are represented by either th or td and these share
  * the following attributes and content model:
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class TableCell extends BodyElement
 {
@@ -89,7 +87,7 @@ abstract class TableCell extends BodyElement
     /**
      * The components composing the TableCell.
      *
-     * @var \qtism\data\content\FlowCollection
+     * @var FlowCollection
      * @qtism-bean-property
      */
     private $content;
@@ -101,7 +99,7 @@ abstract class TableCell extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -118,7 +116,7 @@ abstract class TableCell extends BodyElement
     /**
      * Specify the th element each td element is related to.
      *
-     * @param \qtism\common\collections\IdentifierCollection $headers A collection of QTI identifiers.
+     * @param IdentifierCollection $headers A collection of QTI identifiers.
      */
     public function setHeaders(IdentifierCollection $headers)
     {
@@ -128,7 +126,7 @@ abstract class TableCell extends BodyElement
     /**
      * Get the th element each td element is related to.
      *
-     * @return \qtism\common\collections\IdentifierCollection A collection of QTI identifiers.
+     * @return IdentifierCollection A collection of QTI identifiers.
      */
     public function getHeaders()
     {
@@ -149,7 +147,7 @@ abstract class TableCell extends BodyElement
      * Set the scope attribute.
      *
      * @param integer $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
-     * @throws \InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
+     * @throws InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
      */
     public function setScope($scope)
     {
@@ -185,7 +183,7 @@ abstract class TableCell extends BodyElement
      * Set the value of the abbr attribute.
      *
      * @param string $abbr A string or an empty string if no abbr is defined.
-     * @throws \InvalidArgumentException If $bbr is not a string.
+     * @throws InvalidArgumentException If $bbr is not a string.
      */
     public function setAbbr($abbr)
     {
@@ -221,7 +219,7 @@ abstract class TableCell extends BodyElement
      * Set the value of the axis attribute.
      *
      * @param string $axis A string. Give an empty string if no axis is indicated.
-     * @throws \InvalidArgumentException If $axis is not a string.
+     * @throws InvalidArgumentException If $axis is not a string.
      */
     public function setAxis($axis)
     {
@@ -258,7 +256,7 @@ abstract class TableCell extends BodyElement
      * no rowspan attribute is set.
      *
      * @param integer $rowspan
-     * @throws \InvalidArgumentException If $rowspan is not an integer.
+     * @throws InvalidArgumentException If $rowspan is not an integer.
      */
     public function setRowspan($rowspan)
     {
@@ -296,7 +294,7 @@ abstract class TableCell extends BodyElement
      * no colspan is set.
      *
      * @param integer $colspan An integer.
-     * @throws \InvalidArgumentException If $colspan is not an integer.
+     * @throws InvalidArgumentException If $colspan is not an integer.
      */
     public function setColspan($colspan)
     {
@@ -332,7 +330,7 @@ abstract class TableCell extends BodyElement
     /**
      * Set the components composing the TableCell.
      *
-     * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
+     * @param FlowCollection $content A collection of Flow objects.
      */
     public function setContent(FlowCollection $content)
     {
@@ -342,7 +340,7 @@ abstract class TableCell extends BodyElement
     /**
      * Get the components composing the TableCell.
      *
-     * @return \qtism\data\content\FlowCollection
+     * @return FlowCollection
      */
     public function getContent()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
@@ -34,19 +34,16 @@ use qtism\data\expressions\DefaultVal;
  * defaultValue or NULL if no default value was declared. When used in outcomes processing
  * item identifier prefixing (see variable) may be used to obtain the default value from an
  * individual item.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class DefaultProcessor extends ExpressionProcessor
 {
     /**
-	 * Returns the defaultValue of the current Expression to be processed. If no Variable
-	 * with the given identifier is found, null is returned. If the Variable has no defaultValue,
-	 * null is returned.
-	 *
-	 * @return mixed A QTI Runtime compliant value.
-	 */
+     * Returns the defaultValue of the current Expression to be processed. If no Variable
+     * with the given identifier is found, null is returned. If the Variable has no defaultValue,
+     * null is returned.
+     *
+     * @return mixed A QTI Runtime compliant value.
+     */
     public function process()
     {
         $expr = $this->getExpression();
@@ -56,7 +53,7 @@ class DefaultProcessor extends ExpressionProcessor
 
         return ($var === null) ? null : $var->getDefaultValue();
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

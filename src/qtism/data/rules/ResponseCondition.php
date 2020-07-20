@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -36,43 +37,40 @@ use qtism\data\QtiComponent;
  * to true then consideration passes to the next responseElseIf or, if there are
  * no more responseElseIf parts then the sub-rules of the responseElse are
  * followed (if specified).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ResponseCondition extends QtiComponent implements ResponseRule
 {
     /**
-	 * A ResponseIf object.
-	 *
-	 * @var \qtism\data\rules\ResponseIf
-	 * @qtism-bean-property
-	 */
+     * A ResponseIf object.
+     *
+     * @var ResponseIf
+     * @qtism-bean-property
+     */
     private $responseIf;
 
     /**
-	 * A collection of ResponseElseIf objects.
-	 *
-	 * @var \qtism\data\rules\ResponseElseIfCollection
-	 * @qtism-bean-property
-	 */
+     * A collection of ResponseElseIf objects.
+     *
+     * @var ResponseElseIfCollection
+     * @qtism-bean-property
+     */
     private $responseElseIfs;
 
     /**
-	 * An optional ResponseElse object.
-	 *
-	 * @var \qtism\data\rules\ResponseElse
-	 * @qtism-bean-property
-	 */
+     * An optional ResponseElse object.
+     *
+     * @var ResponseElse
+     * @qtism-bean-property
+     */
     private $responseElse = null;
 
     /**
-	 * Create a new instance of ResponseCondition.
-	 *
-	 * @param \qtism\data\rules\ResponseIf $responseIf An ResponseIf object.
-	 * @param \qtism\data\rules\ResponseElseIfCollection $responseElseIfs A collection of ResponseElseIf objects.
-	 * @param \qtism\data\rules\ResponseElse $responseElse An ResponseElse object.
-	 */
+     * Create a new instance of ResponseCondition.
+     *
+     * @param ResponseIf $responseIf An ResponseIf object.
+     * @param ResponseElseIfCollection $responseElseIfs A collection of ResponseElseIf objects.
+     * @param ResponseElse $responseElse An ResponseElse object.
+     */
     public function __construct(ResponseIf $responseIf, ResponseElseIfCollection $responseElseIfs = null, ResponseElse $responseElse = null)
     {
         $this->setResponseIf($responseIf);
@@ -81,92 +79,92 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     }
 
     /**
-	 * Get the ResponseIf object.
-	 *
-	 * @return \qtism\data\rules\ResponseIf A ResponseIf object.
-	 */
+     * Get the ResponseIf object.
+     *
+     * @return ResponseIf A ResponseIf object.
+     */
     public function getResponseIf()
     {
         return $this->responseIf;
     }
 
     /**
-	 * Set the ResponseIf object.
-	 *
-	 * @param \qtism\data\rules\ResponseIf $responseIf A ResponseIf object.
-	 */
+     * Set the ResponseIf object.
+     *
+     * @param ResponseIf $responseIf A ResponseIf object.
+     */
     public function setResponseIf(ResponseIf $responseIf)
     {
         $this->responseIf = $responseIf;
     }
 
     /**
-	 * Get the collection of ResponseElseIf objects.
-	 *
-	 * @return \qtism\data\rules\ResponseElseIfCollection A ResponseElseIfCollection object.
-	 */
+     * Get the collection of ResponseElseIf objects.
+     *
+     * @return ResponseElseIfCollection A ResponseElseIfCollection object.
+     */
     public function getResponseElseIfs()
     {
         return $this->responseElseIfs;
     }
 
     /**
-	 * Set the collection of ResponseElseIf objects.
-	 *
-	 * @param \qtism\data\rules\ResponseElseIfCollection $responseElseIfs A ResponseElseIfCollection object.
-	 */
+     * Set the collection of ResponseElseIf objects.
+     *
+     * @param ResponseElseIfCollection $responseElseIfs A ResponseElseIfCollection object.
+     */
     public function setResponseElseIfs(ResponseElseIfCollection $responseElseIfs)
     {
         $this->responseElseIfs = $responseElseIfs;
     }
 
     /**
-	 * Get the optional ResponseElse object. Returns null if not specified.
-	 *
-	 * @return \qtism\data\rules\ResponseElse A ResponseElse object.
-	 */
+     * Get the optional ResponseElse object. Returns null if not specified.
+     *
+     * @return ResponseElse A ResponseElse object.
+     */
     public function getResponseElse()
     {
         return $this->responseElse;
     }
 
     /**
-	 * Set the optional ResponseElse object. A null value means there is no else.
-	 *
-	 * @param \qtism\data\rules\ResponseElse $responseElse A ResponseElse object.
-	 */
+     * Set the optional ResponseElse object. A null value means there is no else.
+     *
+     * @param ResponseElse $responseElse A ResponseElse object.
+     */
     public function setResponseElse(ResponseElse $responseElse = null)
     {
         $this->responseElse = $responseElse;
     }
 
     /**
-	 * Whether or not a ResponseElse object is defined for the response condition.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not a ResponseElse object is defined for the response condition.
+     *
+     * @return boolean
+     */
     public function hasResponseElse()
     {
         return $this->getResponseElse() !== null;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'responseCondition';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
-                    array($this->getResponseIf()),
-                    $this->getResponseElseIfs()->getArrayCopy()
-                );
+            [$this->getResponseIf()],
+            $this->getResponseElseIfs()->getArrayCopy()
+        );
 
         if (!is_null($this->getResponseElse())) {
             $comp[] = $this->getResponseElse();

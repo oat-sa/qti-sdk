@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,16 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentItemRefCollection;
 
 /**
  * The ItemSubsetProcessor class is the base class of Outcome Processing only
@@ -51,29 +53,26 @@ use qtism\data\AssessmentItemRef;
  * If specified, only variables from items with a matching category are included.
  *
  * If specified, only variables from items with no matching category are included.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class ItemSubsetProcessor extends ExpressionProcessor
 {
     /**
-	 * A convenience method enabling you to get the sectionIdentifier attribute value
-	 * of the ItemSubset expression to be processed.
-	 *
-	 * @return string A section identifier. If no sectionIdentifier attribute was specified, an empty string ('') is returned.
-	 */
+     * A convenience method enabling you to get the sectionIdentifier attribute value
+     * of the ItemSubset expression to be processed.
+     *
+     * @return string A section identifier. If no sectionIdentifier attribute was specified, an empty string ('') is returned.
+     */
     protected function getSectionIdentifier()
     {
         return $this->getExpression()->getSectionIdentifier();
     }
 
     /**
-	 * A convenience method enabling you to get the includeCategory attribute value
-	 * of the ItemSubset expression to be processed.
-	 *
-	 * @return \qtism\common\collections\IdentifierCollection A collection of category identifiers or NULL if no categories to be included were specified.
-	 */
+     * A convenience method enabling you to get the includeCategory attribute value
+     * of the ItemSubset expression to be processed.
+     *
+     * @return IdentifierCollection A collection of category identifiers or NULL if no categories to be included were specified.
+     */
     protected function getIncludeCategories()
     {
         $categories = $this->getExpression()->getIncludeCategories();
@@ -82,11 +81,11 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
     }
 
     /**
-	 * A convenience method enabling you to get the excludeCategory attribute value of the
-	 * ItemSubset expression to be processed.
-	 *
-	 * @return \qtism\common\collections\IdentifierCollection A collection of category identifiers or NULL if no categories to be excluded were specified.
-	 */
+     * A convenience method enabling you to get the excludeCategory attribute value of the
+     * ItemSubset expression to be processed.
+     *
+     * @return IdentifierCollection A collection of category identifiers or NULL if no categories to be excluded were specified.
+     */
     protected function getExcludeCategories()
     {
         $categories = $this->getExpression()->getExcludeCategories();
@@ -95,12 +94,12 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
     }
 
     /**
-	 * Convenience method that returns the mapped variable identifier from $targetIdentifier.
-	 *
-	 * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object where variable mappings can be found.
-	 * @param string $targetIdentifier A targetIdentifier to be replaced by a sourceIdentifier.
-	 * @return string|false The mapped identifier or $targetIdentifier if no mapping could be established.
-	 */
+     * Convenience method that returns the mapped variable identifier from $targetIdentifier.
+     *
+     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object where variable mappings can be found.
+     * @param string $targetIdentifier A targetIdentifier to be replaced by a sourceIdentifier.
+     * @return string|false The mapped identifier or $targetIdentifier if no mapping could be established.
+     */
     protected static function getMappedVariableIdentifier(AssessmentItemRef $assessmentItemRef, $targetIdentifier)
     {
         // return false if no mapping found.
@@ -120,10 +119,10 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
     }
 
     /**
-	 * A convenience method enabling you to get the item subset corresponding to the ItemSubset expression to be processed.
-	 *
-	 * @return \qtism\data\AssessmentItemRefCollection A collection of AssessmentItemRef object that match the criteria expressed by the ItemSubset expression to be processed.
-	 */
+     * A convenience method enabling you to get the item subset corresponding to the ItemSubset expression to be processed.
+     *
+     * @return AssessmentItemRefCollection A collection of AssessmentItemRef object that match the criteria expressed by the ItemSubset expression to be processed.
+     */
     protected function getItemSubset()
     {
         $sectionIdentifier = $this->getSectionIdentifier();

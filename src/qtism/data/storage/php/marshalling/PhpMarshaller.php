@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,20 +23,17 @@
 
 namespace qtism\data\storage\php\marshalling;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * The base class for all PHP marshallers.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class PhpMarshaller
 {
     /**
      * Get the marshalling context.
      *
-     * @var \qtism\data\storage\php\marshalling\PhpMarshallingContext
+     * @var PhpMarshallingContext
      */
     private $context;
 
@@ -49,9 +47,9 @@ abstract class PhpMarshaller
     /**
      * Create a new PhpMarshaller object.
      *
-     * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
+     * @param PhpMarshallingContext $context A PhpMarshallingContext object.
      * @param mixed The value to be marshalled.
-     * @throws \InvalidArgumentException If $toMarshall cannot be handled by this PhpMarshaller implementation.
+     * @throws InvalidArgumentException If $toMarshall cannot be handled by this PhpMarshaller implementation.
      */
     public function __construct(PhpMarshallingContext $context, $toMarshall)
     {
@@ -63,7 +61,7 @@ abstract class PhpMarshaller
      * Set the value that has to be marshalled.
      *
      * @param mixed $toMarshall The value to be marshalled.
-     * @throws \InvalidArgumentException If the value $toMarshall cannot be managed by this implementation.
+     * @throws InvalidArgumentException If the value $toMarshall cannot be managed by this implementation.
      */
     public function setToMarshall($toMarshall)
     {
@@ -88,7 +86,7 @@ abstract class PhpMarshaller
     /**
      * Set the marshalling context.
      *
-     * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
+     * @param PhpMarshallingContext $context A PhpMarshallingContext object.
      */
     protected function setContext(PhpMarshallingContext $context)
     {
@@ -98,7 +96,7 @@ abstract class PhpMarshaller
     /**
      * Get the marshalling context.
      *
-     * @return \qtism\data\storage\php\marshalling\PhpMarshallingContext A PhpMarshallingContext object.
+     * @return PhpMarshallingContext A PhpMarshallingContext object.
      */
     protected function getContext()
     {
@@ -110,7 +108,7 @@ abstract class PhpMarshaller
      * of the marshall method implementation to push all marshalled values on the
      * variable names stack.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs during the marshalling process.
+     * @throws PhpMarshallingException If an error occurs during the marshalling process.
      */
     abstract public function marshall();
 

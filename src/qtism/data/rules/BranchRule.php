@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,11 @@
 
 namespace qtism\data\rules;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\data\expressions\Expression;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
+use qtism\data\expressions\Expression;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI
@@ -46,39 +47,36 @@ use \InvalidArgumentException;
  * might be used in conjunction with one or more Item Templates to achieve drill and
  * practice, for example.) However, unbounded repitition is not supported. Comments
  * are sought on whether this approach is too restrictive.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BranchRule extends QtiComponent implements Rule
 {
     /**
-	 * The expression of the BranchRule.
-	 *
-	 * @var \qtism\data\expressions\Expression
-	 * @qtism-bean-property
-	 */
+     * The expression of the BranchRule.
+     *
+     * @var Expression
+     * @qtism-bean-property
+     */
     private $expression;
 
     /**
-	 * The following values are reserved and have special meaning when used as a target
-	 * identifier: EXIT_SECTION jumps over all the remaining children of the current
-	 * section to the item (or section) immediately following it; EXIT_TESTPART finishes
-	 * the current testPart immediately and EXIT_TEST finishes the entire assessmentTest
-	 * immediately.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The following values are reserved and have special meaning when used as a target
+     * identifier: EXIT_SECTION jumps over all the remaining children of the current
+     * section to the item (or section) immediately following it; EXIT_TESTPART finishes
+     * the current testPart immediately and EXIT_TEST finishes the entire assessmentTest
+     * immediately.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $target;
 
     /**
-	 * Create a new instance of BranchRule.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression The expression of the BranchRule.
-	 * @param string $target The target identifier of the BranchRule.
-	 * @throws \InvalidArgumentException If $target is not a valid QTI Identifier.
-	 */
+     * Create a new instance of BranchRule.
+     *
+     * @param Expression $expression The expression of the BranchRule.
+     * @param string $target The target identifier of the BranchRule.
+     * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
+     */
     public function __construct(Expression $expression, $target)
     {
         $this->setExpression($expression);
@@ -86,41 +84,41 @@ class BranchRule extends QtiComponent implements Rule
     }
 
     /**
-	 * Get the expression of the BranchRule.
-	 *
-	 * @return \qtism\data\expressions\Expression A QTI Expression.
-	 */
+     * Get the expression of the BranchRule.
+     *
+     * @return Expression A QTI Expression.
+     */
     public function getExpression()
     {
         return $this->expression;
     }
 
     /**
-	 * Set the expression of the BranchRule.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
-	 */
+     * Set the expression of the BranchRule.
+     *
+     * @param Expression $expression A QTI Expression.
+     */
     public function setExpression(Expression $expression)
     {
         $this->expression = $expression;
     }
 
     /**
-	 * Set the target identifier of the BranchRule.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Set the target identifier of the BranchRule.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getTarget()
     {
         return $this->target;
     }
 
     /**
-	 * Get the target identifier of the BranchRule.
-	 *
-	 * @param string $target A QTI Identifier.
-	 * @throws \InvalidArgumentException If $target is not a valid QTI Identifier.
-	 */
+     * Get the target identifier of the BranchRule.
+     *
+     * @param string $target A QTI Identifier.
+     * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
+     */
     public function setTarget($target)
     {
         if (Format::isIdentifier($target)) {
@@ -132,19 +130,19 @@ class BranchRule extends QtiComponent implements Rule
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'branchRule';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
-        $comp = array($this->getExpression());
+        $comp = [$this->getExpression()];
 
         return new QtiComponentCollection($comp);
     }

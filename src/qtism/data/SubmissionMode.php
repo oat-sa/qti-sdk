@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * Submission Mode enumeration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SubmissionMode implements Enumeration
 {
@@ -38,10 +36,10 @@ class SubmissionMode implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'INDIVIDUAL' => self::INDIVIDUAL,
-            'SIMULTANEOUS' => self::SIMULTANEOUS
-        );
+            'SIMULTANEOUS' => self::SIMULTANEOUS,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -49,15 +47,15 @@ class SubmissionMode implements Enumeration
         switch (strtolower($name)) {
             case 'individual':
                 return self::INDIVIDUAL;
-            break;
+                break;
 
             case 'simultaneous':
                 return self::SIMULTANEOUS;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -66,15 +64,15 @@ class SubmissionMode implements Enumeration
         switch ($constant) {
             case self::INDIVIDUAL:
                 return 'individual';
-            break;
+                break;
 
             case self::SIMULTANEOUS:
                 return 'simultaneous';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

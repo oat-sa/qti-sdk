@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,48 +15,44 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\storage\binary;
 
-use qtism\common\storage\IStream;
-use qtism\data\AssessmentTest;
-use qtism\runtime\tests\AssessmentTestSession;
-use qtism\common\storage\MemoryStream;
-use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\files\FileManagerException;
-use qtism\runtime\tests\AbstractSessionManager;
+use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\storage\IStream;
+use qtism\common\storage\MemoryStream;
+use qtism\data\AssessmentTest;
 use qtism\runtime\storage\common\StorageException;
-use \RuntimeException;
+use qtism\runtime\tests\AbstractSessionManager;
+use qtism\runtime\tests\AssessmentTestSession;
+use RuntimeException;
 
 /**
  * A Binary AssessmentTestSession Storage Service implementation which stores the binary data related
  * to AssessmentTestSession objects on the local file system directory of the host file system.
  *
  * This implementation was created for test purpose and should not be used for production.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
 {
     /**
      * The path on the local file system where persistent data will be stored.
-     * 
+     *
      * @var string
      */
     private $path;
-    
+
     /**
      * Create a new LocalQtiBinaryStorage AssessmentTestSssion Storage Service.
      *
-     * @param \qtism\runtime\tests\AbstractSessionManager $manager
-     * @param \qtism\data\AssessmentTest $test
+     * @param AbstractSessionManager $manager
+     * @param AssessmentTest $test
      * @param string $path (optional) The path on the local file system to store persistent data about AssessmentTestSession objects. If no path is provided, the default location will be the temporary directory of the Operating System.
      */
     public function __construct(AbstractSessionManager $manager, AssessmentTest $test, $path = '')
@@ -64,34 +61,34 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $this->setSeeker(new BinaryAssessmentTestSeeker($test));
         $this->setPath((empty($path) === false) ? $path : sys_get_temp_dir());
     }
-    
+
     /**
      * Set the path on the local file system where persistent data will be stored.
-     * 
+     *
      * @param string $path
      */
     public function setPath($path)
     {
         $this->path = $path;
     }
-    
+
     /**
      * Get the path on the local file system where persistent data will be stored.
-     * 
+     *
      * @return string
      */
     public function getPath()
     {
         return $this->path;
     }
-    
+
     /**
      * Persist the binary stream $stream which contains the binary equivalent of $assessmentTestSession in
      * the temporary directory of the file system.
      *
-     * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession The AssessmentTestSession to be persisted.
-     * @param \qtism\common\storage\MemoryStream $stream The MemoryStream to be stored in the temporary directory of the host file system.
-     * @throws \RuntimeException If the binary stream cannot be persisted.
+     * @param AssessmentTestSession $assessmentTestSession The AssessmentTestSession to be persisted.
+     * @param MemoryStream $stream The MemoryStream to be stored in the temporary directory of the host file system.
+     * @throws RuntimeException If the binary stream cannot be persisted.
      */
     protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream)
     {
@@ -111,8 +108,8 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * instantiated from $assessmentTest from the temporary directory of the file system.
      *
      * @param string $sessionId The session ID of the AssessmentTestSession to retrieve.
-     * @return \qtism\common\storage\MemoryStream A MemoryStream object.
-     * @throws \RuntimeException If the binary stream cannot be persisted.
+     * @return MemoryStream A MemoryStream object.
+     * @throws RuntimeException If the binary stream cannot be persisted.
      */
     protected function getRetrievalStream($sessionId)
     {
@@ -135,7 +132,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     {
         return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
     }
-    
+
     /**
      * @see \qtism\runtime\storage\common\AbstractStorage::exists()
      */
@@ -144,7 +141,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         return @is_readable($path);
     }
-    
+
     /**
      * @see \qtism\runtime\storage\common\AbstractStorage::delete()
      */
@@ -153,7 +150,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $fileManager = $this->getManager()->getFileManager();
         foreach ($assessmentTestSession->getFiles() as $file) {
             try {
-                $fileManager->delete($file);    
+                $fileManager->delete($file);
             } catch (FileManagerException $e) {
                 throw new StorageException(
                     "An unexpected error occured while deleting file '" . $file->getIdentifier() . "' bound to Assessment Test Session '" . $assessmentTestSession->getSessionId() . "'.",
@@ -162,7 +159,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
                 );
             }
         }
-        
+
         return @unlink($this->getPath() . DIRECTORY_SEPARATOR . md5($assessmentTestSession->getSessionId()) . '.bin');
     }
 }

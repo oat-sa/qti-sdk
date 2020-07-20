@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,27 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\storage\xml\Utils;
-use qtism\runtime\rendering\RenderingException;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
-use \RuntimeException;
+use qtism\data\storage\xml\Utils;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use qtism\runtime\rendering\RenderingException;
+use RuntimeException;
 
 /**
  * Math Renderer.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathRenderer extends ExternalQtiComponentRenderer
 {
@@ -42,11 +39,11 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * Whether to embed the resulting output into the MathML namespace.
      */
     private $namespaceOutput = true;
-    
+
     /**
      * Create a MathRenderer object.
-     * 
-     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     *
+     * @param AbstractMarkupRenderingEngine $renderingEngine
      * @param boolean $namespaceOutput Whether to embed the resulting output into the MathML namespace.
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
@@ -54,27 +51,27 @@ class MathRenderer extends ExternalQtiComponentRenderer
         parent::__construct($renderingEngine);
         $this->setNamespaceOutput($namespaceOutput);
     }
-    
+
     /**
      * Set whether the resulting output must be embedded in the MathML namespace.
-     * 
+     *
      * @param boolean $namespaceOutput
      */
     public function setNamespaceOutput($namespaceOutput)
     {
         $this->namespaceOutput = $namespaceOutput;
     }
-    
+
     /**
      * Wheter the resulting output must be embedded in the MathML namespace.
-     * 
+     *
      * @return boolean
      */
     public function mustNamespaceOutput()
     {
         return $this->namespaceOutput;
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
      */
@@ -85,11 +82,11 @@ class MathRenderer extends ExternalQtiComponentRenderer
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
             $nodeNamespaceUri = $node->namespaceURI;
             $node = Utils::anonimizeElement($node);
-            
+
             if ($this->mustNamespaceOutput() === true) {
                 $node->setAttribute('xmlns', $nodeNamespaceUri);
             }
-            
+
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
             $msg = "An error occured while rendering the XML content of the 'MathML' external component.";

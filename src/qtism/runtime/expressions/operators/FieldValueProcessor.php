@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,17 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
 
 use qtism\data\expressions\operators\FieldValue;
-
 
 /**
  * The FieldValueProcessor class aims at processing FieldValue expressions.
@@ -34,18 +33,15 @@ use qtism\data\expressions\operators\FieldValue;
  * The field-value operator takes a sub-expression with a record container value.
  * The result is the value of the field with the specified fieldIdentifier. If there
  * is no field with that identifier then the result of the operator is NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class FieldValueProcessor extends OperatorProcessor
 {
     /**
-	 * Process the FieldValue object.
-	 *
-	 * @return mixed|null A QTI Runtime compliant value or null if there is no field with that identifier.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the FieldValue object.
+     *
+     * @return mixed|null A QTI Runtime compliant value or null if there is no field with that identifier.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -59,7 +55,7 @@ class FieldValueProcessor extends OperatorProcessor
 
         return $operands[0][$fieldIdentifier];
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

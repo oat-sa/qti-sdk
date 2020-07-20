@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,33 +15,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\utils;
 
-class Php 
+class Php
 {
     /**
      * Returns a displayable datatype for any $value.
-     * 
+     *
      * Example:
      * echo Php::displayType(null);
      * echo Php::displayType(12);
      * echo Php::displayType(12.1);
      * echo Php::displayType(new stdClass());
-     * 
+     *
      * // null
      * // php:integer
      * // php:double
      * // stdClass
-     * 
+     *
      * @param mixed $value
      * @return string
      */
-    static public function displayType($value)
+    public static function displayType($value)
     {
         if (is_null($value) === true) {
             return 'null';
@@ -49,5 +51,5 @@ class Php
         } else {
             return 'php:' . gettype($value);
         }
-    }    
+    }
 }

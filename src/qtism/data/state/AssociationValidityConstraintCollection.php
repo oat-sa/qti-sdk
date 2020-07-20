@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,23 +23,20 @@
 
 namespace qtism\data\state;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * A collection of AssociationValidityConstraint objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssociationValidityConstraintCollection extends QtiComponentCollection
 {
     /**
-	 * Check if a given $value is an instance of AssociationValidityConstraint.
-	 *
+     * Check if a given $value is an instance of AssociationValidityConstraint.
+     *
      * @param mixed $value
-	 * @throws \InvalidArgumentException If the given $value is not an instance of AssociationValidityConstraint.
-	 */
+     * @throws InvalidArgumentException If the given $value is not an instance of AssociationValidityConstraint.
+     */
     protected function checkType($value)
     {
         if (!$value instanceof AssociationValidityConstraint) {

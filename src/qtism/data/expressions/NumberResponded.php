@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,15 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\expressions;
-
-use qtism\common\enums\Cardinality;
 
 /**
  * From IMS QTI:
@@ -32,9 +31,6 @@ use qtism\common\enums\Cardinality;
  * response was given. In other words, items for which at least one declared response
  * has a value that differs from its declared default (typically NULL). The result is an
  * integer with single cardinality.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class NumberResponded extends ItemSubset
 {

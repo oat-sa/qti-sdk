@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,17 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup;
 
-use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
+use qtism\runtime\rendering\RenderingException;
 
 class MarkupPostRenderer implements Renderable
 {
@@ -49,17 +49,17 @@ class MarkupPostRenderer implements Renderable
      * @var boolean
      */
     private $templateOriented = false;
-    
+
     /**
      * Template fragments generated during the last invokation of ::render().
-     * 
+     *
      * @var array
      */
     private $fragments;
-    
+
     /**
      * Template fragments path prefix.
-     * 
+     *
      * @var string
      */
     private $fragmentPrefix = '';
@@ -140,42 +140,42 @@ class MarkupPostRenderer implements Renderable
     {
         return $this->templateOriented;
     }
-    
+
     /**
      * Get the template fragments generated during the last invokation of the ::render() method.
-     * 
+     *
      * The returned array is composed of arrays with the following keys:
-     * 
+     *
      * * path: the path relative to the rendered file where the fragment should be stored.
      * * content: the content of the fragment.
-     * 
+     *
      * @return array
      */
     public function getFragments()
     {
         return $this->fragments;
     }
-    
+
     /**
      * Set the template fragments generated during the last invokation of the ::render() method.
-     * 
+     *
      * @param array $fragments
      */
     protected function setFragments(array $fragments)
     {
         $this->fragments = $fragments;
     }
-    
+
     /**
      * Set the prefix to be used for fragment file names.
-     * 
-     * @param string $fragmentPrefix.
+     *
+     * @param string $fragmentPrefix .
      */
     public function setFragmentPrefix($fragmentPrefix)
     {
         $this->fragmentPrefix = $fragmentPrefix;
     }
-    
+
     /**
      * Get the prefix to be used for fragment file names.
      */
@@ -191,8 +191,8 @@ class MarkupPostRenderer implements Renderable
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
-        $this->setFragments(array());
-        
+        $this->setFragments([]);
+
         /*
          * 1. Format the output.
          */
@@ -219,17 +219,17 @@ class MarkupPostRenderer implements Renderable
             $className = "qtism\\runtime\\rendering\\markup\\Utils";
             $call = "<?php echo ${className}::printVariable(\\1); ?>";
             $output = preg_replace('/<!--\s+qtism-printVariable\((.+?)\)\s+-->/iu', $call, $output);
-            
-            $matches = array();
+
+            $matches = [];
             $fragmentPrefix = $this->getFragmentPrefix();
             if (($c = preg_match_all('/<!--\s+(?:qtism-include)\s*\((?:(\$.+?), ([0-9]+), "(.+?)", ([0-9]+?))\)\s*:\s+-->(.+?)<!--\s+qtism-endinclude\s+-->/ius', $output, $matches)) > 0) {
                 $fragments = $this->getFragments();
                 for ($i = 0; $i < $c; $i++) {
                     $output = str_replace($matches[0][$i], '<?php include(dirname(__FILE__) . "/' . $fragmentPrefix . $matches[2][$i] . '-" . ' . $matches[1][$i] . '->getShuffledChoiceIdentifierAt(' . $matches[2][$i] . ', ' . $matches[4][$i] . ') . ".phtml"); ?>', $output);
-                    $fragments[] = array(
+                    $fragments[] = [
                         'path' => $fragmentPrefix . $matches[2][$i] . '-' . $matches[3][$i] . '.phtml',
-                        'content' => $matches[5][$i]
-                    );
+                        'content' => $matches[5][$i],
+                    ];
                 }
                 $this->setFragments($fragments);
             }

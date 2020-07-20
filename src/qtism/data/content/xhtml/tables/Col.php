@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,16 +23,12 @@
 
 namespace qtism\data\content\xhtml\tables;
 
-use qtism\data\QtiComponentCollection;
-
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The col XHTML class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Col extends BodyElement
 {
@@ -50,7 +47,7 @@ class Col extends BodyElement
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The language of the bodyElement.
-     * @throws \InvalidArgumentException If one of the argument is invalid.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -62,7 +59,7 @@ class Col extends BodyElement
      * Set the span attribute.
      *
      * @param integer $span A strictly positive integer.
-     * @throws \InvalidArgumentException If $span is not a positive integer.
+     * @throws InvalidArgumentException If $span is not a positive integer.
      */
     public function setSpan($span)
     {

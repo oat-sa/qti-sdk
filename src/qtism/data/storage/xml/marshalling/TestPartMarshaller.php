@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,23 +23,18 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
-use qtism\data\TestPart;
-use qtism\data\TestFeedbackCollection;
-use qtism\data\ItemSessionControl;
-use qtism\data\SectionPartCollection;
-use qtism\data\rules\PreConditionCollection;
-use qtism\data\rules\BranchRuleCollection;
-use qtism\data\TimeLimits;
+use DOMElement;
 use qtism\data\NavigationMode;
+use qtism\data\QtiComponent;
+use qtism\data\rules\BranchRuleCollection;
+use qtism\data\rules\PreConditionCollection;
+use qtism\data\SectionPartCollection;
 use qtism\data\SubmissionMode;
-use \DOMElement;
+use qtism\data\TestFeedbackCollection;
+use qtism\data\TestPart;
 
 /**
  * Marshalling/Unmarshalling implementation for TestPart.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TestPartMarshaller extends Marshaller
 {
@@ -89,20 +85,17 @@ class TestPartMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($navigationMode = $this->getDOMElementAttributeAs($element, 'navigationMode')) !== null) {
-
                 if (($submissionMode = $this->getDOMElementAttributeAs($element, 'submissionMode')) !== null) {
-
                     // We do not use the regular DOMElement::getElementsByTagName method
                     // because it is recursive. We only want the first level elements with
                     // tagname = 'assessmentSection'.
-                    $assessmentSectionElts = $this->getChildElementsByTagName($element, array('assessmentSection', 'assessmentSectionRef'));
+                    $assessmentSectionElts = $this->getChildElementsByTagName($element, ['assessmentSection', 'assessmentSectionRef']);
                     $assessmentSections = new SectionPartCollection();
                     foreach ($assessmentSectionElts as $sectElt) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($sectElt);
@@ -178,8 +171,8 @@ class TestPartMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'testPart';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,29 +23,26 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
-use qtism\data\AssessmentItemRef;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
+use qtism\data\AssessmentItemRef;
+use qtism\data\QtiComponent;
+use qtism\data\state\TemplateDefaultCollection;
 use qtism\data\state\VariableMappingCollection;
 use qtism\data\state\WeightCollection;
-use qtism\data\state\TemplateDefaultCollection;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for assessmentItemRef.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentItemRefMarshaller extends SectionPartMarshaller
 {
     /**
-	 * Marshall an AssessmentItemRef object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An assessmentItemRef object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall an AssessmentItemRef object into a DOMElement object.
+     *
+     * @param QtiComponent $component An assessmentItemRef object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
@@ -82,12 +80,12 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI assessmentItemRef element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent An AssessmentItemRef object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'href' is missing.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI assessmentItemRef element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent An AssessmentItemRef object.
+     * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
@@ -141,8 +139,8 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentItemRef';

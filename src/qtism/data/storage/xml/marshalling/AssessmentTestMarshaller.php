@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,25 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use qtism\data\AssessmentTest;
+use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\TestFeedbackCollection;
 use qtism\data\TestPartCollection;
-use qtism\data\AssessmentTest;
-use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for assessmentTest.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class AssessmentTestMarshaller extends SectionPartMarshaller
 {
     /**
-	 * Marshall an AssessmentTest object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component An AssessmentTest object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall an AssessmentTest object into a DOMElement object.
+     *
+     * @param QtiComponent $component An AssessmentTest object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -91,22 +89,20 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI outcomeProcessing element.
-	 *
-	 * If $assessmentTest is provided, it will be decorated with the unmarshalled data and returned,
-	 * instead of creating a new AssessmentTest object.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @param \qtism\data\AssessmentTest $assessmentTest An AssessmentTest object to decorate.
-	 * @return QtiComponent An OutcomeProcessing object.
-	 * @throws UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI outcomeProcessing element.
+     *
+     * If $assessmentTest is provided, it will be decorated with the unmarshalled data and returned,
+     * instead of creating a new AssessmentTest object.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param AssessmentTest $assessmentTest An AssessmentTest object to decorate.
+     * @return QtiComponent An OutcomeProcessing object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
-
                 if (empty($assessmentTest)) {
                     $object = new AssessmentTest($identifier, $title);
                 } else {
@@ -181,7 +177,6 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                 $msg = "The mandatory attribute 'title' is missing from element 'assessmentTest'.";
                 throw new UnmarshallingException($msg, $element);
             }
-
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element 'assessmentTest'.";
             throw new UnmarshallingException($msg, $element);
@@ -189,8 +184,8 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentTest';

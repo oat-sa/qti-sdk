@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,15 @@
 
 namespace qtism\data\content\xhtml\presentation;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use qtism\data\QtiComponentCollection;
-use qtism\data\content\FlowStatic;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
+use qtism\data\content\FlowStatic;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The hr XHTML class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Hr extends BodyElement implements BlockStatic, FlowStatic
 {
@@ -52,7 +50,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '')
     {
@@ -63,7 +61,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
      * Set the base URI of the Hr.
      *
      * @param string $xmlBase A URI.
-     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '')
     {

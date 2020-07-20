@@ -1,8 +1,10 @@
 <?php
+
 /**
  * I don't even understand how it is correctly parsed...
  * But it's safe!
  */
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 

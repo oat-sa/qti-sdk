@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,37 +23,34 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\Math;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for Math.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathMarshaller extends Marshaller
 {
     /**
-	 * Marshall a Math object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A Math object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \MarshallingException
-	 */
+     * Marshall a Math object into a DOMElement object.
+     *
+     * @param QtiComponent $component A Math object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         return self::getDOMCradle()->importNode($component->getXml()->documentElement, true);
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a math element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A Math object.
-	 * @throws \UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a math element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A Math object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $node = $element->cloneNode(true);
@@ -61,8 +59,8 @@ class MathMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'math';

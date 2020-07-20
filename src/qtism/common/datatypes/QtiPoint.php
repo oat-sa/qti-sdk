@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,16 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
+use qtism\common\enums\Cardinality;
 
 /**
  * Represents the QTI Point datatype.
@@ -34,9 +36,6 @@ use \InvalidArgumentException;
  * graphic point. The two integers correspond to the horizontal (x-axis)
  * and vertical (y-axis) positions respectively. The up/down and
  * left/right senses of the axes are context dependent.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiPoint implements QtiDatatype
 {
@@ -59,7 +58,7 @@ class QtiPoint implements QtiDatatype
      *
      * @param int $x A position on the x-axis.
      * @param int $y A position on the y-axis.
-     * @throws \InvalidArgumentException If $x or $y are not integer values.
+     * @throws InvalidArgumentException If $x or $y are not integer values.
      */
     public function __construct($x, $y)
     {
@@ -71,7 +70,7 @@ class QtiPoint implements QtiDatatype
      * Set the position on the x-axis.
      *
      * @param int $x A position on the x-axis.
-     * @throws \InvalidArgumentException If $x is nto an integer value.
+     * @throws InvalidArgumentException If $x is nto an integer value.
      */
     public function setX($x)
     {
@@ -97,7 +96,7 @@ class QtiPoint implements QtiDatatype
      * Set the position on y-axis.
      *
      * @param int $y A position on the y-axis.
-     * @throws \InvalidArgumentException If $y is not an integer value.
+     * @throws InvalidArgumentException If $y is not an integer value.
      */
     public function setY($y)
     {
@@ -120,7 +119,7 @@ class QtiPoint implements QtiDatatype
     }
 
     /**
-     * Wheter a given $obj is equal to $this Point object. Two Point objects
+     * Whether a given $obj is equal to this Point object. Two Point objects
      * are considered to be the same if they have the same coordinates.
      *
      * @param mixed $obj An object.

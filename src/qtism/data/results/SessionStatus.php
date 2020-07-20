@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\results;
@@ -62,12 +62,12 @@ class SessionStatus implements Enumeration
      */
     public static function asArray()
     {
-        return array(
+        return [
             self::STATUS_FINAL,
             self::STATUS_INITIAL,
             self::STATUS_PENDING_RESPONSE_PROCESSING,
-            self::STATUS_PENDING_SUBMISSON
-        );
+            self::STATUS_PENDING_SUBMISSON,
+        ];
     }
 
     /**
@@ -80,26 +80,25 @@ class SessionStatus implements Enumeration
     public static function getConstantByName($name)
     {
         switch ($name) {
-
             case 'final':
                 return self::STATUS_FINAL;
-            break;
+                break;
 
             case 'initial':
                 return self::STATUS_INITIAL;
-            break;
+                break;
 
             case 'pendingResponseProcessing':
                 return self::STATUS_PENDING_RESPONSE_PROCESSING;
-            break;
+                break;
 
             case 'pendingSubmission':
                 return self::STATUS_PENDING_SUBMISSON;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -113,7 +112,6 @@ class SessionStatus implements Enumeration
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
-
             case self::STATUS_FINAL:
                 return 'final';
                 break;
@@ -135,5 +133,4 @@ class SessionStatus implements Enumeration
                 break;
         }
     }
-
 }

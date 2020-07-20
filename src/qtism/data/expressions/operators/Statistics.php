@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,71 +27,68 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The QTI Statistics enumeration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Statistics implements Enumeration
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The arithmetic mean of the argument, which must be a container of numerical
-	 * base type, which contains a sample of observations.
-	 *
-	 * @var integer
-	 */
+     * From IMS QTI:
+     *
+     * The arithmetic mean of the argument, which must be a container of numerical
+     * base type, which contains a sample of observations.
+     *
+     * @var integer
+     */
     const MEAN = 0;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The variance of the argument, which must be a container of numerical base type,
-	 * with containerSize greater than 1, containing a sample of observations.
-	 *
-	 * @var integer
-	 */
+     * From IMS QTI:
+     *
+     * The variance of the argument, which must be a container of numerical base type,
+     * with containerSize greater than 1, containing a sample of observations.
+     *
+     * @var integer
+     */
     const SAMPLE_VARIANCE = 1;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The standard deviation of the argument, which must be a container of numerical
-	 * base type, with containerSize greater than 1, containing a sample of observations.
-	 *
-	 * @var integer
-	 */
+     * From IMS QTI:
+     *
+     * The standard deviation of the argument, which must be a container of numerical
+     * base type, with containerSize greater than 1, containing a sample of observations.
+     *
+     * @var integer
+     */
     const SAMPLE_SD = 2;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The variance of the argument, which must be a container of numerical base type
-	 * with containerSize greater than 1.
-	 *
-	 * @var integer
-	 */
+     * From IMS QTI:
+     *
+     * The variance of the argument, which must be a container of numerical base type
+     * with containerSize greater than 1.
+     *
+     * @var integer
+     */
     const POP_VARIANCE = 3;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The standard deviation of the argument, which must be a container of numerical base
-	 * type with containerSize greater than 1.
-	 *
-	 * @var integer
-	 */
+     * From IMS QTI:
+     *
+     * The standard deviation of the argument, which must be a container of numerical base
+     * type with containerSize greater than 1.
+     *
+     * @var integer
+     */
     const POP_SD = 4;
 
     public static function asArray()
     {
-        return array(
+        return [
             'MEAN' => self::MEAN,
             'SAMPLE_VARIANCE' => self::SAMPLE_VARIANCE,
             'SAMPLE_SD' => self::SAMPLE_SD,
             'POP_VARIANCE' => self::POP_VARIANCE,
-            'POP_SD' => self::POP_SD
-        );
+            'POP_SD' => self::POP_SD,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -98,27 +96,27 @@ class Statistics implements Enumeration
         switch (strtolower($name)) {
             case 'mean':
                 return self::MEAN;
-            break;
+                break;
 
             case 'samplevariance':
                 return self::SAMPLE_VARIANCE;
-            break;
+                break;
 
             case 'samplesd':
                 return self::SAMPLE_SD;
-            break;
+                break;
 
             case 'popvariance':
                 return self::POP_VARIANCE;
-            break;
+                break;
 
             case 'popsd':
                 return self::POP_SD;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -127,27 +125,27 @@ class Statistics implements Enumeration
         switch ($constant) {
             case self::MEAN:
                 return 'mean';
-            break;
+                break;
 
             case self::SAMPLE_VARIANCE:
                 return 'sampleVariance';
-            break;
+                break;
 
             case self::SAMPLE_SD:
                 return 'sampleSD';
-            break;
+                break;
 
             case self::POP_VARIANCE:
                 return 'popVariance';
-            break;
+                break;
 
             case self::POP_SD:
                 return 'popSD';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

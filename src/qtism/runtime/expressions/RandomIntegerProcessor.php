@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions;
@@ -33,22 +33,19 @@ use qtism\data\expressions\RandomInteger;
  *
  * Selects a random integer from the specified range [min,max] satisfying min + step * n for
  * some integer n. For example, with min=2, max=11 and step=3 the values {2,5,8,11} are possible.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RandomIntegerProcessor extends ExpressionProcessor
 {
     /**
-	 * Process the RandomInteger expression.
-	 *
-	 * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
-	 * * Throws an ExpressionProcessingException if a variable reference is not found in the current state.
-	 * * Throws an ExpressionProcessingException if a variable reference's value is not an integer.
-	 *
-	 * @return QtiInteger A random integer value.
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Process the RandomInteger expression.
+     *
+     * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
+     * * Throws an ExpressionProcessingException if a variable reference is not found in the current state.
+     * * Throws an ExpressionProcessingException if a variable reference's value is not an integer.
+     *
+     * @return QtiInteger A random integer value.
+     * @throws ExpressionProcessingException
+     */
     public function process()
     {
         $expr = $this->getExpression();
@@ -81,7 +78,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

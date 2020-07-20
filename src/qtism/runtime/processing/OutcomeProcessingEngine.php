@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,21 +15,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\processing;
 
-use qtism\runtime\rules\RuleProcessorFactory;
-use qtism\data\QtiComponent;
+use InvalidArgumentException;
 use qtism\data\processing\OutcomeProcessing;
-use qtism\runtime\common\State;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\AbstractEngine;
-use \InvalidArgumentException;
+use qtism\runtime\common\ProcessingException;
+use qtism\runtime\common\State;
+use qtism\runtime\rules\RuleProcessorFactory;
 
 /**
  * The OutcomeProcessingEngine class aims at providing a single engine to execute
@@ -52,9 +53,6 @@ use \InvalidArgumentException;
  * branchRules.
  *
  * The structure of outcome processing is similar to that or responseProcessing.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeProcessingEngine extends AbstractEngine
 {
@@ -62,15 +60,15 @@ class OutcomeProcessingEngine extends AbstractEngine
      * The factory to be used to retrieve
      * the relevant processor to a given rule.
      *
-     * @var \qtism\runtime\rules\RuleProcessorFactory
+     * @var RuleProcessorFactory
      */
     private $ruleProcessorFactory;
 
     /**
      * Create a new OutcomeProcessingEngine object.
      *
-     * @param \qtism\data\QtiComponent $outcomeProcessing A QTI Data Model OutcomeProcessing object.
-     * @param \qtism\runtime\common\State $context A State object as the execution context.
+     * @param QtiComponent $outcomeProcessing A QTI Data Model OutcomeProcessing object.
+     * @param State $context A State object as the execution context.
      */
     public function __construct(QtiComponent $outcomeProcessing, State $context = null)
     {
@@ -82,8 +80,8 @@ class OutcomeProcessingEngine extends AbstractEngine
      * Set the OutcomeProcessing object to be executed by the engine depending
      * on the current context.
      *
-     * @param \qtism\data\QtiComponent $outcomeProcessing An OutcomeProcessing object.
-     * @throws \InvalidArgumentException If $outcomeProcessing is not An OutcomeProcessing object.
+     * @param QtiComponent $outcomeProcessing An OutcomeProcessing object.
+     * @throws InvalidArgumentException If $outcomeProcessing is not An OutcomeProcessing object.
      */
     public function setComponent(QtiComponent $outcomeProcessing)
     {
@@ -98,7 +96,7 @@ class OutcomeProcessingEngine extends AbstractEngine
     /**
      * Set the factory to be used to get the relevant rule processors.
      *
-     * @param \qtism\runtime\rules\RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
+     * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
      */
     public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory)
     {
@@ -108,7 +106,7 @@ class OutcomeProcessingEngine extends AbstractEngine
     /**
      * Get the factory to be used to get the relevant rule processors.
      *
-     * @return \qtism\runtime\rules\RuleProcessorFactory A RuleProcessorFactory object.
+     * @return RuleProcessorFactory A RuleProcessorFactory object.
      */
     public function getRuleProcessorFactory()
     {
@@ -123,7 +121,7 @@ class OutcomeProcessingEngine extends AbstractEngine
      * * RuleProcessingException: if an error occurs while executing an OutcomeRule inside the OutcomeProcessing OR if the ExitTest rule is invoked. In this last case, a specific error code will be produced to handle the situation accordingly.
      * * ExpressionProcessingException: if an error occurs while executing an expression, inside a rule that belongs to the OutcomeProcessing.
      *
-     * @throws \qtism\runtime\common\ProcessingException If an error occurs while executing the OutcomeProcessing.
+     * @throws ProcessingException If an error occurs while executing the OutcomeProcessing.
      */
     public function process()
     {

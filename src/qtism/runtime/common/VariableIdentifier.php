@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,16 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\common;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * The PrefixedIdentifier class is a POO representation
@@ -42,7 +42,6 @@ use \InvalidArgumentException;
  * * Q01.SCORE (The very last submitted SCORE of item Q1)
  * * Q01.3.SCORE (The 3rd time SCORE was submitted for item Q1). '3' is called the 'sequence number'.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @link http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10572 The QTI variable name prefixing technique.
  */
 class VariableIdentifier
@@ -81,7 +80,7 @@ class VariableIdentifier
      * Create a new VariableIdentifier object.
      *
      * @param string $identifier A prefixed identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid variable identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid variable identifier.
      *
      */
     public function __construct($identifier)
@@ -117,7 +116,7 @@ class VariableIdentifier
      * Set the identifier string.
      *
      * @param string $identifier A prefixed identifier.
-     * @throws \InvalidArgumentException If $identifier is not a valid prefixed identifier.
+     * @throws InvalidArgumentException If $identifier is not a valid prefixed identifier.
      */
     protected function setIdentifier($identifier)
     {

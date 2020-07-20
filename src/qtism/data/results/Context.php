@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
- * @author Julien Sébire, <julien@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -62,10 +63,8 @@ class Context extends QtiComponent
      * @param QtiIdentifier|null $sourcedId
      * @param SessionIdentifierCollection|null $sessionIdentifiers
      */
-    public function __construct(
-        QtiIdentifier $sourcedId = null,
-        SessionIdentifierCollection $sessionIdentifiers = null
-    ) {
+    public function __construct(QtiIdentifier $sourcedId = null, SessionIdentifierCollection $sessionIdentifiers = null)
+    {
         $this->setSourcedId($sourcedId);
         if ($sessionIdentifiers === null) {
             $sessionIdentifiers = new SessionIdentifierCollection();
@@ -78,7 +77,7 @@ class Context extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName(): string
+    public function getQtiClassName()
     {
         return 'context';
     }
@@ -88,7 +87,7 @@ class Context extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents(): QtiComponentCollection
+    public function getComponents()
     {
         if ($this->hasSessionIdentifiers()) {
             $components = $this->getSessionIdentifiers()->getArrayCopy();
@@ -114,7 +113,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier $sourcedId
      * @return $this
      */
-    public function setSourcedId(QtiIdentifier $sourcedId = null): self
+    public function setSourcedId(QtiIdentifier $sourcedId = null)
     {
         $this->sourcedId = $sourcedId;
         return $this;
@@ -125,7 +124,7 @@ class Context extends QtiComponent
      *
      * @return bool
      */
-    public function hasSourcedId(): bool
+    public function hasSourcedId()
     {
         return $this->sourcedId !== null;
     }
@@ -135,7 +134,7 @@ class Context extends QtiComponent
      *
      * @return SessionIdentifierCollection
      */
-    public function getSessionIdentifiers(): SessionIdentifierCollection
+    public function getSessionIdentifiers()
     {
         return $this->sessionIdentifiers;
     }
@@ -146,7 +145,7 @@ class Context extends QtiComponent
      * @param SessionIdentifierCollection $sessionIdentifiers
      * @return $this
      */
-    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers): self
+    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->sessionIdentifiers = $sessionIdentifiers;
         return $this;
@@ -185,7 +184,7 @@ class Context extends QtiComponent
      *
      * @return bool
      */
-    public function hasSessionIdentifiers(): bool
+    public function hasSessionIdentifiers()
     {
         return (bool)$this->sessionIdentifiers->count();
     }

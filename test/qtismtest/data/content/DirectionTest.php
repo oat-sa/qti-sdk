@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\data\content;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\content\Direction;
+use qtismtest\QtiSmEnumTestCase;
 
 class DirectionTest extends QtiSmEnumTestCase
 {
@@ -10,31 +11,31 @@ class DirectionTest extends QtiSmEnumTestCase
     {
         return Direction::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'auto',
             'ltr',
-            'rtl'
-        );
+            'rtl',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'AUTO',
             'LTR',
-            'RTL'
-        );
+            'RTL',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             Direction::AUTO,
             Direction::LTR,
             Direction::RTL,
-        );
+        ];
     }
 }

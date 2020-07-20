@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +23,7 @@
 
 namespace qtism\data;
 
-use \Iterator;
+use Iterator;
 
 /**
  * An Iterator that makes you able to loop on the QtiComponent objects contained by a given QtiComponent object.
@@ -37,7 +38,6 @@ use \Iterator;
  *
  * // Let's iterate on the components containted by a Sum object.
  * $iterator = new QtiComponentIterator(new Sum($baseValues));
-
  * $iterations = 0;
  * foreach ($iterator as $k => $i) {
  *    // $k contains the QTI class name of the component.
@@ -53,80 +53,77 @@ use \Iterator;
  * // string(9) "baseValue"
  * // float(0.5)
  * </code>
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiComponentIterator implements Iterator
 {
     /**
-	 * The QtiComponent object which contains the QtiComponent objects to be traversed.
-	 *
-	 * @var \qtism\data\QtiComponent
-	 */
+     * The QtiComponent object which contains the QtiComponent objects to be traversed.
+     *
+     * @var QtiComponent
+     */
     private $rootComponent = null;
 
     /**
-	 * The QtiComponent object being traversed.
-	 *
-	 * @var \qtism\data\QtiComponent
-	 */
+     * The QtiComponent object being traversed.
+     *
+     * @var QtiComponent
+     */
     private $currentComponent = null;
 
     /**
-	 * Whether the iterator state is valid.
-	 *
-	 * @var boolean
-	 */
+     * Whether the iterator state is valid.
+     *
+     * @var boolean
+     */
     private $isValid = true;
 
     /**
-	 * A stack containing the QtiComponents to be traversed.
-	 *
-	 * Each value in the trail is an array where:
-	 * * index [0] contains the source of the trailing phase
-	 * * index [1] contains the next QtiComponent object to traverse.
-	 *
-	 * @var array
-	 */
-    private $trail = array();
+     * A stack containing the QtiComponents to be traversed.
+     *
+     * Each value in the trail is an array where:
+     * * index [0] contains the source of the trailing phase
+     * * index [1] contains the next QtiComponent object to traverse.
+     *
+     * @var array
+     */
+    private $trail = [];
 
     /**
-	 * An array of already traversed QtiComponent objects.
-	 *
-	 * @var array
-	 */
-    private $traversed = array();
+     * An array of already traversed QtiComponent objects.
+     *
+     * @var array
+     */
+    private $traversed = [];
 
     /**
-	 * The QtiComponent object which is the container of the QtiComponent object
-	 * returned by QtiComponentIterator::current().
-	 *
-	 * @var \qtism\data\QtiComponent
-	 */
+     * The QtiComponent object which is the container of the QtiComponent object
+     * returned by QtiComponentIterator::current().
+     *
+     * @var QtiComponent
+     */
     private $currentContainer = null;
 
     /**
-	 * The QTI classes the Iterator must take into account.
-	 *
-	 * @var array
-	 */
+     * The QTI classes the Iterator must take into account.
+     *
+     * @var array
+     */
     private $classes;
 
     /**
-	 * The number of occurences in the trail.
-	 *
-	 * @var integer
-	 */
+     * The number of occurences in the trail.
+     *
+     * @var integer
+     */
     private $trailCount = 0;
 
     /**
-	 * Create a new QtiComponentIterator object.
-	 *
-	 * @param \qtism\data\QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
+     * Create a new QtiComponentIterator object.
+     *
+     * @param QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
      * @param array $classes
-	 */
-    public function __construct(QtiComponent $rootComponent, array $classes = array())
+     */
+    public function __construct(QtiComponent $rootComponent, array $classes = [])
     {
         $this->setRootComponent($rootComponent);
         $this->setClasses($classes);
@@ -134,11 +131,11 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-	 * Set the root QtiComponent. In other words, the QtiComponent which
-	 * contains the QtiComponent objects to be traversed.
-	 *
-	 * @param \qtism\data\QtiComponent $rootComponent
-	 */
+     * Set the root QtiComponent. In other words, the QtiComponent which
+     * contains the QtiComponent objects to be traversed.
+     *
+     * @param QtiComponent $rootComponent
+     */
     protected function setRootComponent(QtiComponent $rootComponent)
     {
         $this->rootComponent = $rootComponent;
@@ -150,55 +147,55 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-	 * Get the root QtiComponent. In other words, the QtiComponent which contains
-	 * the QtiComponent objects to be traversed.
-	 *
-	 * @return \qtism\data\QtiComponent
-	 */
+     * Get the root QtiComponent. In other words, the QtiComponent which contains
+     * the QtiComponent objects to be traversed.
+     *
+     * @return QtiComponent
+     */
     public function getRootComponent()
     {
         return $this->rootComponent;
     }
 
     /**
-	 * Set the QTI classes the Iterator must take into account.
-	 *
-	 * @param array $classes An array of QTI class names.
-	 */
+     * Set the QTI classes the Iterator must take into account.
+     *
+     * @param array $classes An array of QTI class names.
+     */
     protected function setClasses(array $classes)
     {
         $this->classes = $classes;
     }
 
     /**
-	 * Get the QTI classes the Iterator must take into account.
-	 *
-	 * @return array An array of QTI class names.
-	 */
-    protected function &getClasses() 
+     * Get the QTI classes the Iterator must take into account.
+     *
+     * @return array An array of QTI class names.
+     */
+    protected function &getClasses()
     {
         return $this->classes;
     }
 
     /**
-	 * Push a trail entry on the trail.
-	 *
-	 * @param \qtism\data\QTIComponent $source From where we are coming from.
-	 * @param \qtism\data\QTIComponentCollection $components The next components to explore.
-	 */
+     * Push a trail entry on the trail.
+     *
+     * @param QtiComponent $source From where we are coming from.
+     * @param QtiComponentCollection $components The next components to explore.
+     */
     protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components)
-    {     
+    {
         foreach (array_reverse($components->getArrayCopy()) as $c) {
-            array_push($this->trail, array($source, $c));
+            array_push($this->trail, [$source, $c]);
             $this->trailCount++;
         }
     }
 
     /**
-	 * Pop a trail entry from the trail.
-	 *
-	 * @return array
-	 */
+     * Pop a trail entry from the trail.
+     *
+     * @return array
+     */
     protected function popFromTrail()
     {
         $this->trailCount--;
@@ -206,20 +203,20 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-	 * Get a reference on the trail array.
-	 *
-	 * @return array An array of QtiComponent objects.
-	 */
-    protected function &getTrail() 
+     * Get a reference on the trail array.
+     *
+     * @return array An array of QtiComponent objects.
+     */
+    protected function &getTrail()
     {
         return $this->trail;
     }
 
     /**
-	 * Set the trail array.
-	 *
-	 * @param array $trail An array of QtiComponent objects.
-	 */
+     * Set the trail array.
+     *
+     * @param array $trail An array of QtiComponent objects.
+     */
     protected function setTrail(array &$trail)
     {
         $this->trail = $trail;
@@ -227,58 +224,58 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-	 * Set the array of QtiComponents which contains the already traversed
-	 * components.
-	 *
-	 * @param array $traversed An array of QtiComponent objects.
-	 */
+     * Set the array of QtiComponents which contains the already traversed
+     * components.
+     *
+     * @param array $traversed An array of QtiComponent objects.
+     */
     protected function setTraversed(array &$traversed)
     {
         $this->traversed = $traversed;
     }
 
     /**
-	 * Mark a QTIComponent object as traversed.
-	 *
-	 * @param \qtism\data\QtiComponent $component A QTIComponent object.
-	 */
+     * Mark a QTIComponent object as traversed.
+     *
+     * @param QtiComponent $component A QTIComponent object.
+     */
     protected function markTraversed(QtiComponent $component)
     {
         array_push($this->traversed, $component);
     }
 
     /**
-	 * Whether or not a given $component has already been traversed by
-	 * the iterator.
-	 *
-	 * @param \qtism\data\QtiComponent $component
+     * Whether or not a given $component has already been traversed by
+     * the iterator.
+     *
+     * @param QtiComponent $component
      * @return boolean
-	 */
+     */
     protected function isTraversed(QtiComponent $component)
     {
         return in_array($component, $this->traversed, true);
     }
 
     /**
-	 * Indicate Whether the iterator is still valid.
-	 *
-	 * @param boolean $isValid
-	 */
+     * Indicate Whether the iterator is still valid.
+     *
+     * @param boolean $isValid
+     */
     protected function setValid($isValid)
     {
         $this->isValid = $isValid;
     }
 
     /**
-	 * Rewind the iterator.
-	 */
+     * Rewind the iterator.
+     */
     public function rewind()
     {
-        $trail = array();
+        $trail = [];
         $this->setTrail($trail);
         $classes = &$this->getClasses();
 
-        $traversed = array();
+        $traversed = [];
         $this->setTraversed($traversed);
 
         $root = $this->getRootComponent();
@@ -286,6 +283,7 @@ class QtiComponentIterator implements Iterator
 
         $hasTrail = false;
         $foundClass = false;
+
         while (count($this->getTrail()) > 0) {
             $hasTrail = true;
             $trailEntry = $this->popFromTrail();
@@ -310,52 +308,51 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-	 * Get the current QtiComponent object the iterator
-	 * is traversing.
-	 *
-	 * @return \qtism\data\QtiComponent A QtiComponent object.
-	 */
+     * Get the current QtiComponent object the iterator
+     * is traversing.
+     *
+     * @return QtiComponent A QtiComponent object.
+     */
     public function current()
     {
         return $this->currentComponent;
     }
 
     /**
-	 * Get the parent component of the one given by
-	 * the QtiComponentIterator::current() method.
-	 *
-	 * This method will return the null value in the following circumstances:
-	 *
-	 * * The QtiComponentIterator::valid method returns false.
-	 * * The component returned by QtiComponentIterator::current is the root component.
-	 *
-	 * @return null|\qtism\data\QtiComponent The null value if there is no parent, otherwise a QtiComponent.
-	 * @see \qtism\data\QtiComponentIterator::current()
-	 */
+     * Get the parent component of the one given by
+     * the QtiComponentIterator::current() method.
+     *
+     * This method will return the null value in the following circumstances:
+     *
+     * * The QtiComponentIterator::valid method returns false.
+     * * The component returned by QtiComponentIterator::current is the root component.
+     *
+     * @return null|QtiComponent The null value if there is no parent, otherwise a QtiComponent.
+     * @see QtiComponentIterator::current()
+     */
     public function parent()
     {
         return $this->currentContainer;
     }
 
     /**
-	 * Get the key of the current QtiComponent. The value of the key is actually
-	 * its QTI class name e.g. 'assessmentTest', 'assessmentItemRef', ...
-	 *
-	 * @return string A QTI class name.
-	 */
+     * Get the key of the current QtiComponent. The value of the key is actually
+     * its QTI class name e.g. 'assessmentTest', 'assessmentItemRef', ...
+     *
+     * @return string A QTI class name.
+     */
     public function key()
     {
         return $this->currentComponent->getQtiClassName();
     }
 
     /**
-	 * Moves the current position to the next QtiComponent object to be
-	 * traversed.
-	 */
+     * Moves the current position to the next QtiComponent object to be
+     * traversed.
+     */
     public function next()
     {
         if ($this->trailCount > 0) {
-
             while ($this->trailCount > 0) {
                 $trailEntry = $this->popFromTrail();
                 $component = $trailEntry[1];
@@ -384,10 +381,10 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-	 * Checks if current position is valid.
-	 *
-	 * @return boolean Whether the current position is valid.
-	 */
+     * Checks if current position is valid.
+     *
+     * @return boolean Whether the current position is valid.
+     */
     public function valid()
     {
         return $this->isValid;

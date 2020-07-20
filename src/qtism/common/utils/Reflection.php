@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,14 +23,11 @@
 
 namespace qtism\common\utils;
 
-use \ReflectionClass;
-use \ReflectionException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * A utility class focusing on Reflection.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Reflection
 {
@@ -38,13 +36,13 @@ class Reflection
      * goal of this method is to avoid to encounter the issue with empty $args
      * argument described at: http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517
      *
-     * @param \ReflectionClass $class
+     * @param ReflectionClass $class
      * @param array $args
      * @return mixed An instance of $class
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
-    static public function newInstance(ReflectionClass $class, $args = array())
+    public static function newInstance(ReflectionClass $class, $args = [])
     {
         if (empty($args) === true) {
             $fqName = $class->getName();
@@ -69,7 +67,7 @@ class Reflection
      * @param mixed $object An object or a fully qualified class name.
      * @return boolean|string A short class name or false if $object is not an object nor a string.
      */
-    static public function shortClassName($object)
+    public static function shortClassName($object)
     {
         $shortClassName = false;
 
@@ -79,25 +77,24 @@ class Reflection
         } elseif (is_string($object) === true && empty($object) === false) {
             $parts = explode("\\", $object);
             $shortClassName = array_pop($parts);
-
         }
 
         return empty($shortClassName) ? false : $shortClassName;
     }
-    
+
     /**
      * Whether or not a given $object is an instance of $className. This method
      * exists because is_sublcass_of() does not take into account interfaces
      * in PHP 5.3.
-     * 
+     *
      * @param mixed $object The object you want to know it is an instance of $className.
      * @param string $className A class name. It can be fully qualified.
      * @return boolean
      */
-    static public function isInstanceOf($object, $className)
+    public static function isInstanceOf($object, $className)
     {
         $givenType = get_class($object);
-        
+
         return $givenType === $className || is_subclass_of($givenType, $className) === true || in_array($className, class_implements($givenType)) === true;
     }
 }

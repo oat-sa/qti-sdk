@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\data;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\ShowHide;
+use qtismtest\QtiSmEnumTestCase;
 
 class ShowHideTest extends QtiSmEnumTestCase
 {
@@ -10,28 +11,28 @@ class ShowHideTest extends QtiSmEnumTestCase
     {
         return ShowHide::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'show',
-            'hide'
-        );
+            'hide',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'SHOW',
-            'HIDE'
-        );
+            'HIDE',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             ShowHide::SHOW,
-            ShowHide::HIDE
-        );
+            ShowHide::HIDE,
+        ];
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-use qtism\runtime\common\State;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
-use qtism\runtime\common\TemplateVariable;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 

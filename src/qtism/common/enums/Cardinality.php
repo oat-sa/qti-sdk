@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\common\enums;
 
 /**
@@ -45,9 +47,6 @@ namespace qtism\common\enums;
  * customInteractions to manipulate more complex responses and customOperators to
  * return more complex values, in addition to the use for detailed information about
  * numeric responses described in the stringInteraction abstract class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Cardinality implements Enumeration
 {
@@ -81,12 +80,12 @@ class Cardinality implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'SINGLE' => self::SINGLE,
             'MULTIPLE' => self::MULTIPLE,
             'ORDERED' => self::ORDERED,
-            'RECORD' => self::RECORD
-        );
+            'RECORD' => self::RECORD,
+        ];
     }
 
     /**
@@ -100,23 +99,23 @@ class Cardinality implements Enumeration
         switch (strtolower($name)) {
             case 'single':
                 return self::SINGLE;
-            break;
+                break;
 
             case 'multiple':
                 return self::MULTIPLE;
-            break;
+                break;
 
             case 'ordered':
                 return self::ORDERED;
-            break;
+                break;
 
             case 'record':
                 return self::RECORD;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -131,23 +130,23 @@ class Cardinality implements Enumeration
         switch ($constant) {
             case self::SINGLE:
                 return 'single';
-            break;
+                break;
 
             case self::MULTIPLE:
                 return 'multiple';
-            break;
+                break;
 
             case self::ORDERED:
                 return 'ordered';
-            break;
+                break;
 
             case self::RECORD:
                 return 'record';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

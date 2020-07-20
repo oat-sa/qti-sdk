@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,23 +23,20 @@
 
 namespace qtism\common\utils;
 
-use \DateTime;
-use \DateInterval;
-use \DateTimeZone;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 
 /**
  * The Time class provides utility methods for time management.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Time
 {
     /**
      * Get the time difference between two DateTime object in seconds.
      *
-     * @param \DateTime $time1
-     * @param \DateTime $time2
+     * @param DateTime $time1
+     * @param DateTime $time2
      * @return integer a number of seconds.
      */
     public static function timeDiffSeconds(DateTime $time1, DateTime $time2)
@@ -51,7 +49,7 @@ class Time
     /**
      * Get the total number of seconds a given date $interval represents.
      *
-     * @param \DateInterval $interval
+     * @param DateInterval $interval
      * @return integer
      */
     public static function totalSeconds(DateInterval $interval)
@@ -71,8 +69,8 @@ class Time
     /**
      * Clone a given $time into its UTC equivalent.
      *
-     * @param \DateTime $time
-     * @return \DateTime
+     * @param DateTime $time
+     * @return DateTime
      */
     public static function toUtc(DateTime $time)
     {

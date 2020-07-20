@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,30 +23,26 @@
 
 namespace qtism\data\storage\php\marshalling;
 
-use qtism\data\storage\php\PhpVariable;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
-use qtism\common\datatypes\QtiShape;
-use qtism\common\datatypes\QtiPoint;
-use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\QtiPair;
-use qtism\common\datatypes\QtiCoords;
-use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\QtiDatatype;
-use qtism\common\storage\StreamAccessException;
+use qtism\data\storage\php\PhpVariable;
 
 /**
  * A PhpMarshaller implementation focusing on marshalling QTI Datatypes.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpQtiDatatypeMarshaller extends PhpMarshaller
 {
     /**
      * Marshall a QtiDatatype object into PHP source code.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs during marshalling.
+     * @throws PhpMarshallingException If an error occurs during marshalling.
      */
     public function marshall()
     {
@@ -68,10 +65,12 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
                 $this->marshallPoint();
 
                 return;
-            } else if ($toMarshall instanceof QtiIdentifier) {
-                $this->marshallIdentifier();
-                
-                return;
+            } else {
+                if ($toMarshall instanceof QtiIdentifier) {
+                    $this->marshallIdentifier();
+
+                    return;
+                }
             }
         } catch (PhpMarshallingException $e) {
             $msg = "An error occured while marshalling a QtiDatatype object.";
@@ -96,7 +95,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
     /**
      * Marshall a Coords QTI datatype object.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
      */
     protected function marshallCoords()
     {
@@ -125,7 +124,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             $access->writeSemicolon($ctx->mustFormatOutput());
 
             // Marshall the Coords object.
-            $coordsArgs = new PhpArgumentCollection(array(new PhpArgument($coords->getShape()), new PhpArgument(new PhpVariable($arrayVarName))));
+            $coordsArgs = new PhpArgumentCollection([new PhpArgument($coords->getShape()), new PhpArgument(new PhpVariable($arrayVarName))]);
             $varName = $ctx->generateVariableName($coords);
             $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
@@ -142,7 +141,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
     /**
      * Marshall a Pair QTI datatype object.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
      */
     protected function marshallPair()
     {
@@ -154,7 +153,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             $varName = $ctx->generateVariableName($pair);
             $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $args = new PhpArgumentCollection(array(new PhpArgument($pair->getFirst()), new PhpArgument($pair->getSecond())));
+            $args = new PhpArgumentCollection([new PhpArgument($pair->getFirst()), new PhpArgument($pair->getSecond())]);
             $access->writeInstantiation(get_class($pair), $args);
             $access->writeSemicolon($ctx->mustFormatOutput());
 
@@ -168,7 +167,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
     /**
      * Marshall a Duration QTI datatype object.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
      */
     protected function marshallDuration()
     {
@@ -180,7 +179,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             $varName = $ctx->generateVariableName($duration);
             $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $args = new PhpArgumentCollection(array(new PhpArgument($duration->__toString())));
+            $args = new PhpArgumentCollection([new PhpArgument($duration->__toString())]);
             $access->writeInstantiation(get_class($duration), $args);
             $access->writeSemiColon($ctx->mustFormatOutput());
 
@@ -190,11 +189,11 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }
-    
+
     /**
      * Marshall an Identifier QTI datatype object.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
      */
     protected function marshallIdentifier()
     {
@@ -206,7 +205,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             $varName = $ctx->generateVariableName($identifier);
             $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $args = new PhpArgumentCollection(array(new PhpArgument($identifier->getValue())));
+            $args = new PhpArgumentCollection([new PhpArgument($identifier->getValue())]);
             $access->writeInstantiation(get_class($identifier), $args);
             $access->writeSemicolon($ctx->mustFormatOutput());
 
@@ -220,7 +219,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
     /**
      * Marshall a Point QTI datatype object.
      *
-     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
      */
     protected function marshallPoint()
     {
@@ -232,7 +231,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             $varName = $ctx->generateVariableName($point);
             $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $args = new PhpArgumentCollection(array(new PhpArgument($point->getX()), new PhpArgument($point->getY())));
+            $args = new PhpArgumentCollection([new PhpArgument($point->getX()), new PhpArgument($point->getY())]);
             $access->writeInstantiation(get_class($point), $args);
             $access->writeSemicolon($ctx->mustFormatOutput());
 

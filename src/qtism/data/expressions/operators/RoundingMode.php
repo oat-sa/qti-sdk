@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -26,9 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The QTI roudingMode enumeration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RoundingMode implements Enumeration
 {
@@ -38,10 +36,10 @@ class RoundingMode implements Enumeration
 
     public static function asArray()
     {
-        return array(
+        return [
             'SIGNIFICANT_FIGURES' => self::SIGNIFICANT_FIGURES,
-            'DECIMAL_PLACES' => self::DECIMAL_PLACES
-        );
+            'DECIMAL_PLACES' => self::DECIMAL_PLACES,
+        ];
     }
 
     public static function getConstantByName($name)
@@ -49,15 +47,15 @@ class RoundingMode implements Enumeration
         switch (strtolower($name)) {
             case 'significantfigures':
                 return self::SIGNIFICANT_FIGURES;
-            break;
+                break;
 
             case 'decimalplaces':
                 return self::DECIMAL_PLACES;
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 
@@ -66,15 +64,15 @@ class RoundingMode implements Enumeration
         switch ($constant) {
             case self::SIGNIFICANT_FIGURES:
                 return 'significantFigures';
-            break;
+                break;
 
             case self::DECIMAL_PLACES:
                 return 'decimalPlaces';
-            break;
+                break;
 
             default:
                 return false;
-            break;
+                break;
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -53,9 +53,6 @@ use qtism\runtime\expressions\Utils as ExprUtils;
  * greater, the nth digit is increased by 1 and all digits to its right are
  * discarded; if the deciding digit is less than 5, all digits to the right of the
  * nth digit are discarded.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RoundToProcessor extends OperatorProcessor
 {
@@ -69,7 +66,7 @@ class RoundToProcessor extends OperatorProcessor
      * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
      *
      * @return null|QtiFloat A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
-     * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
+     * @throws OperatorProcessingException
      */
     public function process()
     {
@@ -119,7 +116,6 @@ class RoundToProcessor extends OperatorProcessor
         }
 
         if ($roundingMode === RoundingMode::SIGNIFICANT_FIGURES) {
-
             if ($figures <= 0) {
                 // As per QTI 2.1 spec.
                 $msg = "The 'figures' attribute must be a non-zero positive integer when mode 'significantFigures' is used, '${figures}' given.";
@@ -138,7 +134,6 @@ class RoundToProcessor extends OperatorProcessor
 
             return new QtiFloat(floatval($shifted / $magnitude));
         } else {
-
             // As per QTI 2.1 spec.
             if ($figures < 0) {
                 $msg = "The 'figures' attribute must be a integer greater than or equal to zero when mode 'decimalPlaces' is used, '${figures}' given.";
@@ -148,7 +143,7 @@ class RoundToProcessor extends OperatorProcessor
             return new QtiFloat(round($operand->getValue(), $figures));
         }
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

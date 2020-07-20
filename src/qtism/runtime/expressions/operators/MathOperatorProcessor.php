@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,16 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 
@@ -70,17 +71,14 @@ use qtism\data\expressions\operators\MathOperator;
  * * If the first argument is positive infinity and the second argument is negative infinity, then the result is the double value closest to 3*π/4.
  * * If the first argument is negative infinity and the second argument is positive infinity, then the result is the double value closest to -π/4.
  * * If both arguments are negative infinity, then the result is the double value closest to -3*π/4.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MathOperatorProcessor extends OperatorProcessor
 {
     /**
-	 * Process the MathOperator operator.
-	 *
-	 * @return QtiFloat|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
-	 */
+     * Process the MathOperator operator.
+     *
+     * @return QtiFloat|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -101,7 +99,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
         $qtiFuncName = MathFunctions::getNameByConstant($this->getExpression()->getName());
         $methodName = 'process' . ucfirst($qtiFuncName);
-        $result = call_user_func_array(array($this, $methodName), array());
+        $result = call_user_func_array([$this, $methodName], []);
 
         if ($result instanceof QtiFloat && is_nan($result->getValue()) === true) {
             // outside the domain of the function.
@@ -112,9 +110,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processSin()
     {
         $operands = $this->getOperands();
@@ -123,9 +121,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processCos()
     {
         $operands = $this->getOperands();
@@ -134,9 +132,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processTan()
     {
         $operands = $this->getOperands();
@@ -145,9 +143,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processSec()
     {
         $operands = $this->getOperands();
@@ -156,9 +154,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processCsc()
     {
         $operands = $this->getOperands();
@@ -167,20 +165,26 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat|null
-	 */
+     *
+     * @return QtiFloat|null
+     */
     protected function processCot()
     {
         $operands = $this->getOperands();
         $tan = tan($operands[0]->getValue());
-        return (is_infinite($tan)) ? new QtiFloat(0.0) : (($tan == 0) ? null : new QtiFloat(1 / $tan));
+        if (is_infinite($tan)) {
+            return new QtiFloat(0.0);
+        } elseif ($tan == 0) {
+            return null;
+        } else {
+            return new QtiFloat(1 / $tan);
+        }
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processAsin()
     {
         $operands = $this->getOperands();
@@ -189,9 +193,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processAcos()
     {
         $operands = $this->getOperands();
@@ -200,9 +204,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processAtan()
     {
         $operands = $this->getOperands();
@@ -211,10 +215,10 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     * @throws OperatorProcessingException
+     */
     protected function processAtan2()
     {
         $operands = $this->getOperands();
@@ -234,9 +238,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processAsec()
     {
         $operands = $this->getOperands();
@@ -250,9 +254,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processAcsc()
     {
         $operands = $this->getOperands();
@@ -266,9 +270,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processAcot()
     {
         $operands = $this->getOperands();
@@ -282,9 +286,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processSinh()
     {
         $operands = $this->getOperands();
@@ -293,9 +297,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processCosh()
     {
         $operands = $this->getOperands();
@@ -304,9 +308,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return \qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return QtiFloat
+     */
     protected function processTanh()
     {
         $operands = $this->getOperands();
@@ -315,9 +319,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processSech()
     {
         $operands = $this->getOperands();
@@ -331,9 +335,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processCsch()
     {
         $operands = $this->getOperands();
@@ -347,9 +351,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processCoth()
     {
         $operands = $this->getOperands();
@@ -365,9 +369,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processLog()
     {
         $operands = $this->getOperands();
@@ -383,9 +387,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processLn()
     {
         $operands = $this->getOperands();
@@ -401,9 +405,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processExp()
     {
         $operands = $this->getOperands();
@@ -421,9 +425,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processAbs()
     {
         $operands = $this->getOperands();
@@ -437,10 +441,10 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 * Process the signum (a.k.a. sign) function.
-	 *
-	 * @link https://en.wikipedia.org/wiki/Sign_function
-	 */
+     * Process the signum (a.k.a. sign) function.
+     *
+     * @link https://en.wikipedia.org/wiki/Sign_function
+     */
     protected function processSignum()
     {
         $operands = $this->getOperands();
@@ -458,9 +462,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat|\qtism\common\datatypes\QtiInteger
-	 */
+     *
+     * @return null|QtiFloat|QtiInteger
+     */
     protected function processFloor()
     {
         $operands = $this->getOperands();
@@ -478,9 +482,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat|\qtism\common\datatypes\QtiInteger
-	 */
+     *
+     * @return null|QtiFloat|QtiInteger
+     */
     protected function processCeil()
     {
         $operands = $this->getOperands();
@@ -498,9 +502,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processToDegrees()
     {
         $operands = $this->getOperands();
@@ -518,9 +522,9 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-	 *
-	 * @return null|\qtism\common\datatypes\QtiFloat
-	 */
+     *
+     * @return null|QtiFloat
+     */
     protected function processToRadians()
     {
         $operands = $this->getOperands();
@@ -536,7 +540,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
         return new QtiFloat(floatval(deg2rad($operand->getValue())));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

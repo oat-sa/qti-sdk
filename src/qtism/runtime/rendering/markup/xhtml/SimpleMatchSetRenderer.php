@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,32 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * SimpleMatchSet renderer. Will render the element with an additional
  * CSS class 'qti-simpleMatchSet'.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SimpleMatchSetRenderer extends AbstractXhtmlRenderer
 {
     /**
      * Create a new SimpleMatchSetRenderer object
      *
-     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     * @param AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {

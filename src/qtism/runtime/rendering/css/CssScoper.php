@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,27 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\css;
 
-use qtism\runtime\rendering\RenderingException;
-use qtism\runtime\rendering\Renderable;
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\MemoryStreamException;
 use qtism\runtime\rendering\css\Utils as CssUtils;
+use qtism\runtime\rendering\Renderable;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * The CssScoper aims at rescoping a CSS stylesheet to a specific element on an
  * identifier basis.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class CssScoper implements Renderable
 {
@@ -83,80 +80,80 @@ class CssScoper implements Renderable
     const CHAR_SLASH = "/";
 
     /**
-	 * The current state.
-	 *
-	 * @var integer
-	 */
+     * The current state.
+     *
+     * @var integer
+     */
     private $state = self::RUNNING;
 
     /**
-	 * The identifier used as a scope.
-	 *
-	 * @var string
-	 */
+     * The identifier used as a scope.
+     *
+     * @var string
+     */
     private $id = '';
 
     /**
-	 * The stream to read.
-	 *
-	 * @var \qtism\common\storage\MemoryStream
-	 */
+     * The stream to read.
+     *
+     * @var MemoryStream
+     */
     private $stream;
 
     /**
-	 * The previously read char.
-	 *
-	 * @var string
-	 */
+     * The previously read char.
+     *
+     * @var string
+     */
     private $previousChar = false;
 
     /**
-	 * The previously read significant char.
-	 *
-	 * @var string
-	 */
+     * The previously read significant char.
+     *
+     * @var string
+     */
     private $previousSignificantChar = false;
 
     /**
-	 * The currently read char.
-	 *
-	 * @var string
-	 */
+     * The currently read char.
+     *
+     * @var string
+     */
     private $currentChar = false;
 
     /**
-	 * The buffer.
-	 *
-	 * @var array
-	 */
+     * The buffer.
+     *
+     * @var array
+     */
     private $buffer;
 
     /**
-	 * The output string.
-	 *
-	 * @var string
-	 */
+     * The output string.
+     *
+     * @var string
+     */
     private $output = '';
 
     /**
-	 * The previous state.
-	 *
-	 * @var integer
-	 */
+     * The previous state.
+     *
+     * @var integer
+     */
     private $previousState = false;
 
     /**
-	 * Whether or not map QTI classes to their qti-X CSS classes.
-	 *
-	 * @var boolean
-	 */
+     * Whether or not map QTI classes to their qti-X CSS classes.
+     *
+     * @var boolean
+     */
     private $mapQtiClasses = false;
-    
+
     /**
      * Whether or not map -qti-* like peuso classes to qti-X CSS classes.
      */
     private $mapQtiPseudoClasses = false;
-    
+
     /**
      * @var boolean Whether or not using the Web Component Friendly mode.
      */
@@ -164,16 +161,16 @@ class CssScoper implements Renderable
 
     /**
      * QTI classes to qti-* classes.
-     * 
-	 * An array containing a mapping between QTI class names
-	 * and their runtime XHTML rendering equivalent.
-	 *
-	 * This array is associative. Keys are the QTI class names
-	 * and values are their XHTML rendering equivalent.
-	 *
-	 * @var array
-	 */
-    static private $qtiClassMapping = array(
+     *
+     * An array containing a mapping between QTI class names
+     * and their runtime XHTML rendering equivalent.
+     *
+     * This array is associative. Keys are the QTI class names
+     * and values are their XHTML rendering equivalent.
+     *
+     * @var array
+     */
+    private static $qtiClassMapping = [
         // HTML components of QTI.
         'abbr' => 'qti-abbr',
         'acronym' => 'qti-acronym',
@@ -227,7 +224,7 @@ class CssScoper implements Renderable
         'tr' => 'qti-tr',
         'img' => 'qti-img',
         'a' => 'qti-a',
-        
+
         // QTI Components considered to be safe CSS selector targets.
         'assessmentItem' => 'qti-assessmentItem',
         'itemBody' => 'qti-itemBody',
@@ -269,9 +266,9 @@ class CssScoper implements Renderable
         'infoControl' => 'qti-infoControl',
         'modalFeedback' => 'qti-modalFeedback',
         'templateInline' => 'qti-templateInline',
-        'templateBlock' => 'qti-templateBlock'
-    );
-    
+        'templateBlock' => 'qti-templateBlock',
+    ];
+
     /**
      * aQTI classes to qti-* classes.
      *
@@ -283,7 +280,7 @@ class CssScoper implements Renderable
      *
      * @var array
      */
-    static private $wcFriendlyQtiClassMapping = array(
+    private static $wcFriendlyQtiClassMapping = [
         'qti-assessment-item' => 'qti-assessmentItem',
         'qti-item-body' => 'qti-itemBody',
         'qti-feedback-block' => 'qti-feedbackBlock',
@@ -324,24 +321,24 @@ class CssScoper implements Renderable
         'qti-info-control' => 'qti-infoControl',
         'qti-modal-feedback' => 'qti-modalFeedback',
         'qti-template-inline' => 'qti-templateInline',
-        'qti-template-block' => 'qti-templateBlock'
-    );
-    
-    /**
-     * -qti-* pseudo classes to CSS class map.
-     * 
-     * @var array
-     */
-    private static $qtiPseudoClassMapping = array(
-        'qti-selected' => 'qti-selected'
-    );
+        'qti-template-block' => 'qti-templateBlock',
+    ];
 
     /**
-	 * Create a new CssScoper object.
-	 *
-	 * @param boolean $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
+     * -qti-* pseudo classes to CSS class map.
+     *
+     * @var array
+     */
+    private static $qtiPseudoClassMapping = [
+        'qti-selected' => 'qti-selected',
+    ];
+
+    /**
+     * Create a new CssScoper object.
+     *
+     * @param boolean $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
      * @param boolean $mapQtiPseudoClasses Whether or not to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
-	 */
+     */
     public function __construct($mapQtiClasses = false, $mapQtiPseudoClasses = false)
     {
         $this->mapQtiClasses($mapQtiClasses);
@@ -349,50 +346,50 @@ class CssScoper implements Renderable
     }
 
     /**
-	 * Whether or not QTI classes are mapped to their qti-X CSS class equivalent.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not QTI classes are mapped to their qti-X CSS class equivalent.
+     *
+     * @return boolean
+     */
     public function doesMapQtiClasses()
     {
         return $this->mapQtiClasses;
     }
 
     /**
-	 * Whether or not map QTI classes to their qti-X CSS class equivalent.
-	 *
-	 * @param boolean $mapQtiClasses
-	 */
+     * Whether or not map QTI classes to their qti-X CSS class equivalent.
+     *
+     * @param boolean $mapQtiClasses
+     */
     public function mapQtiClasses($mapQtiClasses)
     {
         $this->mapQtiClasses = $mapQtiClasses;
     }
-    
+
     /**
      * Whether or not QTI pseudo classes are mapped to their QTI-X CSS class equivalent.
-     * 
+     *
      * @return boolean
      */
     public function doesMapQtiPseudoClasses()
     {
         return $this->mapQtiPseudoClasses;
     }
-    
+
     /**
      * Whether or not map QTI pseudo classes to their QTI-X CSS class equivalent.
-     * 
+     *
      * @param boolean $mapQtiPseudoClasses
      */
     public function mapQtiPseudoClasses($mapQtiPseudoClasses)
     {
         $this->mapQtiPseudoClasses = $mapQtiPseudoClasses;
     }
-    
+
     public function setWebComponentFriendly($webComponentFriendly)
     {
         $this->webComponentFriendly = $webComponentFriendly;
     }
-    
+
     public function isWebComponentFriendly()
     {
         return $this->webComponentFriendly;
@@ -404,7 +401,7 @@ class CssScoper implements Renderable
      * @param string $file The path to the file that has to be rescoped.
      * @param string $id The scope identifier. If not given, will be randomly generated.
      * @return string The rescoped content of $file.
-     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rescoping the content.
+     * @throws RenderingException If something goes wrong while rescoping the content.
      */
     public function render($file, $id = '')
     {
@@ -417,7 +414,6 @@ class CssScoper implements Renderable
         $stream = $this->getStream();
 
         while ($stream->eof() === false) {
-
             try {
                 $char = $stream->read(1);
                 $this->beforeCharReading($char);
@@ -425,39 +421,39 @@ class CssScoper implements Renderable
                 switch ($this->getState()) {
                     case self::RUNNING:
                         $this->runningState();
-                    break;
+                        break;
 
                     case self::IN_ATRULE:
                         $this->inAtRuleState();
-                    break;
+                        break;
 
                     case self::IN_ATRULESTRING:
                         $this->inAtRuleStringState();
-                    break;
+                        break;
 
                     case self::IN_SELECTOR:
                         $this->inSelectorState();
-                    break;
+                        break;
 
                     case self::IN_CLASSBODY:
                         $this->inClassbodyState();
-                    break;
+                        break;
 
                     case self::IN_MAINCOMMENT:
                         $this->inMainCommentState();
-                    break;
+                        break;
 
                     case self::IN_CLASSSTRING:
                         $this->inClassStringState();
-                    break;
+                        break;
 
                     case self::IN_CLASSCOMMENT:
                         $this->inClassCommentState();
-                    break;
+                        break;
 
                     case self::IN_ATRULEBODY:
                         $this->inAtRuleBodyState();
-                    break;
+                        break;
                 }
 
                 $this->afterCharReading($char);
@@ -478,13 +474,13 @@ class CssScoper implements Renderable
      *
      * @param string $id The identifier to be used for scoping.
      * @param string $file The path to the CSS file to be scoped.
-     * @throws \qtism\runtime\rendering\RenderingException
+     * @throws RenderingException
      */
     protected function init($id, $file)
     {
         $this->setState(self::RUNNING);
         $this->setId($id);
-        $this->setBuffer(array());
+        $this->setBuffer([]);
         $this->setOutput('');
         $this->setPreviousChar(false);
         $this->setPreviousSignificantChar(false);
@@ -541,7 +537,7 @@ class CssScoper implements Renderable
     /**
      * Set the stream to be read.
      *
-     * @param \qtism\common\storage\MemoryStream $stream
+     * @param MemoryStream $stream
      */
     protected function setStream(MemoryStream $stream)
     {
@@ -551,7 +547,7 @@ class CssScoper implements Renderable
     /**
      * Get the stream to be read.
      *
-     * @return \qtism\common\storage\MemoryStream
+     * @return MemoryStream
      */
     protected function getStream()
     {
@@ -634,28 +630,28 @@ class CssScoper implements Renderable
 
     /**
      * Get the array containing a mapping between QTI class names
-	 * and their runtime XHTML rendering equivalent.
-	 *
-	 * This array is associative. Keys are the QTI class names
-	 * and values are their XHTML rendering equivalent.
+     * and their runtime XHTML rendering equivalent.
+     *
+     * This array is associative. Keys are the QTI class names
+     * and values are their XHTML rendering equivalent.
      *
      * @return array
      */
-    static protected function getQtiClassMapping()
+    protected static function getQtiClassMapping()
     {
         return self::$qtiClassMapping;
     }
-    
+
     /**
      * Get the array containing a mapping between QTI pseudo classes
      * and their runtime XHTML rendering equivalent.
-     * 
+     *
      * This array is associative. Keys are the QTI pseudo class names
      * and values are their XHTML rendering equivalent.
-     * 
+     *
      * @return array
      */
-    static protected function getQtiPseudoClassMapping()
+    protected static function getQtiPseudoClassMapping()
     {
         return self::$qtiPseudoClassMapping;
     }
@@ -871,7 +867,7 @@ class CssScoper implements Renderable
      */
     protected function cleanBuffer()
     {
-        $this->setBuffer(array());
+        $this->setBuffer([]);
     }
 
     /**
@@ -936,7 +932,7 @@ class CssScoper implements Renderable
 
     /**
      * Update selector implementation.
-     * 
+     *
      * Update the currently processed CSS selector by prefixing it
      * with the appropriate id.
      */
@@ -946,7 +942,6 @@ class CssScoper implements Renderable
         $qtiClassMap = ($this->isWebComponentFriendly()) ? array_merge(self::$qtiClassMapping, self::$wcFriendlyQtiClassMapping) : self::$qtiClassMapping;
 
         if (strpos($buffer, ',') === false) {
-
             // Do not rescope if already scoped!
             if (strpos($buffer, '#' . $this->getId()) === false) {
                 $buffer = ($this->doesMapQtiClasses() === true) ? CssUtils::mapSelector($buffer, $qtiClassMap) : $buffer;
@@ -958,14 +953,13 @@ class CssScoper implements Renderable
             }
         } else {
             $classes = explode(',', $buffer);
-            $newClasses = array();
+            $newClasses = [];
 
             foreach ($classes as $c) {
-
                 // Same as above, do not rescope if already scoped...
                 if (strpos($c, '#' . $this->getId()) === false) {
                     $c = ($this->doesMapQtiClasses() === true) ? CssUtils::mapSelector($c, $qtiClassMap) : $c;
-                    $newC =  '#' . $this->getId() . ' ' . trim($c);
+                    $newC = '#' . $this->getId() . ' ' . trim($c);
                     $newC = str_replace(trim($c), $newC, $c);
                 } else {
                     $newC = $c;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,22 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtism\data\results\ResultResponseVariable;
-use qtism\data\results\CandidateResponse;
-use qtism\common\enums\Cardinality;
+use DOMElement;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\data\results\CandidateResponse;
+use qtism\data\results\ResultResponseVariable;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\common\datatypes\QtiIdentifier;
 use qtismtest\QtiSmTestCase;
 
 class ResponseVariableMarshallerTest extends QtiSmTestCase
@@ -110,23 +112,23 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),
             0,
-            new CandidateResponse(new ValueCollection(array(
+            new CandidateResponse(new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            ))),
+            ])),
             4,
-            new CorrectResponse(new ValueCollection(array(
+            new CorrectResponse(new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
                 new Value('fixture-value2'),
-            ))),
+            ])),
             new QtiIdentifier('value-id-1')
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -136,10 +138,10 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $this->assertEquals('value-id-1', $element->getAttribute('choiceSequence'));
 
         $this->assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
-        $this->assertEquals(2,$element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
+        $this->assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
 
         $this->assertEquals(1, $element->getElementsByTagName('correctResponse')->length);
-        $this->assertEquals(3,$element->getElementsByTagName('correctResponse')->item(0)->getElementsByTagName('value')->length);
+        $this->assertEquals(3, $element->getElementsByTagName('correctResponse')->item(0)->getElementsByTagName('value')->length);
     }
 
     public function testMarshallMinimal()
@@ -147,29 +149,29 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),
             0,
-            new CandidateResponse(new ValueCollection(array(
+            new CandidateResponse(new ValueCollection([
                 new Value('fixture-value1'),
                 new Value('fixture-value2'),
-            )))
+            ]))
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
         $attributes = [];
-        for ($i=0; $i<2; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, array('identifier', 'cardinality')));
+        $this->assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
 
-        $this->assertEquals(1,$element->getElementsByTagName('candidateResponse')->length);
-        $this->assertEquals(2,$element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
+        $this->assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
+        $this->assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
 
-        $this->assertEquals(0,$element->getElementsByTagName('correctResponse')->length);
+        $this->assertEquals(0, $element->getElementsByTagName('correctResponse')->length);
     }
 
     public function testGetExpectedQtiClassName()

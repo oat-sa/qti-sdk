@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,11 @@
 
 namespace qtism\data\processing;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\data\rules\ResponseRuleCollection;
+use InvalidArgumentException;
 use qtism\common\utils\Format;
-use \InvalidArgumentException;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
+use qtism\data\rules\ResponseRuleCollection;
 
 /**
  * From IMS QTI:
@@ -50,41 +51,38 @@ use \InvalidArgumentException;
  * The mapping from values assigned to respones variables by the candidate onto
  * appropriate values for the item's outcome variables is achieved through a
  * number of rules.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ResponseProcessing extends QtiComponent
 {
     /**
-	 * A collection of ResponseRule objects.
-	 *
-	 * @var \qtism\data\rules\ResponseRuleCollection
-	 * @qtism-bean-property
-	 */
+     * A collection of ResponseRule objects.
+     *
+     * @var ResponseRuleCollection
+     * @qtism-bean-property
+     */
     private $responseRules;
 
     /**
-	 * The optional response processing template.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The optional response processing template.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $template = '';
 
     /**
-	 * The optional response processing template location.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The optional response processing template location.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $templateLocation = '';
 
     /**
-	 * Create a new instance of ResponseProcessing.
-	 *
-	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 */
+     * Create a new instance of ResponseProcessing.
+     *
+     * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+     */
     public function __construct(ResponseRuleCollection $responseRules = null)
     {
         if (empty($responseRules)) {
@@ -95,53 +93,53 @@ class ResponseProcessing extends QtiComponent
     }
 
     /**
-	 * Get the ResponseRule objects that form the ResponseProcessing.
-	 *
-	 * @return \qtism\data\rules\ResponseRuleCollection A collection of ResponseRule objects.
-	 */
+     * Get the ResponseRule objects that form the ResponseProcessing.
+     *
+     * @return ResponseRuleCollection A collection of ResponseRule objects.
+     */
     public function getResponseRules()
     {
         return $this->responseRules;
     }
 
     /**
-	 * Set the ResponseRule objects that form the ResponseProcessing.
-	 *
-	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 */
+     * Set the ResponseRule objects that form the ResponseProcessing.
+     *
+     * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+     */
     public function setResponseRules(ResponseRuleCollection $responseRules)
     {
         $this->responseRules = $responseRules;
     }
 
     /**
-	 * Get the optional response processing template. An empty string ('') means
-	 * there is no template given.
-	 *
-	 * @return string The URI of the response processing template.
-	 */
+     * Get the optional response processing template. An empty string ('') means
+     * there is no template given.
+     *
+     * @return string The URI of the response processing template.
+     */
     public function getTemplate()
     {
         return $this->template;
     }
 
     /**
-	 * Whether the ResponseProcessing has a response processing template.
-	 *
-	 * @return boolean
-	 */
+     * Whether the ResponseProcessing has a response processing template.
+     *
+     * @return boolean
+     */
     public function hasTemplate()
     {
         return $this->getTemplate() !== '';
     }
 
     /**
-	 * Set the optional response processing template. An empty string ('') indicates
-	 * there is no template description.
-	 *
-	 * @param string $template The URI of the template.
-	 * @throws \InvalidArgumentException If $template is not a valid URI nor an empty string.
-	 */
+     * Set the optional response processing template. An empty string ('') indicates
+     * there is no template description.
+     *
+     * @param string $template The URI of the template.
+     * @throws InvalidArgumentException If $template is not a valid URI nor an empty string.
+     */
     public function setTemplate($template)
     {
         if (Format::isUri($template) === true || (gettype($template) === 'string' && empty($template) === true)) {
@@ -153,33 +151,33 @@ class ResponseProcessing extends QtiComponent
     }
 
     /**
-	 * Get the optional response processing template location. An empty string ('') means
-	 * there is no template location given.
-	 *
-	 * @return string The URI of the response processing template location.
-	 */
+     * Get the optional response processing template location. An empty string ('') means
+     * there is no template location given.
+     *
+     * @return string The URI of the response processing template location.
+     */
     public function getTemplateLocation()
     {
         return $this->templateLocation;
     }
 
     /**
-	 * Whether the ResponseProcessing has a response processing template location.
-	 *
-	 * @return boolean
-	 */
+     * Whether the ResponseProcessing has a response processing template location.
+     *
+     * @return boolean
+     */
     public function hasTemplateLocation()
     {
         return $this->getTemplateLocation() !== '';
     }
 
     /**
-	 * Set the optional response processing template location. An empty string ('') indicates
-	 * there is no template location description.
-	 *
-	 * @param string $templateLocation The URI of the template location.
-	 * @throws \InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
-	 */
+     * Set the optional response processing template location. An empty string ('') indicates
+     * there is no template location description.
+     *
+     * @param string $templateLocation The URI of the template location.
+     * @throws InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
+     */
     public function setTemplateLocation($templateLocation)
     {
         if (Format::isUri($templateLocation) === true || (gettype($templateLocation) === 'string' && empty($templateLocation) === true)) {
@@ -191,16 +189,16 @@ class ResponseProcessing extends QtiComponent
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'responseProcessing';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getResponseRules()->getArrayCopy());

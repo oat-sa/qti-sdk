@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,15 @@
 
 namespace qtism\data\storage\php\marshalling;
 
-use qtism\data\storage\php\PhpStreamAccess;
+use InvalidArgumentException;
 use qtism\data\storage\php\marshalling\Utils as PhpMarshallingUtils;
-use \SplStack;
-use \InvalidArgumentException;
-use \RuntimeException;
+use qtism\data\storage\php\PhpStreamAccess;
+use RuntimeException;
+use SplStack;
 
 /**
  * This class represents the running context of the marshalling process
  * of a QtiComponent into PHP source code.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PhpMarshallingContext
 {
@@ -60,7 +58,7 @@ class PhpMarshallingContext
     /**
      * The stack of object variable names.
      *
-     * @var \SplStack
+     * @var SplStack
      */
     private $variableStack;
 
@@ -74,22 +72,22 @@ class PhpMarshallingContext
     /**
      * The stream where the output PHP source code must be written.
      *
-     * @var \qtism\data\storage\php\PhpStreamAccess
+     * @var PhpStreamAccess
      */
     private $streamAccess;
 
     /**
      * Create a new MarshallingContext object.
      *
-     * @param \qtism\data\storage\php\PhpStreamAccess $streamAccess An access to a PHP source code stream for output.
+     * @param PhpStreamAccess $streamAccess An access to a PHP source code stream for output.
      */
     public function __construct(PhpStreamAccess $streamAccess)
     {
         $this->setVariableStack(new SplStack());
         $this->setFormatOutput(false);
         $this->setStreamAccess($streamAccess);
-        $this->setObjectCount(array());
-        $this->setDatatypeCount(array('string' => 0, 'boolean' => 0, 'integer' => 0, 'double' => 0, 'array' => 0, 'null' => 0));
+        $this->setObjectCount([]);
+        $this->setDatatypeCount(['string' => 0, 'boolean' => 0, 'integer' => 0, 'double' => 0, 'array' => 0, 'null' => 0]);
     }
 
     /**
@@ -135,7 +133,7 @@ class PhpMarshallingContext
     /**
      * Set the variables name stack.
      *
-     * @param \SplStack $variableStack
+     * @param SplStack $variableStack
      */
     protected function setVariableStack(SplStack $variableStack)
     {
@@ -145,7 +143,7 @@ class PhpMarshallingContext
     /**
      * Get the variables name stack.
      *
-     * @return \SplStack
+     * @return SplStack
      */
     protected function getVariableStack()
     {
@@ -175,7 +173,7 @@ class PhpMarshallingContext
     /**
      * Set the PHP source code stream access to be used at marshalling time.
      *
-     * @param \qtism\data\storage\php\PhpStreamAccess $streamAccess An access to a PHP source code stream.
+     * @param PhpStreamAccess $streamAccess An access to a PHP source code stream.
      */
     protected function setStreamAccess(PhpStreamAccess $streamAccess)
     {
@@ -185,7 +183,7 @@ class PhpMarshallingContext
     /**
      * Get the PHP source code stream access to be used at marshalling time for output.
      *
-     * @return \qtism\data\storage\php\PhpStreamAccess An access to a PHP source code stream.
+     * @return PhpStreamAccess An access to a PHP source code stream.
      */
     public function getStreamAccess()
     {
@@ -196,12 +194,12 @@ class PhpMarshallingContext
      * Push some value(s) on the variable names stack.
      *
      * @param string|array $values A string or an array of strings to be pushed on the variable names stack.
-     * @throws \InvalidArgumentException If $value or an item of $value is not a non-empty string.
+     * @throws InvalidArgumentException If $value or an item of $value is not a non-empty string.
      */
     public function pushOnVariableStack($values)
     {
         if (is_array($values) === false) {
-            $values = array($values);
+            $values = [$values];
         }
 
         foreach ($values as $value) {
@@ -219,8 +217,8 @@ class PhpMarshallingContext
      *
      * @param integer $quantity
      * @return array An array of strings.
-     * @throws \RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
-     * @throws \InvalidArgumentException If $quantity < 1.
+     * @throws RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
+     * @throws InvalidArgumentException If $quantity < 1.
      */
     public function popFromVariableStack($quantity = 1)
     {
@@ -238,7 +236,7 @@ class PhpMarshallingContext
             throw new RuntimeException($msg);
         }
 
-        $values = array();
+        $values = [];
         for ($i = 0; $i < $quantity; $i++) {
             $values[] = $stack->pop();
         }

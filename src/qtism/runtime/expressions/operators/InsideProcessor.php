@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\expressions\operators;
@@ -36,18 +36,15 @@ use qtism\data\expressions\operators\Inside;
  * inside the area defined by shape and coords. If the sub-expression is a container
  * the result is true if any of the points are inside the area. If either
  * sub-expression is NULL then the operator results in NULL.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class InsideProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Inside operator.
-	 *
-	 * @return QtiBoolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Inside operator.
+     *
+     * @return QtiBoolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -71,7 +68,7 @@ class InsideProcessor extends OperatorProcessor
 
         return new QtiBoolean($coords->inside($operand));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

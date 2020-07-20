@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
@@ -30,8 +31,6 @@ use qtism\data\state\ValueCollection;
  * Class ResultTemplateVariable
  *
  * The Item result information related to a 'Template Variable'.
- *
- * @package qtism\data\results
  */
 class ResultTemplateVariable extends ItemVariable
 {
@@ -40,9 +39,10 @@ class ResultTemplateVariable extends ItemVariable
      * The order of the values is significant only if the template variable was declared with ordered cardinality.
      *
      * Multiplicity [0,*]
+     *
      * @var ValueCollection
      */
-    protected $values=null;
+    protected $values = null;
 
     /**
      * ResultTemplateVariable constructor.
@@ -52,12 +52,11 @@ class ResultTemplateVariable extends ItemVariable
      * @param null $baseType
      * @param ValueCollection|null $values
      */
-    public function __construct(QtiIdentifier $identifier, $cardinality, $baseType=null, ValueCollection $values=null)
+    public function __construct(QtiIdentifier $identifier, $cardinality, $baseType = null, ValueCollection $values = null)
     {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setValues($values);
     }
-
 
     /**
      * Returns the QTI class name as per QTI 2.1 specification.
@@ -99,7 +98,7 @@ class ResultTemplateVariable extends ItemVariable
      * @param ValueCollection $values
      * @return $this
      */
-    public function setValues(ValueCollection $values=null)
+    public function setValues(ValueCollection $values = null)
     {
         $this->values = $values;
         return $this;

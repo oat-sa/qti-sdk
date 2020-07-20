@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,10 +23,10 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
+use InvalidArgumentException;
 use qtism\common\utils\Format as Format;
-use \InvalidArgumentException;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -34,35 +35,32 @@ use \InvalidArgumentException;
  * in the corresponding item to be treated as if they were declared with the name
  * targetIdentifier during outcomeProcessing. Use of variable mappings allows more
  * control over the way outcomes are aggregated when using testVariables.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class VariableMapping extends QtiComponent
 {
     /**
-	 * Source variable identifier.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * Source variable identifier.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $source;
 
     /**
-	 * Target variable identifier.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * Target variable identifier.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $target;
 
     /**
-	 * Create a new instance of VariableMapping.
-	 *
-	 * @param string $source The source variable identifier.
-	 * @param string $target The target variable identifier.
-	 * @throws \InvalidArgumentException If $source or $target are not valid QTI identifiers.
-	 */
+     * Create a new instance of VariableMapping.
+     *
+     * @param string $source The source variable identifier.
+     * @param string $target The target variable identifier.
+     * @throws InvalidArgumentException If $source or $target are not valid QTI identifiers.
+     */
     public function __construct($source, $target)
     {
         $this->setSource($source);
@@ -70,21 +68,21 @@ class VariableMapping extends QtiComponent
     }
 
     /**
-	 * Get the source variable identifier.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the source variable identifier.
+     *
+     * @return string A QTI identifier.
+     */
     public function getSource()
     {
         return $this->source;
     }
 
     /**
-	 * Set the source variable identifier.
-	 *
-	 * @param string $source A valid QTI identifier.
-	 * @throws \InvalidArgumentException If $source is not a valid QTI identifier.
-	 */
+     * Set the source variable identifier.
+     *
+     * @param string $source A valid QTI identifier.
+     * @throws InvalidArgumentException If $source is not a valid QTI identifier.
+     */
     public function setSource($source)
     {
         if (Format::isIdentifier($source)) {
@@ -96,21 +94,21 @@ class VariableMapping extends QtiComponent
     }
 
     /**
-	 * Get the target variable identifier.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the target variable identifier.
+     *
+     * @return string A QTI identifier.
+     */
     public function getTarget()
     {
         return $this->target;
     }
 
     /**
-	 * Set the target variable identifier.
-	 *
-	 * @param string $target A valid QTI identifier.
-	 * @throws \InvalidArgumentException If $target is not a valid QTI identifier.
-	 */
+     * Set the target variable identifier.
+     *
+     * @param string $target A valid QTI identifier.
+     * @throws InvalidArgumentException If $target is not a valid QTI identifier.
+     */
     public function setTarget($target)
     {
         if (Format::isIdentifier($target)) {
@@ -122,16 +120,16 @@ class VariableMapping extends QtiComponent
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'variableMapping';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

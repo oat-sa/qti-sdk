@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
@@ -38,18 +39,15 @@ use qtism\data\expressions\operators\Round;
  * then the operator results in NULL. If the sub-expression is NaN, then the result
  * is NULL. If the sub-expression is INF, then the result is INF. If the
  * sub-expression is -INF, then the result is -INF.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class RoundProcessor extends OperatorProcessor
 {
     /**
-	 * Process the Round operator.
-	 *
-	 * @return QtiInteger|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the Round operator.
+     *
+     * @return QtiInteger|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
+     * @throws OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -73,7 +71,7 @@ class RoundProcessor extends OperatorProcessor
 
         return new QtiInteger(intval(round($operand->getValue(), 0, $mode)));
     }
-    
+
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
      */

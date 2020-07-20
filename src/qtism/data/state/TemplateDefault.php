@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +23,11 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
-use qtism\data\expressions\Expression as Expression;
+use InvalidArgumentException as InvalidArgumentException;
 use qtism\common\utils\Format as Format;
-use \InvalidArgumentException as InvalidArgumentException;
+use qtism\data\expressions\Expression as Expression;
+use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -36,36 +37,33 @@ use \InvalidArgumentException as InvalidArgumentException;
  * by evaluating an expression defined within the reference to the item at test
  * level and which may therefore depend on the values of variables taken from
  * other items in the test or from outcomes defined at test level itself.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateDefault extends QtiComponent
 {
     /**
-	 * The identifier of the template variable affected.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The identifier of the template variable affected.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $templateIdentifier;
 
     /**
-	 * An expression which must result in a value with baseType and cardinality matching
-	 * the declaration of the assossiated variable's templateDeclaration.
-	 *
-	 * @var \qtism\data\expressions\Expression
-	 * @qtism-bean-property
-	 */
+     * An expression which must result in a value with baseType and cardinality matching
+     * the declaration of the assossiated variable's templateDeclaration.
+     *
+     * @var Expression
+     * @qtism-bean-property
+     */
     private $expression;
 
     /**
-	 * Create a new instance of TemplateDefault.
-	 *
-	 * @param string $templateIdentifier The identifier of the template variable affected.
-	 * @param \qtism\data\expressions\Expression $expression The expression that produces the new template default.
-	 * @throws \InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
-	 */
+     * Create a new instance of TemplateDefault.
+     *
+     * @param string $templateIdentifier The identifier of the template variable affected.
+     * @param Expression $expression The expression that produces the new template default.
+     * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
+     */
     public function __construct($templateIdentifier, Expression $expression)
     {
         $this->setTemplateIdentifier($templateIdentifier);
@@ -73,21 +71,21 @@ class TemplateDefault extends QtiComponent
     }
 
     /**
-	 * Get the identifier of the template variable affected.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the identifier of the template variable affected.
+     *
+     * @return string A QTI identifier.
+     */
     public function getTemplateIdentifier()
     {
         return $this->templateIdentifier;
     }
 
     /**
-	 * Set the identifier of the template variable affected.
-	 *
-	 * @param string $templateIdentifier A QTI identifier.
-	 * @throws \InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the template variable affected.
+     *
+     * @param string $templateIdentifier A QTI identifier.
+     * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
+     */
     public function setTemplateIdentifier($templateIdentifier)
     {
         if (Format::isIdentifier($templateIdentifier)) {
@@ -99,38 +97,38 @@ class TemplateDefault extends QtiComponent
     }
 
     /**
-	 * Get the expression that produces the new template default.
-	 *
-	 * @return \qtism\data\expressions\Expression A QTI Expression.
-	 */
+     * Get the expression that produces the new template default.
+     *
+     * @return Expression A QTI Expression.
+     */
     public function getExpression()
     {
         return $this->expression;
     }
 
     /**
-	 * Set the expression that produces the new template defaul.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
-	 */
+     * Set the expression that produces the new template defaul.
+     *
+     * @param Expression $expression A QTI Expression.
+     */
     public function setExpression(Expression $expression)
     {
         $this->expression = $expression;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'templateDefault';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
-        return new QtiComponentCollection(array($this->getExpression()));
+        return new QtiComponentCollection([$this->getExpression()]);
     }
 }

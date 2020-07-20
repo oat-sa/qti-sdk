@@ -1,9 +1,9 @@
 <?php
+
 namespace qtismtest\data\expressions;
 
-use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\OutcomeMinimum;
-use qtism\common\enums\BaseType;
+use qtismtest\QtiSmTestCase;
 
 class OutcomeMinimumTest extends QtiSmTestCase
 {
@@ -13,8 +13,8 @@ class OutcomeMinimumTest extends QtiSmTestCase
         $this->assertInstanceOf('qtism\\data\\expressions\\OutcomeMinimum', $outcomeMinimum);
         $this->assertEquals('SCORE', $outcomeMinimum->getOutcomeIdentifier());
         $this->assertEquals('WEIGHT', $outcomeMinimum->getWeightIdentifier());
-        
-        $this->assertEquals(array(), $outcomeMinimum->getIncludeCategories()->getArrayCopy());
-        $this->assertEquals(array(), $outcomeMinimum->getExcludeCategories()->getArrayCopy());
+
+        $this->assertEquals([], $outcomeMinimum->getIncludeCategories()->getArrayCopy());
+        $this->assertEquals([], $outcomeMinimum->getExcludeCategories()->getArrayCopy());
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,28 +23,23 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\QtiComponent;
-use qtism\data\SectionPart;
-use qtism\data\rules\PreConditionCollection;
-use qtism\data\rules\PreCondition;
 use qtism\data\rules\BranchRuleCollection;
-use qtism\data\rules\BranchRule;
-use \DOMElement;
+use qtism\data\rules\PreConditionCollection;
+use qtism\data\SectionPart;
 
 /**
  * Marshalling/Unmarshalling implementation for sectionPart.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SectionPartMarshaller extends Marshaller
 {
     /**
-	 * Marshall a SectionPart object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A SectionPart object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a SectionPart object into a DOMElement object.
+     *
+     * @param QtiComponent $component A SectionPart object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -76,16 +72,15 @@ class SectionPartMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI sectionPart element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A SectionPart object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI sectionPart element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A SectionPart object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             $object = new SectionPart($identifier);
 
             if (($required = $this->getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
@@ -136,8 +131,8 @@ class SectionPartMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'sectionPart';

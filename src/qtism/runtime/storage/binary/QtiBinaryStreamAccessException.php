@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,24 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\storage\binary;
 
+use Exception;
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
-use \Exception;
 
 /**
  * A BinaryStreamAccessException extension dedicated to QTI binary data.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class QtiBinaryStreamAccessException extends BinaryStreamAccessException
 {
@@ -125,35 +122,35 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
      * @var integer
      */
     const PENDING_RESPONSES = 22;
-    
+
     /**
      * An error occured while reading/writing shuffling states.
-     * 
+     *
      * @var integer
      */
     const SHUFFLING_STATE = 23;
-    
+
     /**
      * An error occured while reading/writing a shuffling group.
-     * 
+     *
      * @var integer
      */
     const SHUFFLING_GROUP = 24;
-    
+
     /**
      * An error occured while reading/writing path.
-     * 
+     *
      * @var integer
      */
     const PATH = 25;
-    
+
     /**
      * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
-     * @param \qtism\common\storage\BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
+     * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
      * @param integer $code An exception code. See class constants.
-     * @param \Exception $previous An optional previously thrown exception.
+     * @param Exception $previous An optional previously thrown exception.
      */
     public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null)
     {

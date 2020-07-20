@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,15 +23,12 @@
 
 namespace qtism\data\rules;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * A specialized QtiComponentCollection aiming at storing
  * TemplateRule objects.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class TemplateRuleCollection extends QtiComponentCollection
 {
@@ -40,7 +36,7 @@ class TemplateRuleCollection extends QtiComponentCollection
      * Check whether or not $value is an instance of TemplateRule.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not an instance of TemplateRule.
+     * @throws InvalidArgumentException If $value is not an instance of TemplateRule.
      */
     protected function checkType($value)
     {

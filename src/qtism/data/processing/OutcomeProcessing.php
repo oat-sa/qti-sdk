@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,8 +23,8 @@
 
 namespace qtism\data\processing;
 
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 use qtism\data\rules\OutcomeRuleCollection;
 
 /**
@@ -40,25 +41,22 @@ use qtism\data\rules\OutcomeRuleCollection;
  * and branchRules.
  *
  * The structure of outcome processing is similar to that or responseProcessing.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeProcessing extends QtiComponent
 {
     /**
-	 * A collection of OutcomeRule objects.
-	 *
-	 * @var \qtism\data\rules\OutcomeRuleCollection
-	 * @qtism-bean-property
-	 */
+     * A collection of OutcomeRule objects.
+     *
+     * @var OutcomeRuleCollection
+     * @qtism-bean-property
+     */
     private $outcomeRules;
 
     /**
-	 * Create a new instance of OutcomeProcessing.
-	 *
-	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 */
+     * Create a new instance of OutcomeProcessing.
+     *
+     * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     */
     public function __construct(OutcomeRuleCollection $outcomeRules = null)
     {
         if (empty($outcomeRules)) {
@@ -69,36 +67,36 @@ class OutcomeProcessing extends QtiComponent
     }
 
     /**
-	 * Get the OutcomeRule objects that form the OutcomeProcessing.
-	 *
-	 * @return \qtism\data\rules\OutcomeRuleCollection A collection of OutcomeRule object.
-	 */
+     * Get the OutcomeRule objects that form the OutcomeProcessing.
+     *
+     * @return OutcomeRuleCollection A collection of OutcomeRule object.
+     */
     public function getOutcomeRules()
     {
         return $this->outcomeRules;
     }
 
     /**
-	 * Set the OutcomeRule objects that form the OutcomeProcessing.
-	 *
-	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 */
+     * Set the OutcomeRule objects that form the OutcomeProcessing.
+     *
+     * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     */
     public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
     {
         $this->outcomeRules = $outcomeRules;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'outcomeProcessing';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getOutcomeRules()->getArrayCopy());

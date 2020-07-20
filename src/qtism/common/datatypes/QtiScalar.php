@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,13 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\common\datatypes;
+
+use InvalidArgumentException;
 
 /**
  * The base class for all Scalar QTI datatypes. The following QTI datatypes
@@ -33,9 +36,6 @@ namespace qtism\common\datatypes;
  * * IntOrIdentifier
  * * String
  * * Uri
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class QtiScalar implements QtiDatatype
 {
@@ -50,7 +50,7 @@ abstract class QtiScalar implements QtiDatatype
      * Create a new Scalar object with a given $value as its content.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
     public function __construct($value)
     {
@@ -58,10 +58,10 @@ abstract class QtiScalar implements QtiDatatype
     }
 
     /**
-     * Set the PHP value to be encapsulated witin the Scalar object.
+     * Set the PHP value to be encapsulated within the Scalar object.
      *
      * @param mixed $value
-     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
     public function setValue($value)
     {
@@ -80,7 +80,7 @@ abstract class QtiScalar implements QtiDatatype
     }
 
     /**
-     * Wheter or not $this is equal to $obj. Two Scalar
+     * Whether or not $this is equal to $obj. Two Scalar
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
      *
@@ -99,8 +99,8 @@ abstract class QtiScalar implements QtiDatatype
      * Checks if $value has the correct PHP datatype to
      * be encapsulated withing the Scalar object.
      *
-     * @param mixed $value A value to be encapsulated whithin the Scalar object.
-     * @throws \InvalidArgumentException If $value has a not compliant PHP datatype.
+     * @param mixed $value A value to be encapsulated within the Scalar object.
+     * @throws InvalidArgumentException If $value has a not compliant PHP datatype.
      */
     abstract protected function checkType($value);
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,21 +23,18 @@
 
 namespace qtism\data\content\xhtml\tables;
 
+use InvalidArgumentException;
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
 
 /**
  * The tbody XHTML class.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class Tbody extends BodyElement
 {
     /**
      * The Tr objects composing the Tbody.
      *
-     * @var \qtism\data\content\xhtml\tables\TrCollection
+     * @var TrCollection
      * @qtism-bean-property
      */
     private $content;
@@ -44,12 +42,12 @@ class Tbody extends BodyElement
     /**
      * Create a new Tbody object.
      *
-     * @param \qtism\data\content\xhtml\tables\TrCollection $content A non-empty TrCollection object.
+     * @param TrCollection $content A non-empty TrCollection object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If one of the arguments is invalid.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -60,8 +58,8 @@ class Tbody extends BodyElement
     /**
      * Set the collection of Tr objects composing the Tbody.
      *
-     * @param \qtism\data\content\xhtml\tables\TrCollection $content A non-empty TrCollection object.
-     * @throws \InvalidArgumentException If $components is empty.
+     * @param TrCollection $content A non-empty TrCollection object.
+     * @throws InvalidArgumentException If $components is empty.
      */
     public function setContent(TrCollection $content)
     {
@@ -76,7 +74,7 @@ class Tbody extends BodyElement
     /**
      * Get the content of the object as a collection of Tr objects.
      *
-     * @return \qtism\data\content\xhtml\tables\TrCollection
+     * @return TrCollection
      */
     public function getContent()
     {

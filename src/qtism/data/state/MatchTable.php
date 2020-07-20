@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\state;
 
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
  *
  * A matchTable transforms a source integer by finding the first matchTableEntry with
  * an exact match to the source.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class MatchTable extends LookupTable
 {
     /**
      * A collection of MatchTableEntry objects.
      *
-     * @var \qtism\data\state\MatchTableEntryCollection
+     * @var MatchTableEntryCollection
      * @qtism-bean-property
      */
     private $matchTableEntries;
@@ -47,9 +45,9 @@ class MatchTable extends LookupTable
     /**
      * Create a new instance of MatchTable.
      *
-     * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
+     * @param MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
      * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
-     * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
+     * @throws InvalidArgumentException If $matchTableEntries is an empty collection.
      */
     public function __construct(MatchTableEntryCollection $matchTableEntries, $defaultValue = null)
     {
@@ -60,7 +58,7 @@ class MatchTable extends LookupTable
     /**
      * Get the collection of MatchTableEntry objects.
      *
-     * @return \qtism\data\state\MatchTableEntryCollection A collection of MatchTableEntry objects.
+     * @return MatchTableEntryCollection A collection of MatchTableEntry objects.
      */
     public function getMatchTableEntries()
     {
@@ -70,8 +68,8 @@ class MatchTable extends LookupTable
     /**
      * Set the collection of MatchTableEntry objects.
      *
-     * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
-     * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
+     * @param MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
+     * @throws InvalidArgumentException If $matchTableEntries is an empty collection.
      */
     public function setMatchTableEntries(MatchTableEntryCollection $matchTableEntries)
     {
@@ -84,7 +82,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @see \qtism\data\state\LookupTable::getQtiClassName()
+     * @inheritDoc
      */
     public function getQtiClassName()
     {
@@ -92,7 +90,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @see \qtism\data\state\LookupTable::getComponents()
+     * @inheritDoc
      */
     public function getComponents()
     {

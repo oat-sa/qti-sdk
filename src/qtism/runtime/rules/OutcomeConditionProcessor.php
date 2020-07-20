@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rules;
@@ -34,9 +34,6 @@ namespace qtism\runtime\rules;
  * then consideration passes to the next outcomeElseIf or, if there are no more
  * outcomeElseIf parts then the sub-rules of the outcomeElse are followed
  * (if specified).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeConditionProcessor extends AbstractConditionProcessor
 {
@@ -47,7 +44,7 @@ class OutcomeConditionProcessor extends AbstractConditionProcessor
     {
         return 'outcome';
     }
-    
+
     /**
      * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
      */

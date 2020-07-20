@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
@@ -60,9 +60,7 @@ use qtism\data\AssessmentSection;
  * reporting test results the sequence number of each item must also be reported to avoid
  * ambiguity. See Results Reporting.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @link http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10093 QTI Test Structure
- *
  */
 abstract class AbstractOrdering
 {
@@ -70,22 +68,22 @@ abstract class AbstractOrdering
      * The AssessmentSection object on which the ordering
      * will occur.
      *
-     * @var \qtism\data\AssessmentSection
+     * @var AssessmentSection
      */
     private $assessmentSection;
 
     /**
      * The SelectableRoute objects that can be ordered.
      *
-     * @var \qtism\runtime\tests\SelectableRouteCollection
+     * @var SelectableRouteCollection
      */
     private $selectableRoutes;
 
     /**
      * Create a new AbstractOrdering object.
      *
-     * @param \qtism\data\AssessmentSection $assessmentSection An AssessmentSection object which represents the QTI Data Model assessmentSection on which the ordering will occur.
-     * @param \qtism\runtime\tests\SelectableRouteCollection $selectableRoutes The collection of Routes that might be ordered.
+     * @param AssessmentSection $assessmentSection An AssessmentSection object which represents the QTI Data Model assessmentSection on which the ordering will occur.
+     * @param SelectableRouteCollection $selectableRoutes The collection of Routes that might be ordered.
      */
     public function __construct(AssessmentSection $assessmentSection, SelectableRouteCollection $selectableRoutes)
     {
@@ -97,7 +95,7 @@ abstract class AbstractOrdering
      * Get the AssessmentSection object on which the ordering
      * will occur.
      *
-     * @return \qtism\data\AssessmentSection An AssessmentSection object.
+     * @return AssessmentSection An AssessmentSection object.
      */
     public function getAssessmentSection()
     {
@@ -107,7 +105,7 @@ abstract class AbstractOrdering
     /**
      * Set the AssessmentSection object on which the ordering will occur.
      *
-     * @param  \qtism\data\AssessmentSection $assessmentSection An AssessmentSection object.
+     * @param AssessmentSection $assessmentSection An AssessmentSection object.
      */
     public function setAssessmentSection(AssessmentSection $assessmentSection)
     {
@@ -117,7 +115,7 @@ abstract class AbstractOrdering
     /**
      * Get the collection of Route objects that are selectable for the ordering.
      *
-     * @return \qtism\runtime\tests\SelectableRouteCollection A collection of Route objects.
+     * @return SelectableRouteCollection A collection of Route objects.
      */
     public function getSelectableRoutes()
     {
@@ -127,7 +125,7 @@ abstract class AbstractOrdering
     /**
      * Set the collection of Route objects that are selectable for ordering.
      *
-     * @param \qtism\runtime\tests\SelectableRouteCollection $selectableRoutes A collection of Route objects.
+     * @param SelectableRouteCollection $selectableRoutes A collection of Route objects.
      */
     public function setSelectableRoutes(SelectableRouteCollection $selectableRoutes)
     {
@@ -137,8 +135,8 @@ abstract class AbstractOrdering
     /**
      * Apply the ordering algorithm.
      *
-     * @return \qtism\runtime\tests\SelectableRouteCollection A collection of SelectableRoute object that were ordered accordingly.
-     * @throws \qtism\runtime\tests\OrderingException If an error occurs while ordering the child elements of the target AssessmentSection.
+     * @return SelectableRouteCollection A collection of SelectableRoute object that were ordered accordingly.
+     * @throws OrderingException If an error occurs while ordering the child elements of the target AssessmentSection.
      */
     abstract public function order();
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,54 +15,51 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\tests;
 
 use qtism\common\datatypes\files\FileManager;
-use qtism\data\SubmissionMode;
-use qtism\data\NavigationMode;
-use qtism\data\IAssessmentItem;
-use qtism\data\AssessmentTest;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
-use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentTest;
+use qtism\data\IAssessmentItem;
+use qtism\data\NavigationMode;
+use qtism\data\SubmissionMode;
 
 /**
- * The AbstractSessionManager class is a bed for instantiating various implementations of AssessmentTestSession and AssessmentItemSession.
+ * The AbstractSessionManager class is a bed for instantiating
+ * various implementations of AssessmentTestSession and AssessmentItemSession.
  *
  * The AbstractSessionManager constructor takes in argument a FileManager object that
  * will be used to deal with QTI file datatypes during execution.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class AbstractSessionManager
 {
     /**
-     * @var \qtism\common\datatypes\files\FileManager
+     * @var FileManager
      */
     private $fileManager;
-    
+
     /**
      * Create a new AbstractSessionManager object.
-     * 
-     * @param \qtism\common\datatypes\files\FileManager A FileManager object.
+     *
+     * @param FileManager A FileManager object.
      */
     public function __construct(FileManager $fileManager)
     {
         $this->setFileManager($fileManager);
     }
-    
+
     /**
      * Set the FileManager object to be used.
-     * 
-     * @param \qtism\common\datatypes\files\FileManager $fileManager
+     *
+     * @param FileManager $fileManager
      */
     public function setFileManager(FileManager $fileManager)
     {
@@ -70,8 +68,8 @@ abstract class AbstractSessionManager
 
     /**
      * Get the FileManager object in use.
-     * 
-     * @return \qtism\common\datatypes\files\FileManager
+     *
+     * @return FileManager
      */
     public function getFileManager()
     {
@@ -81,25 +79,25 @@ abstract class AbstractSessionManager
     /**
      * Create a new AssessmentTestSession object.
      *
-     * @param \qtism\data\AssessmentTest $test The AssessmentTest definition.
-     * @param \qtism\runtime\tests\Route $route (optional) The Route to be taken.
+     * @param AssessmentTest $test The AssessmentTest definition.
+     * @param Route $route (optional) The Route to be taken.
      * @param integer $config (optional) The configuration of the AssessmentTestSession object.
-     * 
-     * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.
+     *
+     * @return AssessmentTestSession An AssessmentTestSession object.
      */
     public function createAssessmentTestSession(AssessmentTest $test, Route $route = null, $config = 0)
     {
         return $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route), $config);
     }
-    
+
     /**
      * Create an AssessmentItemSession object.
      *
-     * @param \qtism\data\IAssessmentItem $assessmentItem
+     * @param IAssessmentItem $assessmentItem
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration $submissionMode.
      *
-     * @return \qtism\runtime\tests\AssessmentItemSession
+     * @return AssessmentItemSession
      */
     public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
     {
@@ -109,20 +107,20 @@ abstract class AbstractSessionManager
     /**
      * Contains the logic of instantiating the appropriate AssessmentTestSession implementation.
      *
-     * @param \qtism\data\AssessmentTest $test
-     * @param \qtism\runtime\tests\Route $route
+     * @param AssessmentTest $test
+     * @param Route $route
      * @param integer $config (optional) The configuration of the AssessmentTestSession object.
-     * @return \qtism\runtime\tests\AssessmentTestSession A freshly instantiated AssessmentTestSession.
+     * @return AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
     abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0);
 
     /**
      * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.
      *
-     * @param \qtism\data\IAssessmentItem $assessmentItem
+     * @param IAssessmentItem $assessmentItem
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration.
-     * @return \qtism\runtime\tests\AssessmentItemSession A freshly instantiated AssessmentItemSession.
+     * @return AssessmentItemSession A freshly instantiated AssessmentItemSession.
      */
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
 
@@ -130,9 +128,9 @@ abstract class AbstractSessionManager
      * Contains the Route create logic depending on whether or not
      * an optional Route to be used is given or not.
      *
-     * @param \qtism\data\AssessmentTest $test
-     * @param \qtism\runtime\tests\Route $route
-     * @return \qtism\runtime\tests\Route
+     * @param AssessmentTest $test
+     * @param Route $route
+     * @return Route
      */
     protected function getRoute(AssessmentTest $test, Route $route = null)
     {
@@ -143,25 +141,23 @@ abstract class AbstractSessionManager
      * Contains the logic of creating the Route of a brand new AssessmentTestSession object.
      * The resulting Route object will be injected in the created AssessmentTestSession.
      *
-     * @param \qtism\data\AssessmentTest $test
-     * @return \qtism\runtime\tests\Route A newly instantiated Route object.
+     * @param AssessmentTest $test
+     * @return Route A newly instantiated Route object.
      */
     protected function createRoute(AssessmentTest $test)
     {
-        $routeStack = array();
+        $routeStack = [];
 
         foreach ($test->getTestParts() as $testPart) {
-
-            $assessmentSectionStack = array();
+            $assessmentSectionStack = [];
 
             foreach ($testPart->getAssessmentSections() as $assessmentSection) {
-                $trail = array();
-                $mark = array();
+                $trail = [];
+                $mark = [];
 
                 array_push($trail, $assessmentSection);
 
                 while (count($trail) > 0) {
-
                     $current = array_pop($trail);
 
                     if (!in_array($current, $mark, true) && $current instanceof AssessmentSection) {
@@ -178,7 +174,7 @@ abstract class AbstractSessionManager
                     } elseif (in_array($current, $mark, true)) {
                         // 2nd pass on assessmentSection.
                         // Pop N routeItems where N is the children count of $current.
-                        $poppedRoutes = array();
+                        $poppedRoutes = [];
                         for ($i = 0; $i < count($current->getSectionParts()); $i++) {
                             $poppedRoutes[] = array_pop($routeStack);
                         }

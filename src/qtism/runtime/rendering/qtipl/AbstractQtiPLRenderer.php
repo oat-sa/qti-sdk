@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\qtipl;
@@ -29,12 +28,9 @@ use qtism\runtime\rendering\Renderable;
 /**
  *
  * An abstract representation of the QtiPLRenderer.
- *
- * @author Tom Verhoof <tomv@taotesting.com>
  */
 abstract class AbstractQtiPLRenderer implements Renderable
 {
-
     /**
      * @TODO
      * @var ConditionRenderingOptions
@@ -56,7 +52,8 @@ abstract class AbstractQtiPLRenderer implements Renderable
      *
      * @param $cro ConditionRenderingOptions
      */
-    public function setCRO($cro) {
+    public function setCRO($cro)
+    {
         $this->cro = $cro;
     }
 

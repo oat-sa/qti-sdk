@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,20 +23,17 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\common\utils\Version;
-use qtism\data\content\interactions\OrderInteraction;
 use qtism\data\content\interactions\ChoiceInteraction;
+use qtism\data\content\interactions\OrderInteraction;
 use qtism\data\content\interactions\Orientation;
 use qtism\data\content\interactions\SimpleChoiceCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Marshaller implementation for ChoiceInteraction/OrderInteraction elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ChoiceInteractionMarshaller extends ContentMarshaller
 {
@@ -47,18 +45,19 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $expectedOrderInteractionClassName = ($this->isWebComponentFriendly() === true) ? 'qti-order-interaction' : 'orderInteraction';
         $isOrderInteraction = $element->localName === $expectedOrderInteractionClassName;
-        
+
         // responseIdentifier.
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass($responseIdentifier, new SimpleChoiceCollection($children->getArrayCopy()));
 
             if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
-            } else if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . " element.";
-                throw new UnmarshallingException($msg, $element);
+            } else {
+                if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
+                    $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . " element.";
+                    throw new UnmarshallingException($msg, $element);
+                }
             }
 
             // maxChoices.
@@ -70,9 +69,11 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 } else {
                     $component->setMaxChoices($maxChoices);
                 }
-            } else if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . " element.";
-                throw new UnmarshallingException($msg, $element);
+            } else {
+                if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
+                    $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . " element.";
+                    throw new UnmarshallingException($msg, $element);
+                }
             }
 
             // minChoices.
@@ -133,7 +134,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $isOrderInteraction = $component instanceof OrderInteraction;
         $isChoiceInteraction = $component instanceof ChoiceInteraction;
-        
+
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
@@ -146,8 +147,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         // shuffle.
         if (Version::compare($version, '2.0.0', '==') === true) {
             $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
-        }
-        elseif ($component->mustShuffle() !== false) {
+        } elseif ($component->mustShuffle() !== false) {
             $this->setDOMElementAttribute($element, 'shuffle', true);
         }
 
@@ -162,7 +162,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         if (Version::compare($version, '2.1.0', '>=') === true) {
             if (($isChoiceInteraction && $component->getMinChoices() !== 0) || ($isOrderInteraction && $component->getMinChoices() !== -1)) {
                 $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
-            }    
+            }
         }
 
         // orientation.
@@ -189,6 +189,6 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

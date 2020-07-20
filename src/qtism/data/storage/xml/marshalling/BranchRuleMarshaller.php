@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\QtiComponent;
 use qtism\data\rules\BranchRule;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for branchRule.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BranchRuleMarshaller extends Marshaller
 {
     /**
-	 * Marshall a BranchRule object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A BranchRule object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a BranchRule object into a DOMElement object.
+     *
+     * @param QtiComponent $component A BranchRule object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -51,12 +49,12 @@ class BranchRuleMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI branchRule element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A BranchRule object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI branchRule element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A BranchRule object.
+     * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($target = $this->getDOMElementAttributeAs($element, 'target')) !== null) {
@@ -78,8 +76,8 @@ class BranchRuleMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'branchRule';

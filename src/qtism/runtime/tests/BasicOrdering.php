@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,19 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\tests;
 
 /**
  * A basic implementation of QTI ordering.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class BasicOrdering extends AbstractOrdering
 {
@@ -36,14 +34,13 @@ class BasicOrdering extends AbstractOrdering
     public function order()
     {
         if (($ordering = $this->getAssessmentSection()->getOrdering()) !== null && $ordering->getShuffle() === true) {
-
             // $orderedRoutes will contain the result of the ordering algorithm.
             $orderedRoutes = new SelectableRoute();
             $selectableRoutes = $this->getSelectableRoutes();
             $selectableRoutesCount = count($selectableRoutes);
 
             // What are the child elements that can be shuffled?
-            $shufflingIndexes = array();
+            $shufflingIndexes = [];
             for ($index = 0; $index < $selectableRoutesCount; $index++) {
                 $selectableRoute = $selectableRoutes[$index];
 

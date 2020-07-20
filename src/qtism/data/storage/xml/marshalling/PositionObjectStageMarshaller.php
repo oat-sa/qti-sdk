@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,26 +23,23 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\interactions\PositionObjectInteractionCollection;
 use qtism\data\content\interactions\PositionObjectStage;
 use qtism\data\QtiComponent;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for PositionObjectStage.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class PositionObjectStageMarshaller extends Marshaller
 {
     /**
-	 * Marshall an PositionObjectStage object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A PositionObjectStage object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall an PositionObjectStage object into a DOMElement object.
+     *
+     * @param QtiComponent $component A PositionObjectStage object.
+     * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
@@ -56,22 +54,20 @@ class PositionObjectStageMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to an positionObjectStage element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A PositionObjectStage object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to an positionObjectStage element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A PositionObjectStage object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $objectElts = $this->getChildElementsByTagName($element, 'object');
         if (count($objectElts) > 0) {
-
             $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
 
             $positionObjectInteractionElts = $this->getChildElementsByTagName($element, 'positionObjectInteraction');
             if (count($positionObjectInteractionElts) > 0) {
-
                 $positionObjectInteractions = new PositionObjectInteractionCollection();
 
                 foreach ($positionObjectInteractionElts as $interactionElt) {
@@ -90,8 +86,8 @@ class PositionObjectStageMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'positionObjectStage';

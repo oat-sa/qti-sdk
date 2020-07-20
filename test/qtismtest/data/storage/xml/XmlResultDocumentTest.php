@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,14 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2019-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Bogaerts Jérôme, <jerome@taotesting.com>
+ * @author Bogaerts Jérôme <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\data\storage\xml;
 
+use DateTime;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
@@ -61,7 +63,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
         $testResult = $assessmentResult->getTestResult();
         $this->assertEquals('fixture-test-identifier', $testResult->getIdentifier());
-        $this->assertInstanceOf(\DateTime::class, $testResult->getDatestamp());
+        $this->assertInstanceOf(DateTime::class, $testResult->getDatestamp());
 
         $this->assertCount(2, $testResult->getItemVariables());
     }

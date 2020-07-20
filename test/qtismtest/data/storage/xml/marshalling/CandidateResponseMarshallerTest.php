@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,17 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Moyon Camille, <camille@taotesting.com>
+ * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\results\CandidateResponse;
-use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
 class CandidateResponseMarshallerTest extends QtiSmTestCase
@@ -62,16 +64,16 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $component = new CandidateResponse(
-            new ValueCollection(array(
+            new ValueCollection([
                 new Value('fixture1'),
                 new Value('fixture2'),
-            ))
+            ])
         );
 
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
 
@@ -89,7 +91,7 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
 
         $this->assertEquals($component->getQtiClassName(), $element->nodeName);
         $this->assertFalse($element->hasAttributes());

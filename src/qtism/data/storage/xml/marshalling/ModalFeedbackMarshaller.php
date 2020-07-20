@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,18 +23,15 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
+use InvalidArgumentException;
 use qtism\data\content\FlowStaticCollection;
-use qtism\data\ShowHide;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
-use \InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
+use qtism\data\ShowHide;
 
 /**
  * The Marshaller implementation for ModalFeedback elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class ModalFeedbackMarshaller extends ContentMarshaller
 {
@@ -45,13 +43,10 @@ class ModalFeedbackMarshaller extends ContentMarshaller
         $fqClass = $this->lookupClass($element);
 
         if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
-
             if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
                 $component = new $fqClass($outcomeIdentifier, $identifier);
 
                 if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
-
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     } catch (InvalidArgumentException $e) {
@@ -112,6 +107,6 @@ class ModalFeedbackMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content");
+        $this->lookupClasses = ["qtism\\data\\content"];
     }
 }

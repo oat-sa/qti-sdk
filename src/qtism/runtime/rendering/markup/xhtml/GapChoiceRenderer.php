@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,17 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use \DOMDocumentFragment;
 
 /**
  * GapChoice renderer, the base class of all renderers that render subclasses of
@@ -46,9 +46,6 @@ use \DOMDocumentFragment;
  * * data-match-max = qti:gapChoice->matchMax
  * * data-match-min = qti:gapChoice->matchMin
  * * data-match-group = qti:associablChoice->matchGroup (only if not empty).
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class GapChoiceRenderer extends ChoiceRenderer
 {
@@ -62,7 +59,7 @@ abstract class GapChoiceRenderer extends ChoiceRenderer
 
         $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
         $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
-        
+
         if (count($component->getMatchGroup()) > 0) {
             $fragment->firstChild->setAttribute('data-match-group', implode(' ', $component->getMatchGroup()->getArrayCopy()));
         }

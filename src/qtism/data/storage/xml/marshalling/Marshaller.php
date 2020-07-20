@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,15 +23,17 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMDocument;
+use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
-use qtism\data\content\Direction;
-use qtism\data\QtiComponent;
 use qtism\data\content\BodyElement;
+use qtism\data\content\Direction;
+use qtism\data\content\enums\AriaLive;
+use qtism\data\content\enums\AriaOrientation;
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
-use \DOMDocument;
-use \DOMElement;
-use \RuntimeException;
-use \InvalidArgumentException;
+use RuntimeException;
 
 abstract class Marshaller
 {
@@ -53,18 +56,18 @@ abstract class Marshaller
 
     /**
      * The version on which the Marshaller operates.
-     * 
+     *
      * @var string
      */
     private $version;
-    
+
     /**
      * An array containing the name of classes
      * that are allowed to have their 'dir' attribute set.
-     * 
-     * @var array
+     *
+     * @var string[]
      */
-    private static $dirClasses = array(
+    private static $dirClasses = [
         'associateInteraction',
         'choiceInteraction',
         'drawingInteraction',
@@ -149,15 +152,15 @@ abstract class Marshaller
         'table',
         'templateBlock',
         'templateInline',
-        'hottext'
-    );
-    
+        'hottext',
+    ];
+
     /**
      * An array containing the QTI class names that are allowed to be Web Component friendly.
-     * 
-     * @var array
+     *
+     * @var string[]
      */
-    public static $webComponentFriendlyClasses = array(
+    public static $webComponentFriendlyClasses = [
         'associableHotspot',
         'gap',
         'gapImg',
@@ -196,19 +199,50 @@ abstract class Marshaller
         'rubricBlock',
         'templateBlock',
         'templateInline',
-        'infoControl'
-    );
-    
+        'infoControl',
+    ];
+
+    /**
+     * An array containing QTI class names preferring aria-flowsto instead of aria-flowto.
+     *
+     * @var string[]
+     */
+    private static $flowsToClasses = [
+        'associateInteraction',
+        'choiceInteraction',
+        'drawingInteraction',
+        'extendedTextInteraction',
+        'gapMatchInteraction',
+        'graphicAssociateInteraction',
+        'hotspotInteraction',
+        'hottextInteraction',
+        'matchInteraction',
+        'mediaInteraction',
+        'orderInteraction',
+        'selectPointInteraction',
+        'sliderInteraction',
+        'uploadInteraction',
+        'associableHotspot',
+        'br',
+        'col',
+        'endAttemptInteraction',
+        'gap',
+        'hotspotChoice',
+        'hr',
+        'img',
+        'textEntryInteraction'
+    ];
+
     /**
      * Create a new Marshaller object.
-     * 
+     *
      * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
      */
     public function __construct($version)
     {
         $this->setVersion($version);
     }
-    
+
     /**
      * Get a DOMDocument to be used by marshaller implementations in order to create
      * new nodes to be imported in a currenlty exported document.
@@ -249,20 +283,20 @@ abstract class Marshaller
 
         return $this->marshallerFactory;
     }
-    
+
     /**
      * Set the version on which the Marshaller operates.
-     * 
+     *
      * @param string $version A QTI version number e.g. '2.1'.
      */
     protected function setVersion($version)
     {
         $this->version = $version;
     }
-    
+
     /**
      * Get the version on which the Marshaller operates.
-     * 
+     *
      * @return string A QTI version number e.g. '2.1'.
      */
     public function getVersion()
@@ -285,7 +319,7 @@ abstract class Marshaller
                 } else {
                     $element = $args[0];
                     if ($element instanceof DOMElement && ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName()))) {
-                        return call_user_func_array(array($this, 'unmarshall'), $args);
+                        return call_user_func_array([$this, 'unmarshall'], $args);
                     } else {
                         $nodeName = $this->getElementName($element);
                         throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
@@ -298,7 +332,7 @@ abstract class Marshaller
 
         throw new RuntimeException("Unknown method Marshaller::'${method}'.");
     }
-    
+
     /**
      * Get Attribute Name to Use for Marshalling
      *
@@ -316,7 +350,7 @@ abstract class Marshaller
      * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
      * "response-identifier" value is returned.
      *
-     * @param \DOMElement $element
+     * @param DOMElement $element
      * @param $attribute
      * @return string
      */
@@ -324,12 +358,12 @@ abstract class Marshaller
     {
         if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
             $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
-        
+
             if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses) === true) {
                 return XmlUtils::webComponentFriendlyAttributeName($attribute);
             }
         }
-        
+
         return $attribute;
     }
 
@@ -339,8 +373,8 @@ abstract class Marshaller
      * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
      * @param string $attribute The attribute name.
      * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
-     * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
+     * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
     public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
@@ -370,11 +404,11 @@ abstract class Marshaller
         switch (gettype($value)) {
             case 'boolean':
                 $element->nodeValue = ($value === true) ? 'true' : 'false';
-            break;
+                break;
 
             default:
                 $element->nodeValue = $value;
-            break;
+                break;
         }
     }
 
@@ -418,8 +452,8 @@ abstract class Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-     * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
-     * @param boolean $withText (optional) Wether text nodes must be returned or not.
+     * @param boolean $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param boolean $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
     public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
@@ -427,7 +461,7 @@ abstract class Marshaller
         if (is_array($tagName) === false) {
             $tagName = [$tagName];
         }
-        
+
         if ($this->isWebComponentFriendly() === true) {
             foreach ($tagName as $key => $name) {
                 if (in_array($name, self::$webComponentFriendlyClasses) === true) {
@@ -435,7 +469,7 @@ abstract class Marshaller
                 }
             }
         }
-        
+
         return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
@@ -471,6 +505,27 @@ abstract class Marshaller
     }
 
     /**
+     * @param BodyElement $bodyElement
+     * @param DOMElement $element
+     */
+    protected function fillBodyElementFlowTo(BodyElement $bodyElement, DOMElement $element)
+    {
+        $scan = ['aria-flowto'];
+
+        if (in_array($bodyElement->getQtiClassName(), self::$flowsToClasses, true)) {
+            array_unshift($scan, 'aria-flowsto');
+        }
+
+        foreach ($scan as $s) {
+            if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, $s)) !== null) {
+                $bodyElement->setAriaFlowTo($ariaFlowTo);
+
+                break;
+            }
+        }
+    }
+
+    /**
      * Fill $bodyElement with the following bodyElement attributes:
      *
      * * id
@@ -490,21 +545,92 @@ abstract class Marshaller
             $bodyElement->setClass($element->getAttribute('class'));
             $bodyElement->setLang($element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
             $bodyElement->setLabel($element->getAttribute('label'));
-            
+
             $version = $this->getVersion();
-            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
-                $bodyElement->setDir(Direction::getConstantByName($dir));
+            if (Version::compare($version, '2.2.0', '>=') === true) {
+                // dir attribute
+                if (($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
+                    $bodyElement->setDir(Direction::getConstantByName($dir));
+                }
+
+                // aria-* attributes
+                if ($element->localName !== 'printedVariable') {
+                    // All QTI classes deal with aria-* except printedVariable.
+                    if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
+                        $bodyElement->setAriaControls($ariaControls);
+                    }
+
+                    if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
+                        $bodyElement->setAriaDescribedBy($ariaDescribedBy);
+                    }
+
+                    /*
+                     * There is a little glitch in the QTI 2.2.X XSDs. Indeed, the following elements do not
+                     * consider aria-flowto (the official one) but aria-flowsto which is an error: associateInteraction,
+                     * choiceInteraction, drawingInteraction, extendedTextInteraction, gapMatchInteraction,
+                     * graphicAssociateInteraction, hotspotInteraction, matchInteraction, mediaInteraction,
+                     * orderInteraction, selectPointInteraction, sliderInteraction, uploadInteraction, associableHotspot,
+                     * br, col, endAttemptInteraction, gap, hotspotChoice, hr, img, textEntryInteraction.
+                     *
+                     * In such a context, at unmarshalling time, for the elements described above, we prefer
+                     * aria-flowsto (as described in the XSDs) as a first choice and then aria-flowto as a backup.
+                     */
+                    $this->fillBodyElementFlowTo($bodyElement, $element);
+
+                    if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
+                        $bodyElement->setAriaLabelledBy($ariaLabelledBy);
+                    }
+
+                    if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
+                        $bodyElement->setAriaOwns($ariaOwns);
+                    }
+
+                    if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
+                        $bodyElement->setAriaLevel($ariaLevel);
+                    }
+
+                    if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
+                        $bodyElement->setAriaLive(AriaLive::getConstantByName($ariaLive));
+                    }
+
+                    if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
+                        $bodyElement->setAriaOrientation(AriaOrientation::getConstantByName($ariaOrientation));
+                    }
+
+                    if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
+                        $bodyElement->setAriaLabel($ariaLabel);
+                    }
+
+                    if (($ariaHidden = $this->getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
+                        $bodyElement->setAriaHidden($ariaHidden);
+                    }
+                }
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label, dir).";
+            $msg = "An error occurred while filling the bodyElement attributes (id, class, lang, label, dir, aria-*).";
             throw new UnmarshallingException($msg, $element, $e);
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param BodyElement $bodyElement
+     */
+    protected function fillElementFlowto(DOMElement $element, BodyElement $bodyElement)
+    {
+        if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
+            if (in_array($element->localName, self::$flowsToClasses, true)) {
+                $element->setAttribute('aria-flowsto', $ariaFlowTo);
+            } else {
+                $element->setAttribute('aria-flowto', $ariaFlowTo);
+            }
         }
     }
 
     /**
      * Fill $element with the attributes of $bodyElement.
      *
-     * @param DOMElement $element The element from where the atribute values will be
+     * @param DOMElement $element The element from where the attribute values will be
      * @param BodyElement $bodyElement The bodyElement to be fill.
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
@@ -524,24 +650,82 @@ abstract class Marshaller
         if (($label = $bodyElement->getLabel()) != '') {
             $element->setAttribute('label', $label);
         }
-        
+
         $version = $this->getVersion();
-        if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
-            $element->setAttribute('dir', Direction::getNameByConstant($dir));
+        if (Version::compare($version, '2.2.0', '>=') === true) {
+            // dir attribute
+            if (($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
+                $element->setAttribute('dir', Direction::getNameByConstant($dir));
+            }
+
+            // aria-* attributes
+            if ($bodyElement->getQtiClassName() !== 'printedVariable') {
+                // All BodyElement objects deal with aria-* except PrintedVariable.
+
+                /*
+                 * There is a little glitch in the QTI 2.2.X XSDs. Indeed, the following elements do not
+                 * consider aria-flowto (the official one) but aria-flowsto which is an error: associateInteraction,
+                 * choiceInteraction, drawingInteraction, extendedTextInteraction, gapMatchInteraction,
+                 * graphicAssociateInteraction, hotspotInteraction, matchInteraction, mediaInteraction,
+                 * orderInteraction, selectPointInteraction, sliderInteraction, uploadInteraction, associableHotspot,
+                 * br, col, endAttemptInteraction, gap, hotspotChoice, hr, img, textEntryInteraction.
+                 *
+                 * In such a context, at marshalling time, for the QTI classes described above, we populate data
+                 * for the aria-flowsto attribute. Otherwise, we populate aria-flowto. This makes us able to honnor
+                 * the XSD contract.
+                 */
+                $this->fillElementFlowto($element, $bodyElement);
+
+                if (($ariaControls = $bodyElement->getAriaControls()) !== '') {
+                    $element->setAttribute('aria-controls', $ariaControls);
+                }
+
+                if (($ariaDescribedBy = $bodyElement->getAriaDescribedBy()) !== '') {
+                    $element->setAttribute('aria-describedby', $ariaDescribedBy);
+                }
+
+                if (($ariaLabelledBy = $bodyElement->getAriaLabelledBy()) !== '') {
+                    $element->setAttribute('aria-labelledby', $ariaLabelledBy);
+                }
+
+                if (($ariaOwns = $bodyElement->getAriaOwns()) !== '') {
+                    $element->setAttribute('aria-owns', $ariaOwns);
+                }
+
+                if (($ariaLevel = $bodyElement->getAriaLevel()) !== '') {
+                    $element->setAttribute('aria-level', $ariaLevel);
+                }
+
+                if (($ariaLive = $bodyElement->getAriaLive()) !== false) {
+                    $element->setAttribute('aria-live', AriaLive::getNameByConstant($ariaLive));
+                }
+
+                if (($ariaOrientation = $bodyElement->getAriaOrientation()) !== false) {
+                    $element->setAttribute('aria-orientation', AriaOrientation::getNameByConstant($ariaOrientation));
+                }
+
+                if (($ariaLabel = $bodyElement->getAriaLabel()) !== '') {
+                    $element->setAttribute('aria-label', $ariaLabel);
+                }
+
+                if (($ariaHidden = $bodyElement->getAriaHidden()) !== false) {
+                    $element->setAttribute('aria-hidden', 'true');
+                }
+            }
         }
     }
-    
+
     protected function createElement(QtiComponent $component)
     {
         $localName = $component->getQtiClassName();
-        
+
         if ($this->isWebComponentFriendly() === true && in_array($localName, self::$webComponentFriendlyClasses) === true) {
             $localName = XmlUtils::webComponentFriendlyClassName($localName);
         }
-        
+
         return self::getDOMCradle()->createElement($localName);
     }
-    
+
     /**
      * Is Web Component Friendly
      *

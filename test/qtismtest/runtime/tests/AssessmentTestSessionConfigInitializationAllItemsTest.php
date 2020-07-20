@@ -1,16 +1,16 @@
 <?php
+
 namespace qtismtest\runtime\tests;
 
-use qtism\data\storage\xml\XmlStorageException;
-use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\files\FileSystemFileManager;
-use qtism\runtime\tests\SessionManager;
-use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\data\storage\xml\XmlStorageException;
+use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\SessionManager;
+use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessmentTestSessionTestCase
 {
-
     /**
      * @dataProvider getBranchingTestCases
      * @param int $config
@@ -36,15 +36,15 @@ class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessm
 
     public function getBranchingTestCases()
     {
-        return array(
+        return [
             // config INITIALIZE_ALL_ITEMS is enabled
-            array(AssessmentTestSession::INITIALIZE_ALL_ITEMS, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml', 4),
-            array(AssessmentTestSession::INITIALIZE_ALL_ITEMS, self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml', 5),
-            array(AssessmentTestSession::INITIALIZE_ALL_ITEMS, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml', 4),
+            [AssessmentTestSession::INITIALIZE_ALL_ITEMS, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml', 4],
+            [AssessmentTestSession::INITIALIZE_ALL_ITEMS, self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml', 5],
+            [AssessmentTestSession::INITIALIZE_ALL_ITEMS, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml', 4],
             // config INITIALIZE_ALL_ITEMS is disabled
-            array(0, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml'),
-            array(0, self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml'),
-            array(0, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml'),
-        );
+            [0, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml'],
+            [0, self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml'],
+            [0, self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml'],
+        ];
     }
 }

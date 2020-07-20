@@ -1,8 +1,9 @@
 <?php
+
 namespace qtismtest\data;
 
-use qtismtest\QtiSmEnumTestCase;
 use qtism\data\TestFeedbackAccess;
+use qtismtest\QtiSmEnumTestCase;
 
 class TestFeedbackAccessTest extends QtiSmEnumTestCase
 {
@@ -10,28 +11,28 @@ class TestFeedbackAccessTest extends QtiSmEnumTestCase
     {
         return TestFeedbackAccess::class;
     }
-    
+
     protected function getNames()
     {
-        return array(
+        return [
             'atEnd',
-            'during'
-        );
+            'during',
+        ];
     }
-    
+
     protected function getKeys()
     {
-        return array(
+        return [
             'AT_END',
-            'DURING'
-        );
+            'DURING',
+        ];
     }
-    
+
     protected function getConstants()
     {
-        return array(
+        return [
             TestFeedbackAccess::AT_END,
-            TestFeedbackAccess::DURING
-        );
+            TestFeedbackAccess::DURING,
+        ];
     }
 }

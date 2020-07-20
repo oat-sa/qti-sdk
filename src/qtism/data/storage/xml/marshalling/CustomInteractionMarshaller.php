@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,25 +23,22 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\content\interactions\CustomInteraction;
-use qtism\data\storage\xml\Utils;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\storage\xml\Utils;
 
 /**
  * Marshalling/Unmarshalling implementation for customInteraction.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class CustomInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall a CustomInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A CustomInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a CustomInteraction object into a DOMElement object.
+     *
+     * @param QtiComponent $component A CustomInteraction object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = $this->createElement($component);
@@ -59,16 +57,15 @@ class CustomInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI customInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A CustomInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI customInteraction element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A CustomInteraction object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-
             $frag = $element->ownerDocument->createDocumentFragment();
             $element = $element->cloneNode(true);
             $frag->appendChild($element);
@@ -82,8 +79,8 @@ class CustomInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'customInteraction';

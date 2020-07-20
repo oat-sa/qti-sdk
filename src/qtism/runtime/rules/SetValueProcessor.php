@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,29 +15,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
 
 namespace qtism\runtime\rules;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\QtiInteger;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
-use qtism\runtime\expressions\ExpressionEngine;
-use qtism\data\rules\Rule;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\common\utils\Reflection;
-use \InvalidArgumentException;
+use qtism\runtime\expressions\ExpressionEngine;
 
 /**
  * Base class for SetOutcomeValue and setTemplateValue Rule Processors.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 abstract class SetValueProcessor extends RuleProcessor
 {
@@ -50,7 +46,7 @@ abstract class SetValueProcessor extends RuleProcessor
      * * The variable's baseType does not match the baseType of the affected value.
      * * An error occurs while processing the related expression.
      *
-     * @throws \qtism\runtime\rules\RuleProcessingException If one of the error described above arise.
+     * @throws RuleProcessingException If one of the error described above arise.
      */
     public function process()
     {
@@ -82,7 +78,7 @@ abstract class SetValueProcessor extends RuleProcessor
             // juggle a little bit (int -> float, float -> int)
             if ($val !== null && $var->getCardinality() === Cardinality::SINGLE) {
                 $baseType = $var->getBaseType();
-                
+
                 // If we are trying to put a container in a scalar, let's make some changes...
                 if (($val->getCardinality() === Cardinality::MULTIPLE || $val->getCardinality() === Cardinality::ORDERED) && count($val) > 0) {
                     $val = $val[0];
@@ -97,13 +93,13 @@ abstract class SetValueProcessor extends RuleProcessor
 
             $var->setValue($val);
         } catch (InvalidArgumentException $e) {
-            $varBaseType = (BaseType::getNameByConstant($var->getBaseType())  === false) ? 'noBaseType' : BaseType::getNameByConstant($var->getBaseType());
+            $varBaseType = (BaseType::getNameByConstant($var->getBaseType()) === false) ? 'noBaseType' : BaseType::getNameByConstant($var->getBaseType());
             $varCardinality = (Cardinality::getNameByConstant($var->getCardinality()));
             // The affected value does not match the baseType of the variable $var.
             $msg = "Unable to set value ${val} to variable '${identifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         }
     }
-    
+
     abstract protected function getVariableType();
 }

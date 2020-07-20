@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -46,9 +47,6 @@ use \InvalidArgumentException;
  * b) include a 'skip' button and count its activation combined with a
  * RESPONSE variable that is equal to the slider's initial position as a
  * NULL response.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SliderInteraction extends BlockInteraction
 {
@@ -145,7 +143,7 @@ class SliderInteraction extends BlockInteraction
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($responseIdentifier, $lowerBound, $upperBound, $id = '', $class = '', $lang = '', $label = '')
     {
@@ -158,7 +156,7 @@ class SliderInteraction extends BlockInteraction
      * Get the value of the lowerBound attribute.
      *
      * @param float $lowerBound A float value.
-     * @throws \InvalidArgumentException If $lowerBound is not a float value.
+     * @throws InvalidArgumentException If $lowerBound is not a float value.
      */
     public function setLowerBound($lowerBound)
     {
@@ -184,7 +182,7 @@ class SliderInteraction extends BlockInteraction
      * Set the value of the upperBound attribute.
      *
      * @param float $upperBound A float value.
-     * @throws \InvalidArgumentException If $upperBound is not a float value.
+     * @throws InvalidArgumentException If $upperBound is not a float value.
      */
     public function setUpperBound($upperBound)
     {
@@ -211,7 +209,7 @@ class SliderInteraction extends BlockInteraction
      * that no value is actually defined for the step attribute.
      *
      * @param integer $step A positive (>= 0) integer.
-     * @throws \InvalidArgumentException If $step is not a positive integer.
+     * @throws InvalidArgumentException If $step is not a positive integer.
      */
     public function setStep($step)
     {
@@ -247,7 +245,7 @@ class SliderInteraction extends BlockInteraction
      * Set whether or not each step on the slider has to be labelled.
      *
      * @param boolean $stepLabel
-     * @throws \InvalidArgumentException If $stepLabel is not a boolean value.
+     * @throws InvalidArgumentException If $stepLabel is not a boolean value.
      */
     public function setStepLabel($stepLabel)
     {
@@ -273,7 +271,7 @@ class SliderInteraction extends BlockInteraction
      * Set the orientation of the slider (horizontal or vertical).
      *
      * @param integer $orientation A value from the Orientation enumeration.
-     * @throws \InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
+     * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
     public function setOrientation($orientation)
     {
@@ -299,7 +297,7 @@ class SliderInteraction extends BlockInteraction
      * Set whether or not the upper and lower bounds are reversed.
      *
      * @param boolean $reverse
-     * @throws \InvalidArgumentException If $reverse is not a boolean value.
+     * @throws InvalidArgumentException If $reverse is not a boolean value.
      */
     public function setReverse($reverse)
     {

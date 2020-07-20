@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,19 +23,16 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Version;
-use qtism\data\ShowHide;
 use qtism\data\content\FlowStaticCollection;
-use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \DOMElement;
+use qtism\data\QtiComponentCollection;
+use qtism\data\ShowHide;
 
 /**
  * The Marshaller implementation for SimpleAssociableChoice elements of the content model.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SimpleAssociableChoiceMarshaller extends ContentMarshaller
 {
@@ -44,11 +42,9 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        
+
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
-
             if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
-
                 $fqClass = $this->lookupClass($element);
                 $component = new $fqClass($identifier, $matchMax);
 
@@ -67,7 +63,7 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
                 if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
-                
+
                 if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                     $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                 }
@@ -113,7 +109,7 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
         if ($component->getMatchMin() !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
             $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
-        
+
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
@@ -133,6 +129,6 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
      */
     protected function setLookupClasses()
     {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
+        $this->lookupClasses = ["qtism\\data\\content\\interactions"];
     }
 }

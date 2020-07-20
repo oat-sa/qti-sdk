@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\QtiComponent;
+use DOMElement;
 use qtism\data\expressions\OutcomeMaximum;
-use \DOMElement;
+use qtism\data\QtiComponent;
 
 /**
  * A marshalling/unmarshalling implementation for the QTI OutcomeMaximum expression.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
 {
     /**
-	 * Marshall an outcomeMaximum object in its DOMElement equivalent.
-	 *
-	 * @param \qtism\data\QtiComponent A OutcomeMaximum object.
-	 * @return \DOMElement The corresponding outcomeMaximum QTI element.
-	 */
+     * Marshall an outcomeMaximum object in its DOMElement equivalent.
+     *
+     * @param QtiComponent A OutcomeMaximum object.
+     * @return DOMElement The corresponding outcomeMaximum QTI element.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
@@ -54,11 +52,11 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-	 * Marshall an outcomeMaximum QTI element in its OutcomeMaximum object equivalent.
-	 *
-	 * @param \DOMElement A DOMElement object.
-	 * @return \qtism\data\QtiComponent The corresponding OutcomeMaximum object.
-	 */
+     * Marshall an outcomeMaximum QTI element in its OutcomeMaximum object equivalent.
+     *
+     * @param DOMElement A DOMElement object.
+     * @return QtiComponent The corresponding OutcomeMaximum object.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
@@ -81,8 +79,8 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'outcomeMaximum';

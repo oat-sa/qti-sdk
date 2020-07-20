@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMElement;
 use qtism\data\QtiComponent;
 use qtism\data\rules\SetCorrectResponse;
-use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for setCorrectResponse.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class SetCorrectResponseMarshaller extends Marshaller
 {
     /**
-	 * Marshall a SetCorrectResponse object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A SetCorrectResponse object.
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a SetCorrectResponse object into a DOMElement object.
+     *
+     * @param QtiComponent $component A SetCorrectResponse object.
+     * @return DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -52,12 +50,12 @@ class SetCorrectResponseMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to a QTI setCorrectResponse element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A SetCorrectResponse object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to a QTI setCorrectResponse element.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A SetCorrectResponse object.
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
@@ -79,8 +77,8 @@ class SetCorrectResponseMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'setCorrectResponse';

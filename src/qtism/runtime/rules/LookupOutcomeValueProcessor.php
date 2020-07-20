@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,25 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  */
+
 namespace qtism\runtime\rules;
 
-use qtism\data\state\Value;
-use qtism\runtime\common\Utils as RuntimeUtils;
-use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\QtiFloat;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\ExpressionEngine;
-use qtism\data\rules\LookupOutcomeValue;
-use qtism\data\rules\Rule;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -40,28 +38,25 @@ use \InvalidArgumentException;
  * The lookupOutcomeValue rule sets the value of an outcome variable to the value
  * obtained by looking up the value of the associated expression in the lookupTable
  * associated with the outcome's declaration.
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
  */
 class LookupOutcomeValueProcessor extends RuleProcessor
 {
     /**
-	 * Process the LookupOutcomeValue rule.
-	 *
-	 * A RuleProcessingException will be thrown if:
-	 *
-	 * * The outcome variable to set does not exist.
-	 * * The variable to set is not an OutcomeVariable
-	 * * The outcome variable's baseType does not match the baseType of the affected value (the result of the bound expression).
-	 * * The outcome variable's declaration has no associated lookup table.
-	 * * The variable's declaration contains a matchTable but the result of the bound expression is not an integer.
-	 * * The variable's declaration contains an interpolationTable but the result of the bound expression is not an integer, nor a float.
-	 * * There is no associated table in the variable's declaration.
-	 * * An error occurs during the processing of the related expression.
-	 *
-	 * @throws \qtism\runtime\rules\RuleProcessingException If one of the error described above arise.
-	 */
+     * Process the LookupOutcomeValue rule.
+     *
+     * A RuleProcessingException will be thrown if:
+     *
+     * * The outcome variable to set does not exist.
+     * * The variable to set is not an OutcomeVariable
+     * * The outcome variable's baseType does not match the baseType of the affected value (the result of the bound expression).
+     * * The outcome variable's declaration has no associated lookup table.
+     * * The variable's declaration contains a matchTable but the result of the bound expression is not an integer.
+     * * The variable's declaration contains an interpolationTable but the result of the bound expression is not an integer, nor a float.
+     * * There is no associated table in the variable's declaration.
+     * * An error occurs during the processing of the related expression.
+     *
+     * @throws RuleProcessingException If one of the error described above arise.
+     */
     public function process()
     {
         $state = $this->getState();
@@ -140,13 +135,12 @@ class LookupOutcomeValueProcessor extends RuleProcessor
                 $msg = "The looked up value's baseType is not compliant with the baseType of variable '${identifier}'.";
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR);
             }
-
         } catch (ExpressionProcessingException $e) {
             $msg = "An error occured while processing the expression bound to the lookupOutcomeValue rule.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
     }
-    
+
     /**
      * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
      */
