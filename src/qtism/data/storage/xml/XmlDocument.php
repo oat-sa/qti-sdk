@@ -32,6 +32,7 @@ use League\Flysystem\Filesystem;
 use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
+use qtism\common\utils\Version;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
@@ -419,7 +420,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = XmlUtils::getSchemaLocation($this->getVersion());
+            $filename = $this->getSchemaLocation();
         }
 
         if (is_readable($filename)) {
@@ -728,5 +729,31 @@ class XmlDocument extends QtiDocument
     protected function inferVersion()
     {
         return XmlUtils::inferVersion($this->getDomDocument());
+    }
+
+    /**
+     * Get the XML schema to use for a given QTI version.
+     *
+     * @return string A filename pointing at an XML Schema file.
+     */
+    public function getSchemaLocation(): string
+    {
+        $version = Version::appendPatchVersion($this->getVersion());
+
+        if ($version === '2.1.0') {
+            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
+        } elseif ($version === '2.1.1') {
+            $filename = __DIR__ . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
+        } elseif ($version === '2.2.0') {
+            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
+        } elseif ($version === '2.2.1') {
+            $filename = __DIR__ . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+        } elseif ($version === '2.2.2') {
+            $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
+        } else {
+            $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
+        }
+
+        return $filename;
     }
 }

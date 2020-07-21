@@ -356,22 +356,13 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Validate the compact AssessmentTest XML document according to the relevant XSD schema.
-     * If $filename is provided, the file pointed by $filename will be used instead
-     * of the default schema.
+     * Get the XML schema to use for a given QTI version.
      *
-     * @param string $filename An optional filename to force the validation against a particular schema.
-     * @throws XmlStorageException
+     * @return string A filename pointing at an XML Schema file.
      */
-    public function schemaValidate($filename = '')
+    public function getSchemaLocation(): string
     {
-        if (empty($filename)) {
-            $dS = DIRECTORY_SEPARATOR;
-            // default xsd for AssessmentTest.
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qticompact_v1p0.xsd';
-        }
-
-        parent::schemaValidate($filename);
+        return __DIR__ . '/schemes/qticompact_v1p0.xsd';
     }
 
     /**

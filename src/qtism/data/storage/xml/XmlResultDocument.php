@@ -32,16 +32,13 @@ use LogicException;
 class XmlResultDocument extends XmlDocument
 {
     /**
-     * Validate DomDocument against associated xsd
+     * Get the XML schema to use for a given QTI Result Report version.
      *
-     * Add DomDocument to XmlUtils to fetch xsd by document namespace
-     *
-     * @param string $filename
-     * @throws XmlStorageException
+     * @return string A filename pointing at an XML Schema file.
      */
-    public function schemaValidate($filename = '')
+    public function getSchemaLocation(): string
     {
-        parent::schemaValidate(__DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd');
+        return __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
     }
 
     /**

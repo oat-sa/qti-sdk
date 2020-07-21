@@ -161,7 +161,6 @@ class XmlUtilsTest extends QtiSmTestCase
             ['2.0.0', realpath("${baseDir}/imsqti_v2p0.xsd")],
             ['2.1', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")],
             ['2.1.0', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")],
-            ['2.1.0', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")],
             ['2.1.1', realpath("${baseDir}/qtiv2p1p1/imsqti_v2p1p1.xsd")],
             ['2.2', realpath("${baseDir}/qtiv2p2/imsqti_v2p2.xsd")],
             ['2.2.0', realpath("${baseDir}/qtiv2p2/imsqti_v2p2.xsd")],

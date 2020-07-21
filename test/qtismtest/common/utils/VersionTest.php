@@ -78,4 +78,29 @@ class VersionTest extends QtiSmTestCase
             ['2.1', '2.2', 'ne', true],
         ];
     }
+
+    /**
+     * @dataProvider appendPatchVersionProvider
+     * @param $originalVersion
+     * @param $patchedVersion
+     */
+    public function testAppendPatchVersion($originalVersion, $patchedVersion)
+    {
+        $this->assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
+    }
+    
+    public function appendPatchVersionProvider()
+    {
+        return [
+          ['2.0', '2.0.0'],  
+          ['2.0.0', '2.0.0'],  
+          ['2.1', '2.1.0'],  
+          ['2.1.0', '2.1.0'],  
+          ['2.1.1', '2.1.1'],  
+          ['2.2', '2.2.0'],  
+          ['2.2.0', '2.2.0'],  
+          ['2.2.1', '2.2.1'],  
+          ['2.2.2', '2.2.2'],  
+        ];
+    }
 }
