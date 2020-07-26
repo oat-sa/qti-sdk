@@ -780,4 +780,46 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this->assertSame('', $assessmentItemRef->getLabel());
         $this->assertFalse($assessmentItemRef->hasLabel());
     }
+
+    /**
+     * @dataProvider compactVersionsProvider
+     */
+    public function testInferVersion($version, $testFile, $expectedVersion)
+    {
+        $doc = new XmlCompactDocument($version);
+        $doc->load($testFile);
+        $this->assertEquals($expectedVersion, $doc->getVersion());
+    }
+
+    /**
+     * @dataProvider compactVersionsProvider
+     */
+    public function testSchemaValidateWithDifferentVersions($version, $testFile)
+    {
+        $doc = new XmlCompactDocument($version);
+        $doc->load($testFile, true);
+
+        // Asserts no exception has been thrown.
+        $this->assertTrue(true);
+    }
+
+    public function compactVersionsProvider(): array
+    {
+        $path = self::samplesDir() . 'custom/tests/empty_compact_test/';
+
+        return [
+            ['2.1', $path . 'empty_compact_test_2_1.xml', '2.1.0'],
+            ['2.2', $path . 'empty_compact_test_2_2.xml', '2.2.0'],
+        ];
+    }
+
+    public function testInferVersionWithMissingNamespaceThrowsException()
+    {
+        $xmlDoc = new XmlCompactDocument();
+
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
+
+        $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
+    }
 }

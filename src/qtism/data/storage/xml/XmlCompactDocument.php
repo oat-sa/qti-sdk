@@ -25,6 +25,8 @@ namespace qtism\data\storage\xml;
 
 use DOMElement;
 use Exception;
+use InvalidArgumentException;
+use qtism\common\utils\Version;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
@@ -40,6 +42,7 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
 use SplObjectStorage;
@@ -359,10 +362,34 @@ class XmlCompactDocument extends XmlDocument
      * Get the XML schema to use for a given QTI version.
      *
      * @return string A filename pointing at an XML Schema file.
+     * @throws InvalidArgumentException when the QTI version is not semantic or not supported.
      */
     public function getSchemaLocation(): string
     {
-        return __DIR__ . '/schemes/qticompact_v1p0.xsd';
+        $versionNumber = Version::appendPatchVersion($this->getVersion());
+
+        if ($versionNumber === '2.1.0') {
+            $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
+        } elseif ($versionNumber === '2.1.1') {
+            $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
+        } elseif ($versionNumber === '2.2.0') {
+            $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
+        } elseif ($versionNumber === '2.2.1') {
+            $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
+        } elseif ($versionNumber === '2.2.2') {
+            $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
+        } else {
+            $knownVersions = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Compact QTI is not supported for version "%s". Supported versions are "%s".',
+                    $versionNumber,
+                    implode('", "', $knownVersions)
+                )
+            );
+        }
+        
+        return $filename;
     }
 
     /**
@@ -375,9 +402,28 @@ class XmlCompactDocument extends XmlDocument
      */
     public function decorateRootElement(DOMElement $rootElement)
     {
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
+        $version = trim($this->getVersion());
+        switch ($version) {
+            case '2.1.0':
+            case '2.1.1':
+                $qtiSuffix = 'v2p1';
+                $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
+                break;
+
+            case '2.2.0':
+            case '2.2.1':
+            case '2.2.2':
+                $qtiSuffix = 'v2p2';
+                $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p2.xsd';
+                break;
+
+            default:
+                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
+        }
+
+        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
     }
 
     /**
@@ -496,6 +542,25 @@ class XmlCompactDocument extends XmlDocument
 
     protected function inferVersion()
     {
-        return '2.1';
+        $document = $this->getDomDocument();
+        $root = $document->documentElement;
+        $version = false;
+
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+
+            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
+                $version = '2.1.0';
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
+                $version = '2.2.0';
+            }
+        }
+
+        if ($version === false) {
+            $msg = 'Cannot infer QTI Compact version. Check namespaces and schema locations in XML file.';
+            throw new XmlStorageException($msg, XmlStorageException::VERSION);
+        }
+
+        return $version;
     }
 }
