@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
+use InvalidArgumentException;
 use qtism\data\NavigationMode;
 use qtism\data\ShowHide;
 use qtism\data\storage\LocalFileResolver;
@@ -821,5 +822,49 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this->expectExceptionCode(XmlStorageException::VERSION);
 
         $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
+    }
+
+    /**
+     * @dataProvider changeVersionProvider
+     * @param string $fromVersion
+     * @param string $fromFile
+     * @param string $toVersion
+     * @param string $toFile
+     * @throws XmlStorageException
+     */
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    {
+        $doc = new XmlCompactDocument($fromVersion);
+        $doc->load($fromFile);
+
+        $doc->changeVersion($toVersion);
+
+        $expected = new XmlCompactDocument($toVersion);
+        $expected->load($toFile);
+
+        $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
+
+    public function changeVersionProvider(): array
+    {
+        $path = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_';
+        return [
+            ['2.1', $path . '2_1.xml', '2.2', $path . '2_2.xml'],
+            ['2.2', $path . '2_2.xml', '2.1', $path . '2_1.xml'],
+        ];
+    }
+
+    public function testChangeVersionWithUnknownVersionThrowsException()
+    {
+        $wrongVersion = '2.4';
+        $file21 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_2_1.xml';
+
+        $doc = new XmlCompactDocument('2.1');
+        $doc->load($file21);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Version \''.$wrongVersion.'\' is not a known QTI version.');
+     
+        $doc->changeVersion($wrongVersion);
     }
 }

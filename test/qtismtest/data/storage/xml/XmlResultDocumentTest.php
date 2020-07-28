@@ -24,6 +24,7 @@
 namespace qtismtest\data\storage\xml;
 
 use DateTime;
+use InvalidArgumentException;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
@@ -124,5 +125,49 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this->expectExceptionCode(XmlStorageException::VERSION);
 
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml');
+    }
+
+    /**
+     * @dataProvider changeVersionProvider
+     * @param string $fromVersion
+     * @param string $fromFile
+     * @param string $toVersion
+     * @param string $toFile
+     * @throws XmlStorageException
+     */
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    {
+        $doc = new XmlResultDocument($fromVersion);
+        $doc->load($fromFile, true);
+
+        $doc->changeVersion($toVersion);
+
+        $expected = new XmlResultDocument($toVersion);
+        $expected->load($toFile, true);
+
+        $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
+
+    public function changeVersionProvider(): array
+    {
+        $path = self::samplesDir() . 'results/simple-assessment-result';
+        return [
+            ['2.1', $path . '.xml', '2.2', $path . '-v2p2.xml'],
+            ['2.2', $path . '-v2p2.xml', '2.1', $path . '.xml'],
+        ];
+    }
+
+    public function testChangeVersionWithUnknownVersionThrowsException()
+    {
+        $wrongVersion = '2.4';
+        $file21 = self::samplesDir() . 'results/simple-assessment-result.xml';
+
+        $doc = new XmlResultDocument('2.1');
+        $doc->load($file21, true);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Version \''.$wrongVersion.'\' is not a known QTI version.');
+
+        $doc->changeVersion($wrongVersion   );
     }
 }

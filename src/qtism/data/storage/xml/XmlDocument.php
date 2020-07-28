@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -599,6 +600,19 @@ class XmlDocument extends QtiDocument
     }
 
     /**
+     * Changes to Qti version of the root element.
+     *
+     * @param string $toVersion
+     * @return self
+     */
+    public function changeVersion(string $toVersion)
+    {
+        $this->setVersion($toVersion);
+        $this->decorateRootElement($this->domDocument->documentElement);
+        return $this;
+    }
+
+    /**
      * Decorate the root element of the XmlAssessmentDocument with the appropriate
      * namespaces and schema definition.
      *
@@ -646,9 +660,9 @@ class XmlDocument extends QtiDocument
                 break;
         }
 
-        $rootElement->setAttribute('xmlns', $xmlns);
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $xmlns);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "${xmlns} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $xmlns . ' ' . $xsdLocation);
     }
 
     /**

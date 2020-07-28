@@ -26,7 +26,6 @@ namespace qtism\data\storage\xml;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;
-use qtism\common\utils\Version;
 use SplStack;
 
 /**
