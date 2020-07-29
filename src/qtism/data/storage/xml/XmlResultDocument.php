@@ -18,15 +18,16 @@
  * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Moyon Camille <camille@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml;
 
 use DOMElement;
+use InvalidArgumentException;
 use LogicException;
 use qtism\common\utils\Version;
-use qtism\data\storage\xml\Utils as XmlUtils;
 
 /**
  * Class XmlResultDocument
@@ -67,38 +68,59 @@ class XmlResultDocument extends XmlDocument
     }
 
     /**
-     * Decorate the root DomElement
-     *
-     * Add Result namespace regarding version
-     *
-     * @param DOMElement $rootElement
-     * @throws LogicException if the version is not supported by QTI result
+     * Returns the QTI Result Report namespace for the given version
+     * @param string $version
+     * @return string
+     * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function decorateRootElement(DOMElement $rootElement)
+    protected function getNamespace(string $version): string
     {
-        $version = trim($this->getVersion());
         switch ($version) {
             case '2.1.0':
             case '2.1.1':
-                $qtiSuffix = 'result_v2p1';
+                $namespace = 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
+                break;
+
+            case '2.2.0':
+            case '2.2.1':
+            case '2.2.2':
+                $namespace = 'http://www.imsglobal.org/xsd/imsqti_result_v2p2';
+                break;
+
+            default:
+                throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
+        }
+        
+        return $namespace;
+    }
+
+    /**
+     * Returns the QTI Result Report XSD location for the given version
+     * @param string $version
+     * @return string
+     * @throws InvalidArgumentException when the version is not supported.
+     */
+    protected function getXsdLocation(string $version): string
+    {
+        switch ($version) {
+            case '2.1.0':
+            case '2.1.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
                 break;
 
             case '2.2.0':
             case '2.2.1':
-                $qtiSuffix = 'result_v2p2';
+            case '2.2.2':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
                 break;
 
             default:
-                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
+                throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
         }
-
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+        
+        return $xsdLocation;
     }
-
+    
     protected function inferVersion()
     {
         $document = $this->getDomDocument();

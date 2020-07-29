@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -42,7 +43,6 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
-use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
 use SplObjectStorage;
@@ -388,44 +388,64 @@ class XmlCompactDocument extends XmlDocument
                 )
             );
         }
-        
+
         return $filename;
     }
 
     /**
-     * Override of XmlDocument.
-     *
-     * Specifies the correct XSD schema locations and main namespace
-     * for the root element of a Compact XML document.
-     *
-     * @param DOMElement $rootElement The root element of a compact XML document.
+     * Returns the QTI Compact namespace for the given version
+     * @param string $version
+     * @return string
+     * @throws InvalidArgumentException when the version is not supported.
      */
-    public function decorateRootElement(DOMElement $rootElement)
+    protected function getNamespace(string $version): string
     {
-        $version = trim($this->getVersion());
         switch ($version) {
             case '2.1.0':
             case '2.1.1':
-                $qtiSuffix = 'v2p1';
+                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
+                break;
+
+            case '2.2.0':
+            case '2.2.1':
+            case '2.2.2':
+                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
+                break;
+
+            default:
+                throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
+        }
+        
+        return $namespace;
+    }
+
+    /**
+     * Returns the QTI Compact XSD location for the given version
+     * @param string $version
+     * @return string
+     * @throws InvalidArgumentException when the version is not supported.
+     */
+    protected function getXsdLocation(string $version): string
+    {
+        switch ($version) {
+            case '2.1.0':
+            case '2.1.1':
                 $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
                 break;
 
             case '2.2.0':
             case '2.2.1':
             case '2.2.2':
-                $qtiSuffix = 'v2p2';
                 $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p2.xsd';
                 break;
 
             default:
-                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
+                throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
         }
-
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+        
+        return $xsdLocation;
     }
-
+    
     /**
      * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
      */
