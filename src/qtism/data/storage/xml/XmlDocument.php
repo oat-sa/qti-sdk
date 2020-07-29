@@ -631,6 +631,7 @@ class XmlDocument extends QtiDocument
 
     /**
      * Returns the QTI namespace for the given version
+     *
      * @param string $version
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
@@ -660,12 +661,13 @@ class XmlDocument extends QtiDocument
             default:
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
         }
-        
+
         return $namespace;
     }
 
     /**
      * Returns the QTI XSD location for the given version
+     *
      * @param string $version
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
@@ -828,20 +830,31 @@ class XmlDocument extends QtiDocument
      */
     public function getSchemaLocation(): string
     {
-        $version = Version::appendPatchVersion($this->getVersion());
+        $versionNumber = Version::appendPatchVersion($this->getVersion());
 
-        if ($version === '2.1.0') {
-            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
-        } elseif ($version === '2.1.1') {
-            $filename = __DIR__ . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
-        } elseif ($version === '2.2.0') {
-            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
-        } elseif ($version === '2.2.1') {
-            $filename = __DIR__ . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
-        } elseif ($version === '2.2.2') {
-            $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
-        } else {
-            $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
+        switch ($versionNumber) {
+            case '2.1.0':
+                $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
+                break;
+                
+            case '2.1.1':
+                $filename = __DIR__ . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
+                break;
+                
+            case '2.2.0':
+                $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
+                break;
+                
+            case '2.2.1':
+                $filename = __DIR__ . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+                break;
+                
+            case '2.2.2':
+                $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
+                break;
+                
+            default:
+                $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
         }
 
         return $filename;

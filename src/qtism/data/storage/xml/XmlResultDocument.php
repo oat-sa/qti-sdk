@@ -24,9 +24,7 @@
 
 namespace qtism\data\storage\xml;
 
-use DOMElement;
 use InvalidArgumentException;
-use LogicException;
 use qtism\common\utils\Version;
 
 /**
@@ -43,25 +41,27 @@ class XmlResultDocument extends XmlDocument
     {
         $versionNumber = Version::appendPatchVersion($this->getVersion());
 
-        if ($versionNumber === '2.1.0') {
-            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
-        } elseif ($versionNumber === '2.1.1') {
-            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
-        } elseif ($versionNumber === '2.2.0') {
-            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
-        } elseif ($versionNumber === '2.2.1') {
-            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
-        } elseif ($versionNumber === '2.2.2') {
-            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
-        } else {
-            $knownVersions = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
-            throw new InvalidArgumentException(
-                sprintf(
-                    'QTI Result Report is not supported for version "%s". Supported versions are "%s".',
-                    $versionNumber,
-                    implode('", "', $knownVersions)
-                )
-            );
+        switch ($versionNumber) {
+            case '2.1.1':
+            case '2.1.0':
+                $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
+                break;
+
+            case '2.2.1':
+            case '2.2.2':
+            case '2.2.0':
+                $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+                break;
+
+            default:
+                $knownVersions = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'QTI Result Report is not supported for version "%s". Supported versions are "%s".',
+                        $versionNumber,
+                        implode('", "', $knownVersions)
+                    )
+                );
         }
 
         return $filename;
@@ -69,6 +69,7 @@ class XmlResultDocument extends XmlDocument
 
     /**
      * Returns the QTI Result Report namespace for the given version
+     *
      * @param string $version
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
@@ -90,12 +91,13 @@ class XmlResultDocument extends XmlDocument
             default:
                 throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
         }
-        
+
         return $namespace;
     }
 
     /**
      * Returns the QTI Result Report XSD location for the given version
+     *
      * @param string $version
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
@@ -117,10 +119,10 @@ class XmlResultDocument extends XmlDocument
             default:
                 throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
         }
-        
+
         return $xsdLocation;
     }
-    
+
     protected function inferVersion()
     {
         $document = $this->getDomDocument();
