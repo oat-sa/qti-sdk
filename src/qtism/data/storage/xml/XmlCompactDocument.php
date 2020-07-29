@@ -359,16 +359,14 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Get the XML schema to use for a given QTI version.
+     * Get the QTI Compact schema for the document version.
      *
      * @return string A filename pointing at an XML Schema file.
      * @throws InvalidArgumentException when the QTI version is not semantic or not supported.
      */
     public function getSchemaLocation(): string
     {
-        $versionNumber = Version::appendPatchVersion($this->getVersion());
-
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.1':
             case '2.1.0':
                 $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
@@ -381,22 +379,21 @@ class XmlCompactDocument extends XmlDocument
                 break;
 
             default:
-                throw QtiVersionException::unsupportedCompactVersion($versionNumber);
+                throw QtiVersionException::unsupportedCompactVersion($this->getVersion());
         }
 
         return $filename;
     }
 
     /**
-     * Returns the QTI Compact namespace for the given version
+     * Returns the QTI Compact namespace for the document version
      *
-     * @param string $versionNumber
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getNamespace(string $versionNumber): string
+    protected function getNamespace(): string
     {
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.0':
             case '2.1.1':
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
@@ -409,22 +406,21 @@ class XmlCompactDocument extends XmlDocument
                 break;
 
             default:
-                throw QtiVersionException::unsupportedCompactVersion($versionNumber);
+                throw QtiVersionException::unsupportedCompactVersion($this->getVersion());
         }
 
         return $namespace;
     }
 
     /**
-     * Returns the QTI Compact XSD location for the given version
+     * Returns the QTI Compact XSD location for the document version
      *
-     * @param string $versionNumber
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getXsdLocation(string $versionNumber): string
+    protected function getXsdLocation(): string
     {
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.0':
             case '2.1.1':
                 $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
@@ -437,7 +433,7 @@ class XmlCompactDocument extends XmlDocument
                 break;
 
             default:
-                throw QtiVersionException::unsupportedCompactVersion($versionNumber);
+                throw QtiVersionException::unsupportedCompactVersion($this->getVersion());
         }
 
         return $xsdLocation;

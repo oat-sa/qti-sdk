@@ -603,13 +603,11 @@ class XmlDocument extends QtiDocument
      * Changes to Qti version of the root element.
      *
      * @param string $toVersion
-     * @return self
      */
     public function changeVersion(string $toVersion)
     {
         $this->setVersion($toVersion);
         $this->decorateRootElement($this->domDocument->documentElement);
-        return $this;
     }
 
     /**
@@ -620,9 +618,8 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $version = trim($this->getVersion());
-        $xmlns = $this->getNamespace($version);
-        $xsdLocation = $this->getXsdLocation($version);
+        $xmlns = $this->getNamespace();
+        $xsdLocation = $this->getXsdLocation();
 
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $xmlns);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -630,15 +627,14 @@ class XmlDocument extends QtiDocument
     }
 
     /**
-     * Returns the QTI namespace for the given version
+     * Returns the QTI namespace for the document version
      *
-     * @param string $version
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getNamespace(string $version): string
+    protected function getNamespace(): string
     {
-        switch ($version) {
+        switch ($this->getVersion()) {
             case '2.0.0':
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
                 break;
@@ -666,15 +662,14 @@ class XmlDocument extends QtiDocument
     }
 
     /**
-     * Returns the QTI XSD location for the given version
+     * Returns the QTI XSD location for the document version
      *
-     * @param string $version
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getXsdLocation(string $version): string
+    protected function getXsdLocation(): string
     {
-        switch ($version) {
+        switch ($this->getVersion()) {
             case '2.0.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
                 break;
@@ -824,15 +819,13 @@ class XmlDocument extends QtiDocument
     }
 
     /**
-     * Get the XML schema to use for a given QTI version.
+     * Get the QTI XML schema to use for the document version.
      *
      * @return string A filename pointing at an XML Schema file.
      */
     public function getSchemaLocation(): string
     {
-        $versionNumber = Version::appendPatchVersion($this->getVersion());
-
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.0':
                 $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
                 break;

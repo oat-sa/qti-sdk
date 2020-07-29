@@ -32,6 +32,8 @@ use InvalidArgumentException;
  */
 class Version
 {
+    const SUPPORTED_QTI_VERSIONS = ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2', '3.0.0'];
+
     /**
      * Compare two version numbers of QTI, following the rules of Semantic Versioning.
      *
@@ -60,55 +62,48 @@ class Version
      */
     public static function compare($version1, $version2, $operator = null)
     {
-        $version1 = trim($version1);
-        $version2 = trim($version2);
+        $version1 = self::sanitize($version1);
+        $version2 = self::sanitize($version2);
+        self::checkOperator($operator);
 
-        // Because version_compare consider 2.1 < 2.1.0...
-        $version1 = self::appendPatchVersion($version1);
-        $version2 = self::appendPatchVersion($version2);
+        return $operator === null
+            ? version_compare($version1, $version2)
+            : version_compare($version1, $version2, $operator);
+    }
 
-        // Check if the versions are known...
-        $knownVersions = self::knownVersions();
-        if (self::isKnown($version1) === false) {
-            $msg = "Version '${version1}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
-            throw new InvalidArgumentException($msg);
-        } elseif (self::isKnown($version2) === false) {
-            $msg = "Version '${version2}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
-            throw new InvalidArgumentException($msg);
+    /**
+     * Whether or not a $version is a supported QTI version.
+     *
+     * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
+     * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
+     */
+    public static function sanitize($version): string
+    {
+        $patchedVersion = self::appendPatchVersion($version);
+        if (!in_array($patchedVersion, self::SUPPORTED_QTI_VERSIONS, true)) {
+            throw QtiVersionException::unsupportedQtiVersion($version);
         }
 
-        // Check if operator is correct.
+        return $patchedVersion;
+    }
+
+    /**
+     * Checks whether the operator is known.
+     *
+     * @param string $operator
+     * @throws InvalidArgumentException when the operator is not known.
+     */
+    protected static function checkOperator($operator)
+    {
         $knownOperators = ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'];
-        if (is_null($operator) === true || in_array($operator, $knownOperators) === true) {
-            return (is_null($operator) === true) ? version_compare($version1, $version2) : version_compare($version1, $version2, $operator);
-        } else {
-            $msg = "Unknown operator '${operator}'. Known operators are '" . implode(', ', $knownOperators) . "'.";
-            throw new InvalidArgumentException($msg);
+        if ($operator !== null && !in_array($operator, $knownOperators, true)) {
+            throw new InvalidArgumentException(
+                sprintf("Unknown operator '%s'. Known operators are '%s'.",
+                    $operator,
+                    implode("', '", $knownOperators)
+                )
+            );
         }
-    }
-
-    /**
-     * Wether or not a $version containing a major, minor and patch
-     * version is a known QTI version.
-     *
-     * @param string $version A version with major, minor and patch version e.g. '2.1.1'.
-     * @return boolean
-     */
-    public static function isKnown($version)
-    {
-        $version = self::appendPatchVersion($version);
-        return in_array($version, self::knownVersions());
-    }
-
-    /**
-     * Get known QTI versions. Returned versions will contain
-     * major, minor and patch version.
-     *
-     * @return array An array of QTI version numbers containing major, minor and patch version e.g. '2.1.1'.
-     */
-    public static function knownVersions()
-    {
-        return ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2', '3.0.0'];
     }
 
     /**

@@ -34,7 +34,7 @@ abstract class QtiDocument
      *
      * @var string
      */
-    private $version = '2.1.0';
+    private $version;
 
     /**
      * The root QTI Component of the document.
@@ -49,7 +49,7 @@ abstract class QtiDocument
      */
     private $url;
 
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
     {
         $this->setVersion($version);
         $this->setDocumentComponent($documentComponent);
@@ -63,12 +63,7 @@ abstract class QtiDocument
      */
     public function setVersion($version)
     {
-        if (Version::isKnown($version) === true) {
-            $this->version = Version::appendPatchVersion($version);
-        } else {
-            $msg = "Version '{$version}' is not a known QTI version. Known versions are '" . implode(', ', Version::knownVersions()) . "'";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->version = Version::sanitize($version);
     }
 
     /**

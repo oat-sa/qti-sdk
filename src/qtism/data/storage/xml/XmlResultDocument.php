@@ -34,15 +34,13 @@ use qtism\common\utils\QtiVersionException;
 class XmlResultDocument extends XmlDocument
 {
     /**
-     * Get the XML schema to use for a given QTI Result Report version.
+     * Get the QTI Result Report schema for the document version.
      *
      * @return string A filename pointing at an XML Schema file.
      */
     public function getSchemaLocation(): string
     {
-        $versionNumber = Version::appendPatchVersion($this->getVersion());
-
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.1':
             case '2.1.0':
                 $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
@@ -55,22 +53,21 @@ class XmlResultDocument extends XmlDocument
                 break;
 
             default:
-                throw QtiVersionException::unsupportedResultVersion($versionNumber);
+                throw QtiVersionException::unsupportedResultVersion($this->getVersion());
         }
 
         return $filename;
     }
 
     /**
-     * Returns the QTI Result Report namespace for the given version
+     * Returns the QTI Result Report namespace for the document version
      *
-     * @param string $versionNumber
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getNamespace(string $versionNumber): string
+    protected function getNamespace(): string
     {
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.0':
             case '2.1.1':
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
@@ -83,22 +80,21 @@ class XmlResultDocument extends XmlDocument
                 break;
 
             default:
-                throw QtiVersionException::unsupportedResultVersion($versionNumber);
+                throw QtiVersionException::unsupportedResultVersion($this->getVersion());
         }
 
         return $namespace;
     }
 
     /**
-     * Returns the QTI Result Report XSD location for the given version
+     * Returns the QTI Result Report XSD location for the document version
      *
-     * @param string $versionNumber
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getXsdLocation(string $versionNumber): string
+    protected function getXsdLocation(): string
     {
-        switch ($versionNumber) {
+        switch ($this->getVersion()) {
             case '2.1.0':
             case '2.1.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
@@ -111,7 +107,7 @@ class XmlResultDocument extends XmlDocument
                 break;
 
             default:
-                throw QtiVersionException::unsupportedResultVersion($versionNumber);
+                throw QtiVersionException::unsupportedResultVersion($this->getVersion());
         }
 
         return $xsdLocation;

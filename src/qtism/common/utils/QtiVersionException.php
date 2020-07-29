@@ -33,6 +33,15 @@ class QtiVersionException extends InvalidArgumentException
     const SUPPORTED_COMPACT_VERSIONS = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
     const SUPPORTED_RESULT_VERSIONS = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
 
+    public static function unsupportedQtiVersion(string $versionNumber): self
+    {
+        return self::unsupportedVersion(
+            'QTI version "%s" is not supported.',
+            $versionNumber,
+            Version::SUPPORTED_QTI_VERSIONS
+        );
+    }
+
     public static function unsupportedCompactVersion(string $versionNumber): self
     {
         return self::unsupportedVersion(
