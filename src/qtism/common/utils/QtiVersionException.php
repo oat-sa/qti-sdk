@@ -21,7 +21,7 @@
  * @license GPLv2
  */
 
-namespace qtism\data\storage\xml;
+namespace qtism\common\utils;
 
 use InvalidArgumentException;
 

@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml;
 
 use InvalidArgumentException;
 use qtism\common\utils\Version;
+use qtism\common\utils\QtiVersionException;
 
 /**
  * Class XmlResultDocument
