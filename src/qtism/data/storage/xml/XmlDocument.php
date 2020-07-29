@@ -78,21 +78,6 @@ class XmlDocument extends QtiDocument
     private $fileSystem = null;
 
     /**
-     * Create a new XmlDocument.
-     *
-     * If the given QTI $version number is given with no patch version (c.f. Semantic Versioning), 0 will be used as the patch
-     * version.
-     *
-     * @param string $version The version number of the QTI specfication to use in order to load or save an AssessmentTest.
-     * @param QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
-     * @throws InvalidArgumentException If $version is not a known QTI version.
-     */
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
-    {
-        parent::__construct($version, $documentComponent);
-    }
-
-    /**
      * Set the DOMDocument object in use.
      *
      * @param DOMDocument $domDocument A DOMDocument object.
