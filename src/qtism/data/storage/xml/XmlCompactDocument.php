@@ -372,22 +372,15 @@ class XmlCompactDocument extends XmlDocument
             case '2.1.0':
                 $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
                 break;
-                
+
             case '2.2.1':
             case '2.2.2':
             case '2.2.0':
                 $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
                 break;
-                
+
             default:
-                $knownVersions = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'Compact QTI is not supported for version "%s". Supported versions are "%s".',
-                        $versionNumber,
-                        implode('", "', $knownVersions)
-                    )
-                );
+                throw QtiVersionException::unsupportedCompactVersion($versionNumber);
         }
 
         return $filename;
@@ -396,13 +389,13 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Returns the QTI Compact namespace for the given version
      *
-     * @param string $version
+     * @param string $versionNumber
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getNamespace(string $version): string
+    protected function getNamespace(string $versionNumber): string
     {
-        switch ($version) {
+        switch ($versionNumber) {
             case '2.1.0':
             case '2.1.1':
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
@@ -415,7 +408,7 @@ class XmlCompactDocument extends XmlDocument
                 break;
 
             default:
-                throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
+                throw QtiVersionException::unsupportedCompactVersion($versionNumber);
         }
 
         return $namespace;
@@ -424,13 +417,13 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Returns the QTI Compact XSD location for the given version
      *
-     * @param string $version
+     * @param string $versionNumber
      * @return string
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected function getXsdLocation(string $version): string
+    protected function getXsdLocation(string $versionNumber): string
     {
-        switch ($version) {
+        switch ($versionNumber) {
             case '2.1.0':
             case '2.1.1':
                 $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
@@ -443,7 +436,7 @@ class XmlCompactDocument extends XmlDocument
                 break;
 
             default:
-                throw new InvalidArgumentException('Result xml is not supported for QTI version "' . $version . '"');
+                throw QtiVersionException::unsupportedCompactVersion($versionNumber);
         }
 
         return $xsdLocation;

@@ -23,21 +23,21 @@ class VersionTest extends QtiSmTestCase
 
     public function testVersionCompareInvalidVersion1()
     {
-        $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.2.2, 3.0.0'.";
+        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "3.0.0".';
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         Version::compare('2.1.4', '2.1.1', '>');
     }
 
     public function testVersionCompareInvalidVersion2()
     {
-        $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.2.2, 3.0.0'.";
+        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "3.0.0".';
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         Version::compare('2.1.0', '2.1.4', '<');
     }
 
     public function testUnknownOperator()
     {
-        $msg = "Unknown operator '!=='. Known operators are '<, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne'.";
+        $msg = "Unknown operator '!=='. Known operators are '<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'.";
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         Version::compare('2.1.1', '2.2.0', '!==');
     }
