@@ -84,7 +84,7 @@ class XmlCompactDocument extends XmlDocument
      */
     public function setVersion($versionNumber)
     {
-        $this->version = CompactVersion::sanitize($versionNumber);
+        $this->version = CompactVersion::create($versionNumber);
     }
 
     /**
@@ -366,75 +366,6 @@ class XmlCompactDocument extends XmlDocument
             $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
-    }
-
-    /**
-     * Get the QTI Compact schema for the document version.
-     *
-     * @return string A filename pointing at an XML Schema file.
-     */
-    public function getSchemaLocation(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.1.1':
-            case '2.1.0':
-                $filename = 'qticompact_v2p1.xsd';
-                break;
-
-            case '2.2.1':
-            case '2.2.2':
-            case '2.2.0':
-                $filename = 'qticompact_v2p2.xsd';
-                break;
-        }
-
-        return $filename;
-    }
-
-    /**
-     * Returns the QTI Compact namespace for the document version
-     *
-     * @return string
-     */
-    protected function getNamespace(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.1.0':
-            case '2.1.1':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
-                break;
-        }
-
-        return $namespace;
-    }
-
-    /**
-     * Returns the QTI Compact XSD location for the document version
-     *
-     * @return string
-     */
-    protected function getXsdLocation(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.1.0':
-            case '2.1.1':
-                $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p2.xsd';
-                break;
-        }
-
-        return $xsdLocation;
     }
 
     /**

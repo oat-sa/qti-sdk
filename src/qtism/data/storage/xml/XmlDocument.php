@@ -401,7 +401,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = __DIR__ . '/schemes/' . $this->getSchemaLocation();
+            $filename = __DIR__ . '/schemes/' . $this->version->getSchemaLocation();
         }
 
         if (is_readable($filename)) {
@@ -587,11 +587,11 @@ class XmlDocument extends QtiDocument
     /**
      * Changes to Qti version of the root element.
      *
-     * @param string $toVersion
+     * @param string $toVersionNumber
      */
-    public function changeVersion(string $toVersion)
+    public function changeVersion(string $toVersionNumber)
     {
-        $this->setVersion($toVersion);
+        $this->setVersion($toVersionNumber);
         $this->decorateRootElement($this->domDocument->documentElement);
     }
 
@@ -603,83 +603,12 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $xmlns = $this->getNamespace();
-        $xsdLocation = $this->getXsdLocation();
+        $xmlns = $this->version->getNamespace();
+        $xsdLocation = $this->version->getXsdLocation();
 
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $xmlns);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $xmlns . ' ' . $xsdLocation);
-    }
-
-    /**
-     * Returns the QTI namespace for the document version
-     *
-     * @return string
-     */
-    protected function getNamespace(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.0.0':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
-                break;
-
-            case '2.1.0':
-            case '2.1.1':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
-                break;
-
-            case '2.2.1':
-            case '2.2.2':
-            case '2.2.0':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
-                break;
-
-            case '3.0.0':
-                $namespace = 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
-                break;
-        }
-
-        return $namespace;
-    }
-
-    /**
-     * Returns the QTI XSD location for the document version
-     *
-     * @return string
-     */
-    protected function getXsdLocation(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.0.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-                break;
-
-            case '2.1.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-                break;
-
-            case '2.1.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
-                break;
-
-            case '2.2.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                break;
-
-            case '2.2.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
-                break;
-
-            case '2.2.2':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd';
-                break;
-
-            case '3.0.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
-                break;
-        }
-
-        return $xsdLocation;
     }
 
     /**
@@ -793,41 +722,5 @@ class XmlDocument extends QtiDocument
         }
 
         return $version;
-    }
-
-    /**
-     * Get the QTI XML schema to use for the document version.
-     *
-     * @return string A filename pointing at an XML Schema file.
-     */
-    public function getSchemaLocation(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.0.0':
-                $filename = 'imsqti_v2p0.xsd';
-                break;
-
-            case '2.1.0':
-                $filename = 'qtiv2p1/imsqti_v2p1.xsd';
-                break;
-                
-            case '2.1.1':
-                $filename = 'qtiv2p1p1/imsqti_v2p1p1.xsd';
-                break;
-                
-            case '2.2.0':
-                $filename = 'qtiv2p2/imsqti_v2p2.xsd';
-                break;
-                
-            case '2.2.1':
-                $filename = 'qtiv2p2p1/imsqti_v2p2p1.xsd';
-                break;
-                
-            case '2.2.2':
-                $filename = 'qtiv2p2p2/imsqti_v2p2p2.xsd';
-                break;
-        }
-
-        return $filename;
     }
 }

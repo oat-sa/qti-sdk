@@ -32,7 +32,7 @@ abstract class QtiDocument
     /**
      * The version of the document.
      *
-     * @var string
+     * @var Version
      */
     protected $version;
 
@@ -49,9 +49,9 @@ abstract class QtiDocument
      */
     private $url;
 
-    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
+    public function __construct($versionNumber = '2.1.0', QtiComponent $documentComponent = null)
     {
-        $this->setVersion($version);
+        $this->setVersion($versionNumber);
         $this->setDocumentComponent($documentComponent);
     }
 
@@ -63,7 +63,7 @@ abstract class QtiDocument
      */
     public function setVersion($versionNumber)
     {
-        $this->version = Version::sanitize($versionNumber);
+        $this->version = Version::create($versionNumber);
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class QtiDocument
      */
     public function getVersion()
     {
-        return $this->version;
+        return (string)$this->version;
     }
 
     /**

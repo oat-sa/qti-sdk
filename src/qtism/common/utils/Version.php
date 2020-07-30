@@ -51,6 +51,32 @@ abstract class Version
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
 
+    /** @var string */
+    private $versionNumber;
+
+    public function __construct(string $versionNumber)
+    {
+        $this->versionNumber = $versionNumber;
+    }
+
+    public function __toString(): string
+    {
+        return $this->versionNumber;
+    }
+
+    /**
+     * Creates a new Version given the version number.
+     *
+     * @param string $versionNumber
+     * @return $this
+     */
+    public static function create(string $versionNumber): self
+    {
+        $versionNumber = self::sanitize($versionNumber);
+        $class = static::SUPPORTED_VERSIONS[$versionNumber];
+        return new $class($versionNumber);
+    }
+
     /**
      * Compare two version numbers of QTI, following the rules of Semantic Versioning.
      *
@@ -96,7 +122,7 @@ abstract class Version
      * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
      * @throws InvalidArgumentException when version is not supported.
      */
-    public static function sanitize(string $version): string
+    private static function sanitize(string $version): string
     {
         $patchedVersion = self::appendPatchVersion($version);
 

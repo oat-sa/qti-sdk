@@ -40,76 +40,7 @@ class XmlResultDocument extends XmlDocument
      */
     public function setVersion($versionNumber)
     {
-        $this->version = ResultVersion::sanitize($versionNumber);
-    }
-
-    /**
-     * Get the QTI Result Report schema for the document version.
-     *
-     * @return string A filename pointing at an XML Schema file.
-     */
-    public function getSchemaLocation(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.1.1':
-            case '2.1.0':
-                $filename = 'qtiv2p1/imsqti_result_v2p1.xsd';
-                break;
-
-            case '2.2.1':
-            case '2.2.2':
-            case '2.2.0':
-                $filename = 'qtiv2p2/imsqti_result_v2p2.xsd';
-                break;
-        }
-
-        return $filename;
-    }
-
-    /**
-     * Returns the QTI Result Report namespace for the document version
-     *
-     * @return string
-     */
-    protected function getNamespace(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.1.0':
-            case '2.1.1':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_result_v2p2';
-                break;
-        }
-
-        return $namespace;
-    }
-
-    /**
-     * Returns the QTI Result Report XSD location for the document version
-     *
-     * @return string
-     */
-    protected function getXsdLocation(): string
-    {
-        switch ($this->getVersion()) {
-            case '2.1.0':
-            case '2.1.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
-                break;
-        }
-
-        return $xsdLocation;
+        $this->version = ResultVersion::create($versionNumber);
     }
 
     protected function inferVersion()
