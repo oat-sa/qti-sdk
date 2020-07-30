@@ -51,7 +51,6 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\TestPart;
 use ReflectionClass;
 use RuntimeException;
@@ -679,48 +678,11 @@ class XmlDocument extends QtiDocument
     /**
      * Infer the QTI version of the document from its XML definition.
      *
-     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
      * @throws XmlStorageException when the version can not be inferred.
      */
-    protected function inferVersion()
+    protected function inferVersion(): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
-                $version = '2.0.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
-                $version = '2.1.0';
-
-                $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
-                    $version = '2.1.1';
-                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd') {
-                    $version = '2.1.0';
-                }
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
-                $version = '2.2.0';
-
-                $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd') {
-                    $version = '2.2.2';
-                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
-                    $version = '2.2.1';
-                }
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0') {
-                $version = '3.0.0';
-            }
-        }
-
-        if ($version === false) {
-            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg, XmlStorageException::VERSION);
-        }
-
-        return $version;
+        return Version::inferFromDocument($this->getDomDocument());
     }
 }

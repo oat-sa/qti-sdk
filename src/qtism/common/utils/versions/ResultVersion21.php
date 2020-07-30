@@ -26,18 +26,12 @@ namespace qtism\common\utils\versions;
  */
 class ResultVersion21 extends ResultVersion
 {
+    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
+
+    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
+
     public function getSchemaLocation()
     {
         return 'qtiv2p1/imsqti_result_v2p1.xsd';
-    }
-    
-    public function getNamespace()
-    {
-        return 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
-    }
-
-    public function getXsdLocation()
-    {
-        return 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
     }
 }

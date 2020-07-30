@@ -23,6 +23,7 @@
 
 namespace qtism\common\utils;
 
+use DOMDocument;
 use InvalidArgumentException;
 use qtism\common\utils\versions\QtiVersion200;
 use qtism\common\utils\versions\QtiVersion210;
@@ -31,6 +32,8 @@ use qtism\common\utils\versions\QtiVersion220;
 use qtism\common\utils\versions\QtiVersion221;
 use qtism\common\utils\versions\QtiVersion222;
 use qtism\common\utils\versions\QtiVersion300;
+use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\XmlStorageException;
 
 /**
  * This utility class provides utility classes about Semantic Versionning.
@@ -179,9 +182,76 @@ abstract class Version
         );
     }
 
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     *
+     * @param DOMDocument $document
+     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @throws XmlStorageException when the version can not be inferred.
+     */
+    public static function inferFromDocument(DOMDocument $document): string
+    {
+        $root = $document->documentElement;
+        $version = '';
+
+        if ($root !== null) {
+            $rootNs = $root->namespaceURI;
+            if ($rootNs !== null) {
+                $version = static::findVersionInDocument($rootNs, $document);
+            }
+        }
+
+        if ($version === '') {
+            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
+            throw new XmlStorageException($msg, XmlStorageException::VERSION);
+        }
+
+        return $version;
+    }
+    
+    /**
+     * @param string $rootNs
+     * @param DOMDocument $document
+     * @return string
+     */
+    public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
+    {
+        $version = '';
+
+        if ($rootNs === QtiVersion200::XMLNS) {
+            $version = '2.0.0';
+        } elseif ($rootNs === QtiVersion210::XMLNS) {
+            $version = '2.1.0';
+
+            $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
+            if ($nsLocation === QtiVersion211::XSD) {
+                $version = '2.1.1';
+            }
+        } elseif ($rootNs === QtiVersion220::XMLNS) {
+            $version = '2.2.0';
+
+            $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
+            if ($nsLocation === QtiVersion221::XSD) {
+                $version = '2.2.1';
+            } elseif ($nsLocation === QtiVersion222::XSD) {
+                $version = '2.2.2';
+            }
+        } elseif ($rootNs === QtiVersion300::XMLNS) {
+            $version = '3.0.0';
+        }
+        
+        return $version;
+    }
+
     abstract public function getSchemaLocation();
 
-    abstract public function getNamespace();
-
-    abstract public function getXsdLocation();
+    public function getNamespace(): string
+    {
+        return static::XMLNS;
+    }
+    
+    public function getXsdLocation(): string
+    {
+        return static::XSD;
+    }
 }

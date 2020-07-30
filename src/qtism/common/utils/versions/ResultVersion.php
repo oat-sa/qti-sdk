@@ -23,6 +23,7 @@
 
 namespace qtism\common\utils\versions;
 
+use DOMDocument;
 use qtism\common\utils\Version;
 
 /**
@@ -39,4 +40,22 @@ abstract class ResultVersion extends Version
     ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
+
+    /**
+     * @param string $rootNs
+     * @param DOMDocument $document
+     * @return string
+     */
+    public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
+    {
+        $version = '';
+
+        if ($rootNs === ResultVersion21::XMLNS) {
+            $version = '2.1.0';
+        } elseif ($rootNs === ResultVersion22::XMLNS) {
+            $version = '2.2.0';
+        }
+
+        return $version;
+    }
 }

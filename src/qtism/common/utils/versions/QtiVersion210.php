@@ -28,18 +28,12 @@ use qtism\common\utils\Version;
  */
 class QtiVersion210 extends Version
 {
+    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
+
+    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+
     public function getSchemaLocation()
     {
         return 'qtiv2p1/imsqti_v2p1.xsd';
-    }
-    
-    public function getNamespace()
-    {
-        return 'http://www.imsglobal.org/xsd/imsqti_v2p1';
-    }
-
-    public function getXsdLocation()
-    {
-        return 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
     }
 }

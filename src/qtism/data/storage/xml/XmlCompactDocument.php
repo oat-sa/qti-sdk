@@ -482,27 +482,14 @@ class XmlCompactDocument extends XmlDocument
         return $references;
     }
 
-    protected function inferVersion()
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     *
+     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @throws XmlStorageException when the version can not be inferred.
+     */
+    protected function inferVersion(): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
-                $version = '2.1.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
-                $version = '2.2.0';
-            }
-        }
-
-        if ($version === false) {
-            $msg = 'Cannot infer QTI Compact version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg, XmlStorageException::VERSION);
-        }
-
-        return $version;
+        return CompactVersion::inferFromDocument($this->getDomDocument());
     }
 }

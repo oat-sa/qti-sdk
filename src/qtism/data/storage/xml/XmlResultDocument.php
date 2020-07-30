@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml;
 
+use DOMDocument;
 use InvalidArgumentException;
 use qtism\common\utils\versions\ResultVersion;
 
@@ -43,27 +44,14 @@ class XmlResultDocument extends XmlDocument
         $this->version = ResultVersion::create($versionNumber);
     }
 
-    protected function inferVersion()
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     *
+     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @throws XmlStorageException when the version can not be inferred.
+     */
+    protected function inferVersion(): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
-                $version = '2.1.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
-                $version = '2.2.0';
-            }
-        }
-
-        if ($version === false) {
-            $msg = 'Cannot infer QTI Result Report version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg, XmlStorageException::VERSION);
-        }
-
-        return $version;
+        return ResultVersion::inferFromDocument($this->getDomDocument());
     }
 }

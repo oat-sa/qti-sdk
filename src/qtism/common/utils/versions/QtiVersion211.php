@@ -26,13 +26,10 @@ namespace qtism\common\utils\versions;
  */
 class QtiVersion211 extends QtiVersion210
 {
+    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
+
     public function getSchemaLocation(): string 
     {
         return 'qtiv2p1p1/imsqti_v2p1p1.xsd';
-    }
-
-    public function getXsdLocation(): string
-    {
-        return 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
     }
 }

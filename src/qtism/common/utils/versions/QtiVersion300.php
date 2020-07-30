@@ -30,18 +30,12 @@ use qtism\common\utils\Version;
  */
 class QtiVersion300 extends Version
 {
+    const XMLNS = 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
+
+    const XSD = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+
     public function getSchemaLocation()
     {
         return 'aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
-    }
-    
-    public function getNamespace()
-    {
-        return 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
-    }
-
-    public function getXsdLocation()
-    {
-        return 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
     }
 }
