@@ -32,7 +32,15 @@ use InvalidArgumentException;
  */
 class Version
 {
-    const SUPPORTED_VERSIONS = ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2', '3.0.0'];
+    const SUPPORTED_VERSIONS = [
+        '2.0.0' => '', 
+        '2.1.0' => '', 
+        '2.1.1' => '', 
+        '2.2.0' => '', 
+        '2.2.1' => '', 
+        '2.2.2' => '', 
+        '3.0.0' => '',
+    ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
 
@@ -84,7 +92,8 @@ class Version
     public static function sanitize(string $version): string
     {
         $patchedVersion = self::appendPatchVersion($version);
-        if (!in_array($patchedVersion, static::SUPPORTED_VERSIONS, true)) {
+        
+        if (!isset(static::SUPPORTED_VERSIONS[$patchedVersion])) {
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
         }
 

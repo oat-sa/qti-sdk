@@ -30,7 +30,13 @@ use qtism\common\utils\Version;
  */
 class CompactVersion extends Version
 {
-    const SUPPORTED_VERSIONS = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
+    const SUPPORTED_VERSIONS = [
+        '2.1.0' => '', 
+        '2.1.1' => '', 
+        '2.2.0' => '',
+        '2.2.1' => '', 
+        '2.2.2' => '',
+    ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
 }

@@ -35,12 +35,12 @@ class XmlResultDocument extends XmlDocument
     /**
      * Sets version to a supported QTI Result version.
      *
-     * @param string $version
+     * @param string $versionNumber
      * @throws InvalidArgumentException when version is not supported for QTI Result.
      */
-    public function setVersion($version)
+    public function setVersion($versionNumber)
     {
-        $this->version = ResultVersion::sanitize($version);
+        $this->version = ResultVersion::sanitize($versionNumber);
     }
 
     /**

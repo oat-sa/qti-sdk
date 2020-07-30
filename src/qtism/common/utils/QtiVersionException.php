@@ -36,7 +36,7 @@ class QtiVersionException extends InvalidArgumentException
             sprintf(
                 $message . ' Supported versions are "%s".',
                 $versionNumber,
-                implode('", "', $supportedVersions)
+                implode('", "', array_keys($supportedVersions))
             )
         );
     }

@@ -79,12 +79,12 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Sets version to a supported QTI Compact version.
      *
-     * @param string $version
+     * @param string $versionNumber
      * @throws InvalidArgumentException when version is not supported for QTI Compact.
      */
-    public function setVersion($version)
+    public function setVersion($versionNumber)
     {
-        $this->version = CompactVersion::sanitize($version);
+        $this->version = CompactVersion::sanitize($versionNumber);
     }
 
     /**
