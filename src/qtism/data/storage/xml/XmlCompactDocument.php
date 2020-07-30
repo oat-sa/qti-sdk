@@ -378,13 +378,13 @@ class XmlCompactDocument extends XmlDocument
         switch ($this->getVersion()) {
             case '2.1.1':
             case '2.1.0':
-                $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
+                $filename = 'qticompact_v2p1.xsd';
                 break;
 
             case '2.2.1':
             case '2.2.2':
             case '2.2.0':
-                $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
+                $filename = 'qticompact_v2p2.xsd';
                 break;
         }
 

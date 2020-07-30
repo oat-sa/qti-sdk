@@ -53,13 +53,13 @@ class XmlResultDocument extends XmlDocument
         switch ($this->getVersion()) {
             case '2.1.1':
             case '2.1.0':
-                $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
+                $filename = 'qtiv2p1/imsqti_result_v2p1.xsd';
                 break;
 
             case '2.2.1':
             case '2.2.2':
             case '2.2.0':
-                $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+                $filename = 'qtiv2p2/imsqti_result_v2p2.xsd';
                 break;
         }
 

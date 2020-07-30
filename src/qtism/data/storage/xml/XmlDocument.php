@@ -401,7 +401,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = $this->getSchemaLocation();
+            $filename = __DIR__ . '/schemes/' . $this->getSchemaLocation();
         }
 
         if (is_readable($filename)) {
@@ -804,27 +804,27 @@ class XmlDocument extends QtiDocument
     {
         switch ($this->getVersion()) {
             case '2.0.0':
-                $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
+                $filename = 'imsqti_v2p0.xsd';
                 break;
 
             case '2.1.0':
-                $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
+                $filename = 'qtiv2p1/imsqti_v2p1.xsd';
                 break;
                 
             case '2.1.1':
-                $filename = __DIR__ . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
+                $filename = 'qtiv2p1p1/imsqti_v2p1p1.xsd';
                 break;
                 
             case '2.2.0':
-                $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
+                $filename = 'qtiv2p2/imsqti_v2p2.xsd';
                 break;
                 
             case '2.2.1':
-                $filename = __DIR__ . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+                $filename = 'qtiv2p2p1/imsqti_v2p2p1.xsd';
                 break;
                 
             case '2.2.2':
-                $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
+                $filename = 'qtiv2p2p2/imsqti_v2p2p2.xsd';
                 break;
         }
 
