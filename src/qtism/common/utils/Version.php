@@ -24,22 +24,29 @@
 namespace qtism\common\utils;
 
 use InvalidArgumentException;
+use qtism\common\utils\versions\QtiVersion200;
+use qtism\common\utils\versions\QtiVersion210;
+use qtism\common\utils\versions\QtiVersion211;
+use qtism\common\utils\versions\QtiVersion220;
+use qtism\common\utils\versions\QtiVersion221;
+use qtism\common\utils\versions\QtiVersion222;
+use qtism\common\utils\versions\QtiVersion300;
 
 /**
  * This utility class provides utility classes about Semantic Versionning.
  *
  * @see http://semver.org Semantic Versioning
  */
-class Version
+abstract class Version
 {
     const SUPPORTED_VERSIONS = [
-        '2.0.0' => '', 
-        '2.1.0' => '', 
-        '2.1.1' => '', 
-        '2.2.0' => '', 
-        '2.2.1' => '', 
-        '2.2.2' => '', 
-        '3.0.0' => '',
+        '2.0.0' => QtiVersion200::class,
+        '2.1.0' => QtiVersion210::class,
+        '2.1.1' => QtiVersion211::class,
+        '2.2.0' => QtiVersion220::class,
+        '2.2.1' => QtiVersion221::class,
+        '2.2.2' => QtiVersion222::class,
+        '3.0.0' => QtiVersion300::class,
     ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
@@ -92,7 +99,7 @@ class Version
     public static function sanitize(string $version): string
     {
         $patchedVersion = self::appendPatchVersion($version);
-        
+
         if (!isset(static::SUPPORTED_VERSIONS[$patchedVersion])) {
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
         }
@@ -145,4 +152,10 @@ class Version
             sprintf("Provided version number '%s' is not compliant to semantic versioning.", $versionNumber)
         );
     }
+
+    abstract public function getSchemaLocation();
+
+    abstract public function getNamespace();
+
+    abstract public function getXsdLocation();
 }

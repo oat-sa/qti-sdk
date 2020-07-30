@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,23 +19,29 @@
  * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
-
 namespace qtism\common\utils\versions;
 
 use qtism\common\utils\Version;
 
 /**
- * Specialized version for QTI Compact.
+ * QTI version 3.0.0
+ * 
+ * This class is a draft since QTI 3.0 hasn't been published yet.
  */
-abstract class CompactVersion extends Version
+class QtiVersion300 extends Version
 {
-    const SUPPORTED_VERSIONS = [
-        '2.1.0' => CompactVersion21::class, 
-        '2.1.1' => CompactVersion21::class, 
-        '2.2.0' => CompactVersion22::class,
-        '2.2.1' => CompactVersion22::class, 
-        '2.2.2' => CompactVersion22::class,
-    ];
+    public function getSchemaLocation()
+    {
+        return 'aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+    }
+    
+    public function getNamespace()
+    {
+        return 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
+    }
 
-    const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
+    public function getXsdLocation()
+    {
+        return 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+    }
 }
