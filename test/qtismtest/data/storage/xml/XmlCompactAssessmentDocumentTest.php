@@ -863,7 +863,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->load($file21);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('QTI version "'.$wrongVersion.'" is not supported.');
+        $this->expectExceptionMessage('QTI Compact is not supported for version "'.$wrongVersion.'".');
      
         $doc->changeVersion($wrongVersion);
     }

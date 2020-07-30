@@ -26,8 +26,7 @@ namespace qtism\data\storage\xml;
 
 use Exception;
 use InvalidArgumentException;
-use qtism\common\utils\QtiVersionException;
-use qtism\common\utils\Version;
+use qtism\common\utils\versions\CompactVersion;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
@@ -76,6 +75,17 @@ class XmlCompactDocument extends XmlDocument
      * @var boolean
      */
     private $explodeTestFeedbacks = false;
+
+    /**
+     * Sets version to a supported QTI Compact version.
+     *
+     * @param string $version
+     * @throws InvalidArgumentException when version is not supported for QTI Compact.
+     */
+    public function setVersion($version)
+    {
+        $this->version = CompactVersion::sanitize($version);
+    }
 
     /**
      * Whether or not the rubrickBlock components contained in the document should be separated from the document.
@@ -362,7 +372,6 @@ class XmlCompactDocument extends XmlDocument
      * Get the QTI Compact schema for the document version.
      *
      * @return string A filename pointing at an XML Schema file.
-     * @throws InvalidArgumentException when the QTI version is not semantic or not supported.
      */
     public function getSchemaLocation(): string
     {
@@ -377,9 +386,6 @@ class XmlCompactDocument extends XmlDocument
             case '2.2.0':
                 $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
                 break;
-
-            default:
-                throw QtiVersionException::unsupportedCompactVersion($this->getVersion());
         }
 
         return $filename;
@@ -389,7 +395,6 @@ class XmlCompactDocument extends XmlDocument
      * Returns the QTI Compact namespace for the document version
      *
      * @return string
-     * @throws InvalidArgumentException when the version is not supported.
      */
     protected function getNamespace(): string
     {
@@ -404,9 +409,6 @@ class XmlCompactDocument extends XmlDocument
             case '2.2.2':
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
                 break;
-
-            default:
-                throw QtiVersionException::unsupportedCompactVersion($this->getVersion());
         }
 
         return $namespace;
@@ -416,7 +418,6 @@ class XmlCompactDocument extends XmlDocument
      * Returns the QTI Compact XSD location for the document version
      *
      * @return string
-     * @throws InvalidArgumentException when the version is not supported.
      */
     protected function getXsdLocation(): string
     {
@@ -431,9 +432,6 @@ class XmlCompactDocument extends XmlDocument
             case '2.2.2':
                 $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p2.xsd';
                 break;
-
-            default:
-                throw QtiVersionException::unsupportedCompactVersion($this->getVersion());
         }
 
         return $xsdLocation;

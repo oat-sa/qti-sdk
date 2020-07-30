@@ -8,12 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * Copyright (c) 2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
@@ -21,23 +21,16 @@
  * @license GPLv2
  */
 
-namespace qtism\common\utils;
+namespace qtism\common\utils\versions;
 
-use InvalidArgumentException;
+use qtism\common\utils\Version;
 
 /**
- * An exception type that represent an error when dealing with QTI-XML files.
+ * Specialized version for QTI Compact.
  */
-class QtiVersionException extends InvalidArgumentException
+class CompactVersion extends Version
 {
-    public static function unsupportedVersion(string $message, string $versionNumber, array $supportedVersions): self
-    {
-        return new self(
-            sprintf(
-                $message . ' Supported versions are "%s".',
-                $versionNumber,
-                implode('", "', $supportedVersions)
-            )
-        );
-    }
+    const SUPPORTED_VERSIONS = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
+
+    const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
 }

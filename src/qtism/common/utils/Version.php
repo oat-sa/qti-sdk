@@ -32,7 +32,9 @@ use InvalidArgumentException;
  */
 class Version
 {
-    const SUPPORTED_QTI_VERSIONS = ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2', '3.0.0'];
+    const SUPPORTED_VERSIONS = ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2', '3.0.0'];
+
+    const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
 
     /**
      * Compare two version numbers of QTI, following the rules of Semantic Versioning.
@@ -72,16 +74,18 @@ class Version
     }
 
     /**
-     * Whether or not a $version is a supported QTI version.
+     * Checks whether the given version is supported and adds
+     * patch version if missing, i.e. '2.1' becomes '2.1.0'.
      *
      * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
      * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
+     * @throws InvalidArgumentException when version is not supported.
      */
-    public static function sanitize($version): string
+    public static function sanitize(string $version): string
     {
         $patchedVersion = self::appendPatchVersion($version);
-        if (!in_array($patchedVersion, self::SUPPORTED_QTI_VERSIONS, true)) {
-            throw QtiVersionException::unsupportedQtiVersion($version);
+        if (!in_array($patchedVersion, static::SUPPORTED_VERSIONS, true)) {
+            throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
         }
 
         return $patchedVersion;

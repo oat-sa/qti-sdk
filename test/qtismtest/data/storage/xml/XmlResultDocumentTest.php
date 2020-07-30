@@ -166,7 +166,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $doc->load($file21, true);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('QTI version "' . $wrongVersion . '" is not supported.');
+        $this->expectExceptionMessage('QTI Result Report is not supported for version "' . $wrongVersion . '".');
 
         $doc->changeVersion($wrongVersion);
     }

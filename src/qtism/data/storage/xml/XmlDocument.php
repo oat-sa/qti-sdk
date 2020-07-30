@@ -615,7 +615,6 @@ class XmlDocument extends QtiDocument
      * Returns the QTI namespace for the document version
      *
      * @return string
-     * @throws InvalidArgumentException when the version is not supported.
      */
     protected function getNamespace(): string
     {
@@ -624,8 +623,8 @@ class XmlDocument extends QtiDocument
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
                 break;
 
-            case '2.1.1':
             case '2.1.0':
+            case '2.1.1':
                 $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
                 break;
 
@@ -638,9 +637,6 @@ class XmlDocument extends QtiDocument
             case '3.0.0':
                 $namespace = 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
                 break;
-
-            default:
-                $namespace = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
         }
 
         return $namespace;
@@ -650,7 +646,6 @@ class XmlDocument extends QtiDocument
      * Returns the QTI XSD location for the document version
      *
      * @return string
-     * @throws InvalidArgumentException when the version is not supported.
      */
     protected function getXsdLocation(): string
     {
@@ -682,9 +677,6 @@ class XmlDocument extends QtiDocument
             case '3.0.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
                 break;
-
-            default:
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
         }
 
         return $xsdLocation;
@@ -811,6 +803,10 @@ class XmlDocument extends QtiDocument
     public function getSchemaLocation(): string
     {
         switch ($this->getVersion()) {
+            case '2.0.0':
+                $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
+                break;
+
             case '2.1.0':
                 $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
                 break;
@@ -830,9 +826,6 @@ class XmlDocument extends QtiDocument
             case '2.2.2':
                 $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
                 break;
-                
-            default:
-                $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
         }
 
         return $filename;
