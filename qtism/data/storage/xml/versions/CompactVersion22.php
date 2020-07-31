@@ -28,4 +28,7 @@ namespace qtism\data\storage\xml\versions;
  */
 class CompactVersion22 extends CompactVersion
 {
+    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
+
+    const XSD = 'http://www.taotesting.com/xsd/qticompact_v2p2.xsd';
 }

@@ -43,6 +43,13 @@ use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\versions\QtiVersion200;
+use qtism\data\storage\xml\versions\QtiVersion210;
+use qtism\data\storage\xml\versions\QtiVersion211;
+use qtism\data\storage\xml\versions\QtiVersion220;
+use qtism\data\storage\xml\versions\QtiVersion221;
+use qtism\data\storage\xml\versions\QtiVersion222;
+use qtism\data\storage\xml\versions\QtiVersion300;
 use qtism\data\TestPart;
 use ReflectionClass;
 use RuntimeException;
@@ -449,33 +456,33 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-        $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+        $xsdLocation = QtiVersion210::XSD;
+        $xmlns = QtiVersion210::XMLNS;
 
         switch (trim($this->getVersion())) {
             case '2.0.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
+                $xsdLocation = QtiVersion200::XSD;
+                $xmlns = QtiVersion200::XMLNS;
                 break;
 
             case '2.1.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                $xsdLocation = QtiVersion210::XSD;
+                $xmlns = QtiVersion210::XMLNS;
                 break;
 
             case '2.1.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                $xsdLocation = QtiVersion211::XSD;
+                $xmlns = QtiVersion211::XMLNS;
                 break;
 
             case '2.2.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                $xsdLocation = QtiVersion220::XSD;
+                $xmlns = QtiVersion220::XMLNS;
                 break;
 
             case '2.2.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                $xsdLocation = QtiVersion221::XSD;
+                $xmlns = QtiVersion221::XMLNS;
                 break;
         }
 

@@ -26,6 +26,13 @@ namespace qtism\data\storage\xml;
 use DOMDocument;
 use DOMElement;
 use qtism\common\utils\Version;
+use qtism\data\storage\xml\versions\QtiVersion200;
+use qtism\data\storage\xml\versions\QtiVersion210;
+use qtism\data\storage\xml\versions\QtiVersion211;
+use qtism\data\storage\xml\versions\QtiVersion220;
+use qtism\data\storage\xml\versions\QtiVersion221;
+use qtism\data\storage\xml\versions\ResultVersion21;
+use qtism\data\storage\xml\versions\ResultVersion22;
 use SplStack;
 
 /**
@@ -73,27 +80,27 @@ class Utils
         if (empty($root) === false) {
             $rootNs = $root->namespaceURI;
 
-            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
+            if ($rootNs === QtiVersion200::XMLNS) {
                 $version = '2.0.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
-                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p1');
+            } elseif ($rootNs === QtiVersion210::XMLNS) {
+                $nsLocation = self::getXsdLocation($document, $rootNs);
 
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
+                if ($nsLocation === QtiVersion211::XSD) {
                     $version = '2.1.1';
                 } else {
                     $version = '2.1.0';
                 }
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
-                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p2');
+            } elseif ($rootNs === QtiVersion220::XMLNS) {
+                $nsLocation = self::getXsdLocation($document, $rootNs);
 
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                if ($nsLocation === QtiVersion221::XSD) {
                     $version = '2.2.1';
                 } else {
                     $version = '2.2.0';
                 }
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+            } elseif ($rootNs === ResultVersion21::XMLNS) {
                 $version = '2.1.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
+            } elseif ($rootNs === ResultVersion22::XMLNS) {
                 $version = '2.2.0';
             }
         }

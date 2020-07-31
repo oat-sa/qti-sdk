@@ -28,4 +28,5 @@ namespace qtism\data\storage\xml\versions;
  */
 class QtiVersion211 extends QtiVersion210
 {
+    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
 }

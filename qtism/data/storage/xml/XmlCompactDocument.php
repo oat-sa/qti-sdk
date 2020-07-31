@@ -39,6 +39,7 @@ use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use qtism\data\storage\xml\versions\CompactVersion;
+use qtism\data\storage\xml\versions\CompactVersion21;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestPart;
 use SplObjectStorage;
@@ -344,9 +345,9 @@ class XmlCompactDocument extends XmlDocument
      */
     public function decorateRootElement(DOMElement $rootElement)
     {
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
+        $rootElement->setAttribute('xmlns', CompactVersion21::XMLNS);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v2p1.xsd");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', CompactVersion21::XSD);
     }
 
     /**

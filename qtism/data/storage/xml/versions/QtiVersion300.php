@@ -25,9 +25,12 @@ namespace qtism\data\storage\xml\versions;
 
 /**
  * QTI version 3.0.0
- *
+ * 
  * This class is a draft since QTI 3.0 hasn't been published yet.
  */
 class QtiVersion300 extends QtiVersion
 {
+    const XMLNS = 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
+
+    const XSD = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
 }

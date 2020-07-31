@@ -27,6 +27,8 @@ use DOMElement;
 use LogicException;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\storage\xml\versions\ResultVersion;
+use qtism\data\storage\xml\versions\ResultVersion21;
+use qtism\data\storage\xml\versions\ResultVersion22;
 
 /**
  * Class XmlResultDocument
@@ -71,22 +73,22 @@ class XmlResultDocument extends XmlDocument
         switch ($version) {
             case '2.1.0':
             case '2.1.1':
-                $qtiSuffix = 'result_v2p1';
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
+                $qtiSuffix = ResultVersion21::XMLNS;
+                $xsdLocation = ResultVersion21::XSD;
                 break;
 
             case '2.2.0':
             case '2.2.1':
-                $qtiSuffix = 'result_v2p2';
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
+                $qtiSuffix = ResultVersion22::XMLNS;
+                $xsdLocation = ResultVersion22::XSD;
                 break;
 
             default:
                 throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
         }
 
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
+        $rootElement->setAttribute('xmlns', $qtiSuffix);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "$qtiSuffix $xsdLocation");
     }
 }
