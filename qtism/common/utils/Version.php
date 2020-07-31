@@ -24,6 +24,7 @@
 namespace qtism\common\utils;
 
 use InvalidArgumentException;
+use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * This utility class provides utility classes about Semantic Versionning.
@@ -68,14 +69,8 @@ class Version
         $version2 = self::appendPatchVersion($version2);
 
         // Check if the versions are known...
-        $knownVersions = self::knownVersions();
-        if (self::isKnown($version1) === false) {
-            $msg = "Version '${version1}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
-            throw new InvalidArgumentException($msg);
-        } elseif (self::isKnown($version2) === false) {
-            $msg = "Version '${version2}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
-            throw new InvalidArgumentException($msg);
-        }
+        QtiVersion::checkVersion($version1);
+        QtiVersion::checkVersion($version2);
 
         // Check if operator is correct.
         $knownOperators = ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'];
@@ -88,43 +83,29 @@ class Version
     }
 
     /**
-     * Wether or not a $version containing a major, minor and patch
-     * version is a known QTI version.
-     *
-     * @param string $version A version with major, minor and patch version e.g. '2.1.1'.
-     * @return boolean
-     */
-    public static function isKnown($version)
-    {
-        $version = self::appendPatchVersion($version);
-        return in_array($version, self::knownVersions());
-    }
-
-    /**
-     * Get known QTI versions. Returned versions will contain
-     * major, minor and patch version.
-     *
-     * @return array An array of QTI version numbers containing major, minor and patch version e.g. '2.1.1'.
-     */
-    public static function knownVersions()
-    {
-        return ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1'];
-    }
-
-    /**
      * Append patch version to $version if $version only contains
      * major and minor versions.
      *
-     * @param string $version
+     * @param string $versionNumber
      * @return string
+     * @throws InvalidArgumentException when the given version is not semantic.
      */
-    public static function appendPatchVersion($version)
+    public static function appendPatchVersion($versionNumber): string
     {
-        $shortKnownVersions = ['2.0', '2.1', '2.2'];
-        if (in_array($version, $shortKnownVersions) === true) {
-            $version = $version . '.0';
+        $versionNumber = trim($versionNumber);
+
+        if (preg_match('/^\d+\.\d+\.\d+$/', $versionNumber)) {
+            return $versionNumber;
+        }
+        if (preg_match('/^\d+\.\d+$/', $versionNumber)) {
+            return $versionNumber . '.0';
+        }
+        if (preg_match('/^\d+$/', $versionNumber)) {
+            return $versionNumber . '.0.0';
         }
 
-        return $version;
+        throw new InvalidArgumentException(
+            sprintf("Provided version number '%s' is not compliant to semantic versioning.", $versionNumber)
+        );
     }
 }
