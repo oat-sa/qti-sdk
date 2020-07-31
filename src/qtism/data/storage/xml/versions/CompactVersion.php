@@ -21,7 +21,7 @@
  * @license GPLv2
  */
 
-namespace qtism\common\utils\versions;
+namespace qtism\data\storage\xml\versions;
 
 use DOMDocument;
 

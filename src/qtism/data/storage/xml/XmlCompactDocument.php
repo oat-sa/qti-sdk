@@ -26,7 +26,7 @@ namespace qtism\data\storage\xml;
 
 use Exception;
 use InvalidArgumentException;
-use qtism\common\utils\versions\CompactVersion;
+use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;

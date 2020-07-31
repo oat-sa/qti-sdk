@@ -19,19 +19,16 @@
  * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
-namespace qtism\common\utils\versions;
+namespace qtism\data\storage\xml\versions;
 
 /**
- * QTI version 2.0.0
+ * QTI version 2.2.0
  */
-class QtiVersion200 extends QtiVersion
+class QtiVersion220 extends QtiVersion
 {
-    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
+    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
 
-    const XSD = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
+    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
 
-    public function getSchemaLocation()
-    {
-        return 'imsqti_v2p0.xsd';
-    }
+    const LOCAL_XSD = 'qtiv2p2/imsqti_v2p2.xsd';
 }

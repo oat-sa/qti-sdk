@@ -1,9 +1,9 @@
 <?php
 
-namespace qtismtest\common\utils\versions;
+namespace qtismtest\data\storage\xml\versions;
 
 use InvalidArgumentException;
-use qtism\common\utils\versions\QtiVersion;
+use qtism\data\storage\xml\versions\QtiVersion;
 use qtismtest\QtiSmTestCase;
 
 class QtiVersionTest extends QtiSmTestCase

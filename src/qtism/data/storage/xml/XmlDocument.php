@@ -33,7 +33,7 @@ use League\Flysystem\Filesystem;
 use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
-use qtism\common\utils\versions\QtiVersion;
+use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
@@ -400,7 +400,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = __DIR__ . '/schemes/' . $this->version->getSchemaLocation();
+            $filename = $this->version->getLocalXsd();
         }
 
         if (is_readable($filename)) {

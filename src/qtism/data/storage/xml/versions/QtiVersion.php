@@ -22,10 +22,9 @@
  * @license GPLv2
  */
 
-namespace qtism\common\utils\versions;
+namespace qtism\data\storage\xml\versions;
 
 use DOMDocument;
-use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\storage\xml\XmlStorageException;
@@ -33,7 +32,7 @@ use qtism\data\storage\xml\XmlStorageException;
 /**
  * General Qti version.
  */
-abstract class QtiVersion extends Version
+class QtiVersion extends Version
 {
     const SUPPORTED_VERSIONS = [
         '2.0.0' => QtiVersion200::class,
@@ -141,7 +140,10 @@ abstract class QtiVersion extends Version
         return $version;
     }
 
-    abstract public function getSchemaLocation();
+    public function getLocalXsd(): string
+    {
+        return __DIR__ . '/../schemes/' . static::LOCAL_XSD;
+    }
 
     public function getNamespace(): string
     {
