@@ -33,13 +33,13 @@ use qtism\common\utils\Version;
 class QtiVersion extends Version
 {
     const SUPPORTED_VERSIONS = [
-        '2.0.0',
-        '2.1.0',
-        '2.1.1',
-        '2.2.0',
-        '2.2.1',
-        '2.2.2',
-        '3.0.0',
+        '2.0.0' => QtiVersion200::class,
+        '2.1.0' => QtiVersion210::class,
+        '2.1.1' => QtiVersion211::class,
+        '2.2.0' => QtiVersion220::class,
+        '2.2.1' => QtiVersion221::class,
+        '2.2.2' => QtiVersion222::class,
+        '3.0.0' => QtiVersion300::class,
     ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
@@ -66,7 +66,8 @@ class QtiVersion extends Version
     public static function create(string $versionNumber): self
     {
         $versionNumber = self::sanitize($versionNumber);
-        return new static($versionNumber);
+        $class = static::SUPPORTED_VERSIONS[$versionNumber];
+        return new $class($versionNumber);
     }
 
     /**
@@ -77,7 +78,7 @@ class QtiVersion extends Version
      */
     protected static function checkVersion(string $version)
     {
-        if (!in_array($version, static::SUPPORTED_VERSIONS, true)) {
+        if (!isset(static::SUPPORTED_VERSIONS[$version])) {
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
         }
     }

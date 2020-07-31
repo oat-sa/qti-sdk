@@ -29,11 +29,11 @@ namespace qtism\data\storage\xml\versions;
 class CompactVersion extends QtiVersion
 {
     const SUPPORTED_VERSIONS = [
-        '2.1.0', 
-        '2.1.1', 
-        '2.2.0',
-        '2.2.1', 
-        '2.2.2',
+        '2.1.0' => CompactVersion21::class,
+        '2.1.1' => CompactVersion21::class,
+        '2.2.0' => CompactVersion22::class,
+        '2.2.1' => CompactVersion22::class,
+        '2.2.2' => CompactVersion22::class,
     ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';

@@ -24,17 +24,10 @@
 namespace qtism\data\storage\xml\versions;
 
 /**
- * Specialized version for QTI Result Report.
+ * QTI version 3.0.0
+ *
+ * This class is a draft since QTI 3.0 hasn't been published yet.
  */
-class ResultVersion extends QtiVersion
+class QtiVersion300 extends QtiVersion
 {
-    const SUPPORTED_VERSIONS = [
-        '2.1.0' => ResultVersion21::class,
-        '2.1.1' => ResultVersion21::class,
-        '2.2.0' => ResultVersion22::class,
-        '2.2.1' => ResultVersion22::class,
-        '2.2.2' => ResultVersion22::class,
-    ];
-
-    const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
 }
