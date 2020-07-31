@@ -17,7 +17,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
         $doc->load($file, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
 
-        $schema = dirname(__FILE__) . '/../../../../../qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
+        $schema = dirname(__FILE__) . '/../../../../../qtism/data/storage/xml/schemes/qticompact_v2p1.xsd';
         $this->assertTrue($doc->schemaValidate($schema));
     }
 

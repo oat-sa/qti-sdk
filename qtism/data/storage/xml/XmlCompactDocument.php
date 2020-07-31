@@ -315,7 +315,7 @@ class XmlCompactDocument extends XmlDocument
         if (empty($filename)) {
             $dS = DIRECTORY_SEPARATOR;
             // default xsd for AssessmentTest.
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qticompact_v1p0.xsd';
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qticompact_v2p1.xsd';
         }
 
         parent::schemaValidate($filename);
@@ -333,7 +333,7 @@ class XmlCompactDocument extends XmlDocument
     {
         $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v2p1.xsd");
     }
 
     /**

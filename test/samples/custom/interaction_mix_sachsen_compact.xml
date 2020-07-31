@@ -2,7 +2,7 @@
 <!--This file was created using: Onyx Editor, Version 3.4.3 (Full, licensed version), (c)2012 BPS Bildungsportal Sachsen GmbH-->
 <assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
 	identifier="InteractionMixSachsen_1901710679" title="Interaction Mix (Sachsen)">
 	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 		<defaultValue>
