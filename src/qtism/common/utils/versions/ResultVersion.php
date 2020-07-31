@@ -24,12 +24,11 @@
 namespace qtism\common\utils\versions;
 
 use DOMDocument;
-use qtism\common\utils\Version;
 
 /**
  * Specialized version for QTI Result Report.
  */
-abstract class ResultVersion extends Version
+abstract class ResultVersion extends QtiVersion
 {
     const SUPPORTED_VERSIONS = [
         '2.1.0' => ResultVersion21::class,

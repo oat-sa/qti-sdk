@@ -23,63 +23,15 @@
 
 namespace qtism\common\utils;
 
-use DOMDocument;
 use InvalidArgumentException;
-use qtism\common\utils\versions\QtiVersion200;
-use qtism\common\utils\versions\QtiVersion210;
-use qtism\common\utils\versions\QtiVersion211;
-use qtism\common\utils\versions\QtiVersion220;
-use qtism\common\utils\versions\QtiVersion221;
-use qtism\common\utils\versions\QtiVersion222;
-use qtism\common\utils\versions\QtiVersion300;
-use qtism\data\storage\xml\Utils as XmlUtils;
-use qtism\data\storage\xml\XmlStorageException;
 
 /**
  * This utility class provides utility classes about Semantic Versionning.
  *
  * @see http://semver.org Semantic Versioning
  */
-abstract class Version
+class Version
 {
-    const SUPPORTED_VERSIONS = [
-        '2.0.0' => QtiVersion200::class,
-        '2.1.0' => QtiVersion210::class,
-        '2.1.1' => QtiVersion211::class,
-        '2.2.0' => QtiVersion220::class,
-        '2.2.1' => QtiVersion221::class,
-        '2.2.2' => QtiVersion222::class,
-        '3.0.0' => QtiVersion300::class,
-    ];
-
-    const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
-
-    /** @var string */
-    private $versionNumber;
-
-    public function __construct(string $versionNumber)
-    {
-        $this->versionNumber = $versionNumber;
-    }
-
-    public function __toString(): string
-    {
-        return $this->versionNumber;
-    }
-
-    /**
-     * Creates a new Version given the version number.
-     *
-     * @param string $versionNumber
-     * @return $this
-     */
-    public static function create(string $versionNumber): self
-    {
-        $versionNumber = self::sanitize($versionNumber);
-        $class = static::SUPPORTED_VERSIONS[$versionNumber];
-        return new $class($versionNumber);
-    }
-
     /**
      * Compare two version numbers of QTI, following the rules of Semantic Versioning.
      *
@@ -125,15 +77,22 @@ abstract class Version
      * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
      * @throws InvalidArgumentException when version is not supported.
      */
-    private static function sanitize(string $version): string
+    protected static function sanitize(string $version): string
     {
         $patchedVersion = self::appendPatchVersion($version);
-
-        if (!isset(static::SUPPORTED_VERSIONS[$patchedVersion])) {
-            throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
-        }
-
+        static::checkVersion($patchedVersion);
         return $patchedVersion;
+    }
+
+    /**
+     * Checks whether the version is supported for Qti versions.
+     * This stub allows semantic version comparison for general use.
+     *
+     * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
+     * @throws InvalidArgumentException when version is not supported.
+     */
+    protected static function checkVersion(string $version)
+    {
     }
 
     /**
@@ -180,78 +139,5 @@ abstract class Version
         throw new InvalidArgumentException(
             sprintf("Provided version number '%s' is not compliant to semantic versioning.", $versionNumber)
         );
-    }
-
-    /**
-     * Infer the QTI version of the document from its XML definition.
-     *
-     * @param DOMDocument $document
-     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
-     * @throws XmlStorageException when the version can not be inferred.
-     */
-    public static function inferFromDocument(DOMDocument $document): string
-    {
-        $root = $document->documentElement;
-        $version = '';
-
-        if ($root !== null) {
-            $rootNs = $root->namespaceURI;
-            if ($rootNs !== null) {
-                $version = static::findVersionInDocument($rootNs, $document);
-            }
-        }
-
-        if ($version === '') {
-            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg, XmlStorageException::VERSION);
-        }
-
-        return $version;
-    }
-    
-    /**
-     * @param string $rootNs
-     * @param DOMDocument $document
-     * @return string
-     */
-    public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
-    {
-        $version = '';
-
-        if ($rootNs === QtiVersion200::XMLNS) {
-            $version = '2.0.0';
-        } elseif ($rootNs === QtiVersion210::XMLNS) {
-            $version = '2.1.0';
-
-            $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
-            if ($nsLocation === QtiVersion211::XSD) {
-                $version = '2.1.1';
-            }
-        } elseif ($rootNs === QtiVersion220::XMLNS) {
-            $version = '2.2.0';
-
-            $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
-            if ($nsLocation === QtiVersion221::XSD) {
-                $version = '2.2.1';
-            } elseif ($nsLocation === QtiVersion222::XSD) {
-                $version = '2.2.2';
-            }
-        } elseif ($rootNs === QtiVersion300::XMLNS) {
-            $version = '3.0.0';
-        }
-        
-        return $version;
-    }
-
-    abstract public function getSchemaLocation();
-
-    public function getNamespace(): string
-    {
-        return static::XMLNS;
-    }
-    
-    public function getXsdLocation(): string
-    {
-        return static::XSD;
     }
 }

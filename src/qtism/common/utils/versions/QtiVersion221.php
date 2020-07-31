@@ -21,8 +21,6 @@
  */
 namespace qtism\common\utils\versions;
 
-use qtism\common\utils\Version;
-
 /**
  * QTI version 2.2.1
  */

@@ -633,13 +633,14 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testChangeVersionWithUnknownVersionThrowsException()
     {
         $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
         $file21 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_2_1.xml';
 
         $doc = new XmlDocument('2.1');
         $doc->load($file21);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('QTI version "'.$wrongVersion.'" is not supported.');
+        $this->expectExceptionMessage('QTI version "' . $patchedWrongVersion . '" is not supported.');
 
         $doc->changeVersion($wrongVersion);
     }

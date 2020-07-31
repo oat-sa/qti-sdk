@@ -856,15 +856,16 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     public function testChangeVersionWithUnknownVersionThrowsException()
     {
-        $wrongVersion = '2.4';
+        $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
         $file21 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_2_1.xml';
 
         $doc = new XmlCompactDocument('2.1');
         $doc->load($file21);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('QTI Compact is not supported for version "'.$wrongVersion.'".');
-     
+        $this->expectExceptionMessage('QTI Compact is not supported for version "' . $patchedWrongVersion . '".');
+
         $doc->changeVersion($wrongVersion);
     }
 }

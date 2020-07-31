@@ -33,7 +33,7 @@ use League\Flysystem\Filesystem;
 use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
-use qtism\common\utils\Version;
+use qtism\common\utils\versions\QtiVersion;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
@@ -683,6 +683,6 @@ class XmlDocument extends QtiDocument
      */
     protected function inferVersion(): string
     {
-        return Version::inferFromDocument($this->getDomDocument());
+        return QtiVersion::inferFromDocument($this->getDomDocument());
     }
 }

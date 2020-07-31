@@ -16,23 +16,9 @@ class VersionTest extends QtiSmTestCase
      * @param string|null $operator
      * @param mixed $expected
      */
-    public function testVersionCompareValid($version1, $version2, $operator, $expected)
+    public function testVersionCompare($version1, $version2, $operator, $expected)
     {
         $this->assertSame($expected, Version::compare($version1, $version2, $operator));
-    }
-
-    public function testVersionCompareInvalidVersion1()
-    {
-        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "3.0.0".';
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
-        Version::compare('2.1.4', '2.1.1', '>');
-    }
-
-    public function testVersionCompareInvalidVersion2()
-    {
-        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "3.0.0".';
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
-        Version::compare('2.1.0', '2.1.4', '<');
     }
 
     public function testUnknownOperator()
@@ -45,24 +31,17 @@ class VersionTest extends QtiSmTestCase
     public function versionCompareValidProvider()
     {
         return [
+            ['2', '2', null, 0],
+            ['2', '2.0', null, 0],
+            ['2', '2.0.0', null, 0],
+            ['2.0', '2', null, 0],
             ['2.0', '2.0', null, 0],
             ['2.0', '2.0.0', null, 0],
+            ['2.0.0', '2', null, 0],
             ['2.0.0', '2.0', null, 0],
-            ['2.1', '2.1', null, 0],
-            ['2.1', '2.1.0', null, 0],
-            ['2.1.0', '2.1', null, 0],
-            ['2.1.0', '2.1.0', null, 0],
-            ['2.1.1', '2.1.1', null, 0],
-            ['2.2', '2.2', null, 0],
-            ['2.2', '2.2.0', null, 0],
-            ['2.2.0', '2.2', null, 0],
-            ['2.2.0', '2.2.0', null, 0],
+            ['2.0.0', '2.0.0', null, 0],
             ['2.0', '2.1', null, -1],
             ['2.0.0', '2.1', null, -1],
-            ['2.0.0', '2.1.0', null, -1],
-            ['2.0.0', '2.1.1', null, -1],
-            ['2.0', '2.2', null, -1],
-            ['2.2.0', '2.1.1', null, 1],
             ['2.2', '2.1.1', null, 1],
             ['2.2', '2.0.0', null, 1],
             ['2.0', '2.0.0', '=', true],

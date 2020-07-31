@@ -21,7 +21,7 @@
  * @license GPLv2
  */
 
-namespace qtism\common\utils;
+namespace qtism\common\utils\versions;
 
 use InvalidArgumentException;
 

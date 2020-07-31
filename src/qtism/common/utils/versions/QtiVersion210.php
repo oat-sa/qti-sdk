@@ -21,12 +21,10 @@
  */
 namespace qtism\common\utils\versions;
 
-use qtism\common\utils\Version;
-
 /**
  * QTI version 2.1.0
  */
-class QtiVersion210 extends Version
+class QtiVersion210 extends QtiVersion
 {
     const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
 

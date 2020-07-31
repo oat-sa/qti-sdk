@@ -159,14 +159,15 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
     public function testChangeVersionWithUnknownVersionThrowsException()
     {
-        $wrongVersion = '2.4';
+        $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
         $file21 = self::samplesDir() . 'results/simple-assessment-result.xml';
 
         $doc = new XmlResultDocument('2.1');
         $doc->load($file21, true);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('QTI Result Report is not supported for version "' . $wrongVersion . '".');
+        $this->expectExceptionMessage('QTI Result Report is not supported for version "' . $patchedWrongVersion . '".');
 
         $doc->changeVersion($wrongVersion);
     }

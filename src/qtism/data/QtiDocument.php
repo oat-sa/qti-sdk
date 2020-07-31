@@ -24,7 +24,7 @@
 namespace qtism\data;
 
 use InvalidArgumentException;
-use qtism\common\utils\Version;
+use qtism\common\utils\versions\QtiVersion;
 use qtism\data\storage\StorageException;
 
 abstract class QtiDocument
@@ -32,7 +32,7 @@ abstract class QtiDocument
     /**
      * The version of the document.
      *
-     * @var Version
+     * @var QtiVersion
      */
     protected $version;
 
@@ -63,7 +63,7 @@ abstract class QtiDocument
      */
     public function setVersion($versionNumber)
     {
-        $this->version = Version::create($versionNumber);
+        $this->version = QtiVersion::create($versionNumber);
     }
 
     /**

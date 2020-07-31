@@ -24,12 +24,11 @@
 namespace qtism\common\utils\versions;
 
 use DOMDocument;
-use qtism\common\utils\Version;
 
 /**
  * Specialized version for QTI Compact.
  */
-abstract class CompactVersion extends Version
+abstract class CompactVersion extends QtiVersion
 {
     const SUPPORTED_VERSIONS = [
         '2.1.0' => CompactVersion21::class, 
