@@ -34,7 +34,7 @@ abstract class QtiDocument
      *
      * @var QtiVersion
      */
-    private $version;
+    protected $version;
 
     /**
      * The root QTI Component of the document.

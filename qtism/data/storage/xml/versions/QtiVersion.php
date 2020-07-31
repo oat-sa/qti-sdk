@@ -66,7 +66,7 @@ class QtiVersion extends Version
     public static function create(string $versionNumber): self
     {
         $versionNumber = self::sanitize($versionNumber);
-        return new self($versionNumber);
+        return new static($versionNumber);
     }
 
     /**

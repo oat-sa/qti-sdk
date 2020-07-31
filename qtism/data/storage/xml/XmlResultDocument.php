@@ -25,12 +25,25 @@ namespace qtism\data\storage\xml;
 
 use DOMElement;
 use LogicException;
+use qtism\data\storage\xml\versions\QtiVersionException;
+use qtism\data\storage\xml\versions\ResultVersion;
 
 /**
  * Class XmlResultDocument
  */
 class XmlResultDocument extends XmlDocument
 {
+    /**
+     * Set the QTI Result version in use for this document.
+     *
+     * @param string $versionNumber A QTI Result version number e.g. '2.1.0'.
+     * @throws QtiVersionException when version is unknown regarding existing QTI Result versions.
+     */
+    public function setVersion($versionNumber)
+    {
+        $this->version = ResultVersion::create($versionNumber);
+    }
+
     /**
      * Validate DomDocument against associated xsd
      *

@@ -38,6 +38,8 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\versions\CompactVersion;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestPart;
 use SplObjectStorage;
 
@@ -56,6 +58,14 @@ use SplObjectStorage;
 class XmlCompactDocument extends XmlDocument
 {
     /**
+     * Whether or not the rubricBlock elements
+     * must be separated from the core document.
+     *
+     * @var boolean
+     */
+    private $explodeRubricBlocks = false;
+
+    /**
      * XmlCompactDocument constructor.
      *
      * Create a new XmlCompactDocument object.
@@ -63,7 +73,7 @@ class XmlCompactDocument extends XmlDocument
      * @param string $version
      * @param QtiComponent|null $documentComponent
      */
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
     {
         // Version 1.0 was used in legacy code, let's keep it BC.
         if ($version === '1.0') {
@@ -74,12 +84,15 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Whether or not the rubricBlock elements
-     * must be separated from the core document.
+     * Set the QTI Compact version in use for this document.
      *
-     * @var boolean
+     * @param string $versionNumber A QTI Compact version number e.g. '2.1.0'.
+     * @throws QtiVersionException when version is unknown regarding existing QTI Compact versions.
      */
-    private $explodeRubricBlocks = false;
+    public function setVersion($versionNumber)
+    {
+        $this->version = CompactVersion::create($versionNumber);
+    }
 
     /**
      * Whether or not the rubrickBlock components contained
