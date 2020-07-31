@@ -26,7 +26,7 @@ namespace qtism\common\utils;
 use InvalidArgumentException;
 
 /**
- * This utility class provides utility classes about Semantic Versionning.
+ * This utility class provides utility classes about Semantic Versioning.
  *
  * @see http://semver.org Semantic Versioning
  */
@@ -77,7 +77,7 @@ class Version
      * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
      * @throws InvalidArgumentException when version is not supported.
      */
-    public static function sanitize(string $version): string
+    protected static function sanitize(string $version): string
     {
         $patchedVersion = self::appendPatchVersion($version);
         static::checkVersion($patchedVersion);

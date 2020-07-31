@@ -44,13 +44,38 @@ class QtiVersion extends Version
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
 
+    /** @var string */
+    private $versionNumber;
+
+    public function __construct(string $versionNumber)
+    {
+        $this->versionNumber = $versionNumber;
+    }
+
+    public function __toString(): string
+    {
+        return $this->versionNumber;
+    }
+
     /**
-     * Checks if the given version is supported.
+     * Creates a new Version given the version number.
+     *
+     * @param string $versionNumber
+     * @return $this
+     */
+    public static function create(string $versionNumber): self
+    {
+        $versionNumber = self::sanitize($versionNumber);
+        return new self($versionNumber);
+    }
+
+    /**
+     * Checks that the given version is supported.
      *
      * @param string $version a semantic version
      * @throws InvalidArgumentException when the version is not supported.
      */
-    public static function checkVersion(string $version)
+    protected static function checkVersion(string $version)
     {
         if (!in_array($version, static::SUPPORTED_VERSIONS, true)) {
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);

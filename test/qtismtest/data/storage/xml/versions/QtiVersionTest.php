@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml\versions;
 
 use InvalidArgumentException;
 use qtism\data\storage\xml\versions\QtiVersion;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtismtest\QtiSmTestCase;
 
 class QtiVersionTest extends QtiSmTestCase
@@ -27,5 +28,23 @@ class QtiVersionTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($msg);
         QtiVersion::compare('2.1.0', '2.1.4', '<');
+    }
+    
+    public function testCreateWithSupportedVersion()
+    {
+        $version = '2.1';
+        $patchedVersion = $version . '.0';
+        
+        $versionObject = QtiVersion::create($version);
+        $this->assertInstanceOf(QtiVersion::class, $versionObject);
+        $this->assertEquals($patchedVersion, (string)$versionObject);
+    }
+    
+    public function testCreateWithUnsupportedVersionThrowsException()
+    {
+        $wrongVersion = '36.15';
+
+        $this->expectException(QtiVersionException::class);
+        QtiVersion::create($wrongVersion);
     }
 }
