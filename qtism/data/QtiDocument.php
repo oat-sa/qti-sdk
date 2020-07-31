@@ -24,7 +24,6 @@
 namespace qtism\data;
 
 use InvalidArgumentException;
-use qtism\common\utils\Version;
 use qtism\data\storage\StorageException;
 use qtism\data\storage\xml\versions\QtiVersion;
 
@@ -64,9 +63,7 @@ abstract class QtiDocument
      */
     public function setVersion($version)
     {
-        $version = Version::appendPatchVersion($version);
-        QtiVersion::checkVersion($version);
-        $this->version = $version;
+        $this->version = QtiVersion::sanitize($version);
     }
 
     /**

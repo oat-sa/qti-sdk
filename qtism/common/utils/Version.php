@@ -24,7 +24,6 @@
 namespace qtism\common\utils;
 
 use InvalidArgumentException;
-use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * This utility class provides utility classes about Semantic Versionning.
@@ -61,24 +60,57 @@ class Version
      */
     public static function compare($version1, $version2, $operator = null)
     {
-        $version1 = trim($version1);
-        $version2 = trim($version2);
+        $version1 = self::sanitize($version1);
+        $version2 = self::sanitize($version2);
+        self::checkOperator($operator);
 
-        // Because version_compare consider 2.1 < 2.1.0...
-        $version1 = self::appendPatchVersion($version1);
-        $version2 = self::appendPatchVersion($version2);
+        return $operator === null
+            ? version_compare($version1, $version2)
+            : version_compare($version1, $version2, $operator);
+    }
 
-        // Check if the versions are known...
-        QtiVersion::checkVersion($version1);
-        QtiVersion::checkVersion($version2);
+    /**
+     * Checks whether the given version is supported and adds
+     * patch version if missing, i.e. '2.1' becomes '2.1.0'.
+     *
+     * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
+     * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
+     * @throws InvalidArgumentException when version is not supported.
+     */
+    public static function sanitize(string $version): string
+    {
+        $patchedVersion = self::appendPatchVersion($version);
+        static::checkVersion($patchedVersion);
+        return $patchedVersion;
+    }
 
-        // Check if operator is correct.
+    /**
+     * Checks whether the version is supported for Qti versions.
+     * This stub allows semantic version comparison for general use.
+     *
+     * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
+     * @throws InvalidArgumentException when version is not supported.
+     */
+    protected static function checkVersion(string $version)
+    {
+    }
+
+    /**
+     * Checks that the operator is valid.
+     *
+     * @param string|null $operator
+     * @throws InvalidArgumentException when the operator is not known.
+     */
+    private static function checkOperator($operator)
+    {
         $knownOperators = ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'];
-        if (is_null($operator) === true || in_array($operator, $knownOperators) === true) {
-            return (is_null($operator) === true) ? version_compare($version1, $version2) : version_compare($version1, $version2, $operator);
-        } else {
-            $msg = "Unknown operator '${operator}'. Known operators are '" . implode(', ', $knownOperators) . "'.";
-            throw new InvalidArgumentException($msg);
+        if ($operator !== null && !in_array($operator, $knownOperators, true)) {
+            throw new InvalidArgumentException(
+                sprintf("Unknown operator '%s'. Known operators are '%s'.",
+                    $operator,
+                    implode("', '", $knownOperators)
+                )
+            );
         }
     }
 

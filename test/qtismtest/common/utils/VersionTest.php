@@ -23,12 +23,13 @@ class VersionTest extends QtiSmTestCase
 
     public function testUnknownOperator()
     {
-        $msg = "Unknown operator '!=='. Known operators are '<, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne'.";
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $msg = "Unknown operator '!=='. Known operators are '<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'.";
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
         Version::compare('2.1.1', '2.2.0', '!==');
     }
 
-    public function versionCompareValidProvider()
+    public function versionCompareValidProvider(): array
     {
         return [
             ['2', '2', null, 0],
