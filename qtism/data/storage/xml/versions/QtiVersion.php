@@ -82,4 +82,9 @@ class QtiVersion extends Version
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
         }
     }
+
+    public function getLocalXsd(): string
+    {
+        return __DIR__ . '/../schemes/' . static::LOCAL_XSD;
+    }
 }

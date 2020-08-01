@@ -47,27 +47,6 @@ class XmlResultDocument extends XmlDocument
     }
 
     /**
-     * Validate DomDocument against associated xsd
-     *
-     * Add DomDocument to XmlUtils to fetch xsd by document namespace
-     *
-     * @param string $filename
-     * @throws XmlStorageException
-     */
-    public function getSchemaLocation()
-    {
-        $version = $this->getVersion();
-
-        if ($version === '2.1.0') {
-            $filename = __DIR__ . '/schemes/' . ResultVersion21::LOCAL_XSD;
-        } elseif ($version === '2.2.0') {
-            $filename = __DIR__ . '/schemes/' . ResultVersion22::LOCAL_XSD;
-        }
-        
-        return $filename;
-    }
-
-    /**
      * Decorate the root DomElement
      *
      * Add Result namespace regarding version

@@ -336,27 +336,6 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Validate the compact AssessmentTest XML document according to the relevant XSD schema.
-     * If $filename is provided, the file pointed by $filename will be used instead
-     * of the default schema.
-     *
-     * @param string $filename An optional filename to force the validation against a particular schema.
-     * @throws XmlStorageException
-     */
-    public function getSchemaLocation()
-    {
-        $version = $this->getVersion();
-
-        if ($version === '2.1.0') {
-            $filename = dirname(__FILE__) . '/schemes/' . CompactVersion21::LOCAL_XSD;
-        } elseif ($version === '2.2.0') {
-            $filename = dirname(__FILE__) . '/schemes/' . CompactVersion22::LOCAL_XSD;
-        }
-        
-        return $filename;
-    }
-
-    /**
      * Override of XmlDocument.
      *
      * Specifies the correct XSD schema locations and main namespace
