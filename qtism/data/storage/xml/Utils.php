@@ -25,16 +25,6 @@ namespace qtism\data\storage\xml;
 
 use DOMDocument;
 use DOMElement;
-use qtism\common\utils\Version;
-use qtism\data\storage\xml\versions\QtiVersion200;
-use qtism\data\storage\xml\versions\QtiVersion210;
-use qtism\data\storage\xml\versions\QtiVersion211;
-use qtism\data\storage\xml\versions\QtiVersion220;
-use qtism\data\storage\xml\versions\QtiVersion221;
-use qtism\data\storage\xml\versions\QtiVersion222;
-use qtism\data\storage\xml\versions\QtiVersion300;
-use qtism\data\storage\xml\versions\ResultVersion21;
-use qtism\data\storage\xml\versions\ResultVersion22;
 use SplStack;
 
 /**
