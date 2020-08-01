@@ -31,4 +31,6 @@ class ResultVersion22 extends ResultVersion
     const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_result_v2p2';
 
     const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
+
+    const LOCAL_XSD = 'qtiv2p2/imsqti_result_v2p2.xsd';
 }

@@ -31,6 +31,8 @@ use qtism\data\storage\xml\versions\QtiVersion210;
 use qtism\data\storage\xml\versions\QtiVersion211;
 use qtism\data\storage\xml\versions\QtiVersion220;
 use qtism\data\storage\xml\versions\QtiVersion221;
+use qtism\data\storage\xml\versions\QtiVersion222;
+use qtism\data\storage\xml\versions\QtiVersion300;
 use qtism\data\storage\xml\versions\ResultVersion21;
 use qtism\data\storage\xml\versions\ResultVersion22;
 use SplStack;
@@ -51,19 +53,19 @@ class Utils
         $version = Version::appendPatchVersion($version);
 
         if ($version === '2.1.0') {
-            $filename = dirname(__FILE__) . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion210::LOCAL_XSD;
         } elseif ($version === '2.1.1') {
-            $filename = dirname(__FILE__) . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion211::LOCAL_XSD;
         } elseif ($version === '2.2.0') {
-            $filename = dirname(__FILE__) . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion220::LOCAL_XSD;
         } elseif ($version === '2.2.1') {
-            $filename = dirname(__FILE__) . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion221::LOCAL_XSD;
         } elseif ($version === '2.2.2') {
-            $filename = dirname(__FILE__) . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion222::LOCAL_XSD;
         } elseif ($version === '3.0.0') {
-            $filename = dirname(__FILE__) . '/schemes/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion300::LOCAL_XSD;
         } else {
-            $filename = dirname(__FILE__) . '/schemes/imsqti_v2p0.xsd';
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion200::LOCAL_XSD;
         }
 
         return $filename;

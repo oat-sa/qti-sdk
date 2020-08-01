@@ -60,9 +60,9 @@ class XmlResultDocument extends XmlDocument
             $version = $this->getVersion();
 
             if ($version === '2.1.0') {
-                $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
+                $filename = __DIR__ . '/schemes/' . ResultVersion21::LOCAL_XSD;
             } elseif ($version === '2.2.0') {
-                $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+                $filename = __DIR__ . '/schemes/' . ResultVersion22::LOCAL_XSD;
             }
         }
 

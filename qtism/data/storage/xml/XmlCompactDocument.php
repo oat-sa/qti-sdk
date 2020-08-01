@@ -349,9 +349,9 @@ class XmlCompactDocument extends XmlDocument
             $version = $this->getVersion();
 
             if ($version === '2.1.0') {
-                $filename = dirname(__FILE__) . '/schemes/qticompact_v2p1.xsd';
+                $filename = dirname(__FILE__) . '/schemes/' . CompactVersion21::LOCAL_XSD;
             } elseif ($version === '2.2.0') {
-                $filename = dirname(__FILE__) . '/schemes/qticompact_v2p2.xsd';
+                $filename = dirname(__FILE__) . '/schemes/' . CompactVersion22::LOCAL_XSD;
             }
         }
 
