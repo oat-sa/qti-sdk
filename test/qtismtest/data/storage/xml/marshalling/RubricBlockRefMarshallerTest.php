@@ -4,7 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\content\RubricBlockRef;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class RubricBlockRefMarshallerTest extends QtiSmTestCase
@@ -14,7 +14,7 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<rubricBlockRef identifier="R01" href="./R01.xml"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->assertEquals('R01', $ref->getIdentifier());
@@ -24,7 +24,7 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $ref = new RubricBlockRef('R01', './R01.xml');
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($ref);
         $elt = $marshaller->marshall($ref);
 

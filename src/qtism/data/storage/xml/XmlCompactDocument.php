@@ -41,7 +41,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
 use SplObjectStorage;
@@ -75,6 +75,25 @@ class XmlCompactDocument extends XmlDocument
      * @var boolean
      */
     private $explodeTestFeedbacks = false;
+
+    /**
+     * XmlCompactDocument constructor.
+     *
+     * Create a new XmlCompactDocument object.
+     * Kept for BC reason.
+     *
+     * @param string $version
+     * @param QtiComponent|null $documentComponent
+     */
+    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
+    {
+        // Version 1.0 was used in legacy code, let's keep it BC.
+        if ($version === '1.0') {
+            $version = '2.1.0';
+        }
+
+        parent::__construct($version, $documentComponent);
+    }
 
     /**
      * Sets version to a supported QTI Compact version.
@@ -143,11 +162,11 @@ class XmlCompactDocument extends XmlDocument
      * Override of XmlDocument::createMarshallerFactory in order
      * to return an appropriate CompactMarshallerFactory.
      *
-     * @return CompactMarshallerFactory A CompactMarshallerFactory object.
+     * @return Compact21MarshallerFactory A CompactMarshallerFactory object.
      */
     protected function createMarshallerFactory()
     {
-        return new CompactMarshallerFactory();
+        return new Compact21MarshallerFactory();
     }
 
     /**

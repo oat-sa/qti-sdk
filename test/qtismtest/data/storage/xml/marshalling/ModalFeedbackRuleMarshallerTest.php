@@ -5,7 +5,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ShowHide;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
@@ -15,7 +15,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<modalFeedbackRule outcomeIdentifier="SHOW_HIM" identifier="SHOW_MEH" showHide="show"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $mf = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf('qtism\\data\\content\\ModalFeedbackRule', $mf);
@@ -29,7 +29,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
     public function testMarshallNoTitle()
     {
         $mf = new ModalFeedbackRule('SHOW_HIM', ShowHide::SHOW, 'SHOW_MEH');
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($mf);
         $elt = $marshaller->marshall($mf);
 
@@ -48,7 +48,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<modalFeedbackRule outcomeIdentifier="SHOW_HIM" identifier="SHOW_MEH" showHide="show" href="./MF01.xml" title="Beautiful Feedback!"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $mf = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->assertTrue($mf->hasTitle());
@@ -61,7 +61,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
     public function testMarshallTitle()
     {
         $mf = new ModalFeedbackRule('SHOW_HIM', ShowHide::SHOW, 'SHOW_MEH', 'Beautiful Feedback!');
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($mf);
         $elt = $marshaller->marshall($mf);
 
