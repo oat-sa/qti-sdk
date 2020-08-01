@@ -25,12 +25,13 @@
 namespace qtism\data\storage\xml\versions;
 
 use DOMDocument;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\storage\xml\XmlStorageException;
 
 /**
- * General Qti version.
+ * Generic Qti version.
  */
 class QtiVersion extends Version
 {
@@ -72,6 +73,12 @@ class QtiVersion extends Version
         return new $class($versionNumber);
     }
 
+    /**
+     * Checks that the given version is supported.
+     *
+     * @param string $version a semantic version
+     * @throws InvalidArgumentException when the version is not supported.
+     */
     protected static function checkVersion(string $version)
     {
         if (!isset(static::SUPPORTED_VERSIONS[$version])) {
@@ -105,7 +112,7 @@ class QtiVersion extends Version
 
         return $version;
     }
-    
+
     /**
      * @param string $rootNs
      * @param DOMDocument $document
@@ -136,7 +143,7 @@ class QtiVersion extends Version
         } elseif ($rootNs === QtiVersion300::XMLNS) {
             $version = '3.0.0';
         }
-        
+
         return $version;
     }
 
@@ -149,7 +156,7 @@ class QtiVersion extends Version
     {
         return static::XMLNS;
     }
-    
+
     public function getXsdLocation(): string
     {
         return static::XSD;

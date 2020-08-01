@@ -96,12 +96,12 @@ class Version
     }
 
     /**
-     * Checks whether the operator is known.
+     * Checks that the operator is valid.
      *
-     * @param string $operator
+     * @param string|null $operator
      * @throws InvalidArgumentException when the operator is not known.
      */
-    protected static function checkOperator($operator)
+    private static function checkOperator($operator)
     {
         $knownOperators = ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'];
         if ($operator !== null && !in_array($operator, $knownOperators, true)) {

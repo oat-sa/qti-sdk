@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,11 +20,12 @@
  * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\data\storage\xml\versions;
 
 /**
  * QTI version 3.0.0
- * 
+ *
  * This class is a draft since QTI 3.0 hasn't been published yet.
  */
 class QtiVersion300 extends QtiVersion
