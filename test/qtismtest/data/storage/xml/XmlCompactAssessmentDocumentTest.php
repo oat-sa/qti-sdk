@@ -794,8 +794,11 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider compactVersionsProvider
+     * @param string $version
+     * @param string $testFile
+     * @throws XmlStorageException
      */
-    public function testSchemaValidateWithDifferentVersions($version, $testFile)
+    public function testSchemaValidateWithDifferentVersions(string $version, string $testFile)
     {
         $doc = new XmlCompactDocument($version);
         $doc->load($testFile, true);
@@ -811,6 +814,11 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         return [
             ['2.1', $path . 'empty_compact_test_2_1.xml', '2.1.0'],
             ['2.2', $path . 'empty_compact_test_2_2.xml', '2.2.0'],
+
+            // 2.1 was previously 1.0. Keeping it for BC.
+            ['1.0', $path . 'empty_compact_test_1_0.xml', '2.1.0'],
+            ['1.0', $path . 'empty_compact_test_2_1.xml', '2.1.0'],
+            ['2.1', $path . 'empty_compact_test_1_0.xml', '2.1.0'],
         ];
     }
 
