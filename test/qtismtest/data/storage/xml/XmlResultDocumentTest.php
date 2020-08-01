@@ -96,6 +96,39 @@ class XmlResultDocumentTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider schemaValidateProvider
+     * @param string $version
+     * @param string $testFile
+     * @throws XmlStorageException
+     */
+    public function testSchemaValidate($testFile)
+    {
+        $xmlDoc = new XmlResultDocument();
+        $xmlDoc->load($testFile, true);
+
+        // Asserts no exception is thrown.
+        $this->assertTrue(true);
+    }
+
+    public function schemaValidateProvider(): array
+    {
+        return [
+            [self::samplesDir() . 'results/simple-assessment-result.xml', '2.1.0'],
+            [self::samplesDir() . 'results/simple-assessment-result-v2p2.xml', '2.2.0'],
+        ];
+    }
+
+    public function testSchemaValidateWithMissingNamespaceThrowsException()
+    {
+        $xmlDoc = new XmlResultDocument();
+
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
+
+        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml', true);
+    }
+
+    /**
      * @dataProvider inferVersionProvider
      * @param string $version
      * @param string $testFile
