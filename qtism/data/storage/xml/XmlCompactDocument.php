@@ -74,6 +74,7 @@ class XmlCompactDocument extends XmlDocument
      * XmlCompactDocument constructor.
      *
      * Create a new XmlCompactDocument object.
+     * Kept for BC reason.
      *
      * @param string $version
      * @param QtiComponent|null $documentComponent

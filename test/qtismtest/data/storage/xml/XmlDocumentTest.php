@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
 class XmlDocumentTest extends QtiSmTestCase
@@ -188,5 +189,35 @@ class XmlDocumentTest extends QtiSmTestCase
         $divContent = $divs[0]->getContent();
         $divText = $divContent[0];
         $this->assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
+    }
+
+    /**
+     * @dataProvider validInferQTIVersionProvider
+     */
+    public function testInferQTIVersionValid($file, $expectedVersion)
+    {
+        $dom = new XmlDocument();
+        $dom->load($file);
+        $this->assertEquals($expectedVersion, $dom->getVersion());
+    }
+
+    public function validInferQTIVersionProvider()
+    {
+        return [
+            [self::samplesDir() . 'ims/items/2_2/choice_multiple.xml', '2.2.0'],
+            [self::samplesDir() . 'ims/items/2_1_1/likert.xml', '2.1.1'],
+            [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1.0'],
+            [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0.0'],
+            [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
+        ];
+    }
+
+    public function testInferVersionWithMissingNamespaceThrowsException()
+    {
+        $xmlDoc = new XmlDocument();
+
+        $this->expectException(XmlStorageException::class);
+
+        $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
     }
 }

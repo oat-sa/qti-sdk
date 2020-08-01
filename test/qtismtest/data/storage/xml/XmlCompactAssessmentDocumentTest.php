@@ -264,32 +264,37 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider compactVersionsProvider
-     * @param string $version
+     * @dataProvider inferVersionAndSchemaValidateProvider
      * @param string $testFile
+     * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testSchemaValidateWithDifferentVersions(string $version, string $testFile)
+    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion)
     {
-        $doc = new XmlCompactDocument($version);
+        $doc = new XmlCompactDocument();
         $doc->load($testFile, true);
-
-        // Asserts no exception has been thrown.
-        $this->assertTrue(true);
+        $this->assertEquals($expectedVersion, $doc->getVersion());
     }
 
-    public function compactVersionsProvider(): array
+    public function inferVersionAndSchemaValidateProvider(): array
     {
         $path = self::samplesDir() . 'custom/tests/empty_compact_test/';
 
         return [
-            ['2.1', $path . 'empty_compact_test_2_1.xml'],
-            ['2.2', $path . 'empty_compact_test_2_2.xml'],
+            [$path . 'empty_compact_test_2_1.xml', '2.1.0'],
+            [$path . 'empty_compact_test_2_2.xml', '2.2.0'],
 
             // 2.1 was previously 1.0. Keeping it for BC.
-            ['1.0', $path . 'empty_compact_test_1_0.xml'], 
-            ['1.0', $path . 'empty_compact_test_2_1.xml'],
-            ['2.1', $path . 'empty_compact_test_1_0.xml'],
+            [$path . 'empty_compact_test_1_0.xml', '2.1.0'],
         ];
+    }
+
+    public function testInferVersionWithMissingNamespaceThrowsException()
+    {
+        $xmlDoc = new XmlCompactDocument();
+
+        $this->expectException(XmlStorageException::class);
+
+        $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
     }
 }
