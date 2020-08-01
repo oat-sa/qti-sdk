@@ -343,19 +343,17 @@ class XmlCompactDocument extends XmlDocument
      * @param string $filename An optional filename to force the validation against a particular schema.
      * @throws XmlStorageException
      */
-    public function schemaValidate($filename = '')
+    public function getSchemaLocation()
     {
-        if (empty($filename)) {
-            $version = $this->getVersion();
+        $version = $this->getVersion();
 
-            if ($version === '2.1.0') {
-                $filename = dirname(__FILE__) . '/schemes/' . CompactVersion21::LOCAL_XSD;
-            } elseif ($version === '2.2.0') {
-                $filename = dirname(__FILE__) . '/schemes/' . CompactVersion22::LOCAL_XSD;
-            }
+        if ($version === '2.1.0') {
+            $filename = dirname(__FILE__) . '/schemes/' . CompactVersion21::LOCAL_XSD;
+        } elseif ($version === '2.2.0') {
+            $filename = dirname(__FILE__) . '/schemes/' . CompactVersion22::LOCAL_XSD;
         }
-
-        parent::schemaValidate($filename);
+        
+        return $filename;
     }
 
     /**

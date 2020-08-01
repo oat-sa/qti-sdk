@@ -314,7 +314,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = XmlUtils::getSchemaLocation($this->getVersion());
+            $filename = $this->getSchemaLocation();
         }
 
         if (is_readable($filename)) {
@@ -335,6 +335,35 @@ class XmlDocument extends QtiDocument
             $msg = "Schema '${filename}' cannot be read. Does this file exist? Is it readable?";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    /**
+     * Get the XML schema to use for a given QTI version.
+     *
+     * @param string $version
+     * @return string A filename pointing at an XML Schema file.
+     */
+    public function getSchemaLocation()
+    {
+        $version = $this->getVersion();
+
+        if ($version === '2.1.0') {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion210::LOCAL_XSD;
+        } elseif ($version === '2.1.1') {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion211::LOCAL_XSD;
+        } elseif ($version === '2.2.0') {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion220::LOCAL_XSD;
+        } elseif ($version === '2.2.1') {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion221::LOCAL_XSD;
+        } elseif ($version === '2.2.2') {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion222::LOCAL_XSD;
+        } elseif ($version === '3.0.0') {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion300::LOCAL_XSD;
+        } else {
+            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion200::LOCAL_XSD;
+        }
+
+        return $filename;
     }
 
     /**

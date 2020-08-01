@@ -43,35 +43,6 @@ use SplStack;
 class Utils
 {
     /**
-     * Get the XML schema to use for a given QTI version.
-     *
-     * @param string $version
-     * @return string A filename pointing at an XML Schema file.
-     */
-    public static function getSchemaLocation($version = '2.1')
-    {
-        $version = Version::appendPatchVersion($version);
-
-        if ($version === '2.1.0') {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion210::LOCAL_XSD;
-        } elseif ($version === '2.1.1') {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion211::LOCAL_XSD;
-        } elseif ($version === '2.2.0') {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion220::LOCAL_XSD;
-        } elseif ($version === '2.2.1') {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion221::LOCAL_XSD;
-        } elseif ($version === '2.2.2') {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion222::LOCAL_XSD;
-        } elseif ($version === '3.0.0') {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion300::LOCAL_XSD;
-        } else {
-            $filename = dirname(__FILE__) . '/schemes/' . QtiVersion200::LOCAL_XSD;
-        }
-
-        return $filename;
-    }
-
-    /**
      * Infer the QTI version from a given DOM $document in a Semantic Versioning
      * format always containing a MAJOR, MINOR and PATCH version.
      *
