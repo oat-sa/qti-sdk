@@ -432,8 +432,27 @@ class XmlCompactDocument extends XmlDocument
         return $references;
     }
 
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     *
+     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     */
     protected function inferVersion()
     {
-        return '2.1';
+        $document = $this->getDomDocument();
+        $root = $document->documentElement;
+        $version = false;
+
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+
+            if ($rootNs === CompactVersion21::XMLNS) {
+                $version = '2.1.0';
+            } elseif ($rootNs === CompactVersion22::XMLNS) {
+                $version = '2.2.0';
+            }
+        }
+
+        return $version;
     }
 }

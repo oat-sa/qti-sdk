@@ -79,4 +79,28 @@ class XmlResultDocument extends XmlDocument
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "$qtiSuffix $xsdLocation");
     }
+
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     *
+     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     */
+    protected function inferVersion()
+    {
+        $document = $this->getDomDocument();
+        $root = $document->documentElement;
+        $version = false;
+
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+
+            if ($rootNs === ResultVersion21::XMLNS) {
+                $version = '2.1.0';
+            } elseif ($rootNs === ResultVersion22::XMLNS) {
+                $version = '2.2.0';
+            }
+        }
+
+        return $version;
+    }
 }

@@ -156,7 +156,7 @@ class XmlDocument extends QtiDocument
 
             if (call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
                 // Infer the QTI version.
-                if (($version = XmlUtils::inferVersion($this->getDomDocument())) !== false) {
+                if (($version = $this->inferVersion()) !== false) {
                     $this->setVersion($version);
                 } else {
                     $msg = "Cannot infer QTI version. Is it well formed?";
@@ -574,6 +574,34 @@ class XmlDocument extends QtiDocument
      */
     protected function inferVersion()
     {
-        return XmlUtils::inferVersion($this->getDomDocument());
+        $document = $this->getDomDocument();
+        $root = $document->documentElement;
+        $version = false;
+
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+
+            if ($rootNs === QtiVersion200::XMLNS) {
+                $version = '2.0.0';
+            } elseif ($rootNs === QtiVersion210::XMLNS) {
+                $nsLocation = Utils::getXsdLocation($document, $rootNs);
+
+                if ($nsLocation === QtiVersion211::XSD) {
+                    $version = '2.1.1';
+                } else {
+                    $version = '2.1.0';
+                }
+            } elseif ($rootNs === QtiVersion220::XMLNS) {
+                $nsLocation = Utils::getXsdLocation($document, $rootNs);
+
+                if ($nsLocation === QtiVersion221::XSD) {
+                    $version = '2.2.1';
+                } else {
+                    $version = '2.2.0';
+                }
+            }
+        }
+
+        return $version;
     }
 }

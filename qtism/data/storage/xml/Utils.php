@@ -43,49 +43,6 @@ use SplStack;
 class Utils
 {
     /**
-     * Infer the QTI version from a given DOM $document in a Semantic Versioning
-     * format always containing a MAJOR, MINOR and PATCH version.
-     *
-     * @param DOMDocument $document A DOMDocument object.
-     * @return string|boolean A QTI version number if it could be infered, false otherwise.
-     */
-    public static function inferVersion(DOMDocument $document)
-    {
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === QtiVersion200::XMLNS) {
-                $version = '2.0.0';
-            } elseif ($rootNs === QtiVersion210::XMLNS) {
-                $nsLocation = self::getXsdLocation($document, $rootNs);
-
-                if ($nsLocation === QtiVersion211::XSD) {
-                    $version = '2.1.1';
-                } else {
-                    $version = '2.1.0';
-                }
-            } elseif ($rootNs === QtiVersion220::XMLNS) {
-                $nsLocation = self::getXsdLocation($document, $rootNs);
-
-                if ($nsLocation === QtiVersion221::XSD) {
-                    $version = '2.2.1';
-                } else {
-                    $version = '2.2.0';
-                }
-            } elseif ($rootNs === ResultVersion21::XMLNS) {
-                $version = '2.1.0';
-            } elseif ($rootNs === ResultVersion22::XMLNS) {
-                $version = '2.2.0';
-            }
-        }
-
-        return $version;
-    }
-
-    /**
      * Get the location of an XML Schema Definition file from a given namespace.
      *
      * This utility method enables you to know what is the location of an XML Schema Definition
