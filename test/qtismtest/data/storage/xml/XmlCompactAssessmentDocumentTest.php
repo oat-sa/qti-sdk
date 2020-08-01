@@ -76,6 +76,29 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider testSchemaValidateProvider
+     */
+    public function testSchemaValidate($path)
+    {
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->load($path, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
+
+        $schema = __DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v2p1.xsd';
+        $this->assertTrue($doc->schemaValidate($schema));
+    }
+
+    public function testSchemaValidateProvider(): array
+    {
+        return [
+            [self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml'],
+            [self::samplesDir() . 'custom/runtime/test_feedback_refs.xml'],
+            [self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml'],
+            [self::samplesDir() . 'custom/runtime/shuffling/shuffling_groups.xml'],
+            [self::samplesDir() . 'custom/runtime/validate_response/response_validity_constraints.xml'],
+        ];
+    }
+
+    /**
      * @throws XmlStorageException
      * @dataProvider createFromProvider
      */
@@ -509,29 +532,6 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    /**
-     * @dataProvider testSchemaValidProvider
-     */
-    public function testSchemaValid($path)
-    {
-        $doc = new DOMDocument('1.0', 'UTF-8');
-        $doc->load($path, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
-
-        $schema = __DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v2p1.xsd';
-        $this->assertTrue($doc->schemaValidate($schema));
-    }
-
-    public function testSchemaValidProvider()
-    {
-        return [
-            [self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml'],
-            [self::samplesDir() . 'custom/runtime/test_feedback_refs.xml'],
-            [self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml'],
-            [self::samplesDir() . 'custom/runtime/shuffling/shuffling_groups.xml'],
-            [self::samplesDir() . 'custom/runtime/validate_response/response_validity_constraints.xml'],
-        ];
-    }
-
     public function testTestFeedbackRefLoad()
     {
         $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
@@ -783,17 +783,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider compactVersionsProvider
-     */
-    public function testInferVersion($version, $testFile, $expectedVersion)
-    {
-        $doc = new XmlCompactDocument($version);
-        $doc->load($testFile);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
-    }
-
-    /**
-     * @dataProvider compactVersionsProvider
+     * @dataProvider testSchemaValidateWithDifferentVersionsProvider
      * @param string $version
      * @param string $testFile
      * @throws XmlStorageException
@@ -807,7 +797,32 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this->assertTrue(true);
     }
 
-    public function compactVersionsProvider(): array
+    public function testSchemaValidateWithDifferentVersionsProvider(): array
+    {
+        $path = self::samplesDir() . 'custom/tests/empty_compact_test/';
+
+        return [
+            ['2.1', $path . 'empty_compact_test_2_1.xml'],
+            ['2.2', $path . 'empty_compact_test_2_2.xml'],
+
+            // 2.1 was previously 1.0. Keeping it for BC.
+            ['1.0', $path . 'empty_compact_test_1_0.xml'],
+            ['1.0', $path . 'empty_compact_test_2_1.xml'],
+            ['2.1', $path . 'empty_compact_test_1_0.xml'],
+        ];
+    }
+
+    /**
+     * @dataProvider testInferVersionProvider
+     */
+    public function testInferVersion(string $version, string $testFile, string $expectedVersion)
+    {
+        $doc = new XmlCompactDocument($version);
+        $doc->load($testFile);
+        $this->assertEquals($expectedVersion, $doc->getVersion());
+    }
+
+    public function testInferVersionProvider(): array
     {
         $path = self::samplesDir() . 'custom/tests/empty_compact_test/';
 
