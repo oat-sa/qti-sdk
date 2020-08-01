@@ -96,57 +96,24 @@ class XmlResultDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider schemaValidateProvider
-     * @param string $version
+     * @dataProvider inferVersionAndSchemaValidateProvider
      * @param string $testFile
+     * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testSchemaValidate($testFile)
+    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion)
     {
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load($testFile, true);
 
-        // Asserts no exception is thrown.
-        $this->assertTrue(true);
+        $this->assertEquals($expectedVersion, $xmlDoc->getVersion());
     }
 
-    public function schemaValidateProvider(): array
+    public function inferVersionAndSchemaValidateProvider(): array
     {
         return [
             [self::samplesDir() . 'results/simple-assessment-result.xml', '2.1.0'],
             [self::samplesDir() . 'results/simple-assessment-result-v2p2.xml', '2.2.0'],
-        ];
-    }
-
-    public function testSchemaValidateWithMissingNamespaceThrowsException()
-    {
-        $xmlDoc = new XmlResultDocument();
-
-        $this->expectException(XmlStorageException::class);
-        $this->expectExceptionCode(XmlStorageException::VERSION);
-
-        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml', true);
-    }
-
-    /**
-     * @dataProvider inferVersionProvider
-     * @param string $version
-     * @param string $testFile
-     * @throws XmlStorageException
-     */
-    public function testInferVersion($version, $testFile)
-    {
-        $xmlDoc = new XmlResultDocument();
-        $xmlDoc->load($testFile, true);
-
-        $this->assertEquals($version, $xmlDoc->getVersion());
-    }
-
-    public function inferVersionProvider(): array
-    {
-        return [
-            ['2.1.0', self::samplesDir() . 'results/simple-assessment-result.xml'],
-            ['2.2.0', self::samplesDir() . 'results/simple-assessment-result-v2p2.xml'],
         ];
     }
 
