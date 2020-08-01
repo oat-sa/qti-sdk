@@ -37,11 +37,15 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact22MarshallerFactory;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\storage\xml\versions\CompactVersion21;
+use qtism\data\storage\xml\versions\CompactVersion22;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestPart;
+use RuntimeException;
 use SplObjectStorage;
 
 /**
@@ -130,11 +134,25 @@ class XmlCompactDocument extends XmlDocument
      * Override of XmlDocument::createMarshallerFactory in order
      * to return an appropriate CompactMarshallerFactory.
      *
-     * @return CompactMarshallerFactory A CompactMarshallerFactory object.
+     * @return MarshallerFactory A CompactMarshallerFactory object.
      */
     protected function createMarshallerFactory()
     {
-        return new CompactMarshallerFactory();
+        $version = $this->getVersion();
+        switch ($version) {
+            case '2.1.0':
+            case '2.1.1':
+                return new Compact21MarshallerFactory();
+
+            case '2.2.0':
+            case '2.2.1':
+            case '2.2.2':
+                return new Compact22MarshallerFactory();
+
+            default:
+                $msg = "No MarshallerFactory implementation found for QTI Compact version '${version}'.";
+                throw new RuntimeException($msg);
+        }
     }
 
     /**
@@ -327,9 +345,13 @@ class XmlCompactDocument extends XmlDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $dS = DIRECTORY_SEPARATOR;
-            // default xsd for AssessmentTest.
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qticompact_v2p1.xsd';
+            $version = $this->getVersion();
+
+            if ($version === '2.1.0') {
+                $filename = dirname(__FILE__) . '/schemes/qticompact_v2p1.xsd';
+            } elseif ($version === '2.2.0') {
+                $filename = dirname(__FILE__) . '/schemes/qticompact_v2p2.xsd';
+            }
         }
 
         parent::schemaValidate($filename);
@@ -345,9 +367,28 @@ class XmlCompactDocument extends XmlDocument
      */
     public function decorateRootElement(DOMElement $rootElement)
     {
-        $rootElement->setAttribute('xmlns', CompactVersion21::XMLNS);
+        $version = trim($this->getVersion());
+        switch ($version) {
+            case '2.1.0':
+            case '2.1.1':
+                $qtiSuffix = CompactVersion21::XMLNS;
+                $xsdLocation = CompactVersion21::XSD;
+                break;
+
+            case '2.2.0':
+            case '2.2.1':
+            case '2.2.2':
+                $qtiSuffix = CompactVersion22::XMLNS;
+                $xsdLocation = CompactVersion22::XSD;
+                break;
+
+            default:
+                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
+        }
+
+        $rootElement->setAttribute('xmlns', $qtiSuffix);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', CompactVersion21::XSD);
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $qtiSuffix . ' ' . $xsdLocation);
     }
 
     /**

@@ -79,6 +79,7 @@ class XmlResultDocument extends XmlDocument
 
             case '2.2.0':
             case '2.2.1':
+            case '2.2.2':
                 $qtiSuffix = ResultVersion22::XMLNS;
                 $xsdLocation = ResultVersion22::XSD;
                 break;

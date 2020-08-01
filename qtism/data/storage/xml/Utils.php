@@ -58,6 +58,10 @@ class Utils
             $filename = dirname(__FILE__) . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
         } elseif ($version === '2.2.1') {
             $filename = dirname(__FILE__) . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+        } elseif ($version === '2.2.2') {
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
+        } elseif ($version === '3.0.0') {
+            $filename = dirname(__FILE__) . '/schemes/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
         } else {
             $filename = dirname(__FILE__) . '/schemes/imsqti_v2p0.xsd';
         }

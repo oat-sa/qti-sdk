@@ -5,22 +5,14 @@ namespace qtismtest\data\storage\xml;
 use DOMDocument;
 use qtism\data\NavigationMode;
 use qtism\data\storage\LocalFileResolver;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
 class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 {
-    public function testSchemaValid()
-    {
-        $doc = new DOMDocument('1.0', 'UTF-8');
-        $file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
-        $doc->load($file, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
-
-        $schema = dirname(__FILE__) . '/../../../../../qtism/data/storage/xml/schemes/qticompact_v2p1.xsd';
-        $this->assertTrue($doc->schemaValidate($schema));
-    }
-
     public function testLoad(XmlCompactDocument $doc = null)
     {
         if (empty($doc)) {
@@ -82,6 +74,26 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         unlink($file);
         $this->assertFalse(file_exists($file));
+    }
+
+    /**
+     * @dataProvider testSchemaValidateProvider
+     * @param string $path
+     */
+    public function testSchemaValidate(string $path)
+    {
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->load($path, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
+
+        $schema = __DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qticompact_v2p1.xsd';
+        $this->assertTrue($doc->schemaValidate($schema));
+    }
+
+    public function testSchemaValidateProvider(): array
+    {
+        return [
+            [self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml'],
+        ];
     }
 
     public function testCreateFrom()
@@ -249,5 +261,35 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/tests/invalidassessmentitemref.xml';
         $doc->load($file);
         $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+    }
+
+    /**
+     * @dataProvider compactVersionsProvider
+     * @param string $version
+     * @param string $testFile
+     * @throws XmlStorageException
+     */
+    public function testSchemaValidateWithDifferentVersions(string $version, string $testFile)
+    {
+        $doc = new XmlCompactDocument($version);
+        $doc->load($testFile, true);
+
+        // Asserts no exception has been thrown.
+        $this->assertTrue(true);
+    }
+
+    public function compactVersionsProvider(): array
+    {
+        $path = self::samplesDir() . 'custom/tests/empty_compact_test/';
+
+        return [
+            ['2.1', $path . 'empty_compact_test_2_1.xml'],
+            ['2.2', $path . 'empty_compact_test_2_2.xml'],
+
+            // 2.1 was previously 1.0. Keeping it for BC.
+            ['1.0', $path . 'empty_compact_test_1_0.xml'], 
+            ['1.0', $path . 'empty_compact_test_2_1.xml'],
+            ['2.1', $path . 'empty_compact_test_1_0.xml'],
+        ];
     }
 }

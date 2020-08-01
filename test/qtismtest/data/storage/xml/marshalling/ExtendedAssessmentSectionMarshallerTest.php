@@ -7,7 +7,7 @@ use qtism\data\content\RubricBlockRef;
 use qtism\data\content\RubricBlockRefCollection;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\SectionPartCollection;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
@@ -21,7 +21,7 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
             </assessmentSection>
         ');
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($elt);
 
         $section = $marshaller->unmarshall($elt);
@@ -51,7 +51,7 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
         $section->setSectionParts(new SectionPartCollection([new AssessmentSectionRef('SR01', './SR01.xml')]));
         $section->setRubricBlockRefs(new RubricBlockRefCollection([new RubricBlockRef('R01', './R01.xml')]));
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($section);
         $elt = $marshaller->marshall($section);
 

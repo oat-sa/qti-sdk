@@ -12,14 +12,14 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
@@ -32,7 +32,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="false"/>');
         $element = $dom->documentElement;
@@ -50,7 +50,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testMarshallModerate()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $weights = new WeightCollection(); // some noise
         $weights[] = new Weight('W01', 1.0);
@@ -94,7 +94,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallModerate()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
             '

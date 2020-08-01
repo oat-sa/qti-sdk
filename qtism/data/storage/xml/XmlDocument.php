@@ -40,7 +40,9 @@ use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\storage\xml\versions\QtiVersion200;
@@ -484,6 +486,16 @@ class XmlDocument extends QtiDocument
                 $xsdLocation = QtiVersion221::XSD;
                 $xmlns = QtiVersion221::XMLNS;
                 break;
+
+            case '2.2.2':
+                $xsdLocation = QtiVersion222::XSD;
+                $xmlns = QtiVersion222::XMLNS;
+                break;
+
+            case '3.0.0':
+                $xsdLocation = QtiVersion300::XSD;
+                $xmlns = QtiVersion300::XMLNS;
+                break;
         }
 
         $rootElement->setAttribute('xmlns', $xmlns);
@@ -545,6 +557,10 @@ class XmlDocument extends QtiDocument
             return new Qti22MarshallerFactory();
         } elseif ($version === '2.2.1') {
             return new Qti221MarshallerFactory();
+        } elseif ($version === '2.2.2') {
+            return new Qti222MarshallerFactory();
+        } elseif ($version === '3.0.0') {
+            return new Qti30MarshallerFactory();
         } else {
             $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
             throw new RuntimeException($msg);
