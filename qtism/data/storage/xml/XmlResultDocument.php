@@ -56,7 +56,17 @@ class XmlResultDocument extends XmlDocument
      */
     public function schemaValidate($filename = '')
     {
-        parent::schemaValidate(__DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd');
+        if (empty($filename)) {
+            $version = $this->getVersion();
+
+            if ($version === '2.1.0') {
+                $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
+            } elseif ($version === '2.2.0') {
+                $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+            }
+        }
+
+        parent::schemaValidate($filename);
     }
 
     /**
