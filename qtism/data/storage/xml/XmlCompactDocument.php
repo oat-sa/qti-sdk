@@ -434,18 +434,13 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * @param string $rootNs
-     * @param DOMDocument $document
-     * @return string
+     * Infer the QTI Compact version of the document from its XML definition.
+     *
+     * @return string a semantic version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
      */
-    protected function findVersionInDocument(string $rootNs, DOMDocument $document): string
+    protected function inferVersion(): string
     {
-        $version = '';
-        if ($rootNs === CompactVersion21::XMLNS) {
-            $version = '2.1.0';
-        } elseif ($rootNs === CompactVersion22::XMLNS) {
-            $version = '2.2.0';
-        }
-        return $version;
+        return CompactVersion::infer($this->getDomDocument());
     }
 }

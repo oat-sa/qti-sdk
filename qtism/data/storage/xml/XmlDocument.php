@@ -44,6 +44,7 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\storage\xml\versions\QtiVersion200;
 use qtism\data\storage\xml\versions\QtiVersion210;
 use qtism\data\storage\xml\versions\QtiVersion211;
@@ -154,10 +155,7 @@ class XmlDocument extends QtiDocument
             $doc = $this->getDomDocument();
 
             if (call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
-                // Infer the QTI version.
-                $version = $this->inferVersion();
-
-                $this->setVersion($version);
+                $this->setVersion($this->inferVersion());
 
                 if ($validate === true) {
                     $this->schemaValidate();
@@ -566,57 +564,11 @@ class XmlDocument extends QtiDocument
     /**
      * Infer the QTI version of the document from its XML definition.
      *
-     * @return string a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string a semantic version inferred from the document.
      * @throws XmlStorageException when the version can not be inferred.
      */
     protected function inferVersion(): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = '';
-
-        if ($root !== null) {
-            $rootNs = $root->namespaceURI;
-            if ($rootNs !== null) {
-                $version = $this->findVersionInDocument($rootNs, $document);
-            }
-        }
-
-        if ($version === '') {
-            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg);
-        }
-
-        return $version;
-    }
-
-    /**
-     * @param string $rootNs
-     * @param DOMDocument $document
-     * @return string
-     */
-    protected function findVersionInDocument(string $rootNs, DOMDocument $document): string
-    {
-        $version = '';
-        if ($rootNs === QtiVersion200::XMLNS) {
-            $version = '2.0.0';
-        } elseif ($rootNs === QtiVersion210::XMLNS) {
-            $nsLocation = Utils::getXsdLocation($document, $rootNs);
-
-            if ($nsLocation === QtiVersion211::XSD) {
-                $version = '2.1.1';
-            } else {
-                $version = '2.1.0';
-            }
-        } elseif ($rootNs === QtiVersion220::XMLNS) {
-            $nsLocation = Utils::getXsdLocation($document, $rootNs);
-
-            if ($nsLocation === QtiVersion221::XSD) {
-                $version = '2.2.1';
-            } else {
-                $version = '2.2.0';
-            }
-        }
-        return $version;
+        return QtiVersion::infer($this->getDomDocument());
     }
 }

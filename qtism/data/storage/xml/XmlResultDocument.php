@@ -82,18 +82,13 @@ class XmlResultDocument extends XmlDocument
     }
 
     /**
-     * @param string $rootNs
-     * @param DOMDocument $document
-     * @return string
+     * Infer the QTI Result version of the document from its XML definition.
+     *
+     * @return string a semantic version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
      */
-    protected function findVersionInDocument(string $rootNs, DOMDocument $document): string
+    protected function inferVersion(): string
     {
-        $version = '';
-        if ($rootNs === ResultVersion21::XMLNS) {
-            $version = '2.1.0';
-        } elseif ($rootNs === ResultVersion22::XMLNS) {
-            $version = '2.2.0';
-        }
-        return $version;
+        return ResultVersion::infer($this->getDomDocument());
     }
 }

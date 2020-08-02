@@ -24,8 +24,11 @@
 
 namespace qtism\data\storage\xml\versions;
 
+use DOMDocument;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
+use qtism\data\storage\xml\Utils;
+use qtism\data\storage\xml\XmlStorageException;
 
 /**
  * Generic QTI version.
@@ -81,6 +84,61 @@ class QtiVersion extends Version
         if (!isset(static::SUPPORTED_VERSIONS[$version])) {
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);
         }
+    }
+
+    /**
+     * @param DOMDocument $document
+     * @return string
+     * @throws XmlStorageException
+     */
+    public static function infer(DOMDocument $document): string
+    {
+        $root = $document->documentElement;
+        $version = '';
+
+        if ($root !== null) {
+            $rootNs = $root->namespaceURI;
+            if ($rootNs !== null) {
+                $version = static::findVersionInDocument($rootNs, $document);
+            }
+        }
+
+        if ($version === '') {
+            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
+            throw new XmlStorageException($msg);
+        }
+
+        return $version;
+    }
+    
+    /**
+     * @param string $rootNs
+     * @param DOMDocument $document
+     * @return string
+     */
+    public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
+    {
+        $version = '';
+        if ($rootNs === QtiVersion200::XMLNS) {
+            $version = '2.0.0';
+        } elseif ($rootNs === QtiVersion210::XMLNS) {
+            $nsLocation = Utils::getXsdLocation($document, $rootNs);
+
+            if ($nsLocation === QtiVersion211::XSD) {
+                $version = '2.1.1';
+            } else {
+                $version = '2.1.0';
+            }
+        } elseif ($rootNs === QtiVersion220::XMLNS) {
+            $nsLocation = Utils::getXsdLocation($document, $rootNs);
+
+            if ($nsLocation === QtiVersion221::XSD) {
+                $version = '2.2.1';
+            } else {
+                $version = '2.2.0';
+            }
+        }
+        return $version;
     }
 
     public function getLocalXsd(): string
