@@ -87,7 +87,7 @@ class Utils
             if ($attrNode->namespaceURI === null) {
                 $newElement->setAttribute($attrName, $attrNode->value);
             } else {
-                $newElement->setAttributeNS($attrNode->$namespaceURI, $attrNode->prefix . ':' . $attrName, $attrNode->value);
+                $newElement->setAttributeNS($attrNode->namespaceURI, $attrNode->prefix . ':' . $attrName, $attrNode->value);
             }
         }
 
