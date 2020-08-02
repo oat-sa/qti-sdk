@@ -23,6 +23,7 @@
 
 namespace qtism\data\storage\xml;
 
+use DOMDocument;
 use DOMElement;
 use Exception;
 use qtism\common\Resolver;
@@ -433,26 +434,18 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Infer the QTI version of the document from its XML definition.
-     *
-     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @param string $rootNs
+     * @param DOMDocument $document
+     * @return string
      */
-    protected function inferVersion()
+    protected function findVersionInDocument(string $rootNs, DOMDocument $document): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === CompactVersion21::XMLNS) {
-                $version = '2.1.0';
-            } elseif ($rootNs === CompactVersion22::XMLNS) {
-                $version = '2.2.0';
-            }
+        $version = '';
+        if ($rootNs === CompactVersion21::XMLNS) {
+            $version = '2.1.0';
+        } elseif ($rootNs === CompactVersion22::XMLNS) {
+            $version = '2.2.0';
         }
-
         return $version;
     }
 }
