@@ -139,9 +139,13 @@ class QtiVersion extends Version
             $nsLocation = Utils::getXsdLocation($document, $rootNs);
             if ($nsLocation === QtiVersion221::XSD) {
                 $version = '2.2.1';
+            } elseif ($nsLocation === QtiVersion222::XSD) {
+                $version = '2.2.2';
             }
+        } elseif ($rootNs === QtiVersion300::XMLNS) {
+            $version = '3.0.0';
         }
-
+        
         return $version;
     }
 

@@ -209,6 +209,9 @@ class XmlDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1.0'],
             [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0.0'],
             [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
+            [self::samplesDir() . 'ims/items/2_2_1/choice.xml', '2.2.1'],
+            [self::samplesDir() . 'ims/items/2_2_2/choice.xml', '2.2.2'],
+            [self::samplesDir() . 'ims/items/3_0/empty_item.xml', '3.0.0'],
         ];
     }
 
