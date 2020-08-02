@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use qtism\data\NavigationMode;
 use qtism\data\ShowHide;
 use qtism\data\storage\LocalFileResolver;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
@@ -857,7 +858,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc = new XmlCompactDocument('2.1');
         $doc->load($file21);
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(QtiVersionException::class);
         $this->expectExceptionMessage('QTI Compact is not supported for version "' . $patchedWrongVersion . '".');
 
         $doc->changeVersion($wrongVersion);
