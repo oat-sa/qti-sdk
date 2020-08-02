@@ -439,6 +439,17 @@ class XmlDocument extends QtiDocument
     }
 
     /**
+     * Changes to Qti version of the root element.
+     *
+     * @param string $toVersionNumber
+     */
+    public function changeVersion(string $toVersionNumber)
+    {
+        $this->setVersion($toVersionNumber);
+        $this->decorateRootElement($this->domDocument->documentElement);
+    }
+
+    /**
      * Decorate the root element of the XmlAssessmentDocument with the appropriate
      * namespaces and schema definition.
      *
@@ -449,7 +460,7 @@ class XmlDocument extends QtiDocument
         $namespace = $this->version->getNamespace();
         $xsdLocation = $this->version->getXsdLocation();
 
-        $rootElement->setAttribute('xmlns', $namespace);
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $namespace);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $namespace . ' ' . $xsdLocation);
     }
