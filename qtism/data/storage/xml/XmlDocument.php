@@ -452,49 +452,12 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $xsdLocation = QtiVersion210::XSD;
-        $xmlns = QtiVersion210::XMLNS;
+        $namespace = $this->version->getNamespace();
+        $xsdLocation = $this->version->getXsdLocation();
 
-        switch (trim($this->getVersion())) {
-            case '2.0.0':
-                $xsdLocation = QtiVersion200::XSD;
-                $xmlns = QtiVersion200::XMLNS;
-                break;
-
-            case '2.1.0':
-                $xsdLocation = QtiVersion210::XSD;
-                $xmlns = QtiVersion210::XMLNS;
-                break;
-
-            case '2.1.1':
-                $xsdLocation = QtiVersion211::XSD;
-                $xmlns = QtiVersion211::XMLNS;
-                break;
-
-            case '2.2.0':
-                $xsdLocation = QtiVersion220::XSD;
-                $xmlns = QtiVersion220::XMLNS;
-                break;
-
-            case '2.2.1':
-                $xsdLocation = QtiVersion221::XSD;
-                $xmlns = QtiVersion221::XMLNS;
-                break;
-
-            case '2.2.2':
-                $xsdLocation = QtiVersion222::XSD;
-                $xmlns = QtiVersion222::XMLNS;
-                break;
-
-            case '3.0.0':
-                $xsdLocation = QtiVersion300::XSD;
-                $xmlns = QtiVersion300::XMLNS;
-                break;
-        }
-
-        $rootElement->setAttribute('xmlns', $xmlns);
+        $rootElement->setAttribute('xmlns', $namespace);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "${xmlns} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $namespace . ' ' . $xsdLocation);
     }
 
     /**

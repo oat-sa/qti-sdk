@@ -145,4 +145,14 @@ class QtiVersion extends Version
     {
         return __DIR__ . '/../schemes/' . static::LOCAL_XSD;
     }
+
+    public function getNamespace(): string
+    {
+        return static::XMLNS;
+    }
+
+    public function getXsdLocation(): string
+    {
+        return static::XSD;
+    }
 }

@@ -48,40 +48,6 @@ class XmlResultDocument extends XmlDocument
     }
 
     /**
-     * Decorate the root DomElement
-     *
-     * Add Result namespace regarding version
-     *
-     * @param DOMElement $rootElement
-     * @throws LogicException if the version is not supported by QTI result
-     */
-    protected function decorateRootElement(DOMElement $rootElement)
-    {
-        $version = trim($this->getVersion());
-        switch ($version) {
-            case '2.1.0':
-            case '2.1.1':
-                $qtiSuffix = ResultVersion21::XMLNS;
-                $xsdLocation = ResultVersion21::XSD;
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $qtiSuffix = ResultVersion22::XMLNS;
-                $xsdLocation = ResultVersion22::XSD;
-                break;
-
-            default:
-                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
-        }
-
-        $rootElement->setAttribute('xmlns', $qtiSuffix);
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "$qtiSuffix $xsdLocation");
-    }
-
-    /**
      * Infer the QTI Result version of the document from its XML definition.
      *
      * @return string a semantic version inferred from the document.

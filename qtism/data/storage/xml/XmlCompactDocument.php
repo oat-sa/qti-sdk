@@ -337,40 +337,6 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Override of XmlDocument.
-     *
-     * Specifies the correct XSD schema locations and main namespace
-     * for the root element of a Compact XML document.
-     *
-     * @param DOMElement $rootElement The root element of a compact XML document.
-     */
-    public function decorateRootElement(DOMElement $rootElement)
-    {
-        $version = trim($this->getVersion());
-        switch ($version) {
-            case '2.1.0':
-            case '2.1.1':
-                $qtiSuffix = CompactVersion21::XMLNS;
-                $xsdLocation = CompactVersion21::XSD;
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $qtiSuffix = CompactVersion22::XMLNS;
-                $xsdLocation = CompactVersion22::XSD;
-                break;
-
-            default:
-                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
-        }
-
-        $rootElement->setAttribute('xmlns', $qtiSuffix);
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $qtiSuffix . ' ' . $xsdLocation);
-    }
-
-    /**
      * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)
