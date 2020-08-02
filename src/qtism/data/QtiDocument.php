@@ -61,7 +61,7 @@ abstract class QtiDocument
      * @param string $versionNumber A QTI version number e.g. '2.1.1'.
      * @throws InvalidArgumentException If $version is unknown regarding existing QTI versions.
      */
-    public function setVersion($versionNumber)
+    public function setVersion(string $versionNumber)
     {
         $this->version = QtiVersion::create($versionNumber);
     }

@@ -26,7 +26,7 @@ namespace qtism\data\storage\xml\versions;
 use InvalidArgumentException;
 
 /**
- * An exception type that represent an error when dealing with QTI-XML files.
+ * Exception when dealing with QTI versions.
  */
 class QtiVersionException extends InvalidArgumentException
 {

@@ -26,7 +26,6 @@ namespace qtism\data\storage\xml;
 
 use Exception;
 use InvalidArgumentException;
-use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
@@ -42,6 +41,8 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
+use qtism\data\storage\xml\versions\CompactVersion;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
 use SplObjectStorage;
@@ -98,10 +99,10 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Sets version to a supported QTI Compact version.
      *
-     * @param string $versionNumber
-     * @throws InvalidArgumentException when version is not supported for QTI Compact.
+     * @param string $versionNumber A QTI Compact version number e.g. '2.1.0'.
+     * @throws QtiVersionException when version is not supported for QTI Compact.
      */
-    public function setVersion($versionNumber)
+    public function setVersion(string $versionNumber)
     {
         $this->version = CompactVersion::create($versionNumber);
     }
@@ -502,13 +503,13 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Infer the QTI version of the document from its XML definition.
+     * Infer the QTI Compact version of the document from its XML definition.
      *
-     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string a semantic version inferred from the document.
      * @throws XmlStorageException when the version can not be inferred.
      */
     protected function inferVersion(): string
     {
-        return CompactVersion::inferFromDocument($this->getDomDocument());
+        return CompactVersion::infer($this->getDomDocument());
     }
 }

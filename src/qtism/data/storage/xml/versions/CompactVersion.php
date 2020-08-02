@@ -28,7 +28,7 @@ use DOMDocument;
 /**
  * Specialized version for QTI Compact.
  */
-abstract class CompactVersion extends QtiVersion
+class CompactVersion extends QtiVersion
 {
     const SUPPORTED_VERSIONS = [
         '2.1.0' => CompactVersion21::class,
@@ -41,6 +41,8 @@ abstract class CompactVersion extends QtiVersion
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
 
     /**
+     * Finds the version of the document given the namespace.
+     *
      * @param string $rootNs
      * @param DOMDocument $document
      * @return string

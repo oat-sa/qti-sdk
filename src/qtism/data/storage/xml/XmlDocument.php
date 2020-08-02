@@ -33,7 +33,6 @@ use League\Flysystem\Filesystem;
 use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
-use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
@@ -51,6 +50,7 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
 use ReflectionClass;
 use RuntimeException;
@@ -602,12 +602,12 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $xmlns = $this->version->getNamespace();
+        $namespace = $this->version->getNamespace();
         $xsdLocation = $this->version->getXsdLocation();
 
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $xmlns);
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $namespace);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $xmlns . ' ' . $xsdLocation);
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $namespace . ' ' . $xsdLocation);
     }
 
     /**
@@ -678,11 +678,11 @@ class XmlDocument extends QtiDocument
     /**
      * Infer the QTI version of the document from its XML definition.
      *
-     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string a semantic version inferred from the document.
      * @throws XmlStorageException when the version can not be inferred.
      */
     protected function inferVersion(): string
     {
-        return QtiVersion::inferFromDocument($this->getDomDocument());
+        return QtiVersion::infer($this->getDomDocument());
     }
 }

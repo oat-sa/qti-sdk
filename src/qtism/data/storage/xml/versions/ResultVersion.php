@@ -28,7 +28,7 @@ use DOMDocument;
 /**
  * Specialized version for QTI Result Report.
  */
-abstract class ResultVersion extends QtiVersion
+class ResultVersion extends QtiVersion
 {
     const SUPPORTED_VERSIONS = [
         '2.1.0' => ResultVersion21::class,
@@ -41,6 +41,8 @@ abstract class ResultVersion extends QtiVersion
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
 
     /**
+     * Finds the version of the document given the namespace.
+     *
      * @param string $rootNs
      * @param DOMDocument $document
      * @return string

@@ -27,11 +27,11 @@ namespace qtism\data\storage\xml\versions;
 use DOMDocument;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
-use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\Utils;
 use qtism\data\storage\xml\XmlStorageException;
 
 /**
- * Generic Qti version.
+ * Generic QTI version.
  */
 class QtiVersion extends Version
 {
@@ -90,10 +90,10 @@ class QtiVersion extends Version
      * Infer the QTI version of the document from its XML definition.
      *
      * @param DOMDocument $document
-     * @return string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string a semantic QTI version inferred from the document.
      * @throws XmlStorageException when the version can not be inferred.
      */
-    public static function inferFromDocument(DOMDocument $document): string
+    public static function infer(DOMDocument $document): string
     {
         $root = $document->documentElement;
         $version = '';
@@ -114,6 +114,8 @@ class QtiVersion extends Version
     }
 
     /**
+     * Finds the version of the document given the namespace and Xsd location.
+     *
      * @param string $rootNs
      * @param DOMDocument $document
      * @return string
@@ -127,14 +129,14 @@ class QtiVersion extends Version
         } elseif ($rootNs === QtiVersion210::XMLNS) {
             $version = '2.1.0';
 
-            $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
+            $nsLocation = Utils::getXsdLocation($document, $rootNs);
             if ($nsLocation === QtiVersion211::XSD) {
                 $version = '2.1.1';
             }
         } elseif ($rootNs === QtiVersion220::XMLNS) {
             $version = '2.2.0';
 
-            $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
+            $nsLocation = Utils::getXsdLocation($document, $rootNs);
             if ($nsLocation === QtiVersion221::XSD) {
                 $version = '2.2.1';
             } elseif ($nsLocation === QtiVersion222::XSD) {
