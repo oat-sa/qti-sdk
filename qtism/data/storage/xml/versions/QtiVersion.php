@@ -163,4 +163,9 @@ class QtiVersion extends Version
     {
         return static::XSD;
     }
+
+    public function getMarshallerFactoryClass(): string
+    {
+        return static::MARSHALLER_FACTORY;
+    }
 }

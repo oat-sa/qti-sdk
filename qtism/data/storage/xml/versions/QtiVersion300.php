@@ -23,6 +23,8 @@
 
 namespace qtism\data\storage\xml\versions;
 
+use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
+
 /**
  * QTI version 3.0.0
  *
@@ -35,4 +37,6 @@ class QtiVersion300 extends QtiVersion
     const XSD = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
 
     const LOCAL_XSD = 'aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+
+    const MARSHALLER_FACTORY = Qti30MarshallerFactory::class;
 }

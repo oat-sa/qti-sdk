@@ -39,15 +39,9 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
-use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Compact22MarshallerFactory;
-use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\versions\CompactVersion;
-use qtism\data\storage\xml\versions\CompactVersion21;
-use qtism\data\storage\xml\versions\CompactVersion22;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestPart;
-use RuntimeException;
 use SplObjectStorage;
 
 /**
@@ -131,31 +125,6 @@ class XmlCompactDocument extends XmlDocument
     public function mustExplodeRubricBlocks()
     {
         return $this->explodeRubricBlocks;
-    }
-
-    /**
-     * Override of XmlDocument::createMarshallerFactory in order
-     * to return an appropriate CompactMarshallerFactory.
-     *
-     * @return MarshallerFactory A CompactMarshallerFactory object.
-     */
-    protected function createMarshallerFactory()
-    {
-        $version = $this->getVersion();
-        switch ($version) {
-            case '2.1.0':
-            case '2.1.1':
-                return new Compact21MarshallerFactory();
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                return new Compact22MarshallerFactory();
-
-            default:
-                $msg = "No MarshallerFactory implementation found for QTI Compact version '${version}'.";
-                throw new RuntimeException($msg);
-        }
     }
 
     /**

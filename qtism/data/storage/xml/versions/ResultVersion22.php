@@ -23,6 +23,8 @@
 
 namespace qtism\data\storage\xml\versions;
 
+use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
+
 /**
  * QTI Result version 2.2
  */
@@ -33,4 +35,6 @@ class ResultVersion22 extends ResultVersion
     const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
 
     const LOCAL_XSD = 'qtiv2p2/imsqti_result_v2p2.xsd';
+
+    const MARSHALLER_FACTORY = Qti22MarshallerFactory::class;
 }

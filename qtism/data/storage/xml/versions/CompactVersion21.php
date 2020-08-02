@@ -23,6 +23,8 @@
 
 namespace qtism\data\storage\xml\versions;
 
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
+
 /**
  * QTI Compact version 2.1
  */
@@ -33,4 +35,6 @@ class CompactVersion21 extends CompactVersion
     const XSD = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
 
     const LOCAL_XSD = 'qticompact_v2p1.xsd';
+
+    const MARSHALLER_FACTORY = Compact21MarshallerFactory::class;
 }
