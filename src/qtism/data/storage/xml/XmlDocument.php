@@ -650,29 +650,11 @@ class XmlDocument extends QtiDocument
      * MarshallerFactory factory method (see gang of four).
      *
      * @return MarshallerFactory An appropriate MarshallerFactory object.
-     * @throws RuntimeException If no suitable MarshallerFactory implementation is found.
      */
     protected function createMarshallerFactory()
     {
-        $version = $this->getVersion();
-        if ($version === '2.0.0') {
-            return new Qti20MarshallerFactory();
-        } elseif ($version === '2.1.0') {
-            return new Qti21MarshallerFactory();
-        } elseif ($version === '2.1.1') {
-            return new Qti211MarshallerFactory();
-        } elseif ($version === '2.2.0') {
-            return new Qti22MarshallerFactory();
-        } elseif ($version === '2.2.1') {
-            return new Qti221MarshallerFactory();
-        } elseif ($version === '2.2.2') {
-            return new Qti222MarshallerFactory();
-        } elseif ($version === '3.0.0') {
-            return new Qti30MarshallerFactory();
-        } else {
-            $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
-            throw new RuntimeException($msg);
-        }
+        $class = $this->version->getMarshallerFactoryClass();
+        return new $class;
     }
 
     /**

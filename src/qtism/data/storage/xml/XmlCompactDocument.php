@@ -25,7 +25,6 @@
 namespace qtism\data\storage\xml;
 
 use Exception;
-use InvalidArgumentException;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
@@ -40,7 +39,6 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
-use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestFeedbackRef;
@@ -157,17 +155,6 @@ class XmlCompactDocument extends XmlDocument
     public function mustExplodeTestFeedbacks()
     {
         return $this->explodeTestFeedbacks;
-    }
-
-    /**
-     * Override of XmlDocument::createMarshallerFactory in order
-     * to return an appropriate CompactMarshallerFactory.
-     *
-     * @return Compact21MarshallerFactory A CompactMarshallerFactory object.
-     */
-    protected function createMarshallerFactory()
-    {
-        return new Compact21MarshallerFactory();
     }
 
     /**
