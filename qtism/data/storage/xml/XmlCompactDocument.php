@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -91,12 +92,12 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Set the QTI Compact version in use for this document.
+     * Sets version to a supported QTI Compact version.
      *
      * @param string $versionNumber A QTI Compact version number e.g. '2.1.0'.
-     * @throws QtiVersionException when version is unknown regarding existing QTI Compact versions.
+     * @throws QtiVersionException when version is not supported for QTI Compact.
      */
-    public function setVersion($versionNumber)
+    public function setVersion(string $versionNumber)
     {
         $this->version = CompactVersion::create($versionNumber);
     }

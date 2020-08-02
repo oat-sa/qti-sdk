@@ -87,9 +87,11 @@ class QtiVersion extends Version
     }
 
     /**
+     * Infer the QTI version of the document from its XML definition.
+     *
      * @param DOMDocument $document
-     * @return string
-     * @throws XmlStorageException
+     * @return string a semantic QTI version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
      */
     public static function infer(DOMDocument $document): string
     {
@@ -110,8 +112,10 @@ class QtiVersion extends Version
 
         return $version;
     }
-    
+
     /**
+     * Finds the version of the document given the namespace and Xsd location.
+     *
      * @param string $rootNs
      * @param DOMDocument $document
      * @return string
@@ -119,25 +123,25 @@ class QtiVersion extends Version
     public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
     {
         $version = '';
+
         if ($rootNs === QtiVersion200::XMLNS) {
             $version = '2.0.0';
         } elseif ($rootNs === QtiVersion210::XMLNS) {
-            $nsLocation = Utils::getXsdLocation($document, $rootNs);
+            $version = '2.1.0';
 
+            $nsLocation = Utils::getXsdLocation($document, $rootNs);
             if ($nsLocation === QtiVersion211::XSD) {
                 $version = '2.1.1';
-            } else {
-                $version = '2.1.0';
             }
         } elseif ($rootNs === QtiVersion220::XMLNS) {
-            $nsLocation = Utils::getXsdLocation($document, $rootNs);
+            $version = '2.2.0';
 
+            $nsLocation = Utils::getXsdLocation($document, $rootNs);
             if ($nsLocation === QtiVersion221::XSD) {
                 $version = '2.2.1';
-            } else {
-                $version = '2.2.0';
             }
         }
+
         return $version;
     }
 

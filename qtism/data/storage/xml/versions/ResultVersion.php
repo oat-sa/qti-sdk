@@ -40,14 +40,23 @@ class ResultVersion extends QtiVersion
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
 
+    /**
+     * Finds the version of the document given the namespace.
+     *
+     * @param string $rootNs
+     * @param DOMDocument $document
+     * @return string
+     */
     public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
     {
         $version = '';
+
         if ($rootNs === ResultVersion21::XMLNS) {
             $version = '2.1.0';
         } elseif ($rootNs === ResultVersion22::XMLNS) {
             $version = '2.2.0';
         }
+
         return $version;
     }
 }

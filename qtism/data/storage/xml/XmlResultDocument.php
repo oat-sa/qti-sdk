@@ -18,18 +18,14 @@
  * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Moyon Camille <camille@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml;
 
-use DOMDocument;
-use DOMElement;
-use LogicException;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\storage\xml\versions\ResultVersion;
-use qtism\data\storage\xml\versions\ResultVersion21;
-use qtism\data\storage\xml\versions\ResultVersion22;
 
 /**
  * Class XmlResultDocument
@@ -37,12 +33,12 @@ use qtism\data\storage\xml\versions\ResultVersion22;
 class XmlResultDocument extends XmlDocument
 {
     /**
-     * Set the QTI Result version in use for this document.
+     * Sets version to a supported QTI Result version.
      *
      * @param string $versionNumber A QTI Result version number e.g. '2.1.0'.
-     * @throws QtiVersionException when version is unknown regarding existing QTI Result versions.
+     * @throws QtiVersionException when version is not supported for QTI Result.
      */
-    public function setVersion($versionNumber)
+    public function setVersion(string $versionNumber)
     {
         $this->version = ResultVersion::create($versionNumber);
     }

@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -45,13 +46,6 @@ use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\versions\QtiVersion;
-use qtism\data\storage\xml\versions\QtiVersion200;
-use qtism\data\storage\xml\versions\QtiVersion210;
-use qtism\data\storage\xml\versions\QtiVersion211;
-use qtism\data\storage\xml\versions\QtiVersion220;
-use qtism\data\storage\xml\versions\QtiVersion221;
-use qtism\data\storage\xml\versions\QtiVersion222;
-use qtism\data\storage\xml\versions\QtiVersion300;
 use qtism\data\TestPart;
 use ReflectionClass;
 use RuntimeException;
@@ -500,6 +494,7 @@ class XmlDocument extends QtiDocument
      * MarshallerFactory factory method (see gang of four).
      *
      * @return MarshallerFactory An appropriate MarshallerFactory object.
+     * @throws RuntimeException If no suitable MarshallerFactory implementation is found.
      */
     protected function createMarshallerFactory()
     {
