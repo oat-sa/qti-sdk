@@ -103,23 +103,23 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @dataProvider createFromProvider
      */
-    public function testCreateFrom($file, $filesystem)
+    public function testCreateFrom($file, $filesystem, $version = '2.1')
     {
         $inputFilesystem = $filesystem ? $this->getFileSystem() : null;
         $outputFilesystem = $filesystem ? $this->getOutputFileSystem() : null;
-        $doc = new XmlDocument('2.1');
+        $doc = new XmlDocument($version);
 
         $doc->setFilesystem($inputFilesystem);
         $doc->load($file);
 
-        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
+        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, null, $version);
 
         $file = tempnam('/tmp', 'qsm');
         $compactDoc->setFilesystem($outputFilesystem);
 
         $compactDoc->save($file);
 
-        $compactDoc = new XmlCompactDocument('2.1.0');
+        $compactDoc = new XmlCompactDocument($version);
         $compactDoc->setFilesystem($outputFilesystem);
 
         $compactDoc->load($file);
@@ -131,6 +131,8 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         return [
             [self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml', false],
             ['ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml', true],
+            [self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen_2_2.xml', false, '2.2'],
+            ['ims/tests/interaction_mix_sachsen/interaction_mix_sachsen_2_2.xml', true, '2.2'],
         ];
     }
 

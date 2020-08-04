@@ -162,12 +162,13 @@ class XmlCompactDocument extends XmlDocument
      *
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
      * @param FileResolver (optional) $resolver A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
+     * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1')
     {
-        $compactAssessmentTest = new XmlCompactDocument();
+        $compactAssessmentTest = new XmlCompactDocument($version);
         $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());
 
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
