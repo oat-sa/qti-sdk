@@ -133,12 +133,12 @@ class XmlCompactDocument extends XmlDocument
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
      * @param Resolver $itemResolver (optional) A Resolver object aiming at resolving assessmentItemRefs. If not provided, fallback will be a LocalFileResolver.
      * @param Resolver $sectionResolver (optional) A Resolver object aiming at resolving assessmentSectionRefs. If not provided, fallback will be a LocalFileResolver.
+     * @param string $version
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
-     * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null)
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null, $version = '2.1')
     {
-        $compactAssessmentTest = new XmlCompactDocument();
+        $compactAssessmentTest = new XmlCompactDocument($version);
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
 

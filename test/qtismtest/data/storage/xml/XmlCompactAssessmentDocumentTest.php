@@ -96,25 +96,48 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateFrom()
+    /**
+     * @dataProvider createFromXmlAssessmentTestDocumentProvider
+     * @throws XmlStorageException
+     */
+    public function testcreateFromXmlAssessmentTestDocument($version, $file, $expectedFile)
     {
-        $doc = new XmlDocument('2.1');
-        $file = self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
+        $doc = new XmlDocument($version);
         $doc->load($file);
 
-        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
+        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, null, null, $version);
 
-        $file = tempnam('/tmp', 'qsm');
-        $compactDoc->save($file);
-        $this->assertTrue(file_exists($file));
+        $newFile = tempnam('/tmp', 'qsm');
+        $compactDoc->save($newFile);
+        $this->assertTrue(file_exists($newFile));
 
-        $compactDoc = new XmlCompactDocument('2.1');
-        $compactDoc->load($file);
-        $this->testLoad($compactDoc);
-        unlink($file);
-        $this->assertFalse(file_exists($file));
+        $compactDoc = new XmlCompactDocument($version);
+        $compactDoc->load($newFile, true);
+
+        $expectedDoc = new XmlCompactDocument($version);
+        $expectedDoc->load($expectedFile, true);
+        $this->assertEquals($expectedDoc->saveToString(), $compactDoc->saveToString());
+        
+        unlink($newFile);
+        $this->assertFileNotExists($newFile);
     }
 
+    public function createFromXmlAssessmentTestDocumentProvider(): array
+    {
+        return [
+            [
+                '2.1',
+                self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml',
+                self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml'
+            ],
+            [
+                '2.2',
+                self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen_2_2.xml',
+                self::samplesDir() . 'custom/interaction_mix_sachsen_compact_2_2.xml'
+            ],
+        ];
+    }
+    
     public function testCreateFormExploded(XmlCompactDocument $compactDoc = null)
     {
         $doc = new XmlDocument('2.1');
