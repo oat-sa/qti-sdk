@@ -46,24 +46,43 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals(ExternalScored::HUMAN, $component->getExternalScored());
     }
 
-    public function testMarshallExternalScored()
+    /**
+     * @dataProvider qtiVersionsToTestForExternalScored
+     * @param $qtiVersion
+     * @param $externalScored
+     * @param $expectedExternalScored
+     */
+    public function testMarshallExternalScored($qtiVersion, $externalScored, $expectedExternalScored)
     {
         // Initialize a minimal outcomeDeclaration.
         $identifier = 'outcome1';
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
-        $externalScored = ExternalScored::HUMAN;
 
         $component = new OutcomeDeclaration($identifier, $baseType, $cardinality, null, $externalScored);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory($qtiVersion)->createMarshaller($component);
         /** @var DOMElement $element */
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf('\\DOMElement', $element);
-        $this->assertEquals('human', $element->getAttribute('externalScored'));
+        $this->assertEquals($expectedExternalScored, $element->getAttribute('externalScored'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
         $this->assertEquals('outcome1', $element->getAttribute('identifier'));
         $this->assertEquals('single', $element->getAttribute('cardinality'));
+    }
+
+    public function qtiVersionsToTestForExternalScored(): array
+    {
+        return [
+            ['2.0', ExternalScored::HUMAN,  ''],
+            ['2.0', ExternalScored::EXTERNAL_MACHINE,  ''],
+            ['2.1.0', ExternalScored::HUMAN,  ''],
+            ['2.1.0', ExternalScored::EXTERNAL_MACHINE, ''],
+            ['2.2.0', ExternalScored::HUMAN,  'human'],
+            ['2.2.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
+            ['3.0.0', ExternalScored::HUMAN,  'human'],
+            ['3.0.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
+        ];
     }
 
     public function testMarshallMinimal()
