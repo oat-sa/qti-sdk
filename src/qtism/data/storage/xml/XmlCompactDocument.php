@@ -343,7 +343,7 @@ class XmlCompactDocument extends XmlDocument
             $compactAssessmentItemRef->setTitle($item->getTitle());
             $compactAssessmentItemRef->setLabel($item->getLabel());
         } catch (Exception $e) {
-            $msg = "An error occured while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
+            $msg = "An error occurred while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
     }
@@ -371,7 +371,7 @@ class XmlCompactDocument extends XmlDocument
 
             return $doc;
         } catch (XmlStorageException $e) {
-            $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
+            $msg = "An error occurred while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
     }
@@ -392,7 +392,7 @@ class XmlCompactDocument extends XmlDocument
                     $pathinfo = pathinfo($uri);
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occured while creating external rubrickBlock definition(s).";
+                    $msg = "An error occurred while creating external rubrickBlock definition(s).";
                     throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }
@@ -442,7 +442,7 @@ class XmlCompactDocument extends XmlDocument
                         $href
                     );
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occured while creating external testFeedback definition(s).";
+                    $msg = 'An error occurred while creating external testFeedback definition(s).';
                     throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }

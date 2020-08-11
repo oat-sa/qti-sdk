@@ -201,7 +201,7 @@ class XmlDocument extends QtiDocument
 
             if ($loadMethod === 'loadXML' && empty($data) === true) {
                 // Pre-check to throw an appropriate exception when load from an empty string.
-                $msg = "Cannot load QTI from an empty string.";
+                $msg = 'Cannot load QTI from an empty string.';
                 throw new XmlStorageException($msg, XmlStorageException::READ);
             } else {
                 if ($loadMethod === 'load') {
@@ -234,7 +234,7 @@ class XmlDocument extends QtiDocument
                     $this->setDocumentComponent($marshaller->unmarshall($element));
                 } catch (UnmarshallingException $e) {
                     $line = $e->getDOMElement()->getLineNo();
-                    $msg = "An error occured while processing QTI-XML at line ${line}.";
+                    $msg = "An error occurred while processing QTI-XML at line ${line}.";
                     throw new XmlStorageException($msg, XmlStorageException::READ, $e);
                 } catch (MarshallerNotFoundException $e) {
                     $version = $this->getVersion();
@@ -249,12 +249,12 @@ class XmlDocument extends QtiDocument
                 libxml_clear_errors();
                 libxml_use_internal_errors($oldErrorConfig);
 
-                $msg = "An internal error occured while parsing QTI-XML:\n${formattedErrors}";
+                $msg = "An internal error occurred while parsing QTI-XML:\n${formattedErrors}";
                 throw new XmlStorageException($msg, XmlStorageException::READ, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } catch (DOMException $e) {
             $line = $e->getLine();
-            $msg = "An error occured while parsing QTI-XML at line ${line}.";
+            $msg = "An error occurred while parsing QTI-XML at line ${line}.";
             throw new XmlStorageException($msg, XmlStorageException::READ, $e);
         }
     }
@@ -358,21 +358,21 @@ class XmlDocument extends QtiDocument
 
                 if (empty($uri) === false) {
                     if (@$this->getDomDocument()->save($uri) === false) {
-                        // An error occured while saving.
-                        $msg = "An error occured while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
+                        // An error occurred while saving.
+                        $msg = "An error occurred while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
                         throw new XmlStorageException($msg, XmlStorageException::WRITE);
                     }
                 } else {
                     if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
                         return $strXml;
                     } else {
-                        // An error occured while saving.
-                        $msg = "An internal error occured while exporting QTI-XML as string.";
+                        // An error occurred while saving.
+                        $msg = 'An internal error occurred while exporting QTI-XML as string.';
                         throw new XmlStorageException($msg, XmlStorageException::WRITE);
                     }
                 }
             } catch (DOMException $e) {
-                $msg = "An internal error occured while saving QTI-XML data.";
+                $msg = 'An internal error occurred while saving QTI-XML data.';
                 throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
             } catch (MarshallerNotFoundException $e) {
                 $version = $this->getVersion();
@@ -381,7 +381,7 @@ class XmlDocument extends QtiDocument
                 throw new XmlStorageException($msg, XmlStorageException::VERSION, $e);
             }
         } else {
-            $msg = "The document cannot be saved. No document component object to be saved.";
+            $msg = 'The document cannot be saved. No document component object to be saved.';
             throw new XmlStorageException($msg, XmlStorageException::WRITE);
         }
     }
@@ -428,7 +428,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate Whether or not validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function xInclude($validate = false)
     {
@@ -488,7 +488,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate Whether or not validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function resolveTemplateLocation($validate = false)
     {
@@ -529,7 +529,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function includeAssessmentSectionRefs($validate = false)
     {

@@ -294,7 +294,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1.1');
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
-        $expectedMsg = "An error occured while saving QTI-XML file at '/unknown/location/qti.xml'. Maybe the save location is not reachable?";
+        $expectedMsg = "An error occurred while saving QTI-XML file at '/unknown/location/qti.xml'. Maybe the save location is not reachable?";
         $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::WRITE);
 
         $doc->save('/unknown/location/qti.xml');
@@ -306,7 +306,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->setFilesystem($this->getOutputFileSystem());
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
-        $expectedMsg = "An error occured while saving QTI-XML file";
+        $expectedMsg = "An error occurred while saving QTI-XML file";
         $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException');
 
         $doc->save('../../../../../../../../unknown/location.xml');

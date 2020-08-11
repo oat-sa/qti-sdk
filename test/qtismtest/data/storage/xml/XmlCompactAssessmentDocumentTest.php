@@ -152,12 +152,10 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         $doc->load($file);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\XmlStorageException',
-            "An error occured while unreferencing section reference with identifier 'Sektion_181865064'"
-        );
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage("An error occurred while unreferencing section reference with identifier 'Sektion_181865064'");
 
-        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
+        XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
     }
 
     public function createFromWithUnresolvableAssessmentSectionRefProvider()
@@ -613,8 +611,8 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution()
     {
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\XmlStorageException',
-            "An error occured while unreferencing item reference with identifier 'Q01'.",
+            XmlStorageException::class,
+            "An error occurred while unreferencing item reference with identifier 'Q01'.",
             XmlStorageException::RESOLUTION
         );
 
