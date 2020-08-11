@@ -815,10 +815,9 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     {
         $xmlDoc = new XmlCompactDocument();
 
-        $this->expectException(XmlStorageException::class);
-        $this->expectExceptionCode(XmlStorageException::VERSION);
-
         $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
+
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
     /**

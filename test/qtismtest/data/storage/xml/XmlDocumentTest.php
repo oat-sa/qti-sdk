@@ -234,10 +234,8 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
 
-        $expectedMsg = "Cannot infer QTI version. Check namespaces and schema locations in XML file.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::VERSION);
-
         $doc->load(self::samplesDir() . 'invalid/noversion.xml');
+        $this->assertEquals('2.1.0', $doc->getVersion());
     }
 
     public function testLoadFromNonExistingFile()
@@ -594,10 +592,9 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $xmlDoc = new XmlDocument();
 
-        $this->expectException(XmlStorageException::class);
-        $this->expectExceptionCode(XmlStorageException::VERSION);
+        $xmlDoc->load(self::samplesDir() . 'ims/tests/empty_tests/empty_test_missing_namespace.xml');
 
-        $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
     /**

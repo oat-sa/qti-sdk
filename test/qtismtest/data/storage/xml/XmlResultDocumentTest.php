@@ -121,10 +121,9 @@ class XmlResultDocumentTest extends QtiSmTestCase
     {
         $xmlDoc = new XmlResultDocument();
 
-        $this->expectException(XmlStorageException::class);
-        $this->expectExceptionCode(XmlStorageException::VERSION);
-
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml');
+
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
     /**
