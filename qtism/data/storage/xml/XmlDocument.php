@@ -142,7 +142,13 @@ class XmlDocument extends QtiDocument
             $doc = $this->getDomDocument();
 
             if (call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
-                $this->setVersion($this->inferVersion());
+                // Infer the QTI version.
+                try {
+                    // Prefers the version contained in the XML payload if valid.
+                    $this->setVersion($this->inferVersion());
+                } catch (XmlStorageException $exception) {
+                    // If not valid, keeps the version set on object creation.
+                }
 
                 if ($validate === true) {
                     $this->schemaValidate();
