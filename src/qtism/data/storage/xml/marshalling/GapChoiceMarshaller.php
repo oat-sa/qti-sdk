@@ -83,12 +83,17 @@ class GapChoiceMarshaller extends ContentMarshaller
                         throw new UnmarshallingException($msg, $element);
                     }
 
-                    try {
-                        $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
-                    } catch (InvalidArgumentException $e) {
-                        $msg = "Invalid content in 'gapText' element.";
-                        throw new UnmarshallingException($msg, $element, $e);
+                    if (Version::compare($version, '2.2.0', '>=') === true) {
+                        $content = new QtiComponentCollection($children->getArrayCopy());
+                    } else {
+                        try {
+                            $content = new TextOrVariableCollection($children->getArrayCopy());
+                        } catch (InvalidArgumentException $e) {
+                            $msg = "Invalid content in 'gapText' element.";
+                            throw new UnmarshallingException($msg, $element, $e);
+                        }
                     }
+                    $component->setContent($content);
                 } else {
                     if (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
                         $component->setObjectLabel($objectLabel);

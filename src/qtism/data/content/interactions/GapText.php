@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\TextOrVariableCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -37,7 +38,7 @@ class GapText extends GapChoice
     /**
      * The textOrVariable objects composing the GapText.
      *
-     * @var TextOrVariableCollection
+     * @var QtiComponentCollection
      * @qtism-bean-property
      */
     private $content;
@@ -60,9 +61,9 @@ class GapText extends GapChoice
     }
 
     /**
-     * Get the textOrVariable objects composing the GapText.
+     * Get the objects composing the GapText.
      *
-     * @return TextOrVariableCollection
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -70,19 +71,19 @@ class GapText extends GapChoice
     }
 
     /**
-     * Set the textOrVariable objects composing the GapText.
+     * Set the objects composing the GapText.
      *
-     * @param TextOrVariableCollection $content
+     * @param QtiComponentCollection $content
      */
-    public function setContent(TextOrVariableCollection $content)
+    public function setContent(QtiComponentCollection $content)
     {
         $this->content = $content;
     }
 
     /**
-     * Get the textOrVariable objects composing the GapText.
+     * Get the objects composing the GapText.
      *
-     * @return TextOrVariableCollection
+     * @return QtiComponentCollection
      */
     public function getContent()
     {
