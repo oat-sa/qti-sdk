@@ -10,27 +10,6 @@ use qtismtest\QtiSmTestCase;
 class XmlUtilsTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider validInferQTIVersionProvider
-     */
-    public function testInferQTIVersionValid($file, $expectedVersion)
-    {
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->load($file);
-        $this->assertEquals($expectedVersion, Utils::inferVersion($dom));
-    }
-
-    public function validInferQTIVersionProvider()
-    {
-        return [
-            [self::samplesDir() . 'ims/items/2_2/choice_multiple.xml', '2.2.0'],
-            [self::samplesDir() . 'ims/items/2_1_1/likert.xml', '2.1.1'],
-            [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1.0'],
-            [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0.0'],
-            [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
-        ];
-    }
-
-    /**
      *
      * @param string $originalXmlString
      * @param string $expectedXmlString
@@ -141,31 +120,6 @@ class XmlUtilsTest extends QtiSmTestCase
                 'http://www.imsglobal.org/xsd/imsqti_v2p0',
                 false,
             ],
-        ];
-    }
-
-    /**
-     * @dataProvider getSchemaLocationProvider
-     */
-    public function testGetSchemaLocation($version, $expected)
-    {
-        $location = Utils::getSchemaLocation($version);
-        $this->assertEquals($expected, $location);
-    }
-
-    public function getSchemaLocationProvider()
-    {
-        $baseDir = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes';
-        return [
-            ['2.0', realpath("${baseDir}/imsqti_v2p0.xsd")],
-            ['2.0.0', realpath("${baseDir}/imsqti_v2p0.xsd")],
-            ['2.1', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")],
-            ['2.1.0', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")],
-            ['2.1.0', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")],
-            ['2.1.1', realpath("${baseDir}/qtiv2p1p1/imsqti_v2p1p1.xsd")],
-            ['2.2', realpath("${baseDir}/qtiv2p2/imsqti_v2p2.xsd")],
-            ['2.2.0', realpath("${baseDir}/qtiv2p2/imsqti_v2p2.xsd")],
-            ['2.2.1', realpath("${baseDir}/qtiv2p2p1/imsqti_v2p2p1.xsd")],
         ];
     }
 

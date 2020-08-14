@@ -4,7 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\state\AssociationValidityConstraint;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
@@ -14,7 +14,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" minConstraint="0" maxConstraint="1"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf('qtism\\data\\state\\AssociationValidityConstraint', $component);
@@ -28,7 +28,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint minConstraint="0" maxConstraint="1"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -42,7 +42,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" maxConstraint="1"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -56,7 +56,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" minConstraint="0"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -70,7 +70,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="RESPONSE" minConstraint="0" maxConstraint="-2"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -84,7 +84,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" minConstraint="2" maxConstraint="1"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
@@ -96,7 +96,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
     public function testMarshallSimple()
     {
         $component = new AssociationValidityConstraint('IDENTIFIER', 0, 1);
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $element = $factory->createMarshaller($component)->marshall($component);
         $this->assertEquals('IDENTIFIER', $element->getAttribute('identifier'));

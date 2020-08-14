@@ -18,13 +18,14 @@
  * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Moyon Camille <camille@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml;
 
-use DOMElement;
-use LogicException;
+use qtism\data\storage\xml\versions\QtiVersionException;
+use qtism\data\storage\xml\versions\ResultVersion;
 
 /**
  * Class XmlResultDocument
@@ -32,48 +33,24 @@ use LogicException;
 class XmlResultDocument extends XmlDocument
 {
     /**
-     * Validate DomDocument against associated xsd
+     * Sets version to a supported QTI Result version.
      *
-     * Add DomDocument to XmlUtils to fetch xsd by document namespace
-     *
-     * @param string $filename
-     * @throws XmlStorageException
+     * @param string $versionNumber A QTI Result version number e.g. '2.1.0'.
+     * @throws QtiVersionException when version is not supported for QTI Result.
      */
-    public function schemaValidate($filename = '')
+    public function setVersion(string $versionNumber)
     {
-        parent::schemaValidate(__DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd');
+        $this->version = ResultVersion::create($versionNumber);
     }
 
     /**
-     * Decorate the root DomElement
+     * Infer the QTI Result version of the document from its XML definition.
      *
-     * Add Result namespace regarding version
-     *
-     * @param DOMElement $rootElement
-     * @throws LogicException if the version is not supported by QTI result
+     * @return string a semantic version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
      */
-    protected function decorateRootElement(DOMElement $rootElement)
+    protected function inferVersion(): string
     {
-        $version = trim($this->getVersion());
-        switch ($version) {
-            case '2.1.0':
-            case '2.1.1':
-                $qtiSuffix = 'result_v2p1';
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-                $qtiSuffix = 'result_v2p2';
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd';
-                break;
-
-            default:
-                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
-        }
-
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+        return ResultVersion::infer($this->getDomDocument());
     }
 }
