@@ -18,15 +18,13 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml;
 
-use DOMElement;
 use Exception;
-use InvalidArgumentException;
-use qtism\common\utils\Version;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
@@ -41,8 +39,8 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
-use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\versions\CompactVersion;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
 use SplObjectStorage;
@@ -76,6 +74,36 @@ class XmlCompactDocument extends XmlDocument
      * @var boolean
      */
     private $explodeTestFeedbacks = false;
+
+    /**
+     * XmlCompactDocument constructor.
+     *
+     * Create a new XmlCompactDocument object.
+     * Kept for BC reason.
+     *
+     * @param string $version
+     * @param QtiComponent|null $documentComponent
+     */
+    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
+    {
+        // Version 1.0 was used in legacy code, let's keep it BC.
+        if ($version === '1.0') {
+            $version = '2.1.0';
+        }
+
+        parent::__construct($version, $documentComponent);
+    }
+
+    /**
+     * Sets version to a supported QTI Compact version.
+     *
+     * @param string $versionNumber A QTI Compact version number e.g. '2.1.0'.
+     * @throws QtiVersionException when version is not supported for QTI Compact.
+     */
+    public function setVersion(string $versionNumber)
+    {
+        $this->version = CompactVersion::create($versionNumber);
+    }
 
     /**
      * Whether or not the rubrickBlock components contained in the document should be separated from the document.
@@ -130,27 +158,17 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Override of XmlDocument::createMarshallerFactory in order
-     * to return an appropriate CompactMarshallerFactory.
-     *
-     * @return CompactMarshallerFactory A CompactMarshallerFactory object.
-     */
-    protected function createMarshallerFactory()
-    {
-        return new CompactMarshallerFactory();
-    }
-
-    /**
      * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
      *
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
      * @param FileResolver (optional) $resolver A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
+     * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1')
     {
-        $compactAssessmentTest = new XmlCompactDocument();
+        $compactAssessmentTest = new XmlCompactDocument($version);
         $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());
 
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
@@ -325,7 +343,7 @@ class XmlCompactDocument extends XmlDocument
             $compactAssessmentItemRef->setTitle($item->getTitle());
             $compactAssessmentItemRef->setLabel($item->getLabel());
         } catch (Exception $e) {
-            $msg = "An error occured while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
+            $msg = "An error occurred while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
     }
@@ -353,77 +371,9 @@ class XmlCompactDocument extends XmlDocument
 
             return $doc;
         } catch (XmlStorageException $e) {
-            $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
+            $msg = "An error occurred while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
-    }
-
-    /**
-     * Get the XML schema to use for a given QTI version.
-     *
-     * @return string A filename pointing at an XML Schema file.
-     * @throws InvalidArgumentException when the QTI version is not semantic or not supported.
-     */
-    public function getSchemaLocation(): string
-    {
-        $versionNumber = Version::appendPatchVersion($this->getVersion());
-
-        if ($versionNumber === '2.1.0') {
-            $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
-        } elseif ($versionNumber === '2.1.1') {
-            $filename = __DIR__ . '/schemes/qticompact_v2p1.xsd';
-        } elseif ($versionNumber === '2.2.0') {
-            $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
-        } elseif ($versionNumber === '2.2.1') {
-            $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
-        } elseif ($versionNumber === '2.2.2') {
-            $filename = __DIR__ . '/schemes/qticompact_v2p2.xsd';
-        } else {
-            $knownVersions = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Compact QTI is not supported for version "%s". Supported versions are "%s".',
-                    $versionNumber,
-                    implode('", "', $knownVersions)
-                )
-            );
-        }
-        
-        return $filename;
-    }
-
-    /**
-     * Override of XmlDocument.
-     *
-     * Specifies the correct XSD schema locations and main namespace
-     * for the root element of a Compact XML document.
-     *
-     * @param DOMElement $rootElement The root element of a compact XML document.
-     */
-    public function decorateRootElement(DOMElement $rootElement)
-    {
-        $version = trim($this->getVersion());
-        switch ($version) {
-            case '2.1.0':
-            case '2.1.1':
-                $qtiSuffix = 'v2p1';
-                $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
-                break;
-
-            case '2.2.0':
-            case '2.2.1':
-            case '2.2.2':
-                $qtiSuffix = 'v2p2';
-                $xsdLocation = 'http://www.taotesting.com/xsd/qticompact_v2p2.xsd';
-                break;
-
-            default:
-                throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
-        }
-
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
     }
 
     /**
@@ -442,7 +392,7 @@ class XmlCompactDocument extends XmlDocument
                     $pathinfo = pathinfo($uri);
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occured while creating external rubrickBlock definition(s).";
+                    $msg = "An error occurred while creating external rubrickBlock definition(s).";
                     throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }
@@ -492,7 +442,7 @@ class XmlCompactDocument extends XmlDocument
                         $href
                     );
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occured while creating external testFeedback definition(s).";
+                    $msg = 'An error occurred while creating external testFeedback definition(s).';
                     throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }
@@ -540,27 +490,14 @@ class XmlCompactDocument extends XmlDocument
         return $references;
     }
 
-    protected function inferVersion()
+    /**
+     * Infer the QTI Compact version of the document from its XML definition.
+     *
+     * @return string a semantic version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
+     */
+    protected function inferVersion(): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
-                $version = '2.1.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
-                $version = '2.2.0';
-            }
-        }
-
-        if ($version === false) {
-            $msg = 'Cannot infer QTI Compact version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg, XmlStorageException::VERSION);
-        }
-
-        return $version;
+        return CompactVersion::infer($this->getDomDocument());
     }
 }

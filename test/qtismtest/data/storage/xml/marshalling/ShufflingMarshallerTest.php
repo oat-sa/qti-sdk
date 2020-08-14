@@ -7,7 +7,7 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class ShufflingMarshallerTest extends QtiSmTestCase
@@ -18,7 +18,7 @@ class ShufflingMarshallerTest extends QtiSmTestCase
         $shufflingGroup2 = new ShufflingGroup(new IdentifierCollection(['id4', 'id5', 'id6']));
         $shuffling = new Shuffling('RESPONSE', new ShufflingGroupCollection([$shufflingGroup1, $shufflingGroup2]));
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $element = $factory->createMarshaller($shuffling)->marshall($shuffling);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -33,7 +33,7 @@ class ShufflingMarshallerTest extends QtiSmTestCase
 	        <shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>                
 	    ');
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf('\\qtism\\data\\state\\Shuffling', $component);
