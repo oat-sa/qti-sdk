@@ -122,31 +122,30 @@ class QtiVersion extends Version
      */
     public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
     {
-        $version = '';
+        switch ($rootNs) {
+            case QtiVersion200::XMLNS:
+                return '2.0.0';
 
-        if ($rootNs === QtiVersion200::XMLNS) {
-            $version = '2.0.0';
-        } elseif ($rootNs === QtiVersion210::XMLNS) {
-            $version = '2.1.0';
+            case QtiVersion210::XMLNS:
+                if (Utils::getXsdLocation($document, $rootNs) === QtiVersion211::XSD) {
+                    return '2.1.1';
+                }
+                return '2.1.0';
 
-            $nsLocation = Utils::getXsdLocation($document, $rootNs);
-            if ($nsLocation === QtiVersion211::XSD) {
-                $version = '2.1.1';
-            }
-        } elseif ($rootNs === QtiVersion220::XMLNS) {
-            $version = '2.2.0';
+            case QtiVersion220::XMLNS:
+                switch (Utils::getXsdLocation($document, $rootNs)) {
+                    case QtiVersion221::XSD:
+                        return '2.2.1';
+                    case QtiVersion222::XSD:
+                        return '2.2.2';
+                }
+                return '2.2.0';
 
-            $nsLocation = Utils::getXsdLocation($document, $rootNs);
-            if ($nsLocation === QtiVersion221::XSD) {
-                $version = '2.2.1';
-            } elseif ($nsLocation === QtiVersion222::XSD) {
-                $version = '2.2.2';
-            }
-        } elseif ($rootNs === QtiVersion300::XMLNS) {
-            $version = '3.0.0';
+            case QtiVersion300::XMLNS:
+                return '3.0.0';
         }
 
-        return $version;
+        return '';
     }
 
     public function getLocalXsd(): string
