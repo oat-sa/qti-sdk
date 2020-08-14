@@ -33,7 +33,6 @@ use League\Flysystem\Filesystem;
 use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
-use qtism\common\utils\Version;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
@@ -51,7 +50,7 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
 use ReflectionClass;
 use RuntimeException;
@@ -76,21 +75,6 @@ class XmlDocument extends QtiDocument
      * @var null|Filesystem
      */
     private $fileSystem = null;
-
-    /**
-     * Create a new XmlDocument.
-     *
-     * If the given QTI $version number is given with no patch version (c.f. Semantic Versioning), 0 will be used as the patch
-     * version.
-     *
-     * @param string $version The version number of the QTI specfication to use in order to load or save an AssessmentTest.
-     * @param QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
-     * @throws InvalidArgumentException If $version is not a known QTI version.
-     */
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
-    {
-        parent::__construct($version, $documentComponent);
-    }
 
     /**
      * Set the DOMDocument object in use.
@@ -217,7 +201,7 @@ class XmlDocument extends QtiDocument
 
             if ($loadMethod === 'loadXML' && empty($data) === true) {
                 // Pre-check to throw an appropriate exception when load from an empty string.
-                $msg = "Cannot load QTI from an empty string.";
+                $msg = 'Cannot load QTI from an empty string.';
                 throw new XmlStorageException($msg, XmlStorageException::READ);
             } else {
                 if ($loadMethod === 'load') {
@@ -231,15 +215,11 @@ class XmlDocument extends QtiDocument
 
             if (@call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
                 // Infer the QTI version.
-                if ($fromString === false) {
-                    // When loaded from a file, the version infered from
-                    // that filed always supersedes the one specified
-                    // when the XmlDocument object is instantiated.
+                try {
+                    // Prefers the version contained in the XML payload if valid.
                     $this->setVersion($this->inferVersion());
-                } else {
-                    // When loaded from a string, the version to be used
-                    // is the one specified when the XmlDocument object
-                    // is instantiated.
+                } catch (XmlStorageException $exception) {
+                    // If not valid, keeps the version set on object creation.
                 }
 
                 if ($validate === true) {
@@ -254,7 +234,7 @@ class XmlDocument extends QtiDocument
                     $this->setDocumentComponent($marshaller->unmarshall($element));
                 } catch (UnmarshallingException $e) {
                     $line = $e->getDOMElement()->getLineNo();
-                    $msg = "An error occured while processing QTI-XML at line ${line}.";
+                    $msg = "An error occurred while processing QTI-XML at line ${line}.";
                     throw new XmlStorageException($msg, XmlStorageException::READ, $e);
                 } catch (MarshallerNotFoundException $e) {
                     $version = $this->getVersion();
@@ -269,12 +249,12 @@ class XmlDocument extends QtiDocument
                 libxml_clear_errors();
                 libxml_use_internal_errors($oldErrorConfig);
 
-                $msg = "An internal error occured while parsing QTI-XML:\n${formattedErrors}";
+                $msg = "An internal error occurred while parsing QTI-XML:\n${formattedErrors}";
                 throw new XmlStorageException($msg, XmlStorageException::READ, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } catch (DOMException $e) {
             $line = $e->getLine();
-            $msg = "An error occured while parsing QTI-XML at line ${line}.";
+            $msg = "An error occurred while parsing QTI-XML at line ${line}.";
             throw new XmlStorageException($msg, XmlStorageException::READ, $e);
         }
     }
@@ -378,21 +358,21 @@ class XmlDocument extends QtiDocument
 
                 if (empty($uri) === false) {
                     if (@$this->getDomDocument()->save($uri) === false) {
-                        // An error occured while saving.
-                        $msg = "An error occured while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
+                        // An error occurred while saving.
+                        $msg = "An error occurred while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
                         throw new XmlStorageException($msg, XmlStorageException::WRITE);
                     }
                 } else {
                     if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
                         return $strXml;
                     } else {
-                        // An error occured while saving.
-                        $msg = "An internal error occured while exporting QTI-XML as string.";
+                        // An error occurred while saving.
+                        $msg = 'An internal error occurred while exporting QTI-XML as string.';
                         throw new XmlStorageException($msg, XmlStorageException::WRITE);
                     }
                 }
             } catch (DOMException $e) {
-                $msg = "An internal error occured while saving QTI-XML data.";
+                $msg = 'An internal error occurred while saving QTI-XML data.';
                 throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
             } catch (MarshallerNotFoundException $e) {
                 $version = $this->getVersion();
@@ -401,7 +381,7 @@ class XmlDocument extends QtiDocument
                 throw new XmlStorageException($msg, XmlStorageException::VERSION, $e);
             }
         } else {
-            $msg = "The document cannot be saved. No document component object to be saved.";
+            $msg = 'The document cannot be saved. No document component object to be saved.';
             throw new XmlStorageException($msg, XmlStorageException::WRITE);
         }
     }
@@ -416,7 +396,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = $this->getSchemaLocation();
+            $filename = $this->version->getLocalXsd();
         }
 
         if (is_readable($filename)) {
@@ -448,7 +428,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate Whether or not validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function xInclude($validate = false)
     {
@@ -508,7 +488,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate Whether or not validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function resolveTemplateLocation($validate = false)
     {
@@ -549,7 +529,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function includeAssessmentSectionRefs($validate = false)
     {
@@ -602,14 +582,12 @@ class XmlDocument extends QtiDocument
     /**
      * Changes to Qti version of the root element.
      *
-     * @param string $toVersion
-     * @return self
+     * @param string $toVersionNumber
      */
-    public function changeVersion(string $toVersion)
+    public function changeVersion(string $toVersionNumber)
     {
-        $this->setVersion($toVersion);
+        $this->setVersion($toVersionNumber);
         $this->decorateRootElement($this->domDocument->documentElement);
-        return $this;
     }
 
     /**
@@ -620,49 +598,12 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-        $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+        $namespace = $this->version->getNamespace();
+        $xsdLocation = $this->version->getXsdLocation();
 
-        switch (trim($this->getVersion())) {
-            case '2.0.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
-                break;
-
-            case '2.1.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
-                break;
-
-            case '2.1.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
-                break;
-
-            case '2.2.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
-                break;
-
-            case '2.2.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
-                break;
-
-            case '2.2.2':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
-                break;
-
-            case '3.0.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsaqti_item_v1p0";
-                break;
-        }
-
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $xmlns);
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $namespace);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $xmlns . ' ' . $xsdLocation);
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $namespace . ' ' . $xsdLocation);
     }
 
     /**
@@ -705,102 +646,21 @@ class XmlDocument extends QtiDocument
      * MarshallerFactory factory method (see gang of four).
      *
      * @return MarshallerFactory An appropriate MarshallerFactory object.
-     * @throws RuntimeException If no suitable MarshallerFactory implementation is found.
      */
     protected function createMarshallerFactory()
     {
-        $version = $this->getVersion();
-        if ($version === '2.0.0') {
-            return new Qti20MarshallerFactory();
-        } elseif ($version === '2.1.0') {
-            return new Qti21MarshallerFactory();
-        } elseif ($version === '2.1.1') {
-            return new Qti211MarshallerFactory();
-        } elseif ($version === '2.2.0') {
-            return new Qti22MarshallerFactory();
-        } elseif ($version === '2.2.1') {
-            return new Qti221MarshallerFactory();
-        } elseif ($version === '2.2.2') {
-            return new Qti222MarshallerFactory();
-        } elseif ($version === '3.0.0') {
-            return new Qti30MarshallerFactory();
-        } else {
-            $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
-            throw new RuntimeException($msg);
-        }
+        $class = $this->version->getMarshallerFactoryClass();
+        return new $class;
     }
 
     /**
      * Infer the QTI version of the document from its XML definition.
      *
-     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string a semantic version inferred from the document.
      * @throws XmlStorageException when the version can not be inferred.
      */
-    protected function inferVersion()
+    protected function inferVersion(): string
     {
-        $document = $this->getDomDocument();
-        $root = $document->documentElement;
-        $version = false;
-
-        if (empty($root) === false) {
-            $rootNs = $root->namespaceURI;
-
-            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
-                $version = '2.0.0';
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
-                $version = '2.1.0';
-
-                $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
-                    $version = '2.1.1';
-                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd') {
-                    $version = '2.1.0';
-                }
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
-                $version = '2.2.0';
-
-                $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
-                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd') {
-                    $version = '2.2.2';
-                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
-                    $version = '2.2.1';
-                }
-            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0') {
-                $version = '3.0.0';
-            }
-        }
-
-        if ($version === false) {
-            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
-            throw new XmlStorageException($msg, XmlStorageException::VERSION);
-        }
-
-        return $version;
-    }
-
-    /**
-     * Get the XML schema to use for a given QTI version.
-     *
-     * @return string A filename pointing at an XML Schema file.
-     */
-    public function getSchemaLocation(): string
-    {
-        $version = Version::appendPatchVersion($this->getVersion());
-
-        if ($version === '2.1.0') {
-            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
-        } elseif ($version === '2.1.1') {
-            $filename = __DIR__ . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
-        } elseif ($version === '2.2.0') {
-            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
-        } elseif ($version === '2.2.1') {
-            $filename = __DIR__ . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
-        } elseif ($version === '2.2.2') {
-            $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
-        } else {
-            $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
-        }
-
-        return $filename;
+        return QtiVersion::infer($this->getDomDocument());
     }
 }

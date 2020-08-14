@@ -27,14 +27,14 @@ use qtism\data\state\TemplateDefault;
 use qtism\data\state\TemplateDefaultCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
@@ -50,7 +50,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testMarshallMinimalWithTitle()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $component->setTitle('A title');
         $marshaller = $factory->createMarshaller($component);
@@ -65,7 +65,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testMarshallMinimalWithLabel()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $component->setLabel('A label');
         $marshaller = $factory->createMarshaller($component);
@@ -79,7 +79,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="false"/>');
         $element = $dom->documentElement;
@@ -100,7 +100,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimalWithTitle()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" title="A title" timeDependent="false"/>');
         $element = $dom->documentElement;
@@ -114,7 +114,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimalWithLabel()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" label="A label" timeDependent="false"/>');
         $element = $dom->documentElement;
@@ -131,7 +131,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testMarshallModerate()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $weights = new WeightCollection(); // some noise
         $weights[] = new Weight('W01', 1.0);
@@ -196,7 +196,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testMarshallTemplateDeclarations()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
 
         $templateDeclarations = new TemplateDeclarationCollection();
@@ -221,7 +221,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallModerate()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
             '
@@ -281,7 +281,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallTemplateDeclarations()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
 			<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true">
@@ -300,7 +300,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testMarshallMultipleEndAttemptIdentifiers()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $component->setEndAttemptIdentifiers(new IdentifierCollection(['HINT1', 'HINT2', 'HINT3']));
         $marshaller = $factory->createMarshaller($component);
@@ -315,7 +315,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testMarshallSingleEndAttemptIdentifiers()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $component->setEndAttemptIdentifiers(new IdentifierCollection(['HINT1']));
         $marshaller = $factory->createMarshaller($component);
@@ -330,7 +330,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testMarshallNoEndAttemptIdentifiers()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
         $component->setEndAttemptIdentifiers(new IdentifierCollection([]));
         $marshaller = $factory->createMarshaller($component);
@@ -345,7 +345,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMultipleEndAttemptIdentifiers()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true" endAttemptIdentifiers="HINT1 HINT2 HINT3"/>');
         $element = $dom->documentElement;
@@ -369,7 +369,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallSingleEndAttemptIdentifier()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true" endAttemptIdentifiers="HINT1"/>');
         $element = $dom->documentElement;
@@ -386,7 +386,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallNoEndAttemptIdentifier()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true"/>');
         $element = $dom->documentElement;
@@ -402,7 +402,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testMarshallShufflingGroups()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
 
         $group1 = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
@@ -434,7 +434,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallShufflingGroups()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
             <assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true">
@@ -463,7 +463,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testMarshallResponseValidityConstraints()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
 
         $responseValidityConstraints = new ResponseValidityConstraintCollection(
@@ -500,7 +500,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallResponseValidityConstraints()
     {
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
             <assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true">

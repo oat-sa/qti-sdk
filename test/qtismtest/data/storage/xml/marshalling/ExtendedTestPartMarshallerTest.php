@@ -19,7 +19,7 @@ use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreCondition;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\ShowHide;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\TestFeedbackCollection;
@@ -66,7 +66,7 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase
         $extendedTestPart->setTestFeedbacks($testFeedbacks);
         $extendedTestPart->setTestFeedbackRefs($testFeedbackRefs);
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $element = $factory->createMarshaller($extendedTestPart)->marshall($extendedTestPart);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -100,7 +100,7 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase
         );
 
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);

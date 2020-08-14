@@ -26,7 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 /**
  * A specialized marshaller factory focusing on components involved in CompactXml documents.
  *
- * In addition with the QTI 2.1 related marshallers, the following marshallers are mapped to this factory:
+ * In addition with the QTI 2.2 related marshallers, the following marshallers are mapped to this factory:
  *
  * * ExtendedAssessmentItemRefMarshaller
  * * ExtendedAssessmentSectionMarshaller
@@ -40,7 +40,7 @@ namespace qtism\data\storage\xml\marshalling;
  * * ResponseValidityConstraintMarshaller
  * * AssociationValidityConstraintMarshaller
  */
-class CompactMarshallerFactory extends Qti21MarshallerFactory
+class Compact22MarshallerFactory extends Qti22MarshallerFactory
 {
     /**
      * Create a new CompactMarshallerFactory object.

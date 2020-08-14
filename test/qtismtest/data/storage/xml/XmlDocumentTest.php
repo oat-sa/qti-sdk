@@ -224,8 +224,17 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
 
-        $expectedMsg = "An internal error occured while parsing QTI-XML:\nFatal Error: Premature end of data in tag assessmentItem line 1 at 1:17.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::READ);
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionCode(XmlStorageException::READ);
+
+        // libxml library on jenkins produces another error message.
+        // Don't know how to find the version though.
+        $libMxl2_9_10_Message = 'Premature end of data in tag assessmentItem line 1';
+        $libMxl2_9_otherMessage = 'EndTag\: \\\'<\\/\\\' not found';
+
+        $expectedMsg = '/^An internal error occurred while parsing QTI-XML:' . "\n"
+            . 'Fatal Error: (' . $libMxl2_9_10_Message . '|' . $libMxl2_9_otherMessage . ') at 1\\:17\\.$/';
+        $this->expectExceptionMessageRegExp($expectedMsg);
 
         $doc->loadFromString('<assessmentItem>');
     }
@@ -234,10 +243,8 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
 
-        $expectedMsg = "Cannot infer QTI version. Check namespaces and schema locations in XML file.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::VERSION);
-
         $doc->load(self::samplesDir() . 'invalid/noversion.xml');
+        $this->assertEquals('2.1.0', $doc->getVersion());
     }
 
     public function testLoadFromNonExistingFile()
@@ -287,7 +294,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1.1');
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
-        $expectedMsg = "An error occured while saving QTI-XML file at '/unknown/location/qti.xml'. Maybe the save location is not reachable?";
+        $expectedMsg = "An error occurred while saving QTI-XML file at '/unknown/location/qti.xml'. Maybe the save location is not reachable?";
         $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::WRITE);
 
         $doc->save('/unknown/location/qti.xml');
@@ -299,7 +306,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->setFilesystem($this->getOutputFileSystem());
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
-        $expectedMsg = "An error occured while saving QTI-XML file";
+        $expectedMsg = "An error occurred while saving QTI-XML file";
         $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException');
 
         $doc->save('../../../../../../../../unknown/location.xml');
@@ -584,6 +591,9 @@ class XmlDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1.0'],
             [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0.0'],
             [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
+            [self::samplesDir() . 'ims/items/2_2_1/choice.xml', '2.2.1'],
+            [self::samplesDir() . 'ims/items/2_2_2/choice.xml', '2.2.2'],
+            [self::samplesDir() . 'ims/items/3_0/aqti_tmh_sample_1.xml', '3.0.0'],
         ];
     }
 
@@ -591,10 +601,9 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $xmlDoc = new XmlDocument();
 
-        $this->expectException(XmlStorageException::class);
-        $this->expectExceptionCode(XmlStorageException::VERSION);
+        $xmlDoc->load(self::samplesDir() . 'ims/tests/empty_tests/empty_test_missing_namespace.xml');
 
-        $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
     /**
@@ -633,13 +642,14 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testChangeVersionWithUnknownVersionThrowsException()
     {
         $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
         $file21 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_2_1.xml';
 
         $doc = new XmlDocument('2.1');
         $doc->load($file21);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Version \''.$wrongVersion.'\' is not a known QTI version.');
+        $this->expectExceptionMessage('QTI version "' . $patchedWrongVersion . '" is not supported.');
 
         $doc->changeVersion($wrongVersion);
     }

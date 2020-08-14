@@ -96,24 +96,24 @@ class XmlResultDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider inferVersionProvider
-     * @param string $version
+     * @dataProvider inferVersionAndSchemaValidateProvider
      * @param string $testFile
+     * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testInferVersion($version, $testFile)
+    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion)
     {
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load($testFile, true);
 
-        $this->assertEquals($version, $xmlDoc->getVersion());
+        $this->assertEquals($expectedVersion, $xmlDoc->getVersion());
     }
 
-    public function inferVersionProvider(): array
+    public function inferVersionAndSchemaValidateProvider(): array
     {
         return [
-            ['2.1.0', self::samplesDir() . 'results/simple-assessment-result.xml'],
-            ['2.2.0', self::samplesDir() . 'results/simple-assessment-result-v2p2.xml'],
+            [self::samplesDir() . 'results/simple-assessment-result.xml', '2.1.0'],
+            [self::samplesDir() . 'results/simple-assessment-result-v2p2.xml', '2.2.0'],
         ];
     }
 
@@ -121,10 +121,9 @@ class XmlResultDocumentTest extends QtiSmTestCase
     {
         $xmlDoc = new XmlResultDocument();
 
-        $this->expectException(XmlStorageException::class);
-        $this->expectExceptionCode(XmlStorageException::VERSION);
-
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml');
+
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
     /**
@@ -159,15 +158,16 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
     public function testChangeVersionWithUnknownVersionThrowsException()
     {
-        $wrongVersion = '2.4';
+        $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
         $file21 = self::samplesDir() . 'results/simple-assessment-result.xml';
 
         $doc = new XmlResultDocument('2.1');
         $doc->load($file21, true);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Version \''.$wrongVersion.'\' is not a known QTI version.');
+        $this->expectExceptionMessage('QTI Result Report is not supported for version "' . $patchedWrongVersion . '".');
 
-        $doc->changeVersion($wrongVersion   );
+        $doc->changeVersion($wrongVersion);
     }
 }
