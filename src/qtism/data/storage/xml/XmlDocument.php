@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -32,6 +33,7 @@ use League\Flysystem\Filesystem;
 use LibXMLError;
 use LogicException;
 use qtism\common\utils\Url;
+use qtism\common\utils\Version;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
@@ -233,12 +235,7 @@ class XmlDocument extends QtiDocument
                     // When loaded from a file, the version infered from
                     // that filed always supersedes the one specified
                     // when the XmlDocument object is instantiated.
-                    if (($version = $this->inferVersion()) !== false) {
-                        $this->setVersion($version);
-                    } else {
-                        $msg = "Cannot infer QTI version. Check namespaces and schema locations in XML file.";
-                        throw new XmlStorageException($msg, XmlStorageException::VERSION);
-                    }
+                    $this->setVersion($this->inferVersion());
                 } else {
                     // When loaded from a string, the version to be used
                     // is the one specified when the XmlDocument object
@@ -419,7 +416,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = XmlUtils::getSchemaLocation($this->getVersion());
+            $filename = $this->getSchemaLocation();
         }
 
         if (is_readable($filename)) {
@@ -603,6 +600,19 @@ class XmlDocument extends QtiDocument
     }
 
     /**
+     * Changes to Qti version of the root element.
+     *
+     * @param string $toVersion
+     * @return self
+     */
+    public function changeVersion(string $toVersion)
+    {
+        $this->setVersion($toVersion);
+        $this->decorateRootElement($this->domDocument->documentElement);
+        return $this;
+    }
+
+    /**
      * Decorate the root element of the XmlAssessmentDocument with the appropriate
      * namespaces and schema definition.
      *
@@ -650,9 +660,9 @@ class XmlDocument extends QtiDocument
                 break;
         }
 
-        $rootElement->setAttribute('xmlns', $xmlns);
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $xmlns);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "${xmlns} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $xmlns . ' ' . $xsdLocation);
     }
 
     /**
@@ -723,10 +733,74 @@ class XmlDocument extends QtiDocument
     /**
      * Infer the QTI version of the document from its XML definition.
      *
-     * @return boolean|string false if cannot be infered otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @throws XmlStorageException when the version can not be inferred.
      */
     protected function inferVersion()
     {
-        return XmlUtils::inferVersion($this->getDomDocument());
+        $document = $this->getDomDocument();
+        $root = $document->documentElement;
+        $version = false;
+
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+
+            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
+                $version = '2.0.0';
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
+                $version = '2.1.0';
+
+                $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
+                    $version = '2.1.1';
+                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd') {
+                    $version = '2.1.0';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
+                $version = '2.2.0';
+
+                $nsLocation = XmlUtils::getXsdLocation($document, $rootNs);
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd') {
+                    $version = '2.2.2';
+                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                    $version = '2.2.1';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0') {
+                $version = '3.0.0';
+            }
+        }
+
+        if ($version === false) {
+            $msg = 'Cannot infer QTI version. Check namespaces and schema locations in XML file.';
+            throw new XmlStorageException($msg, XmlStorageException::VERSION);
+        }
+
+        return $version;
+    }
+
+    /**
+     * Get the XML schema to use for a given QTI version.
+     *
+     * @return string A filename pointing at an XML Schema file.
+     */
+    public function getSchemaLocation(): string
+    {
+        $version = Version::appendPatchVersion($this->getVersion());
+
+        if ($version === '2.1.0') {
+            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
+        } elseif ($version === '2.1.1') {
+            $filename = __DIR__ . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
+        } elseif ($version === '2.2.0') {
+            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
+        } elseif ($version === '2.2.1') {
+            $filename = __DIR__ . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+        } elseif ($version === '2.2.2') {
+            $filename = __DIR__ . '/schemes/qtiv2p2p2/imsqti_v2p2p2.xsd';
+        } else {
+            $filename = __DIR__ . '/schemes/imsqti_v2p0.xsd';
+        }
+
+        return $filename;
     }
 }

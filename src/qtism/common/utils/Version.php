@@ -115,16 +115,26 @@ class Version
      * Append patch version to $version if $version only contains
      * major and minor versions.
      *
-     * @param string $version
+     * @param string $versionNumber
      * @return string
+     * @throws InvalidArgumentException when the given version is not semantic.
      */
-    public static function appendPatchVersion($version)
+    public static function appendPatchVersion($versionNumber): string
     {
-        $shortKnownVersions = ['2.0', '2.1', '2.2'];
-        if (in_array($version, $shortKnownVersions) === true) {
-            $version = $version . '.0';
+        $versionNumber = trim($versionNumber);
+
+        if (preg_match('/^\d+\.\d+\.\d+$/', $versionNumber)) {
+            return $versionNumber;
+        }
+        if (preg_match('/^\d+\.\d+$/', $versionNumber)) {
+            return $versionNumber . '.0';
+        }
+        if (preg_match('/^\d+$/', $versionNumber)) {
+            return $versionNumber . '.0.0';
         }
 
-        return $version;
+        throw new InvalidArgumentException(
+            sprintf("Provided version number '%s' is not compliant to semantic versioning.", $versionNumber)
+        );
     }
 }

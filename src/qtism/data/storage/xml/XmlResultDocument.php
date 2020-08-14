@@ -25,6 +25,8 @@ namespace qtism\data\storage\xml;
 
 use DOMElement;
 use LogicException;
+use qtism\common\utils\Version;
+use qtism\data\storage\xml\Utils as XmlUtils;
 
 /**
  * Class XmlResultDocument
@@ -32,16 +34,36 @@ use LogicException;
 class XmlResultDocument extends XmlDocument
 {
     /**
-     * Validate DomDocument against associated xsd
+     * Get the XML schema to use for a given QTI Result Report version.
      *
-     * Add DomDocument to XmlUtils to fetch xsd by document namespace
-     *
-     * @param string $filename
-     * @throws XmlStorageException
+     * @return string A filename pointing at an XML Schema file.
      */
-    public function schemaValidate($filename = '')
+    public function getSchemaLocation(): string
     {
-        parent::schemaValidate(__DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd');
+        $versionNumber = Version::appendPatchVersion($this->getVersion());
+
+        if ($versionNumber === '2.1.0') {
+            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
+        } elseif ($versionNumber === '2.1.1') {
+            $filename = __DIR__ . '/schemes/qtiv2p1/imsqti_result_v2p1.xsd';
+        } elseif ($versionNumber === '2.2.0') {
+            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+        } elseif ($versionNumber === '2.2.1') {
+            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+        } elseif ($versionNumber === '2.2.2') {
+            $filename = __DIR__ . '/schemes/qtiv2p2/imsqti_result_v2p2.xsd';
+        } else {
+            $knownVersions = ['2.1.0', '2.1.1', '2.2.0', '2.2.1', '2.2.2'];
+            throw new InvalidArgumentException(
+                sprintf(
+                    'QTI Result Report is not supported for version "%s". Supported versions are "%s".',
+                    $versionNumber,
+                    implode('", "', $knownVersions)
+                )
+            );
+        }
+
+        return $filename;
     }
 
     /**
@@ -72,8 +94,32 @@ class XmlResultDocument extends XmlDocument
                 throw new LogicException('Result xml is not supported for QTI version "' . $version . '"');
         }
 
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+    }
+
+    protected function inferVersion()
+    {
+        $document = $this->getDomDocument();
+        $root = $document->documentElement;
+        $version = false;
+
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+
+            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p1') {
+                $version = '2.1.0';
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_result_v2p2') {
+                $version = '2.2.0';
+            }
+        }
+
+        if ($version === false) {
+            $msg = 'Cannot infer QTI Result Report version. Check namespaces and schema locations in XML file.';
+            throw new XmlStorageException($msg, XmlStorageException::VERSION);
+        }
+
+        return $version;
     }
 }

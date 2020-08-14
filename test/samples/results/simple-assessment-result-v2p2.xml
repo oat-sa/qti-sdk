@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1"
+<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd">
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd">
   <context sourcedId="fixture-sourcedId">
     <sessionIdentifier sourceID="http://sessionIdentifier1-sourceID" identifier="sessionIdentifier1-id"/>
     <sessionIdentifier sourceID="http://sessionIdentifier2-sourceID" identifier="sessionIdentifier2-id"/>
