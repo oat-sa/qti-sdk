@@ -2436,6 +2436,10 @@ class AssessmentTestSession extends State
         while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
             $route->next();
         }
+
+        if (!$route->valid()) {
+            $this->endTestSession();
+        }
     }
 
     /**

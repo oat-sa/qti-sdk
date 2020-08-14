@@ -227,13 +227,13 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionCode(XmlStorageException::READ);
 
-        // libxml library on jenkins produces another error message.
+        // libxml library on Travis produces another error message.
         // Don't know how to find the version though.
         $libMxl2_9_10_Message = 'Premature end of data in tag assessmentItem line 1';
-        $libMxl2_9_otherMessage = 'EndTag\: \\\'<\\/\\\' not found';
+        $libMxl2_9_other_Message = 'EndTag\: \\\'<\\/\\\' not found';
 
-        $expectedMsg = '/^An internal error occurred while parsing QTI-XML:' . "\n"
-            . 'Fatal Error: (' . $libMxl2_9_10_Message . '|' . $libMxl2_9_otherMessage . ') at 1\\:17\\.$/';
+        $expectedMsg = '/^An internal error occured while parsing QTI-XML:' . "\n"
+            . 'Fatal Error: (' . $libMxl2_9_10_Message . '|' . $libMxl2_9_other_Message . ') at 1\\:17\\.$/';
         $this->expectExceptionMessageRegExp($expectedMsg);
 
         $doc->loadFromString('<assessmentItem>');

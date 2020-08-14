@@ -28,6 +28,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should arrive at section 2.
         $testSession->moveNext();
         $this->assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertTrue($testSession->isRunning());
     }
 
     public function testExitSectionEndOfTest()
@@ -56,6 +57,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // For Q02, we should not get any result because we by-passed it with the branchRule.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
         $this->assertEquals(false, $itemSessions);
+        $this->assertFalse($testSession->isRunning());
     }
 
     public function testExitSectionFromEndOfSection()
@@ -76,6 +78,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->moveNext();
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this->assertFalse($testSession->isRunning());
     }
 
     public function testExitSectionPreconditionsEndOfTest()
@@ -108,6 +111,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         $itemSessions = $testSession->getAssessmentItemSessions('Q03');
         $this->assertEquals(false, $itemSessions);
+        $this->assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPart()
@@ -125,6 +129,9 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should arrive at testPart 2
         $testSession->moveNext();
         $this->assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
+        $this->assertTrue($testSession->isRunning());
+        $testSession->moveNext();
+        $this->assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPartEndOfTest()
@@ -153,6 +160,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // For Q02, we should not get any result because we by-passed it with the branchRule.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
         $this->assertEquals(false, $itemSessions);
+        $this->assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPartPreconditionsEndOfTest()
@@ -185,6 +193,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         $itemSessions = $testSession->getAssessmentItemSessions('Q03');
         $this->assertEquals(false, $itemSessions);
+        $this->assertFalse($testSession->isRunning());
     }
 
     public function testExitTest()
@@ -202,5 +211,6 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should arrive at section 2.
         $testSession->moveNext();
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this->assertFalse($testSession->isRunning());
     }
 }
