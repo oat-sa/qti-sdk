@@ -40,6 +40,11 @@ class CompactVersion extends QtiVersion
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
 
+    const INFERRED_VERSIONS = [
+        CompactVersion21::XMLNS => '2.1.0',
+        CompactVersion22::XMLNS => '2.2.0',
+    ];
+
     /**
      * Finds the version of the document given the namespace.
      *
@@ -49,14 +54,6 @@ class CompactVersion extends QtiVersion
      */
     public static function findVersionInDocument(string $rootNs, DOMDocument $document): string
     {
-        $version = '';
-
-        if ($rootNs === CompactVersion21::XMLNS) {
-            $version = '2.1.0';
-        } elseif ($rootNs === CompactVersion22::XMLNS) {
-            $version = '2.2.0';
-        }
-
-        return $version;
+        return self::INFERRED_VERSIONS[$rootNs] ?? '';
     }
 }
