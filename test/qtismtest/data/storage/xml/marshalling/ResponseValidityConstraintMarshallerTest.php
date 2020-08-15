@@ -131,7 +131,7 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
+            "An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
@@ -148,7 +148,7 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
+            "An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }

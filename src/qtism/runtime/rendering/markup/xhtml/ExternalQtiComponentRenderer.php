@@ -51,7 +51,7 @@ class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the '" . $component->getQtiClassName() . "' external component.";
+            $msg = "An error occurred while rendering the XML content of the '" . $component->getQtiClassName() . "' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

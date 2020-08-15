@@ -74,7 +74,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "An error occured while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
+            "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
@@ -88,7 +88,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "An error occured while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
+            "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }

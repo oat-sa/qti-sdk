@@ -87,7 +87,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
                         return $component;
                     } catch (InvalidArgumentException $e) {
                         throw new UnmarshallingException(
-                            "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.",
+                            "An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.",
                             $element,
                             $e
                         );

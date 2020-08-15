@@ -180,7 +180,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 }
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a Variable value.";
+            $msg = "An error occurred while reading a Variable value.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         } catch (InvalidArgumentException $e) {
             $msg = "Datatype mismatch for variable '" . $variable->getIdentifier() . "'.";
@@ -262,7 +262,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 }
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a Variable value.";
+            $msg = "An error occurred while writing a Variable value.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
     }
@@ -290,7 +290,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return [$key, $value];
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a Record Field.";
+            $msg = "An error occurred while reading a Record Field.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::RECORDFIELD, $e);
         }
     }
@@ -318,7 +318,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 call_user_func([$this, $toCall], ($value instanceof QtiScalar) ? $value->getValue() : $value);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a Record Field.";
+            $msg = "An error occurred while writing a Record Field.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::RECORDFIELD);
         }
     }
@@ -334,7 +334,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             return $this->readString();
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading an identifier.";
+            $msg = "An error occurred while reading an identifier.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::IDENTIFIER, $e);
         }
     }
@@ -350,7 +350,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $this->writeString($identifier);
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing an identifier.";
+            $msg = "An error occurred while writing an identifier.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::IDENTIFIER, $e);
         }
     }
@@ -366,7 +366,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             return new QtiPoint($this->readShort(), $this->readShort());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a point.";
+            $msg = "An error occurred while reading a point.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::POINT, $e);
         }
     }
@@ -383,7 +383,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeShort($point->getX());
             $this->writeShort($point->getY());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a point.";
+            $msg = "An error occurred while writing a point.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::POINT, $e);
         }
     }
@@ -399,7 +399,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             return new QtiPair($this->readString(), $this->readString());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a pair.";
+            $msg = "An error occurred while reading a pair.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PAIR, $e);
         }
     }
@@ -416,7 +416,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeString($pair->getFirst());
             $this->writeString($pair->getSecond());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a pair.";
+            $msg = "An error occurred while writing a pair.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PAIR, $e);
         }
     }
@@ -432,7 +432,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             return new QtiDirectedPair($this->readString(), $this->readString());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a directedPair.";
+            $msg = "An error occurred while reading a directedPair.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DIRECTEDPAIR, $e);
         }
     }
@@ -449,7 +449,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeString($directedPair->getFirst());
             $this->writeString($directedPair->getSecond());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a directedPair.";
+            $msg = "An error occurred while writing a directedPair.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DIRECTEDPAIR, $e);
         }
     }
@@ -483,7 +483,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return $shufflingGroup;
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a shufflingGroup.";
+            $msg = "An error occurred while reading a shufflingGroup.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_GROUP, $e);
         }
     }
@@ -509,7 +509,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeString($identifier);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a shufflingGroup.";
+            $msg = "An error occurred while writing a shufflingGroup.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_GROUP, $e);
         }
     }
@@ -534,7 +534,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return new Shuffling($responseIdentifier, $shufflingGroups);
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a shufflingState.";
+            $msg = "An error occurred while reading a shufflingState.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_STATE);
         }
     }
@@ -556,7 +556,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeShufflingGroup($shufflingGroup);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a shufflingState.";
+            $msg = "An error occurred while writing a shufflingState.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_STATE, $e);
         }
     }
@@ -572,7 +572,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             return new QtiDuration($this->readString());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a duration.";
+            $msg = "An error occurred while reading a duration.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DURATION, $e);
         }
     }
@@ -588,7 +588,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $this->writeString($duration->__toString());
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a duration.";
+            $msg = "An error occurred while writing a duration.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DURATION, $e);
         }
     }
@@ -604,7 +604,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             return $this->readString();
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a URI.";
+            $msg = "An error occurred while reading a URI.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::URI, $e);
         }
     }
@@ -620,7 +620,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $this->writeString($uri);
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a URI.";
+            $msg = "An error occurred while writing a URI.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::URI, $e);
         }
     }
@@ -638,7 +638,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return ($isInt === true) ? $this->readInteger() : $this->readIdentifier();
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading an intOrIdentifier.";
+            $msg = "An error occurred while reading an intOrIdentifier.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER, $e);
         }
     }
@@ -663,7 +663,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing an intOrIdentifier.";
+            $msg = "An error occurred while writing an intOrIdentifier.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER, $e);
         }
     }
@@ -768,7 +768,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return $session;
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading an assessment item session.";
+            $msg = "An error occurred while reading an assessment item session.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "No assessmentItemRef found at position ${itemRefPosition} in the assessmentTest tree structure.";
@@ -876,7 +876,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeShufflingState($shufflingState);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing an assessment item session.";
+            $msg = "An error occurred while writing an assessment item session.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "No assessmentItemRef found in the assessmentTest tree structure.";
@@ -926,7 +926,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return $routeItem;
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a route item.";
+            $msg = "An error occurred while reading a route item.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "A QTI Component was not found in the assessmentTest tree structure.";
@@ -969,7 +969,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeShort($seeker->seekPosition($preCondition));
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a route item.";
+            $msg = "An error occurred while writing a route item.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "A QTI Component position was not found in the assessmentTest tree structure.";
@@ -1006,7 +1006,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return new PendingResponses($state, $itemRef, $occurence);
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading some pending responses.";
+            $msg = "An error occurred while reading some pending responses.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "A QTI component was not found in the assessmentTest tree structure.";
@@ -1050,7 +1050,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             // Write the occurence number.
             $this->writeTinyInt($occurence);
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading some pending responses.";
+            $msg = "An error occurred while reading some pending responses.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
         } catch (OutOfBoundsException $e) {
             $msg = "A QTI component position could not be found in the assessmentTest tree structure.";
@@ -1068,7 +1068,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $this->writeString($file->getIdentifier());
         } catch (QtiBinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a QTI File.";
+            $msg = "An error occurred while reading a QTI File.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
@@ -1085,7 +1085,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $id = $this->readString();
             return $this->getFileManager()->retrieve($id);
         } catch (Exception $e) {
-            $msg = "An error occured while writing a QTI File.";
+            $msg = "An error occurred while writing a QTI File.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
@@ -1108,7 +1108,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             return $path;
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading the path.";
+            $msg = "An error occurred while reading the path.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
         }
     }
@@ -1127,7 +1127,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeShort($p);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing the path.";
+            $msg = "An error occurred while writing the path.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
         }
     }

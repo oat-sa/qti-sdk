@@ -281,7 +281,7 @@ class Utils
     }
 
     /**
-     * Get a meaningful message for the last PREG error that occured.
+     * Get a meaningful message for the last PREG error that occurred.
      *
      * The following PREG error codes are considered by this method:
      *

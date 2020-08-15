@@ -65,7 +65,7 @@ class AssociationValidityConstraintMarshaller extends Marshaller
                         return new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);
                     } catch (InvalidArgumentException $e) {
                         throw new UnmarshallingException(
-                            "An error occured while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information.",
+                            "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information.",
                             $element,
                             $e
                         );

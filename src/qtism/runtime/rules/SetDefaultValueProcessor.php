@@ -78,7 +78,7 @@ class SetDefaultValueProcessor extends RuleProcessor
             $msg = "Unable to set value ${val} to variable '${variableIdentifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound with the 'SetCorrectResponse' rule.";
+            $msg = "An error occurred while processing the expression bound with the 'SetCorrectResponse' rule.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
     }

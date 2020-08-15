@@ -202,7 +202,7 @@ class Render extends Cli
         } catch (XmlStorageException $e) {
             switch ($e->getCode()) {
                 case XmlStorageException::READ:
-                    $msg = "An error occured while reading QTI file '${source}'.\nThe system returned the following error:\n";
+                    $msg = "An error occurred while reading QTI file '${source}'.\nThe system returned the following error:\n";
                     $msg .= ExceptionUtils::formatMessage($e);
                     $this->fail($msg);
                     break;
@@ -219,7 +219,7 @@ class Render extends Cli
                     break;
 
                 default:
-                    $msg = "An fatal error occured while reading QTI file '${source}'.";
+                    $msg = "An fatal error occurred while reading QTI file '${source}'.";
                     $this->fail($msg);
                     break;
             }

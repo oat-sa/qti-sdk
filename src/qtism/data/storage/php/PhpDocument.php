@@ -170,7 +170,7 @@ class PhpDocument extends QtiDocument
             $this->setDocumentComponent($rootcomponent);
             $this->setUrl($url);
         } catch (Exception $e) {
-            $msg = "A PHP Runtime Error occured while executing the PHP source code representing the document to be loaded at '${url}'.";
+            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg, PhpStorageException::UNKNOWN, $e);
         }
     }

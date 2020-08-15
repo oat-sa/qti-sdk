@@ -69,7 +69,7 @@ abstract class SetValueProcessor extends RuleProcessor
             $expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
             $val = $expressionEngine->process();
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound with the '" . Reflection::shortClassName($rule) . "' rule.";
+            $msg = "An error occurred while processing the expression bound with the '" . Reflection::shortClassName($rule) . "' rule.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
 

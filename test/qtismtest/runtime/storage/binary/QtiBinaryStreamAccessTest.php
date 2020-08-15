@@ -458,7 +458,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a Variable value.',
+            'An error occurred while reading a Variable value.',
             QtiBinaryStreamAccessException::VARIABLE
         );
 
@@ -867,7 +867,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a Variable value.',
+            'An error occurred while writing a Variable value.',
             QtiBinaryStreamAccessException::VARIABLE
         );
         $stream->close();
@@ -1228,7 +1228,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            "An error occured while writing an assessment item session.",
+            "An error occurred while writing an assessment item session.",
             QtiBinaryStreamAccessException::ITEM_SESSION
         );
 
@@ -1381,7 +1381,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a shufflingGroup.',
+            'An error occurred while reading a shufflingGroup.',
             QtiBinaryStreamAccessException::SHUFFLING_GROUP
         );
 
@@ -1416,7 +1416,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a shufflingGroup.',
+            'An error occurred while writing a shufflingGroup.',
             QtiBinaryStreamAccessException::SHUFFLING_GROUP
         );
 
@@ -1460,7 +1460,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a shufflingState.',
+            'An error occurred while reading a shufflingState.',
             QtiBinaryStreamAccessException::SHUFFLING_STATE
         );
 
@@ -1503,7 +1503,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a shufflingState.',
+            'An error occurred while writing a shufflingState.',
             QtiBinaryStreamAccessException::SHUFFLING_STATE
         );
 
@@ -1519,7 +1519,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a Record Field.',
+            'An error occurred while reading a Record Field.',
             QtiBinaryStreamAccessException::RECORDFIELD
         );
 
@@ -1534,7 +1534,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a Record Field.',
+            'An error occurred while writing a Record Field.',
             QtiBinaryStreamAccessException::RECORDFIELD
         );
 
@@ -1550,7 +1550,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading an identifier.',
+            'An error occurred while reading an identifier.',
             QtiBinaryStreamAccessException::IDENTIFIER
         );
 
@@ -1565,7 +1565,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing an identifier.',
+            'An error occurred while writing an identifier.',
             QtiBinaryStreamAccessException::IDENTIFIER
         );
 
@@ -1581,7 +1581,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a point.',
+            'An error occurred while reading a point.',
             QtiBinaryStreamAccessException::POINT
         );
 
@@ -1596,7 +1596,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a point.',
+            'An error occurred while writing a point.',
             QtiBinaryStreamAccessException::POINT
         );
 
@@ -1612,7 +1612,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a pair.',
+            'An error occurred while reading a pair.',
             QtiBinaryStreamAccessException::PAIR
         );
 
@@ -1627,7 +1627,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a pair.',
+            'An error occurred while writing a pair.',
             QtiBinaryStreamAccessException::PAIR
         );
 
@@ -1643,7 +1643,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a directedPair.',
+            'An error occurred while reading a directedPair.',
             QtiBinaryStreamAccessException::DIRECTEDPAIR
         );
 
@@ -1658,7 +1658,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a directedPair.',
+            'An error occurred while writing a directedPair.',
             QtiBinaryStreamAccessException::DIRECTEDPAIR
         );
 
@@ -1674,7 +1674,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a duration.',
+            'An error occurred while reading a duration.',
             QtiBinaryStreamAccessException::DURATION
         );
 
@@ -1689,7 +1689,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a duration.',
+            'An error occurred while writing a duration.',
             QtiBinaryStreamAccessException::DURATION
         );
 
@@ -1705,7 +1705,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading a URI.',
+            'An error occurred while reading a URI.',
             QtiBinaryStreamAccessException::URI
         );
 
@@ -1720,7 +1720,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing a URI.',
+            'An error occurred while writing a URI.',
             QtiBinaryStreamAccessException::URI
         );
 
@@ -1736,7 +1736,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while reading an intOrIdentifier.',
+            'An error occurred while reading an intOrIdentifier.',
             QtiBinaryStreamAccessException::INTORIDENTIFIER
         );
 
@@ -1751,7 +1751,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
-            'An error occured while writing an intOrIdentifier.',
+            'An error occurred while writing an intOrIdentifier.',
             QtiBinaryStreamAccessException::INTORIDENTIFIER
         );
 

@@ -89,7 +89,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
 
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the 'MathML' external component.";
+            $msg = "An error occurred while rendering the XML content of the 'MathML' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

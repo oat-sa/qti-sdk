@@ -113,7 +113,7 @@ class EqualRoundedProcessor extends OperatorProcessor
             try {
                 $rounded[] = $roundToProcessor->process();
             } catch (OperatorProcessingException $e) {
-                $msg = "An error occured while rounding '${operand}'.";
+                $msg = "An error occurred while rounding '${operand}'.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR, $e);
             }
         }

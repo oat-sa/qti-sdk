@@ -39,14 +39,14 @@ class StorageException extends Exception
     const UNKNOWN = 0;
 
     /**
-     * The error occured while reading.
+     * The error occurred while reading.
      *
      * @var integer
      */
     const READ = 1;
 
     /**
-     * The error occured while writing.
+     * The error occurred while writing.
      *
      * @var integer
      */

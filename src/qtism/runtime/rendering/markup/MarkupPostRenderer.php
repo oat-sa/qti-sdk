@@ -205,7 +205,7 @@ class MarkupPostRenderer implements Renderable
 
         if ($output === false) {
             $document->formatOutput = $oldFormatOutput;
-            $msg = "A PHP internal error occured while rendering the XML Document.";
+            $msg = "A PHP internal error occurred while rendering the XML Document.";
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 

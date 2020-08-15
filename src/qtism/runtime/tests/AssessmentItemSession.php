@@ -1313,7 +1313,7 @@ class AssessmentItemSession extends State
     /**
      * Apply templateProcessing on the session if a templateProcessing is described.
      *
-     * @return boolean Whether or not the template processing occured.
+     * @return boolean Whether or not the template processing occurred.
      * @throws RuleProcessingException
      */
     public function templateProcessing()

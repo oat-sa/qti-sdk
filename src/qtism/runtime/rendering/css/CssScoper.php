@@ -459,7 +459,7 @@ class CssScoper implements Renderable
                 $this->afterCharReading($char);
             } catch (MemoryStreamException $e) {
                 $stream->close();
-                $msg = "An unexpected error occured while reading the CSS file '${file}'.";
+                $msg = "An unexpected error occurred while reading the CSS file '${file}'.";
                 throw new RenderingException($msg, RenderingException::RUNTIME, $e);
             }
         }

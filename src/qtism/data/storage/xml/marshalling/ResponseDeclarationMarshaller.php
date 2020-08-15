@@ -101,7 +101,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the responseDeclaration.";
+            $msg = "An unexpected error occurred while unmarshalling the responseDeclaration.";
             throw new UnmarshallingException($msg, $element, $e);
         }
     }

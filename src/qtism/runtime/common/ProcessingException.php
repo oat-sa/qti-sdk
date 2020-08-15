@@ -107,7 +107,7 @@ class ProcessingException extends RuntimeException
      * Create a new ProcessingException.
      *
      * @param string $msg A human-readable message describing the error.
-     * @param Processable $source A Processable object where the error occured.
+     * @param Processable $source A Processable object where the error occurred.
      * @param integer A code to characterize the error.
      * @param Exception $previous An optional Exception object that caused the error.
      */
@@ -120,7 +120,7 @@ class ProcessingException extends RuntimeException
     /**
      * Set the source of the exception.
      *
-     * @param Processable $source The Processable object whithin the error occured.
+     * @param Processable $source The Processable object whithin the error occurred.
      */
     protected function setSource(Processable $source)
     {
@@ -130,7 +130,7 @@ class ProcessingException extends RuntimeException
     /**
      * Get the source of the exception.
      *
-     * @return Processable The Processable object within the error occured.
+     * @return Processable The Processable object within the error occurred.
      */
     public function getSource()
     {

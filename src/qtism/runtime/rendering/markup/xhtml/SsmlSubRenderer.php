@@ -59,7 +59,7 @@ class SsmlSubRenderer extends ExternalQtiComponentRenderer
                 $fragment->appendChild($childNode);
             }
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the 'SSML Sub' external component.";
+            $msg = "An error occurred while rendering the XML content of the 'SSML Sub' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

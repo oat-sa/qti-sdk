@@ -32,7 +32,7 @@ use qtism\data\storage\StorageException;
 class XmlStorageException extends StorageException
 {
     /**
-     * An error occured while resolving an external resource.
+     * An error occurred while resolving an external resource.
      *
      * @var integer
      */
