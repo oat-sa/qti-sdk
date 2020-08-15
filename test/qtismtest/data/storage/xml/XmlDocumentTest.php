@@ -232,7 +232,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $libMxl2_9_10_Message = 'Premature end of data in tag assessmentItem line 1';
         $libMxl2_9_other_Message = 'EndTag\: \\\'<\\/\\\' not found';
 
-        $expectedMsg = '/^An internal error occured while parsing QTI-XML:' . "\n"
+        $expectedMsg = '/^An internal error occurred while parsing QTI-XML:' . "\n"
             . 'Fatal Error: (' . $libMxl2_9_10_Message . '|' . $libMxl2_9_other_Message . ') at 1\\:17\\.$/';
         $this->expectExceptionMessageRegExp($expectedMsg);
 
