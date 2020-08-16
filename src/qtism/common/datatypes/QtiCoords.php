@@ -196,7 +196,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      */
     public function equals($obj)
     {
-        return $obj instanceof QtiCoords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+        return $obj instanceof self && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
     }
 
     /**

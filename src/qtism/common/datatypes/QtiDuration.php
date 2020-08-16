@@ -305,7 +305,7 @@ class QtiDuration implements QtiDatatype
         $d1 = $this->refDate;
         $d2 = clone $d1;
 
-        if ($duration instanceof QtiDuration) {
+        if ($duration instanceof self) {
             $toAdd = $duration;
         } elseif ($duration instanceof DateInterval) {
             $toAdd = self::createFromDateInterval($duration);

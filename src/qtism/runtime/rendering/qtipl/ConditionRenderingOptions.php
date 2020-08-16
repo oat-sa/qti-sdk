@@ -46,7 +46,7 @@ class ConditionRenderingOptions
      */
     public static function getDefault()
     {
-        return new ConditionRenderingOptions(ConditionRenderingOptions::$defaultIdentation);
+        return new ConditionRenderingOptions(self::$defaultIdentation);
     }
 
     /**

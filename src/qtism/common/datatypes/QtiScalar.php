@@ -88,7 +88,7 @@ abstract class QtiScalar implements QtiDatatype
      */
     public function equals($obj)
     {
-        if ($obj instanceof QtiScalar) {
+        if ($obj instanceof self) {
             return $obj->getValue() === $this->getValue();
         } else {
             return $this->getValue() === $obj;

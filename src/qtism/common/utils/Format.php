@@ -99,7 +99,7 @@ class Format
     public static function sanitizeIdentifier($dirtyIdentifier)
     {
         if (is_array($dirtyIdentifier) || is_object($dirtyIdentifier)) {
-            return Format::generateIdentifier();
+            return self::generateIdentifier();
         }
 
         if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
@@ -112,7 +112,7 @@ class Format
         if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $cleanIdentifier)) {
             return $cleanIdentifier;
         } else {
-            return Format::generateIdentifier();
+            return self::generateIdentifier();
         }
     }
 
@@ -260,7 +260,7 @@ class Format
      */
     public static function isFloat($string)
     {
-        return (preg_match('/^(?:(?:\\-|\\+){0,1}[0-9]+)$|^(?:(?:\\-|\\+){0,1}[0-9]+\\.[0-9]+)+/', Format::toLowerTrim($string)) === 1);
+        return (preg_match('/^(?:(?:\\-|\\+){0,1}[0-9]+)$|^(?:(?:\\-|\\+){0,1}[0-9]+\\.[0-9]+)+/', self::toLowerTrim($string)) === 1);
     }
 
     /**
@@ -654,7 +654,7 @@ class Format
 
         $ariaValues = explode("\x20", $ariaIdRefs);
         foreach ($ariaValues as $ariaValue) {
-            if (!Format::isIdentifier($ariaValue, false)) {
+            if (!self::isIdentifier($ariaValue, false)) {
                 return false;
             }
         }

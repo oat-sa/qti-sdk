@@ -442,7 +442,7 @@ class XmlDocument extends QtiDocument
                     if (Url::isRelative($href) === true) {
                         $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
 
-                        $doc = new XmlDocument();
+                        $doc = new self();
 
                         if (($filesystem = $this->getFilesystem()) !== null) {
                             $doc->setFilesystem($filesystem);
@@ -492,7 +492,7 @@ class XmlDocument extends QtiDocument
                     $basePath = $pathinfo['dirname'];
                     $templateLocation = Url::rtrim($basePath) . '/' . Url::ltrim($templateLocation);
 
-                    $doc = new XmlDocument();
+                    $doc = new self();
                     $doc->setFilesystem($this->getFilesystem());
                     $doc->load($templateLocation, $validate);
 
@@ -540,7 +540,7 @@ class XmlDocument extends QtiDocument
                     if (Url::isRelative($href) === true) {
                         $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
 
-                        $doc = new XmlDocument();
+                        $doc = new self();
                         $doc->setFilesystem($this->getFilesystem());
                         $doc->load($href, $validate);
 

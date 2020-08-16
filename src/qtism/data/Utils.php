@@ -87,7 +87,7 @@ class Utils
                     if (count($items) == 0) {
                         // Check for recursion
 
-                        $sectparent = Utils::checkRecursion($currentCmp, $sections);
+                        $sectparent = self::checkRecursion($currentCmp, $sections);
 
                         if ($sectparent != null) {
                             $nextSectpart = null;
@@ -203,7 +203,7 @@ class Utils
                     if (count($items) == 0) {
                         // Check for recursion
 
-                        $sectparent = Utils::checkRecursion($currentCmp, $sections);
+                        $sectparent = self::checkRecursion($currentCmp, $sections);
 
                         if ($sectparent != null) {
                             $prevSectPart = null;
