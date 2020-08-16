@@ -96,7 +96,7 @@ class VersionTest extends QtiSmTestCase
     {
         $versionNumber = 'whatever';
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Provided version number '".$versionNumber."' is not compliant to semantic versioning.");
+        $this->expectExceptionMessage("Provided version number '" . $versionNumber . "' is not compliant to semantic versioning.");
         Version::appendPatchVersion($versionNumber);
     }
 }

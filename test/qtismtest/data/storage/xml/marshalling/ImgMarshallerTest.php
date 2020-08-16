@@ -136,6 +136,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         // For img components, we prefer aria-flowsto.
         $this->assertEquals('IDREF2', $img->getAriaFlowTo());
     }
+
     public function testUnmarshall22FallbackFlowTo()
     {
         $element = $this->createDOMElement('
@@ -151,7 +152,6 @@ class ImgMarshallerTest extends QtiSmTestCase
         // to aria-flowto in cas it exists.
         $this->assertEquals('IDREF3', $img->getAriaFlowTo());
     }
-
 
     /**
      * @depends testUnmarshall21

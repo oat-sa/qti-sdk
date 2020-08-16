@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryVersion;
@@ -50,7 +51,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
     /**
      * @dataProvider legacyFeaturesToTest
      * @param int $versionNumber
-     * @throws \qtism\common\storage\BinaryStreamAccessException
+     * @throws BinaryStreamAccessException
      */
     public function testLegacyFeatures(int $versionNumber, array $expectedFeatures)
     {

@@ -452,7 +452,7 @@ class FormatTest extends QtiSmTestCase
             ['-20.4532', false],
             ['abc', false],
             [null, false],
-            [new \stdClass(), false],
+            [new stdClass(), false],
             [-1, false],
             [0, false],
             [-20.5432, false],

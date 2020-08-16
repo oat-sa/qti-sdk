@@ -54,7 +54,7 @@ class AriaOrientation implements Enumeration
     {
         return [
             'HORIZONTAL' => self::HORIZONTAL,
-            'VERTICAL' => self::VERTICAL
+            'VERTICAL' => self::VERTICAL,
         ];
     }
 

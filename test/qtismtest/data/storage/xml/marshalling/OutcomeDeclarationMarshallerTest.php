@@ -83,17 +83,17 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     public function qtiVersionsToTestForExternalScored()
     {
         return [
-            ['2.0', ExternalScored::HUMAN,  ''],
-            ['2.0', ExternalScored::EXTERNAL_MACHINE,  ''],
-            ['2.1.0', ExternalScored::HUMAN,  ''],
+            ['2.0', ExternalScored::HUMAN, ''],
+            ['2.0', ExternalScored::EXTERNAL_MACHINE, ''],
+            ['2.1.0', ExternalScored::HUMAN, ''],
             ['2.1.0', ExternalScored::EXTERNAL_MACHINE, ''],
-            ['2.2.0', ExternalScored::HUMAN,  'human'],
-            ['2.2.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
-            ['3.0.0', ExternalScored::HUMAN,  'human'],
-            ['3.0.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
+            ['2.2.0', ExternalScored::HUMAN, 'human'],
+            ['2.2.0', ExternalScored::EXTERNAL_MACHINE, 'externalMachine'],
+            ['3.0.0', ExternalScored::HUMAN, 'human'],
+            ['3.0.0', ExternalScored::EXTERNAL_MACHINE, 'externalMachine'],
         ];
     }
-	
+
     /**
      * @depends testMarshall21
      */

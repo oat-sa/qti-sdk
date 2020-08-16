@@ -37,7 +37,7 @@ class AriaOrientationTest extends QtiSmEnumTestCase
     {
         return [
             'horizontal',
-            'vertical'
+            'vertical',
         ];
     }
 
@@ -45,7 +45,7 @@ class AriaOrientationTest extends QtiSmEnumTestCase
     {
         return [
             'HORIZONTAL',
-            'VERTICAL'
+            'VERTICAL',
         ];
     }
 
@@ -53,7 +53,7 @@ class AriaOrientationTest extends QtiSmEnumTestCase
     {
         return [
             AriaOrientation::HORIZONTAL,
-            AriaOrientation::VERTICAL
+            AriaOrientation::VERTICAL,
         ];
     }
 }

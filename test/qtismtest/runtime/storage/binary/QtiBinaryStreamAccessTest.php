@@ -655,7 +655,16 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $data[] = [new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('identifier')]))];
         $data[] = [new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, [new QtiIdentifier('identifier')]))];
         $data[] = [
-            new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('identifier1'), new QtiIdentifier('identifier2'), new QtiIdentifier('identifier3'), new QtiIdentifier('identifier4'), new QtiIdentifier('identifier5')])),
+            new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER,
+                new MultipleContainer(BaseType::IDENTIFIER, [
+                        new QtiIdentifier('identifier1'),
+                        new QtiIdentifier('identifier2'),
+                        new QtiIdentifier('identifier3'),
+                        new QtiIdentifier('identifier4'),
+                        new QtiIdentifier('identifier5'),
+                    ]
+                )
+            ),
         ];
         $data[] = [
             new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, [new QtiIdentifier('identifier1'), new QtiIdentifier('identifier2'), new QtiIdentifier('identifier3'), new QtiIdentifier('X-Y-Z'), new QtiIdentifier('identifier4')])),

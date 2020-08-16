@@ -108,7 +108,7 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -129,7 +129,7 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -150,7 +150,7 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -171,7 +171,7 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -192,7 +192,7 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -215,7 +215,7 @@ class BodyElementTest extends QtiSmTestCase
             ['1'],
             [1],
             ['20'],
-            [20]
+            [20],
         ];
     }
 
@@ -236,7 +236,7 @@ class BodyElementTest extends QtiSmTestCase
         return [
             [AriaLive::OFF],
             [AriaLive::POLITE],
-            [AriaLive::ASSERTIVE]
+            [AriaLive::ASSERTIVE],
         ];
     }
 
@@ -256,7 +256,7 @@ class BodyElementTest extends QtiSmTestCase
     {
         return [
             [AriaOrientation::HORIZONTAL],
-            [AriaOrientation::VERTICAL]
+            [AriaOrientation::VERTICAL],
         ];
     }
 
@@ -276,7 +276,7 @@ class BodyElementTest extends QtiSmTestCase
     {
         return [
             [''],
-            ['A normalized string!']
+            ['A normalized string!'],
         ];
     }
 
@@ -296,7 +296,7 @@ class BodyElementTest extends QtiSmTestCase
     {
         return [
             [false],
-            [true]
+            [true],
         ];
     }
 
@@ -327,7 +327,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-controls'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-controls'."],
         ];
     }
 
@@ -358,7 +358,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-describedby'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-describedby'."],
         ];
     }
 
@@ -389,7 +389,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-flowto'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-flowto'."],
         ];
     }
 
@@ -420,7 +420,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-labelledby'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-labelledby'."],
         ];
     }
 
@@ -451,7 +451,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-owns'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-owns'."],
         ];
     }
 
@@ -479,7 +479,7 @@ class BodyElementTest extends QtiSmTestCase
             ['ABCD 999999'],
             [false],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-level'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-level'."],
         ];
     }
 
@@ -507,7 +507,7 @@ class BodyElementTest extends QtiSmTestCase
             ['ABCD 999999'],
             [''],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-live'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-live'."],
         ];
     }
 
@@ -535,7 +535,7 @@ class BodyElementTest extends QtiSmTestCase
             ['ABCD 999999'],
             [''],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-orientation'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-orientation'."],
         ];
     }
 
@@ -565,7 +565,7 @@ class BodyElementTest extends QtiSmTestCase
             [-5],
             [55.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-label'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-label'."],
         ];
     }
 
@@ -595,7 +595,7 @@ class BodyElementTest extends QtiSmTestCase
             [-5],
             [55.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-hidden'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-hidden'."],
         ];
     }
 }

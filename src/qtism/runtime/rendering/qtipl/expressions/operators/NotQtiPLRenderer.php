@@ -47,9 +47,9 @@ class NotQtiPLRenderer extends AbstractQtiPLRenderer
         $renderer = new QtiPLRenderer($this->getCRO());
         $orenderer = new OperatorQtiPLRenderer($this->getCRO());
         $needsparenthesis0 = array_key_exists(
-            $something->getExpressions()[0]->getQtiClassName(),
-            $orenderer->getSignAsOperatorMap()
-        )
+                $something->getExpressions()[0]->getQtiClassName(),
+                $orenderer->getSignAsOperatorMap()
+            )
             && $something->getExpressions()[0]->getExpressions()->count() == 2;
 
         if ($needsparenthesis0) {

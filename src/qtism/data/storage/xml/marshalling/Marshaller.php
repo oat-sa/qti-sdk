@@ -230,7 +230,7 @@ abstract class Marshaller
         'hotspotChoice',
         'hr',
         'img',
-        'textEntryInteraction'
+        'textEntryInteraction',
     ];
 
     /**

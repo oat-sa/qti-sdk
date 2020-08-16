@@ -42,18 +42,10 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
-use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
 use ReflectionClass;
-use RuntimeException;
 
 /**
  * This class represents a QTI-XML Document.

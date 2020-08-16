@@ -25,7 +25,6 @@
 namespace qtism\runtime\storage\binary;
 
 use Exception;
-use InvalidArgumentException;
 use OutOfBoundsException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;

@@ -24,8 +24,8 @@
 namespace qtism\data;
 
 use InvalidArgumentException;
-use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\storage\StorageException;
+use qtism\data\storage\xml\versions\QtiVersion;
 
 abstract class QtiDocument
 {

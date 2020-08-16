@@ -3,7 +3,6 @@
 namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
-use InvalidArgumentException;
 use qtism\data\NavigationMode;
 use qtism\data\ShowHide;
 use qtism\data\storage\LocalFileResolver;
