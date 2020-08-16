@@ -312,7 +312,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      *
      * @param StreamException $e The StreamException object to deal with.
      * @param integer $typeError The BinaryStreamAccess exception code to be thrown in case of error.
-     * @param boolean $read Wheter or not the error occured in a reading/writing context.
+     * @param boolean $read Wheter or not the error occurred in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
     protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true)
@@ -363,12 +363,12 @@ class BinaryStreamAccess extends AbstractStreamAccess
                 break;
 
             case StreamException::READ:
-                $msg = "An error occured while ${strAction} a ${strType}.";
+                $msg = "An error occurred while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
                 break;
 
             default:
-                $msg = "An unknown error occured while ${strAction} a ${strType}.";
+                $msg = "An unknown error occurred while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
         }

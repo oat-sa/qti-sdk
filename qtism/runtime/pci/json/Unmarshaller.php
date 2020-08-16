@@ -108,8 +108,8 @@ class Unmarshaller
         if (is_string($json) === true) {
             $tmpJson = @json_decode($json, true);
             if ($tmpJson === null) {
-                // An error occured while decoding.
-                $msg = "An error occured while decoding the following JSON data '" . mb_substr($json, 0, 30, 'UTF-8') . "...'.";
+                // An error occurred while decoding.
+                $msg = "An error occurred while decoding the following JSON data '" . mb_substr($json, 0, 30, 'UTF-8') . "...'.";
                 $code = UnmarshallingException::JSON_DECODE;
                 throw new UnmarshallingException($msg, $code);
             }

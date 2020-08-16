@@ -166,7 +166,7 @@ class XmlDocument extends QtiDocument
                     $this->setDocumentComponent($marshaller->unmarshall($element));
                 } catch (UnmarshallingException $e) {
                     $line = $e->getDOMElement()->getLineNo();
-                    $msg = "An error occured while processing QTI-XML at line ${line}.";
+                    $msg = "An error occurred while processing QTI-XML at line ${line}.";
                     throw new XmlStorageException($msg, $e);
                 } catch (RuntimeException $e) {
                     $msg = "Unmarshallable element '" . $element->localName . "' in QTI-XML.";
@@ -179,12 +179,12 @@ class XmlDocument extends QtiDocument
                 libxml_clear_errors();
                 libxml_use_internal_errors($oldErrorConfig);
 
-                $msg = "An internal error occured while parsing QTI-XML:\n${formattedErrors}";
+                $msg = "An internal error occurred while parsing QTI-XML:\n${formattedErrors}";
                 throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } catch (DOMException $e) {
             $line = $e->getLine();
-            $msg = "An error occured while parsing QTI-XML at line ${line}.";
+            $msg = "An error occurred while parsing QTI-XML at line ${line}.";
             throw new XmlStorageException($msg, $e);
         }
     }
@@ -267,8 +267,8 @@ class XmlDocument extends QtiDocument
 
                 if (empty($uri) === false) {
                     if ($this->getDomDocument()->save($uri) === false) {
-                        // An error occured while saving.
-                        $msg = "An internal error occured while saving QTI-XML file at '${uri}'.";
+                        // An error occurred while saving.
+                        $msg = "An internal error occurred while saving QTI-XML file at '${uri}'.";
                         throw new XmlStorageException($msg);
 
                         $this->setUrl($uri);
@@ -277,16 +277,16 @@ class XmlDocument extends QtiDocument
                     if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
                         return $strXml;
                     } else {
-                        // An error occured while saving.
-                        $msg = "An internal error occured while exporting QTI-XML as string.";
+                        // An error occurred while saving.
+                        $msg = "An internal error occurred while exporting QTI-XML as string.";
                         throw new XmlStorageException($msg);
                     }
                 }
             } catch (DOMException $e) {
-                $msg = "An internal error occured while saving QTI-XML data.";
+                $msg = "An internal error occurred while saving QTI-XML data.";
                 throw new XmlStorageException($msg, $e);
             } catch (XmlStorageException $e) {
-                $msg = "An error occured before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
+                $msg = "An error occurred before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
                 throw new XmlStorageException($msg, $e);
             }
         } else {
@@ -337,7 +337,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate Whether or not validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function xInclude($validate = false)
     {
@@ -392,7 +392,7 @@ class XmlDocument extends QtiDocument
      *
      * @param boolean $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
-     * @throws XmlStorageException If an error occured while parsing or validating files to be included.
+     * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
     public function includeAssessmentSectionRefs($validate = false)
     {

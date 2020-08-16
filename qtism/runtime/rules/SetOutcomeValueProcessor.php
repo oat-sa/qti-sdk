@@ -99,7 +99,7 @@ class SetOutcomeValueProcessor extends RuleProcessor
             $expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
             $val = $expressionEngine->process();
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound with the setOutcomeValue rule.";
+            $msg = "An error occurred while processing the expression bound with the setOutcomeValue rule.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
 

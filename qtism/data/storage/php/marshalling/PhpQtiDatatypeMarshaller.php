@@ -66,7 +66,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
                 return;
             }
         } catch (PhpMarshallingException $e) {
-            $msg = "An error occured while marshalling a QtiDatatype object.";
+            $msg = "An error occurred while marshalling a QtiDatatype object.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::RUNTIME, $e);
         }
 
@@ -126,7 +126,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while marshalling a Coords object into the PHP source code stream.";
+            $msg = "An error occurred while marshalling a Coords object into the PHP source code stream.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }
@@ -152,7 +152,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while marshalling a Pair/DirectedPair object into the PHP source code stream.";
+            $msg = "An error occurred while marshalling a Pair/DirectedPair object into the PHP source code stream.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }
@@ -178,7 +178,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while marshalling a Duration object into the PHP source code stream.";
+            $msg = "An error occurred while marshalling a Duration object into the PHP source code stream.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }
@@ -204,7 +204,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while marshalling a Point object into the PHP source code stream.";
+            $msg = "An error occurred while marshalling a Point object into the PHP source code stream.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }

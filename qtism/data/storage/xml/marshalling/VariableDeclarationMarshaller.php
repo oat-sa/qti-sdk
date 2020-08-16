@@ -103,7 +103,7 @@ class VariableDeclarationMarshaller extends Marshaller
                 throw new UnmarshallingException($msg, $element);
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the variableDeclaration.";
+            $msg = "An unexpected error occurred while unmarshalling the variableDeclaration.";
             throw new UnmarshallingException($msg, $element, $e);
         }
     }

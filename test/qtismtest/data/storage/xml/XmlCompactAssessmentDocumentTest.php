@@ -242,7 +242,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\qtism\\data\\storage\\xml\\XmlStorageException',
-            "An error occured while unreferencing item reference with identifier 'Q01'."
+            "An error occurred while unreferencing item reference with identifier 'Q01'."
         );
 
         $doc = new XmlDocument('2.1');

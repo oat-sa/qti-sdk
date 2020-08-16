@@ -125,7 +125,7 @@ class PatternMatchProcessor extends OperatorProcessor
                     break;
             }
 
-            $msg = "An internal error occured while processing the regular expression '${rawPattern}': ${errorType}.";
+            $msg = "An internal error occurred while processing the regular expression '${rawPattern}': ${errorType}.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
     }

@@ -77,7 +77,7 @@ class FileSystemFileManager implements FileManager
         try {
             return FileSystemFile::createFromExistingFile($path, $destination, $mimeType, $filename);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while creating a QTI FileSystemFile object.";
+            $msg = "An error occurred while creating a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }
@@ -98,7 +98,7 @@ class FileSystemFileManager implements FileManager
         try {
             return FileSystemFile::createFromData($data, $destination, $mimeType, $filename);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while creating a QTI FileSystemFile object.";
+            $msg = "An error occurred while creating a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }
@@ -115,7 +115,7 @@ class FileSystemFileManager implements FileManager
         try {
             return FileSystemFile::retrieveFile($identifier);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while retrieving a QTI FileSystemFile object.";
+            $msg = "An error occurred while retrieving a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }

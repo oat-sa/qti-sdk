@@ -275,7 +275,7 @@ class XmlCompactDocument extends XmlDocument
             $compactAssessmentItemRef->setAdaptive($doc->getDocumentComponent()->isAdaptive());
             $compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
         } catch (Exception $e) {
-            $msg = "An error occured while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
+            $msg = "An error occurred while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, $e);
         }
     }
@@ -297,7 +297,7 @@ class XmlCompactDocument extends XmlDocument
             $doc->load($href);
             return $doc->getDocumentComponent();
         } catch (XmlStorageException $e) {
-            $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
+            $msg = "An error occurred while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, $e);
         }
     }
@@ -351,7 +351,7 @@ class XmlCompactDocument extends XmlDocument
                     $pathinfo = pathinfo($uri);
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occured while creating external rubrickBlock definition(s).";
+                    $msg = "An error occurred while creating external rubrickBlock definition(s).";
                     throw new XmlStorageException($msg, $e);
                 }
             }

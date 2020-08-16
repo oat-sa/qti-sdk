@@ -1638,11 +1638,11 @@ class AssessmentTestSession extends State
                     $pendingResponsesProcessed++;
                     $this->submitItemResults($itemSession, $occurence);
                 } catch (ProcessingException $e) {
-                    $msg = "An error occured during postponed response processing.";
+                    $msg = "An error occurred during postponed response processing.";
                     throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
                 } catch (AssessmentTestSessionException $e) {
-                    // An error occured while transmitting the results.
-                    $msg = "An error occured while transmitting item results to the appropriate data source.";
+                    // An error occurred while transmitting the results.
+                    $msg = "An error occurred while transmitting item results to the appropriate data source.";
                     throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
                 }
             }
@@ -2015,7 +2015,7 @@ class AssessmentTestSession extends State
                     $this->submitTestResults();
                 }
             } catch (ProcessingException $e) {
-                $msg = "An error occured while processing OutcomeProcessing.";
+                $msg = "An error occurred while processing OutcomeProcessing.";
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::OUTCOME_PROCESSING_ERROR, $e);
             }
         }
@@ -2736,7 +2736,7 @@ class AssessmentTestSession extends State
         if ($e instanceof AssessmentItemSessionException) {
             switch ($e->getCode()) {
                 case AssessmentItemSessionException::UNKNOWN:
-                    $msg = "An unknown error occured at the AssessmentItemSession level.";
+                    $msg = "An unknown error occurred at the AssessmentItemSession level.";
                     $code = AssessmentTestSessionException::UNKNOWN;
                     break;
 
@@ -2760,7 +2760,7 @@ class AssessmentTestSession extends State
 
                 case AssessmentItemSessionException::RUNTIME_ERROR:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "A runtime error occured at the AssessmentItemSession level.";
+                    $msg = "A runtime error occurred at the AssessmentItemSession level.";
                     $code = AssessmentTestSessionException::UNKNOWN;
                     break;
 
@@ -2786,7 +2786,7 @@ class AssessmentTestSession extends State
             return new AssessmentTestSessionException($msg, $code, $e);
         } else {
             // Generic exception...
-            $msg = "An unexpected error occured at the level of the Test Session.";
+            $msg = "An unexpected error occurred at the level of the Test Session.";
 
             return new AssessmentTestSessionException($msg, AssessmentTestSessionException::UNKNOWN, $e);
         }

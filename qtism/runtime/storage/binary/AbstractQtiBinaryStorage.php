@@ -123,7 +123,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $session;
         } catch (Exception $e) {
-            $msg = "An error occured while instantiating the given AssessmentTest.";
+            $msg = "An error occurred while instantiating the given AssessmentTest.";
             throw new StorageException($msg, StorageException::INSTANTIATION, $e);
         }
     }
@@ -220,7 +220,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->close();
         } catch (Exception $e) {
             $sessionId = $assessmentTestSession->getSessionId();
-            $msg = "An error occured while persisting AssessmentTestSession with ID '${sessionId}'.";
+            $msg = "An error occurred while persisting AssessmentTestSession with ID '${sessionId}'.";
             throw new StorageException($msg, StorageException::PERSITANCE, $e);
         }
     }
@@ -340,7 +340,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $assessmentTestSession;
         } catch (Exception $e) {
-            $msg = "An error occured while retrieving AssessmentTestSession.";
+            $msg = "An error occurred while retrieving AssessmentTestSession.";
             throw new StorageException($msg, StorageException::RETRIEVAL, $e);
         }
     }

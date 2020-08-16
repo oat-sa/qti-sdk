@@ -79,7 +79,7 @@ class PhpDocument extends QtiDocument
             $stream = $this->transformToPhp();
             file_put_contents($url, $stream->getBinary());
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while writing the PHP source code stream.";
+            $msg = "An error occurred while writing the PHP source code stream.";
             throw new PhpStorageException($msg, 0, $e);
         }
     }
@@ -96,7 +96,7 @@ class PhpDocument extends QtiDocument
             $memoryStream = $this->transformToPhp();
             return $memoryStream->getBinary();
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while writing the PHP source code stream.";
+            $msg = "An error occurred while writing the PHP source code stream.";
             throw new PhpStorageException($msg, 0, $e);
         }
     }

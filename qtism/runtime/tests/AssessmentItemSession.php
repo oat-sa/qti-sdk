@@ -717,7 +717,7 @@ class AssessmentItemSession extends State
                 catch (ExpressionProcessingException $e) {
                     $responseIdentifier = $response->getIdentifier();
                     $msg = "The current itemSessionControl.validResponses attribute is set to true but an error ";
-                    $msg.= "occured while trying to detect if response '${responseIdentifier}' was correct.";
+                    $msg.= "occurred while trying to detect if response '${responseIdentifier}' was correct.";
                     throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::RUNTIME_ERROR, $e);
                 }
             }

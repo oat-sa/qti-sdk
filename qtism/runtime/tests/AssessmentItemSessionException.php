@@ -107,7 +107,7 @@ class AssessmentItemSessionException extends Exception
      * Create a new AssessmentItemSessionException object.
      *
      * @param string $message A human-readable message describing the nature of the exception.
-     * @param AssessmentItemSession $source The AssessmentItemSession object from where the error occured.
+     * @param AssessmentItemSession $source The AssessmentItemSession object from where the error occurred.
      * @param integer $code A numeric error code. The accepted error codes are described in the constants of this class.
      * @param Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
      */

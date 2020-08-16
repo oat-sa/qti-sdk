@@ -87,7 +87,7 @@ abstract class StreamException extends Exception
     const REWIND = 7;
 
     /**
-     * The IStream object where in the error occured.
+     * The IStream object where in the error occurred.
      *
      * @var IStream
      */
@@ -97,7 +97,7 @@ abstract class StreamException extends Exception
      * Create a new StreamException.
      *
      * @param string $message The human-readable message describing the error.
-     * @param IStream $source The IStream object where in the error occured.
+     * @param IStream $source The IStream object where in the error occurred.
      * @param integer $code A code describing the error.
      * @param Exception $previous An optional previous exception.
      */
@@ -108,7 +108,7 @@ abstract class StreamException extends Exception
     }
 
     /**
-     * Get the IStream object where the error occured.
+     * Get the IStream object where the error occurred.
      *
      * @return IStream An IStream object.
      */
@@ -118,7 +118,7 @@ abstract class StreamException extends Exception
     }
 
     /**
-     * Set the IStream object where the error occured.
+     * Set the IStream object where the error occurred.
      *
      * @param IStream $source An IStream object.
      */

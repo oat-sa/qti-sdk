@@ -81,7 +81,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->getStream()->write('null');
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing the scalar value '${scalar}'.";
+            $msg = "An error occurred while writing the scalar value '${scalar}'.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -101,7 +101,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->getStream()->write('=');
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing the PHP equality symbol (=).";
+            $msg = "An error occurred while writing the PHP equality symbol (=).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -116,7 +116,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write("\n");
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a newline escape sequence (\\n).";
+            $msg = "An error occurred while writing a newline escape sequence (\\n).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -135,7 +135,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeNewline();
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a PHP opening tag (<?php).";
+            $msg = "An error occurred while writing a PHP opening tag (<?php).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -153,7 +153,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             }
             $this->getStream()->write('?>');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a PHP closing tag (?>).";
+            $msg = "An error occurred while writing a PHP closing tag (?>).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -172,7 +172,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeNewline();
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a semicolon (;).";
+            $msg = "An error occurred while writing a semicolon (;).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -187,7 +187,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(':');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a colon (:).";
+            $msg = "An error occurred while writing a colon (:).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -202,7 +202,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write('::');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a scope resolution operator (::).";
+            $msg = "An error occurred while writing a scope resolution operator (::).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -218,7 +218,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->writeScopeResolution();
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a Paamayim Nekudotayim.";
+            $msg = "An error occurred while writing a Paamayim Nekudotayim.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -233,7 +233,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write('(');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing an opening parenthesis (().";
+            $msg = "An error occurred while writing an opening parenthesis (().";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -248,7 +248,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(')');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a closing parenthesis ()).";
+            $msg = "An error occurred while writing a closing parenthesis ()).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -267,7 +267,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeSpace();
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a comma (,).";
+            $msg = "An error occurred while writing a comma (,).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -282,7 +282,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(' ');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a white space ( ).";
+            $msg = "An error occurred while writing a white space ( ).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -298,7 +298,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write('$' . $varname);
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a variable reference.";
+            $msg = "An error occurred while writing a variable reference.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -313,7 +313,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write('->');
         } catch (StreamException $e) {
-            $msg = "An error occured while writing an object operator (->).";
+            $msg = "An error occurred while writing an object operator (->).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -337,7 +337,7 @@ class PhpStreamAccess extends AbstractStreamAccess
 
             $this->writeClosingParenthesis();
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a function call.";
+            $msg = "An error occurred while writing a function call.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -371,7 +371,7 @@ class PhpStreamAccess extends AbstractStreamAccess
 
             $this->writeClosingParenthesis();
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a method call.";
+            $msg = "An error occurred while writing a method call.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -390,7 +390,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeSpace();
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a new operator.";
+            $msg = "An error occurred while writing a new operator.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -414,7 +414,7 @@ class PhpStreamAccess extends AbstractStreamAccess
 
             $this->writeClosingParenthesis();
         } catch (StreamException $e) {
-            $msg = "An error occured while writing an object instantiation.";
+            $msg = "An error occurred while writing an object instantiation.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -438,7 +438,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 }
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing a sequence of arguments.";
+            $msg = "An error occurred while writing a sequence of arguments.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -460,7 +460,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeScalar($value);
             }
         } catch (StreamException $e) {
-            $msg = "An error occured while writing an argument with value '${value}'.";
+            $msg = "An error occurred while writing an argument with value '${value}'.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
