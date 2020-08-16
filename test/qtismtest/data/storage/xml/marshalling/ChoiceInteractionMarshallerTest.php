@@ -3,7 +3,6 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
-use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\Orientation;

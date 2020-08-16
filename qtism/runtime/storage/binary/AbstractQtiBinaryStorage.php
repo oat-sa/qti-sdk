@@ -266,13 +266,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 ? $access->readBoolean()
                 : false;
             $mustTrackPath = $this->version->storesTrackPath()
-                ? $access->readBoolean() 
+                ? $access->readBoolean()
                 : false;
             $mustAlwaysAllowJumps = $this->version->storesAlwaysAllowJumps()
-                ? $access->readBoolean() 
+                ? $access->readBoolean()
                 : false;
-            $path = $this->version->storesTrackPath() 
-                ? $access->readPath() 
+            $path = $this->version->storesTrackPath()
+                ? $access->readPath()
                 : [];
 
             // Create the item session factory that will be used to instantiate

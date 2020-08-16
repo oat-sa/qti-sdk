@@ -4,11 +4,9 @@ namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ResponseDeclaration;
-use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;

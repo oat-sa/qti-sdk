@@ -3,10 +3,10 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
-use qtism\data\content\PrintedVariable;
-use qtismtest\QtiSmTestCase;
 use qtism\data\content\enums\AriaOrientation;
+use qtism\data\content\PrintedVariable;
 use qtism\data\storage\xml\marshalling\MarshallingException;
+use qtismtest\QtiSmTestCase;
 
 class PrintedVariableMarshallerTest extends QtiSmTestCase
 {

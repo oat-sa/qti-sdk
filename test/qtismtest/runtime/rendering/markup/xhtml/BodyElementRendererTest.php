@@ -34,6 +34,7 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertEquals('en-US', $element->getAttribute('lang'));
         $this->assertEquals('', $element->getAttribute('label'));
     }
+
     /**
      * @throws RenderingException
      */

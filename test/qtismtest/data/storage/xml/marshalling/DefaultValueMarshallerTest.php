@@ -3,7 +3,6 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
-use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\DefaultValue;

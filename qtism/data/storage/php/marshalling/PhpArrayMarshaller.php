@@ -23,7 +23,6 @@
 
 namespace qtism\data\storage\php\marshalling;
 
-use qtism\common\storage\StreamAccessException;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\Utils as PhpUtils;

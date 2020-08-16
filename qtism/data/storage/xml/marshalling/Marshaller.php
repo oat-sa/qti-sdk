@@ -87,7 +87,7 @@ abstract class Marshaller
         'hotspotChoice',
         'hr',
         'img',
-        'textEntryInteraction'
+        'textEntryInteraction',
     ];
 
     /**
@@ -471,7 +471,6 @@ abstract class Marshaller
                     }
                 }
             }
-
         } catch (InvalidArgumentException $e) {
             $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label).";
             throw new UnmarshallingException($msg, $element, $e);

@@ -78,7 +78,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
     public function testWrongSessionIdentifierIdentifier()
     {
         $this->expectException(UnmarshallingException::class);
-        
+
         $xml = '<sessionIdentifier identifier="fixture-id"/>';
         $element = QtiSmTestCase::createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);

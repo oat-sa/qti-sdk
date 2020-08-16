@@ -170,7 +170,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
                     $intersects++;
                 }
             }
-            
+
             $j = $i;
         }
 

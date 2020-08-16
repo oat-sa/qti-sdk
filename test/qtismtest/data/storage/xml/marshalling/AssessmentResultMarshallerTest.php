@@ -23,8 +23,8 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use oat\dtms\DateTime;
 use DOMElement;
+use oat\dtms\DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\results\AssessmentResult;

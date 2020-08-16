@@ -26,7 +26,6 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use InvalidArgumentException;
 use qtism\common\enums\BaseType;
-use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\state\MapEntry;
 use qtism\data\storage\Utils;

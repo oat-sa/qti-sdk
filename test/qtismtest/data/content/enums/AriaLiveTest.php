@@ -38,7 +38,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
         return [
             'off',
             'polite',
-            'assertive'
+            'assertive',
         ];
     }
 
@@ -47,7 +47,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
         return [
             'OFF',
             'POLITE',
-            'ASSERTIVE'
+            'ASSERTIVE',
         ];
     }
 
@@ -56,7 +56,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
         return [
             AriaLive::OFF,
             AriaLive::POLITE,
-            AriaLive::ASSERTIVE
+            AriaLive::ASSERTIVE,
         ];
     }
 }

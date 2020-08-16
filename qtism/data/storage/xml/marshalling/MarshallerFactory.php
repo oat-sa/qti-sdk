@@ -25,7 +25,6 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use InvalidArgumentException;
-use qtism\common\utils\Reflection;
 use qtism\data\QtiComponent;
 use ReflectionClass;
 use ReflectionException;

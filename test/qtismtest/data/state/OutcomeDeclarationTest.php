@@ -30,7 +30,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 {
     /** @var OutcomeDeclaration */
     private $subject;
-    
+
     public function setUp()
     {
         $this->subject = new OutcomeDeclaration('id');
@@ -41,9 +41,9 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->assertFalse($this->subject->isExternallyScored());
         $this->assertFalse($this->subject->isScoredByHuman());
         $this->assertFalse($this->subject->isScoredByExternalMachine());
-        
+
         $this->subject->setExternalScored(ExternalScored::getConstantByName('human'));
-        
+
         $this->assertTrue($this->subject->isExternallyScored());
         $this->assertTrue($this->subject->isScoredByHuman());
         $this->assertFalse($this->subject->isScoredByExternalMachine());

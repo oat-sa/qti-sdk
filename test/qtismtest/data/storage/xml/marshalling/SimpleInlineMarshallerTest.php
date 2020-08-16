@@ -3,15 +3,15 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use qtism\data\content\enums\AriaLive;
+use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\A;
 use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\xhtml\text\Q;
-use qtism\data\content\xhtml\text\Strong;
 use qtism\data\content\xhtml\text\Span;
-use qtism\data\content\enums\AriaLive;
-use qtism\data\content\enums\AriaOrientation;
+use qtism\data\content\xhtml\text\Strong;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 
@@ -117,7 +117,8 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         // In QTI 2.1, aria-* and dir must be ignored.
 
         /** @var Span $span */
-        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" dir="rtl" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label">I am a span</span>', '2.1.0');
+        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" dir="rtl" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label">I am a span</span>',
+            '2.1.0');
         $this->assertInstanceOf(Span::class, $span);
         $this->assertEquals('', $span->getAriaControls());
         $this->assertFalse($span->hasAriaControls());
@@ -168,13 +169,15 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<span id="myspan" class="myclass" aria-flowto="IDREF1" aria-controls="IDREF2" aria-describedby="IDREF3" aria-labelledby="IDREF4" aria-owns="IDREF5" aria-level="1" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-hidden="true"/>', $dom->saveXML($element));
+        $this->assertEquals('<span id="myspan" class="myclass" aria-flowto="IDREF1" aria-controls="IDREF2" aria-describedby="IDREF3" aria-labelledby="IDREF4" aria-owns="IDREF5" aria-level="1" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-hidden="true"/>',
+            $dom->saveXML($element));
     }
 
     public function testUnmarshallSpan22()
     {
         /** @var Span $span */
-        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-flowsto="not-considered-here" aria-hidden="true">I am a span</span>', '2.2.0');
+        $span = $this->createComponentFromXml('<span id="myspan" class="myclass" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-flowsto="not-considered-here" aria-hidden="true">I am a span</span>',
+            '2.2.0');
         $this->assertInstanceOf(Span::class, $span);
         $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
         $this->assertTrue($span->hasAriaControls());

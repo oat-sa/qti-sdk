@@ -9,7 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {
-
     /**
      * @dataProvider validFileProvider
      */
@@ -22,7 +21,6 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $assessmentItem = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
     }
-
 
     /**
      * @dataProvider validFileProvider
@@ -377,7 +375,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
             // Other miscellaneous items...
             [self::samplesDir() . 'custom/items/custom_operator_item.xml', '2.1.0'],
-            [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0']
+            [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0'],
         ];
     }
 

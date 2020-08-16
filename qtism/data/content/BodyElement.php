@@ -115,7 +115,6 @@ abstract class BodyElement extends QtiComponent
      */
     private $ariaOwns = '';
 
-
     /**
      * @var string
      * @qtism-bean-property

@@ -526,7 +526,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        
+
         $version = $this->createVersionMock(2);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
 
@@ -562,7 +562,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $version = $this->createVersionMock(3);
         $routeItem = $access->readRouteItem($seeker, $version);
-        
+
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S01', $routeItem->getAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
@@ -663,7 +663,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals(0, $pendingResponses->getOccurence());
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
-    
+
     public function createVersionMock(int $versionNumber): QtiBinaryVersion
     {
         $version = new QtiBinaryVersion();
@@ -671,7 +671,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $property->setAccessible(true);
         $property->setValue($version, $versionNumber);
         $property->setAccessible(false);
-        
+
         return $version;
     }
 }

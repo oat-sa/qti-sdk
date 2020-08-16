@@ -4,9 +4,9 @@ namespace qtismtest;
 
 use DOMDocument;
 use DOMElement;
+use PHPUnit_Framework_TestCase as TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
-use PHPUnit_Framework_TestCase as TestCase;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;

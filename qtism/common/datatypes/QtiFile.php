@@ -23,8 +23,8 @@
 
 namespace qtism\common\datatypes;
 
-use RuntimeException;
 use qtism\common\Comparable;
+use RuntimeException;
 
 /**
  * The interface to implement to create a new QTI File datatype
