@@ -95,7 +95,7 @@ class IndexProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
         }
 
-        $n = $n - 1; // QTI indexes begin at 1...
+        $n--; // QTI indexes begin at 1...
         if ($n > count($operands[0]) - 1) {
             // As per specs, if n exceeds the number of values in the container,
             // the result of the index operator is NULL.
