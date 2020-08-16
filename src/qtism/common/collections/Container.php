@@ -85,8 +85,8 @@ class Container extends AbstractCollection implements Comparable
     {
         if (!RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {
             $displayType = PhpUtils::displayType($value);
-            $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";
-            $msg .= "null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ";
+            $msg = 'Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ';
+            $msg .= 'null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ';
             $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. '${displayType}' given.";
 
             throw new InvalidArgumentException($msg);

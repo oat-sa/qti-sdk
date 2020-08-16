@@ -77,12 +77,12 @@ class Utils
             $visitedNodes[] = $currentCmp->getIdentifier();
 
             switch ($currentCmp->getQtiClassName()) {
-                case "assessmentItemRef":
+                case 'assessmentItemRef':
                     return $currentCmp;
                     break;
 
-                case "assessmentSection":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'assessmentSection':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // Check for recursion
@@ -135,8 +135,8 @@ class Utils
                     }
                     break;
 
-                case "testPart":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'testPart':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // First item of the next testpart
@@ -193,12 +193,12 @@ class Utils
 
         while (true) {
             switch ($currentCmp->getQtiClassName()) {
-                case "assessmentItemRef":
+                case 'assessmentItemRef':
                     return $currentCmp;
                     break;
 
-                case "assessmentSection":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'assessmentSection':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // Check for recursion
@@ -245,8 +245,8 @@ class Utils
                     }
                     break;
 
-                case "testPart":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'testPart':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // First item of the next testpart

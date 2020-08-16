@@ -116,7 +116,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
             if ($this->hasAdditionalClasses() === true) {
                 $classes = implode("\x20", $this->getAdditionalClasses());
                 $currentClasses = $fragment->firstChild->getAttribute('class');
-                $glue = ($currentClasses !== '') ? "\x20" : "";
+                $glue = ($currentClasses !== '') ? "\x20" : '';
                 $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
             }
         } else {
@@ -132,7 +132,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
         if ($this->hasAdditionalUserClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalUserClasses());
             $currentClasses = $fragment->firstChild->getAttribute('class');
-            $glue = ($currentClasses !== '') ? "\x20" : "";
+            $glue = ($currentClasses !== '') ? "\x20" : '';
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
 

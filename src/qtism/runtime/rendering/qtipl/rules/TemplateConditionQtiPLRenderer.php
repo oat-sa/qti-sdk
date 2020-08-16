@@ -46,10 +46,10 @@ class TemplateConditionQtiPLRenderer extends AbstractQtiPLRenderer
         $qtipl = $renderer->render($something->getTemplateIf());
 
         foreach ($something->getTemplateElseIfs() as $elseif) {
-            $qtipl .= " " . $renderer->render($elseif);
+            $qtipl .= ' ' . $renderer->render($elseif);
         }
 
-        $qtipl .= ($something->getTemplateElse() == null) ? "" : $renderer->render($something->getTemplateElse());
+        $qtipl .= ($something->getTemplateElse() == null) ? '' : $renderer->render($something->getTemplateElse());
         return $qtipl;
     }
 }

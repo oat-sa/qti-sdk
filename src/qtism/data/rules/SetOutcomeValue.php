@@ -98,7 +98,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "Identifier must be a valid QTI Identifier.";
+            $msg = 'Identifier must be a valid QTI Identifier.';
             throw new InvalidArgumentException($msg);
         }
     }

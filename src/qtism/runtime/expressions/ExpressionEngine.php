@@ -106,7 +106,7 @@ class ExpressionEngine extends AbstractEngine
         if ($expression instanceof Expression) {
             parent::setComponent($expression);
         } else {
-            $msg = "The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed.";
+            $msg = 'The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -39,7 +39,7 @@ class ExitTestProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Test.";
+        $msg = 'Termination of Test.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEST);
     }
 

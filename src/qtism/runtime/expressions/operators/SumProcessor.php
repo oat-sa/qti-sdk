@@ -53,10 +53,10 @@ class SumProcessor extends OperatorProcessor
         if ($operands->containsNull() === true) {
             return null;
         } elseif ($operands->anythingButRecord() === false) {
-            $msg = "The Sum operator only accepts operands with cardinality single, multiple or ordered.";
+            $msg = 'The Sum operator only accepts operands with cardinality single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         } elseif ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Sum operator only accepts operands with an integer or float baseType.";
+            $msg = 'The Sum operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

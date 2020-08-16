@@ -300,7 +300,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         if (Format::isString256($label) === true) {
             $this->label = $label;
         } else {
-            $msg = "The label argument must be a string with at most 256 characters.";
+            $msg = 'The label argument must be a string with at most 256 characters.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -410,7 +410,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         if (Format::isString256($toolName) === true) {
             $this->toolName = $toolName;
         } else {
-            $msg = "The toolName argument must be a string with at most 256 characters.";
+            $msg = 'The toolName argument must be a string with at most 256 characters.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -446,7 +446,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         if (Format::isString256($toolVersion) === true) {
             $this->toolVersion = $toolVersion;
         } else {
-            $msg = "The toolVersion argument must be a string with at most 256 characters.";
+            $msg = 'The toolVersion argument must be a string with at most 256 characters.';
             throw new InvalidArgumentException($msg);
         }
     }

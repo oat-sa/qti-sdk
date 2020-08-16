@@ -139,7 +139,7 @@ class GapMatchInteraction extends BlockInteraction
         if (count($gapChoices) > 0) {
             $this->gapChoices = $gapChoices;
         } else {
-            $msg = "A GapMatchInteraction object must be composed of at least one GapChoice object, none given.";
+            $msg = 'A GapMatchInteraction object must be composed of at least one GapChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -165,7 +165,7 @@ class GapMatchInteraction extends BlockInteraction
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "A GapMatchInteraction object must be composed of at lease one BlockStatic object, none given.";
+            $msg = 'A GapMatchInteraction object must be composed of at lease one BlockStatic object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

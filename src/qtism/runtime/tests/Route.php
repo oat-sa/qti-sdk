@@ -840,7 +840,7 @@ class Route implements Iterator
         $routeItemsCount = count($routeItems);
 
         if ($routeItemsCount === 0) {
-            $msg = "Cannot get the last RouteItem of the Route while it is empty.";
+            $msg = 'Cannot get the last RouteItem of the Route while it is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -859,7 +859,7 @@ class Route implements Iterator
         $routeItemsCount = count($routeItems);
 
         if ($routeItemsCount === 0) {
-            $msg = "Cannot get the first RouteItem of the Route while it is empty.";
+            $msg = 'Cannot get the first RouteItem of the Route while it is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -876,7 +876,7 @@ class Route implements Iterator
     {
         $count = $this->count();
         if ($count === 0) {
-            $msg = "Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.";
+            $msg = 'Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -902,7 +902,7 @@ class Route implements Iterator
     {
         $count = $this->count();
         if ($count === 0) {
-            $msg = "Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.";
+            $msg = 'Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -927,7 +927,7 @@ class Route implements Iterator
     {
         $currentPosition = $this->getPosition();
         if ($currentPosition === 0) {
-            $msg = "The current RouteItem is the first one in the route. There is no previous RouteItem";
+            $msg = 'The current RouteItem is the first one in the route. There is no previous RouteItem';
             throw new OutOfBoundsException($msg);
         }
 
@@ -943,7 +943,7 @@ class Route implements Iterator
     public function getNext()
     {
         if ($this->isLast() === true) {
-            $msg = "The current RouteItem is the last one in the route. There is no next RouteItem.";
+            $msg = 'The current RouteItem is the last one in the route. There is no next RouteItem.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -1126,7 +1126,7 @@ class Route implements Iterator
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
                 // in the same testPart [...]
-                $msg = "Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.";
+                $msg = 'Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.';
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1142,7 +1142,7 @@ class Route implements Iterator
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
                 // in the same testPart [...]
-                $msg = "Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.";
+                $msg = 'Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.';
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1159,7 +1159,7 @@ class Route implements Iterator
             if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // For testParts, the target must refer to another testPart.
-                $msg = "Cannot branch to the same testPart.";
+                $msg = 'Cannot branch to the same testPart.';
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1186,7 +1186,7 @@ class Route implements Iterator
         if (($search = array_search($routeItem, $this->getRouteItems(), true)) !== false) {
             return $search;
         } else {
-            $msg = "No such RouteItem object referenced in the Route.";
+            $msg = 'No such RouteItem object referenced in the Route.';
             throw new OutOfBoundsException($msg);
         }
     }

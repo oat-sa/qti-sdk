@@ -101,7 +101,7 @@ class RepeatProcessor extends OperatorProcessor
 
                 // Check cardinality.
                 if ($operand->getCardinality() !== Cardinality::SINGLE && $operand->getCardinality() !== Cardinality::ORDERED) {
-                    $msg = "The Repeat operator only accepts operands with a single or ordered cardinality.";
+                    $msg = 'The Repeat operator only accepts operands with a single or ordered cardinality.';
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
                 }
 
@@ -109,7 +109,7 @@ class RepeatProcessor extends OperatorProcessor
                 $currentType = RuntimeUtils::inferBaseType($operand);
 
                 if ($refType !== null && $currentType !== $refType) {
-                    $msg = "The Repeat operator only accepts operands with the same baseType.";
+                    $msg = 'The Repeat operator only accepts operands with the same baseType.';
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
                 } elseif (is_null($result)) {
                     $refType = $currentType;

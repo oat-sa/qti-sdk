@@ -69,7 +69,7 @@ class TemplateConstraintProcessor extends RuleProcessor
         $val = $expressionEngine->process();
 
         if (Utils::isNull($val) || $val->getValue() === false) {
-            $msg = "Unsatisfied Template Constraint.";
+            $msg = 'Unsatisfied Template Constraint.';
             throw new RuleProcessingException($msg, $this, RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED);
         }
     }

@@ -203,16 +203,16 @@ abstract class Cli
         $arguments = $this->getArguments();
         $options = $arguments->getOptions();
 
-        $msg = "Missing argument";
+        $msg = 'Missing argument';
 
         if (array_key_exists($longName, $options)) {
             $msg .= " '${longName}'";
         }
 
-        $msg .= ".";
+        $msg .= '.';
 
         $this->error($msg);
-        $this->fail("Use the --help option to see the help screen.");
+        $this->fail('Use the --help option to see the help screen.');
     }
 
     /**

@@ -52,12 +52,12 @@ class BaseValueQtiPLRenderer extends AbstractQtiPLRenderer
             case 3: // FLOAT
                 return $something->getValue();
             case 4: // STRING
-                return "\"" . $something->getValue() . "\"";
+                return '"' . $something->getValue() . '"';
             case 10: // URI
-                return "`" . $something->getValue() . "`";
+                return '`' . $something->getValue() . '`';
             default:
-                return strtolower(BaseType::getNameByConstant($something->getBaseType())) . "(" .
-                    $something->getValue() . ")";
+                return strtolower(BaseType::getNameByConstant($something->getBaseType())) . '(' .
+                    $something->getValue() . ')';
         }
     }
 }

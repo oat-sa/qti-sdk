@@ -60,7 +60,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType attribute must be a value from the BaseType enumeration.";
+            $msg = 'The baseType attribute must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }

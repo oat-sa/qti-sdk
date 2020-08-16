@@ -41,7 +41,7 @@ class QtiString extends QtiScalar
     protected function checkType($value)
     {
         if (is_string($value) !== true) {
-            $msg = "The String Datatype only accepts to store string values.";
+            $msg = 'The String Datatype only accepts to store string values.';
             throw new InvalidArgumentException($msg);
         }
     }

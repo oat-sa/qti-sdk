@@ -59,12 +59,12 @@ class MatchProcessor extends OperatorProcessor
         }
 
         if ($operands->sameCardinality() === false) {
-            $msg = "The Match Expression only accepts operands with the same cardinality.";
+            $msg = 'The Match Expression only accepts operands with the same cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Match Expression only accepts operands with the same baseType.";
+            $msg = 'The Match Expression only accepts operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

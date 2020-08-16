@@ -40,7 +40,7 @@ class RouteItemCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof RouteItem) {
-            $msg = "RoutItemCollection objects only accept to store RouteItem objects.";
+            $msg = 'RoutItemCollection objects only accept to store RouteItem objects.';
             throw new InvalidArgumentException($msg);
         }
     }

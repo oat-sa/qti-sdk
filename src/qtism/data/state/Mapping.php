@@ -209,7 +209,7 @@ class Mapping extends QtiComponent
         if (count($mapEntries) > 0) {
             $this->mapEntries = $mapEntries;
         } else {
-            $msg = "A Mapping object must contain at least one MapEntry object, none given.";
+            $msg = 'A Mapping object must contain at least one MapEntry object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

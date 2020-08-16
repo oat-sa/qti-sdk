@@ -41,10 +41,10 @@ class QtiIdentifier extends QtiString
     protected function checkType($value)
     {
         if (is_string($value) !== true) {
-            $msg = "The Identifier Datatype only accepts to store identifier values.";
+            $msg = 'The Identifier Datatype only accepts to store identifier values.';
             throw new InvalidArgumentException($msg);
         } elseif ($value === '') {
-            $msg = "The Identifier Datatype do not accept empty strings as valid identifiers.";
+            $msg = 'The Identifier Datatype do not accept empty strings as valid identifiers.';
             throw new InvalidArgumentException($msg);
         }
     }

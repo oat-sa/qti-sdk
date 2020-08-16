@@ -46,7 +46,7 @@ class SubstringQtiPLRenderer extends AbstractQtiPLRenderer
         $attributes = [];
 
         if (!$something->isCaseSensitive()) {
-            $attributes['caseSensitive'] = "false";
+            $attributes['caseSensitive'] = 'false';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

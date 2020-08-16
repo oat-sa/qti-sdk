@@ -33,7 +33,7 @@ use qtism\runtime\rendering\RenderingException;
  */
 class NotQtiPLRenderer extends AbstractQtiPLRenderer
 {
-    private $signAsOperator = "!";
+    private $signAsOperator = '!';
 
     /**
      * Render a QtiComponent object into another constitution.

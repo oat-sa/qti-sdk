@@ -41,7 +41,7 @@ class SimpleChoiceCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof SimpleChoice) {
-            $msg = "A SimpleChoiceCollection object only accepts to store SimpleChoice objects.";
+            $msg = 'A SimpleChoiceCollection object only accepts to store SimpleChoice objects.';
             throw new InvalidArgumentException($msg);
         }
     }

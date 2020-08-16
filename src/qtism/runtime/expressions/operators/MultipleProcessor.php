@@ -56,7 +56,7 @@ class MultipleProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingleOrMultiple() === false) {
-            $msg = "The Multiple operator only accepts operands with single or omultiple cardinality.";
+            $msg = 'The Multiple operator only accepts operands with single or omultiple cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -75,7 +75,7 @@ class MultipleProcessor extends OperatorProcessor
                         static::appendValue($returnValue, $operand);
                     } else {
                         // baseType mismatch.
-                        $msg = "The Multiple operator only accepts values with a similar baseType.";
+                        $msg = 'The Multiple operator only accepts values with a similar baseType.';
                         throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
                     }
                 } elseif (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {

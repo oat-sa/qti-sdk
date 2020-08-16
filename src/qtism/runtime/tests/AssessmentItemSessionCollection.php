@@ -38,7 +38,7 @@ class AssessmentItemSessionCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof AssessmentItemSession) {
-            $msg = "The AssessmentItemSessionCollection class only accepts to store AssessmentItemSession objects.";
+            $msg = 'The AssessmentItemSessionCollection class only accepts to store AssessmentItemSession objects.';
             throw new InvalidArgumentException($msg);
         }
     }

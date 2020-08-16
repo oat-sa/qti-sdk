@@ -49,7 +49,7 @@ class PhpArrayMarshaller extends PhpMarshaller
 
         foreach ($array as $a) {
             if (PhpUtils::isScalar($a) === false) {
-                $msg = "The PhpArrayMarshaller class only deals with PHP scalar values, object or resource given.";
+                $msg = 'The PhpArrayMarshaller class only deals with PHP scalar values, object or resource given.';
                 throw new PhpMarshallingException($msg);
             }
 

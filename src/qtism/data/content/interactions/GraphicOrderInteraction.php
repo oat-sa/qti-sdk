@@ -119,7 +119,7 @@ class GraphicOrderInteraction extends GraphicInteraction
         if (count($hotspotChoices) > 0) {
             $this->hotspotChoices = $hotspotChoices;
         } else {
-            $msg = "A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.";
+            $msg = 'A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.';
             throw new InvalidArgumentException($msg);
         }
     }

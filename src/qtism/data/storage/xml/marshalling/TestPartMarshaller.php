@@ -153,7 +153,7 @@ class TestPartMarshaller extends Marshaller
 
                         return $object;
                     } else {
-                        $msg = "A testPart element must contain at least one assessmentSection.";
+                        $msg = 'A testPart element must contain at least one assessmentSection.';
                         throw new UnmarshallingException($msg, $element);
                     }
                 } else {

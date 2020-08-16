@@ -88,12 +88,12 @@ class MathOperatorProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The MathOperator operator only accepts operands with a single cardinality.";
+            $msg = 'The MathOperator operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The MathOperator operator only accepts operands with an integer or float baseType.";
+            $msg = 'The MathOperator operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -224,10 +224,10 @@ class MathOperatorProcessor extends OperatorProcessor
         $operands = $this->getOperands();
 
         if (!isset($operands[1])) {
-            $msg = "The atan2 math function of the MathOperator requires 2 operands, 1 operand given.";
+            $msg = 'The atan2 math function of the MathOperator requires 2 operands, 1 operand given.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         } elseif (count($operands) > 2) {
-            $msg = "The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.";
+            $msg = 'The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::TOO_MUCH_OPERANDS);
         }
 

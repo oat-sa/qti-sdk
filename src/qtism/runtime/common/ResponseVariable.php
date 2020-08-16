@@ -97,7 +97,7 @@ class ResponseVariable extends Variable
         } elseif (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true && Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse) === true) {
             $this->correctResponse = $correctResponse;
         } else {
-            $msg = "The given correct response is not compliant with the associated response variable.";
+            $msg = 'The given correct response is not compliant with the associated response variable.';
             throw new InvalidArgumentException($msg);
         }
     }

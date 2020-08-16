@@ -153,11 +153,11 @@ class MapResponseProcessor extends ExpressionProcessor
                         return new QtiFloat($result);
                     }
                 } else {
-                    $msg = "MapResponse cannot be applied on a Record container.";
+                    $msg = 'MapResponse cannot be applied on a Record container.';
                     throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
             } else {
-                $msg = "The target variable of a MapResponse expression must be a ResponseVariable.";
+                $msg = 'The target variable of a MapResponse expression must be a ResponseVariable.';
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
             }
         } else {

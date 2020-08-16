@@ -84,7 +84,7 @@ class ResponseProcessingEngine extends AbstractEngine
         if ($responseProcessing instanceof ResponseProcessing) {
             parent::setComponent($responseProcessing);
         } else {
-            $msg = "The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.";
+            $msg = 'The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -193,7 +193,7 @@ class ResponseProcessingEngine extends AbstractEngine
             $php = new PhpDocument();
             $php->load($finalTemplateFile);
             $rules = $php->getDocumentComponent()->getResponseRules();
-            $this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
+            $this->trace(count($rules) . ' responseRule(s) extracted from the response processing template');
         }
 
         try {

@@ -42,7 +42,7 @@ class LibXmlErrorCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof LibXMLError) {
-            $msg = "LibXmlErrorCollection class only accept LibXMLError objects.";
+            $msg = 'LibXmlErrorCollection class only accept LibXMLError objects.';
             throw new InvalidArgumentException($msg);
         }
     }

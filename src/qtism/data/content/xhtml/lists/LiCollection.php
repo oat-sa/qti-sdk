@@ -41,7 +41,7 @@ class LiCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof Li) {
-            $msg = "LiCollection objects only accept to store Li objects.";
+            $msg = 'LiCollection objects only accept to store Li objects.';
             throw new InvalidArgumentException($msg);
         }
     }

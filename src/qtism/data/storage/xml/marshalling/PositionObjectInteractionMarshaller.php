@@ -59,7 +59,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
 
         if ($component->hasCenterPoint() === true) {
             $centerPoint = $component->getCenterPoint();
-            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
+            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . ' ' . $centerPoint->getY());
         }
 
         $this->fillElement($element, $component);

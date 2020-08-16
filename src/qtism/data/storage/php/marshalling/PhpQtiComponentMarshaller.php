@@ -148,7 +148,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($componentVarName);
         } catch (BeanException $e) {
-            $msg = "The given QtiComponent to be marshalled into PHP source code is not a strict bean.";
+            $msg = 'The given QtiComponent to be marshalled into PHP source code is not a strict bean.';
             throw new PhpMarshallingException($msg, PhpMarshallingException::RUNTIME, $e);
         }
     }

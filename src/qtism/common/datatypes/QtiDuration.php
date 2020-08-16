@@ -93,11 +93,11 @@ class QtiDuration implements QtiDatatype
                 $this->interval = $interval;
                 $this->refDate = new DateTime('@0', $tz);
             } catch (Exception $e) {
-                $msg = "The specified interval specification cannot be processed as an ISO8601 duration.";
+                $msg = 'The specified interval specification cannot be processed as an ISO8601 duration.';
                 throw new InvalidArgumentException($msg, 0, $e);
             }
         } else {
-            $msg = "The intervalSpec argument must be a non-empty string.";
+            $msg = 'The intervalSpec argument must be a non-empty string.';
             throw new InvalidArgumentException($msg);
         }
     }

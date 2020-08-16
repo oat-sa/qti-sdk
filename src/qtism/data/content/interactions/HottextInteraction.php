@@ -170,7 +170,7 @@ class HottextInteraction extends BlockInteraction
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "A HottextInteraction object must be composed of at least one BlockStatic object, none given.";
+            $msg = 'A HottextInteraction object must be composed of at least one BlockStatic object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

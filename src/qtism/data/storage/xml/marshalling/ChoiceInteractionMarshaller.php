@@ -55,7 +55,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 $component->setShuffle($shuffle);
             } else {
                 if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                    $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . " element.";
+                    $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . ' element.';
                     throw new UnmarshallingException($msg, $element);
                 }
             }
@@ -71,7 +71,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 }
             } else {
                 if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . " element.";
+                    $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . ' element.';
                     throw new UnmarshallingException($msg, $element);
                 }
             }
@@ -121,7 +121,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             return $component;
         } else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . " element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . ' element.';
             throw new UnmarshallingException($msg, $element);
         }
     }

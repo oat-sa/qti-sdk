@@ -41,7 +41,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
     protected function setStream(IStream $stream)
     {
         if ($stream->isOpen() === false) {
-            $msg = "A BinaryStreamAccess do not accept closed streams to be read.";
+            $msg = 'A BinaryStreamAccess do not accept closed streams to be read.';
             throw new BinaryStreamAccessException($msg, $this, StreamAccessException::NOT_OPEN);
         }
 

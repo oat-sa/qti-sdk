@@ -225,7 +225,7 @@ class AssociateInteraction extends BlockInteraction
         if (count($simpleAssociableChoices) > 0) {
             $this->simpleAssociableChoices = $simpleAssociableChoices;
         } else {
-            $msg = "An AssociateInteraction object must be composed of at lease one SimpleAssociableChoice object, none given.";
+            $msg = 'An AssociateInteraction object must be composed of at lease one SimpleAssociableChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

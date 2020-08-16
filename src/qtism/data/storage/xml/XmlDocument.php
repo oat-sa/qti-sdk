@@ -466,7 +466,7 @@ class XmlDocument extends QtiDocument
                 }
             }
         } else {
-            $msg = "Cannot include fragments via XInclude before loading any file.";
+            $msg = 'Cannot include fragments via XInclude before loading any file.';
             throw new LogicException($msg);
         }
     }
@@ -507,7 +507,7 @@ class XmlDocument extends QtiDocument
                 }
             }
         } else {
-            $msg = "Cannot resolve template location before loading any file.";
+            $msg = 'Cannot resolve template location before loading any file.';
             throw new LogicException($msg);
         }
     }
@@ -566,7 +566,7 @@ class XmlDocument extends QtiDocument
                 $count = count($root->getComponentsByClassName('assessmentSectionRef'));
             }
         } else {
-            $msg = "Cannot resolve assessmentSectionRefs before loading any file.";
+            $msg = 'Cannot resolve assessmentSectionRefs before loading any file.';
             throw new LogicException($msg);
         }
     }
@@ -614,17 +614,17 @@ class XmlDocument extends QtiDocument
                     // Since QTI 2.2, some schemas are imported multiple times.
                     // Xerces does not produce errors, but libxml does...
                     if (preg_match('/Skipping import of schema located/ui', $error->message) === 0) {
-                        $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                        $formattedErrors[] = 'Warning: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
                     }
 
                     break;
 
                 case LIBXML_ERR_ERROR:
-                    $formattedErrors[] = "Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    $formattedErrors[] = 'Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
                     break;
 
                 case LIBXML_ERR_FATAL:
-                    $formattedErrors[] = "Fatal Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    $formattedErrors[] = 'Fatal Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
                     break;
             }
         }

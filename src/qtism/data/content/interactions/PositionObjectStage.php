@@ -98,7 +98,7 @@ class PositionObjectStage extends QtiComponent implements Block
         if (count($positionObjectInteractions) > 0) {
             $this->positionObjectInteractions = $positionObjectInteractions;
         } else {
-            $msg = "A PositionObjectStage object must be composed of at least 1 PositionObjectInteraction object, none given.";
+            $msg = 'A PositionObjectStage object must be composed of at least 1 PositionObjectInteraction object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -48,7 +48,7 @@ class QtiInteger extends QtiScalar
     protected function checkType($value)
     {
         if (Utils::isQtiInteger($value) !== true) {
-            $msg = "The Integer Datatype only accepts to store integer values.";
+            $msg = 'The Integer Datatype only accepts to store integer values.';
             throw new InvalidArgumentException($msg);
         }
     }

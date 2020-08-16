@@ -767,7 +767,7 @@ class AssessmentItemSession extends State
 
         if ($this->getState() === AssessmentItemSessionState::CLOSED) {
             if ($this->isMaxTimeReached() === true && ($this->getTimeLimits()->doesAllowLateSubmission() === false && $forceLateSubmission === false)) {
-                $msg = "The maximum time to be spent on the item session has been reached.";
+                $msg = 'The maximum time to be spent on the item session has been reached.';
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
             }
             // else...
@@ -783,7 +783,7 @@ class AssessmentItemSession extends State
                     // An exception is thrown to prevent the numAttempts to be incremented.
                     // Suspend and wait for a next attempt.
                     $this->suspend();
-                    $msg = "The minimal duration is not yet reached.";
+                    $msg = 'The minimal duration is not yet reached.';
                     throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
                 }
             }
@@ -898,7 +898,7 @@ class AssessmentItemSession extends State
         $state = $this->getState();
 
         if ($state !== AssessmentItemSessionState::INTERACTING && $state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
-            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state SUSPENDED.";
+            $msg = 'Cannot switch from state ' . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . ' to state SUSPENDED.';
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
         } elseif ($state == AssessmentItemSessionState::MODAL_FEEDBACK) {
@@ -939,7 +939,7 @@ class AssessmentItemSession extends State
         $state = $this->getState();
 
         if ($state !== AssessmentItemSessionState::SUSPENDED) {
-            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state INTERACTING.";
+            $msg = 'Cannot switch from state ' . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . ' to state INTERACTING.';
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
         } else {
@@ -961,7 +961,7 @@ class AssessmentItemSession extends State
         $state = $this->getState();
 
         if ($state !== AssessmentItemSessionState::INTERACTING) {
-            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state SUSPENDED.";
+            $msg = 'Cannot switch from state ' . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . ' to state SUSPENDED.';
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
         } else {

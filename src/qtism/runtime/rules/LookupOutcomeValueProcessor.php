@@ -136,7 +136,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR);
             }
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occurred while processing the expression bound to the lookupOutcomeValue rule.";
+            $msg = 'An error occurred while processing the expression bound to the lookupOutcomeValue rule.';
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
     }

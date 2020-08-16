@@ -607,7 +607,7 @@ abstract class Marshaller
                 }
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "An error occurred while filling the bodyElement attributes (id, class, lang, label, dir, aria-*).";
+            $msg = 'An error occurred while filling the bodyElement attributes (id, class, lang, label, dir, aria-*).';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }

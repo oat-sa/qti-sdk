@@ -80,7 +80,7 @@ class Utils
                 // To avoid conflict with NullValue QTI expression object!!!
                 return 'scalarnullvalue_' . $occurence;
             } else {
-                $msg = "Cannot handle the given value.";
+                $msg = 'Cannot handle the given value.';
                 throw new InvalidArgumentException($msg);
             }
         }

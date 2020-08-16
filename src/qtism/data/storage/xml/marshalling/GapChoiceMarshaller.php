@@ -87,7 +87,7 @@ class GapChoiceMarshaller extends ContentMarshaller
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
                     } else {
-                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . " given.";
+                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . ' given.';
                         throw new UnmarshallingException($msg, $element);
                     }
                 } else {

@@ -57,7 +57,7 @@ class IndexProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyOrdered() === false) {
-            $msg = "The Index operator only accepts values with a cardinality of ordered.";
+            $msg = 'The Index operator only accepts values with a cardinality of ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

@@ -41,7 +41,7 @@ class QtiUri extends QtiString
     protected function checkType($value)
     {
         if (is_string($value) !== true) {
-            $msg = "The Uri Datatype only accepts to store URI values.";
+            $msg = 'The Uri Datatype only accepts to store URI values.';
             throw new InvalidArgumentException($msg);
         }
     }

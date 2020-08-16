@@ -45,7 +45,7 @@ class StatsOperatorQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['name'] = "\"" . Statistics::getNameByConstant($something->getName()) . "\"";
+        $attributes['name'] = '"' . Statistics::getNameByConstant($something->getName()) . '"';
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)
             . $renderer->writeChildElements($something->getExpressions());

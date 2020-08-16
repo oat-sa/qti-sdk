@@ -53,12 +53,12 @@ class IntegerDivideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerDivide operator only accepts operands with single cardinality.";
+            $msg = 'The IntegerDivide operator only accepts operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerDivide operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerDivide operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

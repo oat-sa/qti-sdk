@@ -88,7 +88,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
                 return new $className($expression, $operands);
             }
         } else {
-            $msg = "The OperatorProcessorFactory only accepts to create processors for Operator objects.";
+            $msg = 'The OperatorProcessorFactory only accepts to create processors for Operator objects.';
             throw new InvalidArgumentException($msg);
         }
     }

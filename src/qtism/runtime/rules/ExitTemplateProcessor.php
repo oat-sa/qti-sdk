@@ -39,7 +39,7 @@ class ExitTemplateProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Template Processing.";
+        $msg = 'Termination of Template Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEMPLATE);
     }
 

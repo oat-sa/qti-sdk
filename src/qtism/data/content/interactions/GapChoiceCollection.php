@@ -41,7 +41,7 @@ class GapChoiceCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof GapChoice) {
-            $msg = "GapChoiceCollection objects only accept to store GapChoice objects.";
+            $msg = 'GapChoiceCollection objects only accept to store GapChoice objects.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -147,7 +147,7 @@ class Unmarshaller
         } elseif (in_array('list', $keys) === true) {
             $keys = array_keys($json['list']);
             if (isset($keys[0]) === false) {
-                $msg = "No baseType provided for list.";
+                $msg = 'No baseType provided for list.';
                 throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
             }
 
@@ -277,7 +277,7 @@ class Unmarshaller
                         break;
                 }
             } catch (InvalidArgumentException $e) {
-                $msg = "A value does not satisfy its baseType.";
+                $msg = 'A value does not satisfy its baseType.';
                 throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
             }
         } elseif ($unit['base'] === null) {

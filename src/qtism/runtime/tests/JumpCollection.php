@@ -39,7 +39,7 @@ class JumpCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof Jump) {
-            $msg = "JumpCollection objects only accept to store Jump objects.";
+            $msg = 'JumpCollection objects only accept to store Jump objects.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -80,13 +80,13 @@ class RoundToProcessor extends OperatorProcessor
         }
 
         if (!$operands->exclusivelySingle()) {
-            $msg = "The RoundTo operator accepts 1 operand with single cardinality.";
+            $msg = 'The RoundTo operator accepts 1 operand with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         // Accept only numerical operands.
         if (!$operands->exclusivelyNumeric()) {
-            $msg = "The RoundTo operand accepts 1 operand with numerical baseType.";
+            $msg = 'The RoundTo operand accepts 1 operand with numerical baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

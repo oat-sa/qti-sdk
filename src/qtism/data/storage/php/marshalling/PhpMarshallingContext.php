@@ -204,7 +204,7 @@ class PhpMarshallingContext
 
         foreach ($values as $value) {
             if (is_string($value) === false) {
-                $msg = "The pushOnVariableStack method only accepts non-empty string values.";
+                $msg = 'The pushOnVariableStack method only accepts non-empty string values.';
                 throw new InvalidArgumentException($msg);
             }
 

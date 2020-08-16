@@ -261,7 +261,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             }
         }
 
-        $msg = "The object you want to detach could not be found in the collection.";
+        $msg = 'The object you want to detach could not be found in the collection.';
         throw new UnexpectedValueException($msg);
     }
 
@@ -296,7 +296,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             }
         }
 
-        $msg = "The object you want to replace could not be found.";
+        $msg = 'The object you want to replace could not be found.';
         throw new UnexpectedValueException($msg);
     }
 
@@ -348,7 +348,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             $newData = array_merge($this->dataPlaceHolder, $collection->getDataPlaceHolder());
             $this->dataPlaceHolder = $newData;
         } else {
-            $msg = "Only collections with compliant types can be merged ";
+            $msg = 'Only collections with compliant types can be merged ';
             $msg .= "('" . get_class($this) . "' vs '" . get_class($collection) . "').";
             throw new InvalidArgumentException($msg);
         }
@@ -367,7 +367,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 
             return new static($newData);
         } else {
-            $msg = "Difference may apply only on two collections of the same type.";
+            $msg = 'Difference may apply only on two collections of the same type.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -385,7 +385,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 
             return new static($newData);
         } else {
-            $msg = "Intersection may apply only on two collections of the same type.";
+            $msg = 'Intersection may apply only on two collections of the same type.';
             throw new InvalidArgumentException($msg);
         }
     }

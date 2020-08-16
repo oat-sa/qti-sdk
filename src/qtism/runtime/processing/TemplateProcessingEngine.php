@@ -71,7 +71,7 @@ class TemplateProcessingEngine extends AbstractEngine
         if ($templateProcessing instanceof TemplateProcessing) {
             parent::setComponent($templateProcessing);
         } else {
-            $msg = "The TemplateProcessing class only accepts TemplateProcessing objects to be executed.";
+            $msg = 'The TemplateProcessing class only accepts TemplateProcessing objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }

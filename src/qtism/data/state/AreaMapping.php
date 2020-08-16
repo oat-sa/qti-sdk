@@ -175,7 +175,7 @@ class AreaMapping extends QtiComponent
         if (count($areaMapEntries) >= 1) {
             $this->areaMapEntries = $areaMapEntries;
         } else {
-            $msg = "An AreaMapping object must contain at least one AreaMapEntry object. none given.";
+            $msg = 'An AreaMapping object must contain at least one AreaMapEntry object. none given.';
             throw new InvalidArgumentException($msg);
         }
     }

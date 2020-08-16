@@ -1049,7 +1049,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function templateFeedbackComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         if (self::isFeedback($component) === false) {
-            $msg = "Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.";
+            $msg = 'Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
@@ -1064,7 +1064,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $valCheck = "(${scalarCheck} || ${containerCheck})";
 
         $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
-        $endifStmt = " qtism-endif ";
+        $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
@@ -1083,7 +1083,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function templateRubricBlockComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         if (self::isRubricBlock($component) === false) {
-            $msg = "Cannot template a component which is not an instance of RubricBlock.";
+            $msg = 'Cannot template a component which is not an instance of RubricBlock.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
@@ -1097,7 +1097,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
         $conds = (count($views) > 1) ? implode(' || ', $conds) : $conds[0];
         $ifStmt = " qtism-if (${conds}): ";
-        $endifStmt = " qtism-endif ";
+        $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
@@ -1116,7 +1116,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function templateChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         if (self::isChoice($component) === false) {
-            $msg = "Cannot template a component which is not an instance of Choice.";
+            $msg = 'Cannot template a component which is not an instance of Choice.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
@@ -1131,7 +1131,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $valCheck = "(${scalarCheck} || ${containerCheck})";
 
         $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
-        $endifStmt = " qtism-endif ";
+        $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);

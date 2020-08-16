@@ -54,10 +54,10 @@ class ProductProcessor extends OperatorProcessor
         if ($operands->containsNull() === true) {
             return null;
         } elseif ($operands->anythingButRecord() === false) {
-            $msg = "The Product operator only accepts operands with a single, multiple or ordered cardinality.";
+            $msg = 'The Product operator only accepts operands with a single, multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         } elseif ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Product operator only accepts operands with integer or float baseType.";
+            $msg = 'The Product operator only accepts operands with integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

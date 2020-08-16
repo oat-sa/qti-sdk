@@ -58,12 +58,12 @@ class DivideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Divide operator only accepts operands with a single cardinality.";
+            $msg = 'The Divide operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Divide operator only accepts operands with a baseType of integer or float.";
+            $msg = 'The Divide operator only accepts operands with a baseType of integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

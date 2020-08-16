@@ -109,7 +109,7 @@ class Equal extends Operator implements Pure
         $this->setToleranceMode($toleranceMode);
 
         if (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && empty($tolerance)) {
-            $msg = "The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.";
+            $msg = 'The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.';
             throw new UnexpectedValueException($msg);
         }
 
@@ -155,10 +155,10 @@ class Equal extends Operator implements Pure
     public function setTolerance(array $tolerance)
     {
         if (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && count($tolerance) < 1) {
-            $msg = "The tolerance array must contain at least t0.";
+            $msg = 'The tolerance array must contain at least t0.';
             throw new InvalidArgumentException($msg);
         } elseif (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && count($tolerance) > 2) {
-            $msg = "The tolerance array must contain at most t0 and t1";
+            $msg = 'The tolerance array must contain at most t0 and t1';
             throw new InvalidArgumentException($msg);
         }
 

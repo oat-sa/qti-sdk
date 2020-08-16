@@ -111,7 +111,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
         if (count($views) > 0) {
             $this->views = $views;
         } else {
-            $msg = "A RubricBlock object must contain at least one View.";
+            $msg = 'A RubricBlock object must contain at least one View.';
             throw new InvalidArgumentException($msg);
         }
     }

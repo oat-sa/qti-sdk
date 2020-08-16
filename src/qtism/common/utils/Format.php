@@ -106,8 +106,8 @@ class Format
             return $dirtyIdentifier;
         }
 
-        $cleanIdentifier = preg_replace("/^[^a-zA-Z_]+/u", "", $dirtyIdentifier); // Cleaning start
-        $cleanIdentifier = preg_replace("/[^a-zA-Z0-9_\.-]+/u", "", $cleanIdentifier); // Cleaning content
+        $cleanIdentifier = preg_replace('/^[^a-zA-Z_]+/u', '', $dirtyIdentifier); // Cleaning start
+        $cleanIdentifier = preg_replace("/[^a-zA-Z0-9_\.-]+/u", '', $cleanIdentifier); // Cleaning content
 
         if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $cleanIdentifier)) {
             return $cleanIdentifier;
@@ -124,7 +124,7 @@ class Format
      */
     private static function generateIdentifier()
     {
-        $rID = "";
+        $rID = '';
         for ($i = 0; $i < 8; $i++) {
             $rID .= chr(rand(65, 90));
         }
@@ -619,7 +619,7 @@ class Format
         if (is_int($length) === true) {
             return $length >= 0;
         } elseif (is_string($length) === true) {
-            return preg_match("/[0-9]+%/", $length) === 1;
+            return preg_match('/[0-9]+%/', $length) === 1;
         } else {
             return false;
         }

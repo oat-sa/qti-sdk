@@ -101,7 +101,7 @@ class OutcomeIf extends QtiComponent
         if (count($outcomeRules) > 0) {
             $this->outcomeRules = $outcomeRules;
         } else {
-            $msg = "An OutcomeIf object must be bound to at least one OutcomeRule.";
+            $msg = 'An OutcomeIf object must be bound to at least one OutcomeRule.';
             throw new InvalidArgumentException($msg);
         }
     }

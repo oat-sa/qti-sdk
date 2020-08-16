@@ -39,7 +39,7 @@ class TestFeedbackRefCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof TestFeedbackRef) {
-            $msg = "A TestFeedbackRefCollection object only accepts to store TestFeedbackRef objects.";
+            $msg = 'A TestFeedbackRefCollection object only accepts to store TestFeedbackRef objects.';
             throw new InvalidArgumentException($msg);
         }
     }

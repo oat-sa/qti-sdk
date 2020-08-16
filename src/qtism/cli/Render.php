@@ -136,7 +136,7 @@ class Render extends Cli
         ];
 
         if (in_array(strtolower($arguments['flavour']), $knownFlavours) === false) {
-            $msg = "Unknown --flavour value'" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . ".";
+            $msg = "Unknown --flavour value'" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . '.';
             $this->fail($msg);
         }
 
@@ -152,7 +152,7 @@ class Render extends Cli
         ];
 
         if (in_array(strtolower($arguments['xmlbase']), $knownXmlBase) === false) {
-            $msg = "Unknown --xmlbase value '" . $arguments['xmlbase'] . "'. Available values are " . implode(', ', $knownXmlBase) . ".";
+            $msg = "Unknown --xmlbase value '" . $arguments['xmlbase'] . "'. Available values are " . implode(', ', $knownXmlBase) . '.';
             $this->fail($msg);
         }
     }
@@ -198,7 +198,7 @@ class Render extends Cli
             }
 
             $this->out($renderingData, $nl);
-            $this->success("QTI XML file successfully rendered.");
+            $this->success('QTI XML file successfully rendered.');
         } catch (XmlStorageException $e) {
             switch ($e->getCode()) {
                 case XmlStorageException::READ:
@@ -272,7 +272,7 @@ class Render extends Cli
                 $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
             }
 
-            $header .= "<html " . implode(' ', $htmlAttributes) . ">${nl}";
+            $header .= '<html ' . implode(' ', $htmlAttributes) . ">${nl}";
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
             $header .= "${indent}${indent}<title>" . XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle()) . "</title>${nl}";

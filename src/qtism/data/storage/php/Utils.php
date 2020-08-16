@@ -61,9 +61,9 @@ class Utils
      */
     public static function doubleQuotedPhpString($string)
     {
-        $escapes = ["\\", '"', "\n", "\t", "\v", "\r", "\f", "$"];
+        $escapes = ["\\", '"', "\n", "\t", "\v", "\r", "\f", '$'];
         $replace = ["\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f", "\\$"];
 
-        return "\"" . str_replace($escapes, $replace, $string) . "\""; // UTF-8 safe.
+        return '"' . str_replace($escapes, $replace, $string) . '"'; // UTF-8 safe.
     }
 }

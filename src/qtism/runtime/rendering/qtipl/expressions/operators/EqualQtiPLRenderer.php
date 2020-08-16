@@ -47,22 +47,22 @@ class EqualQtiPLRenderer extends AbstractQtiPLRenderer
         $attributes = [];
 
         if ($something->getToleranceMode() != ToleranceMode::EXACT) {
-            $attributes['toleranceMode'] = "\"" . ToleranceMode::getNameByConstant($something->getToleranceMode()) . "\"";
+            $attributes['toleranceMode'] = '"' . ToleranceMode::getNameByConstant($something->getToleranceMode()) . '"';
         }
 
         if (($something->getTolerance() != null) && count($something->getTolerance()) > 0) {
-            $tolerance = "\"" . $something->getTolerance()[0];
-            $tolerance .= (count($something->getTolerance()) > 1) ? ";" . $something->getTolerance()[1] : "";
-            $tolerance .= "\"";
+            $tolerance = '"' . $something->getTolerance()[0];
+            $tolerance .= (count($something->getTolerance()) > 1) ? ';' . $something->getTolerance()[1] : '';
+            $tolerance .= '"';
             $attributes['tolerance'] = $tolerance;
         }
 
         if (!$something->doesIncludeLowerBound()) {
-            $attributes['includeLowerBound'] = "false";
+            $attributes['includeLowerBound'] = 'false';
         }
 
         if (!$something->doesIncludeUpperBound()) {
-            $attributes['includeUpperBound'] = "false";
+            $attributes['includeUpperBound'] = 'false';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

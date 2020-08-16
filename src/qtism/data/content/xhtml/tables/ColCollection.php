@@ -41,7 +41,7 @@ class ColCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof Col) {
-            $msg = "ColCollection objects only accept to store Col objects.";
+            $msg = 'ColCollection objects only accept to store Col objects.';
             throw new InvalidArgumentException($msg);
         }
     }

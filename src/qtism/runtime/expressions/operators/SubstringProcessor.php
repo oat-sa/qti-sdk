@@ -54,12 +54,12 @@ class SubstringProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Substring operator only accepts operands with a single cardinality.";
+            $msg = 'The Substring operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The Substring operator only accepts operands with a string baseType.";
+            $msg = 'The Substring operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

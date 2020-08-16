@@ -40,7 +40,7 @@ class ExitResponseProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Response Processing.";
+        $msg = 'Termination of Response Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_RESPONSE);
     }
 

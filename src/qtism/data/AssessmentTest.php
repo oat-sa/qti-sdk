@@ -560,7 +560,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         if (($keyCurrentItem != null) and ($keyTargetItem != null)) {
                             if ($keyCurrentItem == $keyTargetItem) {
                                 throw new BranchRuleTargetException(
-                                    "Recursive branching is not allowed.",
+                                    'Recursive branching is not allowed.',
                                     BranchRuleTargetException::RECURSIVE_BRANCHING,
                                     $component
                                 );
@@ -568,7 +568,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                             if ($itemidToIndex[$keyCurrentItem] > $itemidToIndex[$keyTargetItem]) {
                                 throw new BranchRuleTargetException(
-                                    "Branching backward is not allowed.",
+                                    'Branching backward is not allowed.',
                                     BranchRuleTargetException::BACKWARD_BRANCHING,
                                     $component
                                 );
@@ -627,17 +627,17 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         $sections = new AssessmentSectionCollection();
         $testparts = new TestPartCollection();
 
-        foreach ($this->getComponentsByClassName(["assessmentItemRef", "assessmentSection", "testPart"]) as $cp) {
+        foreach ($this->getComponentsByClassName(['assessmentItemRef', 'assessmentSection', 'testPart']) as $cp) {
             switch ($cp->getQtiClassName()) {
-                case "assessmentItemRef":
+                case 'assessmentItemRef':
                     $items[] = $cp;
                     break;
 
-                case "assessmentSection":
+                case 'assessmentSection':
                     $sections[] = $cp;
                     break;
 
-                case "testPart":
+                case 'testPart':
                     $testparts[] = $cp;
                     break;
 
@@ -690,7 +690,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         foreach ($testparts as $tp) {
             if (count($tp->getPreConditions()) > 0) {
-                $tpItems = $tp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                $tpItems = $tp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                 // for each existing, duplicate it and remove the current item
                 // (because it may not exist with the precondition)
@@ -717,7 +717,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         foreach ($sections as $sect) {
             if (count($sect->getPreConditions()) > 0) {
-                $sectItems = $sect->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                $sectItems = $sect->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                 // for each existing, duplicate it and remove the current item
                 // (because it may not exist with the precondition)
@@ -802,7 +802,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         // Special cases
 
         switch ($branch->getTarget()) {
-            case "EXIT_TEST":
+            case 'EXIT_TEST':
                 $prevItem = DataUtils::getLastItem($this, $component, $sections);
 
                 if ($prevItem == null) {
@@ -823,7 +823,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 }
                 break;
 
-            case "EXIT_TESTPART":
+            case 'EXIT_TESTPART':
                 $prevItem = DataUtils::getLastItem($this, $component, $sections);
                 $targetItem = null;
                 $currentTpFound = false;
@@ -863,8 +863,8 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 }
                 break;
 
-            case "EXIT_SECTION":
-                if ($component->getQtiClassName() == "testPart") {
+            case 'EXIT_SECTION':
+                if ($component->getQtiClassName() == 'testPart') {
                     break;
                 }
 
@@ -876,14 +876,14 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                 foreach ($sections as $sect) {
                     if (
-                        ($component->getQtiClassName() == "assessmentSection") and
+                        ($component->getQtiClassName() == 'assessmentSection') and
                         ($component->getIdentifier() == $sect->getIdentifier())
                     ) {
                         $prevSect = $sect;
                         break;
                     } else {
                         if (
-                            (($component->getQtiClassName() != "assessmentSection")) and (in_array(
+                            (($component->getQtiClassName() != 'assessmentSection')) and (in_array(
                                 $component,
                                 $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()
                             ))

@@ -54,12 +54,12 @@ class InsideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Inside operator only accepts operands with a single cardinality.";
+            $msg = 'The Inside operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyPoint() === false) {
-            $msg = "The Inside operator only accepts operands with a baseType of point.";
+            $msg = 'The Inside operator only accepts operands with a baseType of point.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

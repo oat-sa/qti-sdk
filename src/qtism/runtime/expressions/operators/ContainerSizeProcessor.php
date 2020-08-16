@@ -53,7 +53,7 @@ class ContainerSizeProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The ContainerSize operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The ContainerSize operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

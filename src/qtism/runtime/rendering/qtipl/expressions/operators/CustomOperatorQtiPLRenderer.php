@@ -45,8 +45,8 @@ class CustomOperatorQtiPLRenderer extends AbstractQtiPLRenderer
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
 
-        if ($something->getClass() != "") {
-            $attributes['class'] = "\"" . $something->getClass() . "\"";
+        if ($something->getClass() != '') {
+            $attributes['class'] = '"' . $something->getClass() . '"';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

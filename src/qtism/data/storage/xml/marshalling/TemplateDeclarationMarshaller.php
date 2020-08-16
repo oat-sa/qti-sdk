@@ -94,7 +94,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occurred while unmarshalling the templateDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the templateDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }

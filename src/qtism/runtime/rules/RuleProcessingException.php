@@ -75,7 +75,7 @@ class RuleProcessingException extends ProcessingException
         if ($source instanceof RuleProcessor) {
             parent::setSource($source);
         } else {
-            $msg = "RuleProcessingException::setSource only accept RuleProcessor objects.";
+            $msg = 'RuleProcessingException::setSource only accept RuleProcessor objects.';
             throw new InvalidArgumentException($msg);
         }
     }

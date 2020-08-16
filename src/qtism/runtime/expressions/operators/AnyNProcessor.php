@@ -111,7 +111,7 @@ class AnyNProcessor extends OperatorProcessor
                 }
             } else {
                 // Not null, not a boolean, we have a problem...
-                $msg = "The AnyN operator only accepts values with cardinality single and baseType boolean.";
+                $msg = 'The AnyN operator only accepts values with cardinality single and baseType boolean.';
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE_OR_CARDINALITY);
             }
         }
