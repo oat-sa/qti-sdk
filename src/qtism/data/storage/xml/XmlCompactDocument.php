@@ -416,7 +416,7 @@ class XmlCompactDocument extends XmlDocument
                     $occurence = $testPartCount[$parent];
                 } else {
                     // It's a testFeedback related to an assessmentTest.
-                    $testCount += 1;
+                    $testCount++;
                     $occurence = $testCount;
                 }
 

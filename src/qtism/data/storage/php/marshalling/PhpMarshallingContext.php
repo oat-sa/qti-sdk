@@ -265,7 +265,7 @@ class PhpMarshallingContext
                 $occurence = $counter[$className];
             }
 
-            $counter[$className] += 1;
+            $counter[$className]++;
             $this->setObjectCount($counter);
         } else {
             if (is_null($value) === true) {
@@ -276,7 +276,7 @@ class PhpMarshallingContext
 
             $counter = $this->getDatatypeCount();
             $occurence = $counter[$type];
-            $counter[$type] += 1;
+            $counter[$type]++;
 
             $this->setDatatypeCount($counter);
         }

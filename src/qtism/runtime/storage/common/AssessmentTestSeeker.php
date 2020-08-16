@@ -273,7 +273,7 @@ class AssessmentTestSeeker
             $this->classCounter[$class] = 0;
         }
 
-        $this->classCounter[$class] += 1;
+        $this->classCounter[$class]++;
     }
 
     /**
