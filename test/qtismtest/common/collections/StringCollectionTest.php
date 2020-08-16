@@ -110,9 +110,9 @@ class StringCollectionTest extends QtiSmTestCase
 
     public function testResetKeys()
     {
-        $this->collection[] = "string1";
-        $this->collection[] = "string2";
-        $this->collection[] = "string3";
+        $this->collection[] = 'string1';
+        $this->collection[] = 'string2';
+        $this->collection[] = 'string3';
 
         unset($this->collection[1]);
 

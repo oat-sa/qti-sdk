@@ -18,13 +18,13 @@ function testAssessmentItems(array $files, $validate = false)
         $spent = spentTime($start, $end);
         $totalSpent += $spent;
 
-        output("Item '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
+        output("Item '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf('%.8f', $spent) . ' seconds.');
 
         $outcomeDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('outcomeDeclaration'));
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 
         outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription('Memory usage is ' . (memory_get_usage() / pow(1024, 2)) . ' MB');
         output('');
 
         $loaded++;
@@ -47,14 +47,14 @@ function testAssessmentTests(array $files, $validate = false)
         $spent = spentTime($start, $end);
         $totalSpent += $spent;
 
-        output("Test '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
+        output("Test '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf('%.8f', $spent) . ' seconds.');
 
         $partCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('testPart'));
         $sectionCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentSection'));
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 
         outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription('Memory usage is ' . (memory_get_usage() / pow(1024, 2)) . ' MB');
 
         output('');
 
@@ -74,7 +74,7 @@ function outputTitle($msg)
 
 function outputAverage($avg)
 {
-    output(sprintf("--> Average loading time is %.8f seconds.", $avg));
+    output(sprintf('--> Average loading time is %.8f seconds.', $avg));
 }
 
 function outputDescription($msg)
@@ -129,7 +129,7 @@ $items = [
     SAMPLES_DIR . 'ims/items/2_0/upload.xml',
 ];
 
-outputTitle("Loading QTI-XML Items 2.0 samples:");
+outputTitle('Loading QTI-XML Items 2.0 samples:');
 testAssessmentItems($items);
 
 $items = [
@@ -149,7 +149,7 @@ $items = [
     SAMPLES_DIR . 'ims/items/2_1/text_entry.xml',
 ];
 
-outputTitle("Loading QTI-XML Items 2.1 samples:");
+outputTitle('Loading QTI-XML Items 2.1 samples:');
 testAssessmentItems($items);
 
 $tests = [
@@ -173,5 +173,5 @@ $tests = [
     SAMPLES_DIR . 'custom/very_long_assessmenttest.xml',
 ];
 
-outputTitle("Loading QTI-XML Tests 2.1 samples:");
+outputTitle('Loading QTI-XML Tests 2.1 samples:');
 testAssessmentTests($tests);

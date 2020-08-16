@@ -142,7 +142,7 @@ class OrderInteraction extends BlockInteraction
         if (count($simpleChoices) > 0) {
             $this->simpleChoices = $simpleChoices;
         } else {
-            $msg = "An OrderInteraction object must be composed of at lease one SimpleChoice object, none given.";
+            $msg = 'An OrderInteraction object must be composed of at lease one SimpleChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

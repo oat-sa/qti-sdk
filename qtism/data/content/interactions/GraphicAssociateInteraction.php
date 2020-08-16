@@ -109,7 +109,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
         } else {
-            $msg = "A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.";
+            $msg = 'A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

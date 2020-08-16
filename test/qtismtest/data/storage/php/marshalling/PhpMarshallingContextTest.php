@@ -72,7 +72,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $values = $ctx->popFromVariableStack(4);
-            $this->assertFalse(true, "An exception must be thrown because the requested quantity is too large.");
+            $this->assertFalse(true, 'An exception must be thrown because the requested quantity is too large.');
         } catch (RuntimeException $e) {
             $this->assertTrue(true);
         }
@@ -84,7 +84,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $value = $ctx->popFromVariableStack();
-            $this->assertFalse(true, "An exception must be thrown because the variable names stack is empty.");
+            $this->assertFalse(true, 'An exception must be thrown because the variable names stack is empty.');
         } catch (RuntimeException $e) {
             $this->assertTrue(true);
         }

@@ -27,7 +27,7 @@ class UrlTest extends QtiSmTestCase
 
     public function testTrim()
     {
-        $this->assertEquals("hello", Url::trim("/hello/\n"));
+        $this->assertEquals('hello', Url::trim("/hello/\n"));
     }
 
     public function testLtrim()
@@ -37,7 +37,7 @@ class UrlTest extends QtiSmTestCase
 
     public function testRtrim()
     {
-        $this->assertEquals("/hello", Url::rtrim("/hello/\n"));
+        $this->assertEquals('/hello', Url::rtrim("/hello/\n"));
     }
 
     public function validRelativeUrlProvider()

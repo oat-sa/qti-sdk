@@ -45,7 +45,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
         if ($expression instanceof IntegerToFloat) {
             parent::setExpression($expression);
         } else {
-            $msg = "The IntegerToFloatProcessor class only processes IntegerToFloat QTI Data Model objects.";
+            $msg = 'The IntegerToFloatProcessor class only processes IntegerToFloat QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -65,12 +65,12 @@ class IntegerToFloatProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerToFloat operator only accepts operands with a single cardinality.";
+            $msg = 'The IntegerToFloat operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerToFloat operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerToFloat operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

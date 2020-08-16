@@ -51,7 +51,7 @@ class IsNullProcessor extends OperatorProcessor
         if ($expression instanceof IsNull) {
             parent::setExpression($expression);
         } else {
-            $msg = "The IsNullProcessor class only accept IsNull Operator objects to be processed.";
+            $msg = 'The IsNullProcessor class only accept IsNull Operator objects to be processed.';
             throw new InvalidArgumentException($expression);
         }
     }

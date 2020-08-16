@@ -55,7 +55,7 @@ class AnyNProcessor extends OperatorProcessor
         if ($expression instanceof AnyN) {
             parent::setExpression($expression);
         } else {
-            $msg = "The AnyNProcessor class only processes AnyN QTI Data Model objects.";
+            $msg = 'The AnyNProcessor class only processes AnyN QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -123,7 +123,7 @@ class AnyNProcessor extends OperatorProcessor
                 }
             } else {
                 // Not null, not a boolean, we have a problem...
-                $msg = "The AnyN operator only accepts values with cardinality single and baseType boolean.";
+                $msg = 'The AnyN operator only accepts values with cardinality single and baseType boolean.';
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE_OR_CARDINALITY);
             }
         }

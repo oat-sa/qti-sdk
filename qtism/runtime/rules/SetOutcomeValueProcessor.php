@@ -59,7 +59,7 @@ class SetOutcomeValueProcessor extends RuleProcessor
         if ($rule instanceof SetOutcomeValue) {
             parent::setRule($rule);
         } else {
-            $msg = "The SetOutcomeValueProcessor only accepts SetOutcomeValue objects to be processed.";
+            $msg = 'The SetOutcomeValueProcessor only accepts SetOutcomeValue objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -99,7 +99,7 @@ class SetOutcomeValueProcessor extends RuleProcessor
             $expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
             $val = $expressionEngine->process();
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occurred while processing the expression bound with the setOutcomeValue rule.";
+            $msg = 'An error occurred while processing the expression bound with the setOutcomeValue rule.';
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
 

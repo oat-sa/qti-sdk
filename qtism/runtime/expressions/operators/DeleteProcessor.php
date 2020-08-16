@@ -54,7 +54,7 @@ class DeleteProcessor extends OperatorProcessor
         if ($expression instanceof Delete) {
             parent::setExpression($expression);
         } else {
-            $msg = "The DeleteProcessor class only processes Delete QTI Data Model objects.";
+            $msg = 'The DeleteProcessor class only processes Delete QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -74,20 +74,20 @@ class DeleteProcessor extends OperatorProcessor
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Delete operator only accepts operands with the same baseType.";
+            $msg = 'The Delete operator only accepts operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand1 = $operands[0];
         if (RuntimeUtils::inferCardinality($operand1) !== Cardinality::SINGLE) {
-            $msg = "The first operand of the Delete operator must have the single cardinality.";
+            $msg = 'The first operand of the Delete operator must have the single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         $operand2 = $operands[1];
         $cardinality = RuntimeUtils::inferCardinality($operand2);
         if ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
-            $msg = "The second operand of the Delete operator must have a cardinality or multiple or ordered.";
+            $msg = 'The second operand of the Delete operator must have a cardinality or multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

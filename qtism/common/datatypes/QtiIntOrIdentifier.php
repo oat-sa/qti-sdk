@@ -42,7 +42,7 @@ class QtiIntOrIdentifier extends QtiScalar implements QtiDatatype
     protected function checkType($value)
     {
         if (is_int($value) !== true && is_string($value) !== true) {
-            $msg = "The IntOrIdentifier Datatype only accepts to store identifier and integer values.";
+            $msg = 'The IntOrIdentifier Datatype only accepts to store identifier and integer values.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -46,7 +46,7 @@ class GteProcessor extends OperatorProcessor
         if ($expression instanceof Gte) {
             parent::setExpression($expression);
         } else {
-            $msg = "The GteProcessor class only processes Gte QTI Data Model objects.";
+            $msg = 'The GteProcessor class only processes Gte QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -66,12 +66,12 @@ class GteProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Gte operator only accepts operands with a single cardinality.";
+            $msg = 'The Gte operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Gte operator only accepts operands with a float or integer baseType.";
+            $msg = 'The Gte operator only accepts operands with a float or integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

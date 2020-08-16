@@ -115,7 +115,7 @@ class DefaultValue extends QtiComponent
         if (count($values) > 0) {
             $this->values = $values;
         } else {
-            $msg = "Values must contain at lease one Value.";
+            $msg = 'Values must contain at lease one Value.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -286,7 +286,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "The PrintedVariableEngine class only accepts PrintedVariable objects to be executed."
+            'The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.'
         );
 
         new PrintedVariableEngine(new TextRun('crash'));
@@ -303,7 +303,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
         try {
             $engine->process();
-            $this->assertFalse(true, "Should not be able to process a printed variable rendering from a QTI File.");
+            $this->assertFalse(true, 'Should not be able to process a printed variable rendering from a QTI File.');
         } catch (PrintedVariableProcessingException $e) {
             $this->assertEquals("The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.", $e->getMessage());
         }
@@ -323,7 +323,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
     public function testForNewProvider($expected, $id, $state)
     {
         $printedVariable = new PrintedVariable($id);
-        $printedVariable->setFormat("%d");
+        $printedVariable->setFormat('%d');
 
         $engine = new PrintedVariableEngine($printedVariable);
         $engine->setContext($state);
@@ -340,10 +340,10 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $state->setVariable(new OutcomeVariable('test4', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(98.0)));
 
         return [
-            [97, "test1", $state],
-            [97, "test2", $state],
-            [97, "test3", $state],
-            [98, "test4", $state],
+            [97, 'test1', $state],
+            [97, 'test2', $state],
+            [97, 'test3', $state],
+            [98, 'test4', $state],
         ];
     }
 }

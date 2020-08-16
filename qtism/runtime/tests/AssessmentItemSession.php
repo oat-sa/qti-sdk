@@ -670,7 +670,7 @@ class AssessmentItemSession extends State
                     // An exception is thrown to prevent the numAttempts to be incremented.
                     // Suspend and wait for a next attempt.
                     $this->suspend();
-                    $msg = "The minimal duration is not yet reached.";
+                    $msg = 'The minimal duration is not yet reached.';
                     throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
                 }
             }
@@ -683,7 +683,7 @@ class AssessmentItemSession extends State
 
                 if ($this->timeLimits->doesAllowLateSubmission() === false && $allowLateSubmission === false) {
                     $this['completionStatus']->setValue(self::COMPLETION_STATUS_INCOMPLETE);
-                    $msg = "The maximal duration is exceeded.";
+                    $msg = 'The maximal duration is exceeded.';
                     $this->endItemSession();
                     throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
                 } else {

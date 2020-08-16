@@ -41,7 +41,7 @@ class QtiIdentifier extends QtiString
     protected function checkType($value)
     {
         if (is_string($value) !== true) {
-            $msg = "The Identifier Datatype only accepts to store identifier values.";
+            $msg = 'The Identifier Datatype only accepts to store identifier values.';
             throw new InvalidArgumentException($msg);
         }
     }

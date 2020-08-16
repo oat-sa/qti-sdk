@@ -49,7 +49,7 @@ class OrProcessor extends OperatorProcessor
         if ($expression instanceof OrOperator) {
             parent::setExpression($expression);
         } else {
-            $msg = "The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.";
+            $msg = 'The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -67,13 +67,13 @@ class OrProcessor extends OperatorProcessor
 
         foreach ($operands as $op) {
             if ($op instanceof Container) {
-                $msg = "The Or Expression only accept operands with single cardinality.";
+                $msg = 'The Or Expression only accept operands with single cardinality.';
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
             } elseif ($op === null) {
                 continue;
             } else {
                 if (!$op instanceof QtiBoolean) {
-                    $msg = "The Or Expression only accept operands with boolean baseType.";
+                    $msg = 'The Or Expression only accept operands with boolean baseType.';
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
                 } else {
                     if ($op->getValue() !== false) {

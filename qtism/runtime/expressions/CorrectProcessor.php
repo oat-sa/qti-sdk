@@ -46,7 +46,7 @@ class CorrectProcessor extends ExpressionProcessor
         if ($expression instanceof Correct) {
             parent::setExpression($expression);
         } else {
-            $msg = "The CorrectProcessor can only process Correct Expression objects.";
+            $msg = 'The CorrectProcessor can only process Correct Expression objects.';
             throw new InvalidArgumentException($msg);
         }
     }

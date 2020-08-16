@@ -53,7 +53,7 @@ class OrderedProcessor extends OperatorProcessor
         if ($expression instanceof Ordered) {
             parent::setExpression($expression);
         } else {
-            $msg = "The OrderedProcessor class only accepts Ordered QTI Data Model Expression objects to be processed.";
+            $msg = 'The OrderedProcessor class only accepts Ordered QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -73,7 +73,7 @@ class OrderedProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingleOrOrdered() === false) {
-            $msg = "The Ordered operator only accepts operands with single or ordered cardinality.";
+            $msg = 'The Ordered operator only accepts operands with single or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -92,7 +92,7 @@ class OrderedProcessor extends OperatorProcessor
                         static::appendValue($returnValue, $operand);
                     } else {
                         // baseType mismatch.
-                        $msg = "The Ordered operator only accepts values with a similar baseType.";
+                        $msg = 'The Ordered operator only accepts values with a similar baseType.';
                         throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
                     }
                 } elseif (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {

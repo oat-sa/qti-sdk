@@ -80,7 +80,7 @@ class FileSystemFile implements QtiFile
         $fp = @fopen($this->getPath(), 'r');
 
         if ($fp === false) {
-            $msg = "Unable to retrieve QTI file at '" . $this->getPath() . ".";
+            $msg = "Unable to retrieve QTI file at '" . $this->getPath() . '.';
             throw new RuntimeException($msg);
         }
 

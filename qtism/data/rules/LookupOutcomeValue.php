@@ -92,7 +92,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "Identifier must be a vali QTI Identifier.";
+            $msg = 'Identifier must be a vali QTI Identifier.';
             throw new InvalidArgumentException($msg);
         }
     }

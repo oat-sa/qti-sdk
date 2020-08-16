@@ -72,7 +72,7 @@ class ResponseElse extends QtiComponent
         if (count($responseRules) > 0) {
             $this->responseRules = $responseRules;
         } else {
-            $msg = "A ResponseElse object must be bound to at least one ResponseRule object.";
+            $msg = 'A ResponseElse object must be bound to at least one ResponseRule object.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -46,7 +46,7 @@ class LtProcessor extends OperatorProcessor
         if ($expression instanceof Lt) {
             parent::setExpression($expression);
         } else {
-            $msg = "The LtProcessor class only processes Lt QTI Data Model objects.";
+            $msg = 'The LtProcessor class only processes Lt QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -66,12 +66,12 @@ class LtProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Lt operator only accepts operands with a single cardinality.";
+            $msg = 'The Lt operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Lt operator only accepts operands with a float or integer baseType.";
+            $msg = 'The Lt operator only accepts operands with a float or integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

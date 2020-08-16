@@ -54,7 +54,7 @@ class PatternMatchProcessor extends OperatorProcessor
         if ($expression instanceof PatternMatch) {
             parent::setExpression($expression);
         } else {
-            $msg = "The PatternMatchProcessor class only processes PatternMatch QTI Data Model objects.";
+            $msg = 'The PatternMatchProcessor class only processes PatternMatch QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -74,12 +74,12 @@ class PatternMatchProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The PatternMatch operator only accepts operands with a single cardinality.";
+            $msg = 'The PatternMatch operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The PatternMatch operator only accepts operands with a string baseType.";
+            $msg = 'The PatternMatch operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -105,23 +105,23 @@ class PatternMatchProcessor extends OperatorProcessor
 
             switch ($error) {
                 case PREG_INTERNAL_ERROR:
-                    $errorType = "PCRE Engine internal error";
+                    $errorType = 'PCRE Engine internal error';
                     break;
 
                 case PREG_BACKTRACK_LIMIT_ERROR:
-                    $errorType = "PCRE Engine backtrack limit exceeded";
+                    $errorType = 'PCRE Engine backtrack limit exceeded';
                     break;
 
                 case PREG_RECURSION_LIMIT_ERROR:
-                    $errorType = "PCRE Engine recursion limit exceeded";
+                    $errorType = 'PCRE Engine recursion limit exceeded';
                     break;
 
                 case PREG_BAD_UTF8_ERROR:
-                    $errorType = "PCRE Engine malformed UTF-8";
+                    $errorType = 'PCRE Engine malformed UTF-8';
                     break;
 
                 case PREG_BAD_UTF8_OFFSET_ERROR:
-                    $errorType = "PCRE Engine UTF-8 offset error";
+                    $errorType = 'PCRE Engine UTF-8 offset error';
                     break;
             }
 

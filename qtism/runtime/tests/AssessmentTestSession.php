@@ -336,7 +336,7 @@ class AssessmentTestSession extends State
         if (in_array($state, AssessmentTestSessionState::asArray(), true) === true) {
             $this->state = $state;
         } else {
-            $msg = "The state argument must be a value from the AssessmentTestSessionState enumeration";
+            $msg = 'The state argument must be a value from the AssessmentTestSessionState enumeration';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -409,7 +409,7 @@ class AssessmentTestSession extends State
         if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
             $this->getPendingResponseStore()->addPendingResponses($pendingResponses);
         } else {
-            $msg = "Cannot add pending responses while the current submission mode is not SIMULTANEOUS";
+            $msg = 'Cannot add pending responses while the current submission mode is not SIMULTANEOUS';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
     }
@@ -679,7 +679,7 @@ class AssessmentTestSession extends State
                 throw new InvalidArgumentException($msg, 0, $e);
             }
         } elseif (!$identifier instanceof VariableIdentifier) {
-            $msg = "The given identifier argument is not a string, nor a VariableIdentifier object.";
+            $msg = 'The given identifier argument is not a string, nor a VariableIdentifier object.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -725,7 +725,7 @@ class AssessmentTestSession extends State
             $v = new VariableIdentifier($variable->getIdentifier());
 
             if ($v->hasPrefix() === true) {
-                $msg = "The variables set to the AssessmentTestSession global scope must have simple variable identifiers. ";
+                $msg = 'The variables set to the AssessmentTestSession global scope must have simple variable identifiers. ';
                 $msg .= "'" . $v->__toString() . "' given.";
                 throw new OutOfRangeException($msg);
             }
@@ -871,7 +871,7 @@ class AssessmentTestSession extends State
     public function offsetSet($offset, $value)
     {
         if (gettype($offset) !== 'string') {
-            $msg = "An AssessmentTestSession object must be addressed by string.";
+            $msg = 'An AssessmentTestSession object must be addressed by string.';
             throw new OutOfRangeException($msg);
         }
 
@@ -967,7 +967,7 @@ class AssessmentTestSession extends State
             $v = new VariableIdentifier($offset);
 
             if ($v->hasPrefix() === true) {
-                $msg = "Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable ";
+                $msg = 'Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable ';
                 $msg .= "identifiers (no prefix, no sequence number). '" . $v->__toString() . "' given.";
                 throw new OutOfRangeException($msg, 0);
             }
@@ -1152,7 +1152,7 @@ class AssessmentTestSession extends State
         if ($this->getAssessmentItemRefs()->contains($session->getAssessmentItem()) === false) {
             // The session that is requested to be set is bound to an item
             // which is not referenced in the test. This is a pure logic error.
-            $msg = "The item session to set is bound to an unknown AssessmentItemRef.";
+            $msg = 'The item session to set is bound to an unknown AssessmentItemRef.';
             throw new LogicException($msg);
         }
 
@@ -1305,7 +1305,7 @@ class AssessmentTestSession extends State
     public function isCurrentAssessmentItemAdaptive()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1320,7 +1320,7 @@ class AssessmentTestSession extends State
     public function isCurrentAssessmentItemInteracting()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED.";
+            $msg = 'Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1340,14 +1340,14 @@ class AssessmentTestSession extends State
     public function getPreviousRouteItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED";
+            $msg = 'Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
         try {
             return $this->getRoute()->getPrevious();
         } catch (OutOfBoundsException $e) {
-            $msg = "There is no previous route item because the current position in the route sequence is 0";
+            $msg = 'There is no previous route item because the current position in the route sequence is 0';
             throw new OutOfBoundsException($msg, 0, $e);
         }
     }
@@ -1362,14 +1362,14 @@ class AssessmentTestSession extends State
     public function getNextRouteItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know what is the next route item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot know what is the next route item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
         try {
             return $this->getRoute()->getNext();
         } catch (OutOfBoundsException $e) {
-            $msg = "There is not next route item because the current position in the route sequence is the last one.";
+            $msg = 'There is not next route item because the current position in the route sequence is the last one.';
             throw new OutOfBoundsException($msg, 0, $e);
         }
     }
@@ -1384,7 +1384,7 @@ class AssessmentTestSession extends State
     public function skip()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot skip the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1419,7 +1419,7 @@ class AssessmentTestSession extends State
     public function beginAttempt()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1452,7 +1452,7 @@ class AssessmentTestSession extends State
     public function endAttempt(State $responses, $allowLateSubmission = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1491,7 +1491,7 @@ class AssessmentTestSession extends State
             try {
                 $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
             } catch (AssessmentTestSessionException $e) {
-                $msg = "An error occurred while transmitting item results to the appropriate data source at deferred responses processing time.";
+                $msg = 'An error occurred while transmitting item results to the appropriate data source at deferred responses processing time.';
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
             }
 
@@ -1515,7 +1515,7 @@ class AssessmentTestSession extends State
         // Can we jump?
         $navigationMode = $this->getCurrentNavigationMode();
         if ($navigationMode === NavigationMode::LINEAR && $this->mustAlwaysAllowJumps() !== true) {
-            $msg = "Jumps are not allowed in LINEAR navigation mode.";
+            $msg = 'Jumps are not allowed in LINEAR navigation mode.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
 
@@ -1638,11 +1638,11 @@ class AssessmentTestSession extends State
                     $pendingResponsesProcessed++;
                     $this->submitItemResults($itemSession, $occurence);
                 } catch (ProcessingException $e) {
-                    $msg = "An error occurred during postponed response processing.";
+                    $msg = 'An error occurred during postponed response processing.';
                     throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
                 } catch (AssessmentTestSessionException $e) {
                     // An error occurred while transmitting the results.
-                    $msg = "An error occurred while transmitting item results to the appropriate data source.";
+                    $msg = 'An error occurred while transmitting item results to the appropriate data source.';
                     throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
                 }
             }
@@ -1692,7 +1692,7 @@ class AssessmentTestSession extends State
     public function moveNext($allowTimeout = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next item while the test session state is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1750,7 +1750,7 @@ class AssessmentTestSession extends State
     public function moveBack($allowTimeout = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the previous item while the test session state is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1797,7 +1797,7 @@ class AssessmentTestSession extends State
                     $this->interactWithItemSession();
                 } catch (AssessmentTestSessionException $e) {
                     $route->setPosition($oldPosition);
-                    $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
+                    $msg = 'Cannot move backward. All the previous items in the route sequence are timed out.';
                     throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
                 }
             }
@@ -1817,7 +1817,7 @@ class AssessmentTestSession extends State
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next position while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next position while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1903,7 +1903,7 @@ class AssessmentTestSession extends State
     public function moveNextTestPart()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1930,7 +1930,7 @@ class AssessmentTestSession extends State
     public function moveNextAssessmentSection()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1957,7 +1957,7 @@ class AssessmentTestSession extends State
     public function moveNextAssessmentItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1976,13 +1976,13 @@ class AssessmentTestSession extends State
     protected function previousRouteItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move backward in the route item sequence while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move backward in the route item sequence while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         } elseif ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
-            $msg = "Cannot move backward in the route item sequence while the LINEAR navigation mode is in force.";
+            $msg = 'Cannot move backward in the route item sequence while the LINEAR navigation mode is in force.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
         } elseif ($this->getRoute()->getPosition() === 0) {
-            $msg = "Cannot move backward in the route item sequence while the current position is the very first one of the AssessmentTestSession.";
+            $msg = 'Cannot move backward in the route item sequence while the current position is the very first one of the AssessmentTestSession.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);
         }
 
@@ -2015,7 +2015,7 @@ class AssessmentTestSession extends State
                     $this->submitTestResults();
                 }
             } catch (ProcessingException $e) {
-                $msg = "An error occurred while processing OutcomeProcessing.";
+                $msg = 'An error occurred while processing OutcomeProcessing.';
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::OUTCOME_PROCESSING_ERROR, $e);
             }
         }
@@ -2042,7 +2042,7 @@ class AssessmentTestSession extends State
     public function endTestSession()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot end the test session while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot end the test session while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -2311,7 +2311,7 @@ class AssessmentTestSession extends State
     public function isCurrentTestPartComplete()
     {
         if ($this->getCurrentSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
-            $msg = "It makes no sense to check if the current TestPart is complete when the current navigation mode is not SIMULTANEOUS.";
+            $msg = 'It makes no sense to check if the current TestPart is complete when the current navigation mode is not SIMULTANEOUS.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);
         }
 
@@ -2513,7 +2513,7 @@ class AssessmentTestSession extends State
     protected function suspendItemSession()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot suspend the item session if the test session is not running.";
+            $msg = 'Cannot suspend the item session if the test session is not running.';
             $code = AssessmentTestSessionException::STATE_VIOLATION;
             throw new AssessmentTestSessionException($msg, $code);
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
@@ -2521,7 +2521,7 @@ class AssessmentTestSession extends State
                 $itemSession->suspend();
             }
         } else {
-            $msg = "Cannot retrieve the current item session.";
+            $msg = 'Cannot retrieve the current item session.';
             throw new UnexpectedValueException($msg);
         }
     }
@@ -2536,7 +2536,7 @@ class AssessmentTestSession extends State
     protected function interactWithItemSession()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot set the item session in interacting state if test session is not running.";
+            $msg = 'Cannot set the item session in interacting state if test session is not running.';
             $code = AssessmentTestSessionException::STATE_VIOLATION;
             throw new AssessmentTestSessionException($msg, $code);
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
@@ -2544,7 +2544,7 @@ class AssessmentTestSession extends State
                 $itemSession->interact();
             }
         } else {
-            $msg = "Cannot retrieve the current item session.";
+            $msg = 'Cannot retrieve the current item session.';
             throw new UnexpectedValueException($msg);
         }
     }
@@ -2736,7 +2736,7 @@ class AssessmentTestSession extends State
         if ($e instanceof AssessmentItemSessionException) {
             switch ($e->getCode()) {
                 case AssessmentItemSessionException::UNKNOWN:
-                    $msg = "An unknown error occurred at the AssessmentItemSession level.";
+                    $msg = 'An unknown error occurred at the AssessmentItemSession level.';
                     $code = AssessmentTestSessionException::UNKNOWN;
                     break;
 
@@ -2760,7 +2760,7 @@ class AssessmentTestSession extends State
 
                 case AssessmentItemSessionException::RUNTIME_ERROR:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "A runtime error occurred at the AssessmentItemSession level.";
+                    $msg = 'A runtime error occurred at the AssessmentItemSession level.';
                     $code = AssessmentTestSessionException::UNKNOWN;
                     break;
 
@@ -2786,7 +2786,7 @@ class AssessmentTestSession extends State
             return new AssessmentTestSessionException($msg, $code, $e);
         } else {
             // Generic exception...
-            $msg = "An unexpected error occurred at the level of the Test Session.";
+            $msg = 'An unexpected error occurred at the level of the Test Session.';
 
             return new AssessmentTestSessionException($msg, AssessmentTestSessionException::UNKNOWN, $e);
         }

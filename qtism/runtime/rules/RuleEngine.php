@@ -67,7 +67,7 @@ class RuleEngine extends AbstractEngine
         if ($rule instanceof Rule) {
             parent::setComponent($rule);
         } else {
-            $msg = "The RuleEngine class only accepts to execute Rule objects.";
+            $msg = 'The RuleEngine class only accepts to execute Rule objects.';
             throw new InvalidArgumentException($msg);
         }
     }

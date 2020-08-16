@@ -15,7 +15,7 @@ class EqualTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\UnexpectedValueException',
-            "The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT."
+            'The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.'
         );
 
         $equal = new Equal(
@@ -48,7 +48,7 @@ class EqualTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "The tolerance array must contain at least t0."
+            'The tolerance array must contain at least t0.'
         );
 
         $equal->setTolerance([]);
@@ -64,7 +64,7 @@ class EqualTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "The tolerance array must contain at most t0 and t1"
+            'The tolerance array must contain at most t0 and t1'
         );
 
         $equal->setTolerance([1, 2, 3]);

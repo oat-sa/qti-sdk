@@ -200,7 +200,7 @@ class MatchInteraction extends BlockInteraction
         if (count($simpleMatchSets) === 2) {
             $this->simpleMatchSets = $simpleMatchSets;
         } else {
-            $msg = "A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.";
+            $msg = 'A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -151,7 +151,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\pci\\json\\UnmarshallingException',
-            "A value does not satisfy its baseType."
+            'A value does not satisfy its baseType.'
         );
 
         $unmarshaller->unmarshall('{ "list" : { "identifier" : [true, "id2", "ID3"] } }');

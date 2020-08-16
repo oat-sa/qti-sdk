@@ -41,7 +41,7 @@ class TbodyCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof Tbody) {
-            $msg = "TbodyCollection objects only accept to store Tbody objects.";
+            $msg = 'TbodyCollection objects only accept to store Tbody objects.';
             throw new InvalidArgumentException($msg);
         }
     }

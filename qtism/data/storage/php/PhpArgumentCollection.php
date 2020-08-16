@@ -40,7 +40,7 @@ class PhpArgumentCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof PhpArgument) {
-            $msg = "A PhpArgumentCollection only accepts PhpArgument objects to be stored.";
+            $msg = 'A PhpArgumentCollection only accepts PhpArgument objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }

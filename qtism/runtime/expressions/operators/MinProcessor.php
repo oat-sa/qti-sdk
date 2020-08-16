@@ -54,7 +54,7 @@ class MinProcessor extends OperatorProcessor
         if ($expression instanceof Min) {
             parent::setExpression($expression);
         } else {
-            $msg = "The MinProcessor class only accepts Min QTI Data Model Expression objects to be processed.";
+            $msg = 'The MinProcessor class only accepts Min QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -74,7 +74,7 @@ class MinProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Min operator only accept values with a cardinality of single, multiple or ordered.";
+            $msg = 'The Min operator only accept values with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

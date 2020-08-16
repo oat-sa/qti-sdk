@@ -189,7 +189,7 @@ class UtilsTest extends QtiSmTestCase
         $coords = Utils::stringToCoords($string, $shape);
         $this->assertInstanceOf(QtiCoords::class, $coords);
 
-        $intCoords = explode(",", $string);
+        $intCoords = explode(',', $string);
         $this->assertEquals(count($intCoords), count($coords));
 
         for ($i = 0; $i < count($intCoords); $i++) {

@@ -118,7 +118,7 @@ class MatchInteractionTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "A MatchInteraction object must be composed of exactly two SimpleMatchSet objects."
+            'A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.'
         );
 
         $matchInteraction = new MatchInteraction(

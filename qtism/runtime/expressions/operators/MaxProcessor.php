@@ -53,7 +53,7 @@ class MaxProcessor extends OperatorProcessor
         if ($expression instanceof Max) {
             parent::setExpression($expression);
         } else {
-            $msg = "The MaxProcessor class only accepts Max QTI Data Model Expression objects to be processed.";
+            $msg = 'The MaxProcessor class only accepts Max QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -73,7 +73,7 @@ class MaxProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Max operator only accept values with a cardinality of single, multiple or ordered.";
+            $msg = 'The Max operator only accept values with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

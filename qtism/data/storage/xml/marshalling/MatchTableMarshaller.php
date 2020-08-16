@@ -67,7 +67,7 @@ class MatchTableMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType attribute must be a value from the BaseType enumeration.";
+            $msg = 'The baseType attribute must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -140,7 +140,7 @@ class MatchTableMarshaller extends Marshaller
 
             return $object;
         } else {
-            $msg = "A QTI matchTable element must contain at least one matchTableEntry element.";
+            $msg = 'A QTI matchTable element must contain at least one matchTableEntry element.';
             throw new UnmarshallingException($msg, $element);
         }
     }

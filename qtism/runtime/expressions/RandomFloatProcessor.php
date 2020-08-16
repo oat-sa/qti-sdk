@@ -42,7 +42,7 @@ class RandomFloatProcessor extends ExpressionProcessor
         if ($expression instanceof RandomFloat) {
             parent::setExpression($expression);
         } else {
-            $msg = "The RandomFloatProcessor class can only process RandomFloat Expression objects.";
+            $msg = 'The RandomFloatProcessor class can only process RandomFloat Expression objects.';
             throw new InvalidArgumentException($msg);
         }
     }

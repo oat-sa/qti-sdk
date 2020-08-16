@@ -48,7 +48,7 @@ class PowerProcessor extends OperatorProcessor
         if ($expression instanceof Power) {
             parent::setExpression($expression);
         } else {
-            $msg = "The PowerProcessor class only processes Power QTI Data Model objects.";
+            $msg = 'The PowerProcessor class only processes Power QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -68,12 +68,12 @@ class PowerProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Power operator only accepts operands with a single cardinality.";
+            $msg = 'The Power operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Power operator only accepts operands with a baseType of integer or float.";
+            $msg = 'The Power operator only accepts operands with a baseType of integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

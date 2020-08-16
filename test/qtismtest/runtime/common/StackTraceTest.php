@@ -38,7 +38,7 @@ class StackTraceTest extends QtiSmTestCase
 
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "The StackTrace class only accepts to store StackTraceItem objects."
+            'The StackTrace class only accepts to store StackTraceItem objects.'
         );
 
         $stackTrace[] = $stackTraceItem;

@@ -291,7 +291,7 @@ class ContainerTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\UnexpectedValueException',
-            "The object you want to detach could not be found in the collection."
+            'The object you want to detach could not be found in the collection.'
         );
 
         $object = new QtiBoolean(true);
@@ -313,7 +313,7 @@ class ContainerTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\UnexpectedValueException',
-            "The object you want to replace could not be found."
+            'The object you want to replace could not be found.'
         );
 
         $object = new QtiBoolean(true);
@@ -349,7 +349,7 @@ class ContainerTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "Difference may apply only on two collections of the same type."
+            'Difference may apply only on two collections of the same type.'
         );
 
         $container1 = new Container();
@@ -361,7 +361,7 @@ class ContainerTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "Intersection may apply only on two collections of the same type."
+            'Intersection may apply only on two collections of the same type.'
         );
 
         $container1 = new Container();

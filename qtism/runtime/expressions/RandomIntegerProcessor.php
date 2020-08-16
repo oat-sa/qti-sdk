@@ -43,7 +43,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
         if ($expression instanceof RandomInteger) {
             parent::setExpression($expression);
         } else {
-            $msg = "The RandomIntegerProcessor class only accepts to process RandomInteger Expression objects.";
+            $msg = 'The RandomIntegerProcessor class only accepts to process RandomInteger Expression objects.';
             throw new InvalidArgumentException($msg);
         }
     }

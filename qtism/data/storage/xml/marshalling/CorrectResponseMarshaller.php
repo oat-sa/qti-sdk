@@ -47,7 +47,7 @@ class CorrectResponseMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType argument must be a value from the BaseType enumeration.";
+            $msg = 'The baseType argument must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }

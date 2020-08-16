@@ -181,7 +181,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this->assertEquals(13, count($assessmentItemRefs));
 
         $expectedItems = [
-            ['Choicetruefalse_176040516', "Choicetruefalse_176040516.xml"],
+            ['Choicetruefalse_176040516', 'Choicetruefalse_176040516.xml'],
             ['Choicesingle_853928446', 'Choicesingle_853928446.xml'],
             ['Choicemultiple_2014410822', 'Choicemultiple_2014410822.xml'],
             ['Choicemultiple_871212949', 'Choicemultiple_871212949.xml'],

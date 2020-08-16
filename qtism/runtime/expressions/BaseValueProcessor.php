@@ -42,7 +42,7 @@ class BaseValueProcessor extends ExpressionProcessor
         if ($expression instanceof BaseValue) {
             parent::setExpression($expression);
         } else {
-            $msg = "The BaseValueProcessor class only processes BaseValue QTI Data Model objects.";
+            $msg = 'The BaseValueProcessor class only processes BaseValue QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }

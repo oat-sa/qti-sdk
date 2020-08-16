@@ -43,7 +43,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
             ["\$array_0 = array(10, 10, 5);\n\$qticoords_0 = new qtism\\common\\datatypes\\QtiCoords(2, \$array_0);\n", new QtiCoords(QtiShape::CIRCLE, [10, 10, 5])],
             ["\$qtipair_0 = new qtism\\common\\datatypes\\QtiPair(\"A\", \"B\");\n", new QtiPair('A', 'B')],
             ["\$qtidirectedpair_0 = new qtism\\common\\datatypes\\QtiDirectedPair(\"A\", \"B\");\n", new QtiDirectedPair('A', 'B')],
-            ["\$qtiduration_0 = new qtism\\common\\datatypes\\QtiDuration(\"PT30S\");\n", new QtiDuration("PT30S")],
+            ["\$qtiduration_0 = new qtism\\common\\datatypes\\QtiDuration(\"PT30S\");\n", new QtiDuration('PT30S')],
             ["\$qtipoint_0 = new qtism\\common\\datatypes\\QtiPoint(10, 15);\n", new QtiPoint(10, 15)],
         ];
     }

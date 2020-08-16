@@ -64,7 +64,7 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
         if ($expression instanceof ItemSubset) {
             parent::setExpression($expression);
         } else {
-            $msg = "The ItemSubsetProcessor class only accepts ItemSubset expressions to be processed.";
+            $msg = 'The ItemSubsetProcessor class only accepts ItemSubset expressions to be processed.';
             throw new InvalidArgumentException($expression);
         }
     }

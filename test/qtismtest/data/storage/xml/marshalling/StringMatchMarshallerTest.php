@@ -14,8 +14,8 @@ class StringMatchMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $subs = new ExpressionCollection();
-        $subs[] = new BaseValue(BaseType::STRING, "hell");
-        $subs[] = new BaseValue(BaseType::STRING, "hello");
+        $subs[] = new BaseValue(BaseType::STRING, 'hell');
+        $subs[] = new BaseValue(BaseType::STRING, 'hello');
 
         $component = new StringMatch($subs, false);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);

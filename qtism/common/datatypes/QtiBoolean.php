@@ -41,7 +41,7 @@ class QtiBoolean extends QtiScalar implements QtiDatatype
     protected function checkType($value)
     {
         if (is_bool($value) !== true) {
-            $msg = "The Boolean Datatype only accepts to store boolean values.";
+            $msg = 'The Boolean Datatype only accepts to store boolean values.';
             throw new InvalidArgumentException($msg);
         }
     }

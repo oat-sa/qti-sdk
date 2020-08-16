@@ -359,7 +359,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
             // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
             foreach ($assessmentSections as $assessmentSection) {
                 if (!$assessmentSection instanceof AssessmentSection && !$assessmentSection instanceof AssessmentSectionRef) {
-                    $msg = "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.";
+                    $msg = 'A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.';
                     throw new InvalidArgumentException($msg);
                 }
             }

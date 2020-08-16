@@ -56,28 +56,28 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
         switch ($this->getShape()) {
             case QtiShape::DEF:
                 if (count($this->getDataPlaceHolder()) > 0) {
-                    $msg = "No coordinates should be given when the default shape is used.";
+                    $msg = 'No coordinates should be given when the default shape is used.';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
 
             case QtiShape::RECT:
                 if (count($this->getDataPlaceHolder()) != 4) {
-                    $msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
+                    $msg = 'The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
 
             case QtiShape::CIRCLE:
                 if (count($this->getDataPlaceHolder()) != 3) {
-                    $msg = "The circle coordinates must be composed by 3 values (x, y, r).";
+                    $msg = 'The circle coordinates must be composed by 3 values (x, y, r).';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
 
             case QtiShape::POLY:
                 if (count($this->getDataPlaceHolder()) % 2 > 0) {
-                    $msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
+                    $msg = 'The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
@@ -185,7 +185,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
      */
     public function __toString()
     {
-        return implode(",", $this->getDataPlaceHolder());
+        return implode(',', $this->getDataPlaceHolder());
     }
 
     /**

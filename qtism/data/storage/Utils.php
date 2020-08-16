@@ -149,7 +149,7 @@ class Utils
                     break;
 
                 case BaseType::FILE:
-                    throw new RuntimeException("Unsupported baseType: file.");
+                    throw new RuntimeException('Unsupported baseType: file.');
                     break;
 
                 case BaseType::STRING:
@@ -168,11 +168,11 @@ class Utils
                     break;
 
                 default:
-                    throw new RuntimeException("Unknown baseType.");
+                    throw new RuntimeException('Unknown baseType.');
                     break;
             }
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -189,7 +189,7 @@ class Utils
     public static function stringToCoords($string, $shape)
     {
         if (Format::isCoords($string)) {
-            $stringCoords = explode(",", $string);
+            $stringCoords = explode(',', $string);
             $intCoords = [];
 
             foreach ($stringCoords as $sC) {

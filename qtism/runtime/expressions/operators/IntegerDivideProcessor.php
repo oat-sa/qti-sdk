@@ -46,7 +46,7 @@ class IntegerDivideProcessor extends OperatorProcessor
         if ($expression instanceof IntegerDivide) {
             parent::setExpression($expression);
         } else {
-            $msg = "The IntegerDivideProcessor class only processes IntegerDivide QTI Data Model objects.";
+            $msg = 'The IntegerDivideProcessor class only processes IntegerDivide QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -65,12 +65,12 @@ class IntegerDivideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerDivide operator only accepts operands with single cardinality.";
+            $msg = 'The IntegerDivide operator only accepts operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerDivide operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerDivide operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

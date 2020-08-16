@@ -44,7 +44,7 @@ class NotProcessor extends OperatorProcessor
         if ($expression instanceof Not) {
             parent::setExpression($expression);
         } else {
-            $msg = "The NotProcessor class only processes Not QTI Data Model objects.";
+            $msg = 'The NotProcessor class only processes Not QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -64,12 +64,12 @@ class NotProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Not Expression only accept operands with single cardinality.";
+            $msg = 'The Not Expression only accept operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyBoolean() === false) {
-            $msg = "The Not Expression only accept operands with boolean baseType.";
+            $msg = 'The Not Expression only accept operands with boolean baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

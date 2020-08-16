@@ -104,7 +104,7 @@ class Utils
     {
         $givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value);
         $acceptedTypes = ['boolean', 'integer', 'float', 'double', 'string', 'Duration', 'Pair', 'DirectedPair', 'Point'];
-        $acceptedTypes = implode(", ", $acceptedTypes);
+        $acceptedTypes = implode(', ', $acceptedTypes);
         $msg = "A value is not compliant with the QTI runtime model datatypes: ${acceptedTypes} . '${givenValue}' given.";
         throw new InvalidArgumentException($msg);
     }

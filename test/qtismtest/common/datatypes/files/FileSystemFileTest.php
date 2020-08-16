@@ -59,7 +59,7 @@ class FileSystemFileTest extends QtiSmTestCase
                 'text/plain'
             );
 
-            $this->assertFalse(true, "Should throw an error.");
+            $this->assertFalse(true, 'Should throw an error.');
         } catch (RuntimeException $e) {
             $this->assertEquals("Unable to create destination directory at '/root/root/root'.", $e->getMessage());
         }
@@ -86,7 +86,7 @@ class FileSystemFileTest extends QtiSmTestCase
                 '/root/root/root/root.txt',
                 'text/plain'
             );
-            $this->assertFalse(true, "Should throw an error.");
+            $this->assertFalse(true, 'Should throw an error.');
         } catch (RuntimeException $e) {
             $this->assertInstanceOf('\\RuntimeException', $e);
         }
@@ -128,7 +128,7 @@ class FileSystemFileTest extends QtiSmTestCase
 
         try {
             $pFile->getStream();
-            $this->assertFalse(true, "calling FileSystemFile::getStream() on a non-existing file must throw an exception!");
+            $this->assertFalse(true, 'calling FileSystemFile::getStream() on a non-existing file must throw an exception!');
         } catch (RuntimeException $e) {
             $this->assertTrue(true);
         }

@@ -15,7 +15,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     {
         $shape = QtiShape::CIRCLE;
         $coords = new QtiCoords($shape, [0, 0, 5]);
-        $hotspotLabel = "This is a circle.";
+        $hotspotLabel = 'This is a circle.';
         $hotspotChoice = new HotspotChoice('hotspotchoice1', $shape, $coords, 'my-hotspotchoice');
         $hotspotChoice->setFixed(true);
         $hotspotChoice->setTemplateIdentifier('mytpl1');

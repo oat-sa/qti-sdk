@@ -40,7 +40,7 @@ class InlineChoiceCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof InlineChoice) {
-            $msg = "InlineChoiceCollection objects only accept InlineChoice objects to be stored.";
+            $msg = 'InlineChoiceCollection objects only accept InlineChoice objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }

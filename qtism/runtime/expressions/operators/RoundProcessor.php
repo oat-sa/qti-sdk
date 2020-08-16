@@ -49,7 +49,7 @@ class RoundProcessor extends OperatorProcessor
         if ($expression instanceof Round) {
             parent::setExpression($expression);
         } else {
-            $msg = "The RoundProcessor class only processes Round QTI Data Model objects.";
+            $msg = 'The RoundProcessor class only processes Round QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -69,12 +69,12 @@ class RoundProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Round operator only accepts operands with a single cardinality.";
+            $msg = 'The Round operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Round operator only accepts operands with baseType integer or float.";
+            $msg = 'The Round operator only accepts operands with baseType integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

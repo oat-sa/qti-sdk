@@ -882,7 +882,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\tests\\AssessmentTestSessionException',
-            "Jumps are not allowed in LINEAR navigation mode."
+            'Jumps are not allowed in LINEAR navigation mode.'
         );
         $assessmentTestSession->jumpTo(1);
     }

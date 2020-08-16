@@ -170,7 +170,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -239,7 +239,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         if (in_array($cardinality, Cardinality::asArray())) {
             $this->cardinality = $cardinality;
         } else {
-            $msg = "The cardinality must be a value from the Cardinality enumeration.";
+            $msg = 'The cardinality must be a value from the Cardinality enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }

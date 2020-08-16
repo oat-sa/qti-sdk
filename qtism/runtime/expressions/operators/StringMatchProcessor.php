@@ -49,7 +49,7 @@ class StringMatchProcessor extends OperatorProcessor
         if ($expression instanceof StringMatch) {
             parent::setExpression($expression);
         } else {
-            $msg = "The StringMatchProcessor class only processes StringMatch QTI Data Model objects.";
+            $msg = 'The StringMatchProcessor class only processes StringMatch QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -69,12 +69,12 @@ class StringMatchProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The StringMatch operator only accepts operands with a single cardinality.";
+            $msg = 'The StringMatch operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The StringMatch operator only accepts operands with a string baseType.";
+            $msg = 'The StringMatch operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

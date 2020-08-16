@@ -130,7 +130,7 @@ class MarkupPostRenderer implements Renderable
     public function render($document)
     {
         if ($document->documentElement === null) {
-            $msg = "The XML Document to be rendered has no root element (i.e. it is empty).";
+            $msg = 'The XML Document to be rendered has no root element (i.e. it is empty).';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
@@ -146,7 +146,7 @@ class MarkupPostRenderer implements Renderable
 
         if ($output === false) {
             $document->formatOutput = $oldFormatOutput;
-            $msg = "A PHP internal error occurred while rendering the XML Document.";
+            $msg = 'A PHP internal error occurred while rendering the XML Document.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 

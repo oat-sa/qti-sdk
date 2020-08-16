@@ -91,7 +91,7 @@ class PrintedVariableEngine extends AbstractEngine
         if ($printedVariable instanceof PrintedVariable) {
             parent::setComponent($printedVariable);
         } else {
-            $msg = "The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.";
+            $msg = 'The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -258,7 +258,7 @@ class PrintedVariableEngine extends AbstractEngine
         } elseif ($baseType === BaseType::POINT || $baseType === BaseType::PAIR || $baseType === BaseType::DIRECTED_PAIR) {
             return $value->__toString();
         } else {
-            $msg = "Unknown value type.";
+            $msg = 'Unknown value type.';
             throw new PrintedVariableProcessingException($msg, $this, PrintedVariableProcessingException::RUNTIME_ERROR);
         }
     }

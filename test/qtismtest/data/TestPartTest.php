@@ -28,7 +28,7 @@ class TestPartTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "A TestPart must contain at least one AssessmentSection."
+            'A TestPart must contain at least one AssessmentSection.'
         );
 
         $testPart = new TestPart(
@@ -41,7 +41,7 @@ class TestPartTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects."
+            'A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.'
         );
 
         $testPart = new TestPart(

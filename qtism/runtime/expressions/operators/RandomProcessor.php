@@ -44,7 +44,7 @@ class RandomProcessor extends OperatorProcessor
         if ($expression instanceof Random) {
             parent::setExpression($expression);
         } else {
-            $msg = "The RandomProcessor class only processes Random QTI Data Model objects.";
+            $msg = 'The RandomProcessor class only processes Random QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -64,7 +64,7 @@ class RandomProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The Random operator only accepts values with multiple or ordered cardinality.";
+            $msg = 'The Random operator only accepts values with multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

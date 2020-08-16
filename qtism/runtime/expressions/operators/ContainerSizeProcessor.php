@@ -45,7 +45,7 @@ class ContainerSizeProcessor extends OperatorProcessor
         if ($expression instanceof ContainerSize) {
             parent::setExpression($expression);
         } else {
-            $msg = "The ContainerSizeProcessor class only accepts ContainerSize QTI Data Model Expression objects to be processed.";
+            $msg = 'The ContainerSizeProcessor class only accepts ContainerSize QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -65,7 +65,7 @@ class ContainerSizeProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The ContainerSize operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The ContainerSize operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

@@ -331,9 +331,9 @@ class XmlCompactDocument extends XmlDocument
      */
     public function decorateRootElement(DOMElement $rootElement)
     {
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
+        $rootElement->setAttribute('xmlns', 'http://www.imsglobal.org/xsd/imsqti_v2p1');
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', 'http://www.taotesting.com/xsd/qticompact_v1p0.xsd');
     }
 
     /**
@@ -351,7 +351,7 @@ class XmlCompactDocument extends XmlDocument
                     $pathinfo = pathinfo($uri);
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occurred while creating external rubrickBlock definition(s).";
+                    $msg = 'An error occurred while creating external rubrickBlock definition(s).';
                     throw new XmlStorageException($msg, $e);
                 }
             }

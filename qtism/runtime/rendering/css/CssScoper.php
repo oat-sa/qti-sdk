@@ -53,17 +53,17 @@ class CssScoper implements Renderable
 
     const IN_ATRULEBODY = 8;
 
-    const CHAR_AT = "@";
+    const CHAR_AT = '@';
 
     const CHAR_DOUBLEQUOTE = '"';
 
-    const CHAR_TERMINATOR = ";";
+    const CHAR_TERMINATOR = ';';
 
     const CHAR_ESCAPE = "\\";
 
     const CHAR_TAB = "\t";
 
-    const CHAR_SPACE = " ";
+    const CHAR_SPACE = ' ';
 
     const CHAR_NEWLINE = "\n";
 
@@ -71,13 +71,13 @@ class CssScoper implements Renderable
 
     const CHAR_VERTICALTAB = "\v";
 
-    const CHAR_OPENINGBRACE = "{";
+    const CHAR_OPENINGBRACE = '{';
 
-    const CHAR_CLOSINGBRACE = "}";
+    const CHAR_CLOSINGBRACE = '}';
 
-    const CHAR_STAR = "*";
+    const CHAR_STAR = '*';
 
-    const CHAR_SLASH = "/";
+    const CHAR_SLASH = '/';
 
     /**
      * The current state.

@@ -47,7 +47,7 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
         if ($expression instanceof NumberIncorrect) {
             parent::setExpression($expression);
         } else {
-            $msg = "The NumberIncorrectProcessor class only accepts NumberIncorrect expressions to be processed.";
+            $msg = 'The NumberIncorrectProcessor class only accepts NumberIncorrect expressions to be processed.';
             throw new InvalidArgumentException($expression);
         }
     }

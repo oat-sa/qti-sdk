@@ -48,7 +48,7 @@ class DurationGTEProcessor extends OperatorProcessor
         if ($expression instanceof DurationGTE) {
             parent::setExpression($expression);
         } else {
-            $msg = "The DurationGTEProcessor class only processes DurationGTE QTI Data Model objects.";
+            $msg = 'The DurationGTEProcessor class only processes DurationGTE QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -68,12 +68,12 @@ class DurationGTEProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The DurationGTE operator only accepts operands with a single cardinality.";
+            $msg = 'The DurationGTE operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyDuration() === false) {
-            $msg = "The DurationGTE operator only accepts operands with a duration baseType.";
+            $msg = 'The DurationGTE operator only accepts operands with a duration baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

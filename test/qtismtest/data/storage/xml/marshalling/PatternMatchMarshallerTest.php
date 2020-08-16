@@ -16,7 +16,7 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         $subs = new ExpressionCollection();
         $subs[] = new BaseValue(BaseType::STRING, 'Hello World');
 
-        $pattern = "^Hello World$";
+        $pattern = '^Hello World$';
 
         $component = new PatternMatch($subs, $pattern);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);

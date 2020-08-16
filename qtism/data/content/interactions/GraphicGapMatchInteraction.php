@@ -103,7 +103,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         if (count($gapImgs) > 0) {
             $this->gapImgs = $gapImgs;
         } else {
-            $msg = "A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.";
+            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -129,7 +129,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
         } else {
-            $msg = "A GraphicGapMatch interaction must be composed of at least 1 AssociableHotspot object, none given.";
+            $msg = 'A GraphicGapMatch interaction must be composed of at least 1 AssociableHotspot object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

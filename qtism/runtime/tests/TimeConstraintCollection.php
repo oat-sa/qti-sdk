@@ -40,7 +40,7 @@ class TimeConstraintCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof TimeConstraint) {
-            $msg = "TimeConstraintCollection objects only accept to store TimeConstraint objects.";
+            $msg = 'TimeConstraintCollection objects only accept to store TimeConstraint objects.';
             throw new InvalidArgumentException($msg);
         }
     }

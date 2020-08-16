@@ -146,7 +146,7 @@ class MemoryStream implements IStream
     public function open()
     {
         if ($this->isOpen() === true) {
-            $msg = "The MemoryStream is already open.";
+            $msg = 'The MemoryStream is already open.';
             throw new MemoryStreamException($msg, $this, MemoryStreamException::ALREADY_OPEN);
         }
 
@@ -161,7 +161,7 @@ class MemoryStream implements IStream
     public function close()
     {
         if ($this->isOpen() === false) {
-            $msg = "Cannot call close() a closed stream.";
+            $msg = 'Cannot call close() a closed stream.';
             throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
 
@@ -185,7 +185,7 @@ class MemoryStream implements IStream
         $finalPosition = $position + $length;
 
         if ($finalPosition > $this->length) {
-            $msg = "Cannot read outside the bounds of the MemoryStream.";
+            $msg = 'Cannot read outside the bounds of the MemoryStream.';
             throw new MemoryStreamException($msg, $this, MemoryStreamException::READ);
         }
 
@@ -258,7 +258,7 @@ class MemoryStream implements IStream
     public function rewind()
     {
         if ($this->isOpen() === false) {
-            $msg = "Cannot call rewind() on a closed MemoryStream.";
+            $msg = 'Cannot call rewind() on a closed MemoryStream.';
             throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
 
@@ -286,7 +286,7 @@ class MemoryStream implements IStream
             $this->setBinary('');
             $this->rewind();
         } else {
-            $msg = "Cannot flush a closed MemoryStream.";
+            $msg = 'Cannot flush a closed MemoryStream.';
             throw new MemoryStreamAccessException($msg, $this, MemoryStreamAccessException::NOT_OPEN);
         }
     }

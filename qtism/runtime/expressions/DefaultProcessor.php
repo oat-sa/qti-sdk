@@ -44,7 +44,7 @@ class DefaultProcessor extends ExpressionProcessor
         if ($expression instanceof DefaultVal) {
             parent::setExpression($expression);
         } else {
-            $msg = "The DefaultProcessor class only accepts a Default Expression to be processed.";
+            $msg = 'The DefaultProcessor class only accepts a Default Expression to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }

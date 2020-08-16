@@ -191,7 +191,7 @@ class VariableIdentifier
         if (gettype($variableName) === 'string' && empty($variableName) === false) {
             $this->variableName = $variableName;
         } else {
-            $msg = "The variableName argument must be a non-empty string.";
+            $msg = 'The variableName argument must be a non-empty string.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -217,7 +217,7 @@ class VariableIdentifier
         if (gettype($prefix) === 'string' && empty($prefix) === false) {
             $this->prefix = $prefix;
         } else {
-            $msg = "The prefix argument must be a non-empty string.";
+            $msg = 'The prefix argument must be a non-empty string.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -51,7 +51,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
         if ($expression instanceof MapResponsePoint) {
             parent::setExpression($expression);
         } else {
-            $msg = "The MapResponsePoint processor can only process MapResponsePoint Expression objects.";
+            $msg = 'The MapResponsePoint processor can only process MapResponsePoint Expression objects.';
             throw new InvalidArgumentException($expression);
         }
     }
@@ -128,7 +128,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
                     }
                 } else {
                     if ($var->isRecord()) {
-                        $msg = "The MapResponsePoint expression cannot be applied to RECORD variables.";
+                        $msg = 'The MapResponsePoint expression cannot be applied to RECORD variables.';
                         throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                     } else {
                         $strBaseType = BaseType::getNameByConstant($var->getBaseType());

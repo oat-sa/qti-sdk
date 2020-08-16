@@ -15,7 +15,7 @@ class AreaMappingTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "An AreaMapping object must contain at least one AreaMapEntry object. none given."
+            'An AreaMapping object must contain at least one AreaMapEntry object. none given.'
         );
 
         $mapping = new AreaMapping(

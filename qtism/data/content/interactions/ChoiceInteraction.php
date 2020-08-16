@@ -126,7 +126,7 @@ class ChoiceInteraction extends BlockInteraction
         if (count($simpleChoices) > 0) {
             $this->simpleChoices = $simpleChoices;
         } else {
-            $msg = "A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.";
+            $msg = 'A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

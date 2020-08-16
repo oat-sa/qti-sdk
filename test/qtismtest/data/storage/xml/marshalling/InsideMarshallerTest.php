@@ -26,7 +26,7 @@ class InsideMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf('\\DOMElement', $element);
         $this->assertEquals('inside', $element->nodeName);
-        $this->assertEquals(implode(",", [0, 0, 100, 20]), $element->getAttribute('coords'));
+        $this->assertEquals(implode(',', [0, 0, 100, 20]), $element->getAttribute('coords'));
         $this->assertEquals('rect', $element->getAttribute('shape'));
         $this->assertEquals(1, $element->getElementsByTagName('variable')->length);
     }

@@ -67,7 +67,7 @@ class TemplateProcessing extends QtiComponent
         if (count($templateRules) > 0) {
             $this->templateRules = $templateRules;
         } else {
-            $msg = "A TemplateProcessing object must be composed of at least one TemplateRule object, none given.";
+            $msg = 'A TemplateProcessing object must be composed of at least one TemplateRule object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

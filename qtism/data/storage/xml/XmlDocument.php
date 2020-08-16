@@ -150,7 +150,7 @@ class XmlDocument extends QtiDocument
                 if (($version = XmlUtils::inferVersion($this->getDomDocument())) !== false) {
                     $this->setVersion($version);
                 } else {
-                    $msg = "Cannot infer QTI version. Is it well formed?";
+                    $msg = 'Cannot infer QTI version. Is it well formed?';
                     throw new XmlStorageException($msg);
                 }
 
@@ -278,19 +278,19 @@ class XmlDocument extends QtiDocument
                         return $strXml;
                     } else {
                         // An error occurred while saving.
-                        $msg = "An internal error occurred while exporting QTI-XML as string.";
+                        $msg = 'An internal error occurred while exporting QTI-XML as string.';
                         throw new XmlStorageException($msg);
                     }
                 }
             } catch (DOMException $e) {
-                $msg = "An internal error occurred while saving QTI-XML data.";
+                $msg = 'An internal error occurred while saving QTI-XML data.';
                 throw new XmlStorageException($msg, $e);
             } catch (XmlStorageException $e) {
-                $msg = "An error occurred before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
+                $msg = 'An error occurred before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.';
                 throw new XmlStorageException($msg, $e);
             }
         } else {
-            $msg = "The Assessment Document cannot be saved. No AssessmentTest object provided.";
+            $msg = 'The Assessment Document cannot be saved. No AssessmentTest object provided.';
             throw new XmlStorageException($msg);
         }
     }
@@ -378,7 +378,7 @@ class XmlDocument extends QtiDocument
                 }
             }
         } else {
-            $msg = "Cannot include fragments via XInclude before loading any file.";
+            $msg = 'Cannot include fragments via XInclude before loading any file.';
             throw new LogicException($msg);
         }
     }
@@ -436,7 +436,7 @@ class XmlDocument extends QtiDocument
                 $count = count($root->getComponentsByClassName('assessmentSectionRef'));
             }
         } else {
-            $msg = "Cannot resolve assessmentSectionRefs before loading any file.";
+            $msg = 'Cannot resolve assessmentSectionRefs before loading any file.';
             throw new LogicException($msg);
         }
     }
@@ -450,32 +450,32 @@ class XmlDocument extends QtiDocument
     protected function decorateRootElement(DOMElement $rootElement)
     {
         $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-        $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+        $xmlns = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
 
         switch (trim($this->getVersion())) {
             case '2.0.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
+                $xmlns = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
                 break;
 
             case '2.1.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                $xmlns = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
                 break;
 
             case '2.1.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                $xmlns = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
                 break;
 
             case '2.2.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                $xmlns = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
                 break;
 
             case '2.2.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                $xmlns = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
                 break;
         }
 
@@ -500,17 +500,17 @@ class XmlDocument extends QtiDocument
                     // Since QTI 2.2, some schemas are imported multiple times.
                     // Xerces does not produce errors, but libxml does...
                     if (preg_match('/Skipping import of schema located/ui', $error->message) === 0) {
-                        $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                        $formattedErrors[] = 'Warning: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
                     }
 
                     break;
 
                 case LIBXML_ERR_ERROR:
-                    $formattedErrors[] = "Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    $formattedErrors[] = 'Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
                     break;
 
                 case LIBXML_ERR_FATAL:
-                    $formattedErrors[] = "Fatal Error: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    $formattedErrors[] = 'Fatal Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
                     break;
             }
         }

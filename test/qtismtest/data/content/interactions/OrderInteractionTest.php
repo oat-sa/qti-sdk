@@ -13,7 +13,7 @@ class OrderInteractionTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "An OrderInteraction object must be composed of at lease one SimpleChoice object, none given"
+            'An OrderInteraction object must be composed of at lease one SimpleChoice object, none given'
         );
 
         $orderInteraction = new OrderInteraction(

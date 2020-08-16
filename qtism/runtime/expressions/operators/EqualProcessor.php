@@ -68,7 +68,7 @@ class EqualProcessor extends OperatorProcessor
         if ($expression instanceof Equal) {
             parent::setExpression($expression);
         } else {
-            $msg = "The EqualProcessor class only processes Equal QTI Data Model objects.";
+            $msg = 'The EqualProcessor class only processes Equal QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -88,12 +88,12 @@ class EqualProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Equal operator only accepts operands with a single cardinality.";
+            $msg = 'The Equal operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Equal operator only accepts operands with an integer or float baseType";
+            $msg = 'The Equal operator only accepts operands with an integer or float baseType';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

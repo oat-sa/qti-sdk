@@ -49,7 +49,7 @@ class AndProcessor extends OperatorProcessor
         if ($expression instanceof AndOperator) {
             parent::setExpression($expression);
         } else {
-            $msg = "The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.";
+            $msg = 'The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -69,12 +69,12 @@ class AndProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The And Expression only accept operands with single cardinality.";
+            $msg = 'The And Expression only accept operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyBoolean() === false) {
-            $msg = "The And Expression only accept operands with boolean baseType.";
+            $msg = 'The And Expression only accept operands with boolean baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

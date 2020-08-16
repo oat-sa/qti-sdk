@@ -78,7 +78,7 @@ class Utils
             // null value?
             return 'nullvalue_' . $occurence;
         } else {
-            $msg = "Cannot handle the given value.";
+            $msg = 'Cannot handle the given value.';
             throw new InvalidArgumentException($msg);
         }
     }

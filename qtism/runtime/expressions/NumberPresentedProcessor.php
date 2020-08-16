@@ -46,7 +46,7 @@ class NumberPresentedProcessor extends ItemSubsetProcessor
         if ($expression instanceof NumberPresented) {
             parent::setExpression($expression);
         } else {
-            $msg = "The NumberPresentedProcessor class only accepts NumberPresented expressions to be processed.";
+            $msg = 'The NumberPresentedProcessor class only accepts NumberPresented expressions to be processed.';
             throw new InvalidArgumentException($expression);
         }
     }

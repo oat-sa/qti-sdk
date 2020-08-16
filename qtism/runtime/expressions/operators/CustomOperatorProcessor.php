@@ -69,7 +69,7 @@ abstract class CustomOperatorProcessor extends OperatorProcessor
         if ($expression instanceof CustomOperator) {
             parent::setExpression($expression);
         } else {
-            $msg = "The CustomOperatorProcessor can only process CustomOperator objects.";
+            $msg = 'The CustomOperatorProcessor can only process CustomOperator objects.';
             throw new InvalidArgumentException($msg);
         }
     }

@@ -50,7 +50,7 @@ class TruncateProcessor extends OperatorProcessor
         if ($expression instanceof Truncate) {
             parent::setExpression($expression);
         } else {
-            $msg = "The TruncateProcessor class only processes Truncate QTI Data Model objects.";
+            $msg = 'The TruncateProcessor class only processes Truncate QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -70,12 +70,12 @@ class TruncateProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Truncate operator only accepts operands with a single cardinality.";
+            $msg = 'The Truncate operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Truncate operator only accepts operands with an integer or float baseType.";
+            $msg = 'The Truncate operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

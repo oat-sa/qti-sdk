@@ -13,7 +13,7 @@ class MappingTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "A Mapping object must contain at least one MapEntry object, none given."
+            'A Mapping object must contain at least one MapEntry object, none given.'
         );
 
         $mapping = new Mapping(

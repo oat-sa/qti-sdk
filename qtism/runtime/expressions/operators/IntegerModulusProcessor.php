@@ -47,7 +47,7 @@ class IntegerModulusProcessor extends OperatorProcessor
         if ($expression instanceof IntegerModulus) {
             parent::setExpression($expression);
         } else {
-            $msg = "The IntegerModulusProcessor class only processes IntegerModulus QTI Data Model objects.";
+            $msg = 'The IntegerModulusProcessor class only processes IntegerModulus QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -67,12 +67,12 @@ class IntegerModulusProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerModulus operator only accepts operands with single cardinality.";
+            $msg = 'The IntegerModulus operator only accepts operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerModulus operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerModulus operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

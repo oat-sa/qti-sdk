@@ -49,7 +49,7 @@ class LcmProcessor extends OperatorProcessor
         if ($expression instanceof Lcm) {
             parent::setExpression($expression);
         } else {
-            $msg = "The LcmProcessor class only processes Lcm QTI Data Model objects.";
+            $msg = 'The LcmProcessor class only processes Lcm QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -69,12 +69,12 @@ class LcmProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Lcm operator only accepts operands with a cardinality of single, multiple or ordered.";
+            $msg = 'The Lcm operator only accepts operands with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The Lcm operator only accepts operands with an integer baseType.";
+            $msg = 'The Lcm operator only accepts operands with an integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

@@ -64,7 +64,7 @@ class StackTrace extends AbstractCollection implements Stack
     public function checkType($value)
     {
         if (!$value instanceof StackTraceItem) {
-            $msg = "The StackTrace class only accepts to store StackTraceItem objects.";
+            $msg = 'The StackTrace class only accepts to store StackTraceItem objects.';
             throw new InvalidArgumentException($msg);
         }
     }

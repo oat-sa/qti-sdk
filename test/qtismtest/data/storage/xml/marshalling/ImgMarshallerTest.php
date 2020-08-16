@@ -10,12 +10,12 @@ class ImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
     {
-        $img = new Img('my/image.png', "An Image...", "my-img");
+        $img = new Img('my/image.png', 'An Image...', 'my-img');
         $img->setClass('beautiful');
         $img->setHeight('40%');
         $img->setWidth(30);
         $img->setLang('en-YO');
-        $img->setLongdesc("A Long Description...");
+        $img->setLongdesc('A Long Description...');
         $img->setXmlBase('/home/jerome');
 
         // aria-* attributes are ignored in QTI 2.1
@@ -31,7 +31,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testMarshall22()
     {
-        $img = new Img('my/image.png', "An Image...", "my-img");
+        $img = new Img('my/image.png', 'An Image...', 'my-img');
 
         // aria-* attributes are NOT ignored in QTI 2.2.1
         $img->setAriaOwns('IDREF');

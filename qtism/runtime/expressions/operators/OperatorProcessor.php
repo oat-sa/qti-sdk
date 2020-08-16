@@ -55,7 +55,7 @@ abstract class OperatorProcessor extends ExpressionProcessor
         if ($expression instanceof Operator) {
             parent::setExpression($expression);
         } else {
-            $msg = "The OperatorProcessor class only accepts QTI Data Model Operators to be processed.";
+            $msg = 'The OperatorProcessor class only accepts QTI Data Model Operators to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }

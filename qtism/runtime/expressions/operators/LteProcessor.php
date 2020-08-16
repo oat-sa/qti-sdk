@@ -46,7 +46,7 @@ class LteProcessor extends OperatorProcessor
         if ($expression instanceof Lte) {
             parent::setExpression($expression);
         } else {
-            $msg = "The LteProcessor class only processes Lte QTI Data Model objects.";
+            $msg = 'The LteProcessor class only processes Lte QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -66,12 +66,12 @@ class LteProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Lte operator only accepts operands with a single cardinality.";
+            $msg = 'The Lte operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Lte operator only accepts operands with a float or integer baseType.";
+            $msg = 'The Lte operator only accepts operands with a float or integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

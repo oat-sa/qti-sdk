@@ -43,7 +43,7 @@ class MathConstantProcessor extends ExpressionProcessor
         if ($expression instanceof MathConstant) {
             parent::setExpression($expression);
         } else {
-            $msg = "The MathConstantProcessor class only processes MathConstant QTI Data Model objects.";
+            $msg = 'The MathConstantProcessor class only processes MathConstant QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }

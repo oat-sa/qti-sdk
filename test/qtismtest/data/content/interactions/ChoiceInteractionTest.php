@@ -13,7 +13,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given."
+            'A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.'
         );
 
         $choiceInteraction = new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection());

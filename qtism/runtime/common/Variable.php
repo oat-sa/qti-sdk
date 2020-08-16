@@ -177,7 +177,7 @@ abstract class Variable
     public function setBaseType($baseType)
     {
         if ($baseType === -1 && $this->isRecord() === false) {
-            $msg = "You are forced to specify a baseType if cardinality is not RECORD.";
+            $msg = 'You are forced to specify a baseType if cardinality is not RECORD.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -287,7 +287,7 @@ abstract class Variable
                 // This should be handled by the Data Model but
                 // I prefer to be defensive.
                 $msg = "A Data Model VariableDeclaration with 'single' cardinality must contain a single value, ";
-                $msg .= count($valueCollection) . " value(s) found.";
+                $msg .= count($valueCollection) . ' value(s) found.';
                 throw new UnexpectedValueException($msg);
             }
         } else {
@@ -303,10 +303,10 @@ abstract class Variable
 
                 return $container; // return container.
             } catch (InvalidArgumentException $e) {
-                $msg = "The default value found in the Data Model Variable Declaration is not consistent. ";
-                $msg .= "The values must have a baseType compliant with the baseType of the VariableDeclaration.";
+                $msg = 'The default value found in the Data Model Variable Declaration is not consistent. ';
+                $msg .= 'The values must have a baseType compliant with the baseType of the VariableDeclaration.';
                 $msg .= "If the VariableDeclaration's cardinality is 'record', make sure the values it contains have ";
-                $msg .= "fieldIdentifiers.";
+                $msg .= 'fieldIdentifiers.';
 
                 throw new UnexpectedValueException($msg, 0, $e);
             }

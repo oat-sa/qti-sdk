@@ -63,7 +63,7 @@ class EqualRoundedProcessor extends OperatorProcessor
         if ($expression instanceof EqualRounded) {
             parent::setExpression($expression);
         } else {
-            $msg = "The EqualRoundedProcessor class only processes EqualRounded QTI Data Model objects.";
+            $msg = 'The EqualRoundedProcessor class only processes EqualRounded QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -83,12 +83,12 @@ class EqualRoundedProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The EqualRounded operator only accepts operands with a single cardinality.";
+            $msg = 'The EqualRounded operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The EqualRounded operator only accepts operands with an integer or float baseType.";
+            $msg = 'The EqualRounded operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

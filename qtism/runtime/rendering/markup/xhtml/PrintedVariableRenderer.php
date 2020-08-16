@@ -126,7 +126,7 @@ class PrintedVariableRenderer extends BodyElementRenderer
                         PhpUtils::doubleQuotedPhpString($component->getMappingIndicator()),
                     ];
 
-                    $value = " qtism-printVariable(" . implode(', ', $params) . ") ";
+                    $value = ' qtism-printVariable(' . implode(', ', $params) . ') ';
                     $fragment->firstChild->appendChild($fragment->ownerDocument->createComment($value));
                     break;
             }

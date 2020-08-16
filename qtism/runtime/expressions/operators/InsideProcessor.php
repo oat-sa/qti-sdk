@@ -46,7 +46,7 @@ class InsideProcessor extends OperatorProcessor
         if ($expression instanceof Inside) {
             parent::setExpression($expression);
         } else {
-            $msg = "The InsideProcessor class only processes Inside QTI Data Model objects.";
+            $msg = 'The InsideProcessor class only processes Inside QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -66,12 +66,12 @@ class InsideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Inside operator only accepts operands with a single cardinality.";
+            $msg = 'The Inside operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyPoint() === false) {
-            $msg = "The Inside operator only accepts operands with a baseType of point.";
+            $msg = 'The Inside operator only accepts operands with a baseType of point.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

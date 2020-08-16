@@ -11,7 +11,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $object = new QtiObject('http://imagine.us/myimg.png', "image/png");
+        $object = new QtiObject('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($gapImg);

@@ -71,7 +71,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($collectionVarName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occurred while marshalling a collection into PHP source code.";
+            $msg = 'An error occurred while marshalling a collection into PHP source code.';
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }

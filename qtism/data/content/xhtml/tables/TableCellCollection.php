@@ -41,7 +41,7 @@ class TableCellCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof TableCell) {
-            $msg = "TableCellCollection objects only accept to store TableCell objects.";
+            $msg = 'TableCellCollection objects only accept to store TableCell objects.';
             throw new InvalidArgumentException($msg);
         }
     }

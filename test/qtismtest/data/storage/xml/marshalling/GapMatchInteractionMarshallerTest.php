@@ -23,7 +23,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $gapText = new GapText('gapText1', 1);
         $gapText->setContent(new FlowStaticCollection([new TextRun('This is gapText1')]));
 
-        $object = new QtiObject("./myimg.png", "image/png");
+        $object = new QtiObject('./myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 1, $object);
 
         $gap1 = new Gap('G1');

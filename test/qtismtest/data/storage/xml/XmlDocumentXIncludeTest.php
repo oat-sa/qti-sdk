@@ -26,7 +26,7 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
             $doc->load($file, true);
             $this->assertTrue(true);
         } catch (XmlStorageException $e) {
-            $this->assertFalse(true, "The document using xinclude should validate after being saved.");
+            $this->assertFalse(true, 'The document using xinclude should validate after being saved.');
         }
     }
 

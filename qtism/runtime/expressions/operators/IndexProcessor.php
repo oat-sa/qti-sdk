@@ -49,7 +49,7 @@ class IndexProcessor extends OperatorProcessor
         if ($expression instanceof Index) {
             parent::setExpression($expression);
         } else {
-            $msg = "The IndexProcessor class only processes Index QTI Data Model objects.";
+            $msg = 'The IndexProcessor class only processes Index QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -69,7 +69,7 @@ class IndexProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyOrdered() === false) {
-            $msg = "The Index operator only accepts values with a cardinality of ordered.";
+            $msg = 'The Index operator only accepts values with a cardinality of ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

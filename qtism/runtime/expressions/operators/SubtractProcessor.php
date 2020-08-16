@@ -47,7 +47,7 @@ class SubtractProcessor extends OperatorProcessor
         if ($expression instanceof Subtract) {
             parent::setExpression($expression);
         } else {
-            $msg = "The SubtractProcessor class only processes Subtract QTI Data Model objects.";
+            $msg = 'The SubtractProcessor class only processes Subtract QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -67,12 +67,12 @@ class SubtractProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Subtract operator only accepts operands with a single cardinality";
+            $msg = 'The Subtract operator only accepts operands with a single cardinality';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Subtract operator only accepts operands with a baseType of integer or float";
+            $msg = 'The Subtract operator only accepts operands with a baseType of integer or float';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

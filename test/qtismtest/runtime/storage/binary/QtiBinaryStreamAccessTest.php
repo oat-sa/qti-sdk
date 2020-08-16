@@ -286,7 +286,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
             // MULTIPLE or ORDERED container.
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertEquals($readValue->getBaseType(), $readValue->getBaseType());
-            $this->assertTrue($readValue->equals($originalValue), $originalValue . " != " . $readValue);
+            $this->assertTrue($readValue->equals($originalValue), $originalValue . ' != ' . $readValue);
         } elseif ($originalValue instanceof Comparable) {
             // Complex QTI Runtime object.
             $this->assertTrue($readValue->equals($originalValue));

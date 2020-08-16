@@ -524,7 +524,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
-            "The atan2 math function of the MathOperator requires 2 operands, 1 operand given."
+            'The atan2 math function of the MathOperator requires 2 operands, 1 operand given.'
         );
 
         $processor->process();
@@ -544,7 +544,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
 
         $this->setExpectedException(
             'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
-            "The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given."
+            'The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.'
         );
 
         $processor->process();

@@ -62,7 +62,7 @@ class StatsOperatorProcessor extends OperatorProcessor
         if ($expression instanceof StatsOperator) {
             parent::setExpression($expression);
         } else {
-            $msg = "The StatsOperatorProcessor class only processes StatsOperator QTI Data Model objects.";
+            $msg = 'The StatsOperatorProcessor class only processes StatsOperator QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -82,12 +82,12 @@ class StatsOperatorProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The StatsOperator operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The StatsOperator operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The StatsOperator operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The StatsOperator operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

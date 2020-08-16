@@ -128,10 +128,10 @@ class JsonMarshallerTest extends QtiSmTestCase
             [new QtiBoolean(false), json_encode(['base' => ['boolean' => false]])],
             [new QtiInteger(1337), json_encode(['base' => ['integer' => 1337]])],
             [new QtiFloat(1337.1337), json_encode(['base' => ['float' => 1337.1337]])],
-            [new QtiString("String!"), json_encode(['base' => ['string' => "String!"]])],
-            [new QtiString(""), json_encode(['base' => ['string' => ""]])],
-            [new QtiIdentifier("RESP_X32"), json_encode(['base' => ['identifier' => "RESP_X32"]])],
-            [new QtiIntOrIdentifier("RESP_X33"), json_encode(['base' => ['intOrIdentifier' => "RESP_X33"]])],
+            [new QtiString('String!'), json_encode(['base' => ['string' => 'String!']])],
+            [new QtiString(''), json_encode(['base' => ['string' => '']])],
+            [new QtiIdentifier('RESP_X32'), json_encode(['base' => ['identifier' => 'RESP_X32']])],
+            [new QtiIntOrIdentifier('RESP_X33'), json_encode(['base' => ['intOrIdentifier' => 'RESP_X33']])],
             [new QtiIntOrIdentifier(1337), json_encode(['base' => ['intOrIdentifier' => 1337]])],
             [new QtiUri('http://www.taotesting.com'), json_encode(['base' => ['uri' => 'http://www.taotesting.com']])],
             [null, json_encode(['base' => null])],
@@ -192,8 +192,8 @@ class JsonMarshallerTest extends QtiSmTestCase
         $returnValue[] = [$container, $json];
 
         // string multiple("Another", "And Another").
-        $container = new MultipleContainer(BaseType::STRING, [new QtiString("Another"), new QtiString("And another")]);
-        $json = json_encode(['list' => ['string' => ["Another", "And another"]]]);
+        $container = new MultipleContainer(BaseType::STRING, [new QtiString('Another'), new QtiString('And another')]);
+        $json = json_encode(['list' => ['string' => ['Another', 'And another']]]);
         $returnValue[] = [$container, $json];
 
         // point multiple(point(123, 456), point(640, 480)).

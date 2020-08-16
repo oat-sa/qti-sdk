@@ -107,20 +107,20 @@ class ResponseVariable extends Variable
                         return;
                     } else {
                         $msg = "The baseType of the given container ('" . BaseType::getNameByConstant($correctResponse->getBaseType()) . "') ";
-                        $msg .= "is not compliant with ";
+                        $msg .= 'is not compliant with ';
                         $msg .= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
                         throw new InvalidArgumentException($msg);
                     }
                 } else {
                     $msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
-                    $msg .= "is not compliant with ";
+                    $msg .= 'is not compliant with ';
                     $msg .= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
                     throw new InvalidArgumentException($msg);
                 }
             }
         }
 
-        $msg = "The provided value is not compliant with the baseType of the ResponseVariable.";
+        $msg = 'The provided value is not compliant with the baseType of the ResponseVariable.';
         throw new InvalidArgumentException($msg);
     }
 

@@ -137,7 +137,7 @@ class TestVariables extends ItemSubset
         if ($baseType == -1 || in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The BaseType argument must be a value from the BaseType enumeration";
+            $msg = 'The BaseType argument must be a value from the BaseType enumeration';
             throw new InvalidArgumentException($msg);
         }
     }

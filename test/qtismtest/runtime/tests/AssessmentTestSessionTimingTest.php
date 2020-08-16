@@ -264,7 +264,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             // are not to be considered.
             $this->assertTrue(true);
         } catch (AssessmentTestSessionException $e) {
-            $this->fail("No exception should be thrown because minTime must not be considered on Q01.");
+            $this->fail('No exception should be thrown because minTime must not be considered on Q01.');
         }
 
         // On the other hand, if we go back to min time consideration...
@@ -275,9 +275,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             // Minimum time not respected...
             $session->beginAttempt();
             $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
-            $this->fail("An exception should be thrown because minTime must be considered now on Q01.");
+            $this->fail('An exception should be thrown because minTime must be considered now on Q01.');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW, $e->getCode(), "The thrown exception should have code ASSESSMENT_ITEM_DURATION_UNDERFLOW, exception message is: " . $e->getMessage());
+            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW, $e->getCode(), 'The thrown exception should have code ASSESSMENT_ITEM_DURATION_UNDERFLOW, exception message is: ' . $e->getMessage());
         }
     }
 

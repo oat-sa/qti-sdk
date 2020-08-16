@@ -46,7 +46,7 @@ class ExitTestProcessor extends RuleProcessor
         if ($rule instanceof ExitTest) {
             parent::setRule($rule);
         } else {
-            $msg = "The ExitTestProcessor only accepts ExitTest objects to be processed.";
+            $msg = 'The ExitTestProcessor only accepts ExitTest objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -59,7 +59,7 @@ class ExitTestProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Test.";
+        $msg = 'Termination of Test.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEST);
     }
 }

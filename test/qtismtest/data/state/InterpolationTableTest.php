@@ -13,7 +13,7 @@ class InterpolationTableTest extends QtiSmTestCase
     {
         $this->setExpectedException(
             '\\InvalidArgumentException',
-            "An InterpolationTable object must contain at least one InterpolationTableEntry object."
+            'An InterpolationTable object must contain at least one InterpolationTableEntry object.'
         );
 
         new InterpolationTable(new InterpolationTableEntryCollection());

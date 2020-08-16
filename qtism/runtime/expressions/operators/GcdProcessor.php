@@ -51,7 +51,7 @@ class GcdProcessor extends OperatorProcessor
         if ($expression instanceof Gcd) {
             parent::setExpression($expression);
         } else {
-            $msg = "The GcdProcessor class only processes Gcd QTI Data Model objects.";
+            $msg = 'The GcdProcessor class only processes Gcd QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -71,12 +71,12 @@ class GcdProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Gcd operator only accepts operands with a cardinality of single, multiple or ordered.";
+            $msg = 'The Gcd operator only accepts operands with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The Gcd operator only accepts operands with an integer baseType.";
+            $msg = 'The Gcd operator only accepts operands with an integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 

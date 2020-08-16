@@ -59,7 +59,7 @@ class RecordContainer extends Container implements QtiDatatype
 
             reset($dataPlaceHolder);
         } else {
-            $msg = "The array argument must be an associative array.";
+            $msg = 'The array argument must be an associative array.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -88,7 +88,7 @@ class RecordContainer extends Container implements QtiDatatype
             $placeholder = &$this->getDataPlaceHolder();
             $placeholder[$offset] = $value;
         } else {
-            $msg = "The offset of a value in a RecordContainer must be a string.";
+            $msg = 'The offset of a value in a RecordContainer must be a string.';
             throw new RuntimeException($msg);
         }
     }
@@ -110,7 +110,7 @@ class RecordContainer extends Container implements QtiDatatype
                 $container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
             } else {
                 $msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";
-                $msg .= "because it has no fieldIdentifier specified.";
+                $msg .= 'because it has no fieldIdentifier specified.';
                 throw new InvalidArgumentException($msg);
             }
         }

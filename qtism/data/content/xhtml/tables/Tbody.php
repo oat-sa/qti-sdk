@@ -66,7 +66,7 @@ class Tbody extends BodyElement
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "A Tbody object must be composed of at least 1 Tr object, none given.";
+            $msg = 'A Tbody object must be composed of at least 1 Tr object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

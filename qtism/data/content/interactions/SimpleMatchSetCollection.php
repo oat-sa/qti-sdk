@@ -40,7 +40,7 @@ class SimpleMatchSetCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof SimpleMatchSet) {
-            $msg = "SimpleMatchSetCollection objects only accept to store SimpleMatchSet collection objects.";
+            $msg = 'SimpleMatchSetCollection objects only accept to store SimpleMatchSet collection objects.';
             throw new InvalidArgumentException($msg);
         }
     }

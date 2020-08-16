@@ -174,7 +174,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occurred while unmarshalling the outcomeDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the outcomeDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }

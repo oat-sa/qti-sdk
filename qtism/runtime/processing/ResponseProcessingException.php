@@ -59,7 +59,7 @@ class ResponseProcessingException extends ProcessingException
         if ($source instanceof ResponseProcessingEngine) {
             parent::setSource($source);
         } else {
-            $msg = "ResponseProcessingException::setSource only accepts ResponseProcessingEngine objects.";
+            $msg = 'ResponseProcessingException::setSource only accepts ResponseProcessingEngine objects.';
             throw new InvalidArgumentException($msg);
         }
     }

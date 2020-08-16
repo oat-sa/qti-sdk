@@ -159,7 +159,7 @@ class InlineChoiceInteraction extends InlineInteraction
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "An InlineChoiceInteraction must be composed by at lease one InlineChoice object, none given.";
+            $msg = 'An InlineChoiceInteraction must be composed by at lease one InlineChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }

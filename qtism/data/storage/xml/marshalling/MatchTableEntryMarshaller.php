@@ -66,7 +66,7 @@ class MatchTableEntryMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }

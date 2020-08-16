@@ -43,7 +43,7 @@ class FieldValueProcessor extends OperatorProcessor
         if ($expression instanceof FieldValue) {
             parent::setExpression($expression);
         } else {
-            $msg = "The FieldValueProcessor class only processes FieldValue QTI Data Model objects.";
+            $msg = 'The FieldValueProcessor class only processes FieldValue QTI Data Model objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -59,7 +59,7 @@ class FieldValueProcessor extends OperatorProcessor
         $operands = $this->getOperands();
 
         if ($operands->exclusivelyRecord() === false) {
-            $msg = "The FieldValue operator only accepts operands with a cardinality of record.";
+            $msg = 'The FieldValue operator only accepts operands with a cardinality of record.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 

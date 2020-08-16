@@ -79,7 +79,7 @@ class PhpDocument extends QtiDocument
             $stream = $this->transformToPhp();
             file_put_contents($url, $stream->getBinary());
         } catch (StreamAccessException $e) {
-            $msg = "An error occurred while writing the PHP source code stream.";
+            $msg = 'An error occurred while writing the PHP source code stream.';
             throw new PhpStorageException($msg, 0, $e);
         }
     }
@@ -96,7 +96,7 @@ class PhpDocument extends QtiDocument
             $memoryStream = $this->transformToPhp();
             return $memoryStream->getBinary();
         } catch (StreamAccessException $e) {
-            $msg = "An error occurred while writing the PHP source code stream.";
+            $msg = 'An error occurred while writing the PHP source code stream.';
             throw new PhpStorageException($msg, 0, $e);
         }
     }
@@ -256,15 +256,15 @@ class PhpDocument extends QtiDocument
             if ($evaluation !== false && isset($rootcomponent)) {
                 $this->setDocumentComponent($rootcomponent);
             } else {
-                $msg = "The PHP string could not be loaded properly.";
+                $msg = 'The PHP string could not be loaded properly.';
                 throw new PhpStorageException($msg);
             }
         } catch (Exception $e) {
-            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
+            $msg = 'A PHP Runtime Error occurred while executing the PHP source code representing the document.';
             throw new PhpStorageException($msg, 0, $e);
         } catch (ParseError $e) {
             // For PHP 7.X
-            $msg = "A PHP Parsing Error occurred while executing the PHP source code representing the document.";
+            $msg = 'A PHP Parsing Error occurred while executing the PHP source code representing the document.';
             throw new PhpStorageException($msg);
         } finally {
             if ($obstart) {

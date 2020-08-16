@@ -138,7 +138,7 @@ class State extends AbstractCollection
                 throw new OutOfBoundsException($msg);
             }
         } else {
-            $msg = "A State object can only be adressed by a valid string.";
+            $msg = 'A State object can only be adressed by a valid string.';
             throw new OutOfRangeException($msg);
         }
     }
@@ -156,7 +156,7 @@ class State extends AbstractCollection
                 return null;
             }
         } else {
-            $msg = "A State object can only be addressed by a valid string.";
+            $msg = 'A State object can only be addressed by a valid string.';
             throw new OutOfRangeException($msg);
         }
     }
@@ -190,7 +190,7 @@ class State extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof Variable) {
-            $msg = "A State object stores Variable objects only.";
+            $msg = 'A State object stores Variable objects only.';
             throw new InvalidArgumentException($msg);
         }
     }

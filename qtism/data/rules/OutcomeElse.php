@@ -72,7 +72,7 @@ class OutcomeElse extends QtiComponent
         if (count($outcomeRules) > 0) {
             $this->outcomeRules = $outcomeRules;
         } else {
-            $msg = "An OutcomeElse object must be bound to at least one OutcomeRule object.";
+            $msg = 'An OutcomeElse object must be bound to at least one OutcomeRule object.';
             throw new InvalidArgumentException($msg);
         }
     }

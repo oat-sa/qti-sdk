@@ -40,7 +40,7 @@ class RouteTimeLimitsCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof RouteTimeLimits) {
-            $msg = "A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.";
+            $msg = 'A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }
