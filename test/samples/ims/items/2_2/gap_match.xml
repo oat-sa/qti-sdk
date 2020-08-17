@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2  http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd"
-	identifier="gapMatch" title="Richard III (Take 1)" adaptive="false" timeDependent="false">
-	<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd" identifier="i5e70ea204b3391086faea29f0ed53fc" title="Katerina QA 6" label="item_gap-match int" xml:lang="en-US" adaptive="false" timeDependent="false" toolName="TAO" toolVersion="3.4.0-sprint134">
+	<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="directedPair">
 		<correctResponse>
-			<value>W G1</value>
-			<value>Su G2</value>
+			<value><![CDATA[choice_5 gap_1]]></value>
 		</correctResponse>
-		<mapping defaultValue="-1" lowerBound="0">
-			<mapEntry mapKey="W G1" mappedValue="1"/>
-			<mapEntry mapKey="Su G2" mappedValue="2"/>
-		</mapping>
 	</responseDeclaration>
-	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+	<outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+		<defaultValue>
+			<value>11</value>
+		</defaultValue>
+	</outcomeDeclaration>
+	<outcomeDeclaration identifier="OUTCOME_1" cardinality="single" baseType="float" interpretation="english" externalScored="human" normalMaximum="10" normalMinimum="0"/>
+	<stylesheet href="style/custom/tao-user-styles.css" type="text/css" media="all" title=""/>
 	<itemBody>
-		<gapMatchInteraction responseIdentifier="RESPONSE" shuffle="false">
-			<prompt>Identify the missing words in this famous quote from Shakespeare's Richard III.</prompt>
-			<gapText identifier="W" matchMax="1">winter</gapText>
-			<gapText identifier="Sp" matchMax="1">spring</gapText>
-			<gapText identifier="Su" matchMax="1">summer</gapText>
-			<gapText identifier="A" matchMax="1">autumn</gapText>
-			<blockquote>
-				<p>Now is the <gap identifier="G1"/> of our discontent<br/> Made glorious <gap
-						identifier="G2"/> by this sun of York;<br/> And all the clouds that lour'd
-					upon our house<br/> In the deep bosom of the ocean buried.</p>
-			</blockquote>
-		</gapMatchInteraction>
+		<div class="grid-row">
+			<div class="col-12">
+				<gapMatchInteraction responseIdentifier="RESPONSE" shuffle="true">
+					<prompt>test  shuffle choices</prompt>
+					<gapText identifier="choice_1" fixed="false" matchMax="1" matchMin="0"><span class="txt-underline"><em><strong>choice </strong></em></span>#1</gapText>
+					<gapText identifier="choice_2" fixed="false" matchMax="1" matchMin="0">choice <sub>#2</sub></gapText>
+					<gapText identifier="choice_3" fixed="false" matchMax="1" matchMin="0">choice <sup>#3</sup></gapText>
+					<gapText identifier="choice_4" fixed="false" matchMax="1" matchMin="0">choice #<m:math><m:semantics><m:mstyle displaystyle="true" scriptlevel="0"><m:mrow class="MJX-TeXAtom-ORD"><m:msup><m:mn>12</m:mn><m:mn>2</m:mn></m:msup></m:mrow></m:mstyle><m:annotation encoding="latex">12^2</m:annotation></m:semantics></m:math></gapText>
+					<gapText identifier="choice_5" fixed="false" matchMax="1" matchMin="0">adipisicing .</gapText>
+					<p>Lorem dolor sit <span data-role="tooltip-target" aria-describedby="_tooltip-ttb6bda1cg0gwd38nz7suc">amet</span><span data-role="tooltip-content" aria-hidden="true" id="_tooltip-ttb6bda1cg0gwd38nz7suc">111</span>, consectetur <gap identifier="gap_1" fixed="false" required="false"/>..</p>
+				</gapMatchInteraction>
+			</div>
+		</div>
 	</itemBody>
-	<responseProcessing
-		template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response"/>
+	<responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
 </assessmentItem>

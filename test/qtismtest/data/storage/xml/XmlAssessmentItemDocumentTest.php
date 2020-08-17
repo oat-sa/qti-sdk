@@ -263,6 +263,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function validFileProvider()
     {
         return [
+            // -- 2.2.2
+            [self::decorateUri('essay.xml', '2.2.0'), '2.2.2'],
+
             // -- 2.2.1
             [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
 
@@ -302,7 +305,6 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('slider.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('template.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('text_entry.xml', '2.2.0'), '2.2.0'],
-            [self::decorateUri('essay.xml', '2.2.0'), '2.2.0'],
 
             // -- 2.1.0
             [self::decorateUri('adaptive.xml', '2.1.0'), '2.1.0'],
@@ -391,6 +393,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             return self::samplesDir() . 'ims/items/2_2/' . $uri;
         } elseif ($version === '2.2.1') {
             return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
+        } elseif ($version === '2.2.2') {
+            return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
         } else {
             return self::samplesDir() . 'ims/items/2_0/' . $uri;
         }

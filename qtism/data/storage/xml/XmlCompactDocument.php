@@ -18,11 +18,13 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml;
 
+use DOMDocument;
 use DOMElement;
 use Exception;
 use qtism\common\Resolver;
@@ -37,7 +39,8 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\versions\CompactVersion;
+use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestPart;
 use SplObjectStorage;
 
@@ -56,14 +59,23 @@ use SplObjectStorage;
 class XmlCompactDocument extends XmlDocument
 {
     /**
+     * Whether or not the rubricBlock elements
+     * must be separated from the core document.
+     *
+     * @var boolean
+     */
+    private $explodeRubricBlocks = false;
+
+    /**
      * XmlCompactDocument constructor.
      *
      * Create a new XmlCompactDocument object.
+     * Kept for BC reason.
      *
      * @param string $version
      * @param QtiComponent|null $documentComponent
      */
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
     {
         // Version 1.0 was used in legacy code, let's keep it BC.
         if ($version === '1.0') {
@@ -74,12 +86,15 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Whether or not the rubricBlock elements
-     * must be separated from the core document.
+     * Sets version to a supported QTI Compact version.
      *
-     * @var boolean
+     * @param string $versionNumber A QTI Compact version number e.g. '2.1.0'.
+     * @throws QtiVersionException when version is not supported for QTI Compact.
      */
-    private $explodeRubricBlocks = false;
+    public function setVersion(string $versionNumber)
+    {
+        $this->version = CompactVersion::create($versionNumber);
+    }
 
     /**
      * Whether or not the rubrickBlock components contained
@@ -113,28 +128,17 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Override of XmlDocument::createMarshallerFactory in order
-     * to return an appropriate CompactMarshallerFactory.
-     *
-     * @return CompactMarshallerFactory A CompactMarshallerFactory object.
-     */
-    protected function createMarshallerFactory()
-    {
-        return new CompactMarshallerFactory();
-    }
-
-    /**
      * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
      *
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
      * @param Resolver $itemResolver (optional) A Resolver object aiming at resolving assessmentItemRefs. If not provided, fallback will be a LocalFileResolver.
      * @param Resolver $sectionResolver (optional) A Resolver object aiming at resolving assessmentSectionRefs. If not provided, fallback will be a LocalFileResolver.
+     * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
-     * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null)
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null, $version = '2.1')
     {
-        $compactAssessmentTest = new XmlCompactDocument();
+        $compactAssessmentTest = new XmlCompactDocument($version);
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
         $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
 
@@ -303,40 +307,6 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Validate the compact AssessmentTest XML document according to the relevant XSD schema.
-     * If $filename is provided, the file pointed by $filename will be used instead
-     * of the default schema.
-     *
-     * @param string $filename An optional filename to force the validation against a particular schema.
-     * @throws XmlStorageException
-     */
-    public function schemaValidate($filename = '')
-    {
-        if (empty($filename)) {
-            $dS = DIRECTORY_SEPARATOR;
-            // default xsd for AssessmentTest.
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qticompact_v1p0.xsd';
-        }
-
-        parent::schemaValidate($filename);
-    }
-
-    /**
-     * Override of XmlDocument.
-     *
-     * Specifies the correct XSD schema locations and main namespace
-     * for the root element of a Compact XML document.
-     *
-     * @param DOMElement $rootElement The root element of a compact XML document.
-     */
-    public function decorateRootElement(DOMElement $rootElement)
-    {
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
-        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
-    }
-
-    /**
      * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)
@@ -399,8 +369,14 @@ class XmlCompactDocument extends XmlDocument
         return $references;
     }
 
-    protected function inferVersion()
+    /**
+     * Infer the QTI Compact version of the document from its XML definition.
+     *
+     * @return string a semantic version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
+     */
+    protected function inferVersion(): string
     {
-        return '2.1';
+        return CompactVersion::infer($this->getDomDocument());
     }
 }

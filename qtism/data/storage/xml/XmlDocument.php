@@ -18,6 +18,7 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -36,13 +37,8 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
 use ReflectionClass;
 use RuntimeException;
@@ -147,11 +143,11 @@ class XmlDocument extends QtiDocument
 
             if (call_user_func_array([$doc, $loadMethod], [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE])) {
                 // Infer the QTI version.
-                if (($version = XmlUtils::inferVersion($this->getDomDocument())) !== false) {
-                    $this->setVersion($version);
-                } else {
-                    $msg = "Cannot infer QTI version. Is it well formed?";
-                    throw new XmlStorageException($msg);
+                try {
+                    // Prefers the version contained in the XML payload if valid.
+                    $this->setVersion($this->inferVersion());
+                } catch (XmlStorageException $exception) {
+                    // If not valid, keeps the version set on object creation.
                 }
 
                 if ($validate === true) {
@@ -305,7 +301,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate($filename = '')
     {
         if (empty($filename)) {
-            $filename = XmlUtils::getSchemaLocation($this->getVersion());
+            $filename = $this->version->getLocalXsd();
         }
 
         if (is_readable($filename)) {
@@ -442,6 +438,17 @@ class XmlDocument extends QtiDocument
     }
 
     /**
+     * Changes to Qti version of the root element.
+     *
+     * @param string $toVersionNumber
+     */
+    public function changeVersion(string $toVersionNumber)
+    {
+        $this->setVersion($toVersionNumber);
+        $this->decorateRootElement($this->domDocument->documentElement);
+    }
+
+    /**
      * Decorate the root element of the XmlAssessmentDocument with the appropriate
      * namespaces and schema definition.
      *
@@ -449,39 +456,12 @@ class XmlDocument extends QtiDocument
      */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-        $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+        $namespace = $this->version->getNamespace();
+        $xsdLocation = $this->version->getXsdLocation();
 
-        switch (trim($this->getVersion())) {
-            case '2.0.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
-                break;
-
-            case '2.1.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
-                break;
-
-            case '2.1.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
-                break;
-
-            case '2.2.0':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
-                break;
-
-            case '2.2.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
-                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
-                break;
-        }
-
-        $rootElement->setAttribute('xmlns', $xmlns);
+        $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $namespace);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "${xmlns} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $namespace . ' ' . $xsdLocation);
     }
 
     /**
@@ -527,30 +507,18 @@ class XmlDocument extends QtiDocument
      */
     protected function createMarshallerFactory()
     {
-        $version = $this->getVersion();
-        if ($version === '2.0.0') {
-            return new Qti20MarshallerFactory();
-        } elseif ($version === '2.1.0') {
-            return new Qti21MarshallerFactory();
-        } elseif ($version === '2.1.1') {
-            return new Qti211MarshallerFactory();
-        } elseif ($version === '2.2.0') {
-            return new Qti22MarshallerFactory();
-        } elseif ($version === '2.2.1') {
-            return new Qti221MarshallerFactory();
-        } else {
-            $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
-            throw new RuntimeException($msg);
-        }
+        $class = $this->version->getMarshallerFactoryClass();
+        return new $class;
     }
 
     /**
      * Infer the QTI version of the document from its XML definition.
      *
-     * @return boolean|string false if cannot be inferred otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     * @return string a semantic version inferred from the document.
+     * @throws XmlStorageException when the version can not be inferred.
      */
-    protected function inferVersion()
+    protected function inferVersion(): string
     {
-        return XmlUtils::inferVersion($this->getDomDocument());
+        return QtiVersion::infer($this->getDomDocument());
     }
 }

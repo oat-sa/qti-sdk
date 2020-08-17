@@ -24,17 +24,17 @@
 namespace qtism\data;
 
 use InvalidArgumentException;
-use qtism\common\utils\Version;
 use qtism\data\storage\StorageException;
+use qtism\data\storage\xml\versions\QtiVersion;
 
 abstract class QtiDocument
 {
     /**
      * The version of the document.
      *
-     * @var string
+     * @var QtiVersion
      */
-    private $version = '2.1';
+    protected $version;
 
     /**
      * The root QTI Component of the document.
@@ -49,26 +49,21 @@ abstract class QtiDocument
      */
     private $url;
 
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    public function __construct($versionNumber = '2.1.0', QtiComponent $documentComponent = null)
     {
-        $this->setVersion($version);
+        $this->setVersion($versionNumber);
         $this->setDocumentComponent($documentComponent);
     }
 
     /**
      * Set the QTI $version in use for this document.
      *
-     * @param string $version A QTI version number e.g. '2.1.1'.
+     * @param string $versionNumber A QTI version number e.g. '2.1.1'.
      * @throws InvalidArgumentException If $version is unknown regarding existing QTI versions.
      */
-    public function setVersion($version)
+    public function setVersion(string $versionNumber)
     {
-        if (Version::isKnown($version) === true) {
-            $this->version = Version::appendPatchVersion($version);
-        } else {
-            $msg = "Version '{$version}' is not a known QTI version. Known versions are '" . implode(', ', Version::knownVersions()) . "'";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->version = QtiVersion::create($versionNumber);
     }
 
     /**
@@ -76,9 +71,9 @@ abstract class QtiDocument
      *
      * @return string A Semantic Versioning version number with major, minor and patch version e.g. '2.1.0'.
      */
-    public function getVersion()
+    public function getVersion(): string
     {
-        return $this->version;
+        return (string)$this->version;
     }
 
     /**

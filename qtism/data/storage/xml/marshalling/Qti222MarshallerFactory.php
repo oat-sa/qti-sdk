@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2019-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,24 +23,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Reflection;
+use ReflectionClass;
+
 /**
- * A specialized marshaller factory focusing on components involved in CompactXml documents.
- *
- * In addition with the QTI 2.1 related marshallers, the following marshallers are mapped to this factory:
- *
- * * ExtendedAssessmentItemRefMarshaller
- * * ExtendedAssessmentSectionMarshaller
+ * A MarshallerFactory focusing on instantiating and configuring
+ * Marshallers for QTI 2.2.2.
  */
-class CompactMarshallerFactory extends Qti21MarshallerFactory
+class Qti222MarshallerFactory extends Qti221MarshallerFactory
 {
     /**
-     * Create a new CompactMarshallerFactory object.
+     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
      */
-    public function __construct()
+    protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
-        parent::__construct();
-
-        $this->addMappingEntry('assessmentItemRef', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller');
-        $this->addMappingEntry('assessmentSection', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentSectionMarshaller');
+        array_unshift($args, '2.2.2');
+        return Reflection::newInstance($class, $args);
     }
 }

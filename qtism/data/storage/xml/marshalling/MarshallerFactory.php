@@ -58,6 +58,13 @@ abstract class MarshallerFactory
     }
 
     /**
+     * Whether or not element and attribute serialization must be Web Component friendly.
+     *
+     * @var boolean
+     */
+    private $webComponentFriendly = false;
+
+    /**
      * Create a new instance of MarshallerFactory.
      *
      */
@@ -353,6 +360,30 @@ abstract class MarshallerFactory
         if ($this->hasMappingEntry($qtiClassName)) {
             unset($mapping[$qtiClassName]);
         }
+    }
+
+    /**
+     * Set Web Componenent Friendship
+     *
+     * Sets whether or not consider Web Component friendly QTI components.
+     *
+     * @param boolean $webComponentFriendly
+     */
+    protected function setWebComponentFriendly($webComponentFriendly)
+    {
+        $this->webComponentFriendly = $webComponentFriendly;
+    }
+
+    /**
+     * Web Component Friendship Status
+     *
+     * Whether or not Web Component friendly QTI components are considered.
+     *
+     * @return boolean
+     */
+    public function isWebComponentFriendly()
+    {
+        return $this->webComponentFriendly;
     }
 
     /**

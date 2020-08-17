@@ -4,15 +4,15 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\ExtendedAssessmentItemRef;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
-class CompactMarshallerFactyoryTest extends QtiSmTestCase
+class CompactMarshallerFactoryTest extends QtiSmTestCase
 {
     public function testInstantiation()
     {
-        $factory = new CompactMarshallerFactory();
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\CompactMarshallerFactory', $factory);
+        $factory = new Compact21MarshallerFactory();
+        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\Compact21MarshallerFactory', $factory);
 
         $this->assertTrue($factory->hasMappingEntry('assessmentItemRef'));
         $this->assertEquals('qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller', $factory->getMappingEntry('assessmentItemRef'));
@@ -24,7 +24,7 @@ class CompactMarshallerFactyoryTest extends QtiSmTestCase
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml"/>');
         $element = $dom->documentElement;
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($element);
         $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller', $marshaller);
     }
