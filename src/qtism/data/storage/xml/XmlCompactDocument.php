@@ -412,7 +412,7 @@ class XmlCompactDocument extends XmlDocument
                         $testPartCount[$parent] = 0;
                     }
 
-                    $testPartCount[$parent] = $testPartCount[$parent] + 1;
+                    $testPartCount[$parent] += 1;
                     $occurence = $testPartCount[$parent];
                 } else {
                     // It's a testFeedback related to an assessmentTest.
@@ -470,7 +470,7 @@ class XmlCompactDocument extends XmlDocument
                 $sectionCount[$section] = 0;
             }
 
-            $sectionCount[$section] = $sectionCount[$section] + 1;
+            $sectionCount[$section] += 1;
             $occurence = $sectionCount[$section];
 
             // determine a suitable file name for the external rubricBlock definition.

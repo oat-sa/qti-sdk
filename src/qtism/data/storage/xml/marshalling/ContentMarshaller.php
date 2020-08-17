@@ -390,7 +390,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
                 return $fqClass;
             }
 
-            $fqClass = $fqClass . 'Element';
+            $fqClass .= 'Element';
             if (class_exists($fqClass) === true) {
                 return $fqClass;
             }
