@@ -48,14 +48,14 @@ foreach ($templates as $t) {
     foreach ($xmlTimings[$t] as $v) {
         $meanXml += $v;
     }
-    $meanXml = $meanXml / $iterations;
+    $meanXml /= $iterations;
 
     // compute arithmetic mean.
     $meanPhp = 0;
     foreach ($phpTimings[$t] as $v) {
         $meanPhp += $v;
     }
-    $meanPhp = $meanPhp / $iterations;
+    $meanPhp /= $iterations;
 
     echo "+ ${t} (XML = ${meanXml} - PHP ${meanPhp})\n";
 }

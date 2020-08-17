@@ -379,7 +379,7 @@ class XmlCompactDocument extends XmlDocument
                 $sectionCount[$section] = 0;
             }
 
-            $sectionCount[$section] = $sectionCount[$section] + 1;
+            $sectionCount[$section] += 1;
             $occurence = $sectionCount[$section];
 
             // determine a suitable file name for the external rubricBlock definition.

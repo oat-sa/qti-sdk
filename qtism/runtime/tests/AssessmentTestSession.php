@@ -2405,7 +2405,7 @@ class AssessmentTestSession extends State
         $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
         // Include assessmentItem only if formally asked by client-code.
         if ($includeAssessmentItem === true) {
-            $places = $places | AssessmentTestPlace::ASSESSMENT_ITEM;
+            $places |= AssessmentTestPlace::ASSESSMENT_ITEM;
         }
 
         $constraints = $this->getTimeConstraints($places);

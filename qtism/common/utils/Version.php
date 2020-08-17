@@ -122,7 +122,7 @@ class Version
     {
         $shortKnownVersions = ['2.0', '2.1', '2.2'];
         if (in_array($version, $shortKnownVersions) === true) {
-            $version = $version . '.0';
+            $version .= '.0';
         }
 
         return $version;

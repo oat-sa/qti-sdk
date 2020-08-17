@@ -73,7 +73,7 @@ class Utils
             return 0;
         }
 
-        $a = $a / self::gcd($a, $b);
+        $a /= self::gcd($a, $b);
 
         return $a * $b;
     }

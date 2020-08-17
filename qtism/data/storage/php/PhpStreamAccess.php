@@ -69,7 +69,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->getStream()->write($scalar);
             } elseif (is_double($scalar) === true) {
                 if (strpos('' . $scalar, '.') === false) {
-                    $scalar = $scalar . '.0';
+                    $scalar .= '.0';
                 }
 
                 $this->getStream()->write($scalar);
