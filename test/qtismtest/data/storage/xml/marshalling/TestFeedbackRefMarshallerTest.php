@@ -4,7 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\ShowHide;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\TestFeedbackRef;
 use qtismtest\QtiSmTestCase;
@@ -16,7 +16,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef identifier="showme" outcomeIdentifier="SHOW_FEEDBACK" access="during" showHide="show" href="./TF01.xml"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->assertEquals('showme', $ref->getIdentifier());
@@ -29,7 +29,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $ref = new TestFeedbackRef('showme', 'SHOW_FEEDBACK', TestFeedbackAccess::DURING, ShowHide::SHOW, './TF01.xml');
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($ref);
         $elt = $marshaller->marshall($ref);
 
@@ -50,7 +50,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef outcomeIdentifier="SHOW_FEEDBACK" access="during" showHide="show" href="./TF01.xml"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -64,7 +64,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef identifier="showme" access="during" showHide="show" href="./TF01.xml"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -78,7 +78,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef identifier="showme" outcomeIdentifier="SHOW_FEEDBACK" showHide="show" href="./TF01.xml"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -92,7 +92,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef identifier="showme" outcomeIdentifier="SHOW_FEEDBACK" access="during" href="./TF01.xml"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -106,7 +106,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef identifier="showme" outcomeIdentifier="SHOW_FEEDBACK" access="during" showHide="show"/>');
         $element = $dom->documentElement;
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 }

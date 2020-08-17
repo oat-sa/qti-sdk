@@ -28,6 +28,7 @@ use DOMElement;
 use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Version;
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -38,6 +39,38 @@ use qtism\data\ShowHide;
  */
 class GapChoiceMarshaller extends ContentMarshaller
 {
+    private static $gapTextAllowedContent = [
+        'a',
+        'abbr',
+        'acronym',
+        'b',
+        'big',
+        'br',
+        'cite',
+        'code',
+        'dfn',
+        'em',
+        'feedbackInline',
+        'i',
+        'img',
+        'include',
+        'kbd',
+        'math',
+        'object',
+        'printedVariable',
+        'q',
+        'samp',
+        'small',
+        'span',
+        'strong',
+        'sub',
+        'sup',
+        'templateInline',
+        'textRun',
+        'tt',
+        'var',
+    ];
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
@@ -83,12 +116,30 @@ class GapChoiceMarshaller extends ContentMarshaller
                         throw new UnmarshallingException($msg, $element);
                     }
 
-                    try {
-                        $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
-                    } catch (InvalidArgumentException $e) {
-                        $msg = "Invalid content in 'gapText' element.";
-                        throw new UnmarshallingException($msg, $element, $e);
+                    if (Version::compare($version, '2.2.0', '>=') === true) {
+                        // The allowed set of elements in a gapText (for QTI 2.2) is a subset of FlowStatic.
+                        // Let's make sure that children elements are in this subset.
+                        $childrenArray = $children->getArrayCopy();
+
+                        foreach ($childrenArray as $child) {
+                            if (!in_array($child->getQtiClassName(), self::$gapTextAllowedContent, true)) {
+                                throw new UnmarshallingException(
+                                    "Element with class '" . $child->getQtiClassName() . "' is not allowed in 'gapText' elements.",
+                                    $element
+                                );
+                            }
+                        }
+
+                        $content = new FlowStaticCollection($children->getArrayCopy());
+                    } else {
+                        try {
+                            $content = new TextOrVariableCollection($children->getArrayCopy());
+                        } catch (InvalidArgumentException $e) {
+                            $msg = "Invalid content in 'gapText' element.";
+                            throw new UnmarshallingException($msg, $element, $e);
+                        }
                     }
+                    $component->setContent($content);
                 } else {
                     if (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
                         $component->setObjectLabel($objectLabel);

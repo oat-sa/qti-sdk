@@ -5,7 +5,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\ShufflingGroup;
-use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
 class ShufflingGroupMarshallerTest extends QtiSmTestCase
@@ -14,7 +14,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
     {
         $component = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $component->setFixedIdentifiers(new IdentifierCollection(['id2']));
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
@@ -29,7 +29,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<shufflingGroup identifiers="id1 id2 id3" fixedIdentifiers="id2"/>');
         $element = $dom->documentElement;
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
@@ -44,7 +44,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<shufflingGroup fixedIdentifiers="id2"/>');
         $element = $dom->documentElement;
 
-        $factory = new CompactMarshallerFactory();
+        $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
             'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',

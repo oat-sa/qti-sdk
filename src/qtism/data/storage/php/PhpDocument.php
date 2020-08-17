@@ -53,20 +53,6 @@ use SplStack;
 class PhpDocument extends QtiDocument
 {
     /**
-     * Create a new PhpDocument object.
-     *
-     * As PHP-serialized QTI documents contain the necessary information about the QTI version they are
-     * refering to, the value of the $version argument will simply be ignored.
-     *
-     * @param string $version (optional) Expected QTI version (default is "2.1").
-     * @param QtiComponent $documentComponent The root QtiComponent object to contained by the PhpDocument.
-     */
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
-    {
-        parent::__construct($version, $documentComponent);
-    }
-
-    /**
      * Save the PhpDocument to a specific location.
      *
      * @param string $url A URL (Uniform Resource Locator) describing where to save the document.

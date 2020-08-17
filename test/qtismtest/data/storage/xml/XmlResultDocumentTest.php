@@ -24,6 +24,7 @@
 namespace qtismtest\data\storage\xml;
 
 use DateTime;
+use InvalidArgumentException;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
@@ -92,5 +93,81 @@ class XmlResultDocumentTest extends QtiSmTestCase
             $expected,
             $str
         );
+    }
+
+    /**
+     * @dataProvider inferVersionAndSchemaValidateProvider
+     * @param string $testFile
+     * @param string $expectedVersion
+     * @throws XmlStorageException
+     */
+    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion)
+    {
+        $xmlDoc = new XmlResultDocument();
+        $xmlDoc->load($testFile, true);
+
+        $this->assertEquals($expectedVersion, $xmlDoc->getVersion());
+    }
+
+    public function inferVersionAndSchemaValidateProvider(): array
+    {
+        return [
+            [self::samplesDir() . 'results/simple-assessment-result.xml', '2.1.0'],
+            [self::samplesDir() . 'results/simple-assessment-result-v2p2.xml', '2.2.0'],
+        ];
+    }
+
+    public function testInferVersionWithMissingNamespaceThrowsException()
+    {
+        $xmlDoc = new XmlResultDocument();
+
+        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml');
+
+        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
+    }
+
+    /**
+     * @dataProvider changeVersionProvider
+     * @param string $fromVersion
+     * @param string $fromFile
+     * @param string $toVersion
+     * @param string $toFile
+     * @throws XmlStorageException
+     */
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    {
+        $doc = new XmlResultDocument($fromVersion);
+        $doc->load($fromFile, true);
+
+        $doc->changeVersion($toVersion);
+
+        $expected = new XmlResultDocument($toVersion);
+        $expected->load($toFile, true);
+
+        $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
+
+    public function changeVersionProvider(): array
+    {
+        $path = self::samplesDir() . 'results/simple-assessment-result';
+        return [
+            ['2.1', $path . '.xml', '2.2', $path . '-v2p2.xml'],
+            ['2.2', $path . '-v2p2.xml', '2.1', $path . '.xml'],
+        ];
+    }
+
+    public function testChangeVersionWithUnknownVersionThrowsException()
+    {
+        $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
+        $file21 = self::samplesDir() . 'results/simple-assessment-result.xml';
+
+        $doc = new XmlResultDocument('2.1');
+        $doc->load($file21, true);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('QTI Result Report is not supported for version "' . $patchedWrongVersion . '".');
+
+        $doc->changeVersion($wrongVersion);
     }
 }
