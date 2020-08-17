@@ -64,9 +64,7 @@ class FieldValueMarshaller extends OperatorMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($fieldIdentifier = static::getDOMElementAttributeAs($element, 'fieldIdentifier')) !== null) {
-            $object = new FieldValue($children, $fieldIdentifier);
-
-            return $object;
+            return new FieldValue($children, $fieldIdentifier);
         } else {
             $msg = "The mandatory attribute 'fieldIdentifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

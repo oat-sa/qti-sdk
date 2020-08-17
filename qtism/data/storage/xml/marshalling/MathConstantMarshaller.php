@@ -59,9 +59,7 @@ class MathConstantMarshaller extends Marshaller
     {
         if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
             if (($cst = MathEnumeration::getConstantByName($name)) !== false) {
-                $object = new MathConstant($cst);
-
-                return $object;
+                return new MathConstant($cst);
             } else {
                 $msg = "'${name}' is not a valid value for the attribute 'name' from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

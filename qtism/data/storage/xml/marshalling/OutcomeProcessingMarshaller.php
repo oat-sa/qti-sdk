@@ -69,9 +69,7 @@ class OutcomeProcessingMarshaller extends Marshaller
             $outcomeRules[] = $marshaller->unmarshall($outcomeRuleElts[$i]);
         }
 
-        $object = new OutcomeProcessing($outcomeRules);
-
-        return $object;
+        return new OutcomeProcessing($outcomeRules);
     }
 
     /**

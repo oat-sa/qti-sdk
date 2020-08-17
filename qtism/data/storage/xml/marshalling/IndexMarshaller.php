@@ -69,9 +69,7 @@ class IndexMarshaller extends OperatorMarshaller
                 $n = intval($n);
             }
 
-            $object = new Index($children, $n);
-
-            return $object;
+            return new Index($children, $n);
         } else {
             $msg = "The mandatory attribute 'n' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

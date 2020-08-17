@@ -66,9 +66,7 @@ class StatsOperatorMarshaller extends OperatorMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
-            $object = new StatsOperator($children, Statistics::getConstantByName($name));
-
-            return $object;
+            return new StatsOperator($children, Statistics::getConstantByName($name));
         } else {
             $msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

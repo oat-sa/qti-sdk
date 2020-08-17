@@ -98,13 +98,11 @@ class SumProcessorTest extends QtiSmTestCase
 
     private function createFakeSumComponent()
     {
-        $sum = $this->createComponentFromXml('
+        return $this->createComponentFromXml('
 			<sum xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
 				<baseValue baseType="integer">1</baseValue>
 				<baseValue baseType="integer">3</baseValue>
 			</sum>
 		');
-
-        return $sum;
     }
 }

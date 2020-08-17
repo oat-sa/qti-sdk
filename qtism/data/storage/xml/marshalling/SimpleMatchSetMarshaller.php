@@ -39,9 +39,7 @@ class SimpleMatchSetMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $fqClass = $this->lookupClass($element);
-        $component = new $fqClass(new SimpleAssociableChoiceCollection($children->getArrayCopy()));
-
-        return $component;
+        return new $fqClass(new SimpleAssociableChoiceCollection($children->getArrayCopy()));
     }
 
     /**

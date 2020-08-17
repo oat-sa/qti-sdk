@@ -62,9 +62,7 @@ class BaseValueMarshaller extends Marshaller
         if (($baseType = static::getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
             $value = $element->nodeValue;
             $baseTypeCst = BaseType::getConstantByName($baseType);
-            $object = new BaseValue($baseTypeCst, Utils::stringToDatatype($value, $baseTypeCst));
-
-            return $object;
+            return new BaseValue($baseTypeCst, Utils::stringToDatatype($value, $baseTypeCst));
         } else {
             $msg = "The mandatory attribute 'baseType' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

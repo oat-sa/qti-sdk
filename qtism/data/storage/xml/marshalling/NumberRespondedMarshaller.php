@@ -40,9 +40,7 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = parent::marshall($component);
-
-        return $element;
+        return parent::marshall($component);
     }
 
     /**

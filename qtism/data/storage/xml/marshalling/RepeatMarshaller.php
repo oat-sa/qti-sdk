@@ -69,9 +69,7 @@ class RepeatMarshaller extends OperatorMarshaller
                 $numberRepeats = intval($numberRepeats);
             }
 
-            $object = new Repeat($children, $numberRepeats);
-
-            return $object;
+            return new Repeat($children, $numberRepeats);
         } else {
             $msg = "The mandatory attribute 'numberRepeats' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

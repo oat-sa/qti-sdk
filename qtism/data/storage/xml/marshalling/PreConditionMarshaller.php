@@ -61,9 +61,7 @@ class PreConditionMarshaller extends Marshaller
 
         if ($expressionElt !== false) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-            $object = new PreCondition($marshaller->unmarshall($expressionElt));
-
-            return $object;
+            return new PreCondition($marshaller->unmarshall($expressionElt));
         } else {
             $msg = "The mandatory 'expression' child element is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

@@ -40,9 +40,7 @@ class TextRunMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createTextNode($component->getContent());
-
-        return $element;
+        return static::getDOMCradle()->createTextNode($component->getContent());
     }
 
     /**
@@ -54,9 +52,7 @@ class TextRunMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        $object = new TextRun($element->nodeValue);
-
-        return $object;
+        return new TextRun($element->nodeValue);
     }
 
     /**

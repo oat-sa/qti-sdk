@@ -57,9 +57,7 @@ class MapResponsePointMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
-            $object = new MapResponsePoint($identifier);
-
-            return $object;
+            return new MapResponsePoint($identifier);
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

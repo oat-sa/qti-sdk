@@ -110,12 +110,10 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     private function getFakeExpression()
     {
-        $expression = $this->createComponentFromXml('
+        return $this->createComponentFromXml('
 			<isNull>
 				<baseValue baseType="string"></baseValue>
 			</isNull>
 		');
-
-        return $expression;
     }
 }

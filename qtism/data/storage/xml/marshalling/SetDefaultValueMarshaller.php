@@ -63,9 +63,7 @@ class SetDefaultValueMarshaller extends Marshaller
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                $object = new SetDefaultValue($identifier, $marshaller->unmarshall($expressionElt));
-
-                return $object;
+                return new SetDefaultValue($identifier, $marshaller->unmarshall($expressionElt));
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element 'setDefaultValue'.";
                 throw new UnmarshallingException($msg, $element);

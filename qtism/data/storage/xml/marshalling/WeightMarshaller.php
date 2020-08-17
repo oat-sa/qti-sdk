@@ -64,9 +64,7 @@ class WeightMarshaller extends Marshaller
             if (($value = static::getDOMElementAttributeAs($element, 'value', 'string')) !== null) {
                 if (Format::isFloat($value)) {
                     try {
-                        $object = new Weight($identifier, floatval($value));
-
-                        return $object;
+                        return new Weight($identifier, floatval($value));
                     } catch (InvalidArgumentException $e) {
                         $msg = "The value of 'identifier' from element '" . $element->localName . "' is not a valid QTI Identifier.";
                         throw new UnmarshallingException($msg, $element, $e);
