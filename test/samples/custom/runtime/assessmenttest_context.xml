@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
 	identifier="assessmenttest_context" title="AssessmentTest Context">
 	<outcomeDeclaration identifier="OUTCOME1" cardinality="single" baseType="string"/>
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">

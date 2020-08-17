@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use InvalidArgumentException;
+use qtism\common\utils\Version;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -44,7 +45,11 @@ class PromptMarshaller extends ContentMarshaller
 
         $content = new FlowStaticCollection();
         $error = false;
-        $exclusion = ['pre', 'hottext', 'printedVariable', 'templateBlock', 'templateInline', 'infoControl', 'feedbackBlock', 'rubricBlock', 'a', 'feedbackInline'];
+        $exclusion = ['pre', 'hottext', 'printedVariable', 'templateBlock', 'templateInline', 'infoControl', 'feedbackBlock', 'rubricBlock', 'feedbackInline'];
+
+        if (Version::compare($this->getVersion(), '2.2.0', '<')) {
+            $exclusion[] = 'a';
+        }
 
         foreach ($children as $c) {
             if (in_array($c->getQtiClassName(), $exclusion) === true) {

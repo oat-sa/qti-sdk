@@ -26,7 +26,7 @@ namespace qtism\common\utils;
 use InvalidArgumentException;
 
 /**
- * This utility class provides utility classes about Semantic Versionning.
+ * This utility class provides utility classes about Semantic Versioning.
  *
  * @see http://semver.org Semantic Versioning
  */
@@ -60,71 +60,84 @@ class Version
      */
     public static function compare($version1, $version2, $operator = null)
     {
-        $version1 = trim($version1);
-        $version2 = trim($version2);
+        $version1 = self::sanitize($version1);
+        $version2 = self::sanitize($version2);
+        self::checkOperator($operator);
 
-        // Because version_compare consider 2.1 < 2.1.0...
-        $version1 = self::appendPatchVersion($version1);
-        $version2 = self::appendPatchVersion($version2);
+        return $operator === null
+            ? version_compare($version1, $version2)
+            : version_compare($version1, $version2, $operator);
+    }
 
-        // Check if the versions are known...
-        $knownVersions = self::knownVersions();
-        if (self::isKnown($version1) === false) {
-            $msg = "Version '${version1}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
-            throw new InvalidArgumentException($msg);
-        } elseif (self::isKnown($version2) === false) {
-            $msg = "Version '${version2}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
-            throw new InvalidArgumentException($msg);
-        }
+    /**
+     * Checks whether the given version is supported and adds
+     * patch version if missing, i.e. '2.1' becomes '2.1.0'.
+     *
+     * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
+     * @return string Semantic version with optionally added patch (defaults to 0), e.g. '2.1' becomes '2.1.0'.
+     * @throws InvalidArgumentException when version is not supported.
+     */
+    protected static function sanitize(string $version): string
+    {
+        $patchedVersion = self::appendPatchVersion($version);
+        static::checkVersion($patchedVersion);
+        return $patchedVersion;
+    }
 
-        // Check if operator is correct.
+    /**
+     * Checks whether the version is supported for Qti versions.
+     * This stub allows semantic version comparison for general use.
+     *
+     * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
+     * @throws InvalidArgumentException when version is not supported.
+     */
+    protected static function checkVersion(string $version)
+    {
+    }
+
+    /**
+     * Checks that the operator is valid.
+     *
+     * @param string|null $operator
+     * @throws InvalidArgumentException when the operator is not known.
+     */
+    private static function checkOperator($operator)
+    {
         $knownOperators = ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'];
-        if (is_null($operator) === true || in_array($operator, $knownOperators) === true) {
-            return (is_null($operator) === true) ? version_compare($version1, $version2) : version_compare($version1, $version2, $operator);
-        } else {
-            $msg = "Unknown operator '${operator}'. Known operators are '" . implode(', ', $knownOperators) . "'.";
-            throw new InvalidArgumentException($msg);
+        if ($operator !== null && !in_array($operator, $knownOperators, true)) {
+            throw new InvalidArgumentException(
+                sprintf("Unknown operator '%s'. Known operators are '%s'.",
+                    $operator,
+                    implode("', '", $knownOperators)
+                )
+            );
         }
-    }
-
-    /**
-     * Wether or not a $version containing a major, minor and patch
-     * version is a known QTI version.
-     *
-     * @param string $version A version with major, minor and patch version e.g. '2.1.1'.
-     * @return boolean
-     */
-    public static function isKnown($version)
-    {
-        $version = self::appendPatchVersion($version);
-        return in_array($version, self::knownVersions());
-    }
-
-    /**
-     * Get known QTI versions. Returned versions will contain
-     * major, minor and patch version.
-     *
-     * @return array An array of QTI version numbers containing major, minor and patch version e.g. '2.1.1'.
-     */
-    public static function knownVersions()
-    {
-        return ['2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1'];
     }
 
     /**
      * Append patch version to $version if $version only contains
      * major and minor versions.
      *
-     * @param string $version
+     * @param string $versionNumber
      * @return string
+     * @throws InvalidArgumentException when the given version is not semantic.
      */
-    public static function appendPatchVersion($version)
+    public static function appendPatchVersion($versionNumber): string
     {
-        $shortKnownVersions = ['2.0', '2.1', '2.2'];
-        if (in_array($version, $shortKnownVersions) === true) {
-            $version .= '.0';
+        $versionNumber = trim($versionNumber);
+
+        if (preg_match('/^\d+\.\d+\.\d+$/', $versionNumber)) {
+            return $versionNumber;
+        }
+        if (preg_match('/^\d+\.\d+$/', $versionNumber)) {
+            return $versionNumber . '.0';
+        }
+        if (preg_match('/^\d+$/', $versionNumber)) {
+            return $versionNumber . '.0.0';
         }
 
-        return $version;
+        throw new InvalidArgumentException(
+            sprintf("Provided version number '%s' is not compliant to semantic versioning.", $versionNumber)
+        );
     }
 }

@@ -104,20 +104,20 @@ class GapChoiceMarshaller extends ContentMarshaller
                 }
 
                 if ($element->localName === 'gapText') {
-                    try {
-                        // The allowed set of elements in a gapText (for QTI 2.2) is a subset of FlowStatic.
-                        // Let's make sure that children elements are in this subset.
-                        $childrenArray = $children->getArrayCopy();
+                    // The allowed set of elements in a gapText (for QTI 2.2) is a subset of FlowStatic.
+                    // Let's make sure that children elements are in this subset.
+                    $childrenArray = $children->getArrayCopy();
 
-                        foreach ($childrenArray as $child) {
-                            if (in_array($child->getQtiClassName(), self::$gapTextAllowedContent) === false) {
-                                throw new UnmarshallingException(
-                                    "Element with class '" . $child->getQtiClassName() . "' is not allowed in 'gapText' elements.",
-                                    $element
-                                );
-                            }
+                    foreach ($childrenArray as $child) {
+                        if (in_array($child->getQtiClassName(), self::$gapTextAllowedContent) === false) {
+                            throw new UnmarshallingException(
+                                "Element with class '" . $child->getQtiClassName() . "' is not allowed in 'gapText' elements.",
+                                $element
+                            );
                         }
+                    }
 
+                    try {
                         $component->setContent(new FlowStaticCollection($childrenArray));
                     } catch (InvalidArgumentException $e) {
                         $msg = "Invalid content in 'gapText' element.";

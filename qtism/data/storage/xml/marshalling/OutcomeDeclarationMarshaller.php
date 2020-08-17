@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use InvalidArgumentException;
+use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
@@ -45,6 +46,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
+        $version = $this->getVersion();
 
         // deal with views.
         // !!! If $arrayViews contain all possible views, it means that the treated
@@ -91,7 +93,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
 
-        if ($component->isExternallyScored()) {
+		if (Version::compare($version, '2.2.0', '>=') === true && $component->isExternallyScored()) {
             static::setDOMElementAttribute($element, 'externalScored', ExternalScored::getNameByConstant($component->getExternalScored()));
         }
 
