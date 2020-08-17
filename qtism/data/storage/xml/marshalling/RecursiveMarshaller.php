@@ -296,7 +296,7 @@ abstract class RecursiveMarshaller extends Marshaller
                 if ($node === $element && !empty($rootComponent)) {
                     $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection, $rootComponent);
                 } else {
-                    if ($marshaller instanceof RecursiveMarshaller) {
+                    if ($marshaller instanceof self) {
                         $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
                     } else {
                         $component = $marshaller->unmarshall($node);

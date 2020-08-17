@@ -114,7 +114,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {
-        $element = QtiSmTestCase::createDOMElement($xmlString);
+        $element = self::createDOMElement($xmlString);
         $factory = $this->getMarshallerFactory($version);
         $marshaller = $factory->createMarshaller($element);
         return $marshaller->unmarshall($element);

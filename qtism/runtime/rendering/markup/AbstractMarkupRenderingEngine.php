@@ -526,13 +526,13 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         // In the list of QTI class names to be ignored?
         if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
             return true;
-        } elseif ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE)) {
+        } elseif ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === self::CONTEXT_AWARE)) {
             // Context Aware + FeedbackElement OR Context Aware + Choice Templating.
             $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
 
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
-        } elseif ($this->getViewPolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE && $component instanceof RubricBlock) {
+        } elseif ($this->getViewPolicy() === self::CONTEXT_AWARE && $component instanceof RubricBlock) {
             // Context Aware + RubricBlock
             $renderingViews = $this->getViews();
             $rubricViews = $component->getViews();
@@ -804,7 +804,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     protected function mustTemplateFeedbackComponent(QtiComponent $component)
     {
-        return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
+        return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::TEMPLATE_ORIENTED);
     }
 
     /**
@@ -819,7 +819,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     protected function mustTemplateRubricBlockComponent(QtiComponent $component)
     {
-        return (self::isRubricBlock($component) && $this->getViewPolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
+        return (self::isRubricBlock($component) && $this->getViewPolicy() === self::TEMPLATE_ORIENTED);
     }
 
     /**
