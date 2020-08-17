@@ -499,9 +499,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
             }
         }
 
-        $finalRendering = $this->createFinalRendering($component);
-
-        return $finalRendering;
+        return $this->createFinalRendering($component);
     }
 
     /**

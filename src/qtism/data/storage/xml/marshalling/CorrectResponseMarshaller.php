@@ -121,9 +121,7 @@ class CorrectResponseMarshaller extends Marshaller
                 $values[] = $valueMarshaller->unmarshall($valueElements->item($i));
             }
 
-            $object = new CorrectResponse($values, $interpretation);
-
-            return $object;
+            return new CorrectResponse($values, $interpretation);
         } else {
             $msg = "A 'correctResponse' QTI element must contain at least one 'value' QTI element.";
             throw new UnmarshallingException($msg, $element);

@@ -283,9 +283,7 @@ abstract class Variable
         if ($cardinality === Cardinality::SINGLE) {
             // We should find a single value in the DefaultValue's values.
             if (count($valueCollection) == 1) {
-                $dataModelValue = RuntimeUtils::valueToRuntime($valueCollection[0]->getValue(), $baseType);
-
-                return $dataModelValue;
+                return RuntimeUtils::valueToRuntime($valueCollection[0]->getValue(), $baseType);
             } else {
                 // The Data Model is in an inconsistent state.
                 // This should be handled by the Data Model but

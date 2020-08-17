@@ -75,9 +75,7 @@ class AnyNMarshaller extends OperatorMarshaller
                     $max = intval($max);
                 }
 
-                $object = new AnyN($children, $min, $max);
-
-                return $object;
+                return new AnyN($children, $min, $max);
             } else {
                 $msg = "The mandatory attribute 'max' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

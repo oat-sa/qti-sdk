@@ -114,9 +114,7 @@ class MatchTableEntryMarshaller extends Marshaller
     {
         if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
             if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
-                $object = new MatchTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()), $this->getBaseType());
-
-                return $object;
+                return new MatchTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()), $this->getBaseType());
             } else {
                 $msg = "The mandatory attribute 'targetValue' is missing.";
                 throw new InvalidArgumentException($msg, $element);

@@ -40,9 +40,7 @@ class StackTrace extends AbstractCollection implements Stack
     public function pop()
     {
         $data = &$this->getDataPlaceHolder();
-        $val = array_pop($data);
-
-        return $val;
+        return array_pop($data);
     }
 
     /**

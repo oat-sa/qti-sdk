@@ -73,9 +73,7 @@ class TemplateDefaultMarshaller extends Marshaller
                 throw new UnmarshallingException($msg, $element);
             }
 
-            $object = new TemplateDefault($tplIdentifier, $expr);
-
-            return $object;
+            return new TemplateDefault($tplIdentifier, $expr);
         } else {
             $msg = "The mandatory attribute 'templateIdentifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

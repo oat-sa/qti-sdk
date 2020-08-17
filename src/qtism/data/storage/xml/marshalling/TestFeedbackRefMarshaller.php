@@ -70,9 +70,7 @@ class TestFeedbackRefMarshaller extends Marshaller
                             $access = TestFeedbackAccess::getConstantByName($access);
                             $showHide = ShowHide::getConstantByName($showHide);
 
-                            $component = new TestFeedbackRef($identifier, $outcomeIdentifier, $access, $showHide, $href);
-
-                            return $component;
+                            return new TestFeedbackRef($identifier, $outcomeIdentifier, $access, $showHide, $href);
                         } else {
                             $msg = "The mandatory 'showHide' attribute is missing from element 'testFeedbackRef'.";
                             throw new UnmarshallingException($msg, $element);

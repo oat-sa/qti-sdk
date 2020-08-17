@@ -111,9 +111,7 @@ class DefaultValueMarshaller extends Marshaller
                 $values[] = $valueMarshaller->unmarshall($valueElements->item($i));
             }
 
-            $object = new DefaultValue($values, $interpretation);
-
-            return $object;
+            return new DefaultValue($values, $interpretation);
         } else {
             $msg = "A 'defaultValue' QTI element must contain at least one 'value' QTI element.";
             throw new UnmarshallingException($msg, $element);

@@ -62,9 +62,7 @@ class InsideMarshaller extends OperatorMarshaller
                 $shape = QtiShape::getConstantByName($shape);
                 $coords = Utils::stringToCoords($coords, $shape);
 
-                $object = new Inside($children, $shape, $coords);
-
-                return $object;
+                return new Inside($children, $shape, $coords);
             } else {
                 $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

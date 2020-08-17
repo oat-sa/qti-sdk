@@ -69,9 +69,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
             } else {
                 $distance = ($min < 0) ? ($max + abs($min)) : ($max - $min);
                 $mult = mt_rand(0, intval(floor($distance / $step)));
-                $random = new QtiInteger($min + ($mult * $step));
-
-                return $random;
+                return new QtiInteger($min + ($mult * $step));
             }
         } else {
             $msg = "At least one of the following variables is not an integer: 'min', 'max', 'step' while processing RandomInteger.";

@@ -61,9 +61,7 @@ class VariableMappingMarshaller extends Marshaller
         if (($source = $this->getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {
             if (($target = $this->getDOMElementAttributeAs($element, 'targetIdentifier', 'string')) !== null) {
                 try {
-                    $object = new VariableMapping($source, $target);
-
-                    return $object;
+                    return new VariableMapping($source, $target);
                 } catch (InvalidArgumentException $e) {
                     $msg = "'targetIdentifier or/and 'sourceIdentifier' are not valid QTI Identifiers.";
                     throw new UnmarshallingException($msg, $element, $e);

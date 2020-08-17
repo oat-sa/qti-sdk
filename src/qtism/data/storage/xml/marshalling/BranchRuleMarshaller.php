@@ -62,9 +62,7 @@ class BranchRuleMarshaller extends Marshaller
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                $object = new BranchRule($marshaller->unmarshall($expressionElt), $target);
-
-                return $object;
+                return new BranchRule($marshaller->unmarshall($expressionElt), $target);
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

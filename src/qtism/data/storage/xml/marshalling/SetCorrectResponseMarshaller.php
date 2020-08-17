@@ -63,9 +63,7 @@ class SetCorrectResponseMarshaller extends Marshaller
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                $object = new SetCorrectResponse($identifier, $marshaller->unmarshall($expressionElt));
-
-                return $object;
+                return new SetCorrectResponse($identifier, $marshaller->unmarshall($expressionElt));
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element 'setCorrectResponse'.";
                 throw new UnmarshallingException($msg, $element);

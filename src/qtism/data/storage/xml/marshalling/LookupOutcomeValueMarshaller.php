@@ -65,9 +65,7 @@ class LookupOutcomeValueMarshaller extends Marshaller
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
                 $expression = $marshaller->unmarshall($expressionElt);
 
-                $object = new LookupOutcomeValue($identifier, $expression);
-
-                return $object;
+                return new LookupOutcomeValue($identifier, $expression);
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
