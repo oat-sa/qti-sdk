@@ -24,7 +24,7 @@
 namespace qtism\data\state;
 
 use InvalidArgumentException;
-use qtism\common\utils\Format as Format;
+use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiIdentifiable;

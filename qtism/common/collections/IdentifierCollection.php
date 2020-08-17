@@ -24,7 +24,7 @@
 namespace qtism\common\collections;
 
 use InvalidArgumentException;
-use qtism\common\utils\Format as Format;
+use qtism\common\utils\Format;
 
 /**
  * A collection that aims at storing string values.

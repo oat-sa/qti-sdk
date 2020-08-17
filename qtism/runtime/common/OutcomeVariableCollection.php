@@ -23,7 +23,7 @@
 
 namespace qtism\data;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * A collection that aims at storing runtime OutcomeVariable objects.

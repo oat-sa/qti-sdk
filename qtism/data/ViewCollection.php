@@ -23,7 +23,7 @@
 
 namespace qtism\data;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\collections\IntegerCollection;
 
 /**
