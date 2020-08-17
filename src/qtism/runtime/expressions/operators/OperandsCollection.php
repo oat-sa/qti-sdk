@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\collections\Container;
 use qtism\common\collections\Stack;

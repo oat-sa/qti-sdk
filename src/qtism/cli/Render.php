@@ -23,7 +23,7 @@
 
 namespace qtism\cli;
 
-use cli\Arguments as Arguments;
+use cli\Arguments;
 use DOMXPath;
 use qtism\common\utils\Exception as ExceptionUtils;
 use qtism\data\storage\xml\Utils as XmlUtils;
