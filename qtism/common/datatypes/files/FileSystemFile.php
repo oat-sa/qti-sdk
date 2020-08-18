@@ -237,7 +237,7 @@ class FileSystemFile implements QtiFile
 
                 $filename = '';
                 $pathinfo = pathinfo($source);
-                $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : strval($withFilename);
+                $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : (string)$withFilename;
 
                 // --- We store the file name and the mimetype in the file itself.
 

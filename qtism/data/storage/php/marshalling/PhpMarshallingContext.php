@@ -222,7 +222,7 @@ class PhpMarshallingContext
      */
     public function popFromVariableStack($quantity = 1)
     {
-        $quantity = intval($quantity);
+        $quantity = (int)$quantity;
         if ($quantity < 1) {
             $msg = "The 'quantity' argument must be >= 1, '${quantity}' given.";
             throw new InvalidArgumentException($msg);

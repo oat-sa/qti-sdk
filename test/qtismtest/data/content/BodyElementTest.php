@@ -201,7 +201,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLevel($value);
 
-        $this->assertEquals(strval($value), $span->getAriaLevel());
+        $this->assertEquals((string)$value, $span->getAriaLevel());
     }
 
     public function validAriaLevelAttributesProvider()

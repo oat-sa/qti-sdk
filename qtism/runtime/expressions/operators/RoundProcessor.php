@@ -81,6 +81,6 @@ class RoundProcessor extends OperatorProcessor
         $operand = $operands[0];
         $mode = ($operand->getValue() >= 0) ? PHP_ROUND_HALF_UP : PHP_ROUND_HALF_DOWN;
 
-        return new QtiInteger(intval(round($operand->getValue(), 0, $mode)));
+        return new QtiInteger((int)round($operand->getValue(), 0, $mode));
     }
 }

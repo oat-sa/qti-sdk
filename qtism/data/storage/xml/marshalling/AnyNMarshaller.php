@@ -67,12 +67,12 @@ class AnyNMarshaller extends OperatorMarshaller
     {
         if (($min = static::getDOMElementAttributeAs($element, 'min')) !== null) {
             if (Format::isInteger($min)) {
-                $min = intval($min);
+                $min = (int)$min;
             }
 
             if (($max = static::getDOMElementAttributeAs($element, 'max')) !== null) {
                 if (Format::isInteger($max)) {
-                    $max = intval($max);
+                    $max = (int)$max;
                 }
 
                 return new AnyN($children, $min, $max);

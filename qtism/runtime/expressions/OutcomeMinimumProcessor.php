@@ -80,7 +80,7 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
                             $result[] = new QtiFloat($normalMinimum);
                         } else {
                             // A weight has to be applied.
-                            $result[] = new QtiFloat(floatval($normalMinimum *= $weight->getValue()));
+                            $result[] = new QtiFloat((float)$normalMinimum *= $weight->getValue());
                         }
                     }
                     // else ... items with no declared minimum are ignored.

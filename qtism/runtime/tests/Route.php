@@ -1118,7 +1118,7 @@ class Route implements Iterator
             $identifier = new VariableIdentifier($identifier);
 
             $id = ($identifier->hasPrefix() === false) ? $identifier->getVariableName() : $identifier->getPrefix();
-            $occurence = ($identifier->hasPrefix() === false) ? 0 : intval($identifier->getVariableName() - 1);
+            $occurence = ($identifier->hasPrefix() === false) ? 0 : (int)($identifier->getVariableName() - 1);
         } catch (InvalidArgumentException $e) {
             $msg = "The given identifier '${identifier}' is an invalid branching target.";
             throw new OutOfRangeException($msg);

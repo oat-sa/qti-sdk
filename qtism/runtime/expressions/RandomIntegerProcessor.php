@@ -80,7 +80,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
                 return new QtiInteger(mt_rand($min, $max));
             } else {
                 $distance = ($min < 0) ? ($max + abs($min)) : ($max - $min);
-                $mult = mt_rand(0, intval(floor($distance / $step)));
+                $mult = mt_rand(0, (int)floor($distance / $step));
                 return new QtiInteger($min + ($mult * $step));
             }
         } else {

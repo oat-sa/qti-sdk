@@ -139,12 +139,12 @@ class RoundToProcessor extends OperatorProcessor
             }
 
             $d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
-            $power = $figures - intval($d);
+            $power = $figures - (int)$d;
 
             $magnitude = pow(10, $power);
             $shifted = round($operand->getValue() * $magnitude);
 
-            return new QtiFloat(floatval($shifted / $magnitude));
+            return new QtiFloat((float)($shifted / $magnitude));
         } else {
             // As per QTI 2.1 spec.
             if ($figures < 0) {

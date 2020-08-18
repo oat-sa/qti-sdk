@@ -66,7 +66,7 @@ class IndexMarshaller extends OperatorMarshaller
     {
         if (($n = static::getDOMElementAttributeAs($element, 'n')) !== null) {
             if (Format::isInteger($n)) {
-                $n = intval($n);
+                $n = (int)$n;
             }
 
             return new Index($children, $n);

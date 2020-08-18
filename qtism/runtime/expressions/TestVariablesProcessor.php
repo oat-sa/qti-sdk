@@ -138,7 +138,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
                 // values are subject to type promotion.
                 foreach ($values as $v) {
-                    $result[] = new QtiFloat(floatval($v->getValue()));
+                    $result[] = new QtiFloat((float)$v->getValue());
                 }
             }
         } else {

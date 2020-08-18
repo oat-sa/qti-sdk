@@ -102,7 +102,7 @@ class VariableIdentifier
             } else {
                 // count = 3, sequence number found.
                 $this->setVariableName($parts[2]);
-                $this->setSequenceNumber(intval($parts[1]));
+                $this->setSequenceNumber((int)$parts[1]);
             }
 
             $this->setPrefix($parts[0]);

@@ -100,6 +100,6 @@ class SumProcessor extends OperatorProcessor
             }
         }
 
-        return ($floatCount > 0) ? new QtiFloat(floatval($returnValue)) : new QtiInteger(intval($returnValue));
+        return ($floatCount > 0) ? new QtiFloat((float)$returnValue) : new QtiInteger((int)$returnValue);
     }
 }

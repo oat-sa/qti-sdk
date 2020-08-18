@@ -86,7 +86,7 @@ class DivideProcessor extends OperatorProcessor
             return null;
         }
 
-        $divide = floatval($operand1->getValue() / $operand2->getValue());
+        $divide = (float)($operand1->getValue() / $operand2->getValue());
 
         return is_nan($divide) ? null : new QtiFloat($divide);
     }

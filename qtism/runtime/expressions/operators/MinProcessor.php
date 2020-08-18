@@ -111,6 +111,6 @@ class MinProcessor extends OperatorProcessor
             }
         }
 
-        return ($integerCount === $valueCount) ? new QtiInteger(intval($min)) : new QtiFloat(floatval($min));
+        return ($integerCount === $valueCount) ? new QtiInteger((int)$min) : new QtiFloat((float)$min);
     }
 }

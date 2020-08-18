@@ -60,12 +60,12 @@ class RandomFloatMarshaller extends Marshaller
     {
         // max attribute is mandatory.
         if (($max = static::getDOMElementAttributeAs($element, 'max')) !== null) {
-            $max = (Format::isVariableRef($max)) ? $max : floatval($max);
+            $max = (Format::isVariableRef($max)) ? $max : (float)$max;
 
             $object = new RandomFloat(0.0, $max);
 
             if (($min = static::getDOMElementAttributeAs($element, 'min')) !== null) {
-                $min = (Format::isVariableRef($min)) ? $min : floatval($min);
+                $min = (Format::isVariableRef($min)) ? $min : (float)$min;
                 $object->setMin($min);
             }
 

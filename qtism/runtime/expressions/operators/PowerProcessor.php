@@ -100,7 +100,7 @@ class PowerProcessor extends OperatorProcessor
         // pow() returns integers as much as it can, so we must cast.
         // If the casted value cannot be contained in a float, we are
         // subject to an overflow/underflow.
-        $floatval = floatval($raised);
+        $floatval = (float)$raised;
         if ($raised != 0 && $floatval == 0) {
             // underflow
             return null;

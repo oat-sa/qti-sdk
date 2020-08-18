@@ -108,7 +108,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::mean(self::filterValues($operand->getArrayCopy()));
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
@@ -122,7 +122,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), true);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
@@ -136,7 +136,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), true);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
@@ -150,7 +150,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), false);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
@@ -164,7 +164,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), false);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**

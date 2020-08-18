@@ -473,7 +473,7 @@ abstract class BodyElement extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
 
-        $this->ariaLevel = strval($ariaLevel);
+        $this->ariaLevel = (string)$ariaLevel;
     }
 
     /**

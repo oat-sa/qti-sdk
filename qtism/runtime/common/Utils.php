@@ -243,10 +243,10 @@ class Utils
             if ($valueBaseType !== $targetBaseType) {
                 // Scalar value.
                 if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
-                    $value = intval($value);
+                    $value = (int)$value;
                 } else {
                     if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                        $value = floatval($value);
+                        $value = (float)$value;
                     }
                 }
             }
@@ -329,7 +329,7 @@ class Utils
     {
         $integerArray = [];
         foreach ($floatArray as $f) {
-            $integerArray[] = (is_null($f) === false) ? intval($f) : null;
+            $integerArray[] = (is_null($f) === false) ? (int)$f : null;
         }
 
         return $integerArray;
@@ -345,7 +345,7 @@ class Utils
     {
         $floatArray = [];
         foreach ($integerArray as $i) {
-            $floatArray[] = (is_null($i) === false) ? floatval($i) : null;
+            $floatArray[] = (is_null($i) === false) ? (float)$i : null;
         }
 
         return $floatArray;

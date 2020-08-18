@@ -86,7 +86,7 @@ class TruncateProcessor extends OperatorProcessor
         } elseif (is_infinite($operand->getValue())) {
             return new QtiFloat(INF);
         } else {
-            return new QtiInteger(intval($operand->getValue()));
+            return new QtiInteger((int)$operand->getValue());
         }
     }
 }

@@ -328,7 +328,7 @@ class Unmarshaller
     protected function unmarshallFloat(array $unit)
     {
         if (is_int($unit['base']['float']) === true) {
-            $unit['base']['float'] = floatval($unit['base']['float']);
+            $unit['base']['float'] = (float)$unit['base']['float'];
         }
 
         return new QtiFloat($unit['base']['float']);

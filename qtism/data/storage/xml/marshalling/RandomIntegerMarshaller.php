@@ -63,15 +63,15 @@ class RandomIntegerMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         if (($max = static::getDOMElementAttributeAs($element, 'max', 'string')) !== null) {
-            $max = (Format::isVariableRef($max)) ? $max : intval($max);
+            $max = (Format::isVariableRef($max)) ? $max : (int)$max;
             $object = new RandomInteger(0, $max);
 
             if (($step = static::getDOMElementAttributeAs($element, 'step')) !== null) {
-                $object->setStep(abs(intval($step)));
+                $object->setStep(abs((int)$step));
             }
 
             if (($min = static::getDOMElementAttributeAs($element, 'min')) !== null) {
-                $min = (Format::isVariableRef($min)) ? $min : intval($min);
+                $min = (Format::isVariableRef($min)) ? $min : (int)$min;
                 $object->setMin($min);
             }
 

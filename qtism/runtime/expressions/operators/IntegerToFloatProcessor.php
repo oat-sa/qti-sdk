@@ -76,6 +76,6 @@ class IntegerToFloatProcessor extends OperatorProcessor
 
         $operand = $operands[0];
 
-        return new QtiFloat(floatval($operand->getValue()));
+        return new QtiFloat((float)$operand->getValue());
     }
 }

@@ -55,7 +55,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(3.4);
         $result = $processor->process();
         $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(26515, intval($result->getValue()));
+        $this->assertEquals(26515, (int)$result->getValue());
     }
 
     public function testOverflow()

@@ -91,11 +91,11 @@ class PrintedVariableMarshaller extends Marshaller
             }
 
             if (($base = self::getDOMElementAttributeAs($element, 'base')) !== null) {
-                $component->setBase((Format::isInteger($base) === true) ? intval($base) : $base);
+                $component->setBase((Format::isInteger($base) === true) ? (int)$base : $base);
             }
 
             if (($index = self::getDOMElementAttributeAs($element, 'index')) !== null) {
-                $component->setIndex((Format::isInteger($index) === true) ? intval($index) : $base);
+                $component->setIndex((Format::isInteger($index) === true) ? (int)$index : $base);
             }
 
             if (($delimiter = self::getDOMElementAttributeAs($element, 'delimiter')) !== null) {
