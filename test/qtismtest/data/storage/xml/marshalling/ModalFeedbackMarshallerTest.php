@@ -31,7 +31,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	    ');
 
         $modalFeedback = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\ModalFeedback', $modalFeedback);
+        $this->assertInstanceOf(ModalFeedback::class, $modalFeedback);
         $this->assertEquals('outcome1', $modalFeedback->getOutcomeIdentifier());
         $this->assertEquals('hello', $modalFeedback->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $modalFeedback->getShowHide());

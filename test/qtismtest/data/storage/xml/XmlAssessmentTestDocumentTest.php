@@ -5,6 +5,11 @@ namespace qtismtest\data\storage\xml;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
+use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSectionRef;
+use qtism\data\TestPart;
+use qtism\data\AssessmentTest;
+use qtism\data\storage\xml\LibXmlErrorCollection;
 
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {
@@ -14,8 +19,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
 
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+        $this->assertInstanceOf(XmlDocument::class, $doc);
+        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     public function testLoadFileDoesNotExist()
@@ -23,7 +28,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         // This file does not exist.
         $uri = dirname(__FILE__) . '/../../../../samples/invalid/abcd.xml';
         $doc = new XmlDocument('2.1');
-        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException');
+        $this->setExpectedException(XmlStorageException::class);
         $doc->load($uri);
     }
 
@@ -38,7 +43,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
             $this->assertFalse(true); // An exception must have been thrown.
         } catch (XmlStorageException $e) {
             $this->assertInternalType('string', $e->getMessage());
-            $this->assertInstanceOf('qtism\\data\\storage\\xml\\LibXmlErrorCollection', $e->getErrors());
+            $this->assertInstanceOf(LibXmlErrorCollection::class, $e->getErrors());
             $this->assertGreaterThan(0, count($e->getErrors()));
         }
     }
@@ -77,8 +82,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc->load($uri);
         $doc->schemaValidate();
 
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+        $this->assertInstanceOf(XmlDocument::class, $doc);
+        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     public function testItemSessionControls()
@@ -88,12 +93,12 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
         // Q01.
         $q01 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $q01);
+        $this->assertInstanceOf(AssessmentItemRef::class, $q01);
         $this->assertEquals(2, $q01->getItemSessionControl()->getMaxAttempts());
 
         // P02.
         $p02 = $doc->getDocumentComponent()->getComponentByIdentifier('P02');
-        $this->assertInstanceOf('qtism\\data\\TestPart', $p02);
+        $this->assertInstanceOf(TestPart::class, $p02);
         $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
     }
 
@@ -107,7 +112,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
         $sectionParts = $testParts['T01']->getAssessmentSections();
         $this->assertTrue(isset($sectionParts['SR01']));
-        $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['SR01']);
+        $this->assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
     }
 
     public function testIncludeAssessmentSectionRefsInTestParts()
@@ -132,11 +137,11 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $assessmentItemRefs = $sectionParts['S01']->getSectionParts()['S02']->getSectionParts();
         $this->assertEquals(3, count($assessmentItemRefs));
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q01']);
+        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
         $this->assertEquals('../sections/../sections/../items/question1.xml', $assessmentItemRefs['Q01']->getHref());
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q02']);
+        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
         $this->assertEquals('../sections/../sections/../items/question2.xml', $assessmentItemRefs['Q02']->getHref());
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
+        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
         $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
 

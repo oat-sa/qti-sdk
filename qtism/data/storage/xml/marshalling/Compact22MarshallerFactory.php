@@ -40,7 +40,7 @@ class Compact22MarshallerFactory extends Qti22MarshallerFactory
     {
         parent::__construct();
 
-        $this->addMappingEntry('assessmentItemRef', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller');
-        $this->addMappingEntry('assessmentSection', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentSectionMarshaller');
+        $this->addMappingEntry('assessmentItemRef', ExtendedAssessmentItemRefMarshaller::class);
+        $this->addMappingEntry('assessmentSection', ExtendedAssessmentSectionMarshaller::class);
     }
 }

@@ -158,7 +158,7 @@ class MarkupPostRenderer implements Renderable
             $output = preg_replace('/<!--\s+(?:qtism-if)\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);
             $output = preg_replace('/<!--\s+(?:qtism-endif)\s+-->/iu', '<?php endif; ?>', $output);
 
-            $className = "qtism\\runtime\\rendering\\markup\\Utils";
+            $className = Utils::class;
             $call = "<?php echo ${className}::printVariable(\\1); ?>";
             $output = preg_replace('/<!--\s+qtism-printVariable\((.+?)\)\s+-->/iu', $call, $output);
         }

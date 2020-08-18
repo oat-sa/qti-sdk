@@ -32,7 +32,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\UploadInteraction', $component);
+        $this->assertInstanceOf(UploadInteraction::class, $component);
         $this->assertEquals('my-upload', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
 

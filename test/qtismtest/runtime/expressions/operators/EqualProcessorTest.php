@@ -15,6 +15,7 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\EqualProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class EqualProcessorTest extends QtiSmTestCase
 {
@@ -192,7 +193,7 @@ class EqualProcessorTest extends QtiSmTestCase
 
         $state = new State();
         $processor->setState($state);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -219,7 +220,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiString('String!')]);
         $processor = new EqualProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -228,7 +229,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new RecordContainer(['A' => new QtiInteger(1)]), new QtiInteger(10)]);
         $processor = new EqualProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -236,7 +237,7 @@ class EqualProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new EqualProcessor($expression, $operands);
     }
 
@@ -244,7 +245,7 @@ class EqualProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), new QtiInteger(10)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new EqualProcessor($expression, $operands);
     }
 

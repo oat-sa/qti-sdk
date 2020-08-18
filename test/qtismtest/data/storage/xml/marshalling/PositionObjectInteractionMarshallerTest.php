@@ -43,7 +43,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\PositionObjectInteraction', $component);
+        $this->assertInstanceOf(PositionObjectInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMaxChoices());
         $this->assertEquals(1, $component->getMinChoices());

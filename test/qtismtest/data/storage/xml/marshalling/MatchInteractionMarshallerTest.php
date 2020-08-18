@@ -57,7 +57,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\MatchInteraction', $component);
+        $this->assertInstanceOf(MatchInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertTrue($component->mustShuffle());
         $this->assertTrue($component->hasPrompt());

@@ -59,7 +59,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicGapMatchInteraction', $component);
+        $this->assertInstanceOf(GraphicGapMatchInteraction::class, $component);
         $this->assertEquals('my-gaps', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
 

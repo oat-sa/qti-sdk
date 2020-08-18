@@ -12,7 +12,7 @@ class MathTest extends QtiSmTestCase
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"></m:mathS>';
         $math = new Math($xml);
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $dom = $math->getXml();
     }
 
@@ -21,7 +21,7 @@ class MathTest extends QtiSmTestCase
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/YogourtML"></m:math>';
         $math = new Math($xml);
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $dom = $math->getXml();
     }
 
@@ -29,6 +29,6 @@ class MathTest extends QtiSmTestCase
     {
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"></m:math>';
         $math = new Math($xml);
-        $this->assertInstanceOf('\\DOMDocument', $math->getXml());
+        $this->assertInstanceOf(\DOMDocument::class, $math->getXml());
     }
 }

@@ -38,6 +38,8 @@ use qtism\runtime\common\State;
 use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\RenderingException;
 use SplStack;
+use qtism\runtime\common\Container;
+use qtism\common\datatypes\QtiIdentifier;
 
 /**
  * The base class to be used by any rendering engines.
@@ -861,8 +863,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
         $val = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']";
         $identifier = $component->getIdentifier();
-        $identifierType = 'qtism\\common\\datatypes\\QtiIdentifier';
-        $containerType = 'qtism\\runtime\\common\\Container';
+        $identifierType = QtiIdentifier::class;
+        $containerType = Container::class;
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
         $valCheck = "(${scalarCheck} || ${containerCheck})";

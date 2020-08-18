@@ -4,6 +4,7 @@ namespace qtismtest\common\datatypes\files;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\files\FileManagerException;
 
 class FileSystemFileManagerTest extends QtiSmTestCase
 {
@@ -41,7 +42,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager('/root');
 
         $this->setExpectedException(
-            'qtism\\common\\datatypes\\files\\FileManagerException',
+            FileManagerException::class,
             'An error occurred while creating a QTI FileSystemFile object.'
         );
 
@@ -53,7 +54,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager('/root');
 
         $this->setExpectedException(
-            'qtism\\common\\datatypes\\files\\FileManagerException',
+            FileManagerException::class,
             'An error occurred while creating a QTI FileSystemFile object.'
         );
 
@@ -95,7 +96,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         unlink($mFile->getPath());
 
         $this->setExpectedException(
-            'qtism\\common\\datatypes\\files\\FileManagerException'
+            FileManagerException::class
         );
 
         $manager->delete($mFile);

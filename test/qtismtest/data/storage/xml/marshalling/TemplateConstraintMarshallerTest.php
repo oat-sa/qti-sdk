@@ -39,7 +39,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateConstraint = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateConstraint', $templateConstraint);
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $templateConstraint->getExpression());
+        $this->assertInstanceOf(TemplateConstraint::class, $templateConstraint);
+        $this->assertInstanceOf(Match::class, $templateConstraint->getExpression());
     }
 }

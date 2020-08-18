@@ -54,14 +54,14 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $gapMatch = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapMatchInteraction', $gapMatch);
+        $this->assertInstanceOf(GapMatchInteraction::class, $gapMatch);
         $this->assertEquals('RESPONSE', $gapMatch->getResponseIdentifier());
         $this->assertFalse($gapMatch->mustShuffle());
 
         $gapChoices = $gapMatch->getGapChoices();
         $this->assertEquals(2, count($gapChoices));
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapText', $gapChoices[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapImg', $gapChoices[1]);
+        $this->assertInstanceOf(GapText::class, $gapChoices[0]);
+        $this->assertInstanceOf(GapImg::class, $gapChoices[1]);
 
         $gaps = $gapMatch->getComponentsByClassName('gap');
         $this->assertEquals(2, count($gaps));

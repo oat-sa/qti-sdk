@@ -23,7 +23,7 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [BaseType::PAIR]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('matchTable', $element->nodeName);
 
         $entryElements = $element->getElementsByTagName('matchTableEntry');
@@ -50,11 +50,11 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::DIRECTED_PAIR]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $component);
+        $this->assertInstanceOf(MatchTable::class, $component);
         $matchTableEntries = $component->getMatchTableEntries();
         $this->assertEquals(2, count($matchTableEntries));
         $entry = $matchTableEntries[0];
-        $this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $entry);
+        $this->assertInstanceOf(MatchTableEntry::class, $entry);
         $this->assertEquals(1, $entry->getSourceValue());
         $this->assertInstanceOf(QtiDirectedPair::class, $entry->getTargetValue());
     }

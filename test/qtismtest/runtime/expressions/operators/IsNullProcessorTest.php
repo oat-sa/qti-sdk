@@ -14,6 +14,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\IsNullProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class IsNullProcessorTest extends QtiSmTestCase
 {
@@ -90,7 +91,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     public function testLessThanNeededOperands()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $operands = new OperandsCollection();
         $expression = $this->getFakeExpression();
@@ -100,7 +101,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     public function testMoreThanNeededOperands()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $operands = new OperandsCollection([new QtiInteger(25), null]);
         $expression = $this->getFakeExpression();

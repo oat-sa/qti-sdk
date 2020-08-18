@@ -50,7 +50,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicOrderInteraction', $component);
+        $this->assertInstanceOf(GraphicOrderInteraction::class, $component);
         $this->assertEquals('my-graphicOrder', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMinChoices());

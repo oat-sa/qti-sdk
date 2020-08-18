@@ -10,6 +10,10 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\RubricBlockRef;
+use qtism\data\ExtendedAssessmentSection;
+use qtism\data\AssessmentTest;
+use qtism\data\ExtendedAssessmentItemRef;
 
 class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 {
@@ -30,13 +34,13 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $assessmentSections = $testParts['testpartID']->getAssessmentSections();
         $this->assertEquals(1, count($assessmentSections));
         $assessmentSection = $assessmentSections['Sektion_181865064'];
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSection);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSection);
 
         $assessmentItemRefs = $assessmentSections['Sektion_181865064']->getSectionParts();
 
         $itemCount = 0;
         foreach ($assessmentItemRefs as $k => $ref) {
-            $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $assessmentItemRefs[$k]);
+            $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $assessmentItemRefs[$k]);
             $this->assertTrue($assessmentItemRefs[$k]->hasResponseProcessing());
             $this->assertFalse($assessmentItemRefs[$k]->isTimeDependent());
             $this->assertFalse($assessmentItemRefs[$k]->isAdaptive());
@@ -145,7 +149,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->load($file);
         $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
 
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlCompactDocument', $compactDoc);
+        $this->assertInstanceOf(XmlCompactDocument::class, $compactDoc);
         $this->assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getDocumentComponent()->getIdentifier());
         $this->assertEquals('Interaction Mix (Sachsen)', $compactDoc->getDocumentComponent()->getTitle());
 
@@ -164,7 +168,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         $assessmentSections2ndLvl = $assessmentSections1stLvl['Container_45665458']->getSectionParts();
         $this->assertEquals(1, count($assessmentSections2ndLvl));
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSections2ndLvl['Sektion_181865064']);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections2ndLvl['Sektion_181865064']);
         $this->assertEquals(0, count($assessmentSections2ndLvl['Sektion_181865064']->getRubricBlockRefs()));
         $this->assertEquals('Sektion_181865064', $assessmentSections2ndLvl['Sektion_181865064']->getIdentifier());
 
@@ -173,7 +177,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         // Pick up 4 for a test...
         $assessmentItemRef = $assessmentItemRefs['Hotspot_278940407'];
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $assessmentItemRef);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $assessmentItemRef);
         $this->assertEquals('Hotspot_278940407', $assessmentItemRef->getIdentifier());
         $responseDeclarations = $assessmentItemRef->getResponseDeclarations();
         $this->assertEquals(1, count($responseDeclarations));
@@ -203,18 +207,18 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         }
 
         // It validates !
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
 
         // Did we retrieve the section as ExtendedAssessmentSection objects?
         $sections = $doc->getDocumentComponent()->getComponentsByClassName('assessmentSection');
         $this->assertEquals(1, count($sections));
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $sections[0]);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $sections[0]);
 
         // Retrieve rubricBlockRefs.
         $rubricBlockRefs = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlockRef');
         $this->assertEquals(1, count($rubricBlockRefs));
         $rubricBlockRef = $rubricBlockRefs[0];
-        $this->assertInstanceOf('qtism\\data\\content\\RubricBlockRef', $rubricBlockRef);
+        $this->assertInstanceOf(RubricBlockRef::class, $rubricBlockRef);
         $this->assertEquals('R01', $rubricBlockRef->getIdentifier());
         $this->assertEquals('./R01.xml', $rubricBlockRef->getHref());
     }
@@ -276,7 +280,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution()
     {
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\XmlStorageException',
+            XmlStorageException::class,
             "An error occurred while unreferencing item reference with identifier 'Q01'."
         );
 

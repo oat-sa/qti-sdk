@@ -33,7 +33,7 @@ class HottextMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Hottext', $component);
+        $this->assertInstanceOf(Hottext::class, $component);
         $this->assertEquals('my-hottext1', $component->getId());
         $this->assertEquals('so hot', $component->getClass());
         $this->assertEquals('choice1', $component->getIdentifier());

@@ -36,7 +36,7 @@ class VariableProcessorTest extends QtiSmTestCase
         // single cardinality test.
         $var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1337));
         $state = new State([$var1]);
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $state->getVariable('var1'));
+        $this->assertInstanceOf(OutcomeVariable::class, $state->getVariable('var1'));
 
         $variableProcessor = new VariableProcessor($variableExpr);
         $this->assertTrue($variableProcessor->process() === null); // State is raw.
@@ -53,7 +53,7 @@ class VariableProcessorTest extends QtiSmTestCase
         $variableExpr = $this->createComponentFromXml('<variable identifier="var2"/>');
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(10, $result[0]->getValue());
         $this->assertEquals(12, $result[1]->getValue());
     }

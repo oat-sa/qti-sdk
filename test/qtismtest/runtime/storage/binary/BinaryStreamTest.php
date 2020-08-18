@@ -39,7 +39,7 @@ class BinaryStreamTest extends QtiSmTestCase
     public function testInstantiate()
     {
         $stream = $this->getBasicStream();
-        $this->assertInstanceOf('qtism\\common\\storage\\MemoryStream', $stream);
+        $this->assertInstanceOf(MemoryStream::class, $stream);
 
         $this->assertEquals('binary-data', $stream->getBinary());
         $this->assertFalse($stream->isOpen());

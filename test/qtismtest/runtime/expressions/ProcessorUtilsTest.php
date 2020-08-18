@@ -21,7 +21,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
      */
     public function testSanitizeVariableRefInvalid($value)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $ref = Utils::sanitizeVariableRef($value);
     }
 

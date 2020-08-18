@@ -31,7 +31,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\FeedbackInline', $component);
+        $this->assertInstanceOf(FeedbackInline::class, $component);
         $this->assertEquals('my-feedback', $component->getId());
         $this->assertEquals('super feedback', $component->getClass());
         $this->assertEquals('outcome1', $component->getOutcomeIdentifier());

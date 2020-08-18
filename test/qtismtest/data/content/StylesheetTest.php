@@ -10,7 +10,7 @@ class StylesheetTest extends QtiSmTestCase
     public function testCreateWrongHref()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Href must be a string, 'integer' given."
         );
 
@@ -20,7 +20,7 @@ class StylesheetTest extends QtiSmTestCase
     public function testSetInvalidType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Type must be a string, 'integer' given."
         );
 
@@ -31,7 +31,7 @@ class StylesheetTest extends QtiSmTestCase
     public function testSetInvalidMedia()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Media must be a string, 'integer' given."
         );
 
@@ -42,7 +42,7 @@ class StylesheetTest extends QtiSmTestCase
     public function testSetInvalidTitle()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Title must be a string, 'integer' given."
         );
 

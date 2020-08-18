@@ -97,7 +97,7 @@ class ResponseVariable extends Variable
             if ($correctResponse instanceof Container) {
                 if ($correctResponse->getCardinality() === $this->getCardinality()) {
                     if (
-                        get_class($correctResponse) === 'qtism\\runtime\\common\\Container'
+                        get_class($correctResponse) === Container::class
                         || $correctResponse->getBaseType() === $this->getBaseType()
                     ) {
                         // This is a simple container with no baseType restriction
@@ -232,7 +232,7 @@ class ResponseVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "ResponseVariable::createFromDataModel only accept 'qtism\\data\\state\\ResponseDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "ResponseVariable::createFromDataModel only accept '" . ResponseDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

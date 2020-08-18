@@ -276,15 +276,15 @@ class PhpDocument extends QtiDocument
     protected static function getBaseImplementation($object)
     {
         if ($object instanceof AssessmentTest) {
-            return "qtism\\data\\AssessmentTest";
+            return AssessmentTest::class;
         } elseif ($object instanceof AssessmentItem) {
-            return "qtism\\data\\AssessmentItem";
+            return AssessmentItem::class;
         } elseif ($object instanceof ResponseProcessing) {
-            return "qtism\\data\\processing\\ResponseProcessing";
+            return ResponseProcessing::class;
         } elseif ($object instanceof ExtendedAssessmentSection) {
-            return 'qtism\\data\\ExtendedAssessmentSection';
+            return ExtendedAssessmentSection::class;
         } elseif ($object instanceof AssessmentSection) {
-            return "qtism\\data\\AssessmentSection";
+            return AssessmentSection::class;
         } else {
             return get_class($object);
         }

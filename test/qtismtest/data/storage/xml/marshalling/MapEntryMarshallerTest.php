@@ -16,7 +16,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('mapEntry', $element->nodeName);
         $this->assertEquals('1337', $element->getAttribute('mapKey'));
         $this->assertEquals('1.377', $element->getAttribute('mappedValue'));
@@ -32,7 +32,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\MapEntry', $component);
+        $this->assertInstanceOf(MapEntry::class, $component);
         $this->assertInternalType('integer', $component->getMapKey());
         $this->assertEquals(1337, $component->getMapKey());
         $this->assertInternalType('float', $component->getMappedValue());

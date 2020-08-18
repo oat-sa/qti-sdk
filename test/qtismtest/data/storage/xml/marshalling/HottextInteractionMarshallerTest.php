@@ -47,7 +47,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HottextInteraction', $component);
+        $this->assertInstanceOf(HottextInteraction::class, $component);
         $this->assertEquals(1, $component->getMaxChoices());
         $this->assertEquals(0, $component->getMinChoices());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
@@ -58,16 +58,16 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $div = $content[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
 
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $divContent[0]);
+        $this->assertInstanceOf(TextRun::class, $divContent[0]);
         $this->assertEquals('This is a ', $divContent[0]->getContent());
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Hottext', $divContent[1]);
+        $this->assertInstanceOf(Hottext::class, $divContent[1]);
         $this->assertEquals('hot1', $divContent[1]->getIdentifier());
 
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $divContent[2]);
+        $this->assertInstanceOf(TextRun::class, $divContent[2]);
         $this->assertEquals(' text...', $divContent[2]->getContent());
     }
 }

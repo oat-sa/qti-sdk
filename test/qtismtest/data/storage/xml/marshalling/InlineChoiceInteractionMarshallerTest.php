@@ -54,7 +54,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $inlineChoiceInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoiceInteraction', $inlineChoiceInteraction);
+        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
         $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
         $this->assertTrue($inlineChoiceInteraction->mustShuffle());
         $this->assertTrue($inlineChoiceInteraction->isRequired());

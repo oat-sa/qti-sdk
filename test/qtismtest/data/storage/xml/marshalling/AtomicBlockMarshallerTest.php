@@ -35,14 +35,14 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
             </p>
 	    ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $p);
+        $this->assertInstanceOf(P::class, $p);
         $this->assertEquals('my-p', $p->getId());
         $this->assertEquals(3, count($p->getContent()));
 
         $content = $p->getContent();
         $this->assertEquals("\n                This text is\n                a ", $content[0]->getContent());
         $em = $content[1];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Em', $em);
+        $this->assertInstanceOf(Em::class, $em);
         $emContent = $em->getContent();
         $this->assertEquals('simple', $emContent[0]->getContent());
         $this->assertEquals(" test.\n            ", $content[2]->getContent());

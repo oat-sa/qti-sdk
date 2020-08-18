@@ -69,7 +69,7 @@ class Utils
         } catch (Exception $e) {
             $previous = $e->getMessage();
 
-            return "qtism\\runtime\\rendering\\markup\\Utils::printVariable() method threw an unexpected exception:\n${previous}.";
+            return self::class . "::printVariable() method threw an unexpected exception:\n$previous.";
         }
     }
 }

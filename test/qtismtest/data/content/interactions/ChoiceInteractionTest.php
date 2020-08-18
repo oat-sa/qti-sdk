@@ -12,7 +12,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
     public function testCreateEmptyChoiceList()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             'A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.'
         );
 
@@ -22,7 +22,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
     public function testSetShuffleWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'shuffle' argument must be a boolean value, 'string' given."
         );
 
@@ -33,7 +33,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
     public function testSetMaxChoicesWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxChoices' argument must be a positive (>= 0) integer, 'string' given."
         );
 
@@ -44,7 +44,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
     public function testSetMinChoicesWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minChoices' argument must be a positive (>= 0) integer, 'string' given."
         );
 
@@ -55,7 +55,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
     public function testSetOrientationWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'orientation' argument must be a value from the Orientation enumeration, 'boolean' given."
         );
 

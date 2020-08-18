@@ -35,7 +35,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\FeedbackBlock', $component);
+        $this->assertInstanceOf(FeedbackBlock::class, $component);
         $this->assertEquals('outcome1', $component->getOutcomeIdentifier());
         $this->assertEquals('please_show_me', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
@@ -43,7 +43,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
         $div = $content[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
 
         $divContent = $div->getContent();
         $this->assertEquals(1, count($divContent));

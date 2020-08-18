@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\RandomFloatProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class RandomFloatProcessorTest extends QtiSmTestCase
 {
@@ -38,7 +39,7 @@ class RandomFloatProcessorTest extends QtiSmTestCase
         $processor = new RandomFloatProcessor($expression);
         $processor->setExpression($expression);
 
-        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 }

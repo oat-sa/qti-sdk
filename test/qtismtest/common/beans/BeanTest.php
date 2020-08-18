@@ -10,6 +10,8 @@ use qtismtest\common\beans\mocks\NotStrictMissingSetterBean;
 use qtismtest\common\beans\mocks\SimpleBean;
 use qtismtest\common\beans\mocks\StrictBean;
 use qtismtest\QtiSmTestCase;
+use qtism\common\beans\BeanMethod;
+use qtism\common\beans\BeanProperty;
 
 class BeanTest extends QtiSmTestCase
 {
@@ -17,7 +19,7 @@ class BeanTest extends QtiSmTestCase
     {
         $mock = new SimpleBean('Mister Bean', 'Mini Cooper');
         $bean = new Bean($mock);
-        $this->assertInstanceOf('qtism\\common\\beans\\Bean', $bean);
+        $this->assertInstanceOf(Bean::class, $bean);
 
         // --- Try to get information about property existence.
         $this->assertTrue($bean->hasProperty('name'));
@@ -27,7 +29,7 @@ class BeanTest extends QtiSmTestCase
         $this->assertFalse($bean->hasProperty('uselessProperty'));
 
         // --- Try to retrieve some bean properties.
-        $this->assertInstanceOf('qtism\\common\\beans\\BeanProperty', $bean->getProperty('name'));
+        $this->assertInstanceOf(BeanProperty::class, $bean->getProperty('name'));
 
         // The property does not exist.
         try {
@@ -60,7 +62,7 @@ class BeanTest extends QtiSmTestCase
         $this->assertFalse($bean->hasGetter('uselessProperty'));
 
         // --- Try to retrieve some bean methods.
-        $this->assertInstanceOf('qtism\\common\\beans\\BeanMethod', $bean->getGetter('name'));
+        $this->assertInstanceOf(BeanMethod::class, $bean->getGetter('name'));
 
         // The getter does not exist.
         try {
@@ -91,7 +93,7 @@ class BeanTest extends QtiSmTestCase
         $this->assertFalse($bean->hasSetter('uselessProperty'));
 
         // --- Try to retrieve some bean methods.
-        $this->assertInstanceOf('qtism\\common\\beans\\BeanMethod', $bean->getSetter('name'));
+        $this->assertInstanceOf(BeanMethod::class, $bean->getSetter('name'));
 
         // The getter does not exist.
         try {
@@ -152,7 +154,7 @@ class BeanTest extends QtiSmTestCase
         // must work in unstrict mode.
         $mock = new NotStrictConstructorBean('John', 'Dunbar', 'red');
         $bean = new Bean($mock);
-        $this->assertInstanceOf('qtism\\common\\beans\\Bean', $bean);
+        $this->assertInstanceOf(Bean::class, $bean);
 
         try {
             $bean = new Bean($mock, true);
@@ -167,7 +169,7 @@ class BeanTest extends QtiSmTestCase
         // must work if no strict mode.
         $mock = new NotStrictMissingSetterBean('John', 'Dunbar', 'brown');
         $bean = new Bean($mock);
-        $this->assertInstanceOf('qtism\\common\\beans\\Bean', $bean);
+        $this->assertInstanceOf(Bean::class, $bean);
 
         try {
             $bean = new Bean($mock, true);
@@ -181,7 +183,7 @@ class BeanTest extends QtiSmTestCase
     {
         $mock = new StrictBean('John', 'Dunbar', 'blond', true);
         $bean = new Bean($mock, true);
-        $this->assertInstanceOf('qtism\\common\\beans\\Bean', $bean);
+        $this->assertInstanceOf(Bean::class, $bean);
 
         $this->assertTrue($bean->hasConstructorParameter('firstName'));
         $this->assertTrue($bean->hasConstructorParameter('lastName'));
@@ -249,7 +251,7 @@ class BeanTest extends QtiSmTestCase
 
     public function testWrongInstanciation()
     {
-        $this->setExpectedException('\\InvalidArgumentException', "The given 'object' argument is not an object.");
+        $this->setExpectedException(\InvalidArgumentException::class, "The given 'object' argument is not an object.");
         $bean = new Bean(10);
     }
 
@@ -258,7 +260,7 @@ class BeanTest extends QtiSmTestCase
         $mock = new StrictBean('John', 'Dunbar', 'white', false);
         $bean = new Bean($mock, true);
 
-        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $this->setExpectedException(\InvalidArgumentException::class, "The 'property' argument must be a string or a BeanProperty object.");
         $bean = new Bean($mock);
         $getter = $bean->getGetter(null);
     }
@@ -268,7 +270,7 @@ class BeanTest extends QtiSmTestCase
         $mock = new StrictBean('John', 'Dunbar', 'white', false);
         $bean = new Bean($mock, true);
 
-        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $this->setExpectedException(\InvalidArgumentException::class, "The 'property' argument must be a string or a BeanProperty object.");
         $bean = new Bean($mock);
         $getter = $bean->getSetter(false);
     }
@@ -278,7 +280,7 @@ class BeanTest extends QtiSmTestCase
         $mock = new StrictBean('John', 'Dunbar', 'white', false);
         $bean = new Bean($mock, true);
 
-        $this->setExpectedException('qtism\\common\\beans\\BeanException', "The bean has no 'melissa' property.", BeanException::NO_METHOD);
+        $this->setExpectedException(BeanException::class, "The bean has no 'melissa' property.", BeanException::NO_METHOD);
         $bean = new Bean($mock);
         $getter = $bean->getSetter('melissa');
     }
@@ -288,7 +290,7 @@ class BeanTest extends QtiSmTestCase
         $mock = new StrictBean('John', 'Dunbar', 'white', false);
         $bean = new Bean($mock, true);
 
-        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $this->setExpectedException(\InvalidArgumentException::class, "The 'property' argument must be a string or a BeanProperty object.");
         $bean = new Bean($mock);
         $getter = $bean->hasGetter(null);
     }
@@ -298,7 +300,7 @@ class BeanTest extends QtiSmTestCase
         $mock = new StrictBean('John', 'Dunbar', 'white', false);
         $bean = new Bean($mock, true);
 
-        $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
+        $this->setExpectedException(\InvalidArgumentException::class, "The 'property' argument must be a string or a BeanProperty object.");
         $bean = new Bean($mock);
         $getter = $bean->hasSetter(null);
     }
@@ -308,7 +310,7 @@ class BeanTest extends QtiSmTestCase
         $mock = new SimpleBean('Name', 'Car');
         $bean = new Bean($mock);
 
-        $this->setExpectedException('\\qtism\\common\\beans\\BeanException', "The bean has no public setter for a 'noGetter' property.");
+        $this->setExpectedException(BeanException::class, "The bean has no public setter for a 'noGetter' property.");
         $setter = $bean->getSetter('noGetter', BeanException::NO_METHOD);
     }
 }

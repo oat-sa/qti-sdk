@@ -9,6 +9,18 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\SubmissionMode;
 use qtismtest\QtiSmTestCase;
+use qtism\data\expressions\TestVariables;
+use qtism\data\expressions\operators\Sum;
+use qtism\data\rules\SetOutcomeValue;
+use qtism\data\processing\OutcomeProcessing;
+use qtism\data\AssessmentItemRef;
+use qtism\data\SectionPartCollection;
+use qtism\data\AssessmentSection;
+use qtism\data\TestPart;
+use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
+use qtism\data\state\DefaultValue;
+use qtism\data\AssessmentTest;
 
 class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 {
@@ -21,8 +33,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+        $this->assertInstanceOf(XmlDocument::class, $doc);
+        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     /**
@@ -34,8 +46,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
         $doc->loadFromString(file_get_contents($uri));
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+        $this->assertInstanceOf(XmlDocument::class, $doc);
+        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     /**
@@ -120,7 +132,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         $assessmentTest->schemaValidate();
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest->getDocumentComponent());
+        $this->assertInstanceOf(AssessmentTest::class, $assessmentTest->getDocumentComponent());
         $this->assertEquals('InteractionMixSachsen_1901710679', $assessmentTest->getDocumentComponent()->getIdentifier());
         $this->assertEquals('Interaction Mix (Sachsen)', $assessmentTest->getDocumentComponent()->getTitle());
 
@@ -133,12 +145,12 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this->assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
         $this->assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
         $defaultValue = $outcomeDeclaration->getDefaultValue();
-        $this->assertInstanceOf('qtism\\data\\state\\DefaultValue', $defaultValue);
+        $this->assertInstanceOf(DefaultValue::class, $defaultValue);
         $values = $defaultValue->getValues();
-        $this->assertInstanceOf('qtism\\data\\state\\ValueCollection', $values);
+        $this->assertInstanceOf(ValueCollection::class, $values);
         $this->assertEquals(1, count($values));
         $value = $values[0];
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $value);
+        $this->assertInstanceOf(Value::class, $value);
         $this->assertInternalType('float', $value->getValue());
         $this->assertEquals(0.0, $value->getValue());
 
@@ -147,12 +159,12 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this->assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
         $this->assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
         $defaultValue = $outcomeDeclaration->getDefaultValue();
-        $this->assertInstanceOf('qtism\\data\\state\\DefaultValue', $defaultValue);
+        $this->assertInstanceOf(DefaultValue::class, $defaultValue);
         $values = $defaultValue->getValues();
-        $this->assertInstanceOf('qtism\\data\\state\\ValueCollection', $values);
+        $this->assertInstanceOf(ValueCollection::class, $values);
         $this->assertEquals(1, count($values));
         $value = $values[0];
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $value);
+        $this->assertInstanceOf(Value::class, $value);
         $this->assertInternalType('float', $value->getValue());
         $this->assertEquals(18.0, $value->getValue());
 
@@ -160,7 +172,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $testParts = $assessmentTest->getDocumentComponent()->getTestParts();
         $this->assertEquals(1, count($testParts));
         $testPart = $testParts['testpartID'];
-        $this->assertInstanceOf('qtism\\data\\TestPart', $testPart);
+        $this->assertInstanceOf(TestPart::class, $testPart);
         $this->assertEquals('testpartID', $testPart->getIdentifier());
         $this->assertEquals(NavigationMode::NONLINEAR, $testPart->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $testPart->getSubmissionMode());
@@ -169,7 +181,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $assessmentSections = $testPart->getAssessmentSections();
         $this->assertEquals(1, count($assessmentSections));
         $assessmentSection = $assessmentSections['Sektion_181865064'];
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSection);
+        $this->assertInstanceOf(AssessmentSection::class, $assessmentSection);
         $this->assertEquals('Sektion_181865064', $assessmentSection->getIdentifier());
         $this->assertFalse($assessmentSection->isFixed());
         $this->assertFalse($assessmentSection->isVisible());
@@ -177,7 +189,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         // -- AssessmentItemRefs
         $assessmentItemRefs = $assessmentSection->getSectionParts();
-        $this->assertInstanceOf('qtism\\data\\SectionPartCollection', $assessmentItemRefs);
+        $this->assertInstanceOf(SectionPartCollection::class, $assessmentItemRefs);
         $this->assertEquals(13, count($assessmentItemRefs));
 
         $expectedItems = [
@@ -200,7 +212,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
             $id = $expectedItems[$i][0];
             $file = $expectedItems[$i][1];
 
-            $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs[$id]);
+            $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs[$id]);
             $this->assertEquals($id, $assessmentItemRefs[$id]->getIdentifier());
             $this->assertEquals($file, $assessmentItemRefs[$id]->getHref());
             $this->assertFalse($assessmentItemRefs[$id]->isFixed());
@@ -208,19 +220,19 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         // OutcomeProcessing
         $outcomeProcessing = $assessmentTest->getDocumentComponent()->getOutcomeProcessing();
-        $this->assertInstanceOf('qtism\\data\\processing\\OutcomeProcessing', $outcomeProcessing);
+        $this->assertInstanceOf(OutcomeProcessing::class, $outcomeProcessing);
         $this->assertEquals(1, count($outcomeProcessing->getOutcomeRules()));
 
         $outcomeRules = $outcomeProcessing->getOutcomeRules();
         $setOutcomeValue = $outcomeRules[0];
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $setOutcomeValue);
+        $this->assertInstanceOf(SetOutcomeValue::class, $setOutcomeValue);
         $this->assertEquals('SCORE', $setOutcomeValue->getIdentifier());
         $sum = $setOutcomeValue->getExpression();
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Sum', $sum);
+        $this->assertInstanceOf(Sum::class, $sum);
 
         $expressions = $sum->getExpressions();
         $testVariables = $expressions[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\TestVariables', $testVariables);
+        $this->assertInstanceOf(TestVariables::class, $testVariables);
         $this->assertEquals('SCORE', $testVariables->getVariableIdentifier());
     }
 

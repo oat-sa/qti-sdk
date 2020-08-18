@@ -133,7 +133,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->setExpectedException(OperatorProcessingException::class);
         $processor = new StatsOperatorProcessor($expression, $operands);
     }
 
@@ -141,7 +141,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0)])]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->setExpectedException(OperatorProcessingException::class);
         $processor = new StatsOperatorProcessor($expression, $operands);
     }
 

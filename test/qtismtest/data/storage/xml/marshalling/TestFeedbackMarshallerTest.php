@@ -8,6 +8,7 @@ use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
+use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
 
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
@@ -26,7 +27,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('testFeedback', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
@@ -48,7 +49,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\testFeedback', $component);
+        $this->assertInstanceOf(TestFeedback::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myIdentifier1');
         $this->assertEquals($component->getAccess(), TestFeedbackAccess::AT_END);
         $this->assertEquals($component->getShowHide(), ShowHide::SHOW);
@@ -65,7 +66,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $dom->loadXML($xmlData);
         $element = $dom->documentElement;
 
-        $class = new ReflectionClass('qtism\\data\\storage\\xml\\marshalling\\TestFeedbackMarshaller');
+        $class = new ReflectionClass(TestFeedbackMarshaller::class);
         $method = $class->getMethod('extractContent');
         $method->setAccessible(true);
         $this->assertEquals($method->invokeArgs(null, [$element]), $expectedContent);

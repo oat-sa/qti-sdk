@@ -31,7 +31,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoice', $component);
+        $this->assertInstanceOf(InlineChoice::class, $component);
         $this->assertEquals('my-choice1', $component->getId());
         $this->assertEquals('choice1', $component->getIdentifier());
         $this->assertTrue($component->isFixed());
@@ -40,6 +40,6 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
-        $this->assertInstanceOf('qtism\\data\\content\\PrintedVariable', $content[0]);
+        $this->assertInstanceOf(PrintedVariable::class, $content[0]);
     }
 }

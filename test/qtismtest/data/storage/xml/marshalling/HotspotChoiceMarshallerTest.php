@@ -8,6 +8,8 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\interactions\Choice;
+use qtism\data\content\interactions\Hotspot;
 
 class HotspotChoiceMarshallerTest extends QtiSmTestCase
 {
@@ -36,9 +38,9 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Hotspot', $component);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Choice', $component);
+        $this->assertInstanceOf(HotspotChoice::class, $component);
+        $this->assertInstanceOf(Hotspot::class, $component);
+        $this->assertInstanceOf(Choice::class, $component);
 
         $this->assertEquals('hotspotchoice1', $component->getIdentifier());
         $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
@@ -63,7 +65,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
+        $this->assertInstanceOf(HotspotChoice::class, $component);
         $this->assertEquals('r_50', $component->getIdentifier());
         $this->assertFalse($component->isFixed());
         $this->assertEquals(QtiShape::CIRCLE, $component->getShape());

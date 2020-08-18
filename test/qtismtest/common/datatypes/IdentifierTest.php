@@ -10,7 +10,7 @@ class IdentifierTest extends QtiSmTestCase
     public function testWrongValue()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             'The Identifier Datatype only accepts to store identifier values.'
         );
         $float = new QtiIdentifier(1337);

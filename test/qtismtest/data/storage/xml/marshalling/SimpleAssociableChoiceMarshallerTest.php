@@ -37,14 +37,14 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleAssociableChoice', $component);
+        $this->assertInstanceOf(SimpleAssociableChoice::class, $component);
         $this->assertEquals('qti-simpleAssociableChoice', $component->getClass());
         $this->assertEquals('choice_1', $component->getIdentifier());
         $this->assertEquals(1, $component->getMatchMin());
         $this->assertEquals(2, $component->getMatchMax());
 
         $content = $component->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
+        $this->assertInstanceOf(FlowStaticCollection::class, $content);
         $this->assertEquals(3, count($content));
     }
 }

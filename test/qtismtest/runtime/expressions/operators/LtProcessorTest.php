@@ -10,6 +10,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LtProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class LtProcessorTest extends QtiSmTestCase
 {
@@ -57,7 +58,7 @@ class LtProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(1);
         $operands[] = new QtiBoolean(true);
         $processor = new LtProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -68,7 +69,7 @@ class LtProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(1, 2);
         $operands[] = new QtiInteger(2);
         $processor = new LtProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -79,7 +80,7 @@ class LtProcessorTest extends QtiSmTestCase
         $operands[] = new RecordContainer(['A' => new QtiInteger(1)]);
         $operands[] = new QtiInteger(2);
         $processor = new LtProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -87,7 +88,7 @@ class LtProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new LtProcessor($expression, $operands);
     }
 
@@ -95,7 +96,7 @@ class LtProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new LtProcessor($expression, $operands);
     }
 

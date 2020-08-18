@@ -34,7 +34,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\TemplateBlock', $component);
+        $this->assertInstanceOf(TemplateBlock::class, $component);
         $this->assertEquals('tpl1', $component->getTemplateIdentifier());
         $this->assertEquals('block1', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());

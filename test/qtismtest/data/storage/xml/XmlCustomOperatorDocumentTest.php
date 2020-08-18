@@ -5,6 +5,8 @@ namespace qtismtest\data\storage\xml;
 use qtism\common\enums\BaseType;
 use qtism\data\storage\xml\XmlDocument;
 use qtismtest\QtiSmTestCase;
+use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\operators\CustomOperator;
 
 class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 {
@@ -15,7 +17,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
+        $this->assertInstanceOf(CustomOperator::class, $customOperator);
         $this->assertEquals('com.taotesting.qtism.customOperator1', $customOperator->getClass());
         $this->assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
 
@@ -25,7 +27,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 
         $expressions = $customOperator->getExpressions();
         $this->assertEquals(1, count($expressions));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
+        $this->assertInstanceOf(BaseValue::class, $expressions[0]);
         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
         $this->assertEquals('Param1Data', $expressions[0]->getValue());
     }
@@ -49,11 +51,11 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
+        $this->assertInstanceOf(CustomOperator::class, $customOperator);
 
         $expressions = $customOperator->getExpressions();
         $this->assertEquals(1, count($expressions));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
+        $this->assertInstanceOf(BaseValue::class, $expressions[0]);
         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
         $this->assertEquals('Param1Data', $expressions[0]->getValue());
     }
@@ -77,7 +79,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
+        $this->assertInstanceOf(CustomOperator::class, $customOperator);
         $this->assertEquals('com.taotesting.qtism.customOperator1', $customOperator->getClass());
         $this->assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
 
@@ -87,7 +89,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 
         $expressions = $customOperator->getExpressions();
         $this->assertEquals(1, count($expressions));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
+        $this->assertInstanceOf(BaseValue::class, $expressions[0]);
         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
         $this->assertEquals('Param1Data', $expressions[0]->getValue());
 
@@ -124,7 +126,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
+        $this->assertInstanceOf(CustomOperator::class, $customOperator);
         $this->assertEquals('com.taotesting.qtism.customOperator', $customOperator->getClass());
         $this->assertEquals('http://qtism.taotesting.com/xsd/nestedOperator.xsd', $customOperator->getDefinition());
 
@@ -150,12 +152,12 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 
         // -- Checking customOperator (first child of customOperator).
         $customOperator = $expressions[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
+        $this->assertInstanceOf(CustomOperator::class, $customOperator);
         $this->assertEquals('com.taotesting.nestedCustomOperator', $customOperator->getClass());
         $this->assertFalse($customOperator->hasDefinition());
         $subExpressions = $customOperator->getExpressions();
         $this->assertEquals(1, count($subExpressions));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $subExpressions[0]);
+        $this->assertInstanceOf(BaseValue::class, $subExpressions[0]);
         $this->assertEquals(BaseType::STRING, $subExpressions[0]->getBaseType());
         $this->assertEquals('Some data to pass to nestedCustomOperator...', $subExpressions[0]->getValue());
         // Check LAX content.
@@ -165,7 +167,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 
         // -- Checking baseValue (second child of customOperator).
         $baseValue = $expressions[1];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $baseValue);
+        $this->assertInstanceOf(BaseValue::class, $baseValue);
         $this->assertEquals(BaseType::STRING, $baseValue->getBaseType());
         $this->assertEquals('Param1Data', $baseValue->getValue());
     }

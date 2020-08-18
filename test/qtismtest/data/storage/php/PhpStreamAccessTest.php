@@ -60,7 +60,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
     public function testInstantiation()
     {
         $access = new PhpStreamAccess($this->getStream());
-        $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpStreamAccess', $access);
+        $this->assertInstanceOf(PhpStreamAccess::class, $access);
     }
 
     /**
@@ -77,7 +77,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
 
     public function testWriteScalarInvalidData()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScalar(new stdClass());
     }

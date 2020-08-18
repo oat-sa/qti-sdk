@@ -226,7 +226,7 @@ class OutcomeVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "OutcomeVariable::createFromDataModel only accept 'qtism\\data\\state\\OutcomeDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "OutcomeVariable::createFromDataModel only accept '" . OutcomeDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

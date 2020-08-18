@@ -10,7 +10,7 @@ class ChoiceTest extends QtiSmTestCase
     public function testCreateChoiceWrongIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'identifier' argument must be a valid QTI identifier"
         );
 
@@ -20,7 +20,7 @@ class ChoiceTest extends QtiSmTestCase
     public function testSetFixedWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'fixed' argument must be a boolean value, 'string' given."
         );
 
@@ -31,7 +31,7 @@ class ChoiceTest extends QtiSmTestCase
     public function testSetTemplateIdentifierWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'templateIdentifier' must be an empty string or a valid QTI identifier, 'integer' given."
         );
 
@@ -42,7 +42,7 @@ class ChoiceTest extends QtiSmTestCase
     public function testSetShowHideWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'showHide' argument must be a value from the ShowHide enumeration."
         );
 

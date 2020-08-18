@@ -28,7 +28,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentSection', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($title, $element->getAttribute('title'));
@@ -73,7 +73,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($title, $element->getAttribute('title'));
         $this->assertEquals('true', $element->getAttribute('visible'));
@@ -146,7 +146,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($root);
         $element = $marshaller->marshall($root);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $root);
+        $this->assertInstanceOf(AssessmentSection::class, $root);
         $this->assertEquals(4, $element->getElementsByTagName('assessmentSection')->length);
 
         $sub1Elt = $element->getElementsByTagName('assessmentSection')->item(0);
@@ -180,7 +180,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $component);
+        $this->assertInstanceOf(AssessmentSection::class, $component);
         $this->assertEquals('myAssessmentSection', $component->getIdentifier());
         $this->assertEquals('A Minimal Assessment Section', $component->getTitle());
         $this->assertTrue($component->isVisible());
@@ -212,7 +212,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $component);
+        $this->assertInstanceOf(AssessmentSection::class, $component);
         $this->assertEquals('myAssessmentSection', $component->getIdentifier());
         $this->assertEquals('A non Recursive Assessment Section', $component->getTitle());
         $this->assertTrue($component->isVisible());
@@ -221,11 +221,11 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         // Is order preserved?
         $sectionParts = $component->getSectionParts();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q01']);
+        $this->assertInstanceOf(AssessmentItemRef::class, $sectionParts['Q01']);
         $this->assertEquals('Q01', $sectionParts['Q01']->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q02']);
+        $this->assertInstanceOf(AssessmentItemRef::class, $sectionParts['Q02']);
         $this->assertEquals('Q02', $sectionParts['Q02']->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['S01']);
+        $this->assertInstanceOf(AssessmentSectionRef::class, $sectionParts['S01']);
         $this->assertEquals('S01', $sectionParts['S01']->getIdentifier());
 
         $this->assertEquals(1, count($component->getPreconditions()));
@@ -274,7 +274,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $component);
+        $this->assertInstanceOf(AssessmentSection::class, $component);
         $this->assertEquals('rootAssessmentSection', $component->getIdentifier());
         $this->assertEquals(2, count($component->getSectionParts()));
         $this->assertTrue($component->hasSelection());
@@ -316,7 +316,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $component);
+        $this->assertInstanceOf(AssessmentSection::class, $component);
         $assessmentItemRefs = $component->getSectionParts();
         $this->assertEquals(3, count($assessmentItemRefs));
     }

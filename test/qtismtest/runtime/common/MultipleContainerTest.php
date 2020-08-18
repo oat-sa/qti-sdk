@@ -34,19 +34,19 @@ class MultipleContainerTest extends QtiSmTestCase
 
     public function testCreationEmptyWrongBaseType1()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $container = new MultipleContainer('invalid');
     }
 
     public function testCreationEmptyWrongBaseType2()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $container = new MultipleContainer(14);
     }
 
     public function testCreationWithWrongValues()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $data = [new QtiPoint(20, 20)];
         $container = new MultipleContainer(BaseType::DURATION, $data);
     }
@@ -58,7 +58,7 @@ class MultipleContainerTest extends QtiSmTestCase
         $valueCollection[] = new Value(new QtiPoint(20, 40), BaseType::POINT);
 
         $container = MultipleContainer::createFromDataModel($valueCollection, BaseType::POINT);
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $container);
+        $this->assertInstanceOf(MultipleContainer::class, $container);
         $this->assertEquals(2, count($container));
         $this->assertEquals(BaseType::POINT, $container->getBaseType());
         $this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
@@ -72,7 +72,7 @@ class MultipleContainerTest extends QtiSmTestCase
     public function testCreateFromDataModelValid($baseType, ValueCollection $valueCollection)
     {
         $container = MultipleContainer::createFromDataModel($valueCollection, $baseType);
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $container);
+        $this->assertInstanceOf(MultipleContainer::class, $container);
     }
 
     /**
@@ -80,7 +80,7 @@ class MultipleContainerTest extends QtiSmTestCase
      */
     public function testCreateFromDataModelInvalid($baseType, ValueCollection $valueCollection)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $container = MultipleContainer::createFromDataModel($valueCollection, $baseType);
     }
 

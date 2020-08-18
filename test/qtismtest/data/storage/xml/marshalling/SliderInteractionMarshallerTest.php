@@ -43,7 +43,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SliderInteraction', $component);
+        $this->assertInstanceOf(SliderInteraction::class, $component);
         $this->assertEquals('my-slider', $component->getId());
         $this->assertEquals('slide-it', $component->getClass());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());

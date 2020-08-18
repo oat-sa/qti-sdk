@@ -11,6 +11,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RoundProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class RoundProcessorTest extends QtiSmTestCase
 {
@@ -96,7 +97,7 @@ class RoundProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new OrderedContainer(BaseType::FLOAT, [new QtiFloat(1.1), new QtiFloat(2.2)]);
         $processor = new RoundProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -106,7 +107,7 @@ class RoundProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiBoolean(true);
         $processor = new RoundProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -116,7 +117,7 @@ class RoundProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiDuration('P1D');
         $processor = new RoundProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -124,7 +125,7 @@ class RoundProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new RoundProcessor($expression, $operands);
     }
 
@@ -134,7 +135,7 @@ class RoundProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10);
         $operands[] = new QtiFloat(1.1);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new RoundProcessor($expression, $operands);
     }
 

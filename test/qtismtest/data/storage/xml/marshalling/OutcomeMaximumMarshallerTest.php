@@ -24,7 +24,7 @@ class OutcomeMaximumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('outcomeMaximum', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
@@ -42,7 +42,7 @@ class OutcomeMaximumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\OutcomeMaximum', $component);
+        $this->assertInstanceOf(OutcomeMaximum::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals($component->getOutcomeIdentifier(), 'myOutcome1');
         $this->assertEquals($component->getWeightIdentifier(), 'myWeight1');

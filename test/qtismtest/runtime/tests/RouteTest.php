@@ -301,7 +301,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->next();
 
         // Q3 - Thrid position, there is no next route item.
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->setExpectedException(OutOfBoundsException::class);
         $nextItem = $route->getNext();
     }
 
@@ -324,7 +324,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->previous();
 
         $this->assertEquals('Q1', $route->current()->getAssessmentItemRef()->getIdentifier());
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->setExpectedException(OutOfBoundsException::class);
         $route->getPrevious();
     }
 

@@ -16,6 +16,10 @@ use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
+use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSection;
+use qtism\data\TestPart;
+use qtism\data\AssessmentTest;
 
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
@@ -198,28 +202,28 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertFalse($timeConstraints[0]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[0]->maxTimeInForce());
         $this->assertFalse($timeConstraints[0]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $timeConstraints[0]->getSource());
+        $this->assertInstanceOf(AssessmentTest::class, $timeConstraints[0]->getSource());
 
         // TestPart level
         $this->assertFalse($timeConstraints[1]->getMaximumRemainingTime());
         $this->assertFalse($timeConstraints[1]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[1]->maxTimeInForce());
         $this->assertFalse($timeConstraints[1]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\TestPart', $timeConstraints[1]->getSource());
+        $this->assertInstanceOf(TestPart::class, $timeConstraints[1]->getSource());
 
         // AssessmentSection level (1st)
         $this->assertFalse($timeConstraints[2]->getMaximumRemainingTime());
         $this->assertFalse($timeConstraints[2]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[2]->maxTimeInForce());
         $this->assertFalse($timeConstraints[2]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $timeConstraints[2]->getSource());
+        $this->assertInstanceOf(AssessmentSection::class, $timeConstraints[2]->getSource());
 
         // AssessmentItem level
         $this->assertEquals('PT1S', $timeConstraints[3]->getMinimumRemainingTime()->round()->__toString());
         $this->assertEquals('PT3S', $timeConstraints[3]->getMaximumRemainingTime()->round()->__toString());
         $this->assertTrue($timeConstraints[3]->maxTimeInForce());
         $this->assertTrue($timeConstraints[3]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $timeConstraints[3]->getSource());
+        $this->assertInstanceOf(AssessmentItemRef::class, $timeConstraints[3]->getSource());
 
         sleep(2);
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));

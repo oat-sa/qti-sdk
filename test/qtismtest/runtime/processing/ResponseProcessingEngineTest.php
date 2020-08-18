@@ -110,7 +110,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $context['RESPONSE'] = new QtiIdentifier('ChoiceC');
         $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
         $this->assertEquals(1.0, $context['SCORE']->getValue());
     }
 
@@ -219,7 +219,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             'The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.'
         );
 
@@ -235,7 +235,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The uri argument must be a string, 'integer' given."
         );
 
@@ -251,7 +251,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The url argument must be a string, 'string' given."
         );
 
@@ -267,7 +267,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The uri argument must be a string, 'integer' given."
         );
 

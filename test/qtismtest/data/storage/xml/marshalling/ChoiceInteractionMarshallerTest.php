@@ -44,7 +44,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());

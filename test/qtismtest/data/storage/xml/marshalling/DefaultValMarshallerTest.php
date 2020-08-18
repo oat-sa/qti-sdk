@@ -16,7 +16,7 @@ class DefaultValMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('default', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
     }
@@ -30,7 +30,7 @@ class DefaultValMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\DefaultVal', $component);
+        $this->assertInstanceOf(DefaultVal::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myDefault1');
     }
 }

@@ -14,6 +14,7 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\EqualRoundedProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class EqualRoundedProcessorTest extends QtiSmTestCase
 {
@@ -78,7 +79,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $state->setVariable(new OutcomeVariable('varX', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(3)));
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
         $this->assertSame(true, $result->getValue());
     }
@@ -88,7 +89,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiPair('A', 'B'), new QtiInteger(3)]);
         $processor = new EqualRoundedProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -97,7 +98,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiInteger(10), new RecordContainer(['A' => new QtiInteger(1337)])]);
         $processor = new EqualRoundedProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -105,7 +106,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiInteger(10)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new EqualRoundedProcessor($expression, $operands);
     }
 
@@ -113,7 +114,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), new QtiInteger(10)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new EqualRoundedProcessor($expression, $operands);
     }
 

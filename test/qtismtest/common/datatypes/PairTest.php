@@ -25,13 +25,13 @@ class PairTest extends QtiSmTestCase
 
     public function testInvalidFirstIdentifier()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $pair = new QtiPair('_33', '33tt');
     }
 
     public function testInvalidSecondIdentifier()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $pair = new QtiPair('33tt', '_33');
     }
 }

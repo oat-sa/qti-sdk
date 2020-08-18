@@ -20,7 +20,7 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('statsOperator', $element->nodeName);
         $this->assertEquals('popVariance', $element->getAttribute('name'));
 
@@ -45,12 +45,12 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\StatsOperator', $component);
+        $this->assertInstanceOf(StatsOperator::class, $component);
         $this->assertEquals(Statistics::POP_VARIANCE, $component->getName());
 
         $subExpr = $component->getExpressions();
         $this->assertEquals(1, count($subExpr));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $subExpr[0]);
+        $this->assertInstanceOf(BaseValue::class, $subExpr[0]);
         $this->assertInternalType('float', $subExpr[0]->getValue());
         $this->assertEquals(12.5468, $subExpr[0]->getValue());
         $this->assertEquals(BaseType::FLOAT, $subExpr[0]->getBaseType());

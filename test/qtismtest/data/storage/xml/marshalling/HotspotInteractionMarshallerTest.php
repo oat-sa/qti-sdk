@@ -47,7 +47,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotInteraction', $component);
+        $this->assertInstanceOf(HotspotInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-hotspot', $component->getId());
         $this->assertEquals(1, $component->getMaxChoices());

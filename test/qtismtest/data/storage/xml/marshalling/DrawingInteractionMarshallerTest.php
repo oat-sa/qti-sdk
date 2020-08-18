@@ -37,7 +37,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\DrawingInteraction', $component);
+        $this->assertInstanceOf(DrawingInteraction::class, $component);
         $this->assertEquals('my-drawings', $component->getId());
         $this->assertEquals('draw-it', $component->getClass());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());

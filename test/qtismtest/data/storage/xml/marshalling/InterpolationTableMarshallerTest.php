@@ -22,7 +22,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('interpolationTable', $element->nodeName);
         $entryElements = $element->getElementsByTagName('interpolationTableEntry');
         $this->assertEquals(2, $entryElements->length);
@@ -55,7 +55,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [$baseType]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\InterpolationTable', $component);
+        $this->assertInstanceOf(InterpolationTable::class, $component);
         $entries = $component->getInterpolationTableEntries();
         $this->assertEquals(2, count($entries));
 

@@ -14,7 +14,7 @@ class ExitResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('exitResponse', $element->nodeName);
     }
 
@@ -27,7 +27,7 @@ class ExitResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\ExitResponse', $component);
+        $this->assertInstanceOf(ExitResponse::class, $component);
         $this->assertEquals('exitResponse', $component->getQtiClassName());
     }
 }

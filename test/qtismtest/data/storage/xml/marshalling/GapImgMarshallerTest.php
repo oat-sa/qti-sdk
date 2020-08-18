@@ -31,7 +31,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapImg', $gapImg);
+        $this->assertInstanceOf(GapImg::class, $gapImg);
         $this->assertEquals('my-gap', $gapImg->getId());
         $this->assertEquals('gaps', $gapImg->getClass());
         $this->assertEquals('gapImg1', $gapImg->getIdentifier());

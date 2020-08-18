@@ -42,7 +42,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $this->assertInstanceOf(OutcomeDeclaration::class, $component);
         $this->assertEquals(ExternalScored::HUMAN, $component->getExternalScored());
     }
 
@@ -64,7 +64,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals($expectedExternalScored, $element->getAttribute('externalScored'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
         $this->assertEquals('outcome1', $element->getAttribute('identifier'));
@@ -96,7 +96,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeDeclaration', $element->nodeName);
         $this->assertEquals('single', $element->getAttribute('cardinality'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
@@ -119,7 +119,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeDeclaration', $element->nodeName);
         $this->assertEquals('multiple', $element->getAttribute('cardinality'));
         $this->assertEquals('duration', $element->getAttribute('baseType'));
@@ -161,7 +161,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeDeclaration', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals('float', $element->getAttribute('baseType'));
@@ -195,7 +195,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $this->assertInstanceOf(OutcomeDeclaration::class, $component);
         $this->assertEquals($component->getIdentifier(), 'outcomeDeclaration1');
         $this->assertEquals($component->getCardinality(), Cardinality::SINGLE);
         $this->assertEquals($component->getBaseType(), BaseType::INTEGER);
@@ -219,22 +219,22 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $this->assertInstanceOf(OutcomeDeclaration::class, $component);
         $this->assertEquals($component->getIdentifier(), 'outcomeDeclaration2');
         $this->assertEquals($component->getCardinality(), Cardinality::MULTIPLE);
         $this->assertEquals($component->getBaseType(), BaseType::DURATION);
 
         $defaultValue = $component->getDefaultValue();
-        $this->assertInstanceOf('qtism\\data\\state\\DefaultValue', $defaultValue);
+        $this->assertInstanceOf(DefaultValue::class, $defaultValue);
         $this->assertEquals('Up to you!', $defaultValue->getInterpretation());
 
         $values = $defaultValue->getValues();
         $this->assertEquals(2, count($values));
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
+        $this->assertInstanceOf(Value::class, $values[0]);
         $this->assertInstanceOf(QtiDuration::class, $values[0]->getValue());
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
+        $this->assertInstanceOf(Value::class, $values[1]);
         $this->assertInstanceOf(QtiDuration::class, $values[1]->getValue());
     }
 
@@ -257,7 +257,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $this->assertInstanceOf(OutcomeDeclaration::class, $component);
         $this->assertEquals($component->getIdentifier(), 'outcomeDeclarationRec');
         $this->assertEquals($component->getCardinality(), Cardinality::RECORD);
         $this->assertEquals($component->getBaseType(), -1);
@@ -270,21 +270,21 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $values = $defaultValue->getValues();
         $this->assertEquals(3, count($values));
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
+        $this->assertInstanceOf(Value::class, $values[0]);
         $this->assertTrue($values[0]->hasFieldIdentifier());
         $this->assertTrue($values[0]->hasBaseType());
         $this->assertEquals('A', $values[0]->getFieldIdentifier());
         $this->assertEquals(BaseType::DURATION, $values[0]->getBaseType());
         $this->assertTrue($values[0]->getValue()->equals(new QtiDuration('P2D')));
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
+        $this->assertInstanceOf(Value::class, $values[1]);
         $this->assertTrue($values[1]->hasFieldIdentifier());
         $this->assertTrue($values[1]->hasBaseType());
         $this->assertEquals('B', $values[1]->getFieldIdentifier());
         $this->assertEquals(BaseType::IDENTIFIER, $values[1]->getBaseType());
         $this->assertEquals('identifier1', $values[1]->getValue());
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $values[2]);
+        $this->assertInstanceOf(Value::class, $values[2]);
         $this->assertTrue($values[2]->hasFieldIdentifier());
         $this->assertTrue($values[2]->hasBaseType());
         $this->assertEquals('C', $values[2]->getFieldIdentifier());
@@ -310,9 +310,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+        $this->assertInstanceOf(OutcomeDeclaration::class, $component);
         $matchTable = $component->getLookupTable();
-        $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $matchTable);
+        $this->assertInstanceOf(MatchTable::class, $matchTable);
         $entries = $matchTable->getMatchTableEntries();
         $this->assertEquals(2, count($entries));
 

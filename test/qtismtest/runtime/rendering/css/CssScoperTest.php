@@ -4,6 +4,7 @@ namespace qtismtest\runtime\rendering\css;
 
 use qtism\runtime\rendering\css\CssScoper;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rendering\RenderingException;
 
 class CssScoperTest extends QtiSmTestCase
 {
@@ -59,7 +60,7 @@ class CssScoperTest extends QtiSmTestCase
         $cssScoper = new CssScoper();
 
         $this->setExpectedException(
-            'qtism\\runtime\\rendering\\RenderingException',
+            RenderingException::class,
             "The CSS file '/root/css_input1.css' could not be open."
         );
 

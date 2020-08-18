@@ -10,6 +10,8 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtismtest\QtiSmTestCase;
+use qtism\data\state\AreaMapping;
+use qtism\data\state\Mapping;
 
 class ResponseVariableTest extends QtiSmTestCase
 {
@@ -44,7 +46,7 @@ class ResponseVariableTest extends QtiSmTestCase
 		');
         $responseDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $responseVariable);
+        $this->assertInstanceOf(ResponseVariable::class, $responseVariable);
 
         $this->assertEquals('outcome1', $responseVariable->getIdentifier());
         $this->assertEquals(BaseType::PAIR, $responseVariable->getBaseType());
@@ -54,24 +56,24 @@ class ResponseVariableTest extends QtiSmTestCase
         $this->assertTrue($responseVariable->isNull());
 
         $defaultValue = $responseVariable->getDefaultValue();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $defaultValue);
+        $this->assertInstanceOf(OrderedContainer::class, $defaultValue);
         $this->assertEquals(3, count($defaultValue));
 
         $mapping = $responseVariable->getMapping();
-        $this->assertInstanceOf('qtism\\data\\state\\Mapping', $mapping);
+        $this->assertInstanceOf(Mapping::class, $mapping);
         $mapEntries = $mapping->getMapEntries();
         $this->assertEquals(3, count($mapEntries));
         $this->assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
 
         $areaMapping = $responseVariable->getAreaMapping();
-        $this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $areaMapping);
+        $this->assertInstanceOf(AreaMapping::class, $areaMapping);
         $areaMapEntries = $areaMapping->getAreaMapEntries();
         $this->assertEquals(3, count($areaMapEntries));
         $this->assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
 
         $this->assertTrue($responseVariable->hasCorrectResponse());
         $correctResponse = $responseVariable->getCorrectResponse();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $correctResponse);
+        $this->assertInstanceOf(OrderedContainer::class, $correctResponse);
         $this->assertEquals(2, count($correctResponse));
         $this->assertTrue($correctResponse[0]->equals(new QtiPair('A', 'B')));
         $this->assertTrue($correctResponse[1]->equals(new QtiPair('E', 'F')));
@@ -83,12 +85,12 @@ class ResponseVariableTest extends QtiSmTestCase
 
         // If I reinitialize the value, we must find a NULL container into this variable.
         $responseVariable->initialize();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $responseVariable->getValue());
+        $this->assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
         $this->assertTrue($responseVariable->isNull());
 
         // If I apply the default value...
         $responseVariable->applyDefaultValue();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $responseVariable->getValue());
+        $this->assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
         $this->assertEquals(3, count($responseVariable->getValue()));
         $this->assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])));
     }

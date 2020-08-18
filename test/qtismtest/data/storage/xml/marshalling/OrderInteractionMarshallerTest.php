@@ -46,7 +46,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\OrderInteraction', $component);
+        $this->assertInstanceOf(OrderInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());

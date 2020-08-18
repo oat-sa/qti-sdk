@@ -13,6 +13,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MultipleProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class MultipleProcessorTest extends QtiSmTestCase
 {
@@ -34,7 +35,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(25), new MultipleContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(1, count($result));
         $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
         $this->assertEquals(25, $result[0]->getValue());
@@ -42,7 +43,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(25), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
         $this->assertEquals(25, $result[0]->getValue());
@@ -51,7 +52,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER), new QtiInteger(25), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
         $this->assertEquals(25, $result[0]->getValue());
@@ -73,7 +74,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $processor = new MultipleProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(3, count($result));
         $this->assertEquals('String1', $result[0]->getValue());
         $this->assertEquals('String2', $result[1]->getValue());
@@ -82,7 +83,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString('String!')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(1, count($result));
     }
 
@@ -95,7 +96,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new MultipleProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(3, count($result));
         $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
         $this->assertTrue($result[1]->equals(new QtiPoint(2, 3)));
@@ -111,7 +112,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new MultipleProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
         $this->assertTrue($result[1]->equals(new QtiPoint(3, 4)));
@@ -126,7 +127,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('string1'), new QtiString('string2')]);
         $operands[] = null;
         $processor = new MultipleProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -139,7 +140,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $operands[] = new QtiInteger(10);
         $processor = new MultipleProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -154,7 +155,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $operands[] = new RecordContainer();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

@@ -16,7 +16,7 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('true', $element->getAttribute('shuffle'));
     }
 
@@ -29,7 +29,7 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\Rules\\Ordering', $component);
+        $this->assertInstanceOf(Ordering::class, $component);
         $this->assertEquals($component->getShuffle(), false);
     }
 }

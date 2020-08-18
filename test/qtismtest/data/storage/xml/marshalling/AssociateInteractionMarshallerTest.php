@@ -48,7 +48,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociateInteraction', $component);
+        $this->assertInstanceOf(AssociateInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertTrue($component->hasPrompt());

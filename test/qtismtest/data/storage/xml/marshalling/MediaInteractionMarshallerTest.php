@@ -44,7 +44,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\MediaInteraction', $component);
+        $this->assertInstanceOf(MediaInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-media', $component->getId());
         $this->assertFalse($component->mustAutostart());

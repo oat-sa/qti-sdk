@@ -11,6 +11,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\CorrectProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class CorrectProcessorTest extends QtiSmTestCase
 {
@@ -35,7 +36,7 @@ class CorrectProcessorTest extends QtiSmTestCase
         $comparable[] = new QtiDirectedPair('C', 'D');
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertTrue($result->equals($comparable));
         $this->assertTrue($comparable->equals($result));
     }
@@ -88,7 +89,7 @@ class CorrectProcessorTest extends QtiSmTestCase
 
         $processor = new CorrectProcessor($expr);
         $processor->setState(new State([$variable]));
-        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 }

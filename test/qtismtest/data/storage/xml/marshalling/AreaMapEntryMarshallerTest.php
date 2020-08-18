@@ -20,7 +20,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('areaMapEntry', $element->nodeName);
         $this->assertEquals('rect', $element->getAttribute('shape'));
         $this->assertEquals('0,20,100,0', $element->getAttribute('coords'));
@@ -36,7 +36,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\AreaMapEntry', $component);
+        $this->assertInstanceOf(AreaMapEntry::class, $component);
         $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
         $this->assertEquals([0, 20, 100, 0], $component->getCoords()->getArrayCopy());
         $this->assertEquals(QtiShape::RECT, $component->getShape());

@@ -33,6 +33,8 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\storage\xml\Utils;
 use ReflectionClass;
+use qtism\data\expressions\operators\OrOperator;
+use qtism\data\expressions\operators\AndOperator;
 
 /**
  * The OperatorMarshaller class focuses on Marshaller/Unmarshalling
@@ -139,10 +141,10 @@ class OperatorMarshaller extends RecursiveMarshaller
         // AndOperator because of PHP reserved words restriction.
 
         if ($element->localName === 'and') {
-            $className = 'qtism\\data\\expressions\\operators\\AndOperator';
+            $className = AndOperator::class;
         } else {
             if ($element->localName === 'or') {
-                $className = 'qtism\\data\\expressions\\operators\\OrOperator';
+                $className = OrOperator::class;
             } else {
                 $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
             }

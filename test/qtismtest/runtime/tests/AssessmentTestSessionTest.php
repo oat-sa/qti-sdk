@@ -28,6 +28,7 @@ use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use qtism\data\state\Weight;
 
 class AssessmentTestSessionTest extends QtiSmTestCase
 {
@@ -881,7 +882,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $assessmentTestSession->beginTestSession();
 
         $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentTestSessionException',
+            AssessmentTestSessionException::class,
             'Jumps are not allowed in LINEAR navigation mode.'
         );
         $assessmentTestSession->jumpTo(1);
@@ -1084,7 +1085,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         $v = new VariableIdentifier($identifier);
         $weight = $state->getWeight($v);
-        $this->assertInstanceOf('qtism\\data\\state\\Weight', $weight);
+        $this->assertInstanceOf(Weight::class, $weight);
         $this->assertEquals($v->getVariableName(), $weight->getIdentifier());
         $this->assertEquals($expectedValue, $weight->getValue());
     }
@@ -1111,7 +1112,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
     public function testGetWeightMalformed($identifier)
     {
         $state = $this->getState();
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(InvalidArgumentException::class);
         $state->getWeight($identifier);
     }
 

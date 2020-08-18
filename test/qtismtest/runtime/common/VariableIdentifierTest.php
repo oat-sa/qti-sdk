@@ -14,7 +14,7 @@ class VariableIdentifierTest extends QtiSmTestCase
      */
     public function testInvalidIdentifier($identifier)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $v = new VariableIdentifier($identifier);
     }
 
@@ -74,7 +74,7 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testInvalidSequenceNumberOne()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The identifier 'Q01.bla.SCORE' is not a valid QTI Variable Name Identifier."
         );
         new VariableIdentifier('Q01.bla.SCORE');
@@ -83,7 +83,7 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testInvalidSequenceNumberTwo()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The identifier 'Q01.0.SCORE' is not a valid QTI Variable Name Identifier."
         );
         new VariableIdentifier('Q01.0.SCORE');
@@ -92,7 +92,7 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testInvalidVariableName()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The identifier 'Q01.0. ' is not a valid QTI Variable Name Identifier."
         );
         new VariableIdentifier('Q01.0. ');
@@ -101,7 +101,7 @@ class VariableIdentifierTest extends QtiSmTestCase
     public function testInvalidPrefix()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The identifier ' .SCORE' is not a valid QTI Variable Name Identifier."
         );
         new VariableIdentifier(' .SCORE');

@@ -19,6 +19,8 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtismtest\QtiSmTestCase;
+use qtism\data\state\MatchTable;
+use qtism\runtime\common\RecordContainer;
 
 class OutcomeVariableTest extends QtiSmTestCase
 {
@@ -28,19 +30,19 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertTrue(is_null($outcome->getValue()));
 
         $outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::INTEGER);
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $outcome->getValue());
+        $this->assertInstanceOf(MultipleContainer::class, $outcome->getValue());
 
         $outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::INTEGER);
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $outcome->getValue());
+        $this->assertInstanceOf(OrderedContainer::class, $outcome->getValue());
 
         $outcome = new OutcomeVariable('var1', Cardinality::RECORD);
-        $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $outcome->getValue());
+        $this->assertInstanceOf(RecordContainer::class, $outcome->getValue());
     }
 
     public function testCardinalitySingle()
     {
         $variable = new OutcomeVariable('outcome1', Cardinality::SINGLE, BaseType::INTEGER);
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $variable);
+        $this->assertInstanceOf(OutcomeVariable::class, $variable);
         $this->assertEquals('outcome1', $variable->getIdentifier());
         $this->assertEquals(BaseType::INTEGER, $variable->getBaseType());
         $this->assertEquals(Cardinality::SINGLE, $variable->getCardinality());
@@ -74,7 +76,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCardinalityMultiple()
     {
         $variable = new OutcomeVariable('outcome1', Cardinality::MULTIPLE, BaseType::INTEGER);
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $variable);
+        $this->assertInstanceOf(OutcomeVariable::class, $variable);
         $this->assertEquals(Cardinality::MULTIPLE, $variable->getCardinality());
 
         $variable->setValue(new MultipleContainer(BaseType::INTEGER));
@@ -112,7 +114,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $outcomeVariable);
+        $this->assertInstanceOf(OutcomeVariable::class, $outcomeVariable);
         $this->assertEquals('outcome1', $outcomeVariable->getIdentifier());
         $this->assertEquals(BaseType::INTEGER, $outcomeVariable->getBaseType());
         $this->assertEquals(Cardinality::SINGLE, $outcomeVariable->getCardinality());
@@ -150,7 +152,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
         $defaultValue = $outcomeVariable->getDefaultValue();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $defaultValue);
+        $this->assertInstanceOf(MultipleContainer::class, $defaultValue);
         $this->assertEquals(2, count($defaultValue));
         $this->assertEquals(Cardinality::MULTIPLE, $defaultValue->getCardinality());
         $this->assertTrue($defaultValue[0]->equals(new QtiPair('A', 'B')));
@@ -172,7 +174,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
         $defaultValue = $outcomeVariable->getDefaultValue();
-        $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $defaultValue);
+        $this->assertInstanceOf(RecordContainer::class, $defaultValue);
         $this->assertEquals(2, count($defaultValue));
 
         $this->assertInstanceOf(QtiPair::class, $defaultValue['A']);
@@ -216,7 +218,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertEquals(1.5, $outcomeVariable->getMasteryValue());
 
         $matchTable = $outcomeVariable->getLookupTable();
-        $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $matchTable);
+        $this->assertInstanceOf(MatchTable::class, $matchTable);
         $matchTableEntries = $matchTable->getMatchTableEntries();
         $this->assertEquals(2, count($matchTableEntries));
         $this->assertEquals(0, $matchTableEntries[0]->getSourceValue());
@@ -241,7 +243,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->setExpectedException(
-            '\\UnexpectedValueException',
+            \UnexpectedValueException::class,
             "A Data Model VariableDeclaration with 'single' cardinality must contain a single value, 2 value(s) found"
         );
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
@@ -262,7 +264,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            '\\UnexpectedValueException',
+            \UnexpectedValueException::class,
             "'bli' cannot be transformed into integer."
         );
 
@@ -278,7 +280,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $variableDeclaration = new VariableDeclaration('var', BaseType::INTEGER, Cardinality::MULTIPLE, $defaultValue);
 
         $this->setExpectedException(
-            '\\UnexpectedValueException',
+            \UnexpectedValueException::class,
             "The default value found in the Data Model Variable Declaration is not consistent. The values must have a baseType compliant with the baseType of the VariableDeclaration.If the VariableDeclaration's cardinality is 'record', make sure the values it contains have fieldIdentifiers."
         );
         $outcomeVariable = OutcomeVariable::createFromDataModel($variableDeclaration);
@@ -351,7 +353,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testSetNoBaseTypeNotRecord()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             'You are forced to specify a baseType if cardinality is not RECORD.'
         );
         $var = new OutcomeVariable('var', Cardinality::MULTIPLE, -1);
@@ -422,7 +424,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The normalMaximum argument must be a floating point value or false, 'boolean' given."
         );
 
@@ -434,7 +436,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The normalMinimum argument must be a floating point value or false, 'boolean' given."
         );
 
@@ -446,7 +448,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The masteryValue argument must be a floating point value or false, 'boolean' given."
         );
 
@@ -466,7 +468,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $responseDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "OutcomeVariable::createFromDataModel only accept 'qtism\data\state\OutcomeDeclaration' objects, 'qtism\data\state\ResponseDeclaration' given."
         );
 

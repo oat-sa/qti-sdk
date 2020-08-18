@@ -10,7 +10,7 @@ class OutcomeMinimumTest extends QtiSmTestCase
     public function testOutcomeMaximum()
     {
         $outcomeMinimum = new OutcomeMinimum('SCORE', 'WEIGHT');
-        $this->assertInstanceOf('qtism\\data\\expressions\\OutcomeMinimum', $outcomeMinimum);
+        $this->assertInstanceOf(OutcomeMinimum::class, $outcomeMinimum);
         $this->assertEquals('SCORE', $outcomeMinimum->getOutcomeIdentifier());
         $this->assertEquals('WEIGHT', $outcomeMinimum->getWeightIdentifier());
 

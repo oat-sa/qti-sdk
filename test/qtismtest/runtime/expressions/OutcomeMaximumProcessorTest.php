@@ -29,7 +29,7 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
         if ($expectedResult === null) {
             $this->assertSame($expectedResult, $result);
         } else {
-            $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+            $this->assertInstanceOf(MultipleContainer::class, $result);
             $this->assertEquals(BaseType::FLOAT, $result->getBaseType());
             $this->assertTrue($result->equals($expectedResult));
         }

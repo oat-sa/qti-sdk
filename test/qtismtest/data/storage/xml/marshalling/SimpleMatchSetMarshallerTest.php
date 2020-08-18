@@ -39,7 +39,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleMatchSet', $component);
+        $this->assertInstanceOf(SimpleMatchSet::class, $component);
 
         $choices = $component->getSimpleAssociableChoices();
         $this->assertEquals(2, count($choices));

@@ -24,6 +24,7 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\tests\AssessmentTestSession;
 
 class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 {
@@ -38,7 +39,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->instantiate($test);
         $sessionId = $session->getSessionId();
 
-        $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
+        $this->assertInstanceOf(AssessmentTestSession::class, $session);
         $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
 
         $session->beginTestSession();

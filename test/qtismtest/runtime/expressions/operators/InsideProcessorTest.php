@@ -13,6 +13,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\InsideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class InsideProcessorTest extends QtiSmTestCase
 {
@@ -100,7 +101,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -111,7 +112,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -122,7 +123,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -132,7 +133,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $point = new QtiPoint(1, 2);
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new InsideProcessor($expression, $operands);
     }
 
@@ -142,7 +143,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $point = new QtiPoint(1, 2);
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([new QtiPoint(1, 2), new QtiPoint(2, 3)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new InsideProcessor($expression, $operands);
     }
 

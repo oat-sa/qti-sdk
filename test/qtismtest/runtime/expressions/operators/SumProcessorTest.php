@@ -11,6 +11,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SumProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\common\Processable;
 
 class SumProcessorTest extends QtiSmTestCase
 {
@@ -22,7 +23,7 @@ class SumProcessorTest extends QtiSmTestCase
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\Processable', $sumProcessor);
+        $this->assertInstanceOf(Processable::class, $sumProcessor);
         $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(2, $result->getValue());
     }
@@ -69,7 +70,7 @@ class SumProcessorTest extends QtiSmTestCase
     {
         $sum = $this->createFakeSumComponent();
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)]);
         $sumProcessor = new SumProcessor($sum, $operands);
@@ -83,7 +84,7 @@ class SumProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::BOOLEAN, [new QtiBoolean(true), new QtiBoolean(false)]);
         $sumProcessor = new SumProcessor($sum, $operands);
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $result = $sumProcessor->process();
     }
 

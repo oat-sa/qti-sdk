@@ -6,6 +6,14 @@ use DOMDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\interactions\ChoiceInteraction;
+use qtism\data\content\xhtml\A;
+use qtism\data\content\xhtml\text\Div;
+use qtism\data\content\xhtml\presentation\Hr;
+use qtism\data\content\TextRun;
+use qtism\data\content\TemplateBlock;
+use qtism\data\content\RubricBlock;
+use qtism\data\content\interactions\Prompt;
 
 class XmlDocumentTest extends QtiSmTestCase
 {
@@ -16,22 +24,22 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $search = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlock');
         $rubricBlock = $search[0];
-        $this->assertInstanceOf('qtism\\data\\content\\RubricBlock', $rubricBlock);
+        $this->assertInstanceOf(RubricBlock::class, $rubricBlock);
 
         $content = $rubricBlock->getContent();
         $text = $content[0];
         $this->assertEquals('Hello there', substr(trim($text->getContent()), 0, 11));
 
         $hr = $content[2];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\presentation\\Hr', $hr);
+        $this->assertInstanceOf(Hr::class, $hr);
 
         $div = $content[4];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
         $this->assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
 
         $a = $content[7];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\A', $a);
+        $this->assertInstanceOf(A::class, $a);
         $aContent = $a->getContent();
         $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
@@ -60,21 +68,21 @@ class XmlDocumentTest extends QtiSmTestCase
         // Check the content...
         $search = $doc->getDocumentComponent()->getComponentsByClassName('templateBlock');
         $templateBlock = $search[0];
-        $this->assertInstanceOf('qtism\\data\\content\\TemplateBlock', $templateBlock);
+        $this->assertInstanceOf(TemplateBlock::class, $templateBlock);
 
         $content = $templateBlock->getContent();
         $this->assertEquals('Hello there', substr(trim($content[0]->getContent()), 0, 11));
 
         $hr = $content[2];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\presentation\\Hr', $hr);
+        $this->assertInstanceOf(Hr::class, $hr);
 
         $div = $content[4];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
         $this->assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
 
         $a = $content[7];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\A', $a);
+        $this->assertInstanceOf(A::class, $a);
         $aContent = $a->getContent();
         $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
@@ -106,19 +114,19 @@ class XmlDocumentTest extends QtiSmTestCase
         $feedback = $feedbacks[0];
         $content = $feedback->getContent();
         $text = $content[0];
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $text);
+        $this->assertInstanceOf(TextRun::class, $text);
         $this->assertEquals('Hello there', substr(trim($text->getContent()), 0, 11));
 
         $hr = $content[2];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\presentation\\Hr', $hr);
+        $this->assertInstanceOf(Hr::class, $hr);
 
         $div = $content[4];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
         $this->assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
 
         $a = $content[7];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\A', $a);
+        $this->assertInstanceOf(A::class, $a);
         $aContent = $a->getContent();
         $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
@@ -144,7 +152,7 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $search = $doc->getDocumentComponent()->getComponentsByClassName('prompt');
         $prompt = $search[0];
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\prompt', $prompt);
+        $this->assertInstanceOf(Prompt::class, $prompt);
 
         $promptContent = $prompt->getContent();
         $this->assertEquals('Hell ', $promptContent[0]->getContent());
@@ -154,7 +162,7 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $search = $doc->getDocumentComponent()->getComponentsByClassName('choiceInteraction');
         $choiceInteraction = $search[0];
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $choiceInteraction);
+        $this->assertInstanceOf(ChoiceInteraction::class, $choiceInteraction);
 
         $simpleChoices = $choiceInteraction->getSimpleChoices();
         $this->assertEquals(1, count($simpleChoices));

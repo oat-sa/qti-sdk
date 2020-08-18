@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\xhtml\text\Div;
 
 class XmlAssessmentContentDocumentTest extends QtiSmTestCase
 {
@@ -13,7 +14,7 @@ class XmlAssessmentContentDocumentTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'rendering/xmlbase_1.xml');
 
         $div = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $this->assertTrue($div->hasXmlBase());
         $this->assertEquals('http://www.qtism-project.org/', $div->getXmlBase());
 
@@ -31,7 +32,7 @@ class XmlAssessmentContentDocumentTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'rendering/xmlbase_2.xml');
 
         $div = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $this->assertFalse($div->hasXmlBase());
         $this->assertEquals('', $div->getXmlBase());
 

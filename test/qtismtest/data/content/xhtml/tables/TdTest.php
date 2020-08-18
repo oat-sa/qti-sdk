@@ -12,7 +12,7 @@ class TdTest extends QtiSmTestCase
         $td = new Td();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'scope' argument must be a value from the TableCellScope enumeration, '1' given."
         );
 
@@ -24,7 +24,7 @@ class TdTest extends QtiSmTestCase
         $td = new Td();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'abbr' attribute must be a string, 'boolean' given."
         );
 
@@ -36,7 +36,7 @@ class TdTest extends QtiSmTestCase
         $td = new Td();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'axis' argument must be a string, 'boolean' given."
         );
 
@@ -48,7 +48,7 @@ class TdTest extends QtiSmTestCase
         $td = new Td();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'rowspan' argument must be an integer, 'boolean' given."
         );
 
@@ -60,7 +60,7 @@ class TdTest extends QtiSmTestCase
         $td = new Td();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'colspan' argument must be an integer, 'boolean' given."
         );
 

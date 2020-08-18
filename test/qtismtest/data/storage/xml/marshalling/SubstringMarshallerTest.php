@@ -18,7 +18,7 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('substring', $element->nodeName);
         $this->assertEquals('false', $element->getAttribute('caseSensitive'));
 
@@ -47,18 +47,18 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Substring', $component);
+        $this->assertInstanceOf(Substring::class, $component);
         $this->assertTrue($component->isCaseSensitive());
 
         $sub = $component->getExpressions();
         $sub = $sub[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $sub);
+        $this->assertInstanceOf(BaseValue::class, $sub);
         $this->assertEquals(BaseType::STRING, $sub->getBaseType());
         $this->assertEquals('Hell', $sub->getValue());
 
         $sub = $component->getExpressions();
         $sub = $sub[1];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $sub);
+        $this->assertInstanceOf(BaseValue::class, $sub);
         $this->assertEquals(BaseType::STRING, $sub->getBaseType());
         $this->assertEquals('Shell', $sub->getValue());
     }

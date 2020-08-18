@@ -105,7 +105,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
         $processor->setState($session);
         $result = $processor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertTrue($result->equals($expectedResult));
     }
 

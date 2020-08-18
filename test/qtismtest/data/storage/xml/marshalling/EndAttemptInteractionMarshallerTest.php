@@ -25,7 +25,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\EndAttemptInteraction', $component);
+        $this->assertInstanceOf(EndAttemptInteraction::class, $component);
         $this->assertEquals('my-end', $component->getId());
         $this->assertEquals('ending', $component->getClass());
         $this->assertEquals('BOOL_RESP', $component->getResponseIdentifier());

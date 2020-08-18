@@ -501,10 +501,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals(2, $session['numAttempts']->getValue());
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals('incomplete', $session['completionStatus']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('scoring'));
+        $this->assertInstanceOf(OutcomeVariable::class, $session->getVariable('scoring'));
         $this->assertInstanceOf(QtiFloat::class, $session['scoring']);
         $this->assertEquals(1.0, $session['scoring']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $session->getVariable('RESPONSE'));
         $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
         $this->assertInstanceOf(QtiString::class, $session['RESPONSE']);
         $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
@@ -623,7 +623,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $pendingResponses = $access->readPendingResponses($seeker);
         $state = $pendingResponses->getState();
         $this->assertEquals(1, count($state));
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $state->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this->assertEquals('ChoiceA', $state['RESPONSE']->getValue());
 
         $itemRef = $pendingResponses->getAssessmentItemRef();
