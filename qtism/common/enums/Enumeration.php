@@ -31,7 +31,7 @@ interface Enumeration
     /**
      * Return the possible values of the enumeration as an array.
      *
-     * @return An associative array where keys are constant names (as they appear in the code) and values are constant values.
+     * @return array An associative array where keys are constant names (as they appear in the code) and values are constant values.
      */
     public static function asArray();
 

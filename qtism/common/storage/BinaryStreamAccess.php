@@ -204,7 +204,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $val = ($boolean === true) ? 1 : 0;
             $this->getStream()->write(chr($val));
-        } catch (StreamAccessException $e) {
+        } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
         }
     }

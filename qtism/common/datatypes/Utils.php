@@ -18,6 +18,7 @@
  * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -36,21 +37,11 @@ class Utils
      * @param mixed $integer the value to test
      * @return boolean
      */
-    public static function isQtiInteger($integer)
+    public static function isQtiInteger($integer): bool
     {
         // QTI integers are twos-complement 32-bits integers.
-        if (is_int($integer) === false) {
-            return false;
-        } else {
-            if ($integer > 2147483647) {
-                return false;
-            } else {
-                if ($integer < -2147483647) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
+        return is_int($integer)
+            && $integer <= 2147483647
+            && $integer >= -2147483647;
     }
 }
