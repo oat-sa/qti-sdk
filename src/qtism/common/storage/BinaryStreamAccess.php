@@ -61,7 +61,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return ord($bin);
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::TINYINT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT);
         }
     }
 
@@ -76,7 +76,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(chr($tinyInt));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::TINYINT, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT, false);
         }
     }
 
@@ -93,7 +93,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return current(unpack('S', $bin));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::SHORT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT);
         }
     }
 
@@ -108,7 +108,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(pack('S', $short));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::SHORT, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT, false);
         }
     }
 
@@ -125,7 +125,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return current(unpack('l', $bin));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::INT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT);
         }
     }
 
@@ -140,7 +140,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(pack('l', $int));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::INT, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT, false);
         }
     }
 
@@ -157,7 +157,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return current(unpack('d', $bin));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::FLOAT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT);
         }
     }
 
@@ -172,7 +172,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(pack('d', $float));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::FLOAT, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
         }
     }
 
@@ -189,7 +189,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return ($int === 0) ? false : true;
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::BOOLEAN);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::BOOLEAN);
         }
     }
 
@@ -205,7 +205,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
             $val = ($boolean === true) ? 1 : 0;
             $this->getStream()->write(chr($val));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::FLOAT, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
         }
     }
 
@@ -223,7 +223,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return $this->getStream()->read($length);
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::STRING);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
         }
     }
 
@@ -247,7 +247,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $this->getStream()->write(pack('S', $len) . $string);
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::STRING, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING, false);
         }
     }
 
@@ -287,7 +287,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
 
             return $date->setTimestamp($timeStamp);
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::DATETIME);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME);
         }
     }
 
@@ -303,19 +303,19 @@ class BinaryStreamAccess extends AbstractStreamAccess
             $timeStamp = $dateTime->getTimestamp();
             $this->getStream()->write(pack('l', $timeStamp));
         } catch (StreamException $e) {
-            $this->handleStreamException($e, BinaryStreamAccessException::DATETIME, false);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME, false);
         }
     }
 
     /**
-     * Handle a StreamException in order to throw the relevant BinaryStreamAccessException.
+     * Handle a BinaryStreamException in order to throw the relevant BinaryStreamAccessException.
      *
      * @param StreamException $e The StreamException object to deal with.
      * @param integer $typeError The BinaryStreamAccess exception code to be thrown in case of error.
      * @param boolean $read Wheter or not the error occurred in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
-    protected function handleStreamException(StreamException $e, $typeError, $read = true)
+    protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true)
     {
         $strType = 'unknown datatype';
 
