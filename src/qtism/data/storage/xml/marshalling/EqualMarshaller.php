@@ -88,7 +88,7 @@ class EqualMarshaller extends OperatorMarshaller
             } else {
                 $finalTolerance = [];
                 foreach ($tolerance as $t) {
-                    $finalTolerance[] = (Format::isFloat($t)) ? floatval($t) : $t;
+                    $finalTolerance[] = (Format::isFloat($t)) ? (float)$t : $t;
                 }
 
                 $object->setTolerance($finalTolerance);

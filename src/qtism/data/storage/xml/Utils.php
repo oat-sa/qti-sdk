@@ -283,11 +283,11 @@ class Utils
                     break;
 
                 case 'integer':
-                    return intval($attr);
+                    return (int)$attr;
                     break;
 
                 case 'float':
-                    return floatval($attr);
+                    return (float)$attr;
                     break;
 
                 case 'double':

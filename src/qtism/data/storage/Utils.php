@@ -68,7 +68,7 @@ class Utils
 
                 case BaseType::INTEGER:
                     if (Format::isInteger($string)) {
-                        $value = intval($string);
+                        $value = (int)$string;
 
                         return $value;
                     } else {
@@ -79,7 +79,7 @@ class Utils
 
                 case BaseType::FLOAT:
                     if (Format::isFloat($string)) {
-                        $value = floatval($string);
+                        $value = (float)$string;
 
                         return $value;
                     } else {
@@ -110,7 +110,7 @@ class Utils
                     if (Format::isIdentifier($string)) {
                         return $string;
                     } elseif (Format::isInteger($string)) {
-                        return intval($string);
+                        return (int)$string;
                     } else {
                         $msg = "'${string}' is not a valid QTI Identifier nor a valid integer.";
                         throw new UnexpectedValueException($msg);
@@ -160,7 +160,7 @@ class Utils
                     if (Format::isPoint($string)) {
                         $parts = explode("\x20", $string);
 
-                        return new QtiPoint(intval($parts[0]), intval($parts[1]));
+                        return new QtiPoint((int)$parts[0], (int)$parts[1]);
                     } else {
                         $msg = "'${string}' is not valid point.";
                         throw new UnexpectedValueException($msg);
@@ -189,7 +189,7 @@ class Utils
             $intCoords = [];
 
             foreach ($stringCoords as $sC) {
-                $intCoords[] = intval($sC);
+                $intCoords[] = (int)$sC;
             }
 
             // Maybe it was accepted has coords, but is it buildable with

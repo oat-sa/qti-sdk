@@ -128,7 +128,7 @@ class OutcomeVariableMarshaller extends Marshaller
         }
 
         if ($element->hasAttribute('normalMinimum')) {
-            $component->setNormalMinimum(new QtiFloat(floatval($element->getAttribute('normalMinimum'))));
+            $component->setNormalMinimum(new QtiFloat((float)$element->getAttribute('normalMinimum')));
         }
 
         if ($element->hasAttribute('normalMaximum')) {

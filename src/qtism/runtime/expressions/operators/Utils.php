@@ -264,7 +264,7 @@ class Utils
             return false;
         }
 
-        $class = strval($class);
+        $class = (string)$class;
         $tokens = explode('.', $class);
         $tokenCount = count($tokens);
 

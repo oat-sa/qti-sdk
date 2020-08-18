@@ -91,7 +91,7 @@ class ImgMarshaller extends Marshaller
 
             if (($height = $this->getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
                 if (stripos($height, '%') === false) {
-                    $component->setHeight(intval($height));
+                    $component->setHeight((int)$height);
                 } else {
                     $component->setHeight($height);
                 }
@@ -99,7 +99,7 @@ class ImgMarshaller extends Marshaller
 
             if (($width = $this->getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
                 if (stripos($width, '%') === false) {
-                    $component->setWidth(intval($width));
+                    $component->setWidth((int)$width);
                 } else {
                     $component->setWidth($width);
                 }

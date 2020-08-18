@@ -111,7 +111,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
                         } elseif ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
                             return new QtiFloat($areaMapping->getUpperBound());
                         } else {
-                            return new QtiFloat(floatval($result));
+                            return new QtiFloat((float)$result);
                         }
                     }
                 } else {

@@ -437,7 +437,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new QtiFloat(floatval(abs($operand->getValue())));
+        return new QtiFloat((float)abs($operand->getValue()));
     }
 
     /**
@@ -478,7 +478,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiInteger(intval(floor($operand->getValue())));
+        return new QtiInteger((int)floor($operand->getValue()));
     }
 
     /**
@@ -498,7 +498,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiInteger(intval(ceil($operand->getValue())));
+        return new QtiInteger((int)ceil($operand->getValue()));
     }
 
     /**
@@ -518,7 +518,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiFloat(floatval(rad2deg($operand->getValue())));
+        return new QtiFloat((float)rad2deg($operand->getValue()));
     }
 
     /**
@@ -538,7 +538,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiFloat(floatval(deg2rad($operand->getValue())));
+        return new QtiFloat((float)deg2rad($operand->getValue()));
     }
 
     /**

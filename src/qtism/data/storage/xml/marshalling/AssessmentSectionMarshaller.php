@@ -72,7 +72,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 // Deal with selection elements.
                 $selectionElements = $this->getChildElementsByTagName($element, 'selection');
                 if (count($selectionElements) == 1) {
-                    $select = intval($selectionElements[0]->getAttribute('select'));
+                    $select = (int)$selectionElements[0]->getAttribute('select');
 
                     if ($select > 0) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($selectionElements[0]);

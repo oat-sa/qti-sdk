@@ -318,7 +318,7 @@ class Unmarshaller
         $val = $unit['base']['float'];
 
         if (is_int($val) === true) {
-            $val = floatval($val);
+            $val = (float)$val;
         }
 
         return new QtiFloat($val);

@@ -85,7 +85,7 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
                             $result[] = new QtiFloat($normalMaximum);
                         } else {
                             // A weight has to be applied.
-                            $result[] = new QtiFloat(floatval($normalMaximum *= $weight->getValue()));
+                            $result[] = new QtiFloat((float)$normalMaximum *= $weight->getValue());
                         }
                     } else {
                         // If any of the items in the given subset have no declared maximum

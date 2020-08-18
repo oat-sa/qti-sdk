@@ -59,7 +59,7 @@ class EqualRoundedMarshaller extends OperatorMarshaller
     {
         if (($figures = $this->getDOMElementAttributeAs($element, 'figures')) !== null) {
             if (Format::isInteger($figures)) {
-                $figures = intval($figures);
+                $figures = (int)$figures;
             }
 
             $object = new EqualRounded($children, $figures);

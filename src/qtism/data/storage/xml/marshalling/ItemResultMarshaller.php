@@ -126,7 +126,7 @@ class ItemResultMarshaller extends Marshaller
         }
 
         $sequenceIndex = $element->hasAttribute('sequenceIndex')
-            ? new QtiInteger(intval($element->getAttribute('sequenceIndex')))
+            ? new QtiInteger((int)$element->getAttribute('sequenceIndex'))
             : null;
 
         return new ItemResult($identifier, $datestamp, $sessionStatus, $variableCollection, $candidateComment, $sequenceIndex);

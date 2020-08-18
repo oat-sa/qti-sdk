@@ -98,7 +98,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
                     if ($pointsCount === 2) {
                         if (Format::isInteger($points[0]) === true) {
                             if (Format::isInteger($points[1]) === true) {
-                                $component->setCenterPoint(new QtiPoint(intval($points[0]), intval($points[1])));
+                                $component->setCenterPoint(new QtiPoint((int)$points[0], (int)$points[1]));
                             } else {
                                 $msg = "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.";
                                 throw new UnmarshallingException($msg, $element);

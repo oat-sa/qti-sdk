@@ -85,9 +85,9 @@ abstract class SetValueProcessor extends RuleProcessor
                 }
 
                 if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
-                    $val = new QtiInteger(intval($val->getValue()));
+                    $val = new QtiInteger((int)$val->getValue());
                 } elseif ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
-                    $val = new QtiFloat(floatval($val->getValue()));
+                    $val = new QtiFloat((float)$val->getValue());
                 }
             }
 

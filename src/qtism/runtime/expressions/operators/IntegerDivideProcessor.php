@@ -70,7 +70,7 @@ class IntegerDivideProcessor extends OperatorProcessor
             return null;
         }
 
-        return new QtiInteger(intval(floor($operand1->getValue() / $operand2->getValue())));
+        return new QtiInteger((int)floor($operand1->getValue() / $operand2->getValue()));
     }
 
     /**

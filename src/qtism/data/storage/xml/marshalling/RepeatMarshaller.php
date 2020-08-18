@@ -66,7 +66,7 @@ class RepeatMarshaller extends OperatorMarshaller
     {
         if (($numberRepeats = $this->getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
             if (Format::isInteger($numberRepeats)) {
-                $numberRepeats = intval($numberRepeats);
+                $numberRepeats = (int)$numberRepeats;
             }
 
             return new Repeat($children, $numberRepeats);

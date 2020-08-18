@@ -201,7 +201,7 @@ class Utils
     {
         $integerArray = [];
         foreach ($floatArray as $f) {
-            $integerArray[] = (is_null($f) === false) ? intval($f) : null;
+            $integerArray[] = (is_null($f) === false) ? (int)$f : null;
         }
 
         return $integerArray;
@@ -217,7 +217,7 @@ class Utils
     {
         $floatArray = [];
         foreach ($integerArray as $i) {
-            $floatArray[] = (is_null($i) === false) ? floatval($i) : null;
+            $floatArray[] = (is_null($i) === false) ? (float)$i : null;
         }
 
         return $floatArray;
