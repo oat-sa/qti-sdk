@@ -71,16 +71,17 @@ class FileSystemFile implements QtiFile
      */
     public function __construct($path)
     {
+        $this->readInfo($path);
         $this->setPath($path);
     }
 
-    private function readInfo()
+    private function readInfo($path)
     {
         // Retrieve filename and mime type.
-        $fp = @fopen($this->getPath(), 'r');
+        $fp = @fopen($path, 'r');
 
         if ($fp === false) {
-            $msg = "Unable to retrieve QTI file at '" . $this->getPath() . '.';
+            $msg = 'Unable to retrieve QTI file at "' . $path . '".';
             throw new RuntimeException($msg);
         }
 
@@ -135,9 +136,6 @@ class FileSystemFile implements QtiFile
      */
     public function getMimeType()
     {
-        if (is_null($this->mimeType)) {
-            $this->readInfo();
-        }
         return $this->mimeType;
     }
 
@@ -148,9 +146,6 @@ class FileSystemFile implements QtiFile
      */
     public function getFilename()
     {
-        if (empty($this->filename)) {
-            $this->readInfo();
-        }
         return $this->filename;
     }
 
@@ -235,7 +230,6 @@ class FileSystemFile implements QtiFile
                     }
                 }
 
-                $filename = '';
                 $pathinfo = pathinfo($source);
                 $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : (string)$withFilename;
 
@@ -251,8 +245,15 @@ class FileSystemFile implements QtiFile
 
                 $finalSize = strlen($packedFilename) + strlen($packedMimeType) + filesize($source);
 
-                $sourceFp = fopen($source, 'r');
-                $destinationFp = fopen($destination, 'w');
+                $sourceFp = @fopen($source, 'r');
+                if ($sourceFp === false) {
+                    throw new RuntimeException("Source file '${source}' could not be open.");
+                }
+
+                $destinationFp = @fopen($destination, 'w');
+                if ($destinationFp === false) {
+                    throw new RuntimeException("Destination file '${destination}' could not be open.");
+                }
 
                 fwrite($destinationFp, $packedFilename . $packedMimeType);
 
