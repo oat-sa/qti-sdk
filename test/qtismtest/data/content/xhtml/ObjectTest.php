@@ -10,7 +10,7 @@ class ObjectTest extends QtiSmTestCase
     public function testCreateWrongData()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'data' argument must be a URI or an empty string, 'integer' given."
         );
 
@@ -20,7 +20,7 @@ class ObjectTest extends QtiSmTestCase
     public function testCreateWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'type' argument must be a non-empty string, 'integer' given."
         );
 
@@ -30,7 +30,7 @@ class ObjectTest extends QtiSmTestCase
     public function testSetWidthWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'width' argument must be an integer, 'double' given."
         );
 
@@ -41,7 +41,7 @@ class ObjectTest extends QtiSmTestCase
     public function testSetHeightWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'height' argument must be an integer, 'double' given."
         );
 

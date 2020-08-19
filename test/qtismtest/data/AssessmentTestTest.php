@@ -34,7 +34,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testCreateAssessmentTestWrongIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'999' is not a valid QTI Identifier."
         );
 
@@ -44,7 +44,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testCreateAssessmentTestWrongTitle()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Title must be a string, 'integer' given."
         );
 
@@ -54,7 +54,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testSetToolNameWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Toolname must be a string, 'integer' given."
         );
 
@@ -65,7 +65,7 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testSetToolVersionWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "ToolVersion must be a string, 'integer' given."
         );
 
@@ -81,7 +81,7 @@ class AssessmentTestTest extends QtiSmTestCase
         );
 
         $components = $test->getComponents();
-        $this->assertInstanceOf('\\qtism\\data\\TimeLimits', $components[count($components) - 1]);
+        $this->assertInstanceOf(TimeLimits::class, $components[count($components) - 1]);
     }
 
     public function testIsExclusivelyLinearNoTestParts()

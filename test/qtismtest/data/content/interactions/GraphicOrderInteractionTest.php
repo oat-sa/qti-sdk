@@ -15,7 +15,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
     public function testCreateNotEnoughHotspotChoices()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given."
         );
 
@@ -28,7 +28,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minChoices' argument must not exceed the number of choices available."
         );
 
@@ -41,7 +41,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minChoices' argument must be a strictly negative or positive integer, 'string' given."
         );
 
@@ -54,7 +54,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxChoices' argument must be a strictly negative or positive integer, 'string' given."
         );
 
@@ -68,7 +68,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction->setMinChoices(2);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxChoices' argument must be greater than or equal to the 'minChoices' attribute."
         );
 

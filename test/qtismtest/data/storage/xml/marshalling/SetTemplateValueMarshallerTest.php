@@ -40,8 +40,8 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
 	    ');
 
         $setTemplateValue = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $setTemplateValue);
+        $this->assertInstanceOf(SetTemplateValue::class, $setTemplateValue);
         $this->assertEquals('tpl1', $setTemplateValue->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $setTemplateValue->getExpression());
+        $this->assertInstanceOf(Match::class, $setTemplateValue->getExpression());
     }
 }

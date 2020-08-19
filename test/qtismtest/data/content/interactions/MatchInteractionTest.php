@@ -25,7 +25,7 @@ class MatchInteractionTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'shuffle' argument must be a boolean value, 'string' given."
         );
 
@@ -46,7 +46,7 @@ class MatchInteractionTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxAssociations' argument must be a positive (>= 0) integer, 'string' given."
         );
 
@@ -67,7 +67,7 @@ class MatchInteractionTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minAssociations' argument must be a positive (>= 0) integer, 'string' given."
         );
 
@@ -88,7 +88,7 @@ class MatchInteractionTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'."
         );
 
@@ -117,7 +117,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A MatchInteraction object must be composed of exactly two SimpleMatchSet objects."
         );
 

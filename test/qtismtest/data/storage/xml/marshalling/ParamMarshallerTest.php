@@ -15,7 +15,7 @@ class ParamMarshallerTest extends QtiSmTestCase
             <param name="movie" value="movie.swf" valuetype="REF" type="application/x-shockwave-flash"/>            
 	    ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Param', $param);
+        $this->assertInstanceOf(Param::class, $param);
         $this->assertEquals('movie', $param->getName());
         $this->assertEquals('movie.swf', $param->getValue());
         $this->assertEquals(ParamType::REF, $param->getValueType());

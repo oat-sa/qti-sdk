@@ -21,7 +21,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('value', $element->nodeName);
         $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
@@ -38,7 +38,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertTrue('false' === $element->nodeValue);
     }
 
@@ -62,7 +62,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+        $this->assertInstanceOf(Value::class, $component);
         $this->assertInternalType('string', $component->getValue());
         $this->assertEquals($component->getValue(), 'A B');
     }
@@ -78,8 +78,8 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::PAIR]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $component->getValue());
+        $this->assertInstanceOf(Value::class, $component);
+        $this->assertInstanceOf(QtiPair::class, $component->getValue());
         $this->assertEquals($component->getValue()->getFirst(), 'A');
         $this->assertEquals($component->getValue()->getSecond(), 'B');
     }
@@ -93,7 +93,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+        $this->assertInstanceOf(Value::class, $component);
         $this->assertInternalType('string', $component->getValue());
         $this->assertSame('Hello <b>bold</b>', $component->getValue());
     }
@@ -143,7 +143,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+        $this->assertInstanceOf(Value::class, $component);
         $this->assertInstanceOf(QtiPair::class, $component->getValue());
         $this->assertEquals($component->getValue()->getFirst(), 'A');
         $this->assertEquals($component->getValue()->getSecond(), 'B');

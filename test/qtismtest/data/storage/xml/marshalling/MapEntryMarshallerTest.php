@@ -6,6 +6,7 @@ use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MapEntry;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class MapEntryMarshallerTest extends QtiSmTestCase
 {
@@ -16,7 +17,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('mapEntry', $element->nodeName);
         $this->assertEquals('1337', $element->getAttribute('mapKey'));
         $this->assertEquals('1.377', $element->getAttribute('mappedValue'));
@@ -32,7 +33,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\MapEntry', $component);
+        $this->assertInstanceOf(MapEntry::class, $component);
         $this->assertInternalType('integer', $component->getMapKey());
         $this->assertEquals(1337, $component->getMapKey());
         $this->assertInternalType('float', $component->getMappedValue());
@@ -50,7 +51,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\MapEntry', $component);
+        $this->assertInstanceOf(MapEntry::class, $component);
         $this->assertEquals('', $component->getMapKey());
         $this->assertEquals(-1.0, $component->getMappedValue());
     }
@@ -62,7 +63,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The value '' of the 'mapKey' attribute could not be converted to a 'integer' value."
         );
 
@@ -77,7 +78,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The value '' of the 'mapKey' attribute could not be converted to a 'identifier' value."
         );
 
@@ -93,7 +94,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('mapEntry', $element->nodeName);
         $this->assertEquals('1337', $element->getAttribute('mapKey'));
         $this->assertEquals('1.377', $element->getAttribute('mappedValue'));
@@ -112,7 +113,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\MapEntry', $component);
+        $this->assertInstanceOf(MapEntry::class, $component);
         $this->assertInternalType('integer', $component->getMapKey());
         $this->assertEquals(1337, $component->getMapKey());
         $this->assertInternalType('float', $component->getMappedValue());

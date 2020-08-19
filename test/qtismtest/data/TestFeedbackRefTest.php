@@ -12,7 +12,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
     public function testSetAccessWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'1' is not a value from the TestFeedbackAccess enumeration."
         );
 
@@ -22,7 +22,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
     public function testSetShowHideWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'1' is not a value from the ShowHide enumeration."
         );
 
@@ -32,7 +32,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
     public function testSetOutcomeIdentifierWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'999' is not a valid QTI Identifier."
         );
 
@@ -42,7 +42,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
     public function testSetIdentifierWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'999' is not a valid QTI Identifier."
         );
 
@@ -52,7 +52,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
     public function testSetHrefWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'999' is not a valid URI."
         );
 

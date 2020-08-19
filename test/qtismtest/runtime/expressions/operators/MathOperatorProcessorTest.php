@@ -11,6 +11,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 class MathOperatorProcessorTest extends QtiSmTestCase
 {
@@ -487,7 +488,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor = new MathOperatorProcessor($expression, $operands);
 
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            OperatorProcessingException::class,
             'The MathOperator operator only accepts operands with a single cardinality.'
         );
 
@@ -505,7 +506,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor = new MathOperatorProcessor($expression, $operands);
 
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            OperatorProcessingException::class,
             'The MathOperator operator only accepts operands with an integer or float baseType.'
         );
 
@@ -523,7 +524,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor = new MathOperatorProcessor($expression, $operands);
 
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            OperatorProcessingException::class,
             "The atan2 math function of the MathOperator requires 2 operands, 1 operand given."
         );
 
@@ -543,7 +544,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor = new MathOperatorProcessor($expression, $operands);
 
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            OperatorProcessingException::class,
             "The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given."
         );
 

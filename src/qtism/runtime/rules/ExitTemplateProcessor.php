@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\ExitTemplate;
+
 /**
  * From IMS QTI:
  *
@@ -48,6 +50,6 @@ class ExitTemplateProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\ExitTemplate';
+        return ExitTemplate::class;
     }
 }

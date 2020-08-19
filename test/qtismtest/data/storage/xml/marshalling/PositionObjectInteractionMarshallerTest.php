@@ -10,6 +10,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -64,7 +65,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\PositionObjectInteraction', $component);
+        $this->assertInstanceOf(PositionObjectInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMaxChoices());
         $this->assertEquals(1, $component->getMinChoices());
@@ -89,7 +90,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The value of the 'centePoint' attribute of a 'positionObjectInteraction' element must be composed of exactly 2 integer values, 1 given."
         );
 
@@ -108,7 +109,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The 1st value of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'."
         );
 
@@ -127,7 +128,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'."
         );
 
@@ -144,7 +145,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'positionObjectInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -163,7 +164,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'positionObjectInteraction' object."
         );
 

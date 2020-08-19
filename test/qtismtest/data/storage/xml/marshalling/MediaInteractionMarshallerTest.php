@@ -9,6 +9,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -45,7 +46,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\MediaInteraction', $component);
+        $this->assertInstanceOf(MediaInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-media', $component->getId());
         $this->assertFalse($component->mustAutostart());
@@ -71,7 +72,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'mediaInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -85,7 +86,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'autostart' attribute is missing from the 'mediaInteraction' element."
         );
 
@@ -99,7 +100,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'mediaInteraction' element."
         );
 

@@ -24,7 +24,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     public function testSetInterpretationWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Interpretation must be a string, 'integer' given."
         );
 
@@ -34,7 +34,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     public function testSetLongInterpretationWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "LongInterpretation must be a string, 'integer' given."
         );
 
@@ -44,7 +44,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     public function testSetNormalMinimumWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "NormalMinimum must be a number or (boolean) false, 'string' given."
         );
 
@@ -54,7 +54,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     public function testSetNormalMaximumWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "NormalMaximum must be a number or (boolean) false, 'string' given."
         );
 
@@ -64,7 +64,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     public function testSetMasteryValueWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "MasteryValue must be a number or (boolean) false, 'string' given."
         );
 
@@ -83,7 +83,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $components = $this->getComponents();
         $last = $components[count($components) - 1];
-        $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $last);
+        $this->assertInstanceOf(MatchTable::class, $last);
     }
 
     public function testExternalScoredAccessors()

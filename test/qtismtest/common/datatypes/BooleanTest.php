@@ -9,7 +9,7 @@ class BooleanTest extends QtiSmTestCase
 {
     public function testWrongValue()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $boolean = new QtiBoolean('string');
     }
 

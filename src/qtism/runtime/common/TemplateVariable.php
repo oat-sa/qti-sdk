@@ -141,7 +141,7 @@ class TemplateVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "TemplateVariable::createFromDataModel only accept 'qtism\\data\\state\\TemplateVariable' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "TemplateVariable::createFromDataModel only accept '" . TemplateDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

@@ -74,7 +74,7 @@ class FileSystemFileTest extends QtiSmTestCase
                 'text/plain'
             );
         } catch (RuntimeException $e) {
-            $this->assertInstanceOf('\\RuntimeException', $e);
+            $this->assertInstanceOf(RuntimeException::class, $e);
         }
     }
 
@@ -88,7 +88,7 @@ class FileSystemFileTest extends QtiSmTestCase
             );
             $this->assertFalse(true, "Should throw an error.");
         } catch (RuntimeException $e) {
-            $this->assertInstanceOf('\\RuntimeException', $e);
+            $this->assertInstanceOf(RuntimeException::class, $e);
         }
     }
 
@@ -136,7 +136,7 @@ class FileSystemFileTest extends QtiSmTestCase
 
     public function testInstantiationWrongPath()
     {
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(RuntimeException::class);
         new FileSystemFile('/qtism/test');
     }
 

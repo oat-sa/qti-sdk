@@ -393,7 +393,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\BinaryStreamAccessException',
+            BinaryStreamAccessException::class,
             "Writing a integer from a closed binary stream is not permitted."
         );
 
@@ -407,7 +407,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\BinaryStreamAccessException',
+            BinaryStreamAccessException::class,
             "Writing a double precision float from a closed binary stream is not permitted."
         );
 
@@ -463,7 +463,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\BinaryStreamAccessException',
+            BinaryStreamAccessException::class,
             "Writing a string from a closed binary stream is not permitted."
         );
 
@@ -477,7 +477,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\BinaryStreamAccessException',
+            BinaryStreamAccessException::class,
             "Writing a datetime from a closed binary stream is not permitted."
         );
 

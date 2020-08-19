@@ -6,6 +6,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlDocument;
 use qtismtest\QtiSmTestCase;
+use qtism\data\AssessmentItem;
 
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {
@@ -19,7 +20,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
 
     /**
@@ -32,7 +33,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
@@ -179,7 +180,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc->load((empty($url) === true) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
         $item = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $item);
+        $this->assertInstanceOf(AssessmentItem::class, $item);
         $this->assertEquals('SimpleExample', $item->getIdentifier());
         $this->assertEquals('Example', $item->getTitle());
         $this->assertFalse($item->isAdaptive());

@@ -12,7 +12,7 @@ class InterpolationTableTest extends QtiSmTestCase
     public function testCreateNotEnoughInterpolationEntries()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "An InterpolationTable object must contain at least one InterpolationTableEntry object."
         );
 
@@ -31,6 +31,6 @@ class InterpolationTableTest extends QtiSmTestCase
 
         $components = $interpolationTable->getComponents();
         $this->assertCount(1, $components);
-        $this->assertInstanceOf('qtism\\data\\state\InterpolationTableEntry', $components[0]);
+        $this->assertInstanceOf(InterpolationTableEntry::class, $components[0]);
     }
 }

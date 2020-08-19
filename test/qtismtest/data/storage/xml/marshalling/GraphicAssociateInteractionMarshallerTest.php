@@ -13,6 +13,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -120,7 +121,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicAssociateInteraction', $component);
+        $this->assertInstanceOf(GraphicAssociateInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('prout', $component->getId());
         $this->assertSame(2, $component->getMinAssociations());
@@ -166,7 +167,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicAssociateInteraction' element must contain at lease one 'associableHotspot' element, none given."
         );
 
@@ -186,7 +187,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicAssociateInteraction', $component);
+        $this->assertInstanceOf(GraphicAssociateInteraction::class, $component);
         $choices = $component->getAssociableHotspots();
         $this->assertEquals(2, count($choices));
     }
@@ -225,7 +226,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'maxAssociations' attribute is missing from the 'graphicAssociateInteraction' element."
         );
 
@@ -246,7 +247,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicAssociateInteraction' element must contain at lease one 'associableHotspot' element, none given."
         );
 
@@ -267,7 +268,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicAssociateInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -309,7 +310,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'graphicAssociateInteraction' element"
         );
 

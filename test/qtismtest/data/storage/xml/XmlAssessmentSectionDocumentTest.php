@@ -6,6 +6,9 @@ use qtism\data\AssessmentSection;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\View;
 use qtismtest\QtiSmTestCase;
+use qtism\data\AssessmentItemRef;
+use qtism\data\SectionPartCollection;
+use qtism\data\content\RubricBlockCollection;
 
 class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
 {
@@ -16,14 +19,14 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
             $doc = new XmlDocument();
             $doc->load($uri);
 
-            $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
-            $this->assertInstanceOf('qtism\\data\\AssessmentSection', $doc->getDocumentComponent());
+            $this->assertInstanceOf(XmlDocument::class, $doc);
+            $this->assertInstanceOf(AssessmentSection::class, $doc->getDocumentComponent());
 
             $assessmentSection = $doc->getDocumentComponent();
         }
 
         $rubricBlocks = $assessmentSection->getRubricBlocks();
-        $this->assertInstanceOf('qtism\\data\\content\\RubricBlockCollection', $rubricBlocks);
+        $this->assertInstanceOf(RubricBlockCollection::class, $rubricBlocks);
         $this->assertEquals(1, count($rubricBlocks));
 
         $rubricBlock = $rubricBlocks[0];
@@ -32,10 +35,10 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
         $this->assertEquals(View::CANDIDATE, $views[0]);
 
         $assessmentItemRefs = $assessmentSection->getSectionParts();
-        $this->assertInstanceOf('qtism\\data\\SectionPartCollection', $assessmentItemRefs);
+        $this->assertInstanceOf(SectionPartCollection::class, $assessmentItemRefs);
 
         foreach ($assessmentItemRefs as $itemRef) {
-            $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $itemRef);
+            $this->assertInstanceOf(AssessmentItemRef::class, $itemRef);
         }
     }
 
@@ -54,7 +57,7 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
 
         // Reload it.
         $doc->load($uri);
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $doc->getDocumentComponent());
+        $this->assertInstanceOf(AssessmentSection::class, $doc->getDocumentComponent());
 
         // Retest.
         $this->testLoad($doc->getDocumentComponent());

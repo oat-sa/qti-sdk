@@ -13,6 +13,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class HotspotInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -97,7 +98,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotInteraction', $component);
+        $this->assertInstanceOf(HotspotInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-hotspot', $component->getId());
         $this->assertEquals(1, $component->getMaxChoices());
@@ -128,7 +129,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotInteraction', $component);
+        $this->assertInstanceOf(HotspotInteraction::class, $component);
         $this->assertEquals('/home/jerome', $component->getXmlBase());
     }
 
@@ -142,7 +143,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotInteraction', $component);
+        $this->assertInstanceOf(HotspotInteraction::class, $component);
     }
 
     /**
@@ -155,7 +156,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given"
         );
 
@@ -172,7 +173,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'hotspotInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -189,7 +190,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'hotspotInteraction' element."
         );
 
@@ -203,7 +204,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'maxChoices' attribute is missing from the 'hotspotInteraction' element."
         );
 

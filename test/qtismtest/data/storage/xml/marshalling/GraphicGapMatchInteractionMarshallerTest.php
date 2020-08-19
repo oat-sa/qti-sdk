@@ -15,6 +15,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -60,7 +61,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicGapMatchInteraction', $component);
+        $this->assertInstanceOf(GraphicGapMatchInteraction::class, $component);
         $this->assertEquals('my-gaps', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
 
@@ -96,7 +97,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicGapMatchInteraction' element must contain at least one 'gapImg' element, none given."
         );
 
@@ -113,7 +114,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicGapMatchInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -130,7 +131,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphiGapMatchInteraction' element must contain at least one 'associableHotspot' element, none given."
         );
 
@@ -147,7 +148,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'graphicGapMatchInteraction' element."
         );
 

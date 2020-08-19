@@ -17,7 +17,7 @@ class RecordContainerTest extends QtiSmTestCase
     public function testValid()
     {
         $record = new RecordContainer();
-        $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $record);
+        $this->assertInstanceOf(RecordContainer::class, $record);
 
         $record = new RecordContainer(['key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new QtiPoint(10, 10)]);
         $this->assertEquals(3, count($record));
@@ -42,27 +42,27 @@ class RecordContainerTest extends QtiSmTestCase
 
     public function testInvalidInstantiationOne()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $record = new RecordContainer([new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
     }
 
     public function testInvalidUseOne()
     {
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $record = new RecordContainer();
         $record[] = new QtiString('string');
     }
 
     public function testInvalidUseTwo()
     {
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $record = new RecordContainer();
         $record[111] = new QtiString('string');
     }
 
     public function testInvalidUseThree()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         // try with a datatype not supported by the QTI Runtime Model.
         $record = new RecordContainer();
         $record['document'] = new DOMDocument();
@@ -83,7 +83,7 @@ class RecordContainerTest extends QtiSmTestCase
         $valueCollection[] = $value;
 
         $record = RecordContainer::createFromDataModel($valueCollection);
-        $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $record);
+        $this->assertInstanceOf(RecordContainer::class, $record);
         $this->assertEquals(2, count($record));
         $this->assertEquals(15, $record['val1']->getValue());
         $this->assertEquals('string', $record['val2']->getValue());
@@ -97,7 +97,7 @@ class RecordContainerTest extends QtiSmTestCase
         $value->setPartOfRecord(true);
         $valueCollection[] = $value;
 
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $record = RecordContainer::createFromDataModel($valueCollection);
     }
 }

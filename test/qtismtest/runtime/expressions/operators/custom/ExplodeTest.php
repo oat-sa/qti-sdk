@@ -12,6 +12,8 @@ use qtism\runtime\expressions\operators\custom\Explode;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class ExplodeProcessorTest extends QtiSmTestCase
 {
@@ -20,7 +22,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\ExpressionProcessingException',
+            ExpressionProcessingException::class,
             "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 0 given.",
             OperatorProcessingException::NOT_ENOUGH_OPERANDS
         );
@@ -33,7 +35,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('Hello-World!')]);
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\ExpressionProcessingException',
+            ExpressionProcessingException::class,
             "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 1 given.",
             OperatorProcessingException::NOT_ENOUGH_OPERANDS
         );
@@ -47,7 +49,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(2), new QtiPoint(0, 0)]);
         $processor = new Explode($expression, $operands);
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\ExpressionProcessingException',
+            ExpressionProcessingException::class,
             "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with a string baseType.",
             OperatorProcessingException::WRONG_BASETYPE
         );
@@ -60,7 +62,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new RecordContainer(['a' => new QtiString('String!')]), new QtiString('Hey!')]);
         $processor = new Explode($expression, $operands);
         $this->setExpectedException(
-            'qtism\\runtime\\expressions\\ExpressionProcessingException',
+            ExpressionProcessingException::class,
             "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with single cardinality.",
             OperatorProcessingException::WRONG_CARDINALITY
         );
@@ -85,7 +87,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertSame(5, count($result));
         $this->assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
     }
@@ -98,7 +100,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertSame(1, count($result));
         $this->assertEquals(['Hello World!'], $result->getArrayCopy());
     }
@@ -110,7 +112,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertSame(2, count($result));
         $this->assertEquals(['Hello', 'World!'], $result->getArrayCopy());
     }

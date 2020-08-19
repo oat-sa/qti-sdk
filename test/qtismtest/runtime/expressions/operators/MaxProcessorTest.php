@@ -12,6 +12,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MaxProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class MaxProcessorTest extends QtiSmTestCase
 {
@@ -41,7 +42,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $result);
 
         $rec['A'] = new QtiInteger(1);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

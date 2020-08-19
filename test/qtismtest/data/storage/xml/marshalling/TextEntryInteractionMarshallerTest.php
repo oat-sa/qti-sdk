@@ -38,7 +38,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE"/>');
         $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\TextEntryInteraction', $textEntryInteraction);
+        $this->assertInstanceOf(TextEntryInteraction::class, $textEntryInteraction);
         $this->assertEquals('RESPONSE', $textEntryInteraction->getResponseIdentifier());
         $this->assertEquals(10, $textEntryInteraction->getBase());
         $this->assertFalse($textEntryInteraction->hasStringIdentifier());
@@ -52,7 +52,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>');
         $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\TextEntryInteraction', $textEntryInteraction);
+        $this->assertInstanceOf(TextEntryInteraction::class, $textEntryInteraction);
         $this->assertEquals('RESPONSE', $textEntryInteraction->getResponseIdentifier());
         $this->assertEquals(2, $textEntryInteraction->getBase());
         $this->assertTrue($textEntryInteraction->hasStringIdentifier());

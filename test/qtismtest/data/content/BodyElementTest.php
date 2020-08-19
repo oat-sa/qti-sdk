@@ -48,7 +48,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The 'id' argument of a body element must be a valid identifier or an empty string"
         );
 
@@ -60,7 +60,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The 'class' argument must be a valid class name, '999' given"
         );
 
@@ -72,7 +72,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The 'label' argument must be a string that does not exceed 256 characters."
         );
 
@@ -84,7 +84,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            InvalidArgumentException::class,
             "The 'dir' argument must be a value from the Direction enumeration."
         );
 

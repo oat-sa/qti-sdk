@@ -30,6 +30,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\runtime\expressions\ExpressionProcessingException;
+use qtism\data\rules\SetDefaultValue;
 
 /**
  * From IMS QTI:
@@ -88,6 +89,6 @@ class SetDefaultValueProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\SetDefaultValue';
+        return SetDefaultValue::class;
     }
 }

@@ -16,7 +16,7 @@ class IndexMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('index', $element->nodeName);
         $this->assertEquals('3', $element->getAttribute('n'));
 
@@ -39,12 +39,12 @@ class IndexMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Index', $component);
+        $this->assertInstanceOf(Index::class, $component);
         $this->assertEquals(3, $component->getN());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\Variable', $sub1);
+        $this->assertInstanceOf(Variable::class, $sub1);
         $this->assertEquals('orderedVar', $sub1->getIdentifier());
     }
 }

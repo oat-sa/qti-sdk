@@ -25,6 +25,7 @@ namespace qtism\runtime\rules;
 
 use qtism\runtime\common\Utils;
 use qtism\runtime\expressions\ExpressionEngine;
+use qtism\data\rules\TemplateConstraint;
 
 /**
  * From IMS QTI:
@@ -79,6 +80,6 @@ class TemplateConstraintProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\TemplateConstraint';
+        return TemplateConstraint::class;
     }
 }

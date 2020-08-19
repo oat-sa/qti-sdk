@@ -70,7 +70,7 @@ class ShufflingTest extends QtiSmTestCase
         $group2 = new ShufflingGroup($identifiers2);
         $shuffling = new Shuffling('RESPONSE', new ShufflingGroupCollection([$group1, $group2]));
 
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->setExpectedException(\OutOfBoundsException::class);
         $identifier = $shuffling->getIdentifierAt($index);
     }
 

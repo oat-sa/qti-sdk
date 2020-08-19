@@ -14,7 +14,7 @@ class AreaMappingTest extends QtiSmTestCase
     public function testCreateNoAreaMapEntries()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "An AreaMapping object must contain at least one AreaMapEntry object. none given."
         );
 
@@ -36,7 +36,7 @@ class AreaMappingTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The lowerBound argument must be a float or false if no lower bound, 'boolean' given."
         );
 
@@ -54,7 +54,7 @@ class AreaMappingTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The upperBound argument must be a float or false if no upper bound, 'boolean' given."
         );
 
@@ -72,7 +72,7 @@ class AreaMappingTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The defaultValue argument must be a numeric value, 'boolean'."
         );
 

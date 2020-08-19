@@ -757,7 +757,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testCreateAssessmentItemWrongIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The identifier argument must be a valid QTI Identifier, '999' given."
         );
 
@@ -767,7 +767,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testCreateAssessmentItemWrongTitle()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The title argument must be a string, 'integer' given."
         );
 
@@ -777,7 +777,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testCreateAssessmentItemWrongLanguage()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The lang argument must be a string, 'integer' given."
         );
 
@@ -787,7 +787,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetLabelWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The label argument must be a string with at most 256 characters."
         );
 
@@ -798,7 +798,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetAdaptiveWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The adaptive argument must be a boolean, 'integer' given."
         );
 
@@ -809,7 +809,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetTimeDependentWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The timeDependent argument must be a boolean, 'integer' given."
         );
 
@@ -820,7 +820,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetToolNameWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The toolName argument must be a string with at most 256 characters."
         );
 
@@ -831,7 +831,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetToolVersionWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The toolVersion argument must be a string with at most 256 characters."
         );
 

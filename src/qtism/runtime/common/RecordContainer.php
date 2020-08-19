@@ -28,6 +28,7 @@ use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Arrays;
+use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use RuntimeException;
@@ -110,7 +111,7 @@ class RecordContainer extends Container implements QtiDatatype
             if (!empty($fieldIdentifier)) {
                 $container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
             } else {
-                $msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";
+                $msg = 'Cannot include ' . Value::class . " '" . $value->getValue() . "' in the RecordContainer ";
                 $msg .= 'because it has no fieldIdentifier specified.';
                 throw new InvalidArgumentException($msg);
             }

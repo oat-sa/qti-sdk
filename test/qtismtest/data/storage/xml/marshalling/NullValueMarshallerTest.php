@@ -14,7 +14,7 @@ class NullValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('null', $element->nodeName);
     }
 
@@ -27,6 +27,6 @@ class NullValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\NullValue', $component);
+        $this->assertInstanceOf(NullValue::class, $component);
     }
 }

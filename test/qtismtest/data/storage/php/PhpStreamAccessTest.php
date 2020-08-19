@@ -9,6 +9,7 @@ use qtism\data\storage\php\PhpStreamAccess;
 use qtism\data\storage\php\PhpVariable;
 use qtismtest\QtiSmTestCase;
 use stdClass;
+use qtism\common\storage\StreamAccessException;
 
 class PhpStreamAccessTest extends QtiSmTestCase
 {
@@ -60,7 +61,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
     public function testInstantiation()
     {
         $access = new PhpStreamAccess($this->getStream());
-        $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpStreamAccess', $access);
+        $this->assertInstanceOf(PhpStreamAccess::class, $access);
     }
 
     /**
@@ -77,7 +78,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
 
     public function testWriteScalarInvalidData()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScalar(new stdClass());
     }
@@ -89,7 +90,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             "An error occurred while writing the scalar value '10'."
         );
 
@@ -114,7 +115,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing the PHP equality symbol (=).'
         );
 
@@ -135,7 +136,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a newline escape sequence (\n).'
         );
 
@@ -160,7 +161,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a PHP opening tag (<?php).'
         );
 
@@ -186,7 +187,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a PHP closing tag (?>).'
         );
 
@@ -211,7 +212,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a semicolon (;).'
         );
 
@@ -232,7 +233,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a scope resolution operator (::).'
         );
 
@@ -253,7 +254,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing an opening parenthesis (().'
         );
 
@@ -274,7 +275,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a closing parenthesis ()).'
         );
 
@@ -299,7 +300,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a comma (,).'
         );
 
@@ -320,7 +321,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a white space ( ).'
         );
 
@@ -341,7 +342,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a variable reference.'
         );
 
@@ -362,7 +363,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing an object operator (->).'
         );
 
@@ -390,7 +391,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a function call.'
         );
 
@@ -415,7 +416,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a new operator.'
         );
 
@@ -436,7 +437,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a colon (:).'
         );
 
@@ -464,7 +465,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing an object instantiation.'
         );
 
@@ -485,7 +486,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a Paamayim Nekudotayim.'
         );
 
@@ -508,7 +509,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a method call.'
         );
 
@@ -523,7 +524,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\common\\storage\\StreamAccessException',
+            StreamAccessException::class,
             'An error occurred while writing a sequence of arguments.'
         );
 

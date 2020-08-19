@@ -36,7 +36,7 @@ class ShufflingMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('\\qtism\\data\\state\\Shuffling', $component);
+        $this->assertInstanceOf(Shuffling::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
 
         $groups = $component->getShufflingGroups();

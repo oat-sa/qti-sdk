@@ -13,6 +13,7 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -51,7 +52,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
@@ -82,7 +83,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the choiceInteraction element."
         );
 
@@ -105,7 +106,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertSame(0, $component->getMaxChoices());
         $this->assertSame(0, $component->getMinChoices());
     }
@@ -126,7 +127,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertSame(0, $component->getMaxChoices());
         $this->assertSame(1, $component->getMinChoices());
     }
@@ -184,7 +185,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertSame(0, $component->getMinChoices());
     }
 
@@ -206,7 +207,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 
         // value of the orientation attribute in the PHP data model will have to be
         // the considered default i.e. 'vertical'.
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertSame(Orientation::VERTICAL, $component->getOrientation());
     }
 
@@ -224,7 +225,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $expectedMsg = "The mandatory 'shuffle' attribute is missing from the choiceInteraction element.";
-        $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
 
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $marshaller->unmarshall($element);
@@ -242,7 +243,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'maxChoices' attribute is missing from the choiceInteraction element."
         );
 
@@ -262,7 +263,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('3.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
@@ -276,11 +277,11 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this->assertEquals('Prompt...', $content[0]->getContent());
 
         $this->assertCount(2, $component->getSimpleChoices());
-        $this->assertInstanceOf('qtism\\data\content\\xhtml\\Text\\Div', $component->getSimpleChoices()[0]->getContent()[0]);
-        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getSimpleChoices()[0]->getContent()[0]->getContent()[0]);
+        $this->assertInstanceOf(Div::class, $component->getSimpleChoices()[0]->getContent()[0]);
+        $this->assertInstanceOf(TextRun::class, $component->getSimpleChoices()[0]->getContent()[0]->getContent()[0]);
         $this->assertEquals('Choice #1', $component->getSimpleChoices()[0]->getContent()[0]->getContent()[0]->getContent());
-        $this->assertInstanceOf('qtism\\data\content\\xhtml\\Text\\Div', $component->getSimpleChoices()[1]->getContent()[0]);
-        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getSimpleChoices()[1]->getContent()[0]->getContent()[0]);
+        $this->assertInstanceOf(Div::class, $component->getSimpleChoices()[1]->getContent()[0]);
+        $this->assertInstanceOf(TextRun::class, $component->getSimpleChoices()[1]->getContent()[0]->getContent()[0]);
         $this->assertEquals('Choice #2', $component->getSimpleChoices()[1]->getContent()[0]->getContent()[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();

@@ -11,7 +11,7 @@ class MediaInteractionTest extends QtiSmTestCase
     public function testCreateWrongAutostartType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'autostart' argument must be a boolean value, 'integer' given."
         );
 
@@ -21,7 +21,7 @@ class MediaInteractionTest extends QtiSmTestCase
     public function testSetMinPlaysWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minPlays' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -32,7 +32,7 @@ class MediaInteractionTest extends QtiSmTestCase
     public function testSetMaxPlaysWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxPlays' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -43,7 +43,7 @@ class MediaInteractionTest extends QtiSmTestCase
     public function testSetLoopWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'loop' argument must be a boolean value, 'integer' given."
         );
 

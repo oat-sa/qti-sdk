@@ -23,7 +23,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('repeat', $element->nodeName);
         $this->assertEquals('2', $element->getAttribute('numberRepeats'));
 
@@ -59,29 +59,29 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Repeat', $component);
+        $this->assertInstanceOf(Repeat::class, $component);
         $this->assertEquals(2, $component->getNumberRepeats());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\MathOperator', $sub1);
+        $this->assertInstanceOf(MathOperator::class, $sub1);
         $this->assertEquals(MathFunctions::SIN, $sub1->getName());
 
         $sub11 = $sub1->getExpressions();
         $sub11 = $sub11[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $sub11);
+        $this->assertInstanceOf(BaseValue::class, $sub11);
         $this->assertInternalType('float', $sub11->getValue());
         $this->assertEquals(23.545, $sub11->getValue());
         $this->assertEquals(BaseType::FLOAT, $sub11->getBaseType());
 
         $sub2 = $component->getExpressions();
         $sub2 = $sub2[1];
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Repeat', $sub2);
+        $this->assertInstanceOf(Repeat::class, $sub2);
         $this->assertEquals(10, $sub2->getNumberRepeats());
 
         $sub21 = $sub2->getExpressions();
         $sub21 = $sub21[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $sub21);
+        $this->assertInstanceOf(BaseValue::class, $sub21);
         $this->assertInternalType('float', $sub21->getValue());
         $this->assertEquals(1.68, $sub21->getValue());
         $this->assertEquals(BaseType::FLOAT, $sub21->getBaseType());

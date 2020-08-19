@@ -33,7 +33,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Prompt', $component);
+        $this->assertInstanceOf(Prompt::class, $component);
         $this->assertEquals('my-prompt', $component->getId());
         $this->assertEquals('qti-prompt', $component->getClass());
 
@@ -47,7 +47,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt with a <pre>pre which is not allowed.</pre></prompt>');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'prompt' cannot contain 'pre' elements."
         );
 
@@ -65,7 +65,7 @@ class PromptMarshallerTest extends QtiSmTestCase
             </prompt>');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'prompt' cannot contain 'choiceInteraction' elements."
         );
 

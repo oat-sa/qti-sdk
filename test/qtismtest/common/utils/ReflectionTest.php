@@ -22,21 +22,21 @@ class ReflectionTest extends QtiSmTestCase
 
     public function testNewInstanceWithArguments()
     {
-        $clazz = new ReflectionClass('\Exception');
+        $clazz = new ReflectionClass(\Exception::class);
         $args = ["A message", 12];
         $instance = Reflection::newInstance($clazz, $args);
 
-        $this->assertInstanceOf('\\Exception', $instance);
+        $this->assertInstanceOf(\Exception::class, $instance);
         $this->assertEquals("A message", $instance->getMessage());
         $this->assertEquals(12, $instance->getCode());
     }
 
     public function testNewInstanceWithoutArguments()
     {
-        $clazz = new ReflectionClass('\stdClass');
+        $clazz = new ReflectionClass(stdClass::class);
         $instance = Reflection::newInstance($clazz);
 
-        $this->assertInstanceOf('\\stdClass', $instance);
+        $this->assertInstanceOf(stdClass::class, $instance);
     }
 
     public function shortClassNameProvider()

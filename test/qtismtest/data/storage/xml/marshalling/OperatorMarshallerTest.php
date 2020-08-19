@@ -33,7 +33,7 @@ class OperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Sum', $component);
+        $this->assertInstanceOf(Sum::class, $component);
         $this->assertEquals(2, count($component->getExpressions()));
 
         $subExpressions = $component->getExpressions();

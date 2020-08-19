@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\ExitTest;
+
 /**
  * From IMS QTI:
  *
@@ -48,6 +50,6 @@ class ExitTestProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\ExitTest';
+        return ExitTest::class;
     }
 }

@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {
@@ -80,7 +81,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
+        $this->assertInstanceOf(AssociableHotspot::class, $component);
 
         $this->assertEquals('hotspot1', $component->getIdentifier());
         $this->assertEquals(QtiShape::RECT, $component->getShape());
@@ -100,7 +101,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'"
         );
 
@@ -156,7 +157,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
+        $this->assertInstanceOf(AssociableHotspot::class, $component);
 
         $this->assertEquals('hotspot1', $component->getIdentifier());
         $this->assertEquals(QtiShape::RECT, $component->getShape());

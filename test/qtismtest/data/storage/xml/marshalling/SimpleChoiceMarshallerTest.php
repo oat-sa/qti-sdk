@@ -38,12 +38,12 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleChoice', $component);
+        $this->assertInstanceOf(SimpleChoice::class, $component);
         $this->assertEquals('qti-simpleChoice', $component->getClass());
         $this->assertEquals('choice_1', $component->getIdentifier());
 
         $content = $component->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
+        $this->assertInstanceOf(FlowStaticCollection::class, $content);
         $this->assertEquals(3, count($content));
     }
 
@@ -90,13 +90,13 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleChoice', $component);
+        $this->assertInstanceOf(SimpleChoice::class, $component);
         $this->assertEquals('choice_1', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
         $this->assertFalse($component->hasTemplateIdentifier());
 
         $content = $component->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
+        $this->assertInstanceOf(FlowStaticCollection::class, $content);
         $this->assertEquals(1, count($content));
     }
 
@@ -114,7 +114,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleChoice', $component);
+        $this->assertInstanceOf(SimpleChoice::class, $component);
         $this->assertEquals('choice_1', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
         $this->assertFalse($component->hasTemplateIdentifier());

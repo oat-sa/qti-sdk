@@ -22,7 +22,7 @@ class DurationTest extends QtiSmTestCase
      */
     public function testInvalidDurationCreation($intervalSpec)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $duration = new QtiDuration($intervalSpec);
     }
 

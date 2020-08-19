@@ -18,7 +18,7 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Max', $max);
+        $this->assertInstanceOf(Max::class, $max);
         $this->assertTrue(in_array(Cardinality::SINGLE, $max->getAcceptedCardinalities()));
         $this->assertTrue(in_array(Cardinality::MULTIPLE, $max->getAcceptedCardinalities()));
         $this->assertTrue(in_array(Cardinality::ORDERED, $max->getAcceptedCardinalities()));
@@ -39,7 +39,7 @@ class MaxTest extends QtiSmTestCase
         $max = new Max($expressions);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The minOperands argument must be an integer >= 0, '1' given."
         );
 
@@ -57,7 +57,7 @@ class MaxTest extends QtiSmTestCase
         $max = new Max($expressions);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The maxOperands argument must be an integer, 'boolean' given."
         );
 
@@ -75,7 +75,7 @@ class MaxTest extends QtiSmTestCase
         $max = new Max($expressions);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Accepted cardinalities must be values from the Cardinality enumeration, '1' given"
         );
 
@@ -93,7 +93,7 @@ class MaxTest extends QtiSmTestCase
         $max = new Max($expressions);
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Accepted baseTypes must be values from the OperatorBaseType enumeration, '1' given."
         );
 

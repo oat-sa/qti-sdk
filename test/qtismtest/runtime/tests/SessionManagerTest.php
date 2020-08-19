@@ -7,6 +7,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\tests\AssessmentTestSession;
 
 class SessionManagerTest extends QtiSmTestCase
 {
@@ -50,6 +51,6 @@ class SessionManagerTest extends QtiSmTestCase
         $manager = new SessionManager(new FileSystemFileManager());
         $session = $manager->createAssessmentTestSession($this->getTest());
 
-        $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
+        $this->assertInstanceOf(AssessmentTestSession::class, $session);
     }
 }

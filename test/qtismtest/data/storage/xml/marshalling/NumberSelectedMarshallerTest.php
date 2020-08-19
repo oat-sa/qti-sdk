@@ -22,7 +22,7 @@ class NumberSelectedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('numberSelected', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($includeCategory, $element->getAttribute('includeCategory'));
@@ -38,7 +38,7 @@ class NumberSelectedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\NumberSelected', $component);
+        $this->assertInstanceOf(NumberSelected::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
         $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));

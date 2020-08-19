@@ -24,7 +24,7 @@ class InsideMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('inside', $element->nodeName);
         $this->assertEquals(implode(",", [0, 0, 100, 20]), $element->getAttribute('coords'));
         $this->assertEquals('rect', $element->getAttribute('shape'));
@@ -46,7 +46,7 @@ class InsideMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Inside', $component);
+        $this->assertInstanceOf(Inside::class, $component);
         $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
         $this->assertInternalType('integer', $component->getShape());
         $this->assertEquals(QtiShape::RECT, $component->getShape());

@@ -71,7 +71,7 @@ class ContainerTest extends QtiSmTestCase
     {
         $container = $this->getContainer();
 
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $container[] = $value;
     }
 
@@ -277,7 +277,7 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testInvalidDatatype($value, $expectedMsg)
     {
-        $this->setExpectedException('\\InvalidArgumentException', $expectedMsg);
+        $this->setExpectedException(\InvalidArgumentException::class, $expectedMsg);
         $container = new Container([$value]);
     }
 
@@ -293,7 +293,7 @@ class ContainerTest extends QtiSmTestCase
             ['str', $msg . "'php:string' given."],
             [true, $msg . "'php:boolean' given."],
             [[], $msg . "'php:array' given."],
-            [new Container(), $msg . "'qtism\\common\\collections\\Container' given."],
+            [new Container(), $msg . "'" . Container::class . "' given."],
         ];
     }
 
@@ -318,7 +318,7 @@ class ContainerTest extends QtiSmTestCase
     public function testDetachNotFound()
     {
         $this->setExpectedException(
-            '\\UnexpectedValueException',
+            \UnexpectedValueException::class,
             "The object you want to detach could not be found in the collection."
         );
 
@@ -330,7 +330,7 @@ class ContainerTest extends QtiSmTestCase
     public function testDetachNotObject()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "You can only detach 'objects' into an AbstractCollection, 'NULL' given."
         );
         $container = new Container();
@@ -340,7 +340,7 @@ class ContainerTest extends QtiSmTestCase
     public function testReplaceNotFound()
     {
         $this->setExpectedException(
-            '\\UnexpectedValueException',
+            \UnexpectedValueException::class,
             "The object you want to replace could not be found."
         );
 
@@ -352,7 +352,7 @@ class ContainerTest extends QtiSmTestCase
     public function testReplaceToReplaceNotObject()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
         );
 
@@ -364,7 +364,7 @@ class ContainerTest extends QtiSmTestCase
     public function testReplaceReplacementNotObject()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
         );
 
@@ -376,7 +376,7 @@ class ContainerTest extends QtiSmTestCase
     public function testMergeNotCompliantTypes()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Only collections with compliant types can be merged ('qtism\common\collections\Container' vs 'qtism\common\collections\StringCollection')."
         );
 
@@ -388,7 +388,7 @@ class ContainerTest extends QtiSmTestCase
     public function testDiffNotCompliantTypes()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Difference may apply only on two collections of the same type."
         );
 
@@ -400,7 +400,7 @@ class ContainerTest extends QtiSmTestCase
     public function testIntersectNotCompliantTypes()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Intersection may apply only on two collections of the same type."
         );
 

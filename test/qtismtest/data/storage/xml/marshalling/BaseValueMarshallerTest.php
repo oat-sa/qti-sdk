@@ -18,7 +18,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('baseValue', $element->nodeName);
         $this->assertEquals('float', $element->getAttribute('baseType'));
         $this->assertEquals($value . '', $element->nodeValue);
@@ -33,7 +33,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component);
+        $this->assertInstanceOf(BaseValue::class, $component);
         $this->assertEquals($component->getBaseType(), BaseType::FLOAT);
         $this->assertInternalType('float', $component->getValue());
         $this->assertEquals($component->getValue(), 27.11);
@@ -44,7 +44,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component);
+        $this->assertInstanceOf(BaseValue::class, $component);
         $this->assertEquals($component->getBaseType(), BaseType::STRING);
         $this->assertEquals('A string...', $component->getValue());
     }

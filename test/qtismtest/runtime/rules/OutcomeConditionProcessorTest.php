@@ -120,7 +120,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
 			</responseCondition>
 		');
 
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $engine = new OutcomeConditionProcessor($rule);
     }
 

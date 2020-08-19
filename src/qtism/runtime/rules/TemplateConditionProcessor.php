@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\TemplateCondition;
+
 /**
  * From IMS QTI:
  *
@@ -49,6 +51,6 @@ class TemplateConditionProcessor extends AbstractConditionProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\TemplateCondition';
+        return TemplateCondition::class;
     }
 }

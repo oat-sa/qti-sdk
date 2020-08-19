@@ -8,6 +8,7 @@ use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\TestFeedbackRef;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class TestFeedbackRefMarshallerTest extends QtiSmTestCase
 {
@@ -43,7 +44,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMissingIdentifier()
     {
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'identifier' attribute is missing from element 'testFeedbackRef'"
         );
 
@@ -57,7 +58,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMissingOutcomeIdentifier()
     {
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedbackRef'"
         );
 
@@ -71,7 +72,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMissingAccess()
     {
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'access' attribute is missing from element 'testFeedbackRef'"
         );
 
@@ -85,7 +86,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMissingShowHide()
     {
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'showHide' attribute is missing from element 'testFeedbackRef'"
         );
 
@@ -99,7 +100,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMissingHref()
     {
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'href' attribute is missing from element 'testFeedbackRef'"
         );
 

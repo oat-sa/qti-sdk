@@ -88,7 +88,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $weights = new WeightCollection([$weight1, $weight2]);
 
         $this->setExpectedException(
-            '\\UnexpectedValueException',
+            \UnexpectedValueException::class,
             'The object you want to replace could not be found.'
         );
         $weights->replace($weight3, new Weight('weight4', 1.4));
@@ -146,7 +146,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
     public function testOffsetGetNonString()
     {
         $this->setExpectedException(
-            '\\OutOfRangeException',
+            \OutOfRangeException::class,
             'The requested offset must be a non-empty string.'
         );
 
@@ -157,7 +157,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
     public function testOffsetSetNonNull()
     {
         $this->setExpectedException(
-            '\\OutOfRangeException',
+            \OutOfRangeException::class,
             "No specific offset can be set in a QtiIdentifiableCollection. The offset is always infered from the 'identifier' attribute of the given QtiIdentifiable object. Given offset is 'offset'."
         );
 
@@ -168,7 +168,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
     public function testOffsetUnsetNonString()
     {
         $this->setExpectedException(
-            '\\OutOfRangeException',
+            \OutOfRangeException::class,
             'The requested offset must be a non-empty string.'
         );
 

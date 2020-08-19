@@ -24,7 +24,7 @@ class OutcomeMinimumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('outcomeMinimum', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
@@ -42,7 +42,7 @@ class OutcomeMinimumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\OutcomeMinimum', $component);
+        $this->assertInstanceOf(OutcomeMinimum::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals($component->getOutcomeIdentifier(), 'myOutcome1');
         $this->assertEquals($component->getWeightIdentifier(), 'myWeight1');

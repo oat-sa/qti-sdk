@@ -11,6 +11,7 @@ use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class AssessmentItemMarshallerTest extends QtiSmTestCase
 {
@@ -31,7 +32,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($assessmentItem);
         $element = $marshaller->marshall($assessmentItem);
 
-        $this->assertInstanceOf('\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, title, label, toolName, toolVersion
@@ -58,7 +59,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\assessmentItem', $component);
+        $this->assertInstanceOf(AssessmentItem::class, $component);
         $this->assertEquals('Q01', $component->getIdentifier());
         $this->assertEquals('Test Item', $component->getTitle());
         $this->assertEquals(false, $component->isTimeDependent());
@@ -96,7 +97,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($item);
         $element = $marshaller->marshall($item);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, lang, title
@@ -136,7 +137,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\assessmentItem', $component);
+        $this->assertInstanceOf(AssessmentItem::class, $component);
         $this->assertEquals('Q01', $component->getIdentifier());
         $this->assertEquals('test item', $component->getTitle());
         $this->assertEquals(false, $component->isTimeDependent());
@@ -187,7 +188,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory attribute 'title' is missing from element 'assessmentItem'."
         );
 
@@ -210,7 +211,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory attribute 'timeDependent' is missing from element 'assessmentItem'."
         );
 
@@ -233,7 +234,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory attribute 'identifier' is missing from element 'assessmentItem'."
         );
 

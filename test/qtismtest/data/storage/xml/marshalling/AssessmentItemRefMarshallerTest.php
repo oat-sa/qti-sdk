@@ -33,7 +33,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals($href, $element->getAttribute('href'));
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
@@ -85,7 +85,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($href, $element->getAttribute('href'));
@@ -124,7 +124,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $component);
+        $this->assertInstanceOf(AssessmentItemRef::class, $component);
         $this->assertEquals('../../question1.xml', $component->getHref());
         $this->assertEquals('question1', $component->getIdentifier());
         $this->assertFalse($component->isFixed());
@@ -165,7 +165,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $component);
+        $this->assertInstanceOf(AssessmentItemRef::class, $component);
         $this->assertEquals($component->getHref(), '../../question1.xml');
         $this->assertEquals(implode("\x20", $component->getCategories()->getArrayCopy()), 'cat1 cat2');
         $this->assertTrue($component->isFixed());
@@ -176,7 +176,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this->assertEquals(1, count($component->getTemplateDefaults()));
         $this->assertEquals(2, count($component->getPreConditions()));
         $this->assertEquals(2, count($component->getBranchRules()));
-        $this->assertInstanceOf('qtism\\data\\TimeLimits', $component->getTimeLimits());
-        $this->assertInstanceOf('qtism\\data\\ItemSessionControl', $component->getItemSessionControl());
+        $this->assertInstanceOf(TimeLimits::class, $component->getTimeLimits());
+        $this->assertInstanceOf(ItemSessionControl::class, $component->getItemSessionControl());
     }
 }

@@ -105,7 +105,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         $session->setTime(self::createDate('2014-07-14 13:00:33'));
 
         $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
+            AssessmentItemSessionException::class,
             "A new attempt for item 'Q01' is not allowed. The maximum time limit in force is reached."
         );
 
@@ -215,7 +215,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         $this->assertTrue($session['duration']->equals(new QtiDuration('PT30S')));
 
         $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
+            AssessmentItemSessionException::class,
             "The maximum time to be spent on the item session has been reached.",
             AssessmentItemSessionException::DURATION_OVERFLOW
         );
@@ -331,7 +331,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();
-            $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $itemSession['SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
             $this->assertTrue($expected[$i]->equals($itemSession['SCORE']));
             $this->assertEquals($t, $itemSession['numAttempts']->getValue());
         }

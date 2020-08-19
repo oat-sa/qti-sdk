@@ -11,6 +11,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Strong;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 {
@@ -78,7 +79,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleAssociableChoice', $component);
+        $this->assertInstanceOf(SimpleAssociableChoice::class, $component);
         $this->assertEquals('qti-simpleAssociableChoice', $component->getClass());
         $this->assertEquals('choice_1', $component->getIdentifier());
         $this->assertEquals(1, $component->getMatchMin());
@@ -87,7 +88,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $this->assertEquals('templateIdentifier', $component->getTemplateIdentifier());
 
         $content = $component->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
+        $this->assertInstanceOf(FlowStaticCollection::class, $content);
         $this->assertEquals(3, count($content));
     }
 
@@ -121,7 +122,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'matchMax' attribute is missing from the 'simpleAssociableChoice' element."
         );
 
@@ -140,7 +141,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'identifier' attribute is missing from the 'simpleAssociableChoice' element."
         );
 
@@ -209,13 +210,13 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleAssociableChoice', $component);
+        $this->assertInstanceOf(SimpleAssociableChoice::class, $component);
         $this->assertEquals('choice_1', $component->getIdentifier());
         $this->assertEquals(0, $component->getMatchMin());
         $this->assertEquals(2, $component->getMatchMax());
 
         $content = $component->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
+        $this->assertInstanceOf(FlowStaticCollection::class, $content);
         $this->assertEquals(1, count($content));
     }
 

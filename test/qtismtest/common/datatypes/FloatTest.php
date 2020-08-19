@@ -9,7 +9,7 @@ class FloatTest extends QtiSmTestCase
 {
     public function testWrongValue()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $float = new QtiFloat(null);
     }
 }

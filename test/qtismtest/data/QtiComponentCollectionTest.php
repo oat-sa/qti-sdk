@@ -16,7 +16,7 @@ class QtiComponentCollectionTest extends QtiSmTestCase
         $collection = new QtiComponentCollection();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "QtiComponentCollection class only accept QtiComponent objects, 'stdClass' given."
         );
 
@@ -28,7 +28,7 @@ class QtiComponentCollectionTest extends QtiSmTestCase
         $collection = new QtiComponentCollection();
 
         $this->setExpectedException(
-            '\\RuntimeException',
+            \RuntimeException::class,
             "QtiComponentCollection must be used as a bag (specific key 'index' given)."
         );
 

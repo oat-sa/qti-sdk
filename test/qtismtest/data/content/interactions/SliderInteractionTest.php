@@ -10,7 +10,7 @@ class SliderInteractionTest extends QtiSmTestCase
     public function testCreateSliderInteractionLowerBoundWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'lowerBound' argument must be a float value, 'integer' given."
         );
 
@@ -20,7 +20,7 @@ class SliderInteractionTest extends QtiSmTestCase
     public function testCreateSliderInteractionUpperBoundWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'upperBound' argument must be a float value, 'integer' given."
         );
 
@@ -30,7 +30,7 @@ class SliderInteractionTest extends QtiSmTestCase
     public function testSetStepNegative()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'step' argument must be a positive (>= 0) integer, 'integer' given."
         );
 
@@ -41,7 +41,7 @@ class SliderInteractionTest extends QtiSmTestCase
     public function testSetStepLabelNonBoolean()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'stepLabel' argument must be a boolean value, 'string' given."
         );
 
@@ -52,7 +52,7 @@ class SliderInteractionTest extends QtiSmTestCase
     public function testSetOrientationWrongValue()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'orientation' argument must be a value from the Orientation enumeration."
         );
 
@@ -63,7 +63,7 @@ class SliderInteractionTest extends QtiSmTestCase
     public function testSetReverseWrongValue()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'reverse' argument must be a boolean value, 'string' given."
         );
 

@@ -9,7 +9,7 @@ class IntegerTest extends QtiSmTestCase
 {
     public function testWrongValue()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $integer = new QtiInteger(13.37);
     }
 }

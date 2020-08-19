@@ -24,7 +24,7 @@ class VersionTest extends QtiSmTestCase
     public function testUnknownOperator()
     {
         $msg = "Unknown operator '!=='. Known operators are '<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'.";
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $this->setExpectedException(InvalidArgumentException::class, $msg);
         Version::compare('2.1.1', '2.2.0', '!==');
     }
 

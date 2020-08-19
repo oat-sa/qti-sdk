@@ -23,7 +23,7 @@ class BlockquoteMarshallerTest extends QtiSmTestCase
 	        </blockquote>
 	    ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Blockquote', $blockquote);
+        $this->assertInstanceOf(Blockquote::class, $blockquote);
         $this->assertEquals('physics', $blockquote->getClass());
         $this->assertEquals('http://www.world.com/einstein', $blockquote->getCite());
         $this->assertEquals('/home/jerome', $blockquote->getXmlBase());
@@ -32,13 +32,13 @@ class BlockquoteMarshallerTest extends QtiSmTestCase
         $this->assertEquals(2, count($blockquoteContent));
 
         $h4 = $blockquoteContent[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H4', $h4);
+        $this->assertInstanceOf(H4::class, $h4);
         $h4Content = $h4->getContent();
         $this->assertEquals(1, count($h4Content));
         $this->assertEquals('Albert Einstein', $h4Content[0]->getContent());
 
         $div = $blockquoteContent[1];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $this->assertEquals('description', $div->getClass());
         $divContent = $div->getContent();
         $this->assertEquals(1, count($divContent));

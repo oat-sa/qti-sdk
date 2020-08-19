@@ -18,7 +18,7 @@ class FieldValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('fieldValue', $element->nodeName);
         $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
 
@@ -41,12 +41,12 @@ class FieldValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\FieldValue', $component);
+        $this->assertInstanceOf(FieldValue::class, $component);
         $this->assertEquals('myField', $component->getFieldIdentifier());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\Variable', $sub1);
+        $this->assertInstanceOf(Variable::class, $sub1);
         $this->assertEquals('recordVar', $sub1->getIdentifier());
     }
 }

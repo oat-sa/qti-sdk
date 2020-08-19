@@ -8,6 +8,7 @@ use qtism\data\content\interactions\GapImg;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class GapImgMarshallerTest extends QtiSmTestCase
 {
@@ -119,7 +120,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapImg', $gapImg);
+        $this->assertInstanceOf(GapImg::class, $gapImg);
         $this->assertEquals('my-gap', $gapImg->getId());
         $this->assertEquals('gaps', $gapImg->getClass());
         $this->assertEquals('gapImg1', $gapImg->getIdentifier());
@@ -161,7 +162,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapImg', $gapImg);
+        $this->assertInstanceOf(GapImg::class, $gapImg);
         $this->assertEquals('my-gap', $gapImg->getId());
         $this->assertEquals('gaps', $gapImg->getClass());
         $this->assertEquals('gapImg1', $gapImg->getIdentifier());
@@ -191,7 +192,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'gapImg' element must contain a single 'object' element, 2 given."
         );
 
@@ -229,7 +230,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element."
         );
 
@@ -250,7 +251,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element."
         );
 

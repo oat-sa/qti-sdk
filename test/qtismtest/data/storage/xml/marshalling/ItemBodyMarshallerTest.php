@@ -23,12 +23,12 @@ class ItemBodyMarshallerTest extends QtiSmTestCase
             </itemBody>
         ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\ItemBody', $itemBody);
+        $this->assertInstanceOf(ItemBody::class, $itemBody);
         $this->assertEquals('my-body', $itemBody->getId());
         $itemBodyContent = $itemBody->getContent();
         $this->assertEquals(2, count($itemBodyContent));
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H1', $itemBodyContent[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $itemBodyContent[1]);
+        $this->assertInstanceOf(H1::class, $itemBodyContent[0]);
+        $this->assertInstanceOf(Div::class, $itemBodyContent[1]);
 
         $h1 = $itemBodyContent[0];
         $h1Content = $h1->getContent();

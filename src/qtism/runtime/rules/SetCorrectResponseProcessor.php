@@ -29,6 +29,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\runtime\expressions\ExpressionProcessingException;
+use qtism\data\rules\SetCorrectResponse;
 
 /**
  * From IMS QTI:
@@ -87,6 +88,6 @@ class SetCorrectResponseProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\SetCorrectResponse';
+        return SetCorrectResponse::class;
     }
 }

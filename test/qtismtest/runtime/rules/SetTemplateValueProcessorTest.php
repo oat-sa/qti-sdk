@@ -10,6 +10,8 @@ use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetTemplateValueProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiFloat;
 
 class SetTemplateValueProcessorTest extends QtiSmTestCase
 {
@@ -29,7 +31,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
 
         // The state must be modified.
         // TemplateVariable with identifier 'TPL1' must contain 4.3.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['TPL1']);
+        $this->assertInstanceOf(QtiFloat::class, $state['TPL1']);
         $this->assertEquals(4.3, $state['TPL1']->getValue());
     }
 
@@ -47,7 +49,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['TPL1']);
+        $this->assertInstanceOf(QtiFloat::class, $state['TPL1']);
         $this->assertEquals(4.0, $state['TPL1']->getValue());
     }
 
@@ -65,7 +67,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $state['TPL1']);
+        $this->assertInstanceOf(QtiInteger::class, $state['TPL1']);
         $this->assertEquals(4, $state['TPL1']->getValue());
     }
 
@@ -82,7 +84,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $state = new State([$tpl1]);
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        $this->setExpectedException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -99,7 +101,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        $this->setExpectedException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -171,7 +173,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
 
         $processor->setState($state);
         $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $state['myBool']);
+        $this->assertInstanceOf(QtiBoolean::class, $state['myBool']);
         $this->assertTrue($state['myBool']->getValue());
     }
 
@@ -189,7 +191,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
+            RuleProcessingException::class,
             "No variable with identifier 'TPLXXXX' to be set in the current state.",
             RuleProcessingException::NONEXISTENT_VARIABLE
         );

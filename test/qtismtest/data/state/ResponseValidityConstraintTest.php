@@ -46,7 +46,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      */
     public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')
     {
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $this->setExpectedException(\InvalidArgumentException::class, $msg);
         $responseValidityConstraint = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
     }
 

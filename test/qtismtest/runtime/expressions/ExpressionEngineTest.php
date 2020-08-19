@@ -45,7 +45,7 @@ class ExpressionEngineTest extends QtiSmTestCase
         $expression = new ItemSessionControl();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed."
         );
 

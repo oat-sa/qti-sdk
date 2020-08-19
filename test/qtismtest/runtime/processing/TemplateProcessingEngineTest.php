@@ -20,7 +20,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
             </outcomeProcessing>
         ');
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             'The TemplateProcessing class only accepts TemplateProcessing objects to be executed.'
         );
         $templateProcessing = new TemplateProcessingEngine($component);

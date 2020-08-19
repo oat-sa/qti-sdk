@@ -25,7 +25,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 
     public function testMarshallWrongDataType()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpScalarMarshaller($ctx, new stdClass());
     }

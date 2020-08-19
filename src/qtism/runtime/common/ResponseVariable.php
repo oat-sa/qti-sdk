@@ -210,7 +210,7 @@ class ResponseVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "ResponseVariable::createFromDataModel only accept 'qtism\\data\\state\\ResponseDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "ResponseVariable::createFromDataModel only accept '". ResponseDeclaration::class. "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

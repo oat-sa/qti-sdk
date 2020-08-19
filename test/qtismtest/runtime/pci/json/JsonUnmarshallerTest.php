@@ -23,6 +23,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\pci\json\Unmarshaller;
 use qtismtest\QtiSmTestCase;
 use stdClass;
+use qtism\runtime\pci\json\UnmarshallingException;
 
 class JsonUnmarshallerTest extends QtiSmTestCase
 {
@@ -109,7 +110,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     public function testUnmarshallInvalid($input)
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->setExpectedException('qtism\\runtime\\pci\\json\\UnmarshallingException');
+        $this->setExpectedException(UnmarshallingException::class);
         $unmarshaller->unmarshall($input);
     }
 
@@ -117,8 +118,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
         $this->setExpectedException(
-            'qtism\\runtime\\pci\\json\\UnmarshallingException',
-            "The 'qtism\\runtime\\pci\\json\\Unmarshaller::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given."
+            UnmarshallingException::class,
+            "The '". Unmarshaller::class."::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given."
         );
         $unmarshaller->unmarshall(true);
     }
@@ -128,7 +129,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller = self::createUnmarshaller();
 
         $this->setExpectedException(
-            'qtism\\runtime\\pci\\json\\UnmarshallingException',
+            UnmarshallingException::class,
             "Unknown QTI baseType 'unknownbasetype'."
         );
 
@@ -140,7 +141,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller = self::createUnmarshaller();
 
         $this->setExpectedException(
-            'qtism\\runtime\\pci\\json\\UnmarshallingException',
+            UnmarshallingException::class,
             "A value does not satisfy its baseType."
         );
 

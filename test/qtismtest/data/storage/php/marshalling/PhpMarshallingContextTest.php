@@ -62,7 +62,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         $ctx->pushOnVariableStack(['foo', 'bar']);
         $this->assertEquals(['foo', 'bar'], $ctx->popFromVariableStack(2));
 
-        $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpStreamAccess', $ctx->getStreamAccess());
+        $this->assertInstanceOf(PhpStreamAccess::class, $ctx->getStreamAccess());
     }
 
     public function testPhpMarshallingTooLargeQuantity()

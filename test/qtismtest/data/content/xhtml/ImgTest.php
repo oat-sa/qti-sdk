@@ -10,7 +10,7 @@ class ImgTest extends QtiSmTestCase
     public function testCreateInvalidSrc()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'src' argument must be a valid URI, '999' given."
         );
 
@@ -20,7 +20,7 @@ class ImgTest extends QtiSmTestCase
     public function testCreateInvalidAlt()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'alt' argument must be a string, 'integer' given."
         );
 
@@ -30,7 +30,7 @@ class ImgTest extends QtiSmTestCase
     public function testSetLongdescWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'longdesc' argument must be a valid URI, '999' given."
         );
 
@@ -41,7 +41,7 @@ class ImgTest extends QtiSmTestCase
     public function testSetHeightWrongFormat()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'height' argument must be a valid XHTML length value, '999xp' given."
         );
 
@@ -52,7 +52,7 @@ class ImgTest extends QtiSmTestCase
     public function testSetWidthWrongFormat()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'width' argument must be a valid XHTML length value, '999xp' given."
         );
 

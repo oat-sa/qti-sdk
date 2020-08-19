@@ -8,6 +8,7 @@ use qtism\data\content\TemplateInline;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class TemplateInlineMarshallerTest extends QtiSmTestCase
 {
@@ -30,7 +31,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\TemplateInline', $component);
+        $this->assertInstanceOf(TemplateInline::class, $component);
         $this->assertEquals('tpl1', $component->getTemplateIdentifier());
         $this->assertEquals('inline1', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
@@ -50,7 +51,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The content of the 'templateInline' is invalid. It must only contain 'block' elements."
         );
 

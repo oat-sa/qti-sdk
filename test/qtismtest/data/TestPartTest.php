@@ -14,7 +14,7 @@ class TestPartTest extends QtiSmTestCase
     public function testCreateInvalidIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'999' is not a valid QTI Identifier."
         );
 
@@ -27,7 +27,7 @@ class TestPartTest extends QtiSmTestCase
     public function testCreateNotEnoughAssessmentSections()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A TestPart must contain at least one AssessmentSection."
         );
 
@@ -40,7 +40,7 @@ class TestPartTest extends QtiSmTestCase
     public function testCreateWrongSectionTypes()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects."
         );
 

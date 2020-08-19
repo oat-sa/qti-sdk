@@ -12,7 +12,7 @@ class MappingTest extends QtiSmTestCase
     public function testCreateNoMapEntries()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A Mapping object must contain at least one MapEntry object, none given."
         );
 
@@ -34,7 +34,7 @@ class MappingTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'lowerBound' attribute must be a float or false, 'boolean' given."
         );
 
@@ -52,7 +52,7 @@ class MappingTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'upperBound' argument must be a float or false, 'boolean' given."
         );
 
@@ -70,7 +70,7 @@ class MappingTest extends QtiSmTestCase
         );
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'defaultValue' argument must be a numeric value, 'boolean' given."
         );
 

@@ -9,6 +9,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class FeedbackBlockMarshallerTest extends QtiSmTestCase
 {
@@ -55,7 +56,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\FeedbackBlock', $component);
+        $this->assertInstanceOf(FeedbackBlock::class, $component);
         $this->assertEquals('outcome1', $component->getOutcomeIdentifier());
         $this->assertEquals('please_show_me', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
@@ -63,7 +64,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
         $div = $content[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
 
         $divContent = $div->getContent();
         $this->assertEquals(1, count($divContent));
@@ -80,7 +81,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "'snow' is not a valid value for the 'showHide' attribute of element 'feedbackBlock'."
         );
 
@@ -97,7 +98,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'simpleChoice' cannot be contained by a 'feedbackBlock'."
         );
 
@@ -114,7 +115,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'endAttemptInteraction' cannot be contained by a 'feedbackBlock'."
         );
 
@@ -144,7 +145,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'identifier' attribute is missing from element 'feedbackBlock'."
         );
 
@@ -161,7 +162,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'outcomeIdentifier' attribute is missing from element 'feedbackBlock'."
         );
 

@@ -105,7 +105,7 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedTestPart', $component);
+        $this->assertInstanceOf(ExtendedTestPart::class, $component);
         $this->assertEquals(1, count($component->getPreConditions()));
         $this->assertEquals(1, count($component->getBranchRules()));
         $this->assertTrue($component->getItemSessionControl()->mustShowSolution());
@@ -116,11 +116,11 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase
 
         // Check that we got ExtendedAssessmentSections.
         $assessmentSections = $component->getAssessmentSections();
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSections['section1']);
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSections['section2']);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section1']);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section2']);
 
         // Check that we got TestFeedbackRef instances.
         $testFeedbackRefs = $component->getTestFeedbackRefs();
-        $this->assertInstanceOf('qtism\\data\\TestFeedbackRef', $testFeedbackRefs[0]);
+        $this->assertInstanceOf(TestFeedbackRef::class, $testFeedbackRefs[0]);
     }
 }

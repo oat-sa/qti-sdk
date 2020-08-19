@@ -17,6 +17,7 @@ use qtism\data\content\xhtml\text\Strong;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class SimpleInlineMarshallerTest extends QtiSmTestCase
 {
@@ -46,25 +47,25 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $em = $marshaller->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Em', $em);
+        $this->assertInstanceOf(Em::class, $em);
         $this->assertEquals('sentence', $em->getId());
         $this->assertEquals('introduction', $em->getClass());
         $this->assertEquals('en-US', $em->getLang());
 
         $sentence = $em->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\InlineCollection', $sentence);
+        $this->assertInstanceOf(InlineCollection::class, $sentence);
         $this->assertEquals(3, count($sentence));
 
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $sentence[0]);
+        $this->assertInstanceOf(TextRun::class, $sentence[0]);
         $this->assertEquals('He is ', $sentence[0]->getContent());
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Strong', $sentence[1]);
+        $this->assertInstanceOf(Strong::class, $sentence[1]);
         $strongContent = $sentence[1]->getContent();
         $this->assertEquals('John Dunbar', $strongContent[0]->getContent());
         $this->assertEquals('john', $sentence[1]->getId());
         $this->assertEquals('His name', $sentence[1]->getLabel());
 
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $sentence[2]);
+        $this->assertInstanceOf(TextRun::class, $sentence[2]);
         $this->assertEquals('.', $sentence[2]->getContent());
     }
 
@@ -77,7 +78,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'href' attribute of the 'a' element is missing."
         );
 
@@ -104,7 +105,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
     public function testUnmarshallQandA21()
     {
         $q = $this->createComponentFromXml('<q id="albert-einstein" cite="http://en.wikipedia.org/wiki/Physicist" xml:base="/home/jerome">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Q', $q);
+        $this->assertInstanceOf(Q::class, $q);
         $this->assertEquals('http://en.wikipedia.org/wiki/Physicist', $q->getCite());
         $this->assertEquals('/home/jerome', $q->getXmlBase());
     }
@@ -236,7 +237,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
     {
         $bdo = $this->createComponentFromXml('<bdo dir="rtl">I am reversed!</bdo>', '2.2.0');
         $this->assertEquals(Direction::RTL, $bdo->getDir());
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Bdo', $bdo);
+        $this->assertInstanceOf(Bdo::class, $bdo);
 
         $content = $bdo->getContent();
         $this->assertSame(1, count($content));

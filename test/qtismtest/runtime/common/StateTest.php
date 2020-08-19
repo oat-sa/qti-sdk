@@ -14,13 +14,14 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtismtest\QtiSmTestCase;
 use stdClass;
+use qtism\runtime\common\VariableCollection;
 
 class StateTest extends QtiSmTestCase
 {
     public function testInstantiation()
     {
         $state = new State();
-        $this->assertInstanceOf('qtism\\runtime\\common\\State', $state);
+        $this->assertInstanceOf(State::class, $state);
         $this->assertEquals(0, count($state));
 
         $varsArray = [];
@@ -29,7 +30,7 @@ class StateTest extends QtiSmTestCase
 
         $state = new State($varsArray);
         $this->assertEquals(2, count($state));
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $state->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this->assertEquals($state->getVariable('RESPONSE')->getBaseType(), BaseType::INTEGER);
 
         // replace a variable.
@@ -46,7 +47,7 @@ class StateTest extends QtiSmTestCase
 
     public function testInstantiationInvalid()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $state = new State([15, 'string', new stdClass()]);
     }
 
@@ -68,14 +69,14 @@ class StateTest extends QtiSmTestCase
 
     public function testAddressingInvalidOne()
     {
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->setExpectedException(\OutOfBoundsException::class);
         $state = new State();
         $state['var'] = new ResponseDeclaration('var', BaseType::POINT, Cardinality::ORDERED);
     }
 
     public function testAdressingInvalidTwo()
     {
-        $this->setExpectedException('\\OutOfRangeException');
+        $this->setExpectedException(\OutOfRangeException::class);
         $state = new State();
         $var = $state[3];
     }
@@ -94,7 +95,7 @@ class StateTest extends QtiSmTestCase
         unset($state['RESPONSE1']);
         $this->assertEquals(1, count($state->getAllVariables()));
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\VariableCollection', $state->getAllVariables());
+        $this->assertInstanceOf(VariableCollection::class, $state->getAllVariables());
     }
 
     /**
@@ -213,7 +214,7 @@ class StateTest extends QtiSmTestCase
         $state = new State();
 
         $this->setExpectedException(
-            '\\OutOfBoundsException',
+            \OutOfBoundsException::class,
             "No Variable object with identifier 'X' found in the current State object."
         );
 
@@ -225,7 +226,7 @@ class StateTest extends QtiSmTestCase
         $state = new State();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The variable argument must be a Variable object or a string, '1' given"
         );
 
@@ -237,7 +238,7 @@ class StateTest extends QtiSmTestCase
         $state = new State();
 
         $this->setExpectedException(
-            '\\OutOfRangeException',
+            \OutOfRangeException::class,
             "A State object can only be adressed by a valid string."
         );
 

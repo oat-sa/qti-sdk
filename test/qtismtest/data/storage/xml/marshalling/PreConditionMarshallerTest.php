@@ -16,7 +16,7 @@ class PreConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('preCondition', $element->nodeName);
         $this->assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
     }
@@ -36,7 +36,7 @@ class PreConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\PreCondition', $component);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getExpression());
+        $this->assertInstanceOf(PreCondition::class, $component);
+        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
     }
 }

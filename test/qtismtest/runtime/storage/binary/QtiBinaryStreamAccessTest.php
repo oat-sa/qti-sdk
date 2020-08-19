@@ -457,7 +457,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a Variable value.',
             QtiBinaryStreamAccessException::VARIABLE
         );
@@ -476,7 +476,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             "Datatype mismatch for variable 'VAR'.",
             QtiBinaryStreamAccessException::VARIABLE
         );
@@ -875,7 +875,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $type = QtiBinaryStreamAccess::RW_VALUE;
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a Variable value.',
             QtiBinaryStreamAccessException::VARIABLE
         );
@@ -922,12 +922,12 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals(2, $session['numAttempts']->getValue());
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals('incomplete', $session['completionStatus']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('scoring'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['scoring']);
+        $this->assertInstanceOf(OutcomeVariable::class, $session->getVariable('scoring'));
+        $this->assertInstanceOf(QtiFloat::class, $session['scoring']);
         $this->assertEquals(1.0, $session['scoring']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $session->getVariable('RESPONSE'));
         $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiString', $session['RESPONSE']);
+        $this->assertInstanceOf(QtiString::class, $session['RESPONSE']);
         $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
     }
 
@@ -993,15 +993,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals(1, $session['numAttempts']->getValue());
         $this->assertEquals('PT20S', $session['duration']->__toString());
         $this->assertEquals('complete', $session['completionStatus']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('SCORE'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['SCORE']);
+        $this->assertInstanceOf(OutcomeVariable::class, $session->getVariable('SCORE'));
+        $this->assertInstanceOf(QtiFloat::class, $session['SCORE']);
         $this->assertEquals(1.0, $session['SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $session->getVariable('RESPONSE'));
         $this->assertSame(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiString', $session['RESPONSE']);
+        $this->assertInstanceOf(QtiString::class, $session['RESPONSE']);
         $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\TemplateVariable', $session->getVariable('TPL'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['TPL']);
+        $this->assertInstanceOf(TemplateVariable::class, $session->getVariable('TPL'));
+        $this->assertInstanceOf(QtiInteger::class, $session['TPL']);
         $this->assertSame(10, $session['TPL']->getValue());
     }
 
@@ -1212,7 +1212,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $session->beginItemSession();
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             "No assessmentItemRef found in the assessmentTest tree structure.",
             QtiBinaryStreamAccessException::ITEM_SESSION
         );
@@ -1236,7 +1236,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             "An error occurred while writing an assessment item session.",
             QtiBinaryStreamAccessException::ITEM_SESSION
         );
@@ -1322,7 +1322,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $pendingResponses = $access->readPendingResponses($seeker);
         $state = $pendingResponses->getState();
         $this->assertEquals(1, count($state));
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $state->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this->assertEquals('ChoiceA', $state['RESPONSE']->getValue());
 
         $itemRef = $pendingResponses->getAssessmentItemRef();
@@ -1389,7 +1389,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a shufflingGroup.',
             QtiBinaryStreamAccessException::SHUFFLING_GROUP
         );
@@ -1424,7 +1424,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a shufflingGroup.',
             QtiBinaryStreamAccessException::SHUFFLING_GROUP
         );
@@ -1468,7 +1468,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a shufflingState.',
             QtiBinaryStreamAccessException::SHUFFLING_STATE
         );
@@ -1511,7 +1511,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a shufflingState.',
             QtiBinaryStreamAccessException::SHUFFLING_STATE
         );
@@ -1527,7 +1527,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a Record Field.',
             QtiBinaryStreamAccessException::RECORDFIELD
         );
@@ -1542,7 +1542,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a Record Field.',
             QtiBinaryStreamAccessException::RECORDFIELD
         );
@@ -1558,7 +1558,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading an identifier.',
             QtiBinaryStreamAccessException::IDENTIFIER
         );
@@ -1573,7 +1573,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing an identifier.',
             QtiBinaryStreamAccessException::IDENTIFIER
         );
@@ -1589,7 +1589,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a point.',
             QtiBinaryStreamAccessException::POINT
         );
@@ -1604,7 +1604,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a point.',
             QtiBinaryStreamAccessException::POINT
         );
@@ -1620,7 +1620,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a pair.',
             QtiBinaryStreamAccessException::PAIR
         );
@@ -1635,7 +1635,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a pair.',
             QtiBinaryStreamAccessException::PAIR
         );
@@ -1651,7 +1651,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a directedPair.',
             QtiBinaryStreamAccessException::DIRECTEDPAIR
         );
@@ -1666,7 +1666,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a directedPair.',
             QtiBinaryStreamAccessException::DIRECTEDPAIR
         );
@@ -1682,7 +1682,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a duration.',
             QtiBinaryStreamAccessException::DURATION
         );
@@ -1697,7 +1697,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a duration.',
             QtiBinaryStreamAccessException::DURATION
         );
@@ -1713,7 +1713,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading a URI.',
             QtiBinaryStreamAccessException::URI
         );
@@ -1728,7 +1728,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing a URI.',
             QtiBinaryStreamAccessException::URI
         );
@@ -1744,7 +1744,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while reading an intOrIdentifier.',
             QtiBinaryStreamAccessException::INTORIDENTIFIER
         );
@@ -1759,7 +1759,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
         $this->setExpectedException(
-            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            QtiBinaryStreamAccessException::class,
             'An error occurred while writing an intOrIdentifier.',
             QtiBinaryStreamAccessException::INTORIDENTIFIER
         );

@@ -5,6 +5,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\rules\Selection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class SelectionMarshallerTest extends QtiSmTestCase
 {
@@ -19,7 +20,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('selection', $element->nodeName);
         $this->assertSame($select . '', $element->getAttribute('select'));
         $this->assertEquals('true', $element->getAttribute('withReplacement'));
@@ -40,7 +41,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('selection', $element->nodeName);
         $this->assertSame($select . '', $element->getAttribute('select'));
         $this->assertEquals('true', $element->getAttribute('withReplacement'));
@@ -57,7 +58,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\Rules\\Selection', $component);
+        $this->assertInstanceOf(Selection::class, $component);
         $this->assertEquals($component->getSelect(), 2);
         $this->assertEquals($component->isWithReplacement(), true);
     }
@@ -71,7 +72,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\Rules\\Selection', $component);
+        $this->assertInstanceOf(Selection::class, $component);
         $this->assertEquals($component->getSelect(), 2);
         $this->assertEquals($component->isWithReplacement(), false);
     }
@@ -94,7 +95,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\Rules\\Selection', $component);
+        $this->assertInstanceOf(Selection::class, $component);
         $this->assertEquals($component->getSelect(), 2);
         $this->assertEquals($component->isWithReplacement(), false);
 
@@ -113,7 +114,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
+        $this->setExpectedException(UnmarshallingException::class);
         $component = $marshaller->unmarshall($element);
     }
 }

@@ -12,7 +12,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testCreateNoAssociableChoices()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "An AssociateInteraction object must be composed of at lease one SimpleAssociableChoice object, none given."
         );
         $associateInteraction = new AssociateInteraction('RESPONSE', new SimpleAssociableChoiceCollection());
@@ -29,7 +29,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testSetMinAssociationsWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minAssociations' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -40,7 +40,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testSetMinAssociationsIllogicValue()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minAssociation' argument must be less than or equal to the limit imposed by 'maxAssociations'."
         );
 
@@ -52,7 +52,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testSetMaxAssociationsWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxAssociations' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -63,7 +63,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testSetShuffleWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'shuffle' argument must be a boolean value, 'string' given."
         );
 

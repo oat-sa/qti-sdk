@@ -18,7 +18,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('itemSubset', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
     }
@@ -34,7 +34,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('itemSubset', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
@@ -53,7 +53,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('itemSubset', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
@@ -69,7 +69,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\ItemSubset', $component);
+        $this->assertInstanceOf(ItemSubset::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
     }
 
@@ -82,7 +82,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\ItemSubset', $component);
+        $this->assertInstanceOf(ItemSubset::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals(implode("\x20", $component->getIncludeCategories()->getArrayCopy()), 'cat1 cat2');
     }
@@ -96,7 +96,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\ItemSubset', $component);
+        $this->assertInstanceOf(ItemSubset::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals(implode("\x20", $component->getIncludeCategories()->getArrayCopy()), 'cat1 cat2');
         $this->assertEquals(implode("\x20", $component->getExcludeCategories()->getArrayCopy()), 'cat3');

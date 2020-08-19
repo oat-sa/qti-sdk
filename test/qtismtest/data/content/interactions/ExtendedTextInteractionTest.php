@@ -12,7 +12,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'base' argument must be a positive (>= 0) integer value, 'string' given."
         );
 
@@ -24,7 +24,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'responseIdentifier' argument must be a valid QTI identifier."
         );
 
@@ -36,7 +36,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, 'boolean' given."
         );
 
@@ -48,7 +48,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'patternMask' argument must be a string value, 'boolean' given."
         );
 
@@ -60,7 +60,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'placeholderText' argument must be a string value, 'boolean' given."
         );
 
@@ -72,7 +72,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxStrings' argument must be a strictly positive (> 0) integer or -1, 'boolean' given."
         );
 
@@ -84,7 +84,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minStrings' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -96,7 +96,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'expectedLines' argument must be a strictly positive (> 0) intege or -1, 'boolean' given."
         );
 
@@ -108,7 +108,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'format' argument must be a value from the TextFormat enumeration, 'integer' given."
         );
 

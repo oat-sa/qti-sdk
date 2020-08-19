@@ -102,7 +102,7 @@ class TestUtilsTest extends QtiSmTestCase
 
     public function testIsResponseValidRuntimeException()
     {
-        $this->setExpectedException('\\RuntimeException', "PCRE Engine error");
+        $this->setExpectedException(\RuntimeException::class, "PCRE Engine error");
 
         $valid = TestUtils::isResponseValid(
             new QtiString('checkme'),

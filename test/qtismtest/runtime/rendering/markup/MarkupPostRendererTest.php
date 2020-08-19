@@ -5,6 +5,7 @@ namespace qtismtest\runtime\rendering\markup;
 use DOMDocument;
 use qtism\runtime\rendering\markup\MarkupPostRenderer;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rendering\RenderingException;
 
 class MarkupPostRendererTest extends QtiSmTestCase
 {
@@ -42,7 +43,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
 
     public function testNoDocumentElement()
     {
-        $this->setExpectedException('qtism\\runtime\\rendering\\RenderingException');
+        $this->setExpectedException(RenderingException::class);
 
         $doc = new DOMDocument('1.0', 'UTF-8');
         $renderer = new MarkupPostRenderer();

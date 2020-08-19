@@ -8,6 +8,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\UploadInteraction;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class UploadInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -34,7 +35,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\UploadInteraction', $component);
+        $this->assertInstanceOf(UploadInteraction::class, $component);
         $this->assertEquals('my-upload', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('/home/jerome', $component->getXmlBase());
@@ -51,7 +52,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'uploadInteraction' element."
         );
 

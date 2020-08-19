@@ -26,6 +26,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class ImgMarshallerTest extends QtiSmTestCase
 {
@@ -87,7 +88,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         /** @var Img $img */
         $img = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Img', $img);
+        $this->assertInstanceOf(Img::class, $img);
         $this->assertEquals('my/image.png', $img->getSrc());
         $this->assertEquals('An Image...', $img->getAlt());
         $this->assertSame(30, $img->getWidth());
@@ -181,7 +182,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The 'mandatory' attribute 'src' is missing from element 'img'."
         );
 

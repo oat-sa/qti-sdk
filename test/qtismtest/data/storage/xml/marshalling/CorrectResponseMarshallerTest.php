@@ -9,6 +9,7 @@ use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\QtiDirectedPair;
 
 class CorrectResponseMarshallerTest extends QtiSmTestCase
 {
@@ -22,7 +23,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('correctResponse', $element->nodeName);
         $this->assertEquals($interpretation, $element->getAttribute('interpretation'));
         $valueElements = $element->getElementsByTagName('value');
@@ -49,12 +50,12 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\CorrectResponse', $component);
+        $this->assertInstanceOf(CorrectResponse::class, $component);
         $this->assertEquals('My Interpretation', $component->getInterpretation());
         $this->assertEquals(1, count($component->getValues()));
 
         $values = $component->getValues();
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
+        $this->assertInstanceOf(Value::class, $values[0]);
         $this->assertEquals(BaseType::INTEGER, $values[0]->getBaseType());
         $this->assertFalse($values[0]->isPartOfRecord());
     }
@@ -75,14 +76,14 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::DIRECTED_PAIR]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\CorrectResponse', $component);
+        $this->assertInstanceOf(CorrectResponse::class, $component);
         $this->assertEquals('', $component->getInterpretation());
         $this->assertEquals(2, count($component->getValues()));
 
         foreach ($component->getValues() as $value) {
-            $this->assertInstanceOf('qtism\\data\\state\\Value', $value);
+            $this->assertInstanceOf(Value::class, $value);
             $this->assertEquals(BaseType::DIRECTED_PAIR, $value->getBaseType());
-            $this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $value->getValue());
+            $this->assertInstanceOf(QtiDirectedPair::class, $value->getValue());
             $this->assertFalse($value->isPartOfRecord());
         }
     }

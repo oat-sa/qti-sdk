@@ -9,6 +9,7 @@ use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class InlineChoiceMarshallerTest extends QtiSmTestCase
 {
@@ -48,7 +49,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoice', $component);
+        $this->assertInstanceOf(InlineChoice::class, $component);
         $this->assertEquals('my-choice1', $component->getId());
         $this->assertEquals('choice1', $component->getIdentifier());
         $this->assertTrue($component->isFixed());
@@ -57,7 +58,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
-        $this->assertInstanceOf('qtism\\data\\content\\PrintedVariable', $content[0]);
+        $this->assertInstanceOf(PrintedVariable::class, $content[0]);
     }
 
     public function testUnmarshall20()
@@ -67,7 +68,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">Choice #1</inlineChoice>');
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoice', $component);
+        $this->assertInstanceOf(InlineChoice::class, $component);
         $this->assertEquals('my-choice1', $component->getId());
         $this->assertEquals('choice1', $component->getIdentifier());
         $this->assertTrue($component->isFixed());
@@ -76,7 +77,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $content[0]);
+        $this->assertInstanceOf(TextRun::class, $content[0]);
         $this->assertEquals('Choice #1', $content[0]->getContent());
     }
 
@@ -86,7 +87,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
     public function testUnmarshallErrorIfPrintedVariable20()
     {
         $expectedMsg = "An 'inlineChoice' element must only contain text. Children elements found.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
 
         $element = $this->createDOMElement('<inlineChoice identifier="choice1">var: <printedVariable identifier="pr1"/></inlineChoice>');
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);

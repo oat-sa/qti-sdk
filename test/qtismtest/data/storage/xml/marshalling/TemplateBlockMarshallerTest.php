@@ -10,6 +10,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class TemplateBlockMarshallerTest extends QtiSmTestCase
 {
@@ -52,7 +53,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\TemplateBlock', $component);
+        $this->assertInstanceOf(TemplateBlock::class, $component);
         $this->assertEquals('tpl1', $component->getTemplateIdentifier());
         $this->assertEquals('block1', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
@@ -68,7 +69,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            '\\qtism\data\storage\xml\marshalling\UnmarshallingException',
+            UnmarshallingException::class,
             "'snow' is not a valid value for the 'showHide' attribute of element 'templateBlock'."
         );
 
@@ -85,7 +86,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            '\\qtism\data\storage\xml\marshalling\UnmarshallingException',
+            UnmarshallingException::class,
             "The 'templateBlock' cannot contain 'hottext' elements."
         );
 
@@ -102,7 +103,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $this->setExpectedException(
-            '\\qtism\data\storage\xml\marshalling\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'templateIdentifier' attribute is missing from element 'templateBlock'."
         );
 

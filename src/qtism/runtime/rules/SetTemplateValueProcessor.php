@@ -23,6 +23,9 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\runtime\common\TemplateVariable;
+use qtism\data\rules\SetTemplateValue;
+
 /**
  * From IMS QTI:
  *
@@ -35,7 +38,7 @@ class SetTemplateValueProcessor extends SetValueProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\SetTemplateValue';
+        return SetTemplateValue::class;
     }
 
     /**
@@ -43,6 +46,6 @@ class SetTemplateValueProcessor extends SetValueProcessor
      */
     protected function getVariableType()
     {
-        return 'qtism\\runtime\\common\\TemplateVariable';
+        return TemplateVariable::class;
     }
 }

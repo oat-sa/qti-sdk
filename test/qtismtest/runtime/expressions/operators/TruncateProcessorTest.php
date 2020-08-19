@@ -11,6 +11,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\TruncateProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class TruncateProcessorTest extends QtiSmTestCase
 {
@@ -119,7 +120,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new OrderedContainer(BaseType::FLOAT, [new QtiFloat(1.1), new QtiFloat(2.2)]);
         $processor = new TruncateProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -129,7 +130,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiBoolean(true);
         $processor = new TruncateProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -139,7 +140,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiDuration('P1D');
         $processor = new TruncateProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -147,7 +148,7 @@ class TruncateProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new TruncateProcessor($expression, $operands);
     }
 
@@ -157,7 +158,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10);
         $operands[] = new QtiFloat(1.1);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new TruncateProcessor($expression, $operands);
     }
 
@@ -195,7 +196,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $processor = new TruncateProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
+        $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals($expected, $result->getValue());
     }
 }

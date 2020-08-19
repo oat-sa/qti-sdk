@@ -13,6 +13,7 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RoundToProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class RoundToProcessorTest extends QtiSmTestCase
 {
@@ -81,13 +82,13 @@ class RoundToProcessorTest extends QtiSmTestCase
             )
         );
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(round(1240000), round($result->getValue()));
     }
 
     public function testFiguresFromRefNoRef()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures">
@@ -103,7 +104,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testFiguresFromRefNonIntegerRef()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures">
@@ -122,13 +123,13 @@ class RoundToProcessorTest extends QtiSmTestCase
             )
         );
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(round(1240000), round($result->getValue()));
     }
 
     public function testFiguresFromRefNegativeWhenSignificantFigureInUse()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures" roundingMode="significantFigures">
@@ -147,7 +148,7 @@ class RoundToProcessorTest extends QtiSmTestCase
             )
         );
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertInstanceOf(QtiFloat::class, $result);
         $this->assertEquals(round(1240000), round($result->getValue()));
     }
 
@@ -201,7 +202,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testNoOperands()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -229,7 +230,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testTooMuchOperands()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -243,7 +244,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongBaseType()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -257,7 +258,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongCardinality()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -271,7 +272,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongFiguresOne()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="significantFigures">
@@ -286,7 +287,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongFiguresTwo()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="-1" roundingMode="decimalPlaces">

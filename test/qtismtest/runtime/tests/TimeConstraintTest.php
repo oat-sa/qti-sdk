@@ -16,7 +16,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $timeConstraint->getSource());
+        $this->assertInstanceOf(AssessmentItemRef::class, $timeConstraint->getSource());
         $this->assertInstanceOf(QtiDuration::class, $timeConstraint->getDuration());
     }
 

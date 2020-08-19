@@ -39,7 +39,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -56,7 +56,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertTrue($element->hasAttribute('title'));
         $this->assertEquals('A title', $element->getAttribute('title'));
@@ -71,7 +71,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertTrue($element->hasAttribute('label'));
         $this->assertEquals('A label', $element->getAttribute('label'));
@@ -86,7 +86,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this->assertFalse($component->isTimeDependent());
         $this->assertFalse($component->isAdaptive());
         $this->assertEquals(0, count($component->getOutcomeDeclarations()));
@@ -107,7 +107,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this->assertTrue($component->hasTitle());
         $this->assertEquals('A title', $component->getTitle());
     }
@@ -121,7 +121,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this->assertTrue($component->hasLabel());
         $this->assertEquals('A label', $component->getLabel());
     }
@@ -161,7 +161,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -207,7 +207,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
 
         $templateDeclarationElts = $element->getElementsByTagName('templateDeclaration');
@@ -247,7 +247,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this->assertEquals('Q01', $component->getIdentifier());
         $this->assertTrue($component->isTimeDependent());
         $this->assertTrue($component->isAdaptive());
@@ -273,7 +273,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this->assertEquals('T01', $templateDefaults[0]->getTemplateIdentifier());
 
         $templateDefaultExpression = $templateDefaults[0]->getExpression();
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateDefaultExpression);
+        $this->assertInstanceOf(BaseValue::class, $templateDefaultExpression);
     }
 
     /**
@@ -306,7 +306,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -321,7 +321,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -336,7 +336,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -414,7 +414,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -478,7 +478,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));

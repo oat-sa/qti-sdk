@@ -17,7 +17,7 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('variableMapping', $element->nodeName);
         $this->assertEquals($source, $element->getAttribute('sourceIdentifier'));
         $this->assertEquals($target, $element->getAttribute('targetIdentifier'));
@@ -32,7 +32,7 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\VariableMapping', $component);
+        $this->assertInstanceOf(VariableMapping::class, $component);
         $this->assertEquals($component->getSource(), 'myIdentifier1');
         $this->assertEquals($component->getTarget(), 'myIdentifier2');
     }

@@ -9,6 +9,7 @@ use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetCorrectResponseProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\QtiIdentifier;
 
 class SetCorrectValueProcessorTest extends QtiSmTestCase
 {
@@ -26,7 +27,7 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $state->getVariable('RESPONSE')->getCorrectResponse());
+        $this->assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getCorrectResponse());
         $this->assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
     }
 
@@ -44,7 +45,7 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
+            RuleProcessingException::class,
             "No variable with identifier 'RESPONSEXXXX' to be set in the current state.",
             RuleProcessingException::NONEXISTENT_VARIABLE
         );
@@ -66,7 +67,7 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException'
+            RuleProcessingException::class
         );
 
         $processor->process();

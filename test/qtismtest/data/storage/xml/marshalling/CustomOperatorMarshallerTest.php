@@ -31,19 +31,19 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $component);
+        $this->assertInstanceOf(CustomOperator::class, $component);
 
         $expressions = $component->getExpressions();
         $this->assertEquals(1, count($expressions));
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $expressions[0]);
+        $this->assertInstanceOf(Equal::class, $expressions[0]);
         $this->assertEquals(ToleranceMode::EXACT, $expressions[0]->getToleranceMode());
 
         $subExpressions = $expressions[0]->getExpressions();
         $this->assertEquals(2, count($subExpressions));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $subExpressions[0]);
+        $this->assertInstanceOf(BaseValue::class, $subExpressions[0]);
         $this->assertEquals(BaseType::INTEGER, $subExpressions[0]->getBaseType());
         $this->assertEquals(1, $subExpressions[0]->getValue());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $subExpressions[1]);
+        $this->assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this->assertEquals(BaseType::INTEGER, $subExpressions[1]->getBaseType());
         $this->assertEquals(1, $subExpressions[1]->getValue());
     }

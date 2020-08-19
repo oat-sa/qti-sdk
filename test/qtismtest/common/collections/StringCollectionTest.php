@@ -60,7 +60,7 @@ class StringCollectionTest extends QtiSmTestCase
     public function testAddStringWrongType()
     {
         $int = 1;
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $this->collection[] = $int;
     }
 
@@ -102,7 +102,7 @@ class StringCollectionTest extends QtiSmTestCase
     public function testAttachNotObject()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "You can only attach 'objects' into an AbstractCollection, 'string' given"
         );
         $this->collection->attach('string');

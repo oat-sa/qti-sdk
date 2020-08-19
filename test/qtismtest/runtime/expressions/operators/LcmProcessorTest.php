@@ -11,6 +11,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LcmProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 class LcmProcessorTest extends QtiSmTestCase
 {
@@ -32,7 +33,7 @@ class LcmProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->setExpectedException(OperatorProcessingException::class);
         $processor = new LcmProcessor($expression, $operands);
     }
 
@@ -41,7 +42,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiInteger(10)]);
         $processor = new LcmProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->setExpectedException(OperatorProcessingException::class);
         $result = $processor->process();
     }
 
@@ -50,7 +51,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(20), new RecordContainer(['A' => new QtiInteger(10)]), new QtiInteger(30)]);
         $processor = new LcmProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->setExpectedException(OperatorProcessingException::class);
         $result = $processor->process();
     }
 

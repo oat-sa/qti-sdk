@@ -14,7 +14,7 @@ class ExitTemplateProcessorTest extends QtiSmTestCase
         $processor = new ExitTemplateProcessor($rule);
 
         $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
+            RuleProcessingException::class,
             'Termination of Template Processing.',
             RuleProcessingException::EXIT_TEMPLATE
         );

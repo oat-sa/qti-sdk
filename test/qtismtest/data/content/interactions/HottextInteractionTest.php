@@ -14,7 +14,7 @@ class HottextInteractionTest extends QtiSmTestCase
     public function testCreateNoContent()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A HottextInteraction object must be composed of at least one BlockStatic object, none given."
         );
 
@@ -28,7 +28,7 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxChoices' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -42,7 +42,7 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minChoices' argument must be a positive (>= 0) integer value, 'boolean' given."
         );
 
@@ -56,7 +56,7 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minChoices' argument must respect the limits imposed by 'maxChoices'."
         );
 

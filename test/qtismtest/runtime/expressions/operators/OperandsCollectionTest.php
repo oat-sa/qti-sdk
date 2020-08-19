@@ -526,7 +526,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase
         $operands = $this->getOperands();
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The OperandsCollection only accepts QTI Runtime compliant values, '999' given."
         );
 

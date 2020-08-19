@@ -6,6 +6,7 @@ use DOMDocument;
 use qtism\data\state\AssociationValidityConstraint;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
 {
@@ -17,7 +18,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\AssociationValidityConstraint', $component);
+        $this->assertInstanceOf(AssociationValidityConstraint::class, $component);
         $this->assertEquals('IDENTIFIER', $component->getIdentifier());
         $this->assertEquals(0, $component->getMinConstraint());
         $this->assertEquals(1, $component->getMaxConstraint());
@@ -31,7 +32,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'identifier' attribute is missing from element 'associationValididtyConstraint'."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
@@ -45,7 +46,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'minConstraint' attribute is missing from element 'associationValididtyConstraint'."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
@@ -59,7 +60,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'maxConstraint' attribute is missing from element 'associationValididtyConstraint'."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
@@ -73,7 +74,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
@@ -87,7 +88,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
-            '\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);

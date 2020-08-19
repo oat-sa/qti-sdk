@@ -9,7 +9,7 @@ class IntOrIdentifierTest extends QtiSmTestCase
 {
     public function testWrongValue()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $intOrIdentifier = new QtiIntOrIdentifier(13.37);
     }
 }

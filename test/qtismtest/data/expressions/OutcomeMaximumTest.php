@@ -10,7 +10,7 @@ class OutcomeMaximumTest extends QtiSmTestCase
     public function testOutcomeMaximum()
     {
         $outcomeMaximum = new OutcomeMaximum('SCORE', 'WEIGHT');
-        $this->assertInstanceOf('qtism\\data\\expressions\\OutcomeMaximum', $outcomeMaximum);
+        $this->assertInstanceOf(OutcomeMaximum::class, $outcomeMaximum);
         $this->assertEquals('SCORE', $outcomeMaximum->getOutcomeIdentifier());
         $this->assertEquals('WEIGHT', $outcomeMaximum->getWeightIdentifier());
 

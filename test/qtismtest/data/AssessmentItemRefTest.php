@@ -18,7 +18,7 @@ class AssessmentItemRefTest extends QtiSmTestCase
     public function testCreateAssessmentItemRefWrongIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "'999' is not a valid QTI Identifier."
         );
 
@@ -30,7 +30,7 @@ class AssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef = new AssessmentItemRef('nine', 'Nine Nine Nine');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Required must be a boolean, 'string' given."
         );
 
@@ -42,7 +42,7 @@ class AssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef = new AssessmentItemRef('nine', 'Nine Nine Nine');
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "Fixed must be a boolean, 'string' given."
         );
 

@@ -15,7 +15,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
     public function testCreateNotEnoughAssociableHotspots()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given."
         );
 
@@ -29,7 +29,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
     public function testSetMaxAssociationsWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'maxAssociations' argument must be a positive (>= 0) integer, 'boolean' given."
         );
 
@@ -47,7 +47,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
     public function testSetMinAssociationsWrongType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minAssociations' argument must be a positive (>= 0) integer, 'boolean'."
         );
 
@@ -66,7 +66,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
     public function testSetMinAssociationsInvalidValue()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'."
         );
 

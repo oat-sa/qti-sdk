@@ -11,6 +11,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\DeleteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class DeleteProcessorTest extends QtiSmTestCase
 {
@@ -22,7 +23,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $processor = new DeleteProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(3, count($result));
         $this->assertTrue($result->contains(new QtiInteger(0)));
         $this->assertTrue($result->contains(new QtiInteger(20)));
@@ -34,7 +35,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(10);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(10), new QtiInteger(10), new QtiInteger(30)]);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertEquals(3, count($result));
         $this->assertTrue($result->contains(new QtiInteger(0)));
         $this->assertTrue($result->contains(new QtiInteger(20)));
@@ -61,7 +62,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(60), new QtiInteger(60), new QtiInteger(60), new QtiInteger(60)]);
         $processor = new DeleteProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+        $this->assertInstanceOf(MultipleContainer::class, $result);
         $this->assertTrue($result->isNull());
     }
 
@@ -73,7 +74,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(2, 4), new QtiPoint(3, 4)]);
         $processor = new DeleteProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertTrue($result->contains(new QtiPoint(1, 2)));
         $this->assertTrue($result->contains(new QtiPoint(3, 4)));
@@ -84,7 +85,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(2, 4);
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(2, 4), new QtiPoint(2, 4), new QtiPoint(3, 4)]);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertTrue($result->contains(new QtiPoint(1, 2)));
         $this->assertTrue($result->contains(new QtiPoint(3, 4)));
@@ -115,7 +116,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(10.1);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $processor = new DeleteProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -126,7 +127,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $processor = new DeleteProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -137,7 +138,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(10);
         $operands[] = new QtiInteger(10);
         $processor = new DeleteProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -145,7 +146,7 @@ class DeleteProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new DeleteProcessor($expression, $operands);
     }
 
@@ -156,7 +157,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(10);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new DeleteProcessor($expression, $operands);
     }
 

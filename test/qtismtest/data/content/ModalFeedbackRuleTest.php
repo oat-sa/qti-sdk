@@ -11,7 +11,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
     public function testCreateWrongOutcomeIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'outcomeIdentifier' argument must be a valid QTI identifier, '999' given."
         );
         $modalFeedbackRule = new ModalFeedbackRule(999, ShowHide::SHOW, 'IDENTIFIER', 'Title');
@@ -20,7 +20,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
     public function testCreateWrongShowHide()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'showHide' argument must be a value from the ShowHide enumeration, 'boolean' given."
         );
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', true, 'IDENTIFIER', 'Title');
@@ -29,7 +29,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
     public function testCreateWrongIdentifier()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'identifier' argument must be a valid QTI identifier, '999' given."
         );
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', ShowHide::SHOW, 999, 'Title');
@@ -38,7 +38,7 @@ class ModalFeedbackRuleTest extends QtiSmTestCase
     public function testCreateWrongTitle()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'title' argument must be a string, 'boolean' given."
         );
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', ShowHide::SHOW, 'IDENTIFIER', false);

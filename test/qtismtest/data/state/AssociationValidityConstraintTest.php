@@ -43,7 +43,7 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
      */
     public function testUnsuccessfulInstantiation($identifier, $minConstraint, $maxConstraint, $msg)
     {
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $this->setExpectedException(\InvalidArgumentException::class, $msg);
         $associationValidityConstraint = new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);
     }
 

@@ -34,9 +34,9 @@ class MathMarshallerTest extends QtiSmTestCase
             </m:math>');
 
         $math = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\Math', $math);
+        $this->assertInstanceOf(Math::class, $math);
         $xml = $math->getXml();
-        $this->assertInstanceOf('\\DOMDocument', $xml);
+        $this->assertInstanceOf(DOMDocument::class, $xml);
 
         $mathElement = $xml->documentElement;
         $this->assertEquals('m', $mathElement->prefix);
@@ -55,7 +55,7 @@ class MathMarshallerTest extends QtiSmTestCase
             </m:math>');
 
         $math = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $xml = $math->getXml();
     }
 }

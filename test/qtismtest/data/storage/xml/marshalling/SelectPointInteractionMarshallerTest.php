@@ -9,6 +9,7 @@ use qtism\data\content\interactions\SelectPointInteraction;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -58,7 +59,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SelectPointInteraction', $component);
+        $this->assertInstanceOf(SelectPointInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(1, $component->getMaxChoices());
         $this->assertEquals(1, $component->getMinChoices());
@@ -85,7 +86,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'selectPointInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -105,7 +106,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'selectPointInteraction' element."
         );
 
@@ -140,7 +141,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element."
         );
 

@@ -4,6 +4,7 @@ namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\RuleProcessorFactory;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rules\SetOutcomeValueProcessor;
 
 class RuleProcessorFactoryTest extends QtiSmTestCase
 {
@@ -17,7 +18,7 @@ class RuleProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new RuleProcessorFactory();
         $processor = $factory->createProcessor($rule);
-        $this->assertInstanceOf('qtism\\runtime\\rules\\SetOutcomeValueProcessor', $processor);
+        $this->assertInstanceOf(SetOutcomeValueProcessor::class, $processor);
         $this->assertEquals('setOutcomeValue', $processor->getRule()->getQtiClassName());
     }
 
@@ -30,7 +31,7 @@ class RuleProcessorFactoryTest extends QtiSmTestCase
 			</product>');
 
         $factory = new RuleProcessorFactory();
-        $this->setExpectedException('\\RuntimeException');
+        $this->setExpectedException(\RuntimeException::class);
         $processor = $factory->createProcessor($rule);
     }
 }

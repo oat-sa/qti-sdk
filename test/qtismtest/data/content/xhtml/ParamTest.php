@@ -11,7 +11,7 @@ class ParamTest extends QtiSmTestCase
     public function testCreateWrongNameType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'name' argument must be a string, 'integer' given."
         );
         $param = new Param(999, 'value', ParamType::DATA);
@@ -20,7 +20,7 @@ class ParamTest extends QtiSmTestCase
     public function testCreateWrongValueType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'value' argument must be a string, 'integer' given."
         );
         $param = new Param('name', 999, ParamType::DATA);
@@ -29,7 +29,7 @@ class ParamTest extends QtiSmTestCase
     public function testCreateNotParamType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'valueType' argument must be a value from the ParamType enumeration, 'boolean' given."
         );
         $param = new Param('name', 'value', true);
@@ -38,7 +38,7 @@ class ParamTest extends QtiSmTestCase
     public function testCreateWrongTypeType()
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             "The 'type' argument must be a string, 'integer' given."
         );
         $param = new Param('name', 'value', ParamType::REF, 999);

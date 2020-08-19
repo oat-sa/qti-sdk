@@ -10,6 +10,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\StringMatchProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 class StringMatchProcessorTest extends QtiSmTestCase
 {
@@ -62,7 +63,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new MultipleContainer(BaseType::STRING, [new QtiString('String!')])]);
         $processor = new StringMatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -71,7 +72,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new QtiInteger(25)]);
         $processor = new StringMatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -79,7 +80,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!')]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new StringMatchProcessor($expression, $operands);
     }
 
@@ -87,7 +88,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new QtiString('String!'), new QtiString('String!')]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->setExpectedException(ExpressionProcessingException::class);
         $processor = new StringMatchProcessor($expression, $operands);
     }
 

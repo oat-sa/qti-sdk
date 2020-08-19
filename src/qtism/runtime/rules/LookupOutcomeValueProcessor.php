@@ -31,6 +31,7 @@ use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\ExpressionEngine;
+use qtism\data\rules\LookupOutcomeValue;
 
 /**
  * From IMS QTI:
@@ -146,6 +147,6 @@ class LookupOutcomeValueProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\LookupOutcomeValue';
+        return LookupOutcomeValue::class;
     }
 }

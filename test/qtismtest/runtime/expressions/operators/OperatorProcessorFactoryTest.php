@@ -9,6 +9,8 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtismtest\QtiSmTestCase;
+use org\qtism\test\Explode;
+use qtism\runtime\expressions\operators\SumProcessor;
 
 require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
 
@@ -41,7 +43,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory = new OperatorProcessorFactory();
         $operands = new OperandsCollection([new QtiInteger(2), new QtiInteger(2)]);
         $processor = $factory->createProcessor($expression, $operands);
-        $this->assertInstanceOf('qtism\\runtime\\expressions\\operators\\SumProcessor', $processor);
+        $this->assertInstanceOf(SumProcessor::class, $processor);
         $this->assertEquals('sum', $processor->getExpression()->getQtiClassName());
         $this->assertEquals(4, $processor->process()->getValue()); // x)
     }
@@ -51,7 +53,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $expression = $this->createComponentFromXml('<baseValue baseType="string">String!</baseValue>');
         $factory = new OperatorProcessorFactory();
 
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $processor = $factory->createProcessor($expression);
     }
 
@@ -67,7 +69,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory = new OperatorProcessorFactory();
         $operands = new OperandsCollection([new QtiString('this-is-a-test')]);
         $processor = $factory->createProcessor($expression, $operands);
-        $this->assertInstanceOf('org\\qtism\\test\\Explode', $processor);
+        $this->assertInstanceOf(Explode::class, $processor);
         $this->assertEquals('customOperator', $processor->getExpression()->getQtiClassName());
         $this->assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, [new QtiString('this'), new QtiString('is'), new QtiString('a'), new QtiString('test')])));
     }
@@ -84,7 +86,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory = new OperatorProcessorFactory();
 
         $this->setExpectedException(
-            '\\RuntimeException',
+            \RuntimeException::class,
             "Only custom operators with a 'class' attribute value can be processed."
         );
 
@@ -103,7 +105,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory = new OperatorProcessorFactory();
 
         $this->setExpectedException(
-            '\\RuntimeException',
+            \RuntimeException::class,
             "No custom operator implementation found for class 'org.qtism.test.Unknown'"
         );
 

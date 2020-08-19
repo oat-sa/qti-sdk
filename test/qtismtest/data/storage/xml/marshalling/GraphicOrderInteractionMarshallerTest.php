@@ -13,6 +13,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
 {
@@ -85,7 +86,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicOrderInteraction', $component);
+        $this->assertInstanceOf(GraphicOrderInteraction::class, $component);
         $this->assertEquals('my-graphicOrder', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMinChoices());
@@ -135,7 +136,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given."
         );
 
@@ -153,7 +154,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "A 'graphicOrderInteraction' element must contain exactly one 'object' element, none given."
         );
 
@@ -173,7 +174,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory 'responseIdentifier' attribute is missing from the 'graphicOrderInteraction' element."
         );
 
@@ -203,7 +204,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicOrderInteraction', $component);
+        $this->assertInstanceOf(GraphicOrderInteraction::class, $component);
         $this->assertEquals('my-graphicOrder', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->hasMinChoices());

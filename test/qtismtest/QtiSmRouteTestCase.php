@@ -39,7 +39,7 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
      *
      * @return Route
      */
-    public static function buildSimpleRoute($routeClass = 'qtism\\runtime\\tests\\Route', $testPartCount = 1, $itemCount = 3)
+    public static function buildSimpleRoute($routeClass = Route::class, $testPartCount = 1, $itemCount = 3)
     {
         $route = new $routeClass();
         $assessmentTest = new AssessmentTest('test', 'A Test');

@@ -8,6 +8,7 @@ use qtism\data\state\InterpolationTable;
 use qtism\data\state\InterpolationTableEntry;
 use qtism\data\state\InterpolationTableEntryCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class InterpolationTableMarshallerTest extends QtiSmTestCase
 {
@@ -23,7 +24,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('interpolationTable', $element->nodeName);
         $entryElements = $element->getElementsByTagName('interpolationTableEntry');
         $this->assertEquals(2, $entryElements->length);
@@ -58,7 +59,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\InterpolationTable', $component);
+        $this->assertInstanceOf(InterpolationTable::class, $component);
         $entries = $component->getInterpolationTableEntries();
         $this->assertEquals(2, count($entries));
 
@@ -90,7 +91,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "Unable to transform 'string' into float."
         );
 
@@ -111,7 +112,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "An 'interpolationTable' element must contain at least one 'interpolationTableEntry' element."
         );
 
@@ -132,7 +133,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             'The BaseType attribute must be a value from the BaseType enumeration.'
         );
 

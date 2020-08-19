@@ -7,6 +7,7 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 class ShufflingGroupMarshallerTest extends QtiSmTestCase
 {
@@ -18,7 +19,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(\DOMElement::class, $element);
         $this->assertEquals('id1 id2 id3', $element->getAttribute('identifiers'));
         $this->assertEquals('id2', $element->getAttribute('fixedIdentifiers'));
     }
@@ -33,7 +34,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\ShufflingGroup', $component);
+        $this->assertInstanceOf(ShufflingGroup::class, $component);
         $this->assertEquals(['id1', 'id2', 'id3'], $component->getIdentifiers()->getArrayCopy());
         $this->assertEquals(['id2'], $component->getFixedIdentifiers()->getArrayCopy());
     }
@@ -47,7 +48,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            UnmarshallingException::class,
             "The mandatory attribute 'identifiers' is missing from element 'shufflingGroup'."
         );
 

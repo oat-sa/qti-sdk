@@ -6,16 +6,17 @@ use DOMDocument;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 
 class CompactMarshallerFactoryTest extends QtiSmTestCase
 {
     public function testInstantiation()
     {
         $factory = new Compact21MarshallerFactory();
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\Compact21MarshallerFactory', $factory);
+        $this->assertInstanceOf(Compact21MarshallerFactory::class, $factory);
 
         $this->assertTrue($factory->hasMappingEntry('assessmentItemRef'));
-        $this->assertEquals('qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller', $factory->getMappingEntry('assessmentItemRef'));
+        $this->assertEquals(ExtendedAssessmentItemRefMarshaller::class, $factory->getMappingEntry('assessmentItemRef'));
     }
 
     public function testFromDomElement()
@@ -26,7 +27,7 @@ class CompactMarshallerFactoryTest extends QtiSmTestCase
 
         $factory = new Compact21MarshallerFactory();
         $marshaller = $factory->createMarshaller($element);
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller', $marshaller);
+        $this->assertInstanceOf(ExtendedAssessmentItemRefMarshaller::class, $marshaller);
     }
 
     public function testFromComponent()

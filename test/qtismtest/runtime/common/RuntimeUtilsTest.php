@@ -79,7 +79,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     public function testThrowTypingError($value, $expectedMsg)
     {
         $this->setExpectedException(
-            '\\InvalidArgumentException',
+            \InvalidArgumentException::class,
             $expectedMsg
         );
 

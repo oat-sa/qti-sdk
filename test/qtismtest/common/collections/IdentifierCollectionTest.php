@@ -60,14 +60,14 @@ class IdentifierCollectionTest extends QtiSmTestCase
     public function testAddIdentifierWrongFormat()
     {
         $identifier = '.identifier';
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $this->collection[] = $identifier;
     }
 
     public function testAddIdentifierWrongType()
     {
         $identifier = 999;
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->setExpectedException(\InvalidArgumentException::class);
         $this->collection[] = $identifier;
     }
 

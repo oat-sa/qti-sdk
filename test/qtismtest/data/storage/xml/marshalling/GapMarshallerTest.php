@@ -99,7 +99,7 @@ class GapMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Gap', $gap);
+        $this->assertInstanceOf(Gap::class, $gap);
         $this->assertEquals('gap1', $gap->getIdentifier());
         $this->assertEquals('tpl-gap', $gap->getTemplateIdentifier());
         $this->assertTrue($gap->hasTemplateIdentifier());
@@ -132,7 +132,7 @@ class GapMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Gap', $gap);
+        $this->assertInstanceOf(Gap::class, $gap);
         $this->assertEquals('gap1', $gap->getIdentifier());
         $this->assertEquals('', $gap->getTemplateIdentifier());
         $this->assertFalse($gap->hasTemplateIdentifier());
