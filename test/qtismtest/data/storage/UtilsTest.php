@@ -193,7 +193,7 @@ class UtilsTest extends QtiSmTestCase
         $this->assertEquals(count($intCoords), count($coords));
 
         for ($i = 0; $i < count($intCoords); $i++) {
-            $this->assertEquals(intval($intCoords[$i]), $coords[$i]);
+            $this->assertEquals((int)$intCoords[$i], $coords[$i]);
         }
     }
 
@@ -305,8 +305,8 @@ class UtilsTest extends QtiSmTestCase
     {
         return [
             ['25.234', 25.234],
-            ['25', floatval(25)],
-            ['-25', -floatval(25)],
+            ['25', (float)25],
+            ['-25', -(float)25],
             ['-25.234', -25.234],
             ['25.0', 25.0],
         ];
