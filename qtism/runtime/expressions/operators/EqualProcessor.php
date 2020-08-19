@@ -137,7 +137,7 @@ class EqualProcessor extends OperatorProcessor
 
             if ($expression->getToleranceMode() === ToleranceMode::ABSOLUTE) {
                 $t0 = $operand1->getValue() - $tolerance[0];
-                $t1 = $operand1->getValue() + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]);
+                $t1 = $operand1->getValue() + ($tolerance[1] ?? $tolerance[0]);
 
                 $moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
                 $lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
@@ -147,7 +147,7 @@ class EqualProcessor extends OperatorProcessor
                 // Tolerance mode RELATIVE
                 $tolerance = $expression->getTolerance();
                 $t0 = $operand1->getValue() * (1 - $tolerance[0] / 100);
-                $t1 = $operand1->getValue() * (1 + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]) / 100);
+                $t1 = $operand1->getValue() * (1 + ($tolerance[1] ?? $tolerance[0]) / 100);
 
                 $moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
                 $lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;

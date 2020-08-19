@@ -163,7 +163,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return isset($this->dataPlaceHolder[$offset]) ? $this->dataPlaceHolder[$offset] : null;
+        return $this->dataPlaceHolder[$offset] ?? null;
     }
 
     /**

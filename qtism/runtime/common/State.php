@@ -77,11 +77,7 @@ class State extends AbstractCollection
     public function getVariable($variableIdentifier)
     {
         $data = &$this->getDataPlaceHolder();
-        if (isset($data[$variableIdentifier])) {
-            return $data[$variableIdentifier];
-        } else {
-            return null;
-        }
+        return $data[$variableIdentifier] ?? null;
     }
 
     /**

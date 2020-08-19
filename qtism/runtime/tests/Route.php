@@ -756,11 +756,7 @@ class Route implements Iterator
     {
         $sectionMap = $this->getAssessmentItemRefSectionMap();
 
-        if (isset($sectionMap[$sectionIdentifier])) {
-            return $sectionMap[$sectionIdentifier];
-        } else {
-            return new AssessmentItemRefCollection();
-        }
+        return $sectionMap[$sectionIdentifier] ?? new AssessmentItemRefCollection();
     }
 
     /**
