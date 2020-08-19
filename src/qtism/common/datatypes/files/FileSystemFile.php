@@ -71,11 +71,17 @@ class FileSystemFile implements QtiFile
      */
     public function __construct($path)
     {
+        $this->readInfo($path);
+        $this->setPath($path);
+    }
+
+    private function readInfo($path)
+    {
         // Retrieve filename and mime type.
         $fp = @fopen($path, 'r');
 
         if ($fp === false) {
-            $msg = "Unable to retrieve QTI file at '${path}.";
+            $msg = 'Unable to retrieve QTI file at "' . $path . '".';
             throw new RuntimeException($msg);
         }
 
@@ -91,7 +97,6 @@ class FileSystemFile implements QtiFile
 
         $this->setFilename($filename);
         $this->setMimeType($mimeType);
-        $this->setPath($path);
     }
 
     /**
@@ -213,6 +218,10 @@ class FileSystemFile implements QtiFile
             if (is_readable($source) === true) {
                 // Should we build the path to $destination?
                 $pathinfo = pathinfo($destination);
+                if (isset($pathinfo['dirname']) === false) {
+                    $msg = "The destination argument '${destination}' is a malformed path.";
+                    throw new RuntimeException($msg);
+                }
 
                 if (is_dir($pathinfo['dirname']) === false) {
                     if (($mkdir = @mkdir($pathinfo['dirname'], '0770', true)) === false) {
