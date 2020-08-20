@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\FieldValue;
 use qtism\data\expressions\Variable;
@@ -18,7 +19,7 @@ class FieldValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('fieldValue', $element->nodeName);
         $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
 

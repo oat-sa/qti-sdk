@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\runtime\common\StackTrace;
@@ -36,7 +37,7 @@ class StackTraceTest extends QtiSmTestCase
         $stackTrace = new StackTrace();
         $stackTraceItem = new BaseValue(BaseType::INTEGER, 0);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The StackTrace class only accepts to store StackTraceItem objects.");
 
         $stackTrace[] = $stackTraceItem;

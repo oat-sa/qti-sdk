@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
@@ -19,7 +20,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('id1 id2 id3', $element->getAttribute('identifiers'));
         $this->assertEquals('id2', $element->getAttribute('fixedIdentifiers'));
     }

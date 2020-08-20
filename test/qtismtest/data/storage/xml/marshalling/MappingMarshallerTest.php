@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MapEntry;
 use qtism\data\state\MapEntryCollection;
@@ -22,7 +23,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('mapping', $element->nodeName);
         $this->assertEquals($defaultValue . '', $element->getAttribute('defaultValue'));
         $this->assertEquals('', $element->getAttribute('lowerBound')); // empty

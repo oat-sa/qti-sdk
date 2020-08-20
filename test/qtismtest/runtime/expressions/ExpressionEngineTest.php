@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\data\ItemSessionControl;
@@ -44,7 +45,7 @@ class ExpressionEngineTest extends QtiSmTestCase
     {
         $expression = new ItemSessionControl();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed.");
 
         $engine = new ExpressionEngine($expression);

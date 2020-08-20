@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\state\InterpolationTable;
 use qtism\data\state\InterpolationTableEntry;
@@ -24,7 +25,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('interpolationTable', $element->nodeName);
         $entryElements = $element->getElementsByTagName('interpolationTableEntry');
         $this->assertEquals(2, $entryElements->length);

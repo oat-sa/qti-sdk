@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\processing;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -284,7 +285,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
     public function testPrintedVariableWithUnknownValueType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.");
 
         new PrintedVariableEngine(new TextRun('crash'));

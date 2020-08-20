@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -21,7 +22,7 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('stringMatch', $element->nodeName);
         $this->assertEquals('false', $element->getAttribute('caseSensitive'));
         $this->assertEquals('false', $element->getAttribute('substring'));

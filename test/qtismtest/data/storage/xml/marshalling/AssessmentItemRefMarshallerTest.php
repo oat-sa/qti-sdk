@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
@@ -33,7 +34,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals($href, $element->getAttribute('href'));
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
@@ -85,7 +86,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($href, $element->getAttribute('href'));

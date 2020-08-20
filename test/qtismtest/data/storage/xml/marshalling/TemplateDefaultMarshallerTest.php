@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\NullValue;
 use qtism\data\state\TemplateDefault;
 use qtismtest\QtiSmTestCase;
@@ -18,7 +19,7 @@ class TemplateDefaultMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('templateDefault', $element->nodeName);
         $this->assertEquals($templateIdentifier, $element->getAttribute('templateIdentifier'));
 

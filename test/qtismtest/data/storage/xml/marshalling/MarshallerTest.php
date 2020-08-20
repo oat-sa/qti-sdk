@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\ItemSessionControl;
@@ -47,7 +48,7 @@ class MarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $child = Marshaller::getFirstChildElement($element);
-        $this->assertInstanceOf(\DOMElement::class, $child);
+        $this->assertInstanceOf(DOMElement::class, $child);
         $this->assertEquals('child', $child->nodeName);
     }
 

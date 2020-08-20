@@ -20,6 +20,7 @@ use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
+use UnexpectedValueException;
 
 class ContainerTest extends QtiSmTestCase
 {
@@ -319,7 +320,7 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDetachNotFound()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage("The object you want to detach could not be found in the collection.");
 
         $object = new QtiBoolean(true);
@@ -337,7 +338,7 @@ class ContainerTest extends QtiSmTestCase
 
     public function testReplaceNotFound()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage("The object you want to replace could not be found.");
 
         $object = new QtiBoolean(true);

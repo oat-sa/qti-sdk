@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\DefaultValue;
@@ -23,7 +24,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('defaultValue', $element->nodeName);
         $this->assertEquals($interpretation, $element->getAttribute('interpretation'));
         $valueElements = $element->getElementsByTagName('value');

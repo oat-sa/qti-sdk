@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\xml;
 
+use LogicException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
@@ -47,7 +48,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot resolve template location before loading any file.');
         $doc->resolveTemplateLocation();
     }

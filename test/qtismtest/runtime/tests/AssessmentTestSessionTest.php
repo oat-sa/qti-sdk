@@ -4,6 +4,7 @@ namespace qtismtest\runtime\tests;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiFloat;
@@ -2249,7 +2250,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The variables set to the AssessmentTestSession global scope must have simple variable identifiers. 'TEST.Q01' given.");
 
         $assessmentTestSession->setVariable(new OutcomeVariable('TEST.Q01', Cardinality::SINGLE, BaseType::IDENTIFIER));
@@ -2259,7 +2260,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The identifier '999' of the variable to set is invalid.");
 
         $assessmentTestSession->setVariable(new OutcomeVariable('999', Cardinality::SINGLE, BaseType::IDENTIFIER));
@@ -2269,7 +2270,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("AssessmentTestSession object addressed with an invalid identifier '999'.");
 
         $assessmentTestSession[999];
@@ -2279,7 +2280,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("An AssessmentTestSession object must be addressed by string.");
 
         $assessmentTestSession[999] = new QtiIdentifier('XXX');
@@ -2299,7 +2300,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("AssessmentTestSession object addressed with an invalid identifier '---999'.");
 
         $assessmentTestSession['---999'] = new QtiIdentifier('XXX');
@@ -2318,7 +2319,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The variable identifier '---8888' is not a valid variable identifier.");
 
         unset($assessmentTestSession['---8888']);
@@ -2354,7 +2355,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The variable identifier '----989' is not a valid variable identifier.");
 
         unset($assessmentTestSession['----989']);
@@ -2364,7 +2365,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable identifiers (no prefix, no sequence number). 'QX.ITEMVAR' given.");
 
         isset($assessmentTestSession['QX.ITEMVAR']);

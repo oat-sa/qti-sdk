@@ -2,6 +2,7 @@
 
 namespace qtismtest\data;
 
+use InvalidArgumentException;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\P;
@@ -16,7 +17,7 @@ class QtiComponentCollectionTest extends QtiSmTestCase
     {
         $collection = new QtiComponentCollection();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("QtiComponentCollection class only accept QtiComponent objects, 'stdClass' given.");
 
         $collection[] = new stdClass();

@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\data\state\AssociationValidityConstraint;
 use qtism\data\state\AssociationValidityConstraintCollection;
 use qtism\data\state\ResponseValidityConstraint;
@@ -46,7 +47,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      */
     public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($msg);
         $responseValidityConstraint = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
     }

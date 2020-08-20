@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
 use InvalidArgumentException;
+use LogicException;
 use qtism\data\AssessmentItem;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
@@ -464,7 +465,7 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot include fragments via XInclude before loading any file.');
         $doc->xInclude();
     }
@@ -473,7 +474,7 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot resolve template location before loading any file.');
         $doc->resolveTemplateLocation();
     }
@@ -482,7 +483,7 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot resolve assessmentSectionRefs before loading any file.');
         $doc->includeAssessmentSectionRefs();
     }

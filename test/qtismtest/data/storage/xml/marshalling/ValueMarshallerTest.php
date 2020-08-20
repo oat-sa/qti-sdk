@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
@@ -21,7 +22,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('value', $element->nodeName);
         $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
@@ -38,7 +39,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertTrue('false' === $element->nodeValue);
     }
 

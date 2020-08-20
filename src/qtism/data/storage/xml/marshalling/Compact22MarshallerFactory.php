@@ -49,16 +49,16 @@ class Compact22MarshallerFactory extends Qti22MarshallerFactory
     {
         parent::__construct();
 
-        $this->addMappingEntry('assessmentItemRef', \qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller::class);
-        $this->addMappingEntry('assessmentSection', \qtism\data\storage\xml\marshalling\ExtendedAssessmentSectionMarshaller::class);
-        $this->addMappingEntry('testPart', \qtism\data\storage\xml\marshalling\ExtendedTestPartMarshaller::class);
-        $this->addMappingEntry('assessmentTest', \qtism\data\storage\xml\marshalling\ExtendedAssessmentTestMarshaller::class);
-        $this->addMappingEntry('rubricBlockRef', \qtism\data\storage\xml\marshalling\RubricBlockRefMarshaller::class);
-        $this->addMappingEntry('testFeedbackRef', \qtism\data\storage\xml\marshalling\TestFeedbackRefMarshaller::class);
-        $this->addMappingEntry('modalFeedbackRule', \qtism\data\storage\xml\marshalling\ModalFeedbackRuleMarshaller::class);
-        $this->addMappingEntry('shuffling', \qtism\data\storage\xml\marshalling\ShufflingMarshaller::class);
-        $this->addMappingEntry('shufflingGroup', \qtism\data\storage\xml\marshalling\ShufflingGroupMarshaller::class);
-        $this->addMappingEntry('responseValidityConstraint', \qtism\data\storage\xml\marshalling\ResponseValidityConstraintMarshaller::class);
-        $this->addMappingEntry('associationValidityConstraint', \qtism\data\storage\xml\marshalling\AssociationValidityConstraintMarshaller::class);
+        $this->addMappingEntry('assessmentItemRef', ExtendedAssessmentItemRefMarshaller::class);
+        $this->addMappingEntry('assessmentSection', ExtendedAssessmentSectionMarshaller::class);
+        $this->addMappingEntry('testPart', ExtendedTestPartMarshaller::class);
+        $this->addMappingEntry('assessmentTest', ExtendedAssessmentTestMarshaller::class);
+        $this->addMappingEntry('rubricBlockRef', RubricBlockRefMarshaller::class);
+        $this->addMappingEntry('testFeedbackRef', TestFeedbackRefMarshaller::class);
+        $this->addMappingEntry('modalFeedbackRule', ModalFeedbackRuleMarshaller::class);
+        $this->addMappingEntry('shuffling', ShufflingMarshaller::class);
+        $this->addMappingEntry('shufflingGroup', ShufflingGroupMarshaller::class);
+        $this->addMappingEntry('responseValidityConstraint', ResponseValidityConstraintMarshaller::class);
+        $this->addMappingEntry('associationValidityConstraint', AssociationValidityConstraintMarshaller::class);
     }
 }

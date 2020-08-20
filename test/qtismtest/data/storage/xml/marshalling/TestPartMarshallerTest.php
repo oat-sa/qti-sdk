@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\NavigationMode;
@@ -30,7 +31,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('testPart', $element->nodeName);
         $this->assertEquals('part1', $element->getAttribute('identifier'));
         $this->assertEquals('linear', $element->getAttribute('navigationMode'));

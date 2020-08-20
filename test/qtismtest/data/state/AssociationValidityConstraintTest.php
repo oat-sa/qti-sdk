@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\data\state\AssociationValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
@@ -43,7 +44,7 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
      */
     public function testUnsuccessfulInstantiation($identifier, $minConstraint, $maxConstraint, $msg)
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($msg);
         $associationValidityConstraint = new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);
     }

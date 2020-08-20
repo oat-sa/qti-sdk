@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\tests;
 
 use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
@@ -490,7 +491,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The 'testPart' argument must be a string or a TestPart object.");
 
         $routeItems = $route->getRouteItemsByTestPart(false);
@@ -522,7 +523,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The 'assessmentSection' argument must be a string or an AssessmentSection object.");
 
         $routeItems = $route->getRouteItemsByAssessmentSection(false);
@@ -561,7 +562,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.");
 
         $routeItems = $route->getRouteItemsByAssessmentItemRef(false);
@@ -571,7 +572,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("The given identifier '|||' is an invalid branching target.");
 
         $route->branch('|||');

@@ -12,6 +12,7 @@ use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtismtest\QtiSmTestCase;
 use org\qtism\test\Explode;
 use qtism\runtime\expressions\operators\SumProcessor;
+use RuntimeException;
 
 require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
 
@@ -86,7 +87,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new OperatorProcessorFactory();
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Only custom operators with a 'class' attribute value can be processed.");
 
         $factory->createProcessor($expression);
@@ -103,7 +104,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new OperatorProcessorFactory();
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("No custom operator implementation found for class 'org.qtism.test.Unknown'");
 
         $factory->createProcessor($expression);

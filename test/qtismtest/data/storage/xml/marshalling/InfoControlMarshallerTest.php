@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InfoControl;
 use qtism\data\content\InlineCollection;
@@ -18,7 +19,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $component->setXmlBase('/home/jerome');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals(0, $element->childNodes->length);
         $this->assertEquals('', $element->getAttribute('id'));
         $this->assertEquals('', $element->getAttribute('class'));
@@ -33,7 +34,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $component = new InfoControl('myControl', 'myInfo elt', 'en-US', 'A label...');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals(0, $element->childNodes->length);
         $this->assertEquals('myControl', $element->getAttribute('id'));
         $this->assertEquals('myInfo elt', $element->getAttribute('class'));

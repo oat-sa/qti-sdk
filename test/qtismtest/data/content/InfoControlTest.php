@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content;
 
+use InvalidArgumentException;
 use qtism\data\content\InfoControl;
 use qtismtest\QtiSmTestCase;
 
@@ -11,7 +12,7 @@ class InfoControlTest extends QtiSmTestCase
     {
         $infoControl = new InfoControl();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'title' argument must be a string, 'integer' given.");
 
         $infoControl->setTitle(999);

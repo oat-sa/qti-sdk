@@ -36,7 +36,7 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
 
         $expected = '$string_0 = "weight1";' . "\n";
         $expected .= '$double_0 = 1.1;' . "\n";
-        $expected .= '$weight_0 = new ' . \qtism\data\state\Weight::class . '($string_0, $double_0);' . "\n";
+        $expected .= '$weight_0 = new ' . Weight::class . '($string_0, $double_0);' . "\n";
 
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }

@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\AssessmentItem;
@@ -32,7 +33,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($assessmentItem);
         $element = $marshaller->marshall($assessmentItem);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, title, label, toolName, toolVersion
@@ -97,7 +98,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($item);
         $element = $marshaller->marshall($item);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, lang, title

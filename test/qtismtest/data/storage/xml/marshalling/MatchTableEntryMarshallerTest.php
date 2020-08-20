@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MatchTableEntry;
 use qtismtest\QtiSmTestCase;
@@ -18,7 +19,7 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::URI]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('matchTableEntry', $element->nodeName);
         $this->assertEquals('' . $sourceValue, $element->getAttribute('sourceValue'));
         $this->assertEquals($targetValue, $element->getAttribute('targetValue'));

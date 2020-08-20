@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\content\Stylesheet;
 use qtismtest\QtiSmTestCase;
 
@@ -23,7 +24,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('stylesheet', $element->nodeName);
         $this->assertEquals($uri, $element->getAttribute('href'));
         $this->assertEquals($type, $element->getAttribute('type'));
@@ -40,7 +41,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('stylesheet', $element->nodeName);
         $this->assertEquals($uri, $element->getAttribute('href'));
         $this->assertEquals('text/css', $element->getAttribute('type')); // default
