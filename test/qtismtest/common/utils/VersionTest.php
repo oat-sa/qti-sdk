@@ -16,7 +16,7 @@ class VersionTest extends QtiSmTestCase
      * @param string|null $operator
      * @param mixed $expected
      */
-    public function testVersionCompare($version1, $version2, $operator, $expected)
+    public function testVersionCompareValid($version1, $version2, $operator, $expected)
     {
         $this->assertSame($expected, Version::compare($version1, $version2, $operator));
     }
@@ -29,7 +29,7 @@ class VersionTest extends QtiSmTestCase
         Version::compare('2.1.1', '2.2.0', '!==');
     }
 
-    public function versionCompareValidProvider()
+    public function versionCompareValidProvider(): array
     {
         return [
             ['2', '2', null, 0],

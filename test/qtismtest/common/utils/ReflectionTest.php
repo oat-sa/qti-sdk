@@ -23,11 +23,11 @@ class ReflectionTest extends QtiSmTestCase
     public function testNewInstanceWithArguments()
     {
         $clazz = new ReflectionClass(\Exception::class);
-        $args = ["A message", 12];
+        $args = ['A message', 12];
         $instance = Reflection::newInstance($clazz, $args);
 
         $this->assertInstanceOf(\Exception::class, $instance);
-        $this->assertEquals("A message", $instance->getMessage());
+        $this->assertEquals('A message', $instance->getMessage());
         $this->assertEquals(12, $instance->getCode());
     }
 
@@ -42,15 +42,15 @@ class ReflectionTest extends QtiSmTestCase
     public function shortClassNameProvider()
     {
         return [
-            ["SomeClass", "SomeClass"],
-            ["Class", "My\\Class"],
-            ["Class", "My\\Super\\Class"],
-            ["Class", "\\My\\Super\\Class"],
+            ['SomeClass', 'SomeClass'],
+            ['Class', "My\\Class"],
+            ['Class', "My\\Super\\Class"],
+            ['Class', "\\My\\Super\\Class"],
 
-            ["stdClass", new stdClass()],
-            ["QtiInteger", new QtiInteger(10)],
+            ['stdClass', new stdClass()],
+            ['QtiInteger', new QtiInteger(10)],
 
-            ["My_Stupid_Class", "My_Stupid_Class"],
+            ['My_Stupid_Class', 'My_Stupid_Class'],
             [false, 12],
             [false, null],
             [false, "\\"],

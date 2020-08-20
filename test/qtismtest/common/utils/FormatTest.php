@@ -289,7 +289,7 @@ class FormatTest extends QtiSmTestCase
     {
         return [
             ["a\tb"],
-            [" "],
+            [' '],
             [''],
         ];
     }
@@ -297,17 +297,17 @@ class FormatTest extends QtiSmTestCase
     public function validString256FormatProvider()
     {
         return [
-            [""],
+            [''],
             ["\t\n\r"],
-            ["Hello World!"],
-            ["世界，你好！"] // Hello World!
+            ['Hello World!'],
+            ['世界，你好！'] // Hello World!
         ];
     }
 
     public function invalidString256FormatProvider()
     {
         return [
-            ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue."],
+            ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue.'],
         ];
     }
 
@@ -356,19 +356,19 @@ class FormatTest extends QtiSmTestCase
             [":%-15.10s:\n", true],
             ["This is an integer with padding %03d\n", true],
             ['This is an integer with padding...', false],
-            ["Escape or not? %%s", false],
-            ["Escape or not? %%%s", true],
-            ["Escape or not? %%%%s", false],
-            ["Escape or not? %%%%%s", true],
-            ["%s bla %s and %%%s is %s and %%%%s", true],
-            ["%%s bla %s and %%%s is %s and %%%%s", true],
-            ["%%s bla %%s and %%%s is %s and %%%%s", true],
-            ["%%s bla %%s and %%s is %s and %%%%s", true],
-            ["%%s bla %%s and %%s is %%%%s and %%%%s", false],
-            ["%s", true],
-            ["%S", false],
-            ["bla %S bli %s", true],
-            ["blabla", false],
+            ['Escape or not? %%s', false],
+            ['Escape or not? %%%s', true],
+            ['Escape or not? %%%%s', false],
+            ['Escape or not? %%%%%s', true],
+            ['%s bla %s and %%%s is %s and %%%%s', true],
+            ['%%s bla %s and %%%s is %s and %%%%s', true],
+            ['%%s bla %%s and %%%s is %s and %%%%s', true],
+            ['%%s bla %%s and %%s is %s and %%%%s', true],
+            ['%%s bla %%s and %%s is %%%%s and %%%%s', false],
+            ['%s', true],
+            ['%S', false],
+            ['bla %S bli %s', true],
+            ['blabla', false],
         ];
     }
 
@@ -410,27 +410,27 @@ class FormatTest extends QtiSmTestCase
     public function sanitizeProvider()
     {
         return [
-            ["GoodIdentifier", "GoodIdentifier"],
-            ["abc 123", "abc123"],
-            ["@bc", "bc"],
-            ["-bc", "bc"],
-            ["---bc", "bc"],
-            ["-bc-", "bc-"],
-            ["2017id", "id"],
-            ["abc@@@", "abc"],
-            ["20i17d", "i17d"],
-            ["20id@@", "id"],
-            ["9bc", "bc"],
-            ["bc@", "bc"],
+            ['GoodIdentifier', 'GoodIdentifier'],
+            ['abc 123', 'abc123'],
+            ['@bc', 'bc'],
+            ['-bc', 'bc'],
+            ['---bc', 'bc'],
+            ['-bc-', 'bc-'],
+            ['2017id', 'id'],
+            ['abc@@@', 'abc'],
+            ['20i17d', 'i17d'],
+            ['20id@@', 'id'],
+            ['9bc', 'bc'],
+            ['bc@', 'bc'],
         ];
     }
 
     public function sanitizeProvider2()
     {
         return [
-            [""],
-            ["\""],
-            ["123@"],
+            [''],
+            ['"'],
+            ['123@'],
             [123],
             [12.3],
             [null],

@@ -13,7 +13,9 @@ class BeanMethodTest extends QtiSmTestCase
     public function testNoMethod()
     {
         $class = new ReflectionClass(SimpleBean::class);
-        $this->setExpectedException(BeanException::class, "The method 'unknownMethod' does not exist.", BeanException::NO_METHOD);
+        $this->expectException(BeanException::class);
+        $this->expectExceptionMessage("The method 'unknownMethod' does not exist.");
+        $this->expectExceptionCode(BeanException::NO_METHOD);
         $beanMethod = new BeanMethod($class, 'unknownMethod');
     }
 }

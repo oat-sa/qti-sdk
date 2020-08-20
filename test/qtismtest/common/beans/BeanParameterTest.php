@@ -11,11 +11,9 @@ class BeanParameterTest extends QtiSmTestCase
 {
     public function testNoParameter()
     {
-        $this->setExpectedException(
-            BeanException::class,
-            "No such parameter 'method' for method 'getMethod' of class 'stdClass'.",
-            BeanException::NO_PARAMETER
-        );
+        $this->expectException(BeanException::class);
+        $this->expectExceptionMessage("No such parameter 'method' for method 'getMethod' of class 'stdClass'.");
+        $this->expectExceptionCode(BeanException::NO_PARAMETER);
 
         $beanParam = new BeanParameter(stdClass::class, 'getMethod', 'method');
     }

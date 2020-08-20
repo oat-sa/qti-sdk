@@ -42,7 +42,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager('/root');
 
         $this->expectException(FileManagerException::class);
-        $this->expectExceptionMessage("An error occurred while creating a QTI FileSystemFile object.");
+        $this->expectExceptionMessage('An error occurred while creating a QTI FileSystemFile object.');
 
         $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
     }
@@ -52,7 +52,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager('/root');
 
         $this->expectException(FileManagerException::class);
-        $this->expectExceptionMessage("An error occurred while creating a QTI FileSystemFile object.");
+        $this->expectExceptionMessage('An error occurred while creating a QTI FileSystemFile object.');
 
         $manager->createFromData('Some <em>text</em>...', 'text/html');
     }

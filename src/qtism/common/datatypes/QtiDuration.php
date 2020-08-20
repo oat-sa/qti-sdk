@@ -87,6 +87,7 @@ class QtiDuration implements QtiDatatype
                 $tz = new DateTimeZone(self::TIMEZONE);
                 $d1 = new DateTime('now', $tz);
                 $d2 = clone $d1;
+
                 $d2->add(new DateInterval($intervalSpec));
                 $interval = $d2->diff($d1);
                 $interval->invert = ($interval->invert === 1) ? 0 : 1;
@@ -264,9 +265,10 @@ class QtiDuration implements QtiDatatype
      */
     public function equals($obj)
     {
-        return (gettype($obj) === 'object' &&
-            $obj instanceof self &&
-            '' . $obj === '' . $this);
+        return is_object($obj)
+            && $obj instanceof self
+            && '' . $this === '' . $obj
+        ;
     }
 
     /**
