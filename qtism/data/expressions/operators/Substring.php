@@ -45,7 +45,7 @@ class Substring extends Operator
      * a substring of "Shell". If false then the match is not case sensitive and "Hell"
      * is a substring of "Shell".
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $caseSensitive = true;
@@ -54,7 +54,7 @@ class Substring extends Operator
      * Create a new Substring.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param boolean $caseSensitive A boolean value.
+     * @param bool $caseSensitive A boolean value.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean or if the count of $expressions is not correct.
      */
     public function __construct(ExpressionCollection $expressions, $caseSensitive = true)
@@ -66,7 +66,7 @@ class Substring extends Operator
     /**
      * Set the caseSensitive attribute.
      *
-     * @param boolean $caseSensitive A boolean value.
+     * @param bool $caseSensitive A boolean value.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
      */
     public function setCaseSensitive($caseSensitive)
@@ -82,7 +82,7 @@ class Substring extends Operator
     /**
      * Wether or not the operator is case sensitive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCaseSensitive()
     {

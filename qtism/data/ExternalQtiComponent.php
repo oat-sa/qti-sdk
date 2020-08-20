@@ -123,7 +123,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     /**
      * Whether or not a target namespace is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTargetNamespace()
     {

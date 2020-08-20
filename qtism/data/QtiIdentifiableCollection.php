@@ -62,7 +62,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * the collection.
      *
      * @param mixed $offset
-     * @return boolean
+     * @return bool
      * @throws OutOfRangeException If the request $offset is not a string or is empty.
      */
     public function offsetExists($offset)

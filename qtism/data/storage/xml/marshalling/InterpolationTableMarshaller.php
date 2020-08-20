@@ -48,7 +48,7 @@ class InterpolationTableMarshaller extends Marshaller
      * a $baseType can be passed as an argument for instantiation.
      *
      * @param $version
-     * @param integer $baseType A value from the BaseType enumeration or -1.
+     * @param int $baseType A value from the BaseType enumeration or -1.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
     public function __construct($version, $baseType = -1)
@@ -62,7 +62,7 @@ class InterpolationTableMarshaller extends Marshaller
      * to marshall is contained. Set to -1 if no baseType found for the related
      * variableDeclaration.
      *
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
     public function setBaseType($baseType)
@@ -80,7 +80,7 @@ class InterpolationTableMarshaller extends Marshaller
      * to marshall is contained. It returns -1 if no baseType found for the related
      * variableDeclaration.
      *
-     * @return integer A value from the BaseType enumeration or -1 if no baseType found for the related variableDeclaration.
+     * @return int A value from the BaseType enumeration or -1 if no baseType found for the related variableDeclaration.
      */
     public function getBaseType()
     {

@@ -88,7 +88,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * Items are classified into Adaptive Items and Non-adaptive Items.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $adaptive = false;
@@ -96,7 +96,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Wether the item is time dependent or not.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $timeDependent;
@@ -201,7 +201,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param string $identifier A QTI Identifier.
      * @param string $title The title of the item.
-     * @param boolean $timeDependent Whether the item is time dependent.
+     * @param bool $timeDependent Whether the item is time dependent.
      * @param string $lang The language (code) of the item.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value.
      */
@@ -308,7 +308,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a value is defined for the label attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLabel()
     {
@@ -338,7 +338,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Wether the AssessmentItem has a language.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLang()
     {
@@ -350,7 +350,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Set whether the item is adaptive.
      *
-     * @param boolean $adaptive Adaptive or not.
+     * @param bool $adaptive Adaptive or not.
      * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
     public function setAdaptive($adaptive)
@@ -366,7 +366,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether the item is adaptive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdaptive()
     {
@@ -376,7 +376,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Set whether the item is time dependent or not.
      *
-     * @param boolean $timeDependent Time dependent or not.
+     * @param bool $timeDependent Time dependent or not.
      * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
     public function setTimeDependent($timeDependent)
@@ -392,7 +392,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Wether the item is time dependent.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeDependent()
     {
@@ -428,7 +428,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a value is defined for the toolName attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasToolName()
     {
@@ -464,7 +464,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a value is defined for the toolVersion attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasToolVersion()
     {
@@ -557,7 +557,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a TemplateProcessing object is bound to the item.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateProcessing()
     {
@@ -607,7 +607,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not the object has an ItemBody object representing its content.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItemBody()
     {
@@ -637,7 +637,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether the AssessmentItem has a response processing.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasResponseProcessing()
     {

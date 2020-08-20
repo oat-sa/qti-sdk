@@ -38,7 +38,7 @@ interface IStream
     /**
      * Whether the stream is open.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOpen();
 
@@ -46,7 +46,7 @@ interface IStream
      * Write $data into the stream.
      *
      * @param string $data The data to be written in the stream.
-     * @return integer The length of the written $data.
+     * @return int The length of the written $data.
      * @throws StreamException If an error occurs while writing the stream. The error code will be StreamException::WRITE or StreamException::NOT_OPEN.
      */
     public function write($data);
@@ -61,7 +61,7 @@ interface IStream
     /**
      * Read $length bytes from the stream.
      *
-     * @param integer $length The length in bytes of the data to be read from the stream.
+     * @param int $length The length in bytes of the data to be read from the stream.
      * @throws StreamException If an error occurs while reading the stream. The error code will be StreamException::READ or StreamException::NOT_OPEN.
      */
     public function read($length);
@@ -76,7 +76,7 @@ interface IStream
     /**
      * Whether the end of the stream is reached.
      *
-     * @return boolean
+     * @return bool
      * @throws StreamException If the stream is not open. The error code will be StreamException::NOT_OPEN;
      */
     public function eof();

@@ -36,14 +36,14 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * A value from the Shape enumeration.
      *
-     * @var integer
+     * @var int
      */
     private $shape;
 
     /**
      * Create a new Coords object.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      * @param array $coords An array of number values.
      * @throws InvalidArgumentException If an error occurs while creating the Coords object.
      */
@@ -86,7 +86,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * Set the $shape on which the coordinates apply.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      * @throws InvalidArgumentException
      */
     protected function setShape($shape)
@@ -102,7 +102,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * Get the shape on which the coordinates apply.
      *
-     * @return integer A value from the Shape enumeration.
+     * @return int A value from the Shape enumeration.
      *
      */
     public function getShape()
@@ -114,7 +114,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Whether the given $point is inside the coordinates.
      *
      * @param QtiPoint $point A QtiPoint object.
-     * @return boolean
+     * @return bool
      */
     public function inside(QtiPoint $point)
     {
@@ -192,7 +192,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * considered to be equal if they have the same coordinates and shape.
      *
      * @param mixed $obj
-     * @return boolean
+     * @return bool
      */
     public function equals($obj)
     {
@@ -203,7 +203,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * BaseType::COORDS.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -214,7 +214,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Get the cardinality of the value. This method systematically returns
      * Cardinality::SINGLE.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

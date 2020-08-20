@@ -44,7 +44,7 @@ class Utils
      * the correct datatype.
      *
      * @param string $string The QTI valueType value as a string.
-     * @param integer $baseType The QTI baseType that defines the datatype of $string.
+     * @param int $baseType The QTI baseType that defines the datatype of $string.
      * @return mixed A converted object/primitive type.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      * @throws UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.

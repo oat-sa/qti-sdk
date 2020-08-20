@@ -54,7 +54,7 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
     /**
      * Process the related NumberSelected expression.
      *
-     * @return integer The number of items in the given sub-set that have been selected for presentation to the candidate.
+     * @return int The number of items in the given sub-set that have been selected for presentation to the candidate.
      * @throws ExpressionProcessingException
      */
     public function process()

@@ -127,7 +127,7 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider printfFormatIsoToPhpProvider
      *
      * @param string $input
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testPrintfFormatIsoToPhp($input, $expected)
     {
@@ -138,7 +138,7 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider isXhtmlLengthProvider
      *
      * @param mixed $input
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testIsXhtmlLength($input, $expected)
     {

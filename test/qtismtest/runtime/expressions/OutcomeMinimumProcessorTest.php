@@ -16,7 +16,7 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
      * @dataProvider outcomeMinimumProvider
      *
      * @param OutcomeMinimum $expression
-     * @param integer $expectedResult
+     * @param int $expectedResult
      */
     public function testOutcomeMaximum(OutcomeMinimum $expression, $expectedResult)
     {

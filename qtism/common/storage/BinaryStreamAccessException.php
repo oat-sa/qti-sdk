@@ -33,56 +33,56 @@ class BinaryStreamAccessException extends StreamAccessException
     /**
      * An error occurred while reading|writing a tinyint.
      *
-     * @var integer
+     * @var int
      */
     const TINYINT = 2;
 
     /**
      * An error occurred while reading|writing a short int.
      *
-     * @var integer
+     * @var int
      */
     const SHORT = 3;
 
     /**
      * An error occurred while reading|writing an int.
      *
-     * @var integer
+     * @var int
      */
     const INT = 4;
 
     /**
      * An error occurred while reading|writing a float.
      *
-     * @var integer
+     * @var int
      */
     const FLOAT = 5;
 
     /**
      * An error occurred while reading|writing a boolean.
      *
-     * @var integer
+     * @var int
      */
     const BOOLEAN = 6;
 
     /**
      * An error occurred while reading|writing a string.
      *
-     * @var integer
+     * @var int
      */
     const STRING = 7;
 
     /**
      * An error occurred while reading|writing binary data.
      *
-     * @var integer
+     * @var int
      */
     const BINARY = 8;
 
     /**
      * An error occurred while reading|writing a DateTime.
      *
-     * @var integer
+     * @var int
      */
     const DATETIME = 9;
 }

@@ -163,7 +163,7 @@ class AssessmentItemSession extends State
     /**
      * The state of the Item Session as described by the AssessmentItemSessionState enumeration.
      *
-     * @var integer
+     * @var int
      */
     private $state = AssessmentItemSessionState::NOT_SELECTED;
 
@@ -187,7 +187,7 @@ class AssessmentItemSession extends State
      *
      * Default is NavigationMode::LINEAR.
      *
-     * @var integer
+     * @var int
      */
     private $navigationMode = NavigationMode::LINEAR;
 
@@ -196,7 +196,7 @@ class AssessmentItemSession extends State
      *
      * Default is SubmissionMode::INDIVIDUAL.
      *
-     * @var integer
+     * @var int
      */
     private $submissionMode = SubmissionMode::INDIVIDUAL;
 
@@ -211,7 +211,7 @@ class AssessmentItemSession extends State
      * Whether or not the session (SUSPENDED or INTERACTING) is currently attempting an attempt.
      * In other words, a candidate begun an attempt and did not ended it yet.
      *
-     * @var boolean
+     * @var bool
      */
     private $attempting = false;
 
@@ -245,8 +245,8 @@ class AssessmentItemSession extends State
      *
      * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
      * @param AbstractSessionManager $sessionManager
-     * @param integer $navigationMode The current navigation mode. Default is LINEAR.
-     * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
+     * @param int $navigationMode The current navigation mode. Default is LINEAR.
+     * @param int $submissionMode The current submission mode. Default is INDIVIDUAL.
      * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
      */
     public function __construct(IAssessmentItem $assessmentItem, AbstractSessionManager $sessionManager, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
@@ -272,7 +272,7 @@ class AssessmentItemSession extends State
      *
      * The state of the session is a value from the AssessmentItemSessionState enumeration.
      *
-     * @param integer $state A value from the AssessmentItemSessionState enumeration.
+     * @param int $state A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
      */
     public function setState($state)
@@ -285,7 +285,7 @@ class AssessmentItemSession extends State
      *
      * The state of the session is a value from the AssessmentItemSessionState enumeration.
      *
-     * @return integer A value from the AssessmentItemSessionState enumeration.
+     * @return int A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
      */
     public function getState()
@@ -374,7 +374,7 @@ class AssessmentItemSession extends State
     /**
      * Whether or not minimum time limits must be taken into account.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustConsiderMinTime()
     {
@@ -384,7 +384,7 @@ class AssessmentItemSession extends State
     /**
      * Whether or not the session is driven by a TimeLimits object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {
@@ -394,7 +394,7 @@ class AssessmentItemSession extends State
     /**
      * Set the navigation mode in use during the item session.
      *
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function setNavigationMode($navigationMode)
@@ -405,7 +405,7 @@ class AssessmentItemSession extends State
     /**
      * Get the navigation mode in use during the item session.
      *
-     * @return integer A value from the NavigationMode enumeration.
+     * @return int A value from the NavigationMode enumeration.
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function getNavigationMode()
@@ -416,7 +416,7 @@ class AssessmentItemSession extends State
     /**
      * Set the submission mode in use during the item session.
      *
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @see \qtism\data\SubmissionMode The SubmissionMode enumeration.
      */
     public function setSubmissionMode($submissionMode)
@@ -427,7 +427,7 @@ class AssessmentItemSession extends State
     /**
      * Get the submission mode in use during the item session.
      *
-     * @return integer A value from the SubmissionMode enumeration.
+     * @return int A value from the SubmissionMode enumeration.
      * @see \qtism\data\SubmissionMode The SubmissionMode enumeration.
      */
     public function getSubmissionMode()
@@ -440,7 +440,7 @@ class AssessmentItemSession extends State
      *
      * Whether the navigation mode in use for the item session is LINEAR.
      *
-     * @return boolean
+     * @return bool
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function isNavigationLinear()
@@ -453,7 +453,7 @@ class AssessmentItemSession extends State
      *
      * Whether the navigation mode in use for the item session is NON_LINEAR.
      *
-     * @return boolean
+     * @return bool
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function isNavigationNonLinear()
@@ -484,7 +484,7 @@ class AssessmentItemSession extends State
     /**
      * Set whether a candidate is currently performing an attempt.
      *
-     * @param boolean $attempting
+     * @param bool $attempting
      * @throws InvalidArgumentException If $attempting is not a boolean value.
      */
     public function setAttempting($attempting)
@@ -499,7 +499,7 @@ class AssessmentItemSession extends State
      * it means that the candidate was interacting with the item, but went in suspend
      * state by ending the candidate session rather than ending the attempt.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAttempting()
     {
@@ -643,8 +643,8 @@ class AssessmentItemSession extends State
      * * Otherwise, the item session goes to the SUSPENDED state, waiting for a next attempt.
      *
      * @param State $responses (optional) A State composed by the candidate's responses to the item.
-     * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
-     * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
+     * @param bool $responseProcessing (optional) Whether to execute the responseProcessing or not.
+     * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
      * @throws AssessmentItemSessionException
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false)
@@ -941,7 +941,7 @@ class AssessmentItemSession extends State
      * Be careful! If the item of the session is adaptive but not yet completed or if the maxAttempts is unlimited, -1 is returned
      * because there is no way to determine how much remaining attempts are available.
      *
-     * @return integer The number of remaining items. -1 means unlimited.
+     * @return int The number of remaining items. -1 means unlimited.
      */
     public function getRemainingAttempts()
     {
@@ -976,7 +976,7 @@ class AssessmentItemSession extends State
      *
      * If the item session has the NOT_SELECTED state, false is directly returned because it is certain that there is no correct response yet in the session.
      *
-     * @return boolean
+     * @return bool
      * @throws AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
      */
     public function isCorrect()
@@ -1010,7 +1010,7 @@ class AssessmentItemSession extends State
      * Whether the item of the session has been attempted (at least once).
      * In other words, items which the user has interacted, whether or not they provided a response.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPresented()
     {
@@ -1020,7 +1020,7 @@ class AssessmentItemSession extends State
     /**
      * Whether the item of the session has been selected for presentation to the candidate, regardless of whether the candidate has attempted them or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSelected()
     {
@@ -1032,8 +1032,8 @@ class AssessmentItemSession extends State
      *
      * Whether the item of the session has been attempted (at least once) and for which responses were given.
      *
-     * @param boolean $partially (optional) Whether or not consider partially responded sessions as responded.
-     * @return boolean
+     * @param bool $partially (optional) Whether or not consider partially responded sessions as responded.
+     * @return bool
      */
     public function isResponded($partially = true)
     {
@@ -1067,7 +1067,7 @@ class AssessmentItemSession extends State
     /**
      * Whether a new attempt is possible for this AssessmentItemSession.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAttemptable()
     {
@@ -1077,7 +1077,7 @@ class AssessmentItemSession extends State
     /**
      * Whether or not the item has been attempted at least one.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAttempted()
     {
@@ -1101,7 +1101,7 @@ class AssessmentItemSession extends State
      * Whether or not the maximum time limits in force are reached.
      * If there is no time limits in force, this method systematically returns false.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isMaxTimeReached()
     {
@@ -1119,7 +1119,7 @@ class AssessmentItemSession extends State
     /**
      * Get the ResponseVariable objects contained in the AssessmentItemSession.
      *
-     * @param boolean $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
+     * @param bool $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
      * @return State A State object composed exclusively with ResponseVariable objects.
      */
     public function getResponseVariables($builtIn = true)
@@ -1139,7 +1139,7 @@ class AssessmentItemSession extends State
     /**
      * Get the OutcomeVariable objects contained in the AssessmentItemSession.
      *
-     * @param boolean $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
+     * @param bool $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
      * @return State A State object composed exclusively with OutcomeVariable objects.
      */
     public function getOutcomeVariables($builtIn = true)

@@ -40,7 +40,7 @@ class QtiDirectedPair extends QtiPair
      * are considered to be equal if their first and second values are the same.
      *
      * @param mixed $obj
-     * @return boolean
+     * @return bool
      */
     public function equals($obj)
     {
@@ -55,7 +55,7 @@ class QtiDirectedPair extends QtiPair
      * Get the baseType of the value. This method systematically returns the
      * BaseType::DIRECTED_PAIR value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -66,7 +66,7 @@ class QtiDirectedPair extends QtiPair
      * Get the cardinality of the value. This method systematically returns the
      * Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

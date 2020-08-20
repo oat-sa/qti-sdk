@@ -54,7 +54,7 @@ class GtProcessor extends OperatorProcessor
     /**
      * Process the Gt operator.
      *
-     * @return boolean|null Whether the first sub-expression is numerically greather than the second or NULL if either sub-expression is NULL.
+     * @return bool|null Whether the first sub-expression is numerically greather than the second or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

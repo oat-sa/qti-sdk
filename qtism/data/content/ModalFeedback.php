@@ -52,7 +52,7 @@ class ModalFeedback extends QtiComponent
      * attribute. If set to hide then the feedback is shown by default and hidden if the
      * associated outcome variable matches, or contains, the value of the identifier attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
@@ -147,7 +147,7 @@ class ModalFeedback extends QtiComponent
     /**
      * Set how the visibility of the modal feedback is controlled.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
@@ -163,7 +163,7 @@ class ModalFeedback extends QtiComponent
     /**
      * Get how the visibility of the modal feedback is controlled.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {
@@ -221,7 +221,7 @@ class ModalFeedback extends QtiComponent
     /**
      * Whether or not a value is defined for the title attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTitle()
     {

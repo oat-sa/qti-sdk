@@ -47,7 +47,7 @@ class XmlUtilsTest extends QtiSmTestCase
      *
      * @param string $file
      * @param string $namespaceUri
-     * @param boolean|string $expectedLocation
+     * @param bool|string $expectedLocation
      */
     public function testGetXsdLocation($file, $namespaceUri, $expectedLocation)
     {

@@ -52,7 +52,7 @@ class NotProcessor extends OperatorProcessor
     /**
      * Returns the logical negation of the sub-expressions.
      *
-     * @return boolean
+     * @return bool
      * @throws OperatorProcessingException
      */
     public function process()

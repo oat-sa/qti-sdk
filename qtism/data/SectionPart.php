@@ -63,7 +63,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      * It is in error if a section contains a selection rule that selects fewer child
      * elements than the number of required elements it contains.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $required = false;
@@ -75,7 +75,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      * It is in error if a section contains a selection rule that selects fewer child
      * elements than the number of required elements it contains.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $fixed = false;
@@ -127,8 +127,8 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      * Create a new instance of SectionPart.
      *
      * @param string $identifier A QTI Identifier.
-     * @param boolean $required true if it must absolutely appear during the session, false if not.
-     * @param boolean $fixed true if it must not be affected by shuffling, false if it can be affected by shuffling.
+     * @param bool $required true if it must absolutely appear during the session, false if not.
+     * @param bool $fixed true if it must not be affected by shuffling, false if it can be affected by shuffling.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, $required or $fixed are not booleans.
      */
     public function __construct($identifier, $required = false, $fixed = false)
@@ -172,7 +172,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * Must appear at least once?
      *
-     * @return boolean true if must appear at least one, false if not.
+     * @return bool true if must appear at least one, false if not.
      */
     public function isRequired()
     {
@@ -182,7 +182,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * Set if it must appear at least one during the session.
      *
-     * @param boolean $required true if it must appear at least one, otherwise false.
+     * @param bool $required true if it must appear at least one, otherwise false.
      * @throws InvalidArgumentException If $required is not a boolean.
      */
     public function setRequired($required)
@@ -198,7 +198,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * Subject to shuffling?
      *
-     * @return boolean true if subject to shuffling, false if not.
+     * @return bool true if subject to shuffling, false if not.
      */
     public function isFixed()
     {
@@ -208,7 +208,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * Set if the section part is subject to shuffling.
      *
-     * @param boolean $fixed true if subject to shuffling, false if not.
+     * @param bool $fixed true if subject to shuffling, false if not.
      * @throws InvalidArgumentException If $fixed is not a boolean.
      */
     public function setFixed($fixed)
@@ -285,7 +285,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * Whether the SectionPart holds an ItemSessionControl object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItemSessionControl()
     {
@@ -306,7 +306,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * Whether the SectionPart holds a TimeLimits object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {

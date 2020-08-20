@@ -167,7 +167,7 @@ class BaseType implements Enumeration
     /**
      * In qtism, we consider an extra 'coords' baseType.
      *
-     * @var integer
+     * @var int
      */
     const COORDS = 12;
 
@@ -208,7 +208,7 @@ class BaseType implements Enumeration
      * * extra 'coords' -> BaseType::COORDS
      *
      * @param string $name The baseType name.
-     * @return integer|boolean The related enumeration value or false if the name could not be resolved.
+     * @return int|bool The related enumeration value or false if the name could not be resolved.
      */
     public static function getConstantByName($name)
     {
@@ -275,7 +275,7 @@ class BaseType implements Enumeration
      * Get the QTI name of a BaseType.
      *
      * @param int $constant A constant value from the BaseType enumeration.
-     * @return string|boolean The QTI name or false if not match.
+     * @return string|bool The QTI name or false if not match.
      */
     public static function getNameByConstant($constant)
     {

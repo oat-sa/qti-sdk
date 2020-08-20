@@ -96,7 +96,7 @@ class XmlDocument extends QtiDocument
      * an AssessmentTest object.
      *
      * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
-     * @param boolean $validate Whether or not the file must be validated unsing XML Schema? Default is false.
+     * @param bool $validate Whether or not the file must be validated unsing XML Schema? Default is false.
      * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
      */
     public function load($uri, $validate = false)
@@ -111,7 +111,7 @@ class XmlDocument extends QtiDocument
      * Load QTI-XML from string.
      *
      * @param string $string The QTI-XML string.
-     * @param boolean $validate XML Schema validation? Default is false.
+     * @param bool $validate XML Schema validation? Default is false.
      * @throws XmlStorageException If an error occurs while parsing $string.
      */
     public function loadFromString($string, $validate = false)
@@ -123,8 +123,8 @@ class XmlDocument extends QtiDocument
      * Implementation of load.
      *
      * @param mixed $data
-     * @param boolean $validate
-     * @param boolean $fromString
+     * @param bool $validate
+     * @param bool $fromString
      * @throws XmlStorageException
      */
     protected function loadImplementation($data, $validate = false, $fromString = false)
@@ -206,7 +206,7 @@ class XmlDocument extends QtiDocument
      * this Filesystem implementation. Otherwise, it will be stored on the local filesystem.
      *
      * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
-     * @param boolean $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
+     * @param bool $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
      * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
      */
     public function save($uri, $formatOutput = true)
@@ -217,7 +217,7 @@ class XmlDocument extends QtiDocument
     /**
      * Save the Assessment Document as an XML string.
      *
-     * @param boolean $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
+     * @param bool $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
      * @return string The XML string.
      * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
      */
@@ -230,7 +230,7 @@ class XmlDocument extends QtiDocument
      * Implementation of save.
      *
      * @param string $uri
-     * @param boolean $formatOutput
+     * @param bool $formatOutput
      * @return string
      * @throws XmlStorageException
      */
@@ -331,7 +331,7 @@ class XmlDocument extends QtiDocument
      * the include components can be resolved by calling this method. Files will
      * be included following the rules described by the XInclude specification.
      *
-     * @param boolean $validate Whether or not validate files being included. Default is false.
+     * @param bool $validate Whether or not validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
@@ -386,7 +386,7 @@ class XmlDocument extends QtiDocument
      * to assessmentSections are resolved. assessmentSectionRefs will be replaced with their assessmentSection
      * content.
      *
-     * @param boolean $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
+     * @param bool $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
@@ -508,7 +508,7 @@ class XmlDocument extends QtiDocument
     protected function createMarshallerFactory()
     {
         $class = $this->version->getMarshallerFactoryClass();
-        return new $class;
+        return new $class();
     }
 
     /**

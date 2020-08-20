@@ -122,7 +122,7 @@ class CustomOperator extends Operator implements IExternal
     /**
      * Whether or not a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -160,7 +160,7 @@ class CustomOperator extends Operator implements IExternal
     /**
      * Whether or not a value is defined for the definition attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefinition()
     {

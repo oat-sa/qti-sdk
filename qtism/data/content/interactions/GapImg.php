@@ -57,7 +57,7 @@ class GapImg extends GapChoice
      * Create a new GapImg object.
      *
      * @param string $identifier The identifier of the response associated to the GapImg object.
-     * @param integer $matchMax The maximum number of choice association.
+     * @param int $matchMax The maximum number of choice association.
      * @param Object $object An image as an Object object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -103,7 +103,7 @@ class GapImg extends GapChoice
     /**
      * Whether a value is defined for the 'objectLabel' attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasObjectLabel()
     {

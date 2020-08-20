@@ -70,7 +70,7 @@ class Url
      * Whether or not a given $url is relative.
      *
      * @param string $url
-     * @return boolean
+     * @return bool
      */
     public static function isRelative($url)
     {

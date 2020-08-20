@@ -54,7 +54,7 @@ class IntegerDivideProcessor extends OperatorProcessor
     /**
      * Process the IntegerDivide operator.
      *
-     * @return integer|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
+     * @return int|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
      */
     public function process()
     {

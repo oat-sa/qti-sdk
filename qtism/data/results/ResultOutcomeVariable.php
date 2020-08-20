@@ -45,7 +45,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * Multiplicity [0,1]
      *
-     * @var integer
+     * @var int
      */
     protected $view = null;
 
@@ -202,7 +202,7 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the view
      *
-     * @return integer
+     * @return int
      */
     public function getView()
     {

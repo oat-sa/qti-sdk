@@ -483,7 +483,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read an intOrIdentifier from the current binary stream.
      *
-     * @return integer|string An integer or a string depending on the nature of the intOrIdentifier datatype.
+     * @return int|string An integer or a string depending on the nature of the intOrIdentifier datatype.
      * @throws QtiBinaryStreamAccessException
      */
     public function readIntOrIdentifier()
@@ -501,7 +501,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write an intOrIdentifier in the current binary stream.
      *
-     * @param integer|string $intOrIdentifier An integer or a string value.
+     * @param int|string $intOrIdentifier An integer or a string value.
      * @throws QtiBinaryStreamAccessException
      */
     public function writeIntOrIdentifier($intOrIdentifier)

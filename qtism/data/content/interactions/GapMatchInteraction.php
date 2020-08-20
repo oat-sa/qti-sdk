@@ -50,7 +50,7 @@ class GapMatchInteraction extends BlockInteraction
      * the order in which the choices (not the gaps) are initially presented,
      * subject to the value of the fixed attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -102,7 +102,7 @@ class GapMatchInteraction extends BlockInteraction
      * Set whether the delivery engine must randomize the order in which the choices (not
      * the gaps) are initially presented.
      *
-     * @param boolean $shuffle A boolean value.
+     * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
@@ -119,7 +119,7 @@ class GapMatchInteraction extends BlockInteraction
      * Whether the delivery engine must randomize the order in which the choices (not
      * the gaps) are initially presented.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {

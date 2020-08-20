@@ -34,28 +34,28 @@ class AssessmentTestPlace implements Enumeration
     /**
      * Represents the concept of TestPart in an AssessmentTest.
      *
-     * @var integer
+     * @var int
      */
     const TEST_PART = 1;
 
     /**
      * Represents the concept of AssessmentSection in an AssessmentTest.
      *
-     * @var integer
+     * @var int
      */
     const ASSESSMENT_SECTION = 2;
 
     /**
      * Represents the concept of AssessmentItem in an AssessmentTest.
      *
-     * @var integer
+     * @var int
      */
     const ASSESSMENT_ITEM = 4;
 
     /**
      * Represents the concept of AssessmentTest (in an AssessmentTest).
      *
-     * @var integer
+     * @var int
      */
     const ASSESSMENT_TEST = 8;
 

@@ -151,7 +151,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Wheter a value for the summary attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSummary()
     {
@@ -183,7 +183,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Wheter the Table contains a Caption object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCaption()
     {
@@ -254,7 +254,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether the Table contains a Thead object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasThead()
     {
@@ -285,7 +285,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether the Table contains a Tfoot object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTfoot()
     {

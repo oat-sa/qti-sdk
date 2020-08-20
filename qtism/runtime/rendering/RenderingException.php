@@ -37,7 +37,7 @@ class RenderingException extends Exception
      *
      * (Should never be used)
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -45,14 +45,14 @@ class RenderingException extends Exception
      * Error code to use when no renderer is found
      * for a given component.
      *
-     * @var integer
+     * @var int
      */
     const NO_RENDERER = 1;
 
     /**
      * Error code to use for exception only occuring/detectable at runtime.
      *
-     * @var integer
+     * @var int
      */
     const RUNTIME = 2;
 
@@ -60,7 +60,7 @@ class RenderingException extends Exception
      * Create a new RenderingException object.
      *
      * @param string $message A message describing the error.
-     * @param integer $code A code for the client-code.
+     * @param int $code A code for the client-code.
      * @param Exception $previous An optional previous exception.
      */
     public function __construct($message, $code, Exception $previous = null)

@@ -278,7 +278,7 @@ abstract class Marshaller
      * ... manually.
      *
      * @param DOMElement $element A DOMElement object
-     * @return DOMElement|boolean A DOMElement If a child node with nodeType = XML_ELEMENT_NODE or false if nothing found.
+     * @return DOMElement|bool A DOMElement If a child node with nodeType = XML_ELEMENT_NODE or false if nothing found.
      */
     public static function getFirstChildElement($element)
     {
@@ -297,7 +297,7 @@ abstract class Marshaller
      * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param boolean $withText Wether text nodes must be returned or not.
+     * @param bool $withText Wether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
     public static function getChildElements($element, $withText = false)
@@ -321,8 +321,8 @@ abstract class Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-     * @param boolean $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
-     * @param boolean $withText (optional) Whether text nodes must be returned or not.
+     * @param bool $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
     public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)

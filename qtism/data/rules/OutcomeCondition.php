@@ -141,7 +141,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     /**
      * Whether or not an OutcomeElse object is defined for the outcome condition.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasOutcomeElse()
     {

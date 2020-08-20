@@ -57,14 +57,14 @@ class Marshaller
     /**
      * Output of marshalling as an array.
      *
-     * @var integer
+     * @var int
      */
     const MARSHALL_ARRAY = 0;
 
     /**
      * Output of marshalling as JSON string.
      *
-     * @var integer
+     * @var int
      */
     const MARSHALL_JSON = 1;
 
@@ -80,7 +80,7 @@ class Marshaller
      * Marshall some QTI data into JSON.
      *
      * @param State|QtiDatatype|null $data The data to be marshalled into JSON.
-     * @param integer How the output will be returned (see class constants). Default is plain JSON string.
+     * @param int How the output will be returned (see class constants). Default is plain JSON string.
      * @return string|array The JSONified data.
      * @throws InvalidArgumentException If $data has not a compliant type.
      * @throws MarshallingException If an error occurs while marshalling $data into JSON.

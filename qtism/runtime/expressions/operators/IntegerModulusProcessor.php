@@ -55,7 +55,7 @@ class IntegerModulusProcessor extends OperatorProcessor
     /**
      * Process the IntegerModulus operator.
      *
-     * @return integer|null An integer value that corresponds to the remainder of the Integer Division or NULL if the second expression is 0 or if either of the sub-expressions is NULL.
+     * @return int|null An integer value that corresponds to the remainder of the Integer Division or NULL if the second expression is 0 or if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

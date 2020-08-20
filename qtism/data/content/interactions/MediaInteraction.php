@@ -44,7 +44,7 @@ class MediaInteraction extends BlockInteraction
      * candidate starts the attempt (true) or if the media object should be started under
      * the control of the candidate (false).
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $autostart;
@@ -58,7 +58,7 @@ class MediaInteraction extends BlockInteraction
      * there is no minimum. Failure to play the media object the minimum number of
      * times constitutes an invalid response.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minPlays = 0;
@@ -70,7 +70,7 @@ class MediaInteraction extends BlockInteraction
      * times - it must not be possible for the candidate to play the media object more than
      * maxPlay times. A value of 0 (the default) indicates that there is no limit.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxPlays = 0;
@@ -81,7 +81,7 @@ class MediaInteraction extends BlockInteraction
      * The loop attribute is used to set continuous play mode. In continuous play mode,
      * once the media object has started to play it should play continuously (subject to maxPlays).
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $loop = false;
@@ -100,7 +100,7 @@ class MediaInteraction extends BlockInteraction
      * Create a new MediaInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
-     * @param boolean $autostart Whether the media has to be played immediately after the begining of the attempt.
+     * @param bool $autostart Whether the media has to be played immediately after the begining of the attempt.
      * @param Object $object The media object itself.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -118,7 +118,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set whether or not the media must start as soon as the candidate starts the attempt.
      *
-     * @param boolean $autostart
+     * @param bool $autostart
      * @throws InvalidArgumentException If $autostart is not a boolean value.
      */
     public function setAutostart($autostart)
@@ -134,7 +134,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Whether the media must start as soon as the candidate starts the attempt.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustAutostart()
     {
@@ -144,7 +144,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set the minimum number of times the media must be played.
      *
-     * @param integer $minPlays A positive (>= 0) integer.
+     * @param int $minPlays A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minPlays is not a positive integer.
      */
     public function setMinPlays($minPlays)
@@ -160,7 +160,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Get the minimum number of times the media must be played.
      *
-     * @return integer A positive (> 0) integer.
+     * @return int A positive (> 0) integer.
      */
     public function getMinPlays()
     {
@@ -170,7 +170,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Whether a value is defined for the minPlays argument.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinPlays()
     {
@@ -180,7 +180,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set the maximum number of times the media can be played.
      *
-     * @param integer $maxPlays A positive (>= 0) integer.
+     * @param int $maxPlays A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxPlays is not a positive integer.
      */
     public function setMaxPlays($maxPlays)
@@ -196,7 +196,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Get the maximum number of times the media can be played.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxPlays()
     {
@@ -206,7 +206,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Whether a value is defined for the maxPlays argument.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxPlays()
     {
@@ -216,7 +216,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set whether or not the continuous play (subject to maxPlays) of the media is in force.
      *
-     * @param boolean $loop
+     * @param bool $loop
      * @throws InvalidArgumentException If $loop is not a boolean value.
      */
     public function setLoop($loop)
@@ -232,7 +232,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Whether the conitnuous play (subject to maxPlays) is in force.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustLoop()
     {

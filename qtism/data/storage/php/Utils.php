@@ -35,7 +35,7 @@ class Utils
      * value or the null value.
      *
      * @param mixed $value
-     * @return boolean
+     * @return bool
      */
     public static function isScalar($value)
     {
@@ -46,7 +46,7 @@ class Utils
      * Whether a given $string represents a variable reference e.g. '$foobar'.
      *
      * @param string $string
-     * @return boolean
+     * @return bool
      */
     public static function isVariableReference($string)
     {

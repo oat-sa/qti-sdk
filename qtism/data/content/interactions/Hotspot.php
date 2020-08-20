@@ -37,7 +37,7 @@ interface Hotspot
     /**
      * Set the shape of the hotspot.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
      */
     public function setShape($shape);
@@ -45,7 +45,7 @@ interface Hotspot
     /**
      * Get the shape of the hotspot.
      *
-     * @return integer A Shape object.
+     * @return int A Shape object.
      */
     public function getShape();
 
@@ -82,7 +82,7 @@ interface Hotspot
      * Whether or not a value is defined for the hotspotLabel
      * attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHotspotLabel();
 }

@@ -36,7 +36,7 @@ class StorageException extends Exception
      * is unknown. Should be used in absolute necessity. Otherwise,
      * use the appropriate error code.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -44,7 +44,7 @@ class StorageException extends Exception
      * Error code to be used when an error occurs while
      * instantiating an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const INSTANTIATION = 1;
 
@@ -52,7 +52,7 @@ class StorageException extends Exception
      * Error code to use when an error occurs while
      * persisting an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const PERSITANCE = 2;
 
@@ -60,7 +60,7 @@ class StorageException extends Exception
      * Error code to use when an error occurs while
      * retrieving an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const RETRIEVAL = 3;
 
@@ -68,7 +68,7 @@ class StorageException extends Exception
      * Create a new StorageException instance.
      *
      * @param string $message A human-readable message describing the encountered error.
-     * @param integer $code A code enabling client-code to identify the cause of the error.
+     * @param int $code A code enabling client-code to identify the cause of the error.
      * @param Exception $previous An optional previous Exception that was thrown and catched.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

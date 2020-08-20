@@ -74,7 +74,7 @@ class MathOperator extends Operator
     /**
      * The name of the mathematical function.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $name;
@@ -83,7 +83,7 @@ class MathOperator extends Operator
      * Create a new instance of MathOperator.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $name The math functions to use as a value from the MathFunctions enumeration.
+     * @param int $name The math functions to use as a value from the MathFunctions enumeration.
      */
     public function __construct(ExpressionCollection $expressions, $name)
     {
@@ -94,7 +94,7 @@ class MathOperator extends Operator
     /**
      * Get the name of the math function to use.
      *
-     * @return integer A value from the MathFunctions enumeration.
+     * @return int A value from the MathFunctions enumeration.
      */
     public function getName()
     {
@@ -104,7 +104,7 @@ class MathOperator extends Operator
     /**
      * Set the name of the math function to use.
      *
-     * @param integer $name A value from the MathFunctions enumeration.
+     * @param int $name A value from the MathFunctions enumeration.
      * @throws InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
      */
     public function setName($name)

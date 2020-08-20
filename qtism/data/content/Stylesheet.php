@@ -171,7 +171,7 @@ class Stylesheet extends QtiComponent
     /**
      * Whether a value is defined for the media attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMedia()
     {
@@ -207,7 +207,7 @@ class Stylesheet extends QtiComponent
     /**
      * Whether a value is defined for the title attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTitle()
     {

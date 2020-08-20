@@ -179,7 +179,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * Whether or not the baseType attribute is defined for this
      * VariableDeclaration.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBaseType()
     {
@@ -211,7 +211,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     /**
      * Whether or not a DefaultValue object is contained by the VariableDeclaration.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefaultValue()
     {

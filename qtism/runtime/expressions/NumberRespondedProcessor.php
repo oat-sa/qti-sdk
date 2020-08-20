@@ -55,7 +55,7 @@ class NumberRespondedProcessor extends ItemSubsetProcessor
     /**
      * Process the related NumberResponded expression.
      *
-     * @return integer The number of items in the given sub-set that been attempted (at least once) and for which a response was given.
+     * @return int The number of items in the given sub-set that been attempted (at least once) and for which a response was given.
      * @throws ExpressionProcessingException
      */
     public function process()

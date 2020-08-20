@@ -140,7 +140,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Whether or not a TemplateElse object is defined for this template condition.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateElse()
     {

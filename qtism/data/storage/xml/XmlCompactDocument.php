@@ -62,7 +62,7 @@ class XmlCompactDocument extends XmlDocument
      * Whether or not the rubricBlock elements
      * must be separated from the core document.
      *
-     * @var boolean
+     * @var bool
      */
     private $explodeRubricBlocks = false;
 
@@ -110,7 +110,7 @@ class XmlCompactDocument extends XmlDocument
      * Please note that this is took under consideration only when the XmlDocument::save() method
      * is used.
      *
-     * @param boolean $explodeRubricBlocks
+     * @param bool $explodeRubricBlocks
      */
     public function setExplodeRubricBlocks($explodeRubricBlocks)
     {
@@ -120,7 +120,7 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Whether or not the rubricBlock components contained in the document should be separated from the document.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustExplodeRubricBlocks()
     {

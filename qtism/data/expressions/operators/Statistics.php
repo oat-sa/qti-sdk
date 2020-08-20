@@ -36,7 +36,7 @@ class Statistics implements Enumeration
      * The arithmetic mean of the argument, which must be a container of numerical
      * base type, which contains a sample of observations.
      *
-     * @var integer
+     * @var int
      */
     const MEAN = 0;
 
@@ -46,7 +46,7 @@ class Statistics implements Enumeration
      * The variance of the argument, which must be a container of numerical base type,
      * with containerSize greater than 1, containing a sample of observations.
      *
-     * @var integer
+     * @var int
      */
     const SAMPLE_VARIANCE = 1;
 
@@ -56,7 +56,7 @@ class Statistics implements Enumeration
      * The standard deviation of the argument, which must be a container of numerical
      * base type, with containerSize greater than 1, containing a sample of observations.
      *
-     * @var integer
+     * @var int
      */
     const SAMPLE_SD = 2;
 
@@ -66,7 +66,7 @@ class Statistics implements Enumeration
      * The variance of the argument, which must be a container of numerical base type
      * with containerSize greater than 1.
      *
-     * @var integer
+     * @var int
      */
     const POP_VARIANCE = 3;
 
@@ -76,7 +76,7 @@ class Statistics implements Enumeration
      * The standard deviation of the argument, which must be a container of numerical base
      * type with containerSize greater than 1.
      *
-     * @var integer
+     * @var int
      */
     const POP_SD = 4;
 

@@ -47,7 +47,7 @@ class StringCollection extends AbstractCollection
      * Whether the collection contains a given $string.
      *
      * @param mixed $value A string.
-     * @return boolean Whether the collection contains $value.
+     * @return bool Whether the collection contains $value.
      */
     public function contains($value)
     {

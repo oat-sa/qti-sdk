@@ -59,7 +59,7 @@ class IsNullProcessor extends OperatorProcessor
     /**
      * Process the IsNullExpression object from the QTI Data Model.
      *
-     * @return boolean Whether the sub-expression is considered to be NULL.
+     * @return bool Whether the sub-expression is considered to be NULL.
      * @throws OperatorProcessingException If something goes wrong.
      */
     public function process()

@@ -87,7 +87,7 @@ class AssessmentTestSession extends State
     /**
      * The state of the AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     private $state;
 
@@ -118,14 +118,14 @@ class AssessmentTestSession extends State
      * Whether the Assessment Test Session must move automatically
      * to the next RouteItem after ending an attempt.
      *
-     * @var boolean
+     * @var bool
      */
     private $autoForward = true;
 
     /**
      * How/When test results must be submitted.
      *
-     * @var integer
+     * @var int
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
     private $testResultsSubmission = TestResultsSubmission::OUTCOME_PROCESSING;
@@ -156,7 +156,7 @@ class AssessmentTestSession extends State
      *
      * If enabled, branch rules will be executed even if the current navigation mode is non-linear.
      *
-     * @var boolean
+     * @var bool
      */
     private $forceBranching = false;
 
@@ -165,14 +165,14 @@ class AssessmentTestSession extends State
      *
      * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
      *
-     * @var boolean
+     * @var bool
      */
     private $forcePreconditions = false;
 
     /**
      * Whether or not to store the positions taken in the flow while navigating the test.
      *
-     * @var boolean
+     * @var bool
      */
     private $pathTracking = false;
 
@@ -190,7 +190,7 @@ class AssessmentTestSession extends State
      *
      * If enabled, jumps will be allowed even if the current navigation mode is linear.
      *
-     * @var boolean
+     * @var bool
      */
     private $alwaysAllowJumps = false;
 
@@ -319,7 +319,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current status of the AssessmentTestSession.
      *
-     * @return integer A value from the AssessmentTestSessionState enumeration.
+     * @return int A value from the AssessmentTestSessionState enumeration.
      */
     public function getState()
     {
@@ -329,7 +329,7 @@ class AssessmentTestSession extends State
     /**
      * Set the current status of the AssessmentTestSession.
      *
-     * @param integer $state A value from the AssessmentTestSessionState enumeration.
+     * @param int $state A value from the AssessmentTestSessionState enumeration.
      */
     public function setState($state)
     {
@@ -417,7 +417,7 @@ class AssessmentTestSession extends State
     /**
      * Get the Test Results Submission configuration value.
      *
-     * @param integer $testResultsSubmission
+     * @param int $testResultsSubmission
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
     public function setTestResultsSubmission($testResultsSubmission)
@@ -428,7 +428,7 @@ class AssessmentTestSession extends State
     /**
      * Get the Test Results Submission configuration value.
      *
-     * @return integer
+     * @return int
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
     public function getTestResultsSubmission()
@@ -459,7 +459,7 @@ class AssessmentTestSession extends State
     /**
      * Whether or not minimum time limits must be taken into account.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustConsiderMinTime()
     {
@@ -511,7 +511,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
      *
-     * @param boolean $forceBranching
+     * @param bool $forceBranching
      */
     public function setForceBranching($forceBranching)
     {
@@ -523,7 +523,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustForceBranching()
     {
@@ -535,7 +535,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
      *
-     * @param boolean $forcePreconditions
+     * @param bool $forcePreconditions
      */
     public function setForcePreconditions($forcePreconditions)
     {
@@ -547,7 +547,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustForcePreconditions()
     {
@@ -559,7 +559,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, jumps will be allowed even if the current navigation mode is linear.
      *
-     * @param boolean $alwaysAllowJumps
+     * @param bool $alwaysAllowJumps
      */
     public function setAlwaysAllowJumps($alwaysAllowJumps)
     {
@@ -571,7 +571,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, jumps will be allowed even if the current navigation mode is linear.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustAlwaysAllowJumps()
     {
@@ -589,7 +589,7 @@ class AssessmentTestSession extends State
      * has begun using the AssessmentTestSession::beginTestSession() method, path tracking should not
      * be disable. Otherwise, you may experience issues with route item flow.
      *
-     * @param boolean $pathTracking
+     * @param bool $pathTracking
      */
     public function setPathTracking($pathTracking)
     {
@@ -599,7 +599,7 @@ class AssessmentTestSession extends State
     /**
      * Whether or not path tracking is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustTrackPath()
     {
@@ -637,7 +637,7 @@ class AssessmentTestSession extends State
      *
      * Whether or not outcome processing is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOutcomeProcessingEnabled()
     {
@@ -649,7 +649,7 @@ class AssessmentTestSession extends State
      *
      * Set whether or not outcome processing is enabled.
      *
-     * @param boolean $outcomeProcessingEnabled
+     * @param bool $outcomeProcessingEnabled
      */
     public function setOutcomeProcessingEnabled($outcomeProcessingEnabled)
     {
@@ -958,7 +958,7 @@ class AssessmentTestSession extends State
      * Check if a given variable identified by $offset exists in the global scope
      * of the AssessmentTestSession.
      *
-     * @return boolean Whether the variable identified by $offset exists in the current context.
+     * @return bool Whether the variable identified by $offset exists in the current context.
      * @throws OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
      */
     public function offsetExists($offset)
@@ -1024,8 +1024,8 @@ class AssessmentTestSession extends State
      * submission mode, and will set up templateDefaults if any.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode
-     * @param integer $submissionMode
+     * @param int $navigationMode
+     * @param int $submissionMode
      * @return AssessmentItemSession
      */
     protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
@@ -1165,7 +1165,7 @@ class AssessmentTestSession extends State
      * Get an AssessmentItemSession object based on $assessmentItemRef and $occurrence.
      *
      * @param AssessmentItemRef $assessmentItemRef
-     * @param integer $occurrence
+     * @param int $occurrence
      * @return AssessmentItemSession|false
      */
     protected function getItemSession(AssessmentItemRef $assessmentItemRef, $occurrence = 0)
@@ -1213,7 +1213,7 @@ class AssessmentTestSession extends State
      *  * if the current item of the selection is Q23, the return value is 0.
      *  * if the current item of the selection is Q01.3, the return value is 2.
      *
-     * @return integer| the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
+     * @return int| the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
      */
     public function getCurrentAssessmentItemRefOccurence()
     {
@@ -1255,7 +1255,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current navigation mode.
      *
-     * @return integer|false A value from the NavigationMode enumeration or false if the test session is not running.
+     * @return int|false A value from the NavigationMode enumeration or false if the test session is not running.
      */
     public function getCurrentNavigationMode()
     {
@@ -1269,7 +1269,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current submission mode.
      *
-     * @return integer|false A value from the SubmissionMode enumeration or false if the test session is not running.
+     * @return int|false A value from the SubmissionMode enumeration or false if the test session is not running.
      */
     public function getCurrentSubmissionMode()
     {
@@ -1283,7 +1283,7 @@ class AssessmentTestSession extends State
     /**
      * Get the number of remaining items for the current item in the route.
      *
-     * @return integer|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
+     * @return int|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
      */
     public function getCurrentRemainingAttempts()
     {
@@ -1299,7 +1299,7 @@ class AssessmentTestSession extends State
     /**
      * Whether the current item is adaptive.
      *
-     * @return boolean
+     * @return bool
      * @throws AssessmentTestSessionException If the test session is not running.
      */
     public function isCurrentAssessmentItemAdaptive()
@@ -1443,7 +1443,7 @@ class AssessmentTestSession extends State
      * the end of the session if the responded item is the last one.
      *
      * @param State $responses The responses for the curent item in the sequence.
-     * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
+     * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
      * @throws AssessmentTestSessionException
      * @throws AssessmentItemSessionException
      * @qtism-test-interaction
@@ -1504,8 +1504,8 @@ class AssessmentTestSession extends State
      * Perform a 'jump' to a given position in the Route sequence. The current navigation
      * mode must be LINEAR to be able to jump.
      *
-     * @param integer $position The position in the route the jump has to be made.
-     * @param boolean $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
+     * @param int $position The position in the route the jump has to be made.
+     * @param bool $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
      * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1590,7 +1590,7 @@ class AssessmentTestSession extends State
      * This method is triggered each time response processing takes place.
      *
      * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
-     * @param integer $occurence The occurence number of the item bound to $assessmentItemSession.
+     * @param int $occurence The occurence number of the item bound to $assessmentItemSession.
      * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
      */
     protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
@@ -1684,7 +1684,7 @@ class AssessmentTestSession extends State
      * which is not timed out will be set as the current RouteItem. If there is no more following RouteItems
      * that are not timed out in the Route sequence, the test session ends gracefully.
      *
-     * @param boolean $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
+     * @param bool $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1742,7 +1742,7 @@ class AssessmentTestSession extends State
      * that are not timed out in the Route sequence, the current RouteItem remains the same and an
      * AssessmentTestSessionException with the appropriate timing error code is thrown.
      *
-     * @param boolean $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
+     * @param bool $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...) or if $allowTimeout = false and there absolutely no possibility to move backward (even the first RouteItem is timed out).
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1810,8 +1810,8 @@ class AssessmentTestSession extends State
      * * If there is no more item in the route to be explored the session ends gracefully.
      * * If there the end of a test part is reached, pending responses are submitted.
      *
-     * @param boolean $ignoreBranchings Whether or not to ignore branching.
-     * @param boolean $ignorePreConditions Whether or not to ignore preConditions.
+     * @param bool $ignoreBranchings Whether or not to ignore branching.
+     * @param bool $ignorePreConditions Whether or not to ignore preConditions.
      * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
      */
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
@@ -2025,7 +2025,7 @@ class AssessmentTestSession extends State
      * Whether the test session is running. In other words, if the test session is not in
      * state INITIAL nor CLOSED.
      *
-     * @return boolean Whether the test session is running.
+     * @return bool Whether the test session is running.
      */
     public function isRunning()
     {
@@ -2112,8 +2112,8 @@ class AssessmentTestSession extends State
      * * AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE: consider only item occurences containing at least one response declaration.
      * * AssessmentTestSession::ROUTECOUNT_FLOW: ignore item occurences in non linear mode having no response declaration.
      *
-     * @param integer $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE | AssessmentTestSession::ROUTECOUNT_FLOW
-     * @return integer
+     * @param int $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE | AssessmentTestSession::ROUTECOUNT_FLOW
+     * @return int
      */
     public function getRouteCount($mode = self::ROUTECOUNT_ALL)
     {
@@ -2166,8 +2166,8 @@ class AssessmentTestSession extends State
      * Whether a given item occurence is the last updated.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @param integer $occurence An occurence number
-     * @return boolean
+     * @param int $occurence An occurence number
+     * @return bool
      */
     public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
@@ -2184,7 +2184,7 @@ class AssessmentTestSession extends State
      * Notify which $occurence of $assessmentItemRef was the last updated.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @param integer $occurence An occurence number for $assessmentItemRef.
+     * @param int $occurence An occurence number for $assessmentItemRef.
      */
     protected function notifyLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
@@ -2227,7 +2227,7 @@ class AssessmentTestSession extends State
      * * If the current navigation mode is LINEAR, false is returned.
      * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function canMoveBackward()
     {
@@ -2254,7 +2254,7 @@ class AssessmentTestSession extends State
      *
      * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
      *
-     * @param integer $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
+     * @param int $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
      * @return JumpCollection A collection of Jump objects.
      */
     public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = '')
@@ -2332,7 +2332,7 @@ class AssessmentTestSession extends State
      * Get the time constraints running for the current testPart or/and current assessmentSection
      * or/and assessmentItem.
      *
-     * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
+     * @param int $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
      * @return TimeConstraintCollection A collection of TimeConstraint objects.
      * @qtism-test-duration-update
      */
@@ -2392,9 +2392,9 @@ class AssessmentTestSession extends State
      * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_OVERFLOW
      * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_UNDERFLOW
      *
-     * @param boolean $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
-     * @param boolean $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
-     * @param boolean $acceptableLatency Whether or not consider the acceptable latency.
+     * @param bool $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
+     * @param bool $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
+     * @param bool $acceptableLatency Whether or not consider the acceptable latency.
      * @throws AssessmentTestSessionException If one or more time limits in force are not respected.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
      */
@@ -2553,7 +2553,7 @@ class AssessmentTestSession extends State
      * Get the number of responded items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberResponded($identifier = '')
     {
@@ -2578,7 +2578,7 @@ class AssessmentTestSession extends State
      * Get the number of correctly answered items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberCorrect($identifier = '')
     {
@@ -2603,7 +2603,7 @@ class AssessmentTestSession extends State
      * Get the number of incorrectly answered items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberIncorrect($identifier = '')
     {
@@ -2628,7 +2628,7 @@ class AssessmentTestSession extends State
      * Get the number of presented items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberPresented($identifier = '')
     {
@@ -2653,7 +2653,7 @@ class AssessmentTestSession extends State
      * Get the number of selected items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberSelected($identifier = '')
     {
@@ -2682,7 +2682,7 @@ class AssessmentTestSession extends State
      * * The navigation mode in force for the item is non-linear, and its completion status is 'complete'.
      * * The navigation mode in force for the item is linear, and it was presented at least one time.
      *
-     * @return integer The number of completed items.
+     * @return int The number of completed items.
      */
     public function numberCompleted()
     {
@@ -2808,8 +2808,8 @@ class AssessmentTestSession extends State
     /**
      * Whether or not time limits are in force for the current route item.
      *
-     * @param boolean $excludeItem Whether or not include item time limits.
-     * @return boolean
+     * @param bool $excludeItem Whether or not include item time limits.
+     * @return bool
      */
     protected function timeLimitsInForce($excludeItem = false)
     {
@@ -2821,7 +2821,7 @@ class AssessmentTestSession extends State
      *
      * Whether or not Branch Rules have to be applied.
      *
-     * @return boolean
+     * @return bool
      */
     protected function mustApplyBranchRules()
     {
@@ -2833,8 +2833,8 @@ class AssessmentTestSession extends State
      *
      * Whether or not PreConditions have to be applied.
      *
-     * @param boolean $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
-     * @return boolean
+     * @param bool $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
+     * @return bool
      */
     protected function mustApplyPreConditions($nextRouteItem = false)
     {
@@ -2856,7 +2856,7 @@ class AssessmentTestSession extends State
      *
      * Otherwise, this method returns true.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNextRouteItemPredictible()
     {

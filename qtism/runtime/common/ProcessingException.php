@@ -35,7 +35,7 @@ class ProcessingException extends RuntimeException
     /**
      * Code to use when the error of the nature is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -44,14 +44,14 @@ class ProcessingException extends RuntimeException
      *
      * e.g. When a division by zero occurs, an overflow, ...
      *
-     * @var integer
+     * @var int
      */
     const RUNTIME_ERROR = 1;
 
     /**
      * Code to use when a requested variable does not exist or is not set.
      *
-     * @var integer
+     * @var int
      */
     const NONEXISTENT_VARIABLE = 2;
 
@@ -61,7 +61,7 @@ class ProcessingException extends RuntimeException
      * e.g. If the correct processor retrieves a variable which is not
      * a ResponseDeclaration.
      *
-     * @var integer
+     * @var int
      */
     const WRONG_VARIABLE_TYPE = 3;
 
@@ -71,7 +71,7 @@ class ProcessingException extends RuntimeException
      * e.g. If the mapResponsePoint processor retrieves a variable with
      * a baseType different than point.
      *
-     * @var integer
+     * @var int
      */
     const WRONG_VARIABLE_BASETYPE = 4;
 
@@ -81,7 +81,7 @@ class ProcessingException extends RuntimeException
      * e.g. If the mapResponsePoint processor retrieves a variable with
      * no areaMapping set.
      *
-     * @var integer
+     * @var int
      */
     const INCONSISTENT_VARIABLE = 5;
 
@@ -90,7 +90,7 @@ class ProcessingException extends RuntimeException
      *
      * e.g. min >= max in the randomFloat processor.
      *
-     * @var integer
+     * @var int
      */
     const LOGIC_ERROR = 6;
 
@@ -101,7 +101,7 @@ class ProcessingException extends RuntimeException
      *
      * @param string $msg A human-readable message describing the error.
      * @param Processable $source A Processable object where the error occurred.
-     * @param integer A code to characterize the error.
+     * @param int A code to characterize the error.
      * @param Exception $previous An optional Exception object that caused the error.
      */
     public function __construct($msg, Processable $source, $code = 0, Exception $previous = null)

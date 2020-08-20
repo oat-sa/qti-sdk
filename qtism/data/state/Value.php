@@ -78,7 +78,7 @@ class Value extends QtiComponent
     /**
      * Declare if the value is part of a record.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $isPartOfRecord = false;
@@ -102,7 +102,7 @@ class Value extends QtiComponent
     /**
      * Set wether or not the value is part of a record.
      *
-     * @param boolean $partOfRecord
+     * @param bool $partOfRecord
      * @throws InvalidArgumentException If $partOfRecord is not a boolean.
      */
     public function setPartOfRecord($partOfRecord)
@@ -118,7 +118,7 @@ class Value extends QtiComponent
     /**
      * Wheter the value is being part of a record. Default is false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPartOfRecord()
     {
@@ -154,7 +154,7 @@ class Value extends QtiComponent
     /**
      * Whether or not a field identifier is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFieldIdentifier()
     {
@@ -190,7 +190,7 @@ class Value extends QtiComponent
     /**
      * Whether the value has a defined baseType.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBaseType()
     {

@@ -86,7 +86,7 @@ abstract class AbstractSessionManager
      * Set whether or not created AssessmentTestSessions must consider
      * minimum time limits.
      *
-     * @param boolean $considerMinTime
+     * @param bool $considerMinTime
      */
     public function setConsiderMinTime($considerMinTime)
     {
@@ -97,7 +97,7 @@ abstract class AbstractSessionManager
      * Whether or not created AssessmentTestSessions must consider
      * minimum time limits.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustConsiderMinTime()
     {
@@ -129,8 +129,8 @@ abstract class AbstractSessionManager
      * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @return AssessmentItemSession A freshly instantiated AssessmentItemSession.
      */
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
@@ -138,7 +138,7 @@ abstract class AbstractSessionManager
     /**
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
      * @param A value from the SubmissionMode enumeration $submissionMode.
      *
      * @return AssessmentItemSession

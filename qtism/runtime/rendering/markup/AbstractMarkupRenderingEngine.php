@@ -49,28 +49,28 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * Static rendering mode.
      *
-     * @var integer
+     * @var int
      */
     const CONTEXT_STATIC = 0;
 
     /**
      * Context-aware rendering.
      *
-     * @var integer
+     * @var int
      */
     const CONTEXT_AWARE = 1;
 
     /**
      * Template oriented rendering.
      *
-     * @var integer
+     * @var int
      */
     const TEMPLATE_ORIENTED = 2;
 
     /**
      * Ignore xml:base constraints.
      *
-     * @var integer
+     * @var int
      */
     const XMLBASE_IGNORE = 3;
 
@@ -78,7 +78,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Keep xml:base in final rendering,
      * but do not process them.
      *
-     * @var integer
+     * @var int
      */
     const XMLBASE_KEEP = 4;
 
@@ -87,7 +87,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * xml:base into account. xml:base values
      * will not be kept into the final rendering.
      *
-     * @var integer
+     * @var int
      */
     const XMLBASE_PROCESS = 5;
 
@@ -95,7 +95,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Stylesheet components are rendered at the same place
      * they appear in the content model to be rendered.
      *
-     * @var integer
+     * @var int
      */
     const STYLESHEET_INLINE = 6;
 
@@ -103,7 +103,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Stylesheet components are rendered separately and pushed into
      * a specific place.
      *
-     * @var integer
+     * @var int
      */
     const STYLESHEET_SEPARATE = 7;
 
@@ -170,42 +170,42 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * The Choice rendering policy.
      *
-     * @var integer
+     * @var int
      */
     private $choiceShowHidePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The Feedback rendering policy.
      *
-     * @var integer
+     * @var int
      */
     private $feedbackShowHidePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The View rendering policy.
      *
-     * @var integer
+     * @var int
      */
     private $viewPolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The policy to adopt while dealing with printed variables.
      *
-     * @var integer
+     * @var int
      */
     private $printedVariablePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The policy to adopt to deal with xml:base values.
      *
-     * @var integer
+     * @var int
      */
     private $xmlBasePolicy = AbstractMarkupRenderingEngine::XMLBASE_IGNORE;
 
     /**
      * The policy to adopt while dealing with QTI stylesheet components.
      *
-     * @var integer
+     * @var int
      */
     private $stylesheetPolicy = AbstractMarkupRenderingEngine::STYLESHEET_INLINE;
 
@@ -250,7 +250,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Wether choices in shufflable interactions
      * must be shuffled.
      *
-     * @var boolean
+     * @var bool
      */
     private $shuffle = false;
 
@@ -432,7 +432,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Whether or not the currently explored Component object
      * is a final leaf of the tree structured explored hierarchy.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isFinal()
     {
@@ -453,7 +453,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * Wether or not the currently explored component has been already explored.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isExplored()
     {
@@ -519,7 +519,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * The class of the Component is in the list of QTI classes to be ignored.
      *
      * @param QtiComponent $component A Component you want to know if it has to be ignored or not.
-     * @return boolean
+     * @return bool
      */
     protected function mustIgnoreComponent(QtiComponent $component)
     {
@@ -556,7 +556,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * matches its 'identifier' attribute.
      *
      * @param QtiComponent $component A TemplateElement or FeedbackElement or Choice element.
-     * @return boolean
+     * @return bool
      */
     protected function identifierMatches(QtiComponent $component)
     {
@@ -800,7 +800,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * the current policy for feedback elements is TEMPLATE_ORIENTED
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function mustTemplateFeedbackComponent(QtiComponent $component)
     {
@@ -815,7 +815,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * the current policy for views is TEMPLATE_ORIENTED
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function mustTemplateRubricBlockComponent(QtiComponent $component)
     {
@@ -827,7 +827,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * FeedbackElement or ModalFeedback.
      *
      * @param QtiComponent $component A QtiComponent object.
-     * @return boolean
+     * @return bool
      */
     protected static function isFeedback(QtiComponent $component)
     {
@@ -839,7 +839,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * RubricBlock.
      *
      * @param QtiComponent $component A QtiComponent object.
-     * @return boolean
+     * @return bool
      */
     protected static function isRubricBlock(QtiComponent $component)
     {
@@ -918,7 +918,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:choice is described in QTI-XML. The component will never be discarded from rendering.
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from rendering depending on the value of the variable referenced by the choice:templateIdentifier attribute and the value of the choice:showHide attribute.
      *
-     * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
      */
     public function setChoiceShowHidePolicy($policy)
@@ -932,7 +932,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:choice is described in QTI-XML. The component will never be discarded from rendering.
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from rendering depending on the value of the variable referenced by the choice:templateIdentifier attribute and the value of the choice:showHide attribute.
      *
-     * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
      */
     public function getChoiceShowHidePolicy()
@@ -947,7 +947,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE or AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED.
+     * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE or AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED.
      */
     public function setFeedbackShowHidePolicy($policy)
     {
@@ -960,7 +960,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
      *
-     * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function getFeedbackShowHidePolicy()
     {
@@ -974,7 +974,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function setViewPolicy($policy)
     {
@@ -988,7 +988,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function getViewPolicy()
     {
@@ -1002,7 +1002,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the printed variable will be generated as in CONTEXT_STATIC mode, but the value to be displayed will be generated.
      * * In TEMPLATE_ORIENTED mode, the code to be processed to render the variable value will be enclosed into template tags, that can be processed later on.
      *
-     * @param integer $printedVariablePolicy AbstractMarkup
+     * @param int $printedVariablePolicy AbstractMarkup
      */
     public function setPrintedVariablePolicy($printedVariablePolicy)
     {
@@ -1016,7 +1016,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the printed variable will be generated as in CONTEXT_STATIC mode, but the value to be displayed will be generated.
      * * In TEMPLATE_ORIENTED mode, the code to be processed to render the variable value will be enclosed into template tags, that can be processed later on.
      *
-     * @return integer
+     * @return int
      */
     public function getPrintedVariablePolicy()
     {
@@ -1030,7 +1030,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
      * * AbstractMarkupRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
      *
-     * @param integer $xmlBasePolicy AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
+     * @param int $xmlBasePolicy AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
     public function setXmlBasePolicy($xmlBasePolicy)
@@ -1045,7 +1045,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
      * * AbstractMarkupRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
      *
-     * @return integer AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
+     * @return int AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
     public function getXmlBasePolicy()
@@ -1059,7 +1059,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::STYLESHEET_INLINE: Stylesheet components are rendered at the same place they appear in the content model to be rendered.
      * * AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE: Stylesheet components are rendered separately from the rest of the model, and pushed into a specific place.
      *
-     * @param integer $stylesheetPolicy AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
+     * @param int $stylesheetPolicy AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
      */
     public function setStylesheetPolicy($stylesheetPolicy)
     {
@@ -1072,7 +1072,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::STYLESHEET_INLINE: Stylesheet components are rendered at the same place they appear in the content model to be rendered.
      * * AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE: Stylesheet components are rendered separately from the rest of the model, and pushed into a specific place.
      *
-     * @return integer AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
+     * @return int AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
      */
     public function getStylesheetPolicy()
     {
@@ -1149,7 +1149,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Whether or not a URL is defined in place of the value of the root
      * component's xml:base value.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasRootBase()
     {
@@ -1201,7 +1201,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * e.g. ChoiceInteraction, MatchInteraction must be
      * shuffled at rendering time.
      *
-     * @param boolean $shuffle
+     * @param bool $shuffle
      */
     public function setShuffle($shuffle)
     {
@@ -1212,7 +1212,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Whether or not choices in shufflable interactions e.g. ChoiceInteraction,
      * MatchInteraction must be shuffled at rendering time.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {

@@ -89,7 +89,7 @@ abstract class QtiScalar implements QtiDatatype
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
      *
-     * @return boolean
+     * @return bool
      */
     public function equals($obj)
     {

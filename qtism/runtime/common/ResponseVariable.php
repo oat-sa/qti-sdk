@@ -73,9 +73,9 @@ class ResponseVariable extends Variable
      * the appropriate container will be instantiated interally as the $value argument.
      *
      * @param string $identifier An identifier for the variable.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-     * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param int|float|double|bool|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
     public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
@@ -137,7 +137,7 @@ class ResponseVariable extends Variable
     /**
      * Whether the ResponseVariable holds a CorrectResponse object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCorrectResponse()
     {
@@ -188,7 +188,7 @@ class ResponseVariable extends Variable
      * Whether the value of the ResponseVariable matches its
      * correct response.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCorrect()
     {

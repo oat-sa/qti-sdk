@@ -56,7 +56,7 @@ class DurationGTEProcessor extends OperatorProcessor
     /**
      * Process the DurationGTE operator.
      *
-     * @return boolean|null A boolean with a value of true if the first duration is longer or equal to the second, otherwise false. If either sub-expression is NULL, the result of the operator is NULL.
+     * @return bool|null A boolean with a value of true if the first duration is longer or equal to the second, otherwise false. If either sub-expression is NULL, the result of the operator is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

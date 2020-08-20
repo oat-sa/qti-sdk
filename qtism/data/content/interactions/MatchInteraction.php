@@ -42,7 +42,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -50,7 +50,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxAssociations = 1;
@@ -58,7 +58,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minAssociations = 0;
@@ -83,7 +83,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * Set whether the delivery engine must randomize the choices.
      *
-     * @param boolean $shuffle A boolean value.
+     * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
@@ -99,7 +99,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * Whether the delivery engine must randomize the choices.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -110,7 +110,7 @@ class MatchInteraction extends BlockInteraction
      * Set the maximum number of associations that the candidate is allowed to make. If maxAssociations
      * is 0 then there is no restriction.
      *
-     * @param integer $maxAssociations A positive (>= 0) integer.
+     * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
@@ -127,7 +127,7 @@ class MatchInteraction extends BlockInteraction
      * Get the maximum number of associations that the candidate is allowed to make. If maxAssociations
      * is 0 then there is no restriction.
      *
-     * @return integer A positive (>= 0) integer
+     * @return int A positive (>= 0) integer
      */
     public function getMaxAssociations()
     {
@@ -138,7 +138,7 @@ class MatchInteraction extends BlockInteraction
      * Whether a restriction is imposed on the maximum number of associations a candidate
      * can make.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxAssociations()
     {
@@ -149,7 +149,7 @@ class MatchInteraction extends BlockInteraction
      * Set the minimum number of associations that the candidate is required to make. If minAssociations is 0 then
      * there is no restriction.
      *
-     * @param integer $minAssociations A positive (>= 0) integer.
+     * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or does not respect the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations)
@@ -171,7 +171,7 @@ class MatchInteraction extends BlockInteraction
      * Get the minimum number of associations that the candidate is required to make. If minAssociations is 0 then
      * there is no restriction.
      *
-     * @return integer A positive (> 0) integer.
+     * @return int A positive (> 0) integer.
      */
     public function getMinAssociations()
     {
@@ -181,7 +181,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * Whether there is a minimum number of associations required.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinAssociations()
     {

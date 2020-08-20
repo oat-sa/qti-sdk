@@ -70,7 +70,7 @@ class TimeLimits extends QtiComponent
      * The allowLateSubmission attribute regulates whether a candidate's response that is
      * beyond the maxTime should still be accepted.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $allowLateSubmission = false;
@@ -102,7 +102,7 @@ class TimeLimits extends QtiComponent
     /**
      * Whether a minTime is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinTime()
     {
@@ -137,7 +137,7 @@ class TimeLimits extends QtiComponent
     /**
      * Whether a maxTime is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxTime()
     {
@@ -163,7 +163,7 @@ class TimeLimits extends QtiComponent
      * Wether a candidate's response that is beyond the maxTime should be still
      * accepted.
      *
-     * @return boolean true if the candidate's response should still be accepted, false if not.
+     * @return bool true if the candidate's response should still be accepted, false if not.
      */
     public function doesAllowLateSubmission()
     {
@@ -174,7 +174,7 @@ class TimeLimits extends QtiComponent
      * Set wether a candidate's response that is beyond the maxTime should be still
      * accepted.
      *
-     * @param boolean $allowLateSubmission true if the candidate's response should still be accepted, false if not.
+     * @param bool $allowLateSubmission true if the candidate's response should still be accepted, false if not.
      * @throws InvalidArgumentException If $allowLateSubmission is not a boolean.
      */
     public function setAllowLateSubmission($allowLateSubmission)

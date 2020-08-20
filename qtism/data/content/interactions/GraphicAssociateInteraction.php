@@ -48,7 +48,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * greater than 1 (or 0) then the interaction must be bound to a response
      * with multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxAssociations = 1;
@@ -61,7 +61,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * not required to make any associations. minAssociations must be less than
      * or equal to the limit imposed by maxAssociations.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minAssociations = 0;
@@ -128,7 +128,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Set the maximum number of associations that the candidate is allowed
      * to make.
      *
-     * @param integer $maxAssociations A positive (>= 0) integer.
+     * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
@@ -145,7 +145,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Get the maximum number of associations that the candidate is allowed
      * to make.
      *
-     * @return integer $maxAssociations A positive (>= 0) integer.
+     * @return int $maxAssociations A positive (>= 0) integer.
      */
     public function getMaxAssociations()
     {
@@ -156,7 +156,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Set the minimum number of associations that the candidate is required to
      * make.
      *
-     * @param integer $minAssociations A positive (>= 0) integer.
+     * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations)
@@ -178,7 +178,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Get the minimum number of associations that the candidate is required
      * to make.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinAssociations()
     {

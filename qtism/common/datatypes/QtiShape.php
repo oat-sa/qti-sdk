@@ -103,7 +103,7 @@ class QtiShape implements Enumeration
      * Get the constant value associated with $name.
      *
      * @param string $name
-     * @return integer|boolean The constant value associated with the name or false if not found.
+     * @return int|bool The constant value associated with the name or false if not found.
      */
     public static function getConstantByName($name)
     {
@@ -137,8 +137,8 @@ class QtiShape implements Enumeration
     /**
      * Get the name associated with $constant.
      *
-     * @param integer $constant
-     * @return string|boolean The name or false if not found.
+     * @param int $constant
+     * @return string|bool The name or false if not found.
      */
     public static function getNameByConstant($constant)
     {

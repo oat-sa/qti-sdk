@@ -51,7 +51,7 @@ class Bean
      * Create a new Bean object.
      *
      * @param mixed $object The object to be wrapped as a Bean.
-     * @param boolean $strict Whether the given $object must be a strict Bean.
+     * @param bool $strict Whether the given $object must be a strict Bean.
      * @param string $asInstanceOf The name of the class that should be used for reflection.
      * @throws InvalidArgumentException If $object is not an object.
      * @throws BeanException
@@ -237,7 +237,7 @@ class Bean
      * * A valid bean property exists for $propertyName.
      *
      * @param string|BeanProperty $property The name of the property/the BeanProperty object related to the setter to be checked.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     public function hasSetter($property)
@@ -292,7 +292,7 @@ class Bean
      * * The property is annotated with @qtism-bean-property.
      *
      * @param string $propertyName The name of the class property to check.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     public function hasProperty($propertyName)
@@ -420,7 +420,7 @@ class Bean
      * to a valid bean property.
      *
      * @param string $parameterName The name of the parameter.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     public function hasConstructorParameter($parameterName)
@@ -443,7 +443,7 @@ class Bean
      * Whether a given property is annotated with the appropriate bean annotation.
      *
      * @param string $propertyName The name of the property.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     protected function isPropertyAnnotated($propertyName)

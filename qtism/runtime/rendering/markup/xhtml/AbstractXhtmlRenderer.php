@@ -179,7 +179,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether a replacement tag name is defined.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasReplacementTagName()
     {
@@ -223,7 +223,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether additional CSS classes are defined for rendering.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasAdditionalClasses()
     {

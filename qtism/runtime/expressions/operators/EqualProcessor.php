@@ -76,7 +76,7 @@ class EqualProcessor extends OperatorProcessor
     /**
      * Process the Equal operator.
      *
-     * @return boolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
+     * @return bool|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

@@ -66,7 +66,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * The adaptive attribute found in the referenced assessmentItem.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $adaptive = false;
@@ -74,7 +74,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * The timeDependent attribute found in the referenced assessmentItem.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $timeDependent = false;
@@ -138,7 +138,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Whether the referenced assessmentItem has a responseProcessing entry.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasResponseProcessing()
     {
@@ -208,7 +208,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Whether the referenced Item is adaptive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdaptive()
     {
@@ -218,7 +218,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set if the referenced Item is considered to be adaptive or not.
      *
-     * @param boolean $adaptive Whether the referenced Item is adaptive.
+     * @param bool $adaptive Whether the referenced Item is adaptive.
      * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
     public function setAdaptive($adaptive)
@@ -234,7 +234,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Set if the referenced Item is considered to be time dependent or not.
      *
-     * @param boolean $timeDependent Whether the referenced item is time dependent.
+     * @param bool $timeDependent Whether the referenced item is time dependent.
      * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
     public function setTimeDependent($timeDependent)
@@ -250,7 +250,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Whether the referenced Item is considered to be time dependent.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeDependent()
     {

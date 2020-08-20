@@ -54,7 +54,7 @@ class LteProcessor extends OperatorProcessor
     /**
      * Process the Lte operator.
      *
-     * @return boolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
+     * @return bool|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

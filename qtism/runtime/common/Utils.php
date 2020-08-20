@@ -45,7 +45,7 @@ class Utils
      * if it is null or a QTI Scalar Datatype.
      *
      * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
-     * @return boolean
+     * @return bool
      */
     public static function isRuntimeCompliant($value)
     {
@@ -63,7 +63,7 @@ class Utils
      *
      * @param int $baseType A value from the BaseType enumeration.
      * @param mixed $value A value.
-     * @return boolean
+     * @return bool
      */
     public static function isBaseTypeCompliant($baseType, $value)
     {
@@ -79,9 +79,9 @@ class Utils
     /**
      * Whether a given $cardinality is compliant with a given $value.
      *
-     * @param integer $cardinality
+     * @param int $cardinality
      * @param mixed $value
-     * @return boolean
+     * @return bool
      */
     public static function isCardinalityCompliant($cardinality, $value)
     {
@@ -129,7 +129,7 @@ class Utils
      * Infer the QTI baseType of a given $value.
      *
      * @param mixed $value A value you want to know the QTI baseType.
-     * @return integer|false A value from the BaseType enumeration or false if the baseType could not be infered.
+     * @return int|false A value from the BaseType enumeration or false if the baseType could not be infered.
      */
     public static function inferBaseType($value)
     {
@@ -153,7 +153,7 @@ class Utils
      * * The null value has no cardinality, this it always returns false for such a value.
      *
      * @param mixed $value A value you want to infer the cardinality.
-     * @return integer|boolean A value from the Cardinality enumeration or false if it could not be infered.
+     * @return int|bool A value from the Cardinality enumeration or false if it could not be infered.
      */
     public static function inferCardinality($value)
     {
@@ -177,7 +177,7 @@ class Utils
      * Q*01.2.Score    -> Invalid
      *
      * @param string $string A string value.
-     * @return boolean Whether the given $string is a valid variable identifier.
+     * @return bool Whether the given $string is a valid variable identifier.
      */
     public static function isValidVariableIdentifier($string)
     {
@@ -195,7 +195,7 @@ class Utils
      * the original $value is returned.
      *
      * @param mixed $value A QTI Runtime compliant value.
-     * @param integer $targetBaseType The target baseType.
+     * @param int $targetBaseType The target baseType.
      * @return mixed The juggled value if needed, otherwise the original value of $value.
      */
     public static function juggle($value, $targetBaseType)
@@ -270,9 +270,9 @@ class Utils
      * * integer - intOrIdentifier
      * * identifier - intOrIdentifier
      *
-     * @param integer $firstBaseType A value from the baseType enumeration.
-     * @param integer $secondBaseType A value from the baseType enumeration.
-     * @return boolean
+     * @param int $firstBaseType A value from the baseType enumeration.
+     * @param int $secondBaseType A value from the baseType enumeration.
+     * @return bool
      */
     public static function areBaseTypesCompliant($firstBaseType, $secondBaseType)
     {
@@ -355,7 +355,7 @@ class Utils
      * Transform a given PHP scalar value to a QtiScalar equivalent object.
      *
      * @param mixed|null $v
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @return QtiScalar
      */
     public static function valueToRuntime($v, $baseType)
@@ -395,7 +395,7 @@ class Utils
      * are always treated as NULL values.
      *
      * @param QtiDatatype $value
-     * @return boolean
+     * @return bool
      */
     public static function isNull(QtiDatatype $value = null)
     {

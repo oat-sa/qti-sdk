@@ -89,7 +89,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * Process the MathOperator operator.
      *
-     * @return float|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
+     * @return float|int|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
      */
     public function process()
     {

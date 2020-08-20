@@ -71,7 +71,7 @@ class EqualRoundedProcessor extends OperatorProcessor
     /**
      * Process the EqualRounded operator.
      *
-     * @return boolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
+     * @return bool|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
      * @throws OperatorProcessingException
      */
     public function process()

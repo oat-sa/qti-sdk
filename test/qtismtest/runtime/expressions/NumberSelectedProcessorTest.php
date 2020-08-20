@@ -13,7 +13,7 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
      * @dataProvider numberSelectedProvider
      *
      * @param NumberSelected $expression
-     * @param integer $expectedResult
+     * @param int $expectedResult
      */
     public function testNumberSelected(NumberSelected $expression, $expectedResult)
     {

@@ -36,7 +36,7 @@ class RuleProcessingException extends ProcessingException
      * The error code to use when the exitResponse rule is invoked
      * during rule processing.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_RESPONSE = 10;
 
@@ -44,7 +44,7 @@ class RuleProcessingException extends ProcessingException
      * The error code to use when the exitTest rule is invoked
      * during rule processing.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_TEST = 11;
 

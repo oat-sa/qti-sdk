@@ -231,7 +231,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether a value is defined for the base URI of the RubricBlock.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasXmlBase()
     {

@@ -160,7 +160,7 @@ class State extends AbstractCollection
     /**
      * Reset all outcome variables to their defaults.
      *
-     * @param boolean $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
+     * @param bool $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
      * @param array $preserve An array of identifiers reflecting variables that must not be reset but preserved.
      */
     public function resetOutcomeVariables($preserveBuiltIn = true, array $preserve = [])

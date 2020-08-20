@@ -55,7 +55,7 @@ interface QtiFile extends QtiDatatype
     /**
      * Whether or not a file name is defined for this file.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFilename();
 

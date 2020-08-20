@@ -39,14 +39,14 @@ class MemoryStream implements IStream
     /**
      * Whether the stream is open.
      *
-     * @var boolean
+     * @var bool
      */
     private $open = false;
 
     /**
      * The position in the stream.
      *
-     * @var integer
+     * @var int
      */
     private $position = 0;
 
@@ -86,7 +86,7 @@ class MemoryStream implements IStream
     /**
      * Returns the current position in the stream.
      *
-     * @return integer The position in the stream. Position begins at 0.
+     * @return int The position in the stream. Position begins at 0.
      */
     public function getPosition()
     {
@@ -96,7 +96,7 @@ class MemoryStream implements IStream
     /**
      * Set the current position in the stream.
      *
-     * @param integer $position A position in the stream to be set.
+     * @param int $position A position in the stream to be set.
      */
     protected function setPosition($position)
     {
@@ -106,7 +106,7 @@ class MemoryStream implements IStream
     /**
      * Set the length of the binary data.
      *
-     * @param integer $length
+     * @param int $length
      */
     protected function setLength($length)
     {
@@ -116,7 +116,7 @@ class MemoryStream implements IStream
     /**
      * Get the length of the binary data.
      *
-     * @return integer
+     * @return int
      */
     public function getLength()
     {
@@ -131,7 +131,7 @@ class MemoryStream implements IStream
     /**
      * Increment the current position by $i.
      *
-     * @param integer $i The increment to be applied on the current position in the stream.
+     * @param int $i The increment to be applied on the current position in the stream.
      */
     protected function incrementPosition($i)
     {
@@ -171,7 +171,7 @@ class MemoryStream implements IStream
     /**
      * Read $length bytes from the MemoryStream.
      *
-     * @param integer $length The number of bytes to read.
+     * @param int $length The number of bytes to read.
      * @return string The read value or an empty string if length = 0.
      * @throws MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
      */
@@ -205,7 +205,7 @@ class MemoryStream implements IStream
      * Write some $data in the stream.
      *
      * @param string $data
-     * @return integer The amount of written bytes.
+     * @return int The amount of written bytes.
      * @throws MemoryStreamException
      */
     public function write($data)
@@ -233,7 +233,7 @@ class MemoryStream implements IStream
     /**
      * Whether the end of the binary stream is reached.
      *
-     * @return boolean
+     * @return bool
      */
     public function eof()
     {
@@ -243,7 +243,7 @@ class MemoryStream implements IStream
     /**
      * Whether the stream is open yet.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOpen()
     {
@@ -268,7 +268,7 @@ class MemoryStream implements IStream
     /**
      * Specify whether or not the stream is open.
      *
-     * @param boolean $open
+     * @param bool $open
      */
     protected function setOpen($open)
     {

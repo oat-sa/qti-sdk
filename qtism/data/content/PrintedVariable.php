@@ -107,7 +107,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * will be rendered using the 'e' or 'E' format. If the powerform is set to 'true',
      * the form "e+n" is changed to "x 10n".
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $powerForm = false;
@@ -120,7 +120,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * Note: qti:integerOrVariableRef
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $base = 10;
@@ -135,7 +135,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Note: qti:integerOrVariableRef, an empty string indicates nothing was declared
      * for the index attribute.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $index = -1;
@@ -249,7 +249,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * Whether a format attribute value is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFormat()
     {
@@ -260,7 +260,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Set whether the variable value (when it's a float) must use the 'e' format
      * for display.
      *
-     * @param boolean $powerForm
+     * @param bool $powerForm
      * @throws InvalidArgumentException If $powerForm is not a boolean value.
      */
     public function setPowerForm($powerForm)
@@ -277,7 +277,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Whether the power form 'e' format must be used to display
      * float values.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustPowerForm()
     {
@@ -287,7 +287,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * Set the number base to use when converting integer variables to strings.
      *
-     * @param integer|string $base A base to use for conversion as an integer or a variable reference.
+     * @param int|string $base A base to use for conversion as an integer or a variable reference.
      * @throws InvalidArgumentException If $base is not an integer nor a variable reference.
      */
     public function setBase($base)
@@ -303,7 +303,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * Get the number base to use when converting integer variables to strings.
      *
-     * @return integer|string An integer or a variable reference.
+     * @return int|string An integer or a variable reference.
      */
     public function getBase()
     {
@@ -314,7 +314,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Set the index to use when displaying a variable of ordered cardinality. Give a negative integer
      * if there is no index indicated.
      *
-     * @param integer|string $index An integer or variable reference.
+     * @param int|string $index An integer or variable reference.
      * @throws InvalidArgumentException If $index is not an integer nor a variable reference.
      */
     public function setIndex($index)
@@ -331,7 +331,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Get the index to use when displaying a variable of ordered cardinality. A negative integer
      * will be returned if there is no index indicated.
      *
-     * @return integer|string An integer or a variable reference.
+     * @return int|string An integer or a variable reference.
      */
     public function getIndex()
     {
@@ -341,7 +341,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * Whether or not an index is defined for the printedVariable.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasIndex()
     {
@@ -407,7 +407,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * Whether or not the printedVariable has a value for the field attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasField()
     {

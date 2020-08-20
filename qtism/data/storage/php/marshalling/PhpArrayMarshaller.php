@@ -70,7 +70,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      *
      * @param mixed $toMarshall
      *
-     * @return boolean
+     * @return bool
      */
     protected function isMarshallable($toMarshall)
     {

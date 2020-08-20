@@ -190,7 +190,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value is defined for the id attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasId()
     {
@@ -227,7 +227,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Wehther a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -257,7 +257,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value for the lang attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLang()
     {
@@ -293,7 +293,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value is defined for the label attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLabel()
     {

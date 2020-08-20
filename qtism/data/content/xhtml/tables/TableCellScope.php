@@ -32,25 +32,25 @@ class TableCellScope implements Enumeration
 {
     /**
      *
-     * @var integer
+     * @var int
      */
     const ROW = 0;
 
     /**
      *
-     * @var integer
+     * @var int
      */
     const COL = 1;
 
     /**
      *
-     * @var integer
+     * @var int
      */
     const ROWGROUP = 2;
 
     /**
      *
-     * @var integer
+     * @var int
      */
     const COLGROUP = 3;
 

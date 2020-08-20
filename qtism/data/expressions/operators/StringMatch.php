@@ -42,7 +42,7 @@ class StringMatch extends Operator
      *
      * Whether or not the match is to be carried out case sensitively.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $caseSensitive;
@@ -54,7 +54,7 @@ class StringMatch extends Operator
      * If true, then the comparison returns true if the first string contains the
      * second one, otherwise it returns true only if they match entirely.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $substring = false;
@@ -63,8 +63,8 @@ class StringMatch extends Operator
      * Create a new instance of StringMatch.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param boolean $caseSensitive Whether or not the match to be carried out case sensitively.
-     * @param boolean $substring Deprecated argument, use the substring operator instead.
+     * @param bool $caseSensitive Whether or not the match to be carried out case sensitively.
+     * @param bool $substring Deprecated argument, use the substring operator instead.
      * @throws InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.
      */
     public function __construct(ExpressionCollection $expressions, $caseSensitive, $substring = false)
@@ -77,7 +77,7 @@ class StringMatch extends Operator
     /**
      * Set Wheter or not the match is to be carried out case sensitively.
      *
-     * @param boolean $caseSensitive Case sensitiveness.
+     * @param bool $caseSensitive Case sensitiveness.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean.
      */
     public function setCaseSensitive($caseSensitive)
@@ -93,7 +93,7 @@ class StringMatch extends Operator
     /**
      * Wether or not the match is to be carried out case sensitively.
      *
-     * @return boolean True if it has to, false otherwise.
+     * @return bool True if it has to, false otherwise.
      */
     public function isCaseSensitive()
     {
@@ -103,7 +103,7 @@ class StringMatch extends Operator
     /**
      * Set the substring attribute.
      *
-     * @param boolean $substring A boolean value.
+     * @param bool $substring A boolean value.
      * @throws InvalidArgumentException If $substring is not a boolean.
      * @deprecated
      */
@@ -120,7 +120,7 @@ class StringMatch extends Operator
     /**
      * Get the substring attribute.
      *
-     * @return boolean
+     * @return bool
      * @deprecated
      */
     public function mustSubstring()

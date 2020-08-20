@@ -40,7 +40,7 @@ class Utils
      *
      * @param DOMDocument $document A DOMDocument object.
      * @param string $namespaceUri A Namespace URI you want to know the related XSD file location.
-     * @return boolean|string False if no location can be found for $namespaceUri, otherwise the location of the XSD file.
+     * @return bool|string False if no location can be found for $namespaceUri, otherwise the location of the XSD file.
      */
     public static function getXsdLocation(DOMDocument $document, $namespaceUri)
     {
@@ -152,7 +152,7 @@ class Utils
      *
      * @param DOMElement $from The source DOMElement.
      * @param DOMElement $into The target DOMElement.
-     * @param boolean $deep Whether or not to import the whole node hierarchy.
+     * @param bool $deep Whether or not to import the whole node hierarchy.
      */
     public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true)
     {

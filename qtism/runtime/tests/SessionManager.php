@@ -48,8 +48,8 @@ class SessionManager extends AbstractSessionManager
      * Instantiates an AssessmentItemSession with the default implementation.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @return AssessmentItemSession
      */
     protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)

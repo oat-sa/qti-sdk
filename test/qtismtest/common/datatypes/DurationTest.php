@@ -150,7 +150,7 @@ class DurationTest extends QtiSmTestCase
      *
      * @param Duration $duration1
      * @param Duration $duration2
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testShorterThan(QtiDuration $duration1, QtiDuration $duration2, $expected)
     {
@@ -162,7 +162,7 @@ class DurationTest extends QtiSmTestCase
      *
      * @param Duration $duration1
      * @param Duration $duration2
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected)
     {

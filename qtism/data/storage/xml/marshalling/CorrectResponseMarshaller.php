@@ -38,7 +38,7 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * The baseType of values.
      *
-     * @var integer
+     * @var int
      */
     private $baseType = -1;
 
@@ -55,7 +55,7 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * Get the base type of inner values.
      *
-     * @return integer
+     * @return int
      */
     public function getBaseType()
     {
@@ -66,7 +66,7 @@ class CorrectResponseMarshaller extends Marshaller
      * Create a new CorrectResponseMarshaller object.
      *
      * @param $version
-     * @param integer $baseType The base type of the Variable referencing this CorrectResponse.
+     * @param int $baseType The base type of the Variable referencing this CorrectResponse.
      */
     public function __construct($version, $baseType = -1)
     {

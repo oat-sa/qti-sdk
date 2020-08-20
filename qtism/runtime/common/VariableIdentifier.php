@@ -56,7 +56,7 @@ class VariableIdentifier
     /**
      * The detected sequence number.
      *
-     * @var integer
+     * @var int
      */
     private $sequenceNumber = 0;
 
@@ -141,7 +141,7 @@ class VariableIdentifier
     /**
      * Set the detected sequence number.
      *
-     * @param integer $sequenceNumber A integer sequence number.
+     * @param int $sequenceNumber A integer sequence number.
      * @throws InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
      */
     protected function setSequenceNumber($sequenceNumber)
@@ -163,7 +163,7 @@ class VariableIdentifier
      * Returns the sequence number found in the variable identifier. If no such
      * sequence number is found, integer 0 is returned.
      *
-     * @return integer A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
+     * @return int A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
      */
     public function getSequenceNumber()
     {
@@ -173,7 +173,7 @@ class VariableIdentifier
     /**
      * Whether the identifier is composed by a sequence number.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSequenceNumber()
     {
@@ -238,7 +238,7 @@ class VariableIdentifier
     /**
      * Whether a prefix was found in the variable identifier.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPrefix()
     {

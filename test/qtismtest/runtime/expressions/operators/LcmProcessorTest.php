@@ -19,7 +19,7 @@ class LcmProcessorTest extends QtiSmTestCase
      * @dataProvider lcmProvider
      *
      * @param array $operands
-     * @param integer $expected
+     * @param int $expected
      */
     public function testLcm(array $operands, $expected)
     {

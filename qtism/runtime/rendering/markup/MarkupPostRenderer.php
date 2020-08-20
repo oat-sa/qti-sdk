@@ -31,14 +31,14 @@ class MarkupPostRenderer implements Renderable
     /**
      * Whether or not format the XML output.
      *
-     * @var boolean
+     * @var bool
      */
     private $formatOutput = false;
 
     /**
      * Whether or not clean up XML declarations.
      *
-     * @var boolean
+     * @var bool
      */
     private $cleanUpXmlDeclaration = false;
 
@@ -46,16 +46,16 @@ class MarkupPostRenderer implements Renderable
      * Whether or not transforms template statements
      * into PHP statements.
      *
-     * @var boolean
+     * @var bool
      */
     private $templateOriented = false;
 
     /**
      * Create a new MarkupPostRenderer object.
      *
-     * @param boolean $formatOutput Whether or not format the XML output.
-     * @param boolean $cleanUpXmlDeclaration Whether or not clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
-     * @param boolean $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
+     * @param bool $formatOutput Whether or not format the XML output.
+     * @param bool $cleanUpXmlDeclaration Whether or not clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
+     * @param bool $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
      */
     public function __construct($formatOutput = false, $cleanUpXmlDeclaration = false, $templateOriented = false)
     {
@@ -67,7 +67,7 @@ class MarkupPostRenderer implements Renderable
     /**
      * Set whether or not to format the XML output.
      *
-     * @param boolean $formatOutput
+     * @param bool $formatOutput
      */
     public function formatOutput($formatOutput)
     {
@@ -77,7 +77,7 @@ class MarkupPostRenderer implements Renderable
     /**
      * Whether or not the XML output will be formatted.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustFormatOutput()
     {
@@ -88,7 +88,7 @@ class MarkupPostRenderer implements Renderable
      * Set whether or not XML declarations must
      * be clean up.
      *
-     * @param boolean $cleanUpXmlDeclaration
+     * @param bool $cleanUpXmlDeclaration
      */
     public function cleanUpXmlDeclaration($cleanUpXmlDeclaration)
     {
@@ -98,7 +98,7 @@ class MarkupPostRenderer implements Renderable
     /**
      * Whether or not XML declarations must be clean up.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustCleanUpXmlDeclaration()
     {
@@ -109,7 +109,7 @@ class MarkupPostRenderer implements Renderable
      * Set whether or not template statements (qtism-if,  qtism-endif, ...)
      * must be transformed into PHP statements.
      *
-     * @param boolean $templateOriented
+     * @param bool $templateOriented
      */
     public function templateOriented($templateOriented)
     {
@@ -120,7 +120,7 @@ class MarkupPostRenderer implements Renderable
      * Whether or not template statements (qtism-if, qtism-endif, ...)
      * must be transformed into PHP statements.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTemplateOriented()
     {

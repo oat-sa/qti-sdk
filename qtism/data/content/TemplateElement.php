@@ -47,7 +47,7 @@ abstract class TemplateElement extends BodyElement
     /**
      * The showHide attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
@@ -107,7 +107,7 @@ abstract class TemplateElement extends BodyElement
     /**
      * Set the value of the showHide attribute.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
@@ -123,7 +123,7 @@ abstract class TemplateElement extends BodyElement
     /**
      * Get the value of the showHide attribute.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {
@@ -133,7 +133,7 @@ abstract class TemplateElement extends BodyElement
     /**
      * Whether the templateElement is working on 'show' mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShow()
     {
@@ -143,7 +143,7 @@ abstract class TemplateElement extends BodyElement
     /**
      * Whether the templateElement is working on 'hide' mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustHide()
     {

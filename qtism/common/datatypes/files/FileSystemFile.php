@@ -59,7 +59,7 @@ class FileSystemFile implements QtiFile
      * When dealing with files, compare, read, write, ...
      * in CHUNK_SIZE to not eat up memory.
      *
-     * @var integer
+     * @var int
      */
     const CHUNK_SIZE = 2048;
 
@@ -314,7 +314,7 @@ class FileSystemFile implements QtiFile
     /**
      * Get the cardinality of the File value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -324,7 +324,7 @@ class FileSystemFile implements QtiFile
     /**
      * Get the baseType of the File value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -334,7 +334,7 @@ class FileSystemFile implements QtiFile
     /**
      * Whether or not the File has a file name.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFilename()
     {
@@ -346,7 +346,7 @@ class FileSystemFile implements QtiFile
      * are considered to be identical if they have the same file name,
      * mime-type and data.
      *
-     * @return boolean
+     * @return bool
      */
     public function equals($obj)
     {

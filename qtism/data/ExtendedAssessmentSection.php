@@ -46,7 +46,7 @@ class ExtendedAssessmentSection extends AssessmentSection
      *
      * @param string $identifier A QTI identifier.
      * @param string $title A title.
-     * @param boolean $visible The visibility of the section.
+     * @param bool $visible The visibility of the section.
      * @throws InvalidArgumentException If any argument is invalid.
      */
     public function __construct($identifier, $title, $visible)

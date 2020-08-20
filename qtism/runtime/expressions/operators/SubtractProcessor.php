@@ -55,7 +55,7 @@ class SubtractProcessor extends OperatorProcessor
     /**
      * Process the Subtract operator.
      *
-     * @return float|integer|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
+     * @return float|int|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

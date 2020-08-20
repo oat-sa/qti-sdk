@@ -80,7 +80,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
      * Whether the $toMarshall value is marshallable by this implementation which
      * only supports AbstractCollection objects to be marshalled.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isMarshallable($toMarshall)
     {

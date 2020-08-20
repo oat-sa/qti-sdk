@@ -51,7 +51,7 @@ class AnyN extends Operator
      *
      * The minimum number of sub-expressions that must be true.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $min;
@@ -61,7 +61,7 @@ class AnyN extends Operator
      *
      * The maximum number of sub-expressions that may be true.
      *
-     * @var string|integer
+     * @var string|int
      * @qtism-bean-property
      */
     private $max;
@@ -70,8 +70,8 @@ class AnyN extends Operator
      * Create a new instance of AnyN.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param string|integer $min An integer or a variable reference.
-     * @param string|integer $max An integer or a variable reference.
+     * @param string|int $min An integer or a variable reference.
+     * @param string|int $max An integer or a variable reference.
      */
     public function __construct(ExpressionCollection $expressions, $min, $max)
     {
@@ -83,7 +83,7 @@ class AnyN extends Operator
     /**
      * Set the min attribute.
      *
-     * @param string|integer $min An integer or a variable reference.
+     * @param string|int $min An integer or a variable reference.
      * @throws InvalidArgumentException If $min is not an integer nor a variable reference.
      */
     public function setMin($min)
@@ -99,7 +99,7 @@ class AnyN extends Operator
     /**
      * Get the min attribute.
      *
-     * @return string|integer An integer or a variable reference.
+     * @return string|int An integer or a variable reference.
      */
     public function getMin()
     {
@@ -109,7 +109,7 @@ class AnyN extends Operator
     /**
      * Set the max attribute.
      *
-     * @param string|integer $max An integer or a variable reference.
+     * @param string|int $max An integer or a variable reference.
      * @throws InvalidArgumentException If $max is not an integer nor a variable reference.
      */
     public function setMax($max)
@@ -125,7 +125,7 @@ class AnyN extends Operator
     /**
      * Get the max attribute.
      *
-     * @return string|integer An integer or a variable reference.
+     * @return string|int An integer or a variable reference.
      */
     public function getMax()
     {

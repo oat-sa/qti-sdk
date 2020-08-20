@@ -48,21 +48,21 @@ class OutcomeVariable extends Variable
     /**
      * The normal maximum.
      *
-     * @var boolean|float
+     * @var bool|float
      */
     private $normalMaximum = false;
 
     /**
      * The normal minimum.
      *
-     * @var boolean|float
+     * @var bool|float
      */
     private $normalMinimum = false;
 
     /**
      * The mastery value.
      *
-     * @var boolean|float
+     * @var bool|float
      */
     private $masteryValue = false;
 
@@ -78,9 +78,9 @@ class OutcomeVariable extends Variable
      * the appropriate container will be instantiated internally as the $value argument.
      *
      * @param string $identifier An identifier for the variable.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-     * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param int|float|double|bool|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
     public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
@@ -111,7 +111,7 @@ class OutcomeVariable extends Variable
     /**
      * Set the normal maximum.
      *
-     * @param float|double|boolean $normalMaximum The normal maximum or false if not defined.
+     * @param float|double|bool $normalMaximum The normal maximum or false if not defined.
      * @throws InvalidArgumentException If $normalMaximum is not false nor a floating point value.
      */
     public function setNormalMaximum($normalMaximum)
@@ -127,7 +127,7 @@ class OutcomeVariable extends Variable
     /**
      * Get the normal maximum.
      *
-     * @return boolean|float|double False if not defined, otherwise a floating point value.
+     * @return bool|float|double False if not defined, otherwise a floating point value.
      */
     public function getNormalMaximum()
     {
@@ -137,7 +137,7 @@ class OutcomeVariable extends Variable
     /**
      * Set the normal minimum.
      *
-     * @param float|double|boolean $normalMinimum The normal minimum or false if not defined.
+     * @param float|double|bool $normalMinimum The normal minimum or false if not defined.
      * @throws InvalidArgumentException If $normalMinimum is not false nor a floating point value.
      */
     public function setNormalMinimum($normalMinimum)
@@ -153,7 +153,7 @@ class OutcomeVariable extends Variable
     /**
      * Get the normal minimum.
      *
-     * @return boolean|float|double False if not defined, otherwise a floating point value.
+     * @return bool|float|double False if not defined, otherwise a floating point value.
      */
     public function getNormalMinimum()
     {
@@ -163,7 +163,7 @@ class OutcomeVariable extends Variable
     /**
      * Set the mastery value.
      *
-     * @param float|double|boolean $masteryValue A floating point value or false if not defined.
+     * @param float|double|bool $masteryValue A floating point value or false if not defined.
      * @throws InvalidArgumentException If $masteryValue is not a floating point value nor false.
      */
     public function setMasteryValue($masteryValue)
@@ -179,7 +179,7 @@ class OutcomeVariable extends Variable
     /**
      * Get the mastery value.
      *
-     * @return float|double|boolean False if not defined, otherwise a floating point value.
+     * @return float|double|bool False if not defined, otherwise a floating point value.
      */
     public function getMasteryValue()
     {

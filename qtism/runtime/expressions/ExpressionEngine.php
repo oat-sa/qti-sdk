@@ -253,7 +253,7 @@ class ExpressionEngine extends AbstractEngine
      * Whether a given $expression object is already marked as explored.
      *
      * @param Expression $expression An Expression object.
-     * @return boolean Whether $expression is marked as explored.
+     * @return bool Whether $expression is marked as explored.
      */
     protected function isMarked(Expression $expression)
     {

@@ -45,7 +45,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      * The maximum number of choices this choice may be associated with.
      * If matchMax is 0 then there is no restriction.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $matchMax;
@@ -62,7 +62,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      * required to associate this choice with any others at all. matchMin
      * must be less than or equal to the limit imposed by matchMax.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $matchMin = 0;
@@ -71,7 +71,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      * Create a new SimpleAssociableChoice object.
      *
      * @param string $identifier The identifier of the choice.
-     * @param integer $matchMax A positive (>= 0) integer.
+     * @param int $matchMax A positive (>= 0) integer.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
@@ -89,7 +89,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * Set the matchMax attribute.
      *
-     * @param integer $matchMax A positive (>= 0) integer.
+     * @param int $matchMax A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMax is not a positive integer.
      */
     public function setMatchMax($matchMax)
@@ -105,7 +105,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * Get the matchMax attribute.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMatchMax()
     {
@@ -115,7 +115,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * Get the matchMin attribute.
      *
-     * @param integer $matchMin A positive (>= 0) integer.
+     * @param int $matchMin A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMin is not a positive integer.
      */
     public function setMatchMin($matchMin)
@@ -159,7 +159,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * Set the matchMin attribute.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMatchMin()
     {

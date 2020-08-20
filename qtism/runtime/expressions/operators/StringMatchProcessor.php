@@ -57,7 +57,7 @@ class StringMatchProcessor extends OperatorProcessor
     /**
      * Process the StringMatch operator.
      *
-     * @return boolean Whether the two string match according to the comparison rules of the operator's attributes or NULL if either of the sub-expressions is NULL.
+     * @return bool Whether the two string match according to the comparison rules of the operator's attributes or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

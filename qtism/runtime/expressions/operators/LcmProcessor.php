@@ -57,7 +57,7 @@ class LcmProcessor extends OperatorProcessor
     /**
      * Process the Lcm operator.
      *
-     * @return integer|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
+     * @return int|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

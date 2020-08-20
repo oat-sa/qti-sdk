@@ -46,7 +46,7 @@ class Repeat extends Operator
     /**
      * A number of repetitions or a variable reference.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $numberRepeats;
@@ -55,7 +55,7 @@ class Repeat extends Operator
      * Create a new instance of Repeat.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $numberRepeats An integer or a QTI variable reference.
+     * @param int $numberRepeats An integer or a QTI variable reference.
      */
     public function __construct(ExpressionCollection $expressions, $numberRepeats)
     {
@@ -66,7 +66,7 @@ class Repeat extends Operator
     /**
      * Set the numberRepeats attribute.
      *
-     * @param integer|string $numberRepeats An integer or a QTI variable reference.
+     * @param int|string $numberRepeats An integer or a QTI variable reference.
      * @throws InvalidArgumentException If $numberRepeats is not an integer nor a valid QTI variable reference.
      */
     public function setNumberRepeats($numberRepeats)
@@ -82,7 +82,7 @@ class Repeat extends Operator
     /**
      * Get the numberRepeats attribute.
      *
-     * @return integer|string An integer or a QTI variable reference.
+     * @return int|string An integer or a QTI variable reference.
      */
     public function getNumberRepeats()
     {

@@ -35,7 +35,7 @@ class Utils
      * integer in the [-2147483647, 2147483647] range.
      *
      * @param mixed $integer the value to test
-     * @return boolean
+     * @return bool
      */
     public static function isQtiInteger($integer): bool
     {

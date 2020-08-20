@@ -349,7 +349,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the AssessmentTest holds an OutcomeProcessing object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasOutcomeProcessing()
     {
@@ -460,7 +460,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
      * the result will be false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isExclusivelyLinear()
     {
@@ -485,7 +485,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the AssessmentTest as a TimeLimits component bound to it.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {

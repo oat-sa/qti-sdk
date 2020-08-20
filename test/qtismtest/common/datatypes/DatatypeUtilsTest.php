@@ -9,7 +9,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider isQtiIntegerValidProvider
-     * @param integer $value
+     * @param int $value
      */
     public function testIsQtiIntegerValid($value)
     {
@@ -18,7 +18,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider isQtiIntegerInvalidProvider
-     * @param integer $value
+     * @param int $value
      */
     public function testIsQtiIntegerInvalid($value)
     {

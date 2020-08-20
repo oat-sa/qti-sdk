@@ -33,14 +33,14 @@ class ParamType implements Enumeration
     /**
      * DATA
      *
-     * @var integer
+     * @var int
      */
     const DATA = 0;
 
     /**
      * REF
      *
-     * @var integer
+     * @var int
      */
     const REF = 1;
 

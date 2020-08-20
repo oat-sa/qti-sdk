@@ -172,7 +172,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     /**
      * Whether or not a base URI is defined for the CustomInteraction.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasXmlBase()
     {

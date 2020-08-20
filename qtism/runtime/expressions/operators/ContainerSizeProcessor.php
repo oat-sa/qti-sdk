@@ -53,7 +53,7 @@ class ContainerSizeProcessor extends OperatorProcessor
     /**
      * Process the current expression.
      *
-     * @return integer|null The size of the container or null if it contains NULL.
+     * @return int|null The size of the container or null if it contains NULL.
      * @throws OperatorProcessingException
      */
     public function process()

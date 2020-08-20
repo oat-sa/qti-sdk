@@ -160,7 +160,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of days.
      *
-     * @param boolean $total Whether the number of days must be the total of days or simply an offset (default).
+     * @param bool $total Whether the number of days must be the total of days or simply an offset (default).
      * @return int
      */
     public function getDays($total = false)
@@ -294,7 +294,7 @@ class QtiDuration implements QtiDatatype
      * Whether a given $obj is equal to this Duration.
      *
      * @param mixed $obj A given value.
-     * @return boolean Whether the equality is established.
+     * @return bool Whether the equality is established.
      */
     public function equals($obj)
     {
@@ -319,7 +319,7 @@ class QtiDuration implements QtiDatatype
      * than the one described by $duration.
      *
      * @param QtiDuration $duration A Duration object to compare with this one.
-     * @return boolean
+     * @return bool
      */
     public function shorterThan(QtiDuration $duration)
     {
@@ -359,7 +359,7 @@ class QtiDuration implements QtiDatatype
      * equal to the one described by $duration.
      *
      * @param QtiDuration $duration A Duration object to compare with this one.
-     * @return boolean
+     * @return bool
      */
     public function longerThanOrEquals(QtiDuration $duration)
     {
@@ -470,7 +470,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Whether or not the duration is negative e.g. -PT20S = -20 seconds.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNegative()
     {
@@ -481,7 +481,7 @@ class QtiDuration implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * the BaseType::DURATION value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -492,7 +492,7 @@ class QtiDuration implements QtiDatatype
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

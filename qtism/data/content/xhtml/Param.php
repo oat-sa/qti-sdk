@@ -73,7 +73,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * This specification supports the use of DATA and REF but not OBJECT.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $valueType = ParamType::DATA;
@@ -93,7 +93,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @param string $name The name of the parameter as interpreted by the object.
      * @param string $value The value to pass to the object named parameter.
-     * @param integer $valueType A value from the ParamType enumeration.
+     * @param int $valueType A value from the ParamType enumeration.
      * @param string $type A mime-type for values valuetype REF.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
@@ -160,7 +160,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * Set the valueType attribute.
      *
-     * @param integer $valueType A value from the ParamType enumeration.
+     * @param int $valueType A value from the ParamType enumeration.
      * @throws InvalidArgumentException If $valueType is not a value from the ParamType enumeration.
      */
     public function setValueType($valueType)
@@ -176,7 +176,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * Get the valueType attribute.
      *
-     * @return integer A value from the ParamType enumeration.
+     * @return int A value from the ParamType enumeration.
      */
     public function getValueType()
     {
@@ -214,7 +214,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * Whether a type is provided for the param.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasType()
     {
