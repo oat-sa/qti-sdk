@@ -100,10 +100,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMin="1" id="my-hot"/>
 	    ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'"
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'matchMax' is missing from element 'associableHotspot'");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

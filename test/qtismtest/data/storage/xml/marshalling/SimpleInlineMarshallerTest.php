@@ -77,10 +77,8 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'href' attribute of the 'a' element is missing."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'href' attribute of the 'a' element is missing.");
 
         $a = $marshaller->unmarshall($element);
     }

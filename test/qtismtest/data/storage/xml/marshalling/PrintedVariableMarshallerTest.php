@@ -96,10 +96,8 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'identifier' attribute is missing from the 'printedVariable' element"
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from the 'printedVariable' element");
         $component = $marshaller->unmarshall($element);
     }
 }

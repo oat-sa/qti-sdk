@@ -191,10 +191,8 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'gapImg' element must contain a single 'object' element, 2 given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'gapImg' element must contain a single 'object' element, 2 given.");
 
         $gapImg = $marshaller->unmarshall($element);
     }
@@ -229,10 +227,8 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element.");
 
         $gapImg = $marshaller->unmarshall($element);
     }
@@ -250,10 +246,8 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from the 'simpleChoice' element.");
 
         $gapImg = $marshaller->unmarshall($element);
     }

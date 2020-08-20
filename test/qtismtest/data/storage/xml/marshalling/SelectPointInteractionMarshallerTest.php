@@ -85,10 +85,8 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
             </selectPointInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'selectPointInteraction' element must contain exactly one 'object' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'selectPointInteraction' element must contain exactly one 'object' element, none given.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -105,10 +103,8 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
             </selectPointInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'selectPointInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'selectPointInteraction' element.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -140,10 +136,8 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
             </selectPointInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element.");
 
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }

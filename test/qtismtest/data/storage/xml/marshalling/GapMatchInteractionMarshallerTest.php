@@ -80,10 +80,8 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'gapMatchInteraction' element must contain at least 1 'gapChoice' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'gapMatchInteraction' element must contain at least 1 'gapChoice' element, none given.");
 
         $marshaller->unmarshall($element);
     }
@@ -96,10 +94,8 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'gapMatchInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'gapMatchInteraction' element.");
 
         $marshaller->unmarshall($element);
     }

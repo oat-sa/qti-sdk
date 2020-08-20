@@ -284,10 +284,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
     public function testPrintedVariableWithUnknownValueType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The PrintedVariableEngine class only accepts PrintedVariable objects to be executed."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.");
 
         new PrintedVariableEngine(new TextRun('crash'));
     }

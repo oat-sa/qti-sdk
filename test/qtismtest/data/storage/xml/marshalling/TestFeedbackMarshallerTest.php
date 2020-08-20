@@ -86,10 +86,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "'testFeedback' elements cannot contain 'choiceInteraction' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("'testFeedback' elements cannot contain 'choiceInteraction' elements.");
 
         $marshaller->unmarshall($element);
     }
@@ -105,10 +103,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'access' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'access' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }
@@ -124,10 +120,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'showHide' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'showHide' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }
@@ -143,10 +137,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }
@@ -162,10 +154,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'identifier' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }

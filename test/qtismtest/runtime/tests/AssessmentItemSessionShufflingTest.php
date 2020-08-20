@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\tests;
 
+use OutOfBoundsException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtismtest\QtiSmAssessmentItemTestCase;
@@ -55,7 +56,8 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $session = new AssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
-        $this->setExpectedException(\OutOfBoundsException::class, 'No Shuffling State at index 1.');
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('No Shuffling State at index 1.');
         $session->getShuffledChoiceIdentifierAt(1, 3);
     }
 
@@ -67,7 +69,8 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $session = new AssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
-        $this->setExpectedException(\OutOfBoundsException::class, 'No identifier at index 1337.');
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('No identifier at index 1337.');
         $session->getShuffledChoiceIdentifierAt(0, 1337);
     }
 }

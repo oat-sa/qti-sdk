@@ -135,10 +135,8 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
             </graphicOrderInteraction>
          ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -153,10 +151,8 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
             </graphicOrderInteraction>
          ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'graphicOrderInteraction' element must contain exactly one 'object' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'graphicOrderInteraction' element must contain exactly one 'object' element, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -173,10 +169,8 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
             </graphicOrderInteraction>
          ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'graphicOrderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'graphicOrderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

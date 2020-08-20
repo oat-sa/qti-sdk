@@ -181,10 +181,8 @@ class ImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The 'mandatory' attribute 'src' is missing from element 'img'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'mandatory' attribute 'src' is missing from element 'img'.");
 
         $marshaller->unmarshall($element);
     }

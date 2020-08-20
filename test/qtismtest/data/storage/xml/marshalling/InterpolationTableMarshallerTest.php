@@ -90,10 +90,8 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $baseType = BaseType::BOOLEAN; // Theoretical variableDeclaration's baseType.
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "Unable to transform 'string' into float."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("Unable to transform 'string' into float.");
 
         $marshaller->unmarshall($element);
     }
@@ -111,10 +109,8 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $baseType = BaseType::BOOLEAN; // Theoretical variableDeclaration's baseType.
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An 'interpolationTable' element must contain at least one 'interpolationTableEntry' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An 'interpolationTable' element must contain at least one 'interpolationTableEntry' element.");
 
         $marshaller->unmarshall($element);
     }
@@ -132,10 +128,8 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            'The BaseType attribute must be a value from the BaseType enumeration.'
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The BaseType attribute must be a value from the BaseType enumeration.');
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [true]);
     }

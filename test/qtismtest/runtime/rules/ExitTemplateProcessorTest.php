@@ -13,11 +13,8 @@ class ExitTemplateProcessorTest extends QtiSmTestCase
         $rule = $this->createComponentFromXml('<exitTemplate/>');
         $processor = new ExitTemplateProcessor($rule);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            'Termination of Template Processing.',
-            RuleProcessingException::EXIT_TEMPLATE
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Termination of Template Processing.');
 
         $processor->process();
     }

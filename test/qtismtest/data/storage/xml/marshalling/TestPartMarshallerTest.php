@@ -150,10 +150,8 @@ class TestPartMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A testPart element must contain at least one assessmentSection."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A testPart element must contain at least one assessmentSection.");
 
         $marshaller->unmarshall($element);
     }
@@ -173,10 +171,8 @@ class TestPartMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'submissionMode' is missing from element 'testPart'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'submissionMode' is missing from element 'testPart'.");
 
         $marshaller->unmarshall($element);
     }
@@ -196,10 +192,8 @@ class TestPartMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'navigationMode' is missing from element 'testPart'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'navigationMode' is missing from element 'testPart'.");
 
         $marshaller->unmarshall($element);
     }
@@ -219,10 +213,8 @@ class TestPartMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'identifier' is missing from element 'testPart'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'testPart'.");
 
         $marshaller->unmarshall($element);
     }

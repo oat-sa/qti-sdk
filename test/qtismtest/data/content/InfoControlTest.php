@@ -11,10 +11,8 @@ class InfoControlTest extends QtiSmTestCase
     {
         $infoControl = new InfoControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'title' argument must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'title' argument must be a string, 'integer' given.");
 
         $infoControl->setTitle(999);
     }

@@ -155,10 +155,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/></hotspotInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given"
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -172,10 +170,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'hotspotInteraction' element must contain exactly one 'object' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'hotspotInteraction' element must contain exactly one 'object' element, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -189,10 +185,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
             <hotspotInteraction id="my-hotspot" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'hotspotInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'hotspotInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -203,10 +197,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><simpleChoice identifier="simplechoice"/></hotspotInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'maxChoices' attribute is missing from the 'hotspotInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'maxChoices' attribute is missing from the 'hotspotInteraction' element.");
 
         $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }

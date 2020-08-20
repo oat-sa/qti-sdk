@@ -104,10 +104,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         // The candidate spends 31 seconds for the attempt and begins brutally a new one...
         $session->setTime(self::createDate('2014-07-14 13:00:33'));
 
-        $this->setExpectedException(
-            AssessmentItemSessionException::class,
-            "A new attempt for item 'Q01' is not allowed. The maximum time limit in force is reached."
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("A new attempt for item 'Q01' is not allowed. The maximum time limit in force is reached.");
 
         $session->beginAttempt();
     }
@@ -214,11 +212,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         // Extra check: make sure that duration cannot be longer than maxTime.
         $this->assertTrue($session['duration']->equals(new QtiDuration('PT30S')));
 
-        $this->setExpectedException(
-            AssessmentItemSessionException::class,
-            "The maximum time to be spent on the item session has been reached.",
-            AssessmentItemSessionException::DURATION_OVERFLOW
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("The maximum time to be spent on the item session has been reached.");
 
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
     }

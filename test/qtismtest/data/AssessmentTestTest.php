@@ -33,30 +33,24 @@ class AssessmentTestTest extends QtiSmTestCase
 
     public function testCreateAssessmentTestWrongIdentifier()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "'999' is not a valid QTI Identifier."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
 
         $test = new AssessmentTest('999', 'Nine Nine Nine');
     }
 
     public function testCreateAssessmentTestWrongTitle()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Title must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Title must be a string, 'integer' given.");
 
         $test = new AssessmentTest('ABC', 999);
     }
 
     public function testSetToolNameWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Toolname must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Toolname must be a string, 'integer' given.");
 
         $test = new AssessmentTest('ABC', 'ABC');
         $test->setToolName(999);
@@ -64,10 +58,8 @@ class AssessmentTestTest extends QtiSmTestCase
 
     public function testSetToolVersionWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "ToolVersion must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("ToolVersion must be a string, 'integer' given.");
 
         $test = new AssessmentTest('ABC', 'ABC');
         $test->setToolVersion(999);

@@ -15,6 +15,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\tests\Utils as TestUtils;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
 class TestUtilsTest extends QtiSmTestCase
 {
@@ -102,7 +103,8 @@ class TestUtilsTest extends QtiSmTestCase
 
     public function testIsResponseValidRuntimeException()
     {
-        $this->setExpectedException(\RuntimeException::class, "PCRE Engine error");
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('PCRE Engine error');
 
         $valid = TestUtils::isResponseValid(
             new QtiString('checkme'),

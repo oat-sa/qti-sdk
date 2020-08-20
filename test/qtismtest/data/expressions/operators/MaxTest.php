@@ -38,10 +38,8 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The minOperands argument must be an integer >= 0, '1' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The minOperands argument must be an integer >= 0, '1' given.");
 
         $max->setMinOperands(true);
     }
@@ -56,10 +54,8 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The maxOperands argument must be an integer, 'boolean' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The maxOperands argument must be an integer, 'boolean' given.");
 
         $max->setMaxOperands(true);
     }
@@ -74,10 +70,8 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Accepted cardinalities must be values from the Cardinality enumeration, '1' given"
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Accepted cardinalities must be values from the Cardinality enumeration, '1' given");
 
         $max->setAcceptedCardinalities([true]);
     }
@@ -92,10 +86,8 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Accepted baseTypes must be values from the OperatorBaseType enumeration, '1' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Accepted baseTypes must be values from the OperatorBaseType enumeration, '1' given.");
 
         $max->setAcceptedBaseTypes([true]);
     }

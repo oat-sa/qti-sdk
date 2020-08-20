@@ -89,10 +89,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
             </positionObjectInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value of the 'centePoint' attribute of a 'positionObjectInteraction' element must be composed of exactly 2 integer values, 1 given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the 'centePoint' attribute of a 'positionObjectInteraction' element must be composed of exactly 2 integer values, 1 given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -108,10 +106,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
             </positionObjectInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The 1st value of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 1st value of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -127,10 +123,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
             </positionObjectInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -144,10 +138,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos"/>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'positionObjectInteraction' element must contain exactly one 'object' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'positionObjectInteraction' element must contain exactly one 'object' element, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -163,10 +155,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
             </positionObjectInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'positionObjectInteraction' object."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'positionObjectInteraction' object.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

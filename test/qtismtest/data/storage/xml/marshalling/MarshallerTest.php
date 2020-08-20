@@ -6,11 +6,12 @@ use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\ItemSessionControl;
+use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
+use RuntimeException;
 use stdClass;
-use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 
 class MarshallerTest extends QtiSmTestCase
 {
@@ -119,10 +120,8 @@ class MarshallerTest extends QtiSmTestCase
         $dom2->loadXML('<baseValue baseType="boolean">true</baseValue>');
         $marshaller = $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($dom2->documentElement);
 
-        $this->setExpectedException(
-            \RuntimeException::class,
-            "No Marshaller implementation found while unmarshalling element 'foo'."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("No Marshaller implementation found while unmarshalling element 'foo'.");
 
         $marshaller->unmarshall($dom->documentElement);
     }
@@ -133,10 +132,8 @@ class MarshallerTest extends QtiSmTestCase
         $component2 = new stdClass();
         $marshaller = $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component1);
 
-        $this->setExpectedException(
-            \RuntimeException::class,
-            "No marshaller implementation found while marshalling component 'stdClass'."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("No marshaller implementation found while marshalling component 'stdClass'.");
 
         $marshaller->marshall($component2);
     }
@@ -146,10 +143,8 @@ class MarshallerTest extends QtiSmTestCase
         $component1 = new BaseValue(BaseType::BOOLEAN, true);
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component1);
 
-        $this->setExpectedException(
-            \RuntimeException::class,
-            "Unknown method Marshaller::'hello'."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("Unknown method Marshaller::'hello'.");
 
         $marshaller->hello();
     }

@@ -56,10 +56,8 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'mappedValue' is missing from element 'areaMapEntry'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'mappedValue' is missing from element 'areaMapEntry'.");
 
         $component = $marshaller->unmarshall($element);
     }
@@ -75,10 +73,8 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The attribute 'coords' with value 'xxx' has an invalid value."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The attribute 'coords' with value 'xxx' has an invalid value.");
 
         $component = $marshaller->unmarshall($element);
     }
@@ -94,10 +90,8 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'coords' is missing from element 'areaMapEntry'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'coords' is missing from element 'areaMapEntry'.");
 
         $component = $marshaller->unmarshall($element);
     }
@@ -113,10 +107,8 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The 'shape' attribute value 'rectangle' is not a valid value to represent QTI shapes."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'shape' attribute value 'rectangle' is not a valid value to represent QTI shapes.");
 
         $component = $marshaller->unmarshall($element);
     }
@@ -132,10 +124,8 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'shape' is missing from element 'areaMapEntry'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'shape' is missing from element 'areaMapEntry'.");
 
         $component = $marshaller->unmarshall($element);
     }

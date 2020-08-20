@@ -10,19 +10,15 @@ class AssessmentSectionTest extends QtiSmTestCase
 {
     public function testSetTitleWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Title must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Title must be a string, 'integer' given.");
         new AssessmentSection('S01', 999, true);
     }
 
     public function testSetVisibleWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Visible must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Visible must be a boolean, 'integer' given.");
         new AssessmentSection('S01', 'Section 01', 1);
     }
 
@@ -30,10 +26,8 @@ class AssessmentSectionTest extends QtiSmTestCase
     {
         $section = new AssessmentSection('S01', 'Section 01', true);
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "KeepTogether must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("KeepTogether must be a boolean, 'integer' given.");
 
         $section->setKeepTogether(1);
     }

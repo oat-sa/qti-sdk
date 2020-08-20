@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\interactions\TextEntryInteraction;
 use qtismtest\QtiSmTestCase;
 
@@ -11,10 +12,8 @@ class TextInteractionTest extends QtiSmTestCase
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'base' argument must be a positive (>= 0) integer value, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'base' argument must be a positive (>= 0) integer value, 'boolean' given.");
 
         $textEntryInteraction->setBase(true);
     }
@@ -23,10 +22,8 @@ class TextInteractionTest extends QtiSmTestCase
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'stringIdentifier' argument must be a valid QTI identifier or an empty string, '1' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'stringIdentifier' argument must be a valid QTI identifier or an empty string, '1' given.");
 
         $textEntryInteraction->setStringIdentifier(true);
     }
@@ -35,10 +32,8 @@ class TextInteractionTest extends QtiSmTestCase
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, 'boolean' given.");
 
         $textEntryInteraction->setExpectedLength(true);
     }
@@ -47,10 +42,8 @@ class TextInteractionTest extends QtiSmTestCase
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'patternMask' argument must be a string value, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'patternMask' argument must be a string value, 'boolean' given.");
 
         $textEntryInteraction->setPatternMask(true);
     }
@@ -59,10 +52,8 @@ class TextInteractionTest extends QtiSmTestCase
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'placeholderText' argument must be a string value, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'placeholderText' argument must be a string value, 'boolean' given.");
 
         $textEntryInteraction->setPlaceholderText(true);
     }

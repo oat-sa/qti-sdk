@@ -357,10 +357,8 @@ class PhpDocumentTest extends QtiSmTestCase
     {
         $phpDoc = new PhpDocument();
 
-        $this->setExpectedException(
-            PhpStorageException::class,
-            "File located at '/root/root.php' could not be written."
-        );
+        $this->expectException(PhpStorageException::class);
+        $this->expectExceptionMessage("File located at '/root/root.php' could not be written.");
 
         $phpDoc->save('/root/root.php');
     }
@@ -369,10 +367,8 @@ class PhpDocumentTest extends QtiSmTestCase
     {
         $phpDoc = new PhpDocument();
 
-        $this->setExpectedException(
-            PhpStorageException::class,
-            "The PHP document located at '/root/root.php' is not readable or does not exist."
-        );
+        $this->expectException(PhpStorageException::class);
+        $this->expectExceptionMessage("The PHP document located at '/root/root.php' is not readable or does not exist.");
 
         $phpDoc->load('/root/root.php');
     }

@@ -20,10 +20,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "MaxAttempts must be an integer, 'boolean' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("MaxAttempts must be an integer, 'boolean' given.");
 
         $itemSessionControl->setMaxAttempts(true);
     }
@@ -32,10 +30,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "ShowFeedback must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("ShowFeedback must be a boolean, 'integer' given.");
 
         $itemSessionControl->setShowFeedback(999);
     }
@@ -44,10 +40,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "AllowReview must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("AllowReview must be a boolean, 'integer' given.");
 
         $itemSessionControl->setAllowReview(999);
     }
@@ -56,10 +50,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "ShowSolution must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("ShowSolution must be a boolean, 'integer' given.");
 
         $itemSessionControl->setShowSolution(999);
     }
@@ -68,10 +60,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "AllowComment must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("AllowComment must be a boolean, 'integer' given.");
 
         $itemSessionControl->setAllowComment(999);
     }
@@ -80,10 +70,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "AllowSkipping must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("AllowSkipping must be a boolean, 'integer' given.");
 
         $itemSessionControl->setAllowSkipping(999);
     }
@@ -92,10 +80,8 @@ class ItemSessionControlTest extends QtiSmTestCase
     {
         $itemSessionControl = new ItemSessionControl();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "ValidateResponses must be a boolean value, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("ValidateResponses must be a boolean value, 'integer' given.");
 
         $itemSessionControl->setValidateResponses(999);
     }

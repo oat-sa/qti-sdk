@@ -68,10 +68,8 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="snow"><div>Templatable...</div></templateBlock>
 	    ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "'snow' is not a valid value for the 'showHide' attribute of element 'templateBlock'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("'snow' is not a valid value for the 'showHide' attribute of element 'templateBlock'.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -85,10 +83,8 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><hottext identifier="myhottext"/></templateBlock>
 	    ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The 'templateBlock' cannot contain 'hottext' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'templateBlock' cannot contain 'hottext' elements.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -102,10 +98,8 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	        <templateBlock identifier="block1" showHide="show">Templatable...</templateBlock>
 	    ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'templateIdentifier' attribute is missing from element 'templateBlock'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'templateIdentifier' attribute is missing from element 'templateBlock'.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

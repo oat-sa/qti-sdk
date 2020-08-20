@@ -52,10 +52,8 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallNoViewsAttribute()
     {
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'views' is missing."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'views' is missing.");
 
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" xml:base="/home/jerome">
@@ -70,10 +68,8 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallInvalidContent()
     {
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The 'rubricBlock' cannot contain 'choiceInteraction' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'rubricBlock' cannot contain 'choiceInteraction' elements.");
 
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock view="tutor" class="warning" xml:base="/home/jerome">

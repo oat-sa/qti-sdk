@@ -7,6 +7,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\P;
 use qtism\data\QtiComponentCollection;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 use stdClass;
 
 class QtiComponentCollectionTest extends QtiSmTestCase
@@ -15,10 +16,8 @@ class QtiComponentCollectionTest extends QtiSmTestCase
     {
         $collection = new QtiComponentCollection();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "QtiComponentCollection class only accept QtiComponent objects, 'stdClass' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("QtiComponentCollection class only accept QtiComponent objects, 'stdClass' given.");
 
         $collection[] = new stdClass();
     }
@@ -27,10 +26,8 @@ class QtiComponentCollectionTest extends QtiSmTestCase
     {
         $collection = new QtiComponentCollection();
 
-        $this->setExpectedException(
-            \RuntimeException::class,
-            "QtiComponentCollection must be used as a bag (specific key 'index' given)."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("QtiComponentCollection must be used as a bag (specific key 'index' given).");
 
         $collection['index'] = new stdClass();
     }

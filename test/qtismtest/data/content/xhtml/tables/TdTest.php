@@ -11,10 +11,8 @@ class TdTest extends QtiSmTestCase
     {
         $td = new Td();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'scope' argument must be a value from the TableCellScope enumeration, '1' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'scope' argument must be a value from the TableCellScope enumeration, '1' given.");
 
         $td->setScope(true);
     }
@@ -23,10 +21,8 @@ class TdTest extends QtiSmTestCase
     {
         $td = new Td();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'abbr' attribute must be a string, 'boolean' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'abbr' attribute must be a string, 'boolean' given.");
 
         $td->setAbbr(true);
     }
@@ -35,10 +31,8 @@ class TdTest extends QtiSmTestCase
     {
         $td = new Td();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'axis' argument must be a string, 'boolean' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'axis' argument must be a string, 'boolean' given.");
 
         $td->setAxis(true);
     }
@@ -47,10 +41,8 @@ class TdTest extends QtiSmTestCase
     {
         $td = new Td();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'rowspan' argument must be an integer, 'boolean' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'rowspan' argument must be an integer, 'boolean' given.");
 
         $td->setRowspan(true);
     }
@@ -59,10 +51,8 @@ class TdTest extends QtiSmTestCase
     {
         $td = new Td();
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'colspan' argument must be an integer, 'boolean' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'colspan' argument must be an integer, 'boolean' given.");
 
         $td->setColspan(true);
     }

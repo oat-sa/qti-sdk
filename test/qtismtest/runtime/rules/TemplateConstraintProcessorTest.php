@@ -17,11 +17,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 		');
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }
@@ -36,11 +33,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }
@@ -55,11 +49,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }
@@ -74,11 +65,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }

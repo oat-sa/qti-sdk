@@ -71,10 +71,8 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
     public function testLoadMissingData()
     {
-        $this->setExpectedException(
-            XmlStorageException::class,
-            'The document could not be validated with XML Schema'
-        );
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage('The document could not be validated with XML Schema');
 
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-data.xml', true);

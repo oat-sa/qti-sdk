@@ -187,10 +187,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'title' is missing from element 'assessmentItem'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'title' is missing from element 'assessmentItem'.");
 
         $marshaller->unmarshall($element);
     }
@@ -210,10 +208,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'timeDependent' is missing from element 'assessmentItem'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'timeDependent' is missing from element 'assessmentItem'.");
 
         $marshaller->unmarshall($element);
     }
@@ -233,10 +229,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'identifier' is missing from element 'assessmentItem'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'assessmentItem'.");
 
         $marshaller->unmarshall($element);
     }

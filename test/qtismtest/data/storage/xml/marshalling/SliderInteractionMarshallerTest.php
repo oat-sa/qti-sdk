@@ -71,10 +71,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value of the 'orientation' attribute of the 'sliderInteraction' is invalid."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the 'orientation' attribute of the 'sliderInteraction' is invalid.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -90,10 +88,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'upperBound' attribute is missing from the 'sliderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'upperBound' attribute is missing from the 'sliderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -109,10 +105,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'lowerBound' attribute is missing from the 'sliderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'lowerBound' attribute is missing from the 'sliderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -128,10 +122,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'sliderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'sliderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

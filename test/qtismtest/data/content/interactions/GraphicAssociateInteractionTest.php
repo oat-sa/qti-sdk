@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
@@ -14,10 +15,8 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughAssociableHotspots()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.");
 
         new GraphicAssociateInteraction(
             'RESPONSE',
@@ -28,10 +27,8 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
 
     public function testSetMaxAssociationsWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'maxAssociations' argument must be a positive (>= 0) integer, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'maxAssociations' argument must be a positive (>= 0) integer, 'boolean' given.");
 
         $interaction = new GraphicAssociateInteraction(
             'RESPONSE',
@@ -46,10 +43,8 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
 
     public function testSetMinAssociationsWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'minAssociations' argument must be a positive (>= 0) integer, 'boolean'."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minAssociations' argument must be a positive (>= 0) integer, 'boolean'.");
 
         $interaction = new GraphicAssociateInteraction(
             'RESPONSE',
@@ -65,10 +60,8 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
 
     public function testSetMinAssociationsInvalidValue()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.");
 
         $interaction = new GraphicAssociateInteraction(
             'RESPONSE',

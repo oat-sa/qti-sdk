@@ -392,10 +392,8 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access = new BinaryStreamAccess($stream);
         $stream->close();
 
-        $this->setExpectedException(
-            BinaryStreamAccessException::class,
-            "Writing a integer from a closed binary stream is not permitted."
-        );
+        $this->expectException(BinaryStreamAccessException::class);
+        $this->expectExceptionMessage("Writing a integer from a closed binary stream is not permitted.");
 
         $access->writeInteger(1);
     }
@@ -406,10 +404,8 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access = new BinaryStreamAccess($stream);
         $stream->close();
 
-        $this->setExpectedException(
-            BinaryStreamAccessException::class,
-            "Writing a double precision float from a closed binary stream is not permitted."
-        );
+        $this->expectException(BinaryStreamAccessException::class);
+        $this->expectExceptionMessage("Writing a double precision float from a closed binary stream is not permitted.");
 
         $access->writeFloat(1.);
     }
@@ -462,10 +458,8 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access = new BinaryStreamAccess($stream);
         $stream->close();
 
-        $this->setExpectedException(
-            BinaryStreamAccessException::class,
-            "Writing a string from a closed binary stream is not permitted."
-        );
+        $this->expectException(BinaryStreamAccessException::class);
+        $this->expectExceptionMessage("Writing a string from a closed binary stream is not permitted.");
 
         $access->writeBinary('test');
     }
@@ -476,10 +470,8 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access = new BinaryStreamAccess($stream);
         $stream->close();
 
-        $this->setExpectedException(
-            BinaryStreamAccessException::class,
-            "Writing a datetime from a closed binary stream is not permitted."
-        );
+        $this->expectException(BinaryStreamAccessException::class);
+        $this->expectExceptionMessage("Writing a datetime from a closed binary stream is not permitted.");
 
         $access->writeDateTime(new DateTime());
     }

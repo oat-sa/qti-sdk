@@ -31,10 +31,8 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'identifier' attribute is missing from element 'associationValididtyConstraint'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'associationValididtyConstraint'.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -45,10 +43,8 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'minConstraint' attribute is missing from element 'associationValididtyConstraint'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'minConstraint' attribute is missing from element 'associationValididtyConstraint'.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -59,10 +55,8 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'maxConstraint' attribute is missing from element 'associationValididtyConstraint'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'maxConstraint' attribute is missing from element 'associationValididtyConstraint'.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -73,10 +67,8 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -87,10 +79,8 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while unmarshalling an 'associationValidityConstraint' element. See chained exceptions for more information.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 

@@ -133,10 +133,8 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The adaptive argument must be a boolean value, 'string' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The adaptive argument must be a boolean value, 'string' given.");
 
         $assessmentItemRef->setAdaptive('true');
     }
@@ -145,10 +143,8 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The timeDependent argument must be a boolean value, 'string' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The timeDependent argument must be a boolean value, 'string' given.");
 
         $assessmentItemRef->setTimeDependent('true');
     }

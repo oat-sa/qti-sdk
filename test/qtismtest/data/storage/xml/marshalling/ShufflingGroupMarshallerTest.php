@@ -47,10 +47,8 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
 
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'identifiers' is missing from element 'shufflingGroup'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifiers' is missing from element 'shufflingGroup'.");
 
         $factory->createMarshaller($element)->unmarshall($element);
     }

@@ -46,10 +46,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value of 'identifier' from element 'weight' is not a valid QTI Identifier."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of 'identifier' from element 'weight' is not a valid QTI Identifier.");
 
         $marshaller->unmarshall($element);
     }
@@ -62,10 +60,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value of attribute 'value' from element 'weight' cannot be converted into a float."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of attribute 'value' from element 'weight' cannot be converted into a float.");
 
         $marshaller->unmarshall($element);
     }
@@ -78,10 +74,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'value' is missing from element 'weight'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'value' is missing from element 'weight'.");
 
         $marshaller->unmarshall($element);
     }
@@ -94,10 +88,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory attribute 'identifier' is missing from element 'weight'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'weight'.");
 
         $marshaller->unmarshall($element);
     }

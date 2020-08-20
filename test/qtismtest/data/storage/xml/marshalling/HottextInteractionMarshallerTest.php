@@ -109,10 +109,8 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
             </hottextInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The content of the 'hottextInteraction' element is invalid."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The content of the 'hottextInteraction' element is invalid.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -126,10 +124,8 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
             </hottextInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value '999-RESPONSE' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value '999-RESPONSE' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

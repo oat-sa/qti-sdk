@@ -79,10 +79,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from element 'responseValididtyConstraint'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from element 'responseValididtyConstraint'.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -96,10 +94,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'minConstraint' attribute is missing from element 'responseValididtyConstraint'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'minConstraint' attribute is missing from element 'responseValididtyConstraint'.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -113,10 +109,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'maxConstraint' attribute is missing from element 'responseValididtyConstraint'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'maxConstraint' attribute is missing from element 'responseValididtyConstraint'.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -130,10 +124,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
@@ -147,10 +139,8 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
         $factory = new Compact21MarshallerFactory();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.");
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 

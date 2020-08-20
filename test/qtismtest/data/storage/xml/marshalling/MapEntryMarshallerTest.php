@@ -62,10 +62,8 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
         $element = $dom->documentElement;
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value '' of the 'mapKey' attribute could not be converted to a 'integer' value."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value '' of the 'mapKey' attribute could not be converted to a 'integer' value.");
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
@@ -77,10 +75,8 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
         $element = $dom->documentElement;
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value '' of the 'mapKey' attribute could not be converted to a 'identifier' value."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value '' of the 'mapKey' attribute could not be converted to a 'identifier' value.");
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::IDENTIFIER]);
         $component = $marshaller->unmarshall($element);

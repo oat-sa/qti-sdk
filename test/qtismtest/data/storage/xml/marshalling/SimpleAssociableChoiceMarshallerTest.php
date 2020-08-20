@@ -121,10 +121,8 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'matchMax' attribute is missing from the 'simpleAssociableChoice' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'matchMax' attribute is missing from the 'simpleAssociableChoice' element.");
 
         $marshaller->unmarshall($element);
     }
@@ -140,10 +138,8 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'identifier' attribute is missing from the 'simpleAssociableChoice' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from the 'simpleAssociableChoice' element.");
 
         $marshaller->unmarshall($element);
     }

@@ -213,10 +213,8 @@ class TableMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallNoTbody()
     {
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'table' element must contain at lease one 'tbody' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'table' element must contain at lease one 'tbody' element.");
 
         $table = $this->createComponentFromXml('
 	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">

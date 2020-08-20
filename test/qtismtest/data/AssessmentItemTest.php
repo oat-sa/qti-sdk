@@ -756,40 +756,32 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testCreateAssessmentItemWrongIdentifier()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The identifier argument must be a valid QTI Identifier, '999' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The identifier argument must be a valid QTI Identifier, '999' given.");
 
         $assessmentItem = new AssessmentItem('999', 'Nine Nine Nine', false);
     }
 
     public function testCreateAssessmentItemWrongTitle()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The title argument must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The title argument must be a string, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 9, false);
     }
 
     public function testCreateAssessmentItemWrongLanguage()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The lang argument must be a string, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The lang argument must be a string, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false, 1337);
     }
 
     public function testSetLabelWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The label argument must be a string with at most 256 characters."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The label argument must be a string with at most 256 characters.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setLabel(1337);
@@ -797,10 +789,8 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetAdaptiveWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The adaptive argument must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The adaptive argument must be a boolean, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setAdaptive(9999);
@@ -808,10 +798,8 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetTimeDependentWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The timeDependent argument must be a boolean, 'integer' given."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The timeDependent argument must be a boolean, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setTimeDependent(9999);
@@ -819,10 +807,8 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetToolNameWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The toolName argument must be a string with at most 256 characters."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The toolName argument must be a string with at most 256 characters.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setToolName(9999);
@@ -830,10 +816,8 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetToolVersionWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The toolVersion argument must be a string with at most 256 characters."
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("The toolVersion argument must be a string with at most 256 characters.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setToolVersion(9999);

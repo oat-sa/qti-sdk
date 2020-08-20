@@ -7,13 +7,13 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
+use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\operators\custom\Explode;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtismtest\QtiSmTestCase;
-use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\ExpressionProcessingException;
 
 class ExplodeProcessorTest extends QtiSmTestCase
 {
@@ -21,11 +21,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(
-            ExpressionProcessingException::class,
-            "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 0 given.",
-            OperatorProcessingException::NOT_ENOUGH_OPERANDS
-        );
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 0 given.");
+        $this->expectExceptionCode(OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
     }
@@ -34,11 +32,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('Hello-World!')]);
-        $this->setExpectedException(
-            ExpressionProcessingException::class,
-            "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 1 given.",
-            OperatorProcessingException::NOT_ENOUGH_OPERANDS
-        );
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 1 given.");
+        $this->expectExceptionCode(OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
     }
@@ -48,11 +44,8 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(2), new QtiPoint(0, 0)]);
         $processor = new Explode($expression, $operands);
-        $this->setExpectedException(
-            ExpressionProcessingException::class,
-            "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with a string baseType.",
-            OperatorProcessingException::WRONG_BASETYPE
-        );
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with a string baseType.");
         $result = $processor->process();
     }
 
@@ -61,11 +54,8 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['a' => new QtiString('String!')]), new QtiString('Hey!')]);
         $processor = new Explode($expression, $operands);
-        $this->setExpectedException(
-            ExpressionProcessingException::class,
-            "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with single cardinality.",
-            OperatorProcessingException::WRONG_CARDINALITY
-        );
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with single cardinality.");
         $result = $processor->process();
     }
 

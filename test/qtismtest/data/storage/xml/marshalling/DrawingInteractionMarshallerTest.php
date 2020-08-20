@@ -64,10 +64,8 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
             </drawingInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A 'drawingInteraction' element must contain exactly one 'object' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'drawingInteraction' element must contain exactly one 'object' element, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -81,10 +79,8 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
             </drawingInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'drawingInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'drawingInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

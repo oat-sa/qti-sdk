@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ExternalScored;
@@ -23,50 +24,40 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
     public function testSetInterpretationWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Interpretation must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Interpretation must be a string, 'integer' given.");
 
         $this->subject->setInterpretation(999);
     }
 
     public function testSetLongInterpretationWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "LongInterpretation must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("LongInterpretation must be a string, 'integer' given.");
 
         $this->subject->setLongInterpretation(999);
     }
 
     public function testSetNormalMinimumWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "NormalMinimum must be a number or (boolean) false, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("NormalMinimum must be a number or (boolean) false, 'string' given.");
 
         $this->subject->setNormalMinimum('string');
     }
 
     public function testSetNormalMaximumWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "NormalMaximum must be a number or (boolean) false, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("NormalMaximum must be a number or (boolean) false, 'string' given.");
 
         $this->subject->setNormalMaximum('string');
     }
 
     public function testSetMasteryValueWrongType()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "MasteryValue must be a number or (boolean) false, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("MasteryValue must be a number or (boolean) false, 'string' given.");
 
         $this->subject->setMasteryValue('string');
     }
