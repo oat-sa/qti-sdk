@@ -113,16 +113,14 @@ class Render extends Cli
         // Check 'source' argument.
         if (($source = $arguments['source']) === null) {
             $this->missingArgument('source');
-        } else {
-            if (is_readable($source) === false) {
-                if (file_exists($source) === false) {
-                    $msg = "The QTI file '${source}' does not exist.";
-                } else {
-                    $msg = "The QTI file '${source}' cannot be read. Check permissions.";
-                }
-
-                $this->fail($msg);
+        } elseif (is_readable($source) === false) {
+            if (file_exists($source) === false) {
+                $msg = "The QTI file '${source}' does not exist.";
+            } else {
+                $msg = "The QTI file '${source}' cannot be read. Check permissions.";
             }
+
+            $this->fail($msg);
         }
 
         // Check 'flavour' argument.

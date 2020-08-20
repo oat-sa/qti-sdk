@@ -468,29 +468,121 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
             if (!in_array(new AssessmentItemRefCollection(), $paths)) {
                 $newPaths[] = new AssessmentItemRefCollection();
             }
-        } else {
-            if ($targetItem == null) { // Branching to the end of the test
-                foreach ($paths as $path) {
-                    // get the index of the current item and of the target item
+        } elseif ($targetItem == null) { // Branching to the end of the test
+            foreach ($paths as $path) {
+                // get the index of the current item and of the target item
 
-                    $keyCurrentItem = null;
+                $keyCurrentItem = null;
 
-                    $pathkeys = $path->getKeys();
+                $pathkeys = $path->getKeys();
+
+                foreach ($pathkeys as $identifier) {
+                    if ($prevItem->getIdentifier() == $identifier) {
+                        $keyCurrentItem = $prevItem->getIdentifier();
+                        break;
+                    }
+                }
+
+                if ($keyCurrentItem != null) {
+                    $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+                    $deleteKeys = false;
+
+                    // Delete from new path everything between $keyCurrentItem and $keyTargetItem
 
                     foreach ($pathkeys as $identifier) {
-                        if ($prevItem->getIdentifier() == $identifier) {
-                            $keyCurrentItem = $prevItem->getIdentifier();
-                            break;
+                        if ($deleteKeys) {
+                            unset($newPath[$identifier]);
+                        }
+
+                        if ($path[$identifier] == $keyCurrentItem) {
+                            $deleteKeys = true;
                         }
                     }
 
-                    if ($keyCurrentItem != null) {
+                    if (!in_array($newPath, $paths)) {
+                        $newPaths[] = $newPath;
+                    }
+                }
+            }
+        } elseif ($prevItem == null) { // Branching starts at the beginning of the test
+            foreach ($paths as $path) {
+                // get the index of the current item and of the target item
+
+                $keyTargetItem = null;
+
+                $pathkeys = $path->getKeys();
+
+                foreach ($pathkeys as $identifier) {
+                    if ($targetItem->getIdentifier() == $identifier) {
+                        $keyTargetItem = $targetItem->getIdentifier();
+                    }
+                }
+
+                if ($keyTargetItem != null) {
+                    $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+
+                    // Delete from new path everything between $keyCurrentItem and $keyTargetItem
+
+                    foreach ($pathkeys as $identifier) {
+                        if ($identifier == $keyTargetItem) {
+                            break;
+                        }
+
+                        unset($newPath[$identifier]);
+                    }
+
+                    if (!in_array($newPath, $paths)) {
+                        $newPaths[] = $newPath;
+                    }
+                }
+            }
+        } else { // Normal case
+            foreach ($paths as $path) {
+                // get the index of the current item and of the target item
+
+                $keyCurrentItem = null;
+                $keyTargetItem = null;
+
+                $pathkeys = $path->getKeys();
+
+                foreach ($pathkeys as $identifier) {
+                    if ($prevItem->getIdentifier() == $identifier) {
+                        $keyCurrentItem = $prevItem->getIdentifier();
+                    }
+
+                    if ($targetItem->getIdentifier() == $identifier) {
+                        $keyTargetItem = $targetItem->getIdentifier();
+                    }
+                }
+
+                if (($keyCurrentItem != null) and ($keyTargetItem != null)) {
+                    if ($keyCurrentItem == $keyTargetItem) {
+                        throw new BranchRuleTargetException(
+                            'Recursive branching is not allowed.',
+                            BranchRuleTargetException::RECURSIVE_BRANCHING,
+                            $component
+                        );
+                    }
+
+                    if ($itemidToIndex[$keyCurrentItem] > $itemidToIndex[$keyTargetItem]) {
+                        throw new BranchRuleTargetException(
+                            'Branching backward is not allowed.',
+                            BranchRuleTargetException::BACKWARD_BRANCHING,
+                            $component
+                        );
+                    }
+
+                    if ($itemidToIndex[$keyCurrentItem] < $itemidToIndex[$keyTargetItem]) {
                         $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
                         $deleteKeys = false;
 
                         // Delete from new path everything between $keyCurrentItem and $keyTargetItem
 
                         foreach ($pathkeys as $identifier) {
+                            if ($identifier == $keyTargetItem) {
+                                break;
+                            }
+
                             if ($deleteKeys) {
                                 unset($newPath[$identifier]);
                             }
@@ -502,102 +594,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                         if (!in_array($newPath, $paths)) {
                             $newPaths[] = $newPath;
-                        }
-                    }
-                }
-            } else {
-                if ($prevItem == null) { // Branching starts at the beginning of the test
-                    foreach ($paths as $path) {
-                        // get the index of the current item and of the target item
-
-                        $keyTargetItem = null;
-
-                        $pathkeys = $path->getKeys();
-
-                        foreach ($pathkeys as $identifier) {
-                            if ($targetItem->getIdentifier() == $identifier) {
-                                $keyTargetItem = $targetItem->getIdentifier();
-                            }
-                        }
-
-                        if ($keyTargetItem != null) {
-                            $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
-
-                            // Delete from new path everything between $keyCurrentItem and $keyTargetItem
-
-                            foreach ($pathkeys as $identifier) {
-                                if ($identifier == $keyTargetItem) {
-                                    break;
-                                }
-
-                                unset($newPath[$identifier]);
-                            }
-
-                            if (!in_array($newPath, $paths)) {
-                                $newPaths[] = $newPath;
-                            }
-                        }
-                    }
-                } else { // Normal case
-                    foreach ($paths as $path) {
-                        // get the index of the current item and of the target item
-
-                        $keyCurrentItem = null;
-                        $keyTargetItem = null;
-
-                        $pathkeys = $path->getKeys();
-
-                        foreach ($pathkeys as $identifier) {
-                            if ($prevItem->getIdentifier() == $identifier) {
-                                $keyCurrentItem = $prevItem->getIdentifier();
-                            }
-
-                            if ($targetItem->getIdentifier() == $identifier) {
-                                $keyTargetItem = $targetItem->getIdentifier();
-                            }
-                        }
-
-                        if (($keyCurrentItem != null) and ($keyTargetItem != null)) {
-                            if ($keyCurrentItem == $keyTargetItem) {
-                                throw new BranchRuleTargetException(
-                                    'Recursive branching is not allowed.',
-                                    BranchRuleTargetException::RECURSIVE_BRANCHING,
-                                    $component
-                                );
-                            }
-
-                            if ($itemidToIndex[$keyCurrentItem] > $itemidToIndex[$keyTargetItem]) {
-                                throw new BranchRuleTargetException(
-                                    'Branching backward is not allowed.',
-                                    BranchRuleTargetException::BACKWARD_BRANCHING,
-                                    $component
-                                );
-                            }
-
-                            if ($itemidToIndex[$keyCurrentItem] < $itemidToIndex[$keyTargetItem]) {
-                                $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
-                                $deleteKeys = false;
-
-                                // Delete from new path everything between $keyCurrentItem and $keyTargetItem
-
-                                foreach ($pathkeys as $identifier) {
-                                    if ($identifier == $keyTargetItem) {
-                                        break;
-                                    }
-
-                                    if ($deleteKeys) {
-                                        unset($newPath[$identifier]);
-                                    }
-
-                                    if ($path[$identifier] == $keyCurrentItem) {
-                                        $deleteKeys = true;
-                                    }
-                                }
-
-                                if (!in_array($newPath, $paths)) {
-                                    $newPaths[] = $newPath;
-                                }
-                            }
                         }
                     }
                 }
@@ -881,16 +877,14 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     ) {
                         $prevSect = $sect;
                         break;
-                    } else {
-                        if (
-                            (($component->getQtiClassName() != 'assessmentSection')) and (in_array(
-                                $component,
-                                $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()
-                            ))
-                        ) {
-                            $prevSect = $sect;
-                            // No break to be sure that the deepest section is taken
-                        }
+                    } elseif (
+                        (($component->getQtiClassName() != 'assessmentSection')) and (in_array(
+                            $component,
+                            $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()
+                        ))
+                    ) {
+                        $prevSect = $sect;
+                        // No break to be sure that the deepest section is taken
                     }
                 }
 

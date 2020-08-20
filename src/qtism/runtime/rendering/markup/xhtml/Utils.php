@@ -100,22 +100,18 @@ class Utils
 
                     $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
                     $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
-                } else {
-                    if (empty($statements1) === false && empty($statements2) === true) {
-                        $node->removeChild($statements1[0]);
-                        $node->removeChild($statements1[1]);
+                } elseif (empty($statements1) === false && empty($statements2) === true) {
+                    $node->removeChild($statements1[0]);
+                    $node->removeChild($statements1[1]);
 
-                        $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
-                        $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
-                    } else {
-                        if (empty($statements2) === false && empty($statements1) === true) {
-                            $node->removeChild($statements2[0]);
-                            $node->removeChild($statements2[1]);
+                    $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
+                    $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
+                } elseif (empty($statements2) === false && empty($statements1) === true) {
+                    $node->removeChild($statements2[0]);
+                    $node->removeChild($statements2[1]);
 
-                            $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
-                            $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
-                        }
-                    }
+                    $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
+                    $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
                 }
 
                 unset($placeholder1);

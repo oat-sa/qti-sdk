@@ -585,15 +585,13 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                                         $newMathElement->appendChild($node);
                                         $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
                                     }
+                                } elseif ($this->getPrintedVariablePolicy() === self::CONTEXT_AWARE) {
+                                    $newMathElement->appendChild($newMathElement->ownerDocument->createTextNode($printedVariableFragment->firstChild->nodeValue));
+                                    $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
                                 } else {
-                                    if ($this->getPrintedVariablePolicy() === self::CONTEXT_AWARE) {
-                                        $newMathElement->appendChild($newMathElement->ownerDocument->createTextNode($printedVariableFragment->firstChild->nodeValue));
+                                    foreach ($printedVariableFragment->firstChild->childNodes as $node) {
+                                        $newMathElement->appendChild($node);
                                         $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
-                                    } else {
-                                        foreach ($printedVariableFragment->firstChild->childNodes as $node) {
-                                            $newMathElement->appendChild($node);
-                                            $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
-                                        }
                                     }
                                 }
                             }

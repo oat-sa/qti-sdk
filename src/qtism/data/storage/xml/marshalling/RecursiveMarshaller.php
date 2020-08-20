@@ -236,16 +236,13 @@ abstract class RecursiveMarshaller extends Marshaller
                 } else {
                     $this->pushTrail($element);
                 }
+            } elseif ($node instanceof DOMElement) {
+                $this->pushFinal($node);
             } else {
-                // It's a leaf!
-                if ($node instanceof DOMElement) {
-                    $this->pushFinal($node);
-                } else {
-                    $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
-                    $processed = $marshaller->marshall($node);
-                    $this->pushFinal($processed);
-                    $this->pushProcessed($processed);
-                }
+                $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
+                $processed = $marshaller->marshall($node);
+                $this->pushFinal($processed);
+                $this->pushProcessed($processed);
             }
         }
     }
@@ -295,12 +292,10 @@ abstract class RecursiveMarshaller extends Marshaller
                 // Root node?
                 if ($node === $element && !empty($rootComponent)) {
                     $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection, $rootComponent);
+                } elseif ($marshaller instanceof self) {
+                    $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
                 } else {
-                    if ($marshaller instanceof self) {
-                        $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
-                    } else {
-                        $component = $marshaller->unmarshall($node);
-                    }
+                    $component = $marshaller->unmarshall($node);
                 }
 
                 $this->pushProcessed($component);
@@ -312,21 +307,18 @@ abstract class RecursiveMarshaller extends Marshaller
                 } else {
                     $this->pushTrail($component);
                 }
+            } elseif ($node instanceof QtiComponent) {
+                $this->pushFinal($node);
             } else {
-                // Leaf node.
-                if ($node instanceof QtiComponent) {
-                    $this->pushFinal($node);
-                } else {
-                    if ($node instanceof DOMText) {
-                        $node = self::getDOMCradle()->createElement('textRun', preg_replace('/&(?!\w+;)/', '&amp;', $node->wholeText));
-                    }
-
-                    // Process it and make its a final element to be used by hierarchical nodes.
-                    $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
-                    $processed = $marshaller->unmarshall($node);
-                    $this->pushFinal($processed);
-                    $this->pushProcessed($processed);
+                if ($node instanceof DOMText) {
+                    $node = self::getDOMCradle()->createElement('textRun', preg_replace('/&(?!\w+;)/', '&amp;', $node->wholeText));
                 }
+
+                // Process it and make its a final element to be used by hierarchical nodes.
+                $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
+                $processed = $marshaller->unmarshall($node);
+                $this->pushFinal($processed);
+                $this->pushProcessed($processed);
             }
         }
     }

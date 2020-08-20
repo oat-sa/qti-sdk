@@ -108,10 +108,8 @@ class AssociateInteractionMarshaller extends ContentMarshaller
         // shuffle.
         if (Version::compare($version, '2.1.0', '>=') && $component->mustShuffle() !== false) {
             $this->setDOMElementAttribute($element, 'shuffle', true);
-        } else {
-            if (Version::compare($version, '2.0.0', '==') === true) {
-                $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
-            }
+        } elseif (Version::compare($version, '2.0.0', '==') === true) {
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         // maxAssociations.

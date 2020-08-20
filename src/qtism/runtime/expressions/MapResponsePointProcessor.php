@@ -104,25 +104,21 @@ class MapResponsePointProcessor extends ExpressionProcessor
                     // If no relevant mapping found, return the default.
                     if (count($mapped) === 0) {
                         return new QtiFloat($areaMapping->getDefaultValue());
-                    } else {
+                    } elseif ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
                         // Check upper and lower bound.
-                        if ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
-                            return new QtiFloat($areaMapping->getLowerBound());
-                        } elseif ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
-                            return new QtiFloat($areaMapping->getUpperBound());
-                        } else {
-                            return new QtiFloat((float)$result);
-                        }
-                    }
-                } else {
-                    if ($var->isRecord()) {
-                        $msg = 'The MapResponsePoint expression cannot be applied to RECORD variables.';
-                        throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
+                        return new QtiFloat($areaMapping->getLowerBound());
+                    } elseif ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
+                        return new QtiFloat($areaMapping->getUpperBound());
                     } else {
-                        $strBaseType = BaseType::getNameByConstant($var->getBaseType());
-                        $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
-                        throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
+                        return new QtiFloat((float)$result);
                     }
+                } elseif ($var->isRecord()) {
+                    $msg = 'The MapResponsePoint expression cannot be applied to RECORD variables.';
+                    throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
+                } else {
+                    $strBaseType = BaseType::getNameByConstant($var->getBaseType());
+                    $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
+                    throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
             } else {
                 $msg = "The variable with identifier '${identifier}' is not a ResponseVariable.";

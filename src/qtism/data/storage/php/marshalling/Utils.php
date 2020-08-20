@@ -69,20 +69,17 @@ class Utils
             $className = mb_strtolower($object->getShortName(), 'UTF-8');
 
             return "${className}_${occurence}";
+        } elseif (is_scalar($value) === true) {
+            return gettype($value) . '_' . $occurence;
+        } elseif (is_array($value) === true) {
+            return 'array_' . $occurence;
+        } elseif (is_null($value) === true) {
+            // null value?
+            // To avoid conflict with NullValue QTI expression object!!!
+            return 'scalarnullvalue_' . $occurence;
         } else {
-            // Is it a PHP scalar value?
-            if (is_scalar($value) === true) {
-                return gettype($value) . '_' . $occurence;
-            } elseif (is_array($value) === true) {
-                return 'array_' . $occurence;
-            } elseif (is_null($value) === true) {
-                // null value?
-                // To avoid conflict with NullValue QTI expression object!!!
-                return 'scalarnullvalue_' . $occurence;
-            } else {
-                $msg = 'Cannot handle the given value.';
-                throw new InvalidArgumentException($msg);
-            }
+            $msg = 'Cannot handle the given value.';
+            throw new InvalidArgumentException($msg);
         }
     }
 }

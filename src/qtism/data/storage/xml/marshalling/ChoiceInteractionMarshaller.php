@@ -53,11 +53,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
-            } else {
-                if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                    $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . ' element.';
-                    throw new UnmarshallingException($msg, $element);
-                }
+            } elseif (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
+                $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . ' element.';
+                throw new UnmarshallingException($msg, $element);
             }
 
             // maxChoices.
@@ -69,11 +67,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 } else {
                     $component->setMaxChoices($maxChoices);
                 }
-            } else {
-                if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . ' element.';
-                    throw new UnmarshallingException($msg, $element);
-                }
+            } elseif (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
+                $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . ' element.';
+                throw new UnmarshallingException($msg, $element);
             }
 
             // minChoices.

@@ -1122,10 +1122,8 @@ class AssessmentItemSession extends State
                     if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
                         return (($partially) ? true : false);
                     }
-                } else {
-                    if ($value->equals($defaultValue) === (($partially) ? false : true)) {
-                        return (($partially) ? true : false);
-                    }
+                } elseif ($value->equals($defaultValue) === (($partially) ? false : true)) {
+                    return (($partially) ? true : false);
                 }
             }
         }

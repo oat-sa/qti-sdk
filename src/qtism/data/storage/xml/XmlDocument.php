@@ -195,13 +195,11 @@ class XmlDocument extends QtiDocument
                 // Pre-check to throw an appropriate exception when load from an empty string.
                 $msg = 'Cannot load QTI from an empty string.';
                 throw new XmlStorageException($msg, XmlStorageException::READ);
-            } else {
-                if ($loadMethod === 'load') {
-                    // Pre-check to throw an appropriate exception when loading from a non-resolvable file.
-                    if (is_readable($data) === false) {
-                        $msg = "Cannot load QTI file '${data}'. It does not exist or is not readable.";
-                        throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
-                    }
+            } elseif ($loadMethod === 'load') {
+                // Pre-check to throw an appropriate exception when loading from a non-resolvable file.
+                if (is_readable($data) === false) {
+                    $msg = "Cannot load QTI file '${data}'. It does not exist or is not readable.";
+                    throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
                 }
             }
 
@@ -354,14 +352,12 @@ class XmlDocument extends QtiDocument
                         $msg = "An error occurred while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
                         throw new XmlStorageException($msg, XmlStorageException::WRITE);
                     }
+                } elseif (($strXml = $this->getDomDocument()->saveXML()) !== false) {
+                    return $strXml;
                 } else {
-                    if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
-                        return $strXml;
-                    } else {
-                        // An error occurred while saving.
-                        $msg = 'An internal error occurred while exporting QTI-XML as string.';
-                        throw new XmlStorageException($msg, XmlStorageException::WRITE);
-                    }
+                    // An error occurred while saving.
+                    $msg = 'An internal error occurred while exporting QTI-XML as string.';
+                    throw new XmlStorageException($msg, XmlStorageException::WRITE);
                 }
             } catch (DOMException $e) {
                 $msg = 'An internal error occurred while saving QTI-XML data.';

@@ -65,12 +65,10 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
                 $this->marshallPoint();
 
                 return;
-            } else {
-                if ($toMarshall instanceof QtiIdentifier) {
-                    $this->marshallIdentifier();
+            } elseif ($toMarshall instanceof QtiIdentifier) {
+                $this->marshallIdentifier();
 
-                    return;
-                }
+                return;
             }
         } catch (PhpMarshallingException $e) {
             $msg = 'An error occurred while marshalling a QtiDatatype object.';

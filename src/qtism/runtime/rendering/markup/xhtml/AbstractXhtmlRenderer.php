@@ -119,13 +119,11 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
                 $glue = ($currentClasses !== '') ? "\x20" : '';
                 $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
             }
-        } else {
+        } elseif ($this->hasAdditionalClasses() === true) {
             // Only the last added qti- CSS class must be rendered.
-            if ($this->hasAdditionalClasses() === true) {
-                $classes = $this->getAdditionalClasses();
-                $class = array_pop($classes);
-                $fragment->firstChild->setAttribute('class', $class);
-            }
+            $classes = $this->getAdditionalClasses();
+            $class = array_pop($classes);
+            $fragment->firstChild->setAttribute('class', $class);
         }
 
         // Add user specific CSS classes e.g. 'my-class' to rendering.

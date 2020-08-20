@@ -140,10 +140,8 @@ class GapChoiceMarshaller extends ContentMarshaller
                         }
                     }
                     $component->setContent($content);
-                } else {
-                    if (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
-                        $component->setObjectLabel($objectLabel);
-                    }
+                } elseif (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
+                    $component->setObjectLabel($objectLabel);
                 }
 
                 if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
@@ -198,12 +196,9 @@ class GapChoiceMarshaller extends ContentMarshaller
         foreach ($elements as $e) {
             if ($element->localName === 'gapImg') {
                 $element->appendChild($e);
-            } else {
-                // 'gapText'...
-                if (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
-                    // In QTI 2.0, only plain text is allowed...
-                    $element->appendChild($e);
-                }
+            } elseif (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
+                // In QTI 2.0, only plain text is allowed in gapText...
+                $element->appendChild($e);
             }
         }
 

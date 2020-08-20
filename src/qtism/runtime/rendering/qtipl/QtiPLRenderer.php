@@ -138,12 +138,10 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     {
         if (array_key_exists($something->getQtiClassName(), $this->registry)) {
             return $this->registry[$something->getQtiClassName()]->render($something);
+        } elseif (in_array($something->getQtiClassName(), operators\OperatorQtiPLRenderer::getOperatorClassNames())) {
+            return $this->registry['operator']->render($something);
         } else {
-            if (in_array($something->getQtiClassName(), operators\OperatorQtiPLRenderer::getOperatorClassNames())) {
-                return $this->registry['operator']->render($something);
-            } else {
-                return $this->getDefaultRendering($something);
-            }
+            return $this->getDefaultRendering($something);
         }
     }
 

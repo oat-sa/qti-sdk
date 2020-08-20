@@ -2641,10 +2641,8 @@ class AssessmentTestSession extends State
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
             if ($itemSession->getState() === AssessmentItemSessionState::INTERACTING) {
                 $itemSession->endCandidateSession();
-            } else {
-                if ($itemSession->getState() === AssessmentItemSessionState::MODAL_FEEDBACK) {
-                    $itemSession->suspend();
-                }
+            } elseif ($itemSession->getState() === AssessmentItemSessionState::MODAL_FEEDBACK) {
+                $itemSession->suspend();
             }
         } else {
             $msg = 'Cannot retrieve the current item session.';
