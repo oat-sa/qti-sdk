@@ -12,7 +12,9 @@ use qtism\common\datatypes\QtiShape;
 use qtism\common\enums\BaseType;
 use qtism\data\storage\Utils;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 use stdClass;
+use UnexpectedValueException;
 
 class UtilsTest extends QtiSmTestCase
 {
@@ -31,7 +33,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToIntegerInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
     }
 
@@ -50,7 +52,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToFloatInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
     }
 
@@ -84,7 +86,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testIntOrIdentifierInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
     }
 
@@ -93,7 +95,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToBooleanInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
     }
 
@@ -114,7 +116,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToPointInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::POINT);
     }
 
@@ -138,7 +140,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToDurationInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::DURATION);
     }
 
@@ -158,7 +160,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToPairInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::PAIR);
     }
 
@@ -178,7 +180,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToDirectedPairInvalid($string)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
     }
 
@@ -203,7 +205,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToCoordsInvalid($string, $shape)
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $coords = Utils::stringToCoords($string, $shape);
     }
 
@@ -235,7 +237,7 @@ class UtilsTest extends QtiSmTestCase
 
     public function testUnsupportedFile()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         Utils::stringToDatatype('not supported', BaseType::FILE);
     }
 

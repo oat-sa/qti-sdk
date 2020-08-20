@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberSelected;
 use qtismtest\QtiSmTestCase;
@@ -22,7 +23,7 @@ class NumberSelectedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('numberSelected', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($includeCategory, $element->getAttribute('includeCategory'));

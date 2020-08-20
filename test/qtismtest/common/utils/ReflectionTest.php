@@ -2,6 +2,7 @@
 
 namespace qtismtest\common\utils;
 
+use Exception;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\utils\Reflection;
 use qtismtest\QtiSmTestCase;
@@ -22,11 +23,11 @@ class ReflectionTest extends QtiSmTestCase
 
     public function testNewInstanceWithArguments()
     {
-        $clazz = new ReflectionClass(\Exception::class);
+        $clazz = new ReflectionClass(Exception::class);
         $args = ['A message', 12];
         $instance = Reflection::newInstance($clazz, $args);
 
-        $this->assertInstanceOf(\Exception::class, $instance);
+        $this->assertInstanceOf(Exception::class, $instance);
         $this->assertEquals('A message', $instance->getMessage());
         $this->assertEquals(12, $instance->getCode());
     }

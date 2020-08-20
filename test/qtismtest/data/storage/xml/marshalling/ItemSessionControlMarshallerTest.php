@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\ItemSessionControl;
 use qtismtest\QtiSmTestCase;
 
@@ -18,7 +19,7 @@ class ItemSessionControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('itemSessionControl', $element->nodeName);
         $this->assertEquals('true', $element->getAttribute('allowComment'));
         $this->assertEquals('2', $element->getAttribute('maxAttempts'));

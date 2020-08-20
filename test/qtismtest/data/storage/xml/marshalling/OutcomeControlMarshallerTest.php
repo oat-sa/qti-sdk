@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\OutcomeElse;
@@ -24,7 +25,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeIf', $element->nodeName);
         $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
@@ -52,7 +53,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeElseIf', $element->nodeName);
         $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
@@ -78,7 +79,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeElse', $element->nodeName);
         $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
 

@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\state\VariableMapping;
 use qtismtest\QtiSmTestCase;
 
@@ -17,7 +18,7 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('variableMapping', $element->nodeName);
         $this->assertEquals($source, $element->getAttribute('sourceIdentifier'));
         $this->assertEquals($target, $element->getAttribute('targetIdentifier'));

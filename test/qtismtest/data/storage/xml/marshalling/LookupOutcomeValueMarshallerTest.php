@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\LookupOutcomeValue;
@@ -17,7 +18,7 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('lookupOutcomeValue', $element->nodeName);
         $this->assertEquals('myVariable1', $element->getAttribute('identifier'));
         $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);

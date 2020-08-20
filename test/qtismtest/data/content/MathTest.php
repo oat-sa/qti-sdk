@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content;
 
+use DOMDocument;
 use qtism\data\content\Math;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
@@ -30,6 +31,6 @@ class MathTest extends QtiSmTestCase
     {
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"></m:math>';
         $math = new Math($xml);
-        $this->assertInstanceOf(\DOMDocument::class, $math->getXml());
+        $this->assertInstanceOf(DOMDocument::class, $math->getXml());
     }
 }

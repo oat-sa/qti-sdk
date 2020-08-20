@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtismtest\QtiSmTestCase;
@@ -18,7 +19,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('baseValue', $element->nodeName);
         $this->assertEquals('float', $element->getAttribute('baseType'));
         $this->assertEquals($value . '', $element->nodeValue);

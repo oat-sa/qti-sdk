@@ -12,6 +12,7 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SumProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\Processable;
+use RuntimeException;
 
 class SumProcessorTest extends QtiSmTestCase
 {
@@ -70,7 +71,7 @@ class SumProcessorTest extends QtiSmTestCase
     {
         $sum = $this->createFakeSumComponent();
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)]);
         $sumProcessor = new SumProcessor($sum, $operands);
@@ -84,7 +85,7 @@ class SumProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::BOOLEAN, [new QtiBoolean(true), new QtiBoolean(false)]);
         $sumProcessor = new SumProcessor($sum, $operands);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $result = $sumProcessor->process();
     }
 

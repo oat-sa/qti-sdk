@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\OutcomeMinimum;
 use qtismtest\QtiSmTestCase;
@@ -24,7 +25,7 @@ class OutcomeMinimumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeMinimum', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));

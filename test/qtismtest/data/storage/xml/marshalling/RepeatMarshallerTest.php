@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -23,7 +24,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('repeat', $element->nodeName);
         $this->assertEquals('2', $element->getAttribute('numberRepeats'));
 

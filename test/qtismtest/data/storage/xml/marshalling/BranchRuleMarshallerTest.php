@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\BranchRule;
@@ -18,7 +19,7 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('branchRule', $element->nodeName);
         $this->assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
         $this->assertEquals($target, $element->getAttribute('target'));

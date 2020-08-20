@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\ShowHide;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
@@ -27,7 +28,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('testFeedback', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));

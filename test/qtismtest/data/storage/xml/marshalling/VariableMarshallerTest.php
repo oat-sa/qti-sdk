@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
@@ -17,7 +18,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('variable', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
@@ -31,7 +32,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('variable', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals('', $element->getAttribute('weightIdentifier')); // should have no weightIdentifier attr.

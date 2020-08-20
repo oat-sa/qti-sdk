@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\expressions\ExpressionCollection;
@@ -24,7 +25,7 @@ class InsideMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('inside', $element->nodeName);
         $this->assertEquals(implode(',', [0, 0, 100, 20]), $element->getAttribute('coords'));
         $this->assertEquals('rect', $element->getAttribute('shape'));

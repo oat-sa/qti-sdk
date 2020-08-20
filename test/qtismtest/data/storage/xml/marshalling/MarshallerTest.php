@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\ItemSessionControl;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
@@ -43,7 +44,7 @@ class MarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $child = Marshaller::getFirstChildElement($element);
-        $this->assertInstanceOf(\DOMElement::class, $child);
+        $this->assertInstanceOf(DOMElement::class, $child);
         $this->assertEquals('child', $child->nodeName);
     }
 

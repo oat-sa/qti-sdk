@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\CorrectResponse;
@@ -30,7 +31,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('responseDeclaration', $element->nodeName);
         $this->assertEquals('single', $element->getAttribute('cardinality'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
@@ -53,7 +54,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('responseDeclaration', $element->nodeName);
         $this->assertEquals('multiple', $element->getAttribute('cardinality'));
         $this->assertEquals('duration', $element->getAttribute('baseType'));
@@ -95,7 +96,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('responseDeclaration', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals('float', $element->getAttribute('baseType'));

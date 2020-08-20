@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -22,7 +23,7 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('patternMatch', $element->nodeName);
         $this->assertEquals($pattern, $element->getAttribute('pattern'));
         $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);

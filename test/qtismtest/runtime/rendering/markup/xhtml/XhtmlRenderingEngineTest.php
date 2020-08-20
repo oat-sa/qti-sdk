@@ -2,6 +2,9 @@
 
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
+use DOMDocument;
+use DOMDocumentFragment;
+use DOMText;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingContext;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
@@ -18,7 +21,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $renderingEngine = new XhtmlRenderingEngine();
         $rendering = $renderingEngine->render($div);
 
-        $this->assertInstanceOf(\DOMDocument::class, $rendering);
+        $this->assertInstanceOf(DOMDocument::class, $rendering);
 
         $divElt = $rendering->documentElement;
         $this->assertEquals('div', $divElt->nodeName);
@@ -26,7 +29,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $this->assertEquals('container qti-bodyElement qti-div', $divElt->getAttribute('class'));
 
         $text = $divElt->firstChild;
-        $this->assertInstanceOf(\DOMText::class, $text);
+        $this->assertInstanceOf(DOMText::class, $text);
         $this->assertEquals('bla bla', $text->wholeText);
     }
 
@@ -70,7 +73,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
 
         // The separate rendering must contain a single <link> element.
         $linksFragment = $renderingEngine->getStylesheets();
-        $this->assertInstanceOf(\DOMDocumentFragment::class, $linksFragment);
+        $this->assertInstanceOf(DOMDocumentFragment::class, $linksFragment);
         $this->assertEquals(1, $linksFragment->childNodes->length);
         $linkElt = $linksFragment->firstChild;
         $this->assertEquals('link', $linkElt->localName);
@@ -97,7 +100,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $this->assertEquals(0, $linkElts->length);
 
         $linksFragment = $renderingEngine->getStylesheets();
-        $this->assertInstanceOf(\DOMDocumentFragment::class, $linksFragment);
+        $this->assertInstanceOf(DOMDocumentFragment::class, $linksFragment);
         $this->assertEquals(2, $linksFragment->childNodes->length);
 
         // Test first <link> element.

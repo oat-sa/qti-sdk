@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
@@ -27,7 +28,7 @@ class AreaMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('areaMapping', $element->nodeName);
     }
 

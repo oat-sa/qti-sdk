@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\MathConstant;
 use qtism\data\expressions\MathEnumeration;
 use qtismtest\QtiSmTestCase;
@@ -17,7 +18,7 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('mathConstant', $element->nodeName);
         $this->assertEquals('pi', $element->getAttribute('name'));
     }

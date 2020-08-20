@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\ItemSubset;
 use qtismtest\QtiSmTestCase;
@@ -18,7 +19,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('itemSubset', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
     }
@@ -34,7 +35,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('itemSubset', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
@@ -53,7 +54,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('itemSubset', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));

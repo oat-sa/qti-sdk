@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\DefaultValue;
@@ -25,7 +26,7 @@ class VariableDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(\DOMElement::class, $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('variableDeclaration', $element->nodeName);
         $this->assertEquals('myVar', $element->getAttribute('identifier'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
