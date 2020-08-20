@@ -108,17 +108,15 @@ class HotspotMarshaller extends Marshaller
 
                     if ($element->localName === 'hotspotChoice') {
                         $component = new HotspotChoice($identifier, $shape, $coords);
-                    } else {
-                        if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
-                            $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
+                    } elseif (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+                        $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
 
-                            if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
-                                $component->setMatchMin($matchMin);
-                            }
-                        } else {
-                            $msg = "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'.";
-                            throw new UnmarshallingException($msg, $element);
+                        if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                            $component->setMatchMin($matchMin);
                         }
+                    } else {
+                        $msg = "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'.";
+                        throw new UnmarshallingException($msg, $element);
                     }
 
                     if (($hotspotLabel = self::getDOMElementAttributeAs($element, 'hotspotLabel')) !== null) {

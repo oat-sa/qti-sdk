@@ -142,12 +142,10 @@ class OperatorMarshaller extends RecursiveMarshaller
 
         if ($element->localName === 'and') {
             $className = AndOperator::class;
+        } elseif ($element->localName === 'or') {
+            $className = OrOperator::class;
         } else {
-            if ($element->localName === 'or') {
-                $className = OrOperator::class;
-            } else {
-                $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
-            }
+            $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
         }
 
         $class = new ReflectionClass($className);

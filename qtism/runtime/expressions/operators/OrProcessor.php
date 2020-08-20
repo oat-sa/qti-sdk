@@ -71,15 +71,11 @@ class OrProcessor extends OperatorProcessor
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
             } elseif ($op === null) {
                 continue;
-            } else {
-                if (!$op instanceof QtiBoolean) {
-                    $msg = 'The Or Expression only accept operands with boolean baseType.';
-                    throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-                } else {
-                    if ($op->getValue() !== false) {
-                        $allFalse = false;
-                    }
-                }
+            } elseif (!$op instanceof QtiBoolean) {
+                $msg = 'The Or Expression only accept operands with boolean baseType.';
+                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+            } elseif ($op->getValue() !== false) {
+                $allFalse = false;
             }
         }
 

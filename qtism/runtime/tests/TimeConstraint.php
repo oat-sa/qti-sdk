@@ -226,12 +226,10 @@ class TimeConstraint
     {
         if ($this->doesConsiderMinTime() === false) {
             return false;
+        } elseif (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
+            return false;
         } else {
-            if (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
-                return false;
-            } else {
-                return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMinTime() === true;
-            }
+            return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMinTime() === true;
         }
     }
 

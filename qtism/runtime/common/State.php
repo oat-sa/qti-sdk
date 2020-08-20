@@ -171,10 +171,8 @@ class State extends AbstractCollection
             if ($data[$k] instanceof OutcomeVariable) {
                 if ($preserveBuiltIn === true && $k === 'completionStatus') {
                     continue;
-                } else {
-                    if (in_array($k, $preserve) === false) {
-                        $data[$k]->applyDefaultValue();
-                    }
+                } elseif (in_array($k, $preserve) === false) {
+                    $data[$k]->applyDefaultValue();
                 }
             }
         }

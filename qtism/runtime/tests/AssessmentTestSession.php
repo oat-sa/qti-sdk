@@ -2205,11 +2205,9 @@ class AssessmentTestSession extends State
             if (isset($assessmentItemRefs[$assessmentItemRef]) === true) {
                 $assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];
             }
-        } else {
-            if (!$assessmentItemRef instanceof AssessmentItemRef) {
-                $msg = "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.";
-                throw new InvalidArgumentException($msg);
-            }
+        } elseif (!$assessmentItemRef instanceof AssessmentItemRef) {
+            $msg = "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.";
+            throw new InvalidArgumentException($msg);
         }
 
         $lastOccurenceUpdate = $this->getLastOccurenceUpdate();
@@ -2239,11 +2237,7 @@ class AssessmentTestSession extends State
             if ($previousRouteItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) {
                 return false;
             } else {
-                if ($this->getCurrentNavigationMode() === NavigationMode::NONLINEAR) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return $this->getCurrentNavigationMode() === NavigationMode::NONLINEAR;
             }
         }
     }
@@ -2706,10 +2700,8 @@ class AssessmentTestSession extends State
 
                 if ($isAdaptive === true && $itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
                     $numberCompleted++;
-                } else {
-                    if ($isAdaptive === false && $itemSession->isResponded() === true) {
-                        $numberCompleted++;
-                    }
+                } elseif ($isAdaptive === false && $itemSession->isResponded() === true) {
+                    $numberCompleted++;
                 }
             }
         }

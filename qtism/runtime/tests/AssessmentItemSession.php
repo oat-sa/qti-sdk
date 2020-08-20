@@ -768,27 +768,21 @@ class AssessmentItemSession extends State
         if ($maxTimeExceeded === true) {
             $this->endItemSession();
             $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
-        } else {
-            // -- Adaptive item.
-            if ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+        } elseif ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+            //  -- Adaptive item.
+            $this->endItemSession();
+        } elseif ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
+            // -- Non-adaptive item + maxAttempts reached.
+            // Close only if $maxAttempts !== 0 because 0 means no limit!
+            if ($maxAttempts !== 0) {
                 $this->endItemSession();
-            } else {
-                // -- Non-adaptive item + maxAttempts reached.
-                if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
-                    // Close only if $maxAttempts !== 0 because 0 means no limit!
-                    if ($maxAttempts !== 0) {
-                        $this->endItemSession();
-                    }
-
-                    // Even if there is no limit of attempts, we consider the item completed.
-                    $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
-                    // -- Non-adaptive - remaining attempts.
-                } else {
-                    if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() < $maxAttempts) {
-                        $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
-                    }
-                }
             }
+
+            // Even if there is no limit of attempts, we consider the item completed.
+            $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
+            // -- Non-adaptive - remaining attempts.
+        } elseif ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() < $maxAttempts) {
+            $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
         }
         // else...
         // Wait for the next attempt.
@@ -1053,10 +1047,8 @@ class AssessmentItemSession extends State
                     if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
                         return (($partially) ? true : false);
                     }
-                } else {
-                    if ($value->equals($defaultValue) === (($partially) ? false : true)) {
-                        return (($partially) ? true : false);
-                    }
+                } elseif ($value->equals($defaultValue) === (($partially) ? false : true)) {
+                    return (($partially) ? true : false);
                 }
             }
         }

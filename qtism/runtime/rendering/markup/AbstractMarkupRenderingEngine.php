@@ -403,24 +403,22 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                         $this->getExploration()->push($toExplore);
                     }
                 }
+            } elseif ($final === false && $explored === true) {
+                // Hierarchical node: 2nd pass.
+                $this->processNode($this->resolveXmlBase());
+
+                if ($this->getExploredComponent() === $component) {
+                    // End of the rendering.
+                    break;
+                }
             } else {
-                if ($final === false && $explored === true) {
-                    // Hierarchical node: 2nd pass.
-                    $this->processNode($this->resolveXmlBase());
+                // Leaf node.
+                $this->registerXmlBase();
+                $this->processNode($this->resolveXmlBase());
 
-                    if ($this->getExploredComponent() === $component) {
-                        // End of the rendering.
-                        break;
-                    }
-                } else {
-                    // Leaf node.
-                    $this->registerXmlBase();
-                    $this->processNode($this->resolveXmlBase());
-
-                    if ($this->getExploredComponent() === $component) {
-                        // End of the rendering (leaf node is actually a lone root).
-                        break;
-                    }
+                if ($this->getExploredComponent() === $component) {
+                    // End of the rendering (leaf node is actually a lone root).
+                    break;
                 }
             }
         }

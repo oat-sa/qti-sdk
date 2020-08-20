@@ -93,30 +93,28 @@ class ResponseVariable extends Variable
         if (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true) {
             $this->correctResponse = $correctResponse;
             return;
-        } else {
-            if ($correctResponse instanceof Container) {
-                if ($correctResponse->getCardinality() === $this->getCardinality()) {
-                    if (
-                        get_class($correctResponse) === Container::class
-                        || $correctResponse->getBaseType() === $this->getBaseType()
-                    ) {
-                        // This is a simple container with no baseType restriction
-                        // or a Multiple|Record|Ordered container with a compliant
-                        // baseType.
-                        $this->correctResponse = $correctResponse;
-                        return;
-                    } else {
-                        $msg = "The baseType of the given container ('" . BaseType::getNameByConstant($correctResponse->getBaseType()) . "') ";
-                        $msg .= 'is not compliant with ';
-                        $msg .= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
-                        throw new InvalidArgumentException($msg);
-                    }
+        } elseif ($correctResponse instanceof Container) {
+            if ($correctResponse->getCardinality() === $this->getCardinality()) {
+                if (
+                    get_class($correctResponse) === Container::class
+                    || $correctResponse->getBaseType() === $this->getBaseType()
+                ) {
+                    // This is a simple container with no baseType restriction
+                    // or a Multiple|Record|Ordered container with a compliant
+                    // baseType.
+                    $this->correctResponse = $correctResponse;
+                    return;
                 } else {
-                    $msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
+                    $msg = "The baseType of the given container ('" . BaseType::getNameByConstant($correctResponse->getBaseType()) . "') ";
                     $msg .= 'is not compliant with ';
-                    $msg .= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
+                    $msg .= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
                     throw new InvalidArgumentException($msg);
                 }
+            } else {
+                $msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
+                $msg .= 'is not compliant with ';
+                $msg .= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
+                throw new InvalidArgumentException($msg);
             }
         }
 

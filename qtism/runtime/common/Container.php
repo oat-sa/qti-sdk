@@ -167,11 +167,9 @@ class Container extends AbstractCollection implements Comparable
                 if ($t->equals($obj)) {
                     $occurences++;
                 }
-            } else {
+            } elseif ($obj === $t) {
                 // Both primitive.
-                if ($obj === $t) {
-                    $occurences++;
-                }
+                $occurences++;
             }
         }
 

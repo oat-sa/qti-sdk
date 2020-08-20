@@ -325,32 +325,18 @@ class QtiDuration implements QtiDatatype
     {
         if ($this->getYears() < $duration->getYears()) {
             return true;
+        } elseif ($this->getMonths() < $duration->getMonths()) {
+            return true;
+        } elseif ($this->getDays() < $duration->getDays()) {
+            return true;
+        } elseif ($this->getHours() < $duration->getHours()) {
+            return true;
+        } elseif ($this->getMinutes() < $duration->getMinutes()) {
+            return true;
+        } elseif ($this->getSeconds() < $duration->getSeconds()) {
+            return true;
         } else {
-            if ($this->getMonths() < $duration->getMonths()) {
-                return true;
-            } else {
-                if ($this->getDays() < $duration->getDays()) {
-                    return true;
-                } else {
-                    if ($this->getHours() < $duration->getHours()) {
-                        return true;
-                    } else {
-                        if ($this->getMinutes() < $duration->getMinutes()) {
-                            return true;
-                        } else {
-                            if ($this->getSeconds() < $duration->getSeconds()) {
-                                return true;
-                            } else {
-                                if ($this->getMicroseconds() < $duration->getMicroseconds()) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return $this->getMicroseconds() < $duration->getMicroseconds();
         }
     }
 
@@ -365,32 +351,18 @@ class QtiDuration implements QtiDatatype
     {
         if ($this->getYears() < $duration->getYears()) {
             return false;
+        } elseif ($this->getMonths() < $duration->getMonths()) {
+            return false;
+        } elseif ($this->getDays() < $duration->getDays()) {
+            return false;
+        } elseif ($this->getHours() < $duration->getHours()) {
+            return false;
+        } elseif ($this->getMinutes() < $duration->getMinutes()) {
+            return false;
+        } elseif ($this->getSeconds() < $duration->getSeconds()) {
+            return false;
         } else {
-            if ($this->getMonths() < $duration->getMonths()) {
-                return false;
-            } else {
-                if ($this->getDays() < $duration->getDays()) {
-                    return false;
-                } else {
-                    if ($this->getHours() < $duration->getHours()) {
-                        return false;
-                    } else {
-                        if ($this->getMinutes() < $duration->getMinutes()) {
-                            return false;
-                        } else {
-                            if ($this->getSeconds() < $duration->getSeconds()) {
-                                return false;
-                            } else {
-                                if ($this->getMicroseconds() < $duration->getMicroseconds()) {
-                                    return false;
-                                } else {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return !($this->getMicroseconds() < $duration->getMicroseconds());
         }
     }
 

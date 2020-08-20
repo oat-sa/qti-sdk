@@ -86,11 +86,9 @@ class SetOutcomeValueProcessor extends RuleProcessor
         if (is_null($var) === true) {
             $msg = "No variable with identifier '${identifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
-        } else {
-            if (!$var instanceof OutcomeVariable) {
-                $msg = "The variable to set '${identifier}' is not an OutcomeVariable.";
-                throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
-            }
+        } elseif (!$var instanceof OutcomeVariable) {
+            $msg = "The variable to set '${identifier}' is not an OutcomeVariable.";
+            throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
         }
 
         // Process the expression.
@@ -116,10 +114,8 @@ class SetOutcomeValueProcessor extends RuleProcessor
 
                 if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
                     $val = new QtiInteger((int)$val->getValue());
-                } else {
-                    if ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
-                        $val = new QtiFloat((float)$val->getValue());
-                    }
+                } elseif ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
+                    $val = new QtiFloat((float)$val->getValue());
                 }
             }
 

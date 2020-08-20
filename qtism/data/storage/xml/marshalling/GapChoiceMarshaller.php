@@ -123,10 +123,8 @@ class GapChoiceMarshaller extends ContentMarshaller
                         $msg = "Invalid content in 'gapText' element.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
-                } else {
-                    if (($objectLabel = self::getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
-                        $component->setObjectLabel($objectLabel);
-                    }
+                } elseif (($objectLabel = self::getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
+                    $component->setObjectLabel($objectLabel);
                 }
 
                 $this->fillBodyElement($component, $element);

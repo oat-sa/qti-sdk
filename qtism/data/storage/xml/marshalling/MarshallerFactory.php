@@ -403,10 +403,8 @@ abstract class MarshallerFactory
     {
         if ($object instanceof QtiComponent) {
             $qtiClassName = $object->getQtiClassName();
-        } else {
-            if ($object instanceof DOMElement) {
-                $qtiClassName = $object->localName;
-            }
+        } elseif ($object instanceof DOMElement) {
+            $qtiClassName = $object->localName;
         }
 
         if (isset($qtiClassName)) {

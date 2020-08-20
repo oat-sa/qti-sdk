@@ -54,10 +54,8 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
                     if ($objB->equals($objA) === false) {
                         return false;
                     }
-                } else {
-                    if ($objA !== $objB) {
-                        return false;
-                    }
+                } elseif ($objA !== $objB) {
+                    return false;
                 }
             }
 
