@@ -75,7 +75,7 @@ class MathOperator extends Operator implements Pure
     /**
      * The name of the mathematical function.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $name;
@@ -84,7 +84,7 @@ class MathOperator extends Operator implements Pure
      * Create a new instance of MathOperator.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $name The math functions to use as a value from the MathFunctions enumeration.
+     * @param int $name The math functions to use as a value from the MathFunctions enumeration.
      */
     public function __construct(ExpressionCollection $expressions, $name)
     {
@@ -95,7 +95,7 @@ class MathOperator extends Operator implements Pure
     /**
      * Get the name of the math function to use.
      *
-     * @return integer A value from the MathFunctions enumeration.
+     * @return int A value from the MathFunctions enumeration.
      */
     public function getName()
     {
@@ -105,7 +105,7 @@ class MathOperator extends Operator implements Pure
     /**
      * Set the name of the math function to use.
      *
-     * @param integer $name A value from the MathFunctions enumeration.
+     * @param int $name A value from the MathFunctions enumeration.
      * @throws InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
      */
     public function setName($name)
@@ -131,7 +131,7 @@ class MathOperator extends Operator implements Pure
      *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool True if the expression is pure, false otherwise
      */
     public function isPure()
     {

@@ -104,7 +104,7 @@ class StateTest extends QtiSmTestCase
     /**
      * @dataProvider containsNullOnlyProvider
      *
-     * @param boolean $expected
+     * @param bool $expected
      * @param State $state
      */
     public function testContainsNullOnly($expected, State $state)
@@ -138,7 +138,7 @@ class StateTest extends QtiSmTestCase
     /**
      * @dataProvider containsValuesEqualToVariableDefaultOnlyProvider
      *
-     * @param boolean $expected
+     * @param bool $expected
      * @param State $state
      */
     public function testContainsValuesEqualToVariableDefaultOnly($expected, State $state)

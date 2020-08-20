@@ -118,7 +118,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * in the current stream.
      *
      * @param Variable $variable A QTI Runtime Variable object.
-     * @param integer The kind of value to be read (self::RW_VALUE | self::RW_DEFAULTVALUE | self::RW_CORRECTRESPONSE)
+     * @param int The kind of value to be read (self::RW_VALUE | self::RW_DEFAULTVALUE | self::RW_CORRECTRESPONSE)
      * @throws BinaryStreamAccessException If an error occurs at the binary level.
      */
     public function readVariableValue(Variable $variable, $valueType = self::RW_VALUE)
@@ -628,7 +628,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read an intOrIdentifier from the current binary stream.
      *
-     * @return integer|string An integer or a string depending on the nature of the intOrIdentifier datatype.
+     * @return int|string An integer or a string depending on the nature of the intOrIdentifier datatype.
      * @throws QtiBinaryStreamAccessException
      */
     public function readIntOrIdentifier()
@@ -646,7 +646,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write an intOrIdentifier in the current binary stream.
      *
-     * @param integer|string $intOrIdentifier An integer or a string value.
+     * @param int|string $intOrIdentifier An integer or a string value.
      * @throws QtiBinaryStreamAccessException
      */
     public function writeIntOrIdentifier($intOrIdentifier)

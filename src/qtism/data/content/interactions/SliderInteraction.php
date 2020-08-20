@@ -85,7 +85,7 @@ class SliderInteraction extends BlockInteraction
      * to a float, and the step attribute is not declared, the slider is
      * assumed to operate on an approximately continuous scale.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $step = 0;
@@ -99,7 +99,7 @@ class SliderInteraction extends BlockInteraction
      * able to guarantee to label steps so this attribute should be
      * treated only as request.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $stepLabel = false;
@@ -114,7 +114,7 @@ class SliderInteraction extends BlockInteraction
      * the orientation to vertical to indicate that rendering it horizontally
      * could spuriously increase the difficulty of the item.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $orientation = Orientation::HORIZONTAL;
@@ -128,7 +128,7 @@ class SliderInteraction extends BlockInteraction
      * example, an interaction that is used to indicate a depth below sea
      * level might specify both a vertical orientation and set reverse.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $reverse = false;
@@ -208,7 +208,7 @@ class SliderInteraction extends BlockInteraction
      * Set the step that controls the move of the slider. If $step is 0, it means
      * that no value is actually defined for the step attribute.
      *
-     * @param integer $step A positive (>= 0) integer.
+     * @param int $step A positive (>= 0) integer.
      * @throws InvalidArgumentException If $step is not a positive integer.
      */
     public function setStep($step)
@@ -224,7 +224,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Get the step that controls the move of the slider.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getStep()
     {
@@ -234,7 +234,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Whether or not a value is defined for the step attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasStep()
     {
@@ -244,7 +244,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Set whether or not each step on the slider has to be labelled.
      *
-     * @param boolean $stepLabel
+     * @param bool $stepLabel
      * @throws InvalidArgumentException If $stepLabel is not a boolean value.
      */
     public function setStepLabel($stepLabel)
@@ -260,7 +260,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Whether each step on the slider has to be labelled.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustStepLabel()
     {
@@ -270,7 +270,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Set the orientation of the slider (horizontal or vertical).
      *
-     * @param integer $orientation A value from the Orientation enumeration.
+     * @param int $orientation A value from the Orientation enumeration.
      * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
     public function setOrientation($orientation)
@@ -286,7 +286,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Get the orientation of the slider (horizontal or vertical).
      *
-     * @return integer A value from the Orientation enumeration.
+     * @return int A value from the Orientation enumeration.
      */
     public function getOrientation()
     {
@@ -296,7 +296,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Set whether or not the upper and lower bounds are reversed.
      *
-     * @param boolean $reverse
+     * @param bool $reverse
      * @throws InvalidArgumentException If $reverse is not a boolean value.
      */
     public function setReverse($reverse)
@@ -312,7 +312,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * Whether the upper and lower bounds are reversed.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustReverse()
     {

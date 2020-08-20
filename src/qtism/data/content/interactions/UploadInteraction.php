@@ -91,7 +91,7 @@ class UploadInteraction extends BlockInteraction
      * Whether or not a value is defined for the 'type'
      * attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasType()
     {

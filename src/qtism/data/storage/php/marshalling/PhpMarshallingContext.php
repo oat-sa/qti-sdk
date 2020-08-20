@@ -65,7 +65,7 @@ class PhpMarshallingContext
     /**
      * Whether to format the output PHP source code.
      *
-     * @var boolean
+     * @var bool
      */
     private $formatOutput;
 
@@ -153,7 +153,7 @@ class PhpMarshallingContext
     /**
      * Set whether to format the output PHP source code.
      *
-     * @param boolean $formatOutput
+     * @param bool $formatOutput
      */
     public function setFormatOutput($formatOutput)
     {
@@ -163,7 +163,7 @@ class PhpMarshallingContext
     /**
      * Whether to format the output PHP source code.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustFormatOutput()
     {
@@ -215,7 +215,7 @@ class PhpMarshallingContext
     /**
      * Pop a given $quantity of values from the variable names stack.
      *
-     * @param integer $quantity
+     * @param int $quantity
      * @return array An array of strings.
      * @throws RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
      * @throws InvalidArgumentException If $quantity < 1.

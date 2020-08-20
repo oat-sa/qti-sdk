@@ -53,7 +53,7 @@ class Utils
      * is thrown.
      *
      * @param mixed $value A value.
-     * @param integer $occurence An occurence number.
+     * @param int $occurence An occurence number.
      * @return string A variable name.
      * @throws InvalidArgumentException If $occurence is not a positive integer or if $value cannot be handled by this method.
      */

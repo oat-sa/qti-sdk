@@ -44,7 +44,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * Create a MathRenderer object.
      *
      * @param AbstractMarkupRenderingEngine $renderingEngine
-     * @param boolean $namespaceOutput Whether to embed the resulting output into the MathML namespace.
+     * @param bool $namespaceOutput Whether to embed the resulting output into the MathML namespace.
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
     {
@@ -55,7 +55,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
     /**
      * Set whether the resulting output must be embedded in the MathML namespace.
      *
-     * @param boolean $namespaceOutput
+     * @param bool $namespaceOutput
      */
     public function setNamespaceOutput($namespaceOutput)
     {
@@ -65,7 +65,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
     /**
      * Wheter the resulting output must be embedded in the MathML namespace.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustNamespaceOutput()
     {

@@ -61,7 +61,7 @@ abstract class QtiComponent
      * of a given $identifier.
      *
      * @param string $identifier The identifier to search for.
-     * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+     * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
      * @return QtiComponent|null A QtiComponent object or null if not found.
      * @throws InvalidArgumentException If $identifier is not a string.
      */
@@ -97,7 +97,7 @@ abstract class QtiComponent
      * </code>
      *
      * @param array|string An array of strings or a string.
-     * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+     * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
      * @return QtiComponentCollection
      * @throws InvalidArgumentException If $classNames is not an array nor a string value.
      */
@@ -132,7 +132,7 @@ abstract class QtiComponent
      * * If all the objects found have a unique identifier within the retrieved set, a QtiIdentifiableCollection is returned.
      * * If an identifier collision occurs within the retrieved set, a QtiComponentCollection is returned.
      *
-     * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+     * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
      * @return QtiComponentCollection A QtiIdentifiableCollection or a QtiComponentCollection in case of collision.
      */
     public function getIdentifiableComponents($recursive = true)
@@ -162,8 +162,8 @@ abstract class QtiComponent
      * Whether the component contains child components with class $classNames.
      *
      * @param string|array $classNames
-     * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
-     * @return boolean
+     * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
+     * @return bool
      */
     public function containsComponentWithClassName($classNames, $recursive = true)
     {

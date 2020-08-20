@@ -38,7 +38,7 @@ class TemplateVariable extends Variable
      * This attribute determines whether or not the template variable's value should be substituted for
      * object parameter values that match its name. See param for more information.
      *
-     * @var boolean
+     * @var bool
      */
     private $paramVariable = false;
 
@@ -49,7 +49,7 @@ class TemplateVariable extends Variable
      * for identifiers that match its name in MathML expressions. See Combining Template Variables
      * and MathML for more information.
      *
-     * @var boolean
+     * @var bool
      */
     private $mathVariable = false;
 
@@ -58,9 +58,9 @@ class TemplateVariable extends Variable
      * the appropriate container will be instantiated internally as the $value argument.
      *
      * @param string $identifier An identifier for the variable.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-     * @param int|float|double|boolean|string|QtiDuration|QtiPoint|QtiPair|QtiDirectedPair $value A value which is compliant with the QTI Runtime Model.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param int|float|double|bool|string|QtiDuration|QtiPoint|QtiPair|QtiDirectedPair $value A value which is compliant with the QTI Runtime Model.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
     public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
@@ -72,7 +72,7 @@ class TemplateVariable extends Variable
      * Set whether or not the template's value should be substituted for object
      * parameter values.
      *
-     * @param boolean $paramVariable
+     * @param bool $paramVariable
      * @throws InvalidArgumentException
      */
     public function setParamVariable($paramVariable)
@@ -89,7 +89,7 @@ class TemplateVariable extends Variable
      * Let you know whether or not the template variable's value should be substituted
      * for object parameter values.
      *
-     * @return boolean
+     * @return bool
      */
     public function isParamVariable()
     {
@@ -100,7 +100,7 @@ class TemplateVariable extends Variable
      * Set whether or not the template variable's value should be substituted for identifiers that match
      * its name in MathML expressions.
      *
-     * @param boolean $mathVariable
+     * @param bool $mathVariable
      * @throws InvalidArgumentException
      */
     public function setMathVariable($mathVariable)
@@ -117,7 +117,7 @@ class TemplateVariable extends Variable
      * Let you know whether or not the template variable's value should be substituted for identifiers
      * that match its name in MathML expressions.
      *
-     * @return boolean
+     * @return bool
      */
     public function isMathVariable()
     {

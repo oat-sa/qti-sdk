@@ -57,7 +57,7 @@ class QtiInteger extends QtiScalar
      * Get the baseType of the value. This method systematically
      * returns the BaseType::INTEGER value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {

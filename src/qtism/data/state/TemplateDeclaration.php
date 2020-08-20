@@ -46,7 +46,7 @@ class TemplateDeclaration extends VariableDeclaration
      * value should be substituted for object parameter values that match its name.
      * See param for more information.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $paramVariable = false;
@@ -58,7 +58,7 @@ class TemplateDeclaration extends VariableDeclaration
      * be substituted for identifiers that match its name in MathML expressions.
      * See Combining Template Variables and MathML for more information.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $mathVariable = false;
@@ -72,7 +72,7 @@ class TemplateDeclaration extends VariableDeclaration
      * Set whether or not the template variable's value should be substituted for
      * object parameters.
      *
-     * @param boolean $paramVariable A boolean value.
+     * @param bool $paramVariable A boolean value.
      * @throws InvalidArgumentException If $paramVariable is not a boolean value.
      */
     public function setParamVariable($paramVariable)
@@ -89,7 +89,7 @@ class TemplateDeclaration extends VariableDeclaration
      * Lets you know whether or not the template variable's value should be substituted for
      * object parameters.
      *
-     * @return boolean
+     * @return bool
      */
     public function isParamVariable()
     {
@@ -100,7 +100,7 @@ class TemplateDeclaration extends VariableDeclaration
      * Set whether or not the template variable's value should be substituted for identifiers
      * that match its name in MathML.
      *
-     * @param boolean $mathVariable A boolean value.
+     * @param bool $mathVariable A boolean value.
      * @throws InvalidArgumentException If $mathVariable is not a boolean value.
      */
     public function setMathVariable($mathVariable)
@@ -117,7 +117,7 @@ class TemplateDeclaration extends VariableDeclaration
      * Lets you know whether or not the template variable's value should be substitued for identifiers
      * that match its name in MathML.
      *
-     * @return boolean
+     * @return bool
      */
     public function isMathVariable()
     {

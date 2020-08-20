@@ -60,7 +60,7 @@ class Gt extends Operator implements Pure
      *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool True if the expression is pure, false otherwise
      */
     public function isPure()
     {

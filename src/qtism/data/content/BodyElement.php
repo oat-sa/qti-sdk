@@ -88,7 +88,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * The direction in which body elements must be displayed.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $dir;
@@ -199,7 +199,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value is defined for the id attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasId()
     {
@@ -236,7 +236,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Wehther a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -266,7 +266,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value for the lang attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLang()
     {
@@ -302,7 +302,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value is defined for the label attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLabel()
     {
@@ -312,7 +312,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Set the direction in which body elements must be displayed.
      *
-     * @param integer $dir A value from the Direction enumeration.
+     * @param int $dir A value from the Direction enumeration.
      * @throws InvalidArgumentException If $dir is not a value from the Direction enumeration.
      */
     public function setDir($dir)
@@ -328,7 +328,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Get the direction in which body elements must be displayed.
      *
-     * @return integer A value from the Direction enumeration.
+     * @return int A value from the Direction enumeration.
      */
     public function getDir()
     {

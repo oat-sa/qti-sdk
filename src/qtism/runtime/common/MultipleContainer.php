@@ -103,7 +103,7 @@ class MultipleContainer extends Container implements QtiDatatype
      * Create a MultipleContainer object from a Data Model ValueCollection object.
      *
      * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @return MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
      * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
      */

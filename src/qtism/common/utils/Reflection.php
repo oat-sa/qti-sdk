@@ -65,7 +65,7 @@ class Reflection
      * + \my\A -> A
      *
      * @param mixed $object An object or a fully qualified class name.
-     * @return boolean|string A short class name or false if $object is not an object nor a string.
+     * @return bool|string A short class name or false if $object is not an object nor a string.
      */
     public static function shortClassName($object)
     {

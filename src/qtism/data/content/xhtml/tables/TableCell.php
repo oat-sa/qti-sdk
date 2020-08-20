@@ -47,7 +47,7 @@ abstract class TableCell extends BodyElement
     /**
      * The XHTML scope attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $scope = -1;
@@ -71,7 +71,7 @@ abstract class TableCell extends BodyElement
     /**
      * The XHTML rowspan attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $rowspan = -1;
@@ -79,7 +79,7 @@ abstract class TableCell extends BodyElement
     /**
      * The XHTML colspan attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $colspan = -1;
@@ -136,7 +136,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether at least one value is defined for the headers attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHeaders()
     {
@@ -146,7 +146,7 @@ abstract class TableCell extends BodyElement
     /**
      * Set the scope attribute.
      *
-     * @param integer $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
+     * @param int $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
      * @throws InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
      */
     public function setScope($scope)
@@ -162,7 +162,7 @@ abstract class TableCell extends BodyElement
     /**
      * Get the scope attribute.
      *
-     * @return integer A value from the TableCellScope enumeration or -1 if no scope is defined.
+     * @return int A value from the TableCellScope enumeration or -1 if no scope is defined.
      */
     public function getScope()
     {
@@ -172,7 +172,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a scope is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasScope()
     {
@@ -208,7 +208,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value for the attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAbbr()
     {
@@ -244,7 +244,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value is defined for the axis attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAxis()
     {
@@ -255,7 +255,7 @@ abstract class TableCell extends BodyElement
      * Set the value of the rowspan attribute. Give a negative value if
      * no rowspan attribute is set.
      *
-     * @param integer $rowspan
+     * @param int $rowspan
      * @throws InvalidArgumentException If $rowspan is not an integer.
      */
     public function setRowspan($rowspan)
@@ -272,7 +272,7 @@ abstract class TableCell extends BodyElement
      * Get the value of the rowspan attribute. A negative value indicates that
      * no rowspan attribute is set.
      *
-     * @return integer
+     * @return int
      */
     public function getRowspan()
     {
@@ -282,7 +282,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value for the rowspan attribute is set.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRowspan()
     {
@@ -293,7 +293,7 @@ abstract class TableCell extends BodyElement
      * Set the colspan attribute. Give a negative integer to indicate that
      * no colspan is set.
      *
-     * @param integer $colspan An integer.
+     * @param int $colspan An integer.
      * @throws InvalidArgumentException If $colspan is not an integer.
      */
     public function setColspan($colspan)
@@ -310,7 +310,7 @@ abstract class TableCell extends BodyElement
      * Get the colspan attribute. A negative value indicates that no colspan
      * is set.
      *
-     * @return integer
+     * @return int
      */
     public function getColspan()
     {
@@ -320,7 +320,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value for the colspan attribute is set.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasColspan()
     {

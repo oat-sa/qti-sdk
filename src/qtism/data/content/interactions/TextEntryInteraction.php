@@ -46,7 +46,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * If the string interaction is bound to a numeric response variable then the base attribute
      * must be used to set the number base in which to interpret the value entered by the candidate.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $base = 10;
@@ -71,7 +71,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $expectedLength = -1;
@@ -130,7 +130,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * If the interaction is bound to a numeric response variable, get the number base in which
      * to interpret the value entered by the candidate.
      *
-     * @param integer $base A positive (>= 0) integer.
+     * @param int $base A positive (>= 0) integer.
      * @throws InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base)
@@ -147,7 +147,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * If the interaction is bound to a numeric response variable, get the number base in which
      * to interpret the value entered by the candidate.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getBase()
     {
@@ -187,7 +187,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * Whether a value is defined for the stringIdentifier attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasStringIdentifier()
     {
@@ -198,7 +198,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
      * is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @param integer $expectedLength A strictly positive (> 0) integer or -1.
+     * @param int $expectedLength A strictly positive (> 0) integer or -1.
      * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
      */
     public function setExpectedLength($expectedLength)
@@ -215,7 +215,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return integer A strictly positive (> 0) integer or -1 if undefined.
+     * @return int A strictly positive (> 0) integer or -1 if undefined.
      */
     public function getExpectedLength()
     {
@@ -225,7 +225,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * Whether a value is defined for the expectedLength attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasExpectedLength()
     {
@@ -264,7 +264,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * Whether a value is defined for the patternMask attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPatternMask()
     {
@@ -302,7 +302,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * Whether a value for the placeholderText attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPlaceholderText()
     {

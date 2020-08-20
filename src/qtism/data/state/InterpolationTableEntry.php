@@ -59,7 +59,7 @@ class InterpolationTableEntry extends QtiComponent
      * If true, the default, then an exact match of the value is considered a
      * match of this entry.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $includeBoundary = true;
@@ -69,7 +69,7 @@ class InterpolationTableEntry extends QtiComponent
      *
      * @param float $sourceValue The lower bound for the source value to match this entry.
      * @param mixed $targetValue The target value that is used to set the outcome when a match is found.
-     * @param boolean $includeBoundary Determines if an exact match of $sourceValue matches this entry.
+     * @param bool $includeBoundary Determines if an exact match of $sourceValue matches this entry.
      * @throws InvalidArgumentException If $sourceValue is not a float or $includeBoundary is not a boolean.
      */
     public function __construct($sourceValue, $targetValue, $includeBoundary = true)
@@ -128,7 +128,7 @@ class InterpolationTableEntry extends QtiComponent
     /**
      * Set if an exact match of the sourceValue attribute matches this entry.
      *
-     * @param boolean $includeBoundary A boolean value.
+     * @param bool $includeBoundary A boolean value.
      * @throws InvalidArgumentException If $includeBoundary is not a boolean.
      */
     public function setIncludeBoundary($includeBoundary)
@@ -144,7 +144,7 @@ class InterpolationTableEntry extends QtiComponent
     /**
      * State if an exact match of the sourceValue attribute matches this entry.
      *
-     * @return boolean A boolean value.
+     * @return bool A boolean value.
      */
     public function doesIncludeBoundary()
     {

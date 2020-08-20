@@ -126,7 +126,7 @@ class ResponseProcessing extends QtiComponent
     /**
      * Whether the ResponseProcessing has a response processing template.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplate()
     {
@@ -164,7 +164,7 @@ class ResponseProcessing extends QtiComponent
     /**
      * Whether the ResponseProcessing has a response processing template location.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateLocation()
     {

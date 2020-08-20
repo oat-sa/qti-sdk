@@ -129,7 +129,7 @@ class Utils
      *
      * @param DOMElement $node
      * @param string|array $class A class or an array of CSS classes.
-     * @return boolean
+     * @return bool
      */
     public static function hasClass(DOMElement $node, $class)
     {

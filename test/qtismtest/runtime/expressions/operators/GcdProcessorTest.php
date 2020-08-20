@@ -19,7 +19,7 @@ class GcdProcessorTest extends QtiSmTestCase
      * @dataProvider gcdProvider
      *
      * @param array $operands
-     * @param integer $expected
+     * @param int $expected
      */
     public function testGcd(array $operands, $expected)
     {

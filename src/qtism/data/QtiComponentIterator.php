@@ -73,7 +73,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Whether the iterator state is valid.
      *
-     * @var boolean
+     * @var bool
      */
     private $isValid = true;
 
@@ -113,7 +113,7 @@ class QtiComponentIterator implements Iterator
     /**
      * The number of occurences in the trail.
      *
-     * @var integer
+     * @var int
      */
     private $trailCount = 0;
 
@@ -249,7 +249,7 @@ class QtiComponentIterator implements Iterator
      * the iterator.
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function isTraversed(QtiComponent $component)
     {
@@ -259,7 +259,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Indicate Whether the iterator is still valid.
      *
-     * @param boolean $isValid
+     * @param bool $isValid
      */
     protected function setValid($isValid)
     {
@@ -383,7 +383,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Checks if current position is valid.
      *
-     * @return boolean Whether the current position is valid.
+     * @return bool Whether the current position is valid.
      */
     public function valid()
     {

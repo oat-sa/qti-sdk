@@ -42,7 +42,7 @@ interface IAssessmentItem extends QtiIdentifiable
     /**
      * Set whether the item is time dependent or not.
      *
-     * @param boolean $timeDependent Time dependent or not.
+     * @param bool $timeDependent Time dependent or not.
      * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
     public function setTimeDependent($timeDependent);
@@ -50,14 +50,14 @@ interface IAssessmentItem extends QtiIdentifiable
     /**
      * Wether the item is time dependent.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeDependent();
 
     /**
      * Set whether the item is adaptive.
      *
-     * @param boolean $adaptive Adaptive or not.
+     * @param bool $adaptive Adaptive or not.
      * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
     public function setAdaptive($adaptive);
@@ -65,7 +65,7 @@ interface IAssessmentItem extends QtiIdentifiable
     /**
      * Whether the item is adaptive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdaptive();
 

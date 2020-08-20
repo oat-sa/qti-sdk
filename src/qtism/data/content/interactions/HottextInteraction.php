@@ -50,7 +50,7 @@ class HottextInteraction extends BlockInteraction
      * 1 (or 0) then the interaction must be bound to a response with multiple
      * cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 0;
@@ -63,7 +63,7 @@ class HottextInteraction extends BlockInteraction
      * required to select any choices. minChoices must be less than or equal
      * to the limit imposed by maxChoices.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = 0;
@@ -102,7 +102,7 @@ class HottextInteraction extends BlockInteraction
      * Set the maximum number of choices that can be selected by the candidate. If the returned value
      * is 0, it means that the candidate is not requitred to select any choice.
      *
-     * @param integer $maxChoices A positive  integer.
+     * @param int $maxChoices A positive  integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
@@ -119,7 +119,7 @@ class HottextInteraction extends BlockInteraction
      * Get the maximum number of choices that can be selected by the candidate. If the returned
      * value is 0, it means that the candidate is not required to select any choice.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxChoices()
     {
@@ -129,7 +129,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * Set the minimum number of choices that the candidate is required to select to form a valid response.
      *
-     * @param integer $minChoices A positive (>= 0) integer.
+     * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
      */
     public function setMinChoices($minChoices)
@@ -152,7 +152,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * Get the minimum number of choices that the candidate is required to select to form a valid response.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinChoices()
     {

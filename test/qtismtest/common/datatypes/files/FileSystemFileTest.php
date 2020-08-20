@@ -27,7 +27,7 @@ class FileSystemFileTest extends QtiSmTestCase
      *
      * @param string $source
      * @param string $mimeType
-     * @param boolean|string $withFilename
+     * @param bool|string $withFilename
      */
     public function testCreateFromExistingFile($source, $mimeType, $withFilename = true)
     {

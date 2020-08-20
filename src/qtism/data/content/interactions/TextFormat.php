@@ -36,7 +36,7 @@ class TextFormat implements Enumeration
      * except where a response consists only of white-space characters,
      * in which case it should be treated as an empty string (NULL).
      *
-     * @var integer
+     * @var int
      */
     const PLAIN = 0;
 
@@ -49,7 +49,7 @@ class TextFormat implements Enumeration
      * where a response consists only of white-space characters, in which case
      * it should be treated as an empty string (NULL).
      *
-     * @var integer
+     * @var int
      */
     const PRE_FORMATTED = 1;
 
@@ -63,7 +63,7 @@ class TextFormat implements Enumeration
      * conventions such as those used in wiki page editors or a complete WYSIWYG
      * editor.
      *
-     * @var integer
+     * @var int
      */
     const XHTML = 2;
 

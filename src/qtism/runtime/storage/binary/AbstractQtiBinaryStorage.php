@@ -104,7 +104,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     /**
      * Instantiate a new AssessmentTestSession.
      *
-     * @param integer $config (optional) The configuration to be taken into account for the instantiated AssessmentTestSession object.
+     * @param int $config (optional) The configuration to be taken into account for the instantiated AssessmentTestSession object.
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
      * @return AssessmentTestSession An AssessmentTestSession object.
      * @throws StorageException

@@ -43,7 +43,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @dataProvider isValidVariableIdentifierProvider
      *
      * @param string $string
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testIsValidVariableIdentifier($string, $expected)
     {
@@ -54,7 +54,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @dataProvider isNullDataProvider
      *
      * @param QtiDatatype $value
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testIsNull(QtiDatatype $value = null, $expected)
     {
@@ -66,7 +66,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      *
      * @param QtiDatatype $a
      * @param QtiDatatype $b
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected)
     {

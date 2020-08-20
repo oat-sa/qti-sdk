@@ -46,7 +46,7 @@ class Equal extends Operator implements Pure
      * rounding errors. The tolerance mode determines whether the comparison is done
      * exactly, using an absolute range or a relative range.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $toleranceMode = ToleranceMode::EXACT;
@@ -79,7 +79,7 @@ class Equal extends Operator implements Pure
      *
      * Controls whether or not the lower bound is included in the comparison.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $includeLowerBound = true;
@@ -87,7 +87,7 @@ class Equal extends Operator implements Pure
     /**
      * FROM IMS QTI:
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $includeUpperBound = true;
@@ -96,10 +96,10 @@ class Equal extends Operator implements Pure
      * Create a new Equal object.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $toleranceMode The tolerance mode, a value from the ToleranceMode enumeration.
+     * @param int $toleranceMode The tolerance mode, a value from the ToleranceMode enumeration.
      * @param array $tolerance An array of 1 or 2 elements which are float or variableRef values.
-     * @param boolean $includeLowerBound Whether or not to include the lower bound in the comparison.
-     * @param boolean $includeUpperBound Whether or not to include the upper bound in the comparison.
+     * @param bool $includeLowerBound Whether or not to include the lower bound in the comparison.
+     * @param bool $includeUpperBound Whether or not to include the upper bound in the comparison.
      * @throws UnexpectedValueException If The tolerance argument is ABSOLUTE or RELATIVE but no $tolerance array is given.
      * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode, if $tolerance is not a valid tolerance array, if $includeLowerBound/$includeUpperBound is not a boolean.
      */
@@ -121,7 +121,7 @@ class Equal extends Operator implements Pure
     /**
      * Set the tolerance mode.
      *
-     * @param integer $toleranceMode A value from the ToleranceMode enumeration.
+     * @param int $toleranceMode A value from the ToleranceMode enumeration.
      * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode enumeration.
      */
     public function setToleranceMode($toleranceMode)
@@ -137,7 +137,7 @@ class Equal extends Operator implements Pure
     /**
      * Get the tolerance mode.
      *
-     * @return integer A value from the ToleranceMode enumeration.
+     * @return int A value from the ToleranceMode enumeration.
      */
     public function getToleranceMode()
     {
@@ -180,7 +180,7 @@ class Equal extends Operator implements Pure
     /**
      * Set whether or not the lower bound must be included in the comparison.
      *
-     * @param boolean $includeLowerBound
+     * @param bool $includeLowerBound
      * @throws InvalidArgumentException If $includedLowerBound is not a boolean value.
      */
     public function setIncludeLowerBound($includeLowerBound)
@@ -196,7 +196,7 @@ class Equal extends Operator implements Pure
     /**
      * Whether or not the lower bound must be included in the comparison.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesIncludeLowerBound()
     {
@@ -206,7 +206,7 @@ class Equal extends Operator implements Pure
     /**
      * Set whether or not the upper bound must be included in the comparison.
      *
-     * @param boolean $includeUpperBound
+     * @param bool $includeUpperBound
      * @throws InvalidArgumentException If $includeUpperBound is not a boolean.
      */
     public function setIncludeUpperBound($includeUpperBound)
@@ -222,7 +222,7 @@ class Equal extends Operator implements Pure
     /**
      * Whether or not the upper bound must be included in the comparison.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesIncludeUpperBound()
     {
@@ -242,7 +242,7 @@ class Equal extends Operator implements Pure
      *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool True if the expression is pure, false otherwise
      */
     public function isPure()
     {

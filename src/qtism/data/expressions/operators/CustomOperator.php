@@ -123,7 +123,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Whether or not a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -161,7 +161,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Whether or not a value is defined for the definition attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefinition()
     {
@@ -236,7 +236,7 @@ class CustomOperator extends Operator implements IExternal, Pure
      *
      * @see https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool True if the expression is pure, false otherwise
      */
     public function isPure()
     {

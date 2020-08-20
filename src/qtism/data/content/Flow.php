@@ -53,7 +53,7 @@ interface Flow extends ObjectFlow
     /**
      * Whether or not a value is defined for the xml:base attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasXmlBase();
 }

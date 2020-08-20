@@ -36,9 +36,9 @@ class Utils
      * If either $a or $b is negative, its absolute value will be used
      * instead.
      *
-     * @param integer $a A positive integer
-     * @param integer $b A positive integer
-     * @return integer The GCD of $a and $b.
+     * @param int $a A positive integer
+     * @param int $b A positive integer
+     * @return int The GCD of $a and $b.
      */
     public static function gcd($a, $b)
     {
@@ -60,9 +60,9 @@ class Utils
     /**
      * Compute LCM (Least Common Multiple) of $a and $b.
      *
-     * @param integer $a
-     * @param integer $b
-     * @return integer the LCM of $a and $b.
+     * @param int $a
+     * @param int $b
+     * @return int the LCM of $a and $b.
      */
     public static function lcm($a, $b)
     {
@@ -117,7 +117,7 @@ class Utils
      * returns false.
      *
      * @param array $sample An array of numeric values.
-     * @param boolean $correction (optional) Apply the Bessel's correction on the computed variance.
+     * @param bool $correction (optional) Apply the Bessel's correction on the computed variance.
      * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
      * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
      */
@@ -162,7 +162,7 @@ class Utils
      * returns false.
      *
      * @param array $sample An array of numeric values.
-     * @param boolean $correction (optional) Whether to apply Bessel's correction.
+     * @param bool $correction (optional) Whether to apply Bessel's correction.
      * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
      * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
      */
@@ -184,7 +184,7 @@ class Utils
      * method is multi-byte safe safe.
      *
      * @param string $string
-     * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
+     * @return string|bool The delimited string or false if no appropriate delimiters can be found.
      */
     public static function pregAddDelimiter($string)
     {
@@ -195,8 +195,8 @@ class Utils
      * Get the amout of backslash (\) characters in $string that precede $offset.
      *
      * @param string $string
-     * @param integer $offset
-     * @return integer
+     * @param int $offset
+     * @return int
      */
     public static function getPrecedingBackslashesCount($string, $offset)
     {
@@ -254,7 +254,7 @@ class Utils
      * fully qualified class name e.g. 'org\qtism\custom\Explode'.
      *
      * @param string $class A custom operator class name where namespace separator is '.' (dot).
-     * @return boolean|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
+     * @return bool|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
      */
     public static function customOperatorClassToPhpClass($class)
     {

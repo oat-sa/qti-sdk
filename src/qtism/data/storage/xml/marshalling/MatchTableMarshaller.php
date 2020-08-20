@@ -59,7 +59,7 @@ class MatchTableMarshaller extends Marshaller
      * Set the baseType of the variableDeclaration the MatchTable belongs to.
      * Pass -1 to set there is no particular baseType (record case).
      *
-     * @param integer $baseType A value from the BaseType enumeration or -1 to state there is no particular baseType.
+     * @param int $baseType A value from the BaseType enumeration or -1 to state there is no particular baseType.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
     public function setBaseType($baseType)
@@ -76,7 +76,7 @@ class MatchTableMarshaller extends Marshaller
      * Create a new instance of MatchTableMarshaller.
      *
      * @param string $version The QTI version number on which the Marshaller operates e.g '2.1'.
-     * @param integer $baseType The baseType of the variableDeclaration the MatchTable belongs to.
+     * @param int $baseType The baseType of the variableDeclaration the MatchTable belongs to.
      * @throws InvalidArgumentException If $baseType is an invalid value.
      */
     public function __construct($version, $baseType = -1)

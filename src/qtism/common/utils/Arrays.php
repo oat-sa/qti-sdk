@@ -32,7 +32,7 @@ class Arrays
      * Whether or not a given $array is an associative array.
      *
      * @param array $array An array
-     * @return boolean
+     * @return bool
      */
     public static function isAssoc(array $array)
     {

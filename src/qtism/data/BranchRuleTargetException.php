@@ -34,21 +34,21 @@ class BranchRuleTargetException extends Exception
     /**
      * The target is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN_TARGET = 0;
 
     /**
      * The target may or will cause a recursive loop in the test.
      *
-     * @var integer
+     * @var int
      */
     const RECURSIVE_BRANCHING = 1;
 
     /**
      * The target may or will go to an item already passed.
      *
-     * @var integer
+     * @var int
      */
     const BACKWARD_BRANCHING = 2;
 
@@ -63,7 +63,7 @@ class BranchRuleTargetException extends Exception
      * BranchRuleTargetException object.
      *
      * @param string $message A human-readable message.
-     * @param integer $code A exception code (see class constants).
+     * @param int $code A exception code (see class constants).
      * @param QtiComponent A QtiComponent from where the Exception comes from.
      * @param Exception $previous An eventual previous Exception object.
      */

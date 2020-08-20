@@ -35,112 +35,112 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
     /**
      * An error occurred while reading/writing a Variable.
      *
-     * @var integer
+     * @var int
      */
     const VARIABLE = 10;
 
     /**
      * An error occurred while reading/writing a Record Field.
      *
-     * @var integer
+     * @var int
      */
     const RECORDFIELD = 11;
 
     /**
      * An error occurred while reading/writing a QTI identifier.
      *
-     * @var integer
+     * @var int
      */
     const IDENTIFIER = 12;
 
     /**
      * An error occurred while reading/writing a QTI point.
      *
-     * @var integer
+     * @var int
      */
     const POINT = 13;
 
     /**
      * An error occurred while reading/writing a QTI pair.
      *
-     * @var integer
+     * @var int
      */
     const PAIR = 14;
 
     /**
      * An error occurred while reading/writing a QTI directedPair.
      *
-     * @var integer
+     * @var int
      */
     const DIRECTEDPAIR = 15;
 
     /**
      * An error occurred while reading/writing a QTI duration.
      *
-     * @var integer
+     * @var int
      */
     const DURATION = 16;
 
     /**
      * An error occurred while reading/writing a URI.
      *
-     * @var integer
+     * @var int
      */
     const URI = 17;
 
     /**
      * An error occurred while reading/writing File's binary data.
      *
-     * @var integer
+     * @var int
      */
     const FILE = 18;
 
     /**
      * An error occurred while reading/writing an intOrIdentifier.
      *
-     * @var integer
+     * @var int
      */
     const INTORIDENTIFIER = 19;
 
     /**
      * An error occurred while reading/writing an assessment item session.
      *
-     * @var integer
+     * @var int
      */
     const ITEM_SESSION = 20;
 
     /**
      * An error occurred while reading/writing a route item.
      *
-     * @var integer
+     * @var int
      */
     const ROUTE_ITEM = 21;
 
     /**
      * An error occurred while reading/writing pending responses.
      *
-     * @var integer
+     * @var int
      */
     const PENDING_RESPONSES = 22;
 
     /**
      * An error occurred while reading/writing shuffling states.
      *
-     * @var integer
+     * @var int
      */
     const SHUFFLING_STATE = 23;
 
     /**
      * An error occurred while reading/writing a shuffling group.
      *
-     * @var integer
+     * @var int
      */
     const SHUFFLING_GROUP = 24;
 
     /**
      * An error occurred while reading/writing path.
      *
-     * @var integer
+     * @var int
      */
     const PATH = 25;
 
@@ -149,7 +149,7 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
      *
      * @param string $message A human-readable message.
      * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
-     * @param integer $code An exception code. See class constants.
+     * @param int $code An exception code. See class constants.
      * @param Exception $previous An optional previously thrown exception.
      */
     public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null)

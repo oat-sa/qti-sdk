@@ -213,7 +213,7 @@ abstract class MarshallerFactory
     /**
      * Whether or not element and attribute serialization must be Web Component friendly.
      *
-     * @var boolean
+     * @var bool
      */
     private $webComponentFriendly = false;
 
@@ -473,7 +473,7 @@ abstract class MarshallerFactory
      *
      * @param string $qtiClassName A QTI class name.
      * @param string $ns
-     * @return boolean Whether a mapping entry is defined.
+     * @return bool Whether a mapping entry is defined.
      */
     public function hasMappingEntry($qtiClassName, $ns = 'qtism')
     {
@@ -516,7 +516,7 @@ abstract class MarshallerFactory
      *
      * Sets whether or not consider Web Component friendly QTI components.
      *
-     * @param boolean $webComponentFriendly
+     * @param bool $webComponentFriendly
      */
     protected function setWebComponentFriendly($webComponentFriendly)
     {
@@ -528,7 +528,7 @@ abstract class MarshallerFactory
      *
      * Whether or not Web Component friendly QTI components are considered.
      *
-     * @return boolean
+     * @return bool
      */
     public function isWebComponentFriendly()
     {

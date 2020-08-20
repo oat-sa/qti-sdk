@@ -69,7 +69,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The width. -1 means no height was provided.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $width = -1;
@@ -77,7 +77,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The height. -1 means no height was provided.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $height = -1;
@@ -160,7 +160,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @param integer $width A width.
+     * @param int $width A width.
      * @throws InvalidArgumentException
      */
     public function setWidth($width)
@@ -178,7 +178,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @return integer A width.
+     * @return int A width.
      */
     public function getWidth()
     {
@@ -188,7 +188,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * Whether a width is defined for the object.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function hasWidth()
     {
@@ -200,7 +200,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no height is provided.
      *
-     * @param integer $height A height.
+     * @param int $height A height.
      * @throws InvalidArgumentException If $height is not an integer value.
      */
     public function setHeight($height)
@@ -217,7 +217,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * Get the width of the object. A negative value describes that no height is
      * provided.
      *
-     * @return integer A height.
+     * @return int A height.
      */
     public function getHeight()
     {

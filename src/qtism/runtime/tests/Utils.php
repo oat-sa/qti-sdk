@@ -52,7 +52,7 @@ class Utils
      *
      * @param QtiDatatype $response
      * @param ResponseValidityConstraint $constraint
-     * @return boolean
+     * @return bool
      * @throws RuntimeException If An error occurred while validating a patternMask.
      */
     public static function isResponseValid(QtiDatatype $response = null, ResponseValidityConstraint $constraint)

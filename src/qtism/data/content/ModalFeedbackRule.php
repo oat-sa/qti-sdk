@@ -47,7 +47,7 @@ class ModalFeedbackRule extends QtiComponent
      * referenced in the outcomeIdentifier attribute matches the one referenced
      * by the identifier attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide;
@@ -72,7 +72,7 @@ class ModalFeedbackRule extends QtiComponent
      * Create a new ModalFeedbackRef object.
      *
      * @param string $outcomeIdentifier A QTI identifier.
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @param string $identifier The identifier value.
      * @param string $title (optional) An optional title.
      * @throws InvalidArgumentException If any argument is invalid.
@@ -142,7 +142,7 @@ class ModalFeedbackRule extends QtiComponent
     /**
      * Set whether the feedback content must be shown or hidden when the identifier matches.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
@@ -158,7 +158,7 @@ class ModalFeedbackRule extends QtiComponent
     /**
      * Get whether the feedback content must be shown or hidden when the identifier matches.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {
@@ -196,7 +196,7 @@ class ModalFeedbackRule extends QtiComponent
     /**
      * Whether a title is defined for this feedback.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTitle()
     {

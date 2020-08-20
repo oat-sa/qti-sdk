@@ -10,9 +10,9 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
     /**
      * @dataProvider successfulInstantiationProvider
      *
-     * @param integer $identifier
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $identifier
+     * @param int $minConstraint
+     * @param int $maxConstraint
      */
     public function testSuccessfulInstantiation($minConstraint, $maxConstraint)
     {
@@ -37,8 +37,8 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
      * @dataProvider unsuccessfulInstantiationProvider
      *
      * @param string $identifier
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
      * @param string $msg
      */
     public function testUnsuccessfulInstantiation($identifier, $minConstraint, $maxConstraint, $msg)

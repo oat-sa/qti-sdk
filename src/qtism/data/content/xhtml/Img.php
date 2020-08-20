@@ -65,7 +65,7 @@ class Img extends AtomicInline
      * * a string, in order to describe a percentage e.g. "10%".
      * * an integer, in order to describe a width in pixels e.g. 10.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $height = -1;
@@ -79,7 +79,7 @@ class Img extends AtomicInline
      * * a string, in order to describe a percentag e.g. "10%".
      * * an integer, in order to describe a width in pixels e.g. 10.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $width = -1;
@@ -186,7 +186,7 @@ class Img extends AtomicInline
     /**
      * Whether a longdesc attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLongdesc()
     {
@@ -197,7 +197,7 @@ class Img extends AtomicInline
      * Set the height attribute. A negative (< 0) value for $height means there
      * is no height indicated.
      *
-     * @param integer|string $height An integer (pixels) or a string (percentage).
+     * @param int|string $height An integer (pixels) or a string (percentage).
      * @throws InvalidArgumentException If $height is not a valid integer or string value.
      */
     public function setHeight($height)
@@ -214,7 +214,7 @@ class Img extends AtomicInline
      * Get the height attribute. A negative (< 0) value for $height means there
      * is no height indicated.
      *
-     * @return integer A height.
+     * @return int A height.
      */
     public function getHeight()
     {
@@ -224,7 +224,7 @@ class Img extends AtomicInline
     /**
      * Whether a height attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHeight()
     {
@@ -235,7 +235,7 @@ class Img extends AtomicInline
      * Set the width attribute. A negative (< 0) value for $width means there
      * is no width indicated.
      *
-     * @param integer $width An integer (pixels) or a string (percentage).
+     * @param int $width An integer (pixels) or a string (percentage).
      * @throws InvalidArgumentException If $width is not an integer value.
      */
     public function setWidth($width)
@@ -252,7 +252,7 @@ class Img extends AtomicInline
      * Get the width attribute. A negative (< 0) value for $width means there
      * is no width indicated.
      *
-     * @return integer a width.
+     * @return int a width.
      */
     public function getWidth()
     {
@@ -262,7 +262,7 @@ class Img extends AtomicInline
     /**
      * Whether a width attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasWidth()
     {

@@ -43,7 +43,7 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * The minimum cardinality the value to be set to the response must have.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minConstraint;
@@ -51,7 +51,7 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * The maximum cardinality the value to be set the response must have.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxConstraint;
@@ -76,8 +76,8 @@ class ResponseValidityConstraint extends QtiComponent
      * values contained by the variable described in the $responseÏdentifier variable.
      *
      * @param string $responseIdentifier The identifier of the response the validity constraint applies to.
-     * @param integer $minConstraint The minimum cardinality the value to be set to the response must have.
-     * @param integer $maxConstraint The maximum cardinality the value to be set the response must have.
+     * @param int $minConstraint The minimum cardinality the value to be set to the response must have.
+     * @param int $maxConstraint The maximum cardinality the value to be set the response must have.
      * @param string $patternMask (optional) A XML Schema regular expression.
      * @throws InvalidArgumentException If one or more of the arguments above are invalid.
      */
@@ -93,7 +93,7 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * Set the identifier of the response the validity constraint applies to.
      *
-     * @param integer $responseIdentifier
+     * @param int $responseIdentifier
      * @throws InvalidArgumentException If $responseIdentifier is not a non-empty string.
      */
     public function setResponseIdentifier($responseIdentifier)
@@ -120,7 +120,7 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * Set the minimum cardinality the value to be set to the response must have.
      *
-     * @param integer $minConstraint A non negative integer (>= 0) integer value.
+     * @param int $minConstraint A non negative integer (>= 0) integer value.
      * @throws InvalidArgumentException If $minConstraint is not a non negative (>= 0) integer value.
      */
     public function setMinConstraint($minConstraint)
@@ -137,7 +137,7 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * Get the minimum cardinality the value to be set to the response must have.
      *
-     * @return integer A non negative (>= 0) integer value.
+     * @return int A non negative (>= 0) integer value.
      */
     public function getMinConstraint()
     {
@@ -149,7 +149,7 @@ class ResponseValidityConstraint extends QtiComponent
      *
      * Please note that 0 indicates no constraint.
      *
-     * @param integer $maxConstraint An integer value which is greater than the 'minConstraint' in place.
+     * @param int $maxConstraint An integer value which is greater than the 'minConstraint' in place.
      * @throws InvalidArgumentException If $maxConstraint is not an integer greater or equal to the 'minConstraint' in place.
      */
     public function setMaxConstraint($maxConstraint)
@@ -178,7 +178,7 @@ class ResponseValidityConstraint extends QtiComponent
      *
      * Please note that 0 indicates no constraint.
      *
-     * @return integer
+     * @return int
      */
     public function getMaxConstraint()
     {

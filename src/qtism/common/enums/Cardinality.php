@@ -53,28 +53,28 @@ class Cardinality implements Enumeration
     /**
      * The QTI single cardinality.
      *
-     * @var integer
+     * @var int
      */
     const SINGLE = 0;
 
     /**
      * The QTI multiple cardinality.
      *
-     * @var integer
+     * @var int
      */
     const MULTIPLE = 1;
 
     /**
      * The QTI ordered cardinality.
      *
-     * @var integer
+     * @var int
      */
     const ORDERED = 2;
 
     /**
      * The QTI record cardinality.
      *
-     * @var integer
+     * @var int
      */
     const RECORD = 3;
 
@@ -92,7 +92,7 @@ class Cardinality implements Enumeration
      * Get a constant value from its name.
      *
      * @param string $name The name of the constant, as per QTI spec.
-     * @return integer|boolean The constant value or false if not found.
+     * @return int|bool The constant value or false if not found.
      */
     public static function getConstantByName($name)
     {
@@ -123,7 +123,7 @@ class Cardinality implements Enumeration
      * Get the name of a constant from its value.
      *
      * @param string $constant The constant value to search the name for.
-     * @return string|boolean The name of the constant or false if not found.
+     * @return string|bool The name of the constant or false if not found.
      */
     public static function getNameByConstant($constant)
     {

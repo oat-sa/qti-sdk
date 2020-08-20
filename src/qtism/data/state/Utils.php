@@ -43,7 +43,7 @@ class Utils
      * can be built from the given $interaction object.
      *
      * @param Interaction $interaction
-     * @return Shuffling|boolean
+     * @return Shuffling|bool
      */
     public static function createShufflingFromInteraction(Interaction $interaction)
     {

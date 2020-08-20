@@ -45,7 +45,7 @@ class Mapping extends QtiComponent
      * The lower bound for the result of mapping a container. If unspecified
      * there is no lower-bound.
      *
-     * @var float|boolean
+     * @var float|bool
      * @qtism-bean-property
      */
     private $lowerBound = false;
@@ -56,7 +56,7 @@ class Mapping extends QtiComponent
      * The upper bound for the result of mapping a container. If unspecified
      * there is no upper-bound.
      *
-     * @var float|boolean
+     * @var float|bool
      * @qtism-bean-property
      */
     private $upperBound = false;
@@ -87,9 +87,9 @@ class Mapping extends QtiComponent
      * Create a new Mapping object.
      *
      * @param MapEntryCollection $mapEntries A collection of MapEntry which compose the Mapping object to be created.
-     * @param float|boolean $lowerBound A lower bound. Give false if not specified.
-     * @param float|boolean $upperBound An upper bound. Give false if not specified.
-     * @param integer|float $defaultValue A default value. Default is 0.
+     * @param float|bool $lowerBound A lower bound. Give false if not specified.
+     * @param float|bool $upperBound An upper bound. Give false if not specified.
+     * @param int|float $defaultValue A default value. Default is 0.
      * @throws InvalidArgumentException If $defaultValue is not a float, if $lowerBound or $upperBound are not floats nor false, If $mapEntries is an empty collection.
      */
     public function __construct(MapEntryCollection $mapEntries, $defaultValue = 0.0, $lowerBound = false, $upperBound = false)
@@ -103,7 +103,7 @@ class Mapping extends QtiComponent
     /**
      * Set the lower bound.
      *
-     * @param boolean|float $lowerBound A float or false if not lower bound.
+     * @param bool|float $lowerBound A float or false if not lower bound.
      * @throws InvalidArgumentException If $lowerBound is not a float nor false.
      */
     public function setLowerBound($lowerBound)
@@ -119,7 +119,7 @@ class Mapping extends QtiComponent
     /**
      * Get the lower bound.
      *
-     * @return boolean|float A float value or false if not specified.
+     * @return bool|float A float value or false if not specified.
      */
     public function getLowerBound()
     {
@@ -129,7 +129,7 @@ class Mapping extends QtiComponent
     /**
      * Whether the Mapping has a lower bound.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLowerBound()
     {
@@ -139,7 +139,7 @@ class Mapping extends QtiComponent
     /**
      * Set the upper bound.
      *
-     * @param boolean|float $upperBound A float value or false if not specified.
+     * @param bool|float $upperBound A float value or false if not specified.
      * @throws InvalidArgumentException If $upperBound is not a float nor false.
      */
     public function setUpperBound($upperBound)
@@ -155,7 +155,7 @@ class Mapping extends QtiComponent
     /**
      * Get the upper bound.
      *
-     * @return float|boolean A float value or false if not specified.
+     * @return float|bool A float value or false if not specified.
      */
     public function getUpperBound()
     {
@@ -165,7 +165,7 @@ class Mapping extends QtiComponent
     /**
      * Whether the Mapping has an upper bound.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasUpperBound()
     {

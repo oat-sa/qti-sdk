@@ -85,7 +85,7 @@ class RouteItem
     /**
      * The occurence number.
      *
-     * @var integer
+     * @var int
      */
     private $occurence = 0;
 
@@ -199,7 +199,7 @@ class RouteItem
     /**
      * Set the occurence number.
      *
-     * @param integer $occurence An occurence number.
+     * @param int $occurence An occurence number.
      */
     public function setOccurence($occurence)
     {
@@ -209,7 +209,7 @@ class RouteItem
     /**
      * Get the occurence number.
      *
-     * @return integer An occurence number.
+     * @return int An occurence number.
      */
     public function getOccurence()
     {

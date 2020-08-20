@@ -160,7 +160,7 @@ class State extends AbstractCollection
     /**
      * Reset all outcome variables to their defaults.
      *
-     * @param boolean $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
+     * @param bool $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
      */
     public function resetOutcomeVariables($preserveBuiltIn = true)
     {
@@ -200,7 +200,7 @@ class State extends AbstractCollection
      * to be NULL as well. Moreover, if the State is empty of any variable, the method
      * will return true.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsNullOnly()
     {
@@ -220,7 +220,7 @@ class State extends AbstractCollection
     /**
      * Whether or not the State contains only values that are equals to their variable default value only.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsValuesEqualToVariableDefaultOnly()
     {

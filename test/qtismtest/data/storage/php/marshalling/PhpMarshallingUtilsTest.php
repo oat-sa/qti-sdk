@@ -12,7 +12,7 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase
     /**
      * @dataProvider variableNameDataProvider
      * @param mixed $value
-     * @param integer $occurence
+     * @param int $occurence
      * @param string $expected
      */
     public function testVariableName($value, $occurence, $expected)

@@ -35,21 +35,21 @@ class Direction implements Enumeration
     /**
      * Automatic direction detection.
      *
-     * @var integer
+     * @var int
      */
     const AUTO = 0;
 
     /**
      * Left To Right direction.
      *
-     * @var integer
+     * @var int
      */
     const LTR = 1;
 
     /**
      * Right to Left direction.
      *
-     * @var integer
+     * @var int
      */
     const RTL = 2;
 

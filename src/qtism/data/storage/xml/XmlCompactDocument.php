@@ -63,7 +63,7 @@ class XmlCompactDocument extends XmlDocument
      * Whether or not the rubricBlock elements
      * must be separated from the core document.
      *
-     * @var boolean
+     * @var bool
      */
     private $explodeRubricBlocks = false;
 
@@ -71,7 +71,7 @@ class XmlCompactDocument extends XmlDocument
      * Whether or not the testFeedback elements
      * must be separated from the core document.
      *
-     * @var boolean
+     * @var bool
      */
     private $explodeTestFeedbacks = false;
 
@@ -114,7 +114,7 @@ class XmlCompactDocument extends XmlDocument
      * * a replacement of the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes will occur.
      * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
      *
-     * @param boolean $explodeRubricBlocks Wheter rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
+     * @param bool $explodeRubricBlocks Wheter rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
      */
     public function setExplodeRubricBlocks($explodeRubricBlocks)
     {
@@ -124,7 +124,7 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Whether or not the rubricBlock components contained in the document should be separated from the document.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustExplodeRubricBlocks()
     {
@@ -140,7 +140,7 @@ class XmlCompactDocument extends XmlDocument
      * * a replacement of the testFeedback components by testFeedbackRef components with a suitable value for the href attribute will occur.
      * * place the substituted testFeedback contents in separate QTI-XML files, in a valid location and with a valid name regarding the generated testFeedbackRef components.
      *
-     * @param boolean $explodeTestFeedbacks
+     * @param bool $explodeTestFeedbacks
      */
     public function setExplodeTestFeedbacks($explodeTestFeedbacks)
     {
@@ -150,7 +150,7 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Whether or not the testFeedback components contained in the document should be separated from the document.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustExplodeTestFeedbacks()
     {

@@ -27,7 +27,7 @@ class StrictBean
 
     /**
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $cool;

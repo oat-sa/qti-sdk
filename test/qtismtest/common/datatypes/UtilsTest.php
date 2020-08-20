@@ -34,7 +34,7 @@ class UtilsTest extends TestCase
     /**
      * @dataProvider integersToTest
      * @param mixed $integer integer to test
-     * @param boolean test result
+     * @param bool test result
      */
     public function testIsQtiInteger($integer, $expected)
     {

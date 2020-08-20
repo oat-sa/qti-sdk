@@ -87,7 +87,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
     /**
      * Whether the BlockInteraction has a prompt.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPrompt()
     {

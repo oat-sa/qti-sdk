@@ -37,7 +37,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * The min attribute value.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $min = 0;
@@ -45,7 +45,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * The max attribute value.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $max;
@@ -53,7 +53,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * The step attribute value.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $step = 1;
@@ -76,7 +76,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Get the value of the min attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getMin()
     {
@@ -86,7 +86,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Set the value of the min attribute.
      *
-     * @param integer $min
+     * @param int $min
      * @throws InvalidArgumentException
      */
     public function setMin($min)
@@ -102,7 +102,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Get the value of the max attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getMax()
     {
@@ -112,7 +112,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Set the value of the max attribute.
      *
-     * @param integer $max
+     * @param int $max
      * @throws InvalidArgumentException
      */
     public function setMax($max)
@@ -128,7 +128,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Get the value of the step attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getStep()
     {
@@ -138,7 +138,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Set the value of the step attribute.
      *
-     * @param integer $step
+     * @param int $step
      * @throws InvalidArgumentException
      */
     public function setStep($step)
@@ -164,7 +164,7 @@ class RandomInteger extends Expression implements Pure
      *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool True if the expression is pure, false otherwise
      */
     public function isPure()
     {

@@ -50,7 +50,7 @@ class QtiBoolean extends QtiScalar
      * Get the baseType of the Boolean value. This method
      * systematically returns BaseType::BOOLEAN.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -61,7 +61,7 @@ class QtiBoolean extends QtiScalar
      * Get the cardinality of the Boolean value. This method
      * systematically returns Cardinality::SINGLE.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getCardinality()
     {

@@ -41,7 +41,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
      * Get the baseType of the variableDeclaration that contains
      * the interpolationTableEntry to marshall.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {

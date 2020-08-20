@@ -77,7 +77,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * Process the MathOperator operator.
      *
-     * @return QtiFloat|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
+     * @return QtiFloat|int|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
      */
     public function process()
     {

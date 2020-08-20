@@ -16,8 +16,8 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
     /**
      * @dataProvider testOutcomeConditionComplexProvider
      *
-     * @param integer $t
-     * @param integer $tt
+     * @param int $t
+     * @param int $tt
      * @param string $expectedX
      * @param string $expectedY
      * @param string $expectedZ

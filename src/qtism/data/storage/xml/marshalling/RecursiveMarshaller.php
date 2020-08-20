@@ -187,7 +187,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * Wether an $object is marked is already processed.
      *
      * @param mixed $object The object to check;
-     * @return boolean Wether $object is marked.
+     * @return bool Wether $object is marked.
      */
     protected function isMarked($object)
     {

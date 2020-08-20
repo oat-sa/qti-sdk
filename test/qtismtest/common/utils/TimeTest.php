@@ -14,7 +14,7 @@ class TimeTest extends QtiSmTestCase
      *
      * @param DateTime $time1
      * @param DateTime $time2
-     * @param integer $expectedSeconds
+     * @param int $expectedSeconds
      */
     public function testTimeDiffSeconds(DateTime $time1, DateTime $time2, $expectedSeconds)
     {

@@ -139,7 +139,7 @@ class AssessmentTestSeeker
      * Add the component in the ComponentStore.
      *
      * @param QtiComponent $component A QTI Component.
-     * @return integer The position in the AssessmentTest tree the component was found.
+     * @return int The position in the AssessmentTest tree the component was found.
      */
     protected function addToComponentStore(QtiComponent $component)
     {
@@ -161,8 +161,8 @@ class AssessmentTestSeeker
      * and which is at position $position in the AssessmentTest tree.
      *
      * @param string $class A QTI class name.
-     * @param integer $position A position in the AssessmentTest tree.
-     * @return boolean|QtiComponent A QtiComponent object or false if it is not found.
+     * @param int $position A position in the AssessmentTest tree.
+     * @return bool|QtiComponent A QtiComponent object or false if it is not found.
      */
     protected function getComponentFromComponentStore($class, $position)
     {
@@ -179,7 +179,7 @@ class AssessmentTestSeeker
      * Get the position in the AssessmentTest tree for $component.
      *
      * @param QtiComponent $component
-     * @return false|integer The position of $component in the AssessmentTest tree ir false if it could not be found.
+     * @return false|int The position of $component in the AssessmentTest tree ir false if it could not be found.
      */
     protected function getPositionFromComponentStore(QtiComponent $component)
     {
@@ -200,7 +200,7 @@ class AssessmentTestSeeker
      * and that is in position $position in the AssessmentTest tree.
      *
      * @param string $class A QTI class name.
-     * @param integer $position A position in the AssessmentTest tree.
+     * @param int $position A position in the AssessmentTest tree.
      * @return QtiComponent The QtiComponent object that corresponds to $class and $position.
      * @throws OutOfBoundsException If no such QtiComponent could be found in the AssessmentTest tree.
      */
@@ -232,7 +232,7 @@ class AssessmentTestSeeker
      * Seek for the position of $component in the AssessmentTest tree.
      *
      * @param QtiComponent $component A QtiComponent object which is supposed to be in the AssessmentTest tree.
-     * @return integer The position of $component in the AssessmentTest tree.
+     * @return int The position of $component in the AssessmentTest tree.
      * @throws OutOfBoundsException If no such $component could be found in the AssessmentTest tree.
      */
     public function seekPosition(QtiComponent $component)
@@ -280,7 +280,7 @@ class AssessmentTestSeeker
      * Get the number of explored components for a given QTI $class name.
      *
      * @param string $class A QTI class name.
-     * @return integer The number of explored components that belong to the $class.
+     * @return int The number of explored components that belong to the $class.
      */
     protected function getClassCount($class)
     {

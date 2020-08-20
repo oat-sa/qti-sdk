@@ -11,9 +11,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @dataProvider gcdProvider
      *
-     * @param integer $a
-     * @param integer $b
-     * @param integer $expected
+     * @param int $a
+     * @param int $b
+     * @param int $expected
      */
     public function testGcd($a, $b, $expected)
     {
@@ -25,9 +25,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @dataProvider lcmProvider
      *
-     * @param integer $a
-     * @param integer $b
-     * @param integer $expected
+     * @param int $a
+     * @param int $b
+     * @param int $expected
      */
     public function testLcm($a, $b, $expected)
     {
@@ -52,7 +52,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @dataProvider varianceProvider
      *
      * @param array $sample
-     * @param boolean Apply Bessel's correction?
+     * @param bool Apply Bessel's correction?
      * @param number $expected
      */
     public function testVariance(array $sample, $correction, $expected)
@@ -65,7 +65,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @dataProvider standardDeviationProvider
      *
      * @param array $sample
-     * @param boolean Apply Bessel's standard correction?
+     * @param bool Apply Bessel's standard correction?
      * @param number $expected
      */
     public function testStandardDeviation(array $sample, $correction, $expected)
@@ -83,8 +83,8 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @dataProvider getPrecedingBackslashesCountProvider
      *
      * @param string $string
-     * @param integer $offset
-     * @param integer $expected Expected preceding backslashes count.
+     * @param int $offset
+     * @param int $expected Expected preceding backslashes count.
      */
     public function testGetPrecedingBackslashesCount($string, $offset, $expected)
     {
@@ -141,7 +141,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param string $pcre
      * @param string $subject
      * @param string $message
-     * @param integer $recursionLimit
+     * @param int $recursionLimit
      */
     public function testLastPregErrorMessage($pcre, $subject, $message, $recursionLimit = 0)
     {

@@ -12,8 +12,8 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
     /**
      * @dataProvider successfulInstantiationBasicProvider
      *
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
      */
     public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '')
     {
@@ -40,8 +40,8 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      * @dataProvider unsuccessfulInstantiationProvider
      *
      * @param string $responseIdentifier
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
      * @param string $msg
      */
     public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')

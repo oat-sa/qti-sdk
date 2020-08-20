@@ -60,7 +60,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * immediately enclosing interaction supports the shuffling of choices. If
      * no value is specified then the choice is free to be shuffled.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $fixed = false;
@@ -88,7 +88,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * by default and hidden if the associated template variable matches, or contains, the choice's
      * identifier.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide;
@@ -142,7 +142,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Set whether the choice is fixed.
      *
-     * @param boolean $fixed
+     * @param bool $fixed
      * @throws InvalidArgumentException If $fixed is not a boolean value.
      */
     public function setFixed($fixed)
@@ -158,7 +158,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Whether the choice is fixed.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFixed()
     {
@@ -194,7 +194,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Whether a value is defined for the templateIdentifier attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateIdentifier()
     {
@@ -204,7 +204,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Set the visibility of the choice.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
@@ -220,7 +220,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Get the visibility of the choice.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {

@@ -120,7 +120,7 @@ class ItemResult extends QtiComponent
      *
      * @param QtiIdentifier $identifier
      * @param DateTime $datestamp
-     * @param integer $sessionStatus
+     * @param int $sessionStatus
      * @param ItemVariableCollection|null $itemVariables
      * @param QtiString|null $candidateComment
      * @param QtiInteger|null $sequenceIndex

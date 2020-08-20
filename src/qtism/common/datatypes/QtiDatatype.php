@@ -48,14 +48,14 @@ interface QtiDatatype extends Comparable
     /**
      * Get the QTI baseType of the datatype instance.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType();
 
     /**
      * Get the QTI cardinality of the datatype instance.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality();
 }

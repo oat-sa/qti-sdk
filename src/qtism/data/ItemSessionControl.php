@@ -57,7 +57,7 @@ class ItemSessionControl extends QtiComponent
      * Integrated Feedback even if the candidate has access to the review state.
      * The default is false.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $showFeedback = false;
@@ -90,7 +90,7 @@ class ItemSessionControl extends QtiComponent
      * when allowReview is true. When in the review state, the final values of the outcome
      * variables should be used to determine the visibility of integrated feedback.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $allowReview = true;
@@ -101,7 +101,7 @@ class ItemSessionControl extends QtiComponent
      * This constraint controls whether or not the system may provide the candidate with a
      * way of entering the solution state. The default is false.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $showSolution = false;
@@ -114,7 +114,7 @@ class ItemSessionControl extends QtiComponent
      * actors in the assessment process. This constraint controls whether or not the candidate
      * is allowed to provide a comment on the item during the session.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $allowComment = false;
@@ -131,7 +131,7 @@ class ItemSessionControl extends QtiComponent
      * The value of this attribute is only applicable when the item is in a testPart with
      * individual submission mode. (See Navigation and Submission.)
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $validateResponses = false;
@@ -150,7 +150,7 @@ class ItemSessionControl extends QtiComponent
      * Note that if allowSkipping is true delivery engines must ensure that the candidate
      * can choose to submit no response, for example, through the provision of a "skip" button.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $allowSkipping = true;
@@ -158,7 +158,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Get the maximum number of attempts in the given test context.
      *
-     * @return integer An integer.
+     * @return int An integer.
      */
     public function getMaxAttempts()
     {
@@ -168,7 +168,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Set the maximum number of attempts in the given test context.
      *
-     * @param integer $maxAttempts An integer.
+     * @param int $maxAttempts An integer.
      * @throws InvalidArgumentException If $maxAttempts is not an integer.
      */
     public function setMaxAttempts($maxAttempts)
@@ -184,7 +184,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Must show feedback in the given test context?
      *
-     * @return boolean true if feedbacks must be shown, otherwise false.
+     * @return bool true if feedbacks must be shown, otherwise false.
      */
     public function mustShowFeedback()
     {
@@ -194,7 +194,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Set if feedbacks must be shown in the given test context.
      *
-     * @param boolean $showFeedback true if feedbacks must be shown, otherwise false.
+     * @param bool $showFeedback true if feedbacks must be shown, otherwise false.
      * @throws InvalidArgumentException If $showFeedback is not a boolean value.
      */
     public function setShowFeedback($showFeedback)
@@ -210,7 +210,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Is the candidate allowed to review item body and given responses?
      *
-     * @return boolean true if allowed, false if not allowed.
+     * @return bool true if allowed, false if not allowed.
      */
     public function doesAllowReview()
     {
@@ -221,7 +221,7 @@ class ItemSessionControl extends QtiComponent
      * Set that the candidate is allowed to review item body and given responses
      * after the last item.
      *
-     * @param boolean $allowReview true if allowed, false if not.
+     * @param bool $allowReview true if allowed, false if not.
      * @throws InvalidArgumentException If $allowReview is not a boolean.
      */
     public function setAllowReview($allowReview)
@@ -237,7 +237,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Must provide the candidate a way to enter the 'solution' state? Default is false.
      *
-     * @return boolean true if the candidate can, false if not.
+     * @return bool true if the candidate can, false if not.
      */
     public function mustShowSolution()
     {
@@ -247,7 +247,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Set if the candidate is provided a way to enter the 'solution' state.
      *
-     * @param boolean $showSolution true if he is provided, false if not.
+     * @param bool $showSolution true if he is provided, false if not.
      * @throws InvalidArgumentException If $showSolution is not a boolean.
      */
     public function setShowSolution($showSolution)
@@ -263,7 +263,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Is the candidate allowed to communicate comments?
      *
-     * @return boolean true if allowed, false if not.
+     * @return bool true if allowed, false if not.
      */
     public function doesAllowComment()
     {
@@ -273,7 +273,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Set if the candidate is allowed to communicate comments during the session.
      *
-     * @param boolean $allowComment true if allowed, false if not.
+     * @param bool $allowComment true if allowed, false if not.
      * @throws InvalidArgumentException If $allowComment is not a boolean.
      */
     public function setAllowComment($allowComment)
@@ -291,7 +291,7 @@ class ItemSessionControl extends QtiComponent
      *
      * Know whether or not the Delivery Engine allow the candidate to skip items.
      *
-     * @return boolean true if allowed, false if not.
+     * @return bool true if allowed, false if not.
      */
     public function doesAllowSkipping()
     {
@@ -303,7 +303,7 @@ class ItemSessionControl extends QtiComponent
      *
      * Set whether or not the Delivery Engine allows the candidate to skip items.
      *
-     * @param boolean $allowSkipping true if allowed, false otherwise.
+     * @param bool $allowSkipping true if allowed, false otherwise.
      * @throws InvalidArgumentException If $allowSkipping is not a valid boolean.
      */
     public function setAllowSkipping($allowSkipping)
@@ -319,7 +319,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Must validate responses?
      *
-     * @return boolean true if responses must be validated, false if not.
+     * @return bool true if responses must be validated, false if not.
      */
     public function mustValidateResponses()
     {
@@ -331,7 +331,7 @@ class ItemSessionControl extends QtiComponent
      *
      * Whether the values held by the ItemSessionControl are the default ones.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDefault()
     {
@@ -349,7 +349,7 @@ class ItemSessionControl extends QtiComponent
      *
      * Set whether or not responses must be validated by the Delivery Engine.
      *
-     * @param boolean $validateResponses true if responses must be validated, false if not.
+     * @param bool $validateResponses true if responses must be validated, false if not.
      * @throws InvalidArgumentException If $validateResponses is not a boolean.
      */
     public function setValidateResponses($validateResponses)

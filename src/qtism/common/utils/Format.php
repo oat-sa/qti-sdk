@@ -52,7 +52,7 @@ class Format
      * than 32 characters for compatibility with version 1. They are always compared case-sensitively.
      *
      * @link http://www.w3.org/TR/2000/REC-xml-20001006
-     * @return boolean Wether $string is a valid identifier.
+     * @return bool Wether $string is a valid identifier.
      */
     public static function isIdentifier($string, $strict = true)
     {
@@ -227,7 +227,7 @@ class Format
      * Wether a given $string is a URI.
      *
      * @param string $string A string value.
-     * @return boolean Wether $string is a valid URI.
+     * @return bool Wether $string is a valid URI.
      * @link http://en.wikipedia.org/wiki/Uniform_Resource_Identifier
      */
     public static function isUri($string)
@@ -245,7 +245,7 @@ class Format
      * Wether a given $string can be cast into an integer value.
      *
      * @param string $string A string value.
-     * @return boolean Wether $string can be cast into an integer value.
+     * @return bool Wether $string can be cast into an integer value.
      */
     public static function isInteger($string)
     {
@@ -256,7 +256,7 @@ class Format
      * Wether a given $string can be cast into a float value.
      *
      * @param string $string A string value e.g. '27.111'.
-     * @return boolean Wether $string can be converted to a float.
+     * @return bool Wether $string can be converted to a float.
      */
     public static function isFloat($string)
     {
@@ -267,7 +267,7 @@ class Format
      * Wether a given $string can be cast into a pair.
      *
      * @param string $string A string value.
-     * @return boolean Wether $string can be converted to a pair.
+     * @return bool Wether $string can be converted to a pair.
      */
     public static function isPair($string)
     {
@@ -286,7 +286,7 @@ class Format
      * Wether a given $string can be cast into a directed pair.
      *
      * @param string $string A string value.
-     * @return boolean Wether $string can be converted to a directed pair.
+     * @return bool Wether $string can be converted to a directed pair.
      */
     public static function isDirectedPair($string)
     {
@@ -297,7 +297,7 @@ class Format
      * Wether a given $string can be cast into a duration.
      *
      * @param string $string A string value.
-     * @return boolean Wether $string can be converted to a duration.
+     * @return bool Wether $string can be converted to a duration.
      */
     public static function isDuration($string)
     {
@@ -314,7 +314,7 @@ class Format
      * Whether a given $string can be transformed into a boolean.
      *
      * @param string $string A string value.
-     * @return boolean Whether $string can be converted to a boolean.
+     * @return bool Whether $string can be converted to a boolean.
      */
     public static function isBoolean($string)
     {
@@ -336,7 +336,7 @@ class Format
      * Whether a given $string can be cast into a Point datatype.
      *
      * @param string $string A string value.
-     * @return boolean Wheter $string can be transformed to a Point datatype.
+     * @return bool Wheter $string can be transformed to a Point datatype.
      */
     public static function isPoint($string)
     {
@@ -356,7 +356,7 @@ class Format
      * Whether a given $string can be cast into the file baseType.
      *
      * @param string $string A string value.
-     * @return boolean
+     * @return bool
      */
     public static function isFile($string)
     {
@@ -368,7 +368,7 @@ class Format
      * Whether or not a given string is a variable ref.
      *
      * @param string $string A given string.
-     * @return boolean Wheter $string is a valid variable ref.
+     * @return bool Wheter $string is a valid variable ref.
      * @example '{myIdentifier1}' is a valid variable ref but 'myIdentifier1' is not.
      */
     public static function isVariableRef($string)
@@ -390,7 +390,7 @@ class Format
      * be accepted as valid numbers to compose coordinates.
      *
      * @param string $string A given string.
-     * @return boolean Wether $string is a valid coordinate collection.
+     * @return bool Wether $string is a valid coordinate collection.
      * @example '0, 20, 100, 20' is a valid coordinate collection to describe a rectangle shape.
      */
     public static function isCoords($string)
@@ -405,7 +405,7 @@ class Format
      * of 256 characters.
      *
      * @param string $string A string value.
-     * @return boolean
+     * @return bool
      */
     public static function isString256($string)
     {
@@ -417,7 +417,7 @@ class Format
      * attribute e.g. 'qti-label' or 'qti-label qti-component'.
      *
      * @param string $string A string value.
-     * @return boolean
+     * @return bool
      */
     public static function isClass($string)
     {
@@ -438,7 +438,7 @@ class Format
      *
      * @param float $float
      * @param string $x The character to be used as the 'times' operator.
-     * @param false|integer $precision The number of requested significant numbers after the decimal separator.
+     * @param false|int $precision The number of requested significant numbers after the decimal separator.
      * @return string
      */
     public static function scale10($float, $x = 'x', $precision = false)
@@ -558,7 +558,7 @@ class Format
      * Format::isPrintfIsoFormat("bla %S bli %s") => true
      *
      * @param string $isoFormat
-     * @return boolean
+     * @return bool
      */
     public static function isPrintfIsoFormat($isoFormat)
     {
@@ -612,7 +612,7 @@ class Format
      * length (e.g. "10%", 10, ...).
      *
      * @param mixed $length A length as a string or integer.
-     * @return boolean
+     * @return bool
      */
     public static function isXhtmlLength($length)
     {

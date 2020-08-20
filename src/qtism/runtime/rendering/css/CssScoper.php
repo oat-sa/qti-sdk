@@ -82,7 +82,7 @@ class CssScoper implements Renderable
     /**
      * The current state.
      *
-     * @var integer
+     * @var int
      */
     private $state = self::RUNNING;
 
@@ -138,14 +138,14 @@ class CssScoper implements Renderable
     /**
      * The previous state.
      *
-     * @var integer
+     * @var int
      */
     private $previousState = false;
 
     /**
      * Whether or not map QTI classes to their qti-X CSS classes.
      *
-     * @var boolean
+     * @var bool
      */
     private $mapQtiClasses = false;
 
@@ -155,7 +155,7 @@ class CssScoper implements Renderable
     private $mapQtiPseudoClasses = false;
 
     /**
-     * @var boolean Whether or not using the Web Component Friendly mode.
+     * @var bool Whether or not using the Web Component Friendly mode.
      */
     private $webComponentFriendly = false;
 
@@ -336,8 +336,8 @@ class CssScoper implements Renderable
     /**
      * Create a new CssScoper object.
      *
-     * @param boolean $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
-     * @param boolean $mapQtiPseudoClasses Whether or not to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiPseudoClasses Whether or not to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
      */
     public function __construct($mapQtiClasses = false, $mapQtiPseudoClasses = false)
     {
@@ -348,7 +348,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not QTI classes are mapped to their qti-X CSS class equivalent.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesMapQtiClasses()
     {
@@ -358,7 +358,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not map QTI classes to their qti-X CSS class equivalent.
      *
-     * @param boolean $mapQtiClasses
+     * @param bool $mapQtiClasses
      */
     public function mapQtiClasses($mapQtiClasses)
     {
@@ -368,7 +368,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not QTI pseudo classes are mapped to their QTI-X CSS class equivalent.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesMapQtiPseudoClasses()
     {
@@ -378,7 +378,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not map QTI pseudo classes to their QTI-X CSS class equivalent.
      *
-     * @param boolean $mapQtiPseudoClasses
+     * @param bool $mapQtiPseudoClasses
      */
     public function mapQtiPseudoClasses($mapQtiPseudoClasses)
     {
@@ -497,7 +497,7 @@ class CssScoper implements Renderable
     /**
      * Set the current state.
      *
-     * @param integer $state
+     * @param int $state
      */
     protected function setState($state)
     {
@@ -507,7 +507,7 @@ class CssScoper implements Renderable
     /**
      * Get the current state.
      *
-     * @return integer
+     * @return int
      */
     protected function getState()
     {
@@ -835,7 +835,7 @@ class CssScoper implements Renderable
      * Whether a given $char is considered to be white space.
      *
      * @param string $char
-     * @return boolean
+     * @return bool
      */
     private static function isWhiteSpace($char)
     {
@@ -917,7 +917,7 @@ class CssScoper implements Renderable
     /**
      * Wheter the current char is escaping something.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isEscaping()
     {

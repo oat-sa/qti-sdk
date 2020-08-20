@@ -50,7 +50,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * Multiplicity [1]
      *
-     * @var integer
+     * @var int
      */
     private $cardinality;
 
@@ -60,7 +60,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * Multiplicity [0,1]
      *
-     * @var integer
+     * @var int
      */
     private $baseType = null;
 
@@ -103,7 +103,7 @@ abstract class ItemVariable extends QtiComponent
     /**
      * Get the cardinality of the Variable.
      *
-     * @return integer
+     * @return int
      */
     public function getCardinality()
     {
@@ -131,7 +131,7 @@ abstract class ItemVariable extends QtiComponent
     /**
      * Get the baseType of the Variable.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getBaseType()
     {

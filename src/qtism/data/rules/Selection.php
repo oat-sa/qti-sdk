@@ -62,7 +62,7 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Selection (combinations) with or without replacement.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $withReplacement = false;
@@ -71,7 +71,7 @@ class Selection extends QtiComponent implements IExternal
      * Create a new instance of selection.
      *
      * @param int $select The number of child elements to be selected.
-     * @param boolean $withReplacement Selection (combinations) with or without replacement.
+     * @param bool $withReplacement Selection (combinations) with or without replacement.
      * @param string $xmlString
      * @throws InvalidArgumentException If $select is not a valid integer or if $withReplacement is not a valid boolean.
      */
@@ -89,7 +89,7 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Get the number of child elements to be selected.
      *
-     * @return integer An integer.
+     * @return int An integer.
      */
     public function getSelect()
     {
@@ -99,7 +99,7 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Set the number of child elements to be selected.
      *
-     * @param integer $select An integer.
+     * @param int $select An integer.
      * @throws InvalidArgumentException If $select is not an integer.
      */
     public function setSelect($select)
@@ -115,7 +115,7 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Is the selection of items with or without replacements?
      *
-     * @return boolean true if it must be with replacements, false otherwise.
+     * @return bool true if it must be with replacements, false otherwise.
      */
     public function isWithReplacement()
     {
@@ -125,7 +125,7 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Set if the selection of items must be with or without replacements.
      *
-     * @param boolean $withReplacement true if it must be with replacements, false otherwise.
+     * @param bool $withReplacement true if it must be with replacements, false otherwise.
      * @throws InvalidArgumentException If $withReplacement is not a boolean.
      */
     public function setWithReplacement($withReplacement)

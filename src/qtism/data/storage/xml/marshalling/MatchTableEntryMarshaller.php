@@ -42,14 +42,14 @@ class MatchTableEntryMarshaller extends Marshaller
     /**
      * The baseType of the expected targetValue.
      *
-     * @var integer
+     * @var int
      */
     private $baseType;
 
     /**
      * Get the baseType of the expected targetValue.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     protected function getBaseType()
     {
@@ -59,7 +59,7 @@ class MatchTableEntryMarshaller extends Marshaller
     /**
      * Set the base type of the expected targetValue.
      *
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
     protected function setBaseType($baseType)
@@ -78,7 +78,7 @@ class MatchTableEntryMarshaller extends Marshaller
      * the baseType of its targetValue, which is defined by its parent variableDeclaration.
      *
      * @param string $version The QTI version number on which the Marshaller has to operate e.g. '2.1'.
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
      */
     public function __construct($version, $baseType)

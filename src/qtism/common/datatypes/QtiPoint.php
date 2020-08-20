@@ -123,7 +123,7 @@ class QtiPoint implements QtiDatatype
      * are considered to be the same if they have the same coordinates.
      *
      * @param mixed $obj An object.
-     * @return boolean Whether or not the equality is established.
+     * @return bool Whether or not the equality is established.
      */
     public function equals($obj)
     {
@@ -149,7 +149,7 @@ class QtiPoint implements QtiDatatype
      * Get the BaseType of the value. This method systematically returns
      * the BaseType::POINT value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -160,7 +160,7 @@ class QtiPoint implements QtiDatatype
      * Get the Cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

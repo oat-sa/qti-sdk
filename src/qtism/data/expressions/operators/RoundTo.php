@@ -61,7 +61,7 @@ class RoundTo extends Operator implements Pure
      * If roundingMode="decimalPlaces", the value of figures must be an integer
      * greater than or equal to zero.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $figures;
@@ -73,7 +73,7 @@ class RoundTo extends Operator implements Pure
      *
      * Default value is RoundingMode::SIGNIFICANT_FIGURES.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $roundingMode = RoundingMode::SIGNIFICANT_FIGURES;
@@ -82,8 +82,8 @@ class RoundTo extends Operator implements Pure
      * Create a new instance of RoundTo.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer|string $figures An integer or a variable reference.
-     * @param integer $roundingMode A value from the RoundingMode enumeration.
+     * @param int|string $figures An integer or a variable reference.
+     * @param int $roundingMode A value from the RoundingMode enumeration.
      */
     public function __construct(ExpressionCollection $expressions, $figures, $roundingMode = RoundingMode::SIGNIFICANT_FIGURES)
     {
@@ -96,7 +96,7 @@ class RoundTo extends Operator implements Pure
     /**
      * Set the figures attribute.
      *
-     * @param integer|string $figures An integer or a variable reference.
+     * @param int|string $figures An integer or a variable reference.
      * @throws InvalidArgumentException If $figures is not an integer nor a variable reference.
      */
     public function setFigures($figures)
@@ -112,7 +112,7 @@ class RoundTo extends Operator implements Pure
     /**
      * Get the figures attribute.
      *
-     * @return integer|string An integer or a variable reference.
+     * @return int|string An integer or a variable reference.
      */
     public function getFigures()
     {
@@ -122,7 +122,7 @@ class RoundTo extends Operator implements Pure
     /**
      * Set the roundingMode attribute.
      *
-     * @param integer $roundingMode A value from the RoundingMode enumeration.
+     * @param int $roundingMode A value from the RoundingMode enumeration.
      * @throws InvalidArgumentException If $rounding mode is not a value from the RoundingMode enumeration.
      */
     public function setRoundingMode($roundingMode)
@@ -138,7 +138,7 @@ class RoundTo extends Operator implements Pure
     /**
      * Get the roundingMode attribute.
      *
-     * @return integer A value from the RoundingMode enumeration.
+     * @return int A value from the RoundingMode enumeration.
      */
     public function getRoundingMode()
     {
@@ -158,7 +158,7 @@ class RoundTo extends Operator implements Pure
      *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool True if the expression is pure, false otherwise
      */
     public function isPure()
     {

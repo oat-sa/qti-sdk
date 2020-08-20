@@ -47,7 +47,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * the order in which the choices are initially presented, subject to the
      * value of the fixed attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -62,7 +62,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * including a blank value among the choices. Where 'required=false' is set
      * the rendering system must ensure it is possible to select a blank response.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $required = false;
@@ -100,7 +100,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Set whether the delivery engine must shuffle the choices.
      *
-     * @param boolean $shuffle
+     * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
@@ -116,7 +116,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Whether the delivery engine must shuffle the choices.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -126,7 +126,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Set whether a choice is required to be selected by the candidate.
      *
-     * @param boolean $required
+     * @param bool $required
      * @throws InvalidArgumentException If $required is not a boolean value.
      */
     public function setRequired($required)
@@ -142,7 +142,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Whether a choice is required to be selected by the candidate.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRequired()
     {

@@ -57,7 +57,7 @@ abstract class Cli
     /**
      * POSIX success exit status (0).
      *
-     * @var integer
+     * @var int
      */
     const EXIT_SUCCESS = 0;
 
@@ -67,7 +67,7 @@ abstract class Cli
      * Implementations are free to use more appropriate
      * non zero exit status codes if appropriate.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_FAILURE = 1;
 
@@ -233,7 +233,7 @@ abstract class Cli
      * Show raw data in console even if verbose mode is not in force.
      *
      * @param string $data The data to go in output.
-     * @param boolean $newLine Whether to display a new line after $data.
+     * @param bool $newLine Whether to display a new line after $data.
      */
     protected function out($data, $newLine = true)
     {
@@ -250,7 +250,7 @@ abstract class Cli
      * The verbose mode is in force if the CLI arguments contain
      * the -h/--help flag.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isVerbose()
     {

@@ -70,7 +70,7 @@ class HotspotChoice extends Choice implements Hotspot
      * Create a new HotspotChoice object.
      *
      * @param string $identifier The identifier of the choice.
-     * @param integer $shape A value from the Shape enumeration
+     * @param int $shape A value from the Shape enumeration
      * @param QtiCoords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -88,7 +88,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Set the shape of the associableHotspot.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      */
     public function setShape($shape)
     {
@@ -159,7 +159,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Whether or not a value is defined for the hotspotLabel attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHotspotLabel()
     {

@@ -69,7 +69,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection of operands contains null, an empty container, or an empty string, true is returned.
      * * In any other case, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsNull()
     {
@@ -95,7 +95,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection contains a container with cardinality RECORD, it is not considered exclusively numeric.
      * * If the the current OperandsCollection is empty, false is returned.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function exclusivelyNumeric()
     {
@@ -123,7 +123,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection of operands contains a value or container which is not boolean, false is returned.
      * * If the collection of operands contains a RECORD container, false is returned, because records are not typed.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyBoolean()
     {
@@ -147,7 +147,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * Wether the collection contains exclusively single cardinality values. If the container
      * is empty or contains a null value, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelySingle()
     {
@@ -175,7 +175,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection contains a container with cardinality RECORD, it is not considered exclusively string.
      * * If the the current OperandsCollection is empty, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyString()
     {
@@ -198,7 +198,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * Whether the collection contains only MultipleContainer OR OrderedContainer.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyMultipleOrOrdered()
     {
@@ -224,7 +224,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * Only integer primitives and non-NULL Multiple/OrderedContainer objects are considered valid integers.
      * * If the the current OperandsCollection is empty, false is returned.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function exclusivelyInteger()
     {
@@ -252,7 +252,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection of operands contains an OrderedContainer object, false is returned.
      * * In any other case, true is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelySingleOrMultiple()
     {
@@ -279,7 +279,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection of operands contains a MultipleContainer object, false is returned.
      * * In any other case, true is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelySingleOrOrdered()
     {
@@ -305,7 +305,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * Returns false if any of the value contained in the collection of operands is not a RecordContainer object.
      * * In any other case, returns true;
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyRecord()
     {
@@ -330,7 +330,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * Returns false if any of the value contained in the collection of operands is not an OrderedContainer object.
      * * Returns true in any other case.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyOrdered()
     {
@@ -351,7 +351,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * Whether the collection contains anything but a RecordContainer object.
      *
-     * @return boolean
+     * @return bool
      */
     public function anythingButRecord()
     {
@@ -373,7 +373,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the OperandsCollection contains a value considered to be null, false is returned.
      * * If the OperandsCollection is composed exclusively by non-null RecordContainer objects, true is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function sameBaseType()
     {
@@ -406,7 +406,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the OperandsCollection is empty, false is returned.
      * * If the OperandsCollection contains a NULL value or a NULL container (empty), false is returned
      *
-     * @return boolean
+     * @return bool
      */
     public function sameCardinality()
     {
@@ -433,7 +433,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * If the collection of operands contains something other than a Point object or a null Container object
      * with baseType point, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyPoint()
     {
@@ -460,7 +460,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * If the collection of operands contains something other than a Duration object or a null Container object
      * with baseType duration, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyDuration()
     {

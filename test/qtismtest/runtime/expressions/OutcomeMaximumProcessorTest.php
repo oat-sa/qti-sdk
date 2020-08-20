@@ -16,7 +16,7 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
      * @dataProvider outcomeMaximumProvider
      *
      * @param OutcomeMaximum $expression
-     * @param integer $expectedResult
+     * @param int $expectedResult
      */
     public function testOutcomeMaximum(OutcomeMaximum $expression, $expectedResult)
     {

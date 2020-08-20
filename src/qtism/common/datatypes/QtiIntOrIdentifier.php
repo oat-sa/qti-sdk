@@ -51,7 +51,7 @@ class QtiIntOrIdentifier extends QtiScalar
      * Get the baseType of the value. This method systematically returns
      * the BaseType::INT_OR_IDENTIFIER value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -62,7 +62,7 @@ class QtiIntOrIdentifier extends QtiScalar
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

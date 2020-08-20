@@ -90,8 +90,8 @@ class TestFeedbackRef extends QtiComponent
      *
      * @param string $identifier An identifier.
      * @param string $outcomeIdentifier An identifier.
-     * @param integer $access A value from the TestFeedbackAccess enumeration.
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $access A value from the TestFeedbackAccess enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @param string $href A URI.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
@@ -201,7 +201,7 @@ class TestFeedbackRef extends QtiComponent
     /**
      * Set how the feedback should be displayed.
      *
-     * @param boolean $showHide A value from the ShowHide enumeration.
+     * @param bool $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)

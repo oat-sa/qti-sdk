@@ -76,7 +76,7 @@ class SelectableRouteCollection extends AbstractCollection
      * Insert the SelectableRoute object $route at $position.
      *
      * @param SelectableRoute $route A SelectableRoute object.
-     * @param integer $position An integer index where $route must be placed.
+     * @param int $position An integer index where $route must be placed.
      */
     public function insertAt(SelectableRoute $route, $position)
     {

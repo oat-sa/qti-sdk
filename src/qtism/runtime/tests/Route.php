@@ -126,7 +126,7 @@ class Route implements Iterator
     /**
      * The current position in the route.
      *
-     * @var integer
+     * @var int
      */
     private $position = 0;
 
@@ -159,7 +159,7 @@ class Route implements Iterator
     /**
      * Get the current index position.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -169,7 +169,7 @@ class Route implements Iterator
     /**
      * Set the current index position.
      *
-     * @param integer $position
+     * @param int $position
      */
     public function setPosition($position)
     {
@@ -447,7 +447,7 @@ class Route implements Iterator
     /**
      * Get the current key corresponding to the current RouteItem object.
      *
-     * @return integer The returned key is the position of the current RouteItem object in the Route.
+     * @return int The returned key is the position of the current RouteItem object in the Route.
      */
     public function key()
     {
@@ -478,7 +478,7 @@ class Route implements Iterator
     /**
      * Whether the Route is still valid while iterating.
      *
-     * @return boolean
+     * @return bool
      */
     public function valid()
     {
@@ -490,7 +490,7 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the last of the route.
      *
-     * @return boolean
+     * @return bool
      */
     public function isLast()
     {
@@ -503,7 +503,7 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the first of the route.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFirst()
     {
@@ -514,7 +514,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in linear
      * navigation mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNavigationLinear()
     {
@@ -525,7 +525,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in non-linear
      * navigation mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNavigationNonLinear()
     {
@@ -536,7 +536,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in individual
      * submission mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSubmissionIndividual()
     {
@@ -547,7 +547,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in simultaneous
      * submission mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSubmissionSimultaneous()
     {
@@ -694,7 +694,7 @@ class Route implements Iterator
      * Get the sequence of identifiers formed by the identifiers of each
      * assessmentItemRef object of the route, in the order they must be taken.
      *
-     * @param boolean $withSequenceNumber Whether to return the sequence number in the identifier or not.
+     * @param bool $withSequenceNumber Whether to return the sequence number in the identifier or not.
      * @return IdentifierCollection
      */
     public function getIdentifierSequence($withSequenceNumber = true)
@@ -781,7 +781,7 @@ class Route implements Iterator
      * If $assessmentItemRef is not involved in the route, the returned result is 0.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @return integer The number of occurences found in the route for $assessmentItemRef.
+     * @return int The number of occurences found in the route for $assessmentItemRef.
      */
     public function getOccurenceCount(AssessmentItemRef $assessmentItemRef)
     {
@@ -796,7 +796,7 @@ class Route implements Iterator
     /**
      * Get the number of RoutItem objects held by the Route.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
@@ -808,7 +808,7 @@ class Route implements Iterator
      * begins at 0. In other words, the first route item in the sequence will be found at position 0, the second
      * at position 1, ...
      *
-     * @param integer $position The position of the requested RouteItem object in the route sequence.
+     * @param int $position The position of the requested RouteItem object in the route sequence.
      * @return RouteItem The RouteItem found at $position.
      * @throws OutOfBoundsException If no RouteItem is found at $position.
      */
@@ -865,7 +865,7 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the last of the current TestPart.
      *
-     * @return boolean
+     * @return bool
      * @throws OutOfBoundsException If the Route is empty.
      */
     public function isLastOfTestPart()
@@ -891,7 +891,7 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the first of the current TestPart.
      *
-     * @return boolean
+     * @return bool
      * @throws OutOfBoundsException If the Route is empty.
      */
     public function isFirstOfTestPart()
@@ -949,9 +949,9 @@ class Route implements Iterator
     /**
      * Whether the RouteItem at $position in the Route is in the given $testPart.
      *
-     * @param integer $position A position in the Route sequence.
+     * @param int $position A position in the Route sequence.
      * @param TestPart $testPart A TestPart object involved in the Route.
-     * @return boolean
+     * @return bool
      * @throws OutOfBoundsException If $position is out of the Route bounds.
      */
     public function isInTestPart($position, TestPart $testPart)
@@ -1174,7 +1174,7 @@ class Route implements Iterator
      * Get the position of $routeItem in the Route.
      *
      * @param RouteItem $routeItem A RouteItem you want to know the position.
-     * @return integer The position of the routeItem in the Route. The indexes begin at 0.
+     * @return int The position of the routeItem in the Route. The indexes begin at 0.
      * @throws OutOfBoundsException If no such $routeItem is referenced in the Route.
      */
     public function getRouteItemPosition(RouteItem $routeItem)

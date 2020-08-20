@@ -90,7 +90,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write the PHP equality symbol into the current stream.
      *
-     * @param boolean $spaces Whether to surround the equality symbol with spaces.
+     * @param bool $spaces Whether to surround the equality symbol with spaces.
      * @throws StreamAccessException If an error occurs while writing the equality symbol.
      */
     public function writeEquals($spaces = true)
@@ -125,7 +125,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write a PHP opening tag in the current stream.
      *
-     * @param boolean $newline Whether a newline escape sequence must be written after the opening tag.
+     * @param bool $newline Whether a newline escape sequence must be written after the opening tag.
      * @throws StreamAccessException If an error occurs while writing the opening tag.
      */
     public function writeOpeningTag($newline = true)
@@ -144,7 +144,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write a PHP closing tag in the current string.
      *
-     * @param boolean $newline
+     * @param bool $newline
      */
     public function writeClosingTag($newline = true)
     {
@@ -162,7 +162,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write a PHP semicolon (;) in the current stream.
      *
-     * @param boolean $newline Wether a newline escape sequence follows the semicolon.
+     * @param bool $newline Wether a newline escape sequence follows the semicolon.
      * @throws StreamAccessException If an error occurs while writing the semicolon;
      */
     public function writeSemicolon($newline = true)
@@ -257,7 +257,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write a comma in the current stream.
      *
-     * @param boolean $space Whether a white space must be written after the comma.
+     * @param bool $space Whether a white space must be written after the comma.
      * @throws StreamAccessException If an error occurs while writing the comma.
      */
     public function writeComma($space = true)
@@ -349,7 +349,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param string $objectname The name of the variable where the object on which you want to call the method is stored e.g. 'foobar'.
      * @param string $methodname The name of the method you want to call.
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects.
-     * @param boolean $static Whether or not the call is static.
+     * @param bool $static Whether or not the call is static.
      * @throws StreamAccessException If an error occurs while writing the method call.
      */
     public function writeMethodCall($objectname, $methodname, PhpArgumentCollection $arguments = null, $static = false)
@@ -380,7 +380,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write the new operator in the current stream.
      *
-     * @param boolean $space Whether to write an extra white space after the new operator.
+     * @param bool $space Whether to write an extra white space after the new operator.
      * @throws StreamAccessException If an error occurs while writing the new operator.
      */
     public function writeNew($space = true)

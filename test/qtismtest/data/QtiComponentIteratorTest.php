@@ -103,7 +103,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
     /**
      * @dataProvider testClassSelectionProvider
      *
-     * @param integer $iterations
+     * @param int $iterations
      * @param array $classNames
      */
     public function testClassSelection($file, $iterations, array $classNames)

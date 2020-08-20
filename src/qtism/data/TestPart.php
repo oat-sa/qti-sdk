@@ -292,7 +292,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the TestPart holds an ItemSessionControl object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItemSessionControl()
     {
@@ -324,7 +324,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the TestPart holds a TimeLimits object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {

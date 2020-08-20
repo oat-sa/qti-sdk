@@ -14,9 +14,9 @@ class CssScoperTest extends QtiSmTestCase
      * @param string $inputFile
      * @param string $outputFile
      * @param string $id
-     * @param boolean $cssMapping
-     * @param boolean $pseudoClassMapping
-     * @param boolean $wcFriendly
+     * @param bool $cssMapping
+     * @param bool $pseudoClassMapping
+     * @param bool $wcFriendly
      */
     public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
     {

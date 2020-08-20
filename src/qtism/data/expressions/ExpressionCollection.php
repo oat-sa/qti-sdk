@@ -50,7 +50,7 @@ class ExpressionCollection extends QtiComponentCollection implements Pure
      *
      * @link https://en.wikipedia.org/wiki/Pure_function
      *
-     * @return boolean True if this ExpressionCollection is pure, false otherwise.
+     * @return bool True if this ExpressionCollection is pure, false otherwise.
      */
     public function isPure()
     {

@@ -32,38 +32,38 @@ class SelectableRoute extends Route
     /**
      * If the SelectableRoute is fixed.
      *
-     * @var boolean
+     * @var bool
      */
     private $visible;
 
     /**
      * If the SelectableRoute is visible.
      *
-     * @var boolean
+     * @var bool
      */
     private $fixed;
 
     /**
      * If the SelectableRoute is required.
      *
-     * @var boolean
+     * @var bool
      */
     private $required;
 
     /**
      * If the RouteItems must be kept together.
      *
-     * @var boolean
+     * @var bool
      */
     private $keepTogether;
 
     /**
      * Create a new SelectableRoute object.
      *
-     * @param boolean $fixed If the SelectableRoute is fixed.
-     * @param boolean $required If the SelectableRoutei is required.
-     * @param boolean $visible If the SelectableRoute is visible.
-     * @param boolean $keepTogether If the SelectableRoute must be kept together.
+     * @param bool $fixed If the SelectableRoute is fixed.
+     * @param bool $required If the SelectableRoutei is required.
+     * @param bool $visible If the SelectableRoute is visible.
+     * @param bool $keepTogether If the SelectableRoute must be kept together.
      */
     public function __construct($fixed = false, $required = false, $visible = true, $keepTogether = true)
     {
@@ -77,7 +77,7 @@ class SelectableRoute extends Route
     /**
      * Whether the SelectableRoute is fixed.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFixed()
     {
@@ -87,7 +87,7 @@ class SelectableRoute extends Route
     /**
      * Whether the SelectableRoute is visible.
      *
-     * @return boolean
+     * @return bool
      */
     public function isVisible()
     {
@@ -97,7 +97,7 @@ class SelectableRoute extends Route
     /**
      * Whether the SelectableRoute is required.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRequired()
     {
@@ -107,7 +107,7 @@ class SelectableRoute extends Route
     /**
      * Set whether the SelectableRoute is fixed.
      *
-     * @param boolean $fixed
+     * @param bool $fixed
      */
     public function setFixed($fixed)
     {
@@ -117,7 +117,7 @@ class SelectableRoute extends Route
     /**
      * Set whether the SelectableRoute is visible.
      *
-     * @param boolean $visible
+     * @param bool $visible
      */
     public function setVisible($visible)
     {
@@ -127,7 +127,7 @@ class SelectableRoute extends Route
     /**
      * Set Whether the SelectableRoute is required.
      *
-     * @param boolean $required
+     * @param bool $required
      */
     public function setRequired($required)
     {
@@ -137,7 +137,7 @@ class SelectableRoute extends Route
     /**
      * Set whether or not the RouteItem objects held by the Route must be kept together.
      *
-     * @param boolean $keepTogether
+     * @param bool $keepTogether
      */
     public function setKeepTogether($keepTogether)
     {
@@ -147,7 +147,7 @@ class SelectableRoute extends Route
     /**
      * Whether the RouteItem objects held by the Route must be kept together.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustKeepTogether()
     {

@@ -36,7 +36,7 @@ class MemoryStreamException extends StreamException
      *
      * @param string $message The human-readable message describing the error.
      * @param IStream $source The IStream object where in the error occurred.
-     * @param integer $code A code describing the error.
+     * @param int $code A code describing the error.
      * @param Exception $previous An optional previous exception.
      */
     public function __construct($message, IStream $source, $code = 0, Exception $previous = null)

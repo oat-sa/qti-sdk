@@ -165,7 +165,7 @@ class Shuffling extends QtiComponent
      * respectively ['id1', 'id2', 'id3'] and ['id4', 'id5', 'id6'], then 'id2' is at index 1 and
      * 'id5' is at index 4.
      *
-     * @param integer $index
+     * @param int $index
      * @return string
      * @throws OutOfBoundsException
      */

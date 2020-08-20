@@ -46,7 +46,7 @@ class AssociateInteraction extends BlockInteraction
      * If the shuffle attribute is true then the delivery engine must randomize the order in which the choices are
      * initially presented, subject to the value of the fixed attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -58,7 +58,7 @@ class AssociateInteraction extends BlockInteraction
      * is 0 then there is no restriction. If maxAssociations is greater than 1 (or 0) then the interaction
      * must be bound to a response with multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxAssociations = 1;
@@ -70,7 +70,7 @@ class AssociateInteraction extends BlockInteraction
      * If minAssociations is 0 then the candidate is not required to make any associations. minAssociations
      * must be less than or equal to the limit imposed by maxAssociations.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minAssociations = 0;
@@ -109,7 +109,7 @@ class AssociateInteraction extends BlockInteraction
      * Set whether the delivery engine must randomize the order in which
      * the choices are displayed.
      *
-     * @param boolean $shuffle
+     * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
@@ -126,7 +126,7 @@ class AssociateInteraction extends BlockInteraction
      * Whether the delivery engine must randomize the order in which the
      * choices are displayed.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -137,7 +137,7 @@ class AssociateInteraction extends BlockInteraction
      * Set the maximum number of associations the candidate is required to make. If $maxAssociations
      * is 0, there is no maximum number of associations.
      *
-     * @param integer $maxAssociations A positive (>= 0) integer.
+     * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
@@ -154,7 +154,7 @@ class AssociateInteraction extends BlockInteraction
      * Get the maximum number of associations the candidate is required to make. If $maxAssociations
      * is 0, there is no maximum number of associations.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxAssociations()
     {
@@ -164,7 +164,7 @@ class AssociateInteraction extends BlockInteraction
     /**
      * Whether there is a maximum number of associations required.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxAssociations()
     {
@@ -175,7 +175,7 @@ class AssociateInteraction extends BlockInteraction
      * Set the minimum number of associations that the candidate is required to make. If
      * $minAssociations is 0, there is no minimum number of associations required.
      *
-     * @param integer $minAssociations A positive (>= 0) integer.
+     * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by 'maxAssociations'.
      */
     public function setMinAssociations($minAssociations)
@@ -197,7 +197,7 @@ class AssociateInteraction extends BlockInteraction
      * Get the minimum number of associations that the candidate is required to make. If 0 is returned,
      * it means that there is no minimum number of associations required.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinAssociations()
     {
@@ -207,7 +207,7 @@ class AssociateInteraction extends BlockInteraction
     /**
      * Whether the candidate is required to respect a minimum number of associations.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinAssociations()
     {

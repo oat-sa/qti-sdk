@@ -209,7 +209,7 @@ class PrintedVariableEngine extends AbstractEngine
     /**
      * Process a $value depending on its $baseType.
      *
-     * @param integer $baseType The baseType of the value to process.
+     * @param int $baseType The baseType of the value to process.
      * @param mixed $value A QTI Runtime compliant value.
      * @return string
      * @throws PrintedVariableProcessingException If the baseType is unknown.

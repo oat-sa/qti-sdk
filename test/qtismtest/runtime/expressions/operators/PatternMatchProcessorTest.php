@@ -20,7 +20,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
      *
      * @param string $string
      * @param string $pattern
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testPatternMatch($string, $pattern, $expected)
     {

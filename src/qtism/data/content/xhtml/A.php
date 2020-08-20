@@ -125,7 +125,7 @@ class A extends SimpleInline
     /**
      * Whether a value is defined for the type attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasType()
     {

@@ -33,8 +33,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      * @param mixed $value
      * @param string $expected
      * @param string $format
-     * @param boolean $powerForm
-     * @param integer|string $base
+     * @param bool $powerForm
+     * @param int|string $base
      * @param $integer |string $index
      * @param string $delimiter
      * @param string $field

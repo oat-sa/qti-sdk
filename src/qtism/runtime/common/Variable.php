@@ -80,8 +80,8 @@ abstract class Variable
      * the appropriate container will be instantiated as the $value argument.
      *
      * @param string $identifier An identifier.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
      */
@@ -145,7 +145,7 @@ abstract class Variable
     /**
      * Get the cardinality of the Variable.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -155,7 +155,7 @@ abstract class Variable
     /**
      * Set the cardinality of the Variable.
      *
-     * @param integer $cardinality A value from the Cardinality enumeration.
+     * @param int $cardinality A value from the Cardinality enumeration.
      */
     public function setCardinality($cardinality)
     {
@@ -165,7 +165,7 @@ abstract class Variable
     /**
      * Get the baseType of the Variable.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getBaseType()
     {
@@ -175,7 +175,7 @@ abstract class Variable
     /**
      * Set the baseType of the Variable.
      *
-     * @param integer $baseType A value from the Cardinality enumeration or -1 if there is no baseType in a Cardinality::RECORD context.
+     * @param int $baseType A value from the Cardinality enumeration or -1 if there is no baseType in a Cardinality::RECORD context.
      * @throws InvalidArgumentException If -1 is passed but Cardinality::RECORD is not set.
      */
     public function setBaseType($baseType)
@@ -271,8 +271,8 @@ abstract class Variable
      * Create a QTI Runtime value from Data Model ValueCollection
      *
      * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-     * @param integer $baseType The baseType the Value objects in the ValueCollection must respect.
-     * @param integer $cardinality The cardinality the Value objects in the ValueCollection must respect.
+     * @param int $baseType The baseType the Value objects in the ValueCollection must respect.
+     * @param int $cardinality The cardinality the Value objects in the ValueCollection must respect.
      * @return mixed The resulting QTI Runtime value (primitive or container depending on baseType/cardinality).
      * @throws UnexpectedValueException If $baseType or/and $cardinality are not respected by the Value objects in the ValueCollection.
      */
@@ -320,7 +320,7 @@ abstract class Variable
      *
      * Whether the variable stores a single value.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSingle()
     {
@@ -332,7 +332,7 @@ abstract class Variable
      *
      * Whether the variable stores multiple values.
      *
-     * @return boolean Returns true in case of the cardinality is Multiple or Ordered. Otherwise the method returns false.
+     * @return bool Returns true in case of the cardinality is Multiple or Ordered. Otherwise the method returns false.
      */
     public function isMultiple()
     {
@@ -344,7 +344,7 @@ abstract class Variable
      *
      * Whether the variable stores orered values.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOrdered()
     {
@@ -356,7 +356,7 @@ abstract class Variable
      *
      * whether the variable stores values as in a record.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRecord()
     {
@@ -369,7 +369,7 @@ abstract class Variable
      * Whether the variable's value is numeric. If the variable value
      * contains NULL, this method return false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNumeric()
     {
@@ -386,7 +386,7 @@ abstract class Variable
      * * An empty MultipleContainer, OrderedContainer or RecordContainer.
      * * An empty string.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNull()
     {
@@ -407,7 +407,7 @@ abstract class Variable
      * Whether the variable's value is boolean. If the variable's value is NULL, the
      * method returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isBool()
     {
@@ -420,7 +420,7 @@ abstract class Variable
      * Whether the variable's value is float. If the variable's value is NULL, the method
      * returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isInteger()
     {
@@ -433,7 +433,7 @@ abstract class Variable
      * Whether the variable's value is float. If the variable's value is NULL, the method
      * returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFloat()
     {
@@ -446,7 +446,7 @@ abstract class Variable
      * Whether the variable's value is a point. If the variable's value is NULL, the method
      * returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPoint()
     {
@@ -461,7 +461,7 @@ abstract class Variable
      *
      * Be carefull! This method considers that a directedPair is also a pair.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPair()
     {
@@ -474,7 +474,7 @@ abstract class Variable
      * Whether the variable's value is a directedPair. If the variable's value is NULL, the method
      * returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDirectedPair()
     {
@@ -487,7 +487,7 @@ abstract class Variable
      * Whether the variable's value is a duration. If the variable's value is NULL, the method
      * returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDuration()
     {
@@ -500,7 +500,7 @@ abstract class Variable
      * Whether the variable's value is a string. If the variable's value is NULL, the method
      * returns false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isString()
     {

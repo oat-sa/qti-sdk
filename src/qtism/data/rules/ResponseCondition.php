@@ -141,7 +141,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     /**
      * Whether or not a ResponseElse object is defined for the response condition.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasResponseElse()
     {

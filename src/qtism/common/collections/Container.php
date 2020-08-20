@@ -98,7 +98,7 @@ class Container extends AbstractCollection implements Comparable
      * have the NULL value. This method helps you to know whether or not
      * the container has the NULL value.
      *
-     * @return boolean Whether the container has to be considered as NULL.
+     * @return bool Whether the container has to be considered as NULL.
      */
     public function isNull()
     {
@@ -125,7 +125,7 @@ class Container extends AbstractCollection implements Comparable
      * * If $obj is [] and the container is [], true is returned.
      *
      * @param mixed $obj A value to compare to this one.
-     * @return boolean Whether the container is equal to $obj.
+     * @return bool Whether the container is equal to $obj.
      */
     public function equals($obj)
     {

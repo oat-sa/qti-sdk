@@ -34,49 +34,49 @@ class BeanException extends Exception
     /**
      * Error code to use when the error is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
     /**
      * Error code to use when a class method does not exist.
      *
-     * @var integer
+     * @var int
      */
     const NO_METHOD = 1;
 
     /**
      * Error code to use when a class property does not exist.
      *
-     * @var integer
+     * @var int
      */
     const NO_PROPERTY = 2;
 
     /**
      * Error code to use when a method parameter does not exist.
      *
-     * @var integer
+     * @var int
      */
     const NO_PARAMETER = 3;
 
     /**
      * Error code to use when an expected bean annotation cannot be found.
      *
-     * @var integer
+     * @var int
      */
     const NO_ANNOTATION = 4;
 
     /**
      * Error code to use when the bean has no constructor.
      *
-     * @var integer
+     * @var int
      */
     const NO_CONSTRUCTOR = 5;
 
     /**
      * Error code to use when a bean is not a strict bean.
      *
-     * @var integer
+     * @var int
      */
     const NOT_STRICT = 6;
 
@@ -84,7 +84,7 @@ class BeanException extends Exception
      * Create a new BeanException object.
      *
      * @param string $message A human-readable message.
-     * @param integer $code An error code from the BeanException class constants.
+     * @param int $code An error code from the BeanException class constants.
      * @param Exception $previous An optional previous exception.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

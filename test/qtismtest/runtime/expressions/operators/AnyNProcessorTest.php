@@ -23,10 +23,10 @@ class AnyNProcessorTest extends QtiSmTestCase
      *
      * @dataProvider anyNProvider
      *
-     * @param integer $min
-     * @param integer $max
+     * @param int $min
+     * @param int $max
      * @param array $booleans
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testAnyN($min, $max, array $booleans, $expected)
     {

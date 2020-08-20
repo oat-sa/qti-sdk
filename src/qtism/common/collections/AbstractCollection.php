@@ -127,7 +127,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Check if the current position of the iterator is valid.
      *
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      */
     public function valid()
     {
@@ -146,7 +146,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * Wether a offset exists.
      *
      * @param mixed $offset An offset to check for.
-     * @return boolean Wether the offset exist.
+     * @return bool Wether the offset exist.
      */
     public function offsetExists($offset)
     {
@@ -205,7 +205,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * is strict, using the === operator.
      *
      * @param mixed $value A value.
-     * @return boolean Whether the collection contains $value.
+     * @return bool Whether the collection contains $value.
      */
     public function contains($value)
     {
