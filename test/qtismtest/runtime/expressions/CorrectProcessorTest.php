@@ -89,7 +89,7 @@ class CorrectProcessorTest extends QtiSmTestCase
 
         $processor = new CorrectProcessor($expr);
         $processor->setState(new State([$variable]));
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 }

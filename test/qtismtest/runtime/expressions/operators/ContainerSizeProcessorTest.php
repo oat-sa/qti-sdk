@@ -20,7 +20,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new ContainerSizeProcessor($expression, $operands);
     }
 
@@ -30,7 +30,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(26)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new ContainerSizeProcessor($expression, $operands);
     }
 
@@ -55,7 +55,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(25)]);
         $processor = new ContainerSizeProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -64,7 +64,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['1' => new QtiFloat(1.0), '2' => new QtiInteger(2)])]);
         $processor = new ContainerSizeProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

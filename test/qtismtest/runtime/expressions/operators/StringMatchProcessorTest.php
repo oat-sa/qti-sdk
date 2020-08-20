@@ -63,7 +63,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new MultipleContainer(BaseType::STRING, [new QtiString('String!')])]);
         $processor = new StringMatchProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -72,7 +72,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new QtiInteger(25)]);
         $processor = new StringMatchProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -80,7 +80,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!')]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new StringMatchProcessor($expression, $operands);
     }
 
@@ -88,7 +88,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new QtiString('String!'), new QtiString('String!')]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new StringMatchProcessor($expression, $operands);
     }
 

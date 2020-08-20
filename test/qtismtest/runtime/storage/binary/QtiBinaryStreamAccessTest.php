@@ -245,7 +245,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
-        $this->setExpectedException(QtiBinaryStreamAccessException::class, "Datatype mismatch for variable 'VAR'");
+        $this->expectException(QtiBinaryStreamAccessException::class);
+        $this->expectExceptionMessage("Datatype mismatch for variable 'VAR'");
         $access->readVariableValue($variable);
     }
 

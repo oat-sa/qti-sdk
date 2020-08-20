@@ -881,10 +881,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $assessmentTestSession->beginTestSession();
 
-        $this->setExpectedException(
-            AssessmentTestSessionException::class,
-            'Jumps are not allowed in LINEAR navigation mode.'
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage('Jumps are not allowed in LINEAR navigation mode.');
         $assessmentTestSession->jumpTo(1);
     }
 
@@ -1112,7 +1110,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
     public function testGetWeightMalformed($identifier)
     {
         $state = $this->getState();
-        $this->setExpectedException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $state->getWeight($identifier);
     }
 

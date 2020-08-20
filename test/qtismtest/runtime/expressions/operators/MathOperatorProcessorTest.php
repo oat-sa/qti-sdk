@@ -487,10 +487,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         );
         $processor = new MathOperatorProcessor($expression, $operands);
 
-        $this->setExpectedException(
-            OperatorProcessingException::class,
-            'The MathOperator operator only accepts operands with a single cardinality.'
-        );
+        $this->expectException(OperatorProcessingException::class);
+        $this->expectExceptionMessage('The MathOperator operator only accepts operands with a single cardinality.');
 
         $result = $processor->process();
     }
@@ -505,10 +503,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         );
         $processor = new MathOperatorProcessor($expression, $operands);
 
-        $this->setExpectedException(
-            OperatorProcessingException::class,
-            'The MathOperator operator only accepts operands with an integer or float baseType.'
-        );
+        $this->expectException(OperatorProcessingException::class);
+        $this->expectExceptionMessage('The MathOperator operator only accepts operands with an integer or float baseType.');
 
         $processor->process();
     }
@@ -523,10 +519,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         );
         $processor = new MathOperatorProcessor($expression, $operands);
 
-        $this->setExpectedException(
-            OperatorProcessingException::class,
-            'The atan2 math function of the MathOperator requires 2 operands, 1 operand given.'
-        );
+        $this->expectException(OperatorProcessingException::class);
+        $this->expectExceptionMessage('The atan2 math function of the MathOperator requires 2 operands, 1 operand given.');
 
         $processor->process();
     }
@@ -543,10 +537,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         );
         $processor = new MathOperatorProcessor($expression, $operands);
 
-        $this->setExpectedException(
-            OperatorProcessingException::class,
-            'The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.'
-        );
+        $this->expectException(OperatorProcessingException::class);
+        $this->expectExceptionMessage('The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.');
 
         $processor->process();
     }

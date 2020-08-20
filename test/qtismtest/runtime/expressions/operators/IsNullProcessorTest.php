@@ -91,7 +91,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     public function testLessThanNeededOperands()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $operands = new OperandsCollection();
         $expression = $this->getFakeExpression();
@@ -101,7 +101,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     public function testMoreThanNeededOperands()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $operands = new OperandsCollection([new QtiInteger(25), null]);
         $expression = $this->getFakeExpression();

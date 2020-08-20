@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
@@ -11,10 +12,8 @@ class MatchTableTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughMatchTableEntries()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            'A MatchTable object must contain at least one MatchTableEntry object.'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('A MatchTable object must contain at least one MatchTableEntry object.');
 
         new MatchTable(new MatchTableEntryCollection());
     }

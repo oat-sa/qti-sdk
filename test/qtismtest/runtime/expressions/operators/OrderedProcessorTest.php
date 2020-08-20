@@ -127,7 +127,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('string1'), new QtiString('string2')]);
         $operands[] = null;
         $processor = new OrderedProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -140,7 +140,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $operands[] = new QtiInteger(10);
         $processor = new OrderedProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -155,7 +155,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $operands[] = new RecordContainer();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

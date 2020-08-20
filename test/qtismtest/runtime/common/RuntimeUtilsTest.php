@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -66,10 +67,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testThrowTypingError($value, $expectedMsg)
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            $expectedMsg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMsg);
 
         Utils::throwTypingError($value);
     }

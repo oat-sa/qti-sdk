@@ -43,7 +43,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
 
     public function testNoDocumentElement()
     {
-        $this->setExpectedException(RenderingException::class);
+        $this->expectException(RenderingException::class);
 
         $doc = new DOMDocument('1.0', 'UTF-8');
         $renderer = new MarkupPostRenderer();

@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\php;
 
+use InvalidArgumentException;
 use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
@@ -77,7 +78,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
 
     public function testWriteScalarInvalidData()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScalar(new stdClass());
     }

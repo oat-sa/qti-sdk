@@ -70,7 +70,7 @@ class SumProcessorTest extends QtiSmTestCase
     {
         $sum = $this->createFakeSumComponent();
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)]);
         $sumProcessor = new SumProcessor($sum, $operands);
@@ -84,7 +84,7 @@ class SumProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::BOOLEAN, [new QtiBoolean(true), new QtiBoolean(false)]);
         $sumProcessor = new SumProcessor($sum, $operands);
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $result = $sumProcessor->process();
     }
 

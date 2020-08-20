@@ -28,7 +28,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         // This file does not exist.
         $uri = dirname(__FILE__) . '/../../../../samples/invalid/abcd.xml';
         $doc = new XmlDocument('2.1');
-        $this->setExpectedException(XmlStorageException::class);
+        $this->expectException(XmlStorageException::class);
         $doc->load($uri);
     }
 

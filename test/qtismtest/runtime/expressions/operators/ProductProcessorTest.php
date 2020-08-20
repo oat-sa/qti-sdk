@@ -13,6 +13,7 @@ use qtism\runtime\expressions\operators\ProductProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\common\Processable;
+use RuntimeException;
 
 class ProductProcessorTest extends QtiSmTestCase
 {
@@ -59,7 +60,7 @@ class ProductProcessorTest extends QtiSmTestCase
     {
         $product = $this->createFakeProductComponent();
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)]);
         $productProcessor = new ProductProcessor($product, $operands);
@@ -73,7 +74,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::BOOLEAN, [new QtiBoolean(true), new QtiBoolean(false)]);
         $productProcessor = new ProductProcessor($product, $operands);
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $result = $productProcessor->process();
     }
 
@@ -90,7 +91,7 @@ class ProductProcessorTest extends QtiSmTestCase
     {
         $product = $this->createFakeProductComponent();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $productProcessor = new ProductProcessor($product, $operands);
     }
 

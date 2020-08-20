@@ -88,7 +88,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testFiguresFromRefNoRef()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures">
@@ -104,7 +104,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testFiguresFromRefNonIntegerRef()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures">
@@ -129,7 +129,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testFiguresFromRefNegativeWhenSignificantFigureInUse()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures" roundingMode="significantFigures">
@@ -202,7 +202,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testNoOperands()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -230,7 +230,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testTooMuchOperands()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -244,7 +244,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongBaseType()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -258,7 +258,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongCardinality()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -272,7 +272,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongFiguresOne()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="significantFigures">
@@ -287,7 +287,7 @@ class RoundToProcessorTest extends QtiSmTestCase
 
     public function testWrongFiguresTwo()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
 
         $expr = $this->createComponentFromXml('
 			<roundTo figures="-1" roundingMode="decimalPlaces">

@@ -134,7 +134,7 @@ class ValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallNoValueIntegerExpected()
     {
-        $this->setExpectedException(UnmarshallingException::class);
+        $this->expectException(UnmarshallingException::class);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
         $element = $dom->documentElement;

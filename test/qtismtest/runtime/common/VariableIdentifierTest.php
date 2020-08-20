@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
 use qtism\runtime\common\VariableIdentifier;
 use qtismtest\QtiSmTestCase;
 
@@ -14,7 +15,7 @@ class VariableIdentifierTest extends QtiSmTestCase
      */
     public function testInvalidIdentifier($identifier)
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $v = new VariableIdentifier($identifier);
     }
 
@@ -73,37 +74,29 @@ class VariableIdentifierTest extends QtiSmTestCase
 
     public function testInvalidSequenceNumberOne()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The identifier 'Q01.bla.SCORE' is not a valid QTI Variable Name Identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The identifier 'Q01.bla.SCORE' is not a valid QTI Variable Name Identifier.");
         new VariableIdentifier('Q01.bla.SCORE');
     }
 
     public function testInvalidSequenceNumberTwo()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The identifier 'Q01.0.SCORE' is not a valid QTI Variable Name Identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The identifier 'Q01.0.SCORE' is not a valid QTI Variable Name Identifier.");
         new VariableIdentifier('Q01.0.SCORE');
     }
 
     public function testInvalidVariableName()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The identifier 'Q01.0. ' is not a valid QTI Variable Name Identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The identifier 'Q01.0. ' is not a valid QTI Variable Name Identifier.");
         new VariableIdentifier('Q01.0. ');
     }
 
     public function testInvalidPrefix()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The identifier ' .SCORE' is not a valid QTI Variable Name Identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The identifier ' .SCORE' is not a valid QTI Variable Name Identifier.");
         new VariableIdentifier(' .SCORE');
     }
 

@@ -12,21 +12,18 @@ class BeanPropertyTest extends QtiSmTestCase
 {
     public function testNoProperty()
     {
-        $this->setExpectedException(
-            BeanException::class,
-            "The class property with name 'prop' does not exist in class 'stdClass'.",
-            BeanException::NO_PROPERTY
-        );
+        $this->expectException(BeanException::class);
+        $this->expectExceptionMessage("The class property with name 'prop' does not exist in class 'stdClass'.");
+        $this->expectExceptionCode(BeanException::NO_PROPERTY);
 
         $beanProperty = new BeanProperty(stdClass::class, 'prop');
     }
 
     public function testPropertyNotAnnotated()
     {
-        $this->setExpectedException(
-            BeanException::class,
-            "The property with name 'anotherUselessProperty' for class '" . SimpleBean::class . "' is not annotated.",
-            BeanException::NO_PROPERTY
+        $this->expectException(BeanException::class);
+        $this->expectExceptionMessage("The property with name 'anotherUselessProperty' for class '" . SimpleBean::class . "' is not annotated.");
+        $this->expectExceptionCode(BeanException::NO_PROPERTY
         );
 
         $beanProperty = new BeanProperty(SimpleBean::class, 'anotherUselessProperty');

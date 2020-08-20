@@ -88,7 +88,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('string!'), new QtiBoolean(true)]);
         $processor = new DivideProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -97,7 +97,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiPoint(1, 2), new QtiBoolean(true)]);
         $processor = new DivideProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -106,7 +106,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['A' => new QtiInteger(1)]), new QtiInteger(10)]);
         $processor = new DivideProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -114,7 +114,7 @@ class DivideProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new DivideProcessor($expression, $operands);
     }
 
@@ -122,7 +122,7 @@ class DivideProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(11), new QtiInteger(12)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new DivideProcessor($expression, $operands);
     }
 

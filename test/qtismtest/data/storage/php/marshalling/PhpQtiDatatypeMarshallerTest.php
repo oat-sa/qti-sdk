@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\php\marshalling;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -32,7 +33,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 
     public function testMarshallWrongDataType()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new stdClass());
     }

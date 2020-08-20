@@ -41,10 +41,8 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection($initialVal);
         $processor = new RepeatProcessor($expression, $operands);
 
-        $this->setExpectedException(
-            OperatorProcessingException::class,
-            "The variable with name 'repeat' could not be resolved."
-        );
+        $this->expectException(OperatorProcessingException::class);
+        $this->expectExceptionMessage("The variable with name 'repeat' could not be resolved.");
 
         $processor->process();
     }
@@ -110,7 +108,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING);
 
         $processor = new RepeatProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -119,7 +117,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)])]);
         $processor = new RepeatProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -128,7 +126,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), new QtiFloat(10.3)]);
         $processor = new RepeatProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -136,7 +134,7 @@ class RepeatProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new RepeatProcessor($expression, $operands);
     }
 

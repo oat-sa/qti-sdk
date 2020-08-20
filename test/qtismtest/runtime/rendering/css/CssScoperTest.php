@@ -59,10 +59,8 @@ class CssScoperTest extends QtiSmTestCase
     {
         $cssScoper = new CssScoper();
 
-        $this->setExpectedException(
-            RenderingException::class,
-            "The CSS file '/root/css_input1.css' could not be open."
-        );
+        $this->expectException(RenderingException::class);
+        $this->expectExceptionMessage("The CSS file '/root/css_input1.css' could not be open.");
 
         $cssScoper->render('/root/css_input1.css');
     }

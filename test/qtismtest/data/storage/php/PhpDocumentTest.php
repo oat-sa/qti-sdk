@@ -249,7 +249,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
     public function testLoadBadData()
     {
-        $this->setExpectedException(PhpStorageException::class);
+        $this->expectException(PhpStorageException::class);
 
         $phpDoc = new PhpDocument();
         $phpDoc->load(self::samplesDir() . 'custom/php/baddata.php');
@@ -257,7 +257,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
     public function testLoadFromStringBadData()
     {
-        $this->setExpectedException(PhpStorageException::class);
+        $this->expectException(PhpStorageException::class);
 
         $phpDoc = new PhpDocument();
         $phpDoc->loadFromString('<?php $zorglub = "zorg";');
@@ -265,7 +265,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
     public function testLoadNoData()
     {
-        $this->setExpectedException(PhpStorageException::class);
+        $this->expectException(PhpStorageException::class);
 
         $phpDoc = new PhpDocument();
         $phpDoc->load('somewhere/in/antoine.php');
@@ -273,7 +273,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
     public function testCleanOutput()
     {
-        $this->setExpectedException(PhpStorageException::class);
+        $this->expectException(PhpStorageException::class);
 
         // Make sure that no output is present after this invalid data load.
         $phpDoc = new PhpDocument();
@@ -282,7 +282,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
     public function testCleanOutputFromString()
     {
-        $this->setExpectedException(PhpStorageException::class);
+        $this->expectException(PhpStorageException::class);
 
         // Make sure that no output is present after this invalid data load.
         $phpDoc = new PhpDocument();
@@ -291,7 +291,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
     public function testCleanOutputFromString2()
     {
-        $this->setExpectedException(PhpStorageException::class);
+        $this->expectException(PhpStorageException::class);
 
         // Make sure that no output is present after this invalid data load.
         $phpDoc = new PhpDocument();

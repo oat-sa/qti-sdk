@@ -101,7 +101,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -112,7 +112,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -123,7 +123,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -133,7 +133,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $point = new QtiPoint(1, 2);
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new InsideProcessor($expression, $operands);
     }
 
@@ -143,7 +143,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $point = new QtiPoint(1, 2);
         $expression = $this->createFakeExpression($point, $coords);
         $operands = new OperandsCollection([new QtiPoint(1, 2), new QtiPoint(2, 3)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new InsideProcessor($expression, $operands);
     }
 

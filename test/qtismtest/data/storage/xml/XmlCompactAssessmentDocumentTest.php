@@ -279,10 +279,8 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution()
     {
-        $this->setExpectedException(
-            XmlStorageException::class,
-            "An error occurred while unreferencing item reference with identifier 'Q01'."
-        );
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage("An error occurred while unreferencing item reference with identifier 'Q01'.");
 
         $doc = new XmlDocument('2.1');
         $file = self::samplesDir() . 'custom/tests/invalidassessmentitemref.xml';

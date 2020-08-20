@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
@@ -37,7 +38,7 @@ class MarshallerFactyoryTest extends QtiSmTestCase
 
     public function testFromInvalidObject()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $component = new stdClass();
         $factory = new Qti21MarshallerFactory();
         $marshaller = $factory->createMarshaller($component);

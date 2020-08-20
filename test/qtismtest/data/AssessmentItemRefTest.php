@@ -2,6 +2,7 @@
 
 namespace qtismtest\data;
 
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\AssessmentItemRef;
 use qtism\data\expressions\BaseValue;
@@ -17,10 +18,8 @@ class AssessmentItemRefTest extends QtiSmTestCase
 {
     public function testCreateAssessmentItemRefWrongIdentifier()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "'999' is not a valid QTI Identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
 
         $assessmentItemRef = new AssessmentItemRef('999', 'Nine Nine Nine');
     }
@@ -29,10 +28,8 @@ class AssessmentItemRefTest extends QtiSmTestCase
     {
         $assessmentItemRef = new AssessmentItemRef('nine', 'Nine Nine Nine');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Required must be a boolean, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Required must be a boolean, 'string' given.");
 
         $assessmentItemRef->setRequired('test');
     }
@@ -41,10 +38,8 @@ class AssessmentItemRefTest extends QtiSmTestCase
     {
         $assessmentItemRef = new AssessmentItemRef('nine', 'Nine Nine Nine');
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Fixed must be a boolean, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Fixed must be a boolean, 'string' given.");
 
         $assessmentItemRef->setFixed('test');
     }

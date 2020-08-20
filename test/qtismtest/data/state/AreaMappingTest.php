@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
@@ -13,10 +14,8 @@ class AreaMappingTest extends QtiSmTestCase
 {
     public function testCreateNoAreaMapEntries()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            'An AreaMapping object must contain at least one AreaMapEntry object. none given.'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('An AreaMapping object must contain at least one AreaMapEntry object. none given.');
 
         $mapping = new AreaMapping(
             new AreaMapEntryCollection(
@@ -35,10 +34,8 @@ class AreaMappingTest extends QtiSmTestCase
             )
         );
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The lowerBound argument must be a float or false if no lower bound, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The lowerBound argument must be a float or false if no lower bound, 'boolean' given.");
 
         $mapping->setLowerBound(true);
     }
@@ -53,10 +50,8 @@ class AreaMappingTest extends QtiSmTestCase
             )
         );
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The upperBound argument must be a float or false if no upper bound, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The upperBound argument must be a float or false if no upper bound, 'boolean' given.");
 
         $mapping->setUpperBound(true);
     }
@@ -71,10 +66,8 @@ class AreaMappingTest extends QtiSmTestCase
             )
         );
 
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "The defaultValue argument must be a numeric value, 'boolean'."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The defaultValue argument must be a numeric value, 'boolean'.");
 
         $mapping->setDefaultValue(true);
     }

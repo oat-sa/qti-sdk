@@ -116,7 +116,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(10.1);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $processor = new DeleteProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -127,7 +127,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $processor = new DeleteProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -138,7 +138,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(10);
         $operands[] = new QtiInteger(10);
         $processor = new DeleteProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -146,7 +146,7 @@ class DeleteProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new DeleteProcessor($expression, $operands);
     }
 
@@ -157,7 +157,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(10);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new DeleteProcessor($expression, $operands);
     }
 
