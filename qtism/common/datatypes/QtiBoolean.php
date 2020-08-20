@@ -30,7 +30,7 @@ use qtism\common\enums\Cardinality;
 /**
  * Represents the Boolean QTI Datatype.
  */
-class QtiBoolean extends QtiScalar implements QtiDatatype
+class QtiBoolean extends QtiScalar
 {
     /**
      * Check whether or not the intrinsic $value is a PHP boolean.

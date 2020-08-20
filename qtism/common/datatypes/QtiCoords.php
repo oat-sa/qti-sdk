@@ -25,14 +25,13 @@ namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
 use qtism\common\collections\IntegerCollection;
-use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
 /**
  * Represents the QTI Coords Datatype.
  */
-class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
+class QtiCoords extends IntegerCollection implements QtiDatatype
 {
     /**
      * A value from the Shape enumeration.
@@ -135,7 +134,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
         // - Transform coordinates in vertices.
         // -- Use of the "point in polygon" algorithm.
         $vertices = [];
-        $limit = count($this);
+        $limit = $this->count();
         for ($i = 0; $i < $limit; $i++) {
             $vertex = [];
             $vertex[] = $this[$i]; //x

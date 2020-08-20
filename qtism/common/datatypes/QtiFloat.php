@@ -30,7 +30,7 @@ use qtism\common\enums\Cardinality;
 /**
  * Represents the QTI Float datatype.
  */
-class QtiFloat extends QtiScalar implements QtiDatatype
+class QtiFloat extends QtiScalar
 {
     /**
      * Check whether or not $value is a Float object.

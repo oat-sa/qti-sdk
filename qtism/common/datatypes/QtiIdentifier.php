@@ -43,6 +43,9 @@ class QtiIdentifier extends QtiString
         if (is_string($value) !== true) {
             $msg = 'The Identifier Datatype only accepts to store identifier values.';
             throw new InvalidArgumentException($msg);
+        } elseif ($value === '') {
+            $msg = 'The Identifier Datatype do not accept empty strings as valid identifiers.';
+            throw new InvalidArgumentException($msg);
         }
     }
 

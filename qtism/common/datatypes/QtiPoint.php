@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
-use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
@@ -38,7 +37,7 @@ use qtism\common\enums\Cardinality;
  * and vertical (y-axis) positions respectively. The up/down and
  * left/right senses of the axes are context dependent.
  */
-class QtiPoint implements Comparable, QtiDatatype
+class QtiPoint implements QtiDatatype
 {
     /**
      * The position on the x-axis.

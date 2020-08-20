@@ -23,6 +23,8 @@
 
 namespace qtism\common\datatypes;
 
+use qtism\common\Comparable;
+
 /**
  * A simple interface aiming at implementing QTI datatypes. The following
  * QTI datatypes are implemented.
@@ -41,7 +43,7 @@ namespace qtism\common\datatypes;
  * * String
  * * Uri
  */
-interface QtiDatatype
+interface QtiDatatype extends Comparable
 {
     /**
      * Get the QTI baseType of the datatype instance.

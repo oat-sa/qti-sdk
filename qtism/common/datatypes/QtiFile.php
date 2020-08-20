@@ -23,7 +23,6 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\Comparable;
 use RuntimeException;
 
 /**
@@ -38,7 +37,7 @@ use RuntimeException;
  * of an interaction). The content type of the file is one
  * of the MIME types defined by [RFC2045].
  */
-interface QtiFile extends QtiDatatype, Comparable
+interface QtiFile extends QtiDatatype
 {
     /**
      * Get the sequence of bytes composing the file.

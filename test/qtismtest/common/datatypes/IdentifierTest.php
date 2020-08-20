@@ -14,4 +14,11 @@ class IdentifierTest extends QtiSmTestCase
         $this->expectExceptionMessage('The Identifier Datatype only accepts to store identifier values.');
         $float = new QtiIdentifier(1337);
     }
+
+    public function testEmptyIdentifier()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The Identifier Datatype do not accept empty strings as valid identifiers.');
+        $float = new QtiIdentifier('');
+    }
 }

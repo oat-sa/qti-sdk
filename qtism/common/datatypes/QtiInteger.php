@@ -35,7 +35,7 @@ use qtism\common\enums\Cardinality;
  * An integer value is a whole number in the range [-2147483648,2147483647].
  * This is the range of a twos-complement 32-bit integer.
  */
-class QtiInteger extends QtiScalar implements QtiDatatype
+class QtiInteger extends QtiScalar
 {
     /**
      * Checks whether or not $value is an integer compliant

@@ -30,7 +30,7 @@ use qtism\common\enums\Cardinality;
 /**
  * Represents the IntOrIdentifier QTI datatype.
  */
-class QtiIntOrIdentifier extends QtiScalar implements QtiDatatype
+class QtiIntOrIdentifier extends QtiScalar
 {
     /**
      * Checks whether or not $value is a valid integer or string to be

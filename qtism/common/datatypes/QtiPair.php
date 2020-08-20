@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
-use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
@@ -37,7 +36,7 @@ use qtism\common\utils\Format;
  * A pair value represents a pair of identifiers corresponding to an association between two
  * objects. The association is undirected so (A,B) and (B,A) are equivalent.
  */
-class QtiPair implements Comparable, QtiDatatype
+class QtiPair implements QtiDatatype
 {
     /**
      * The first identifier of the Pair.

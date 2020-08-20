@@ -32,10 +32,10 @@ use Exception;
 class MemoryStreamException extends StreamException
 {
     /**
-     * Create a new BinaryStreamException.
+     * Create a new MemoryStreamException.
      *
      * @param string $message The human-readable message describing the error.
-     * @param BinaryStream $source The BinaryStream object where in the error occurred.
+     * @param IStream $source The IStream object where in the error occurred.
      * @param integer $code A code describing the error.
      * @param Exception $previous An optional previous exception.
      */

@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
-use qtism\common\Comparable;
 
 /**
  * The base class for all Scalar QTI datatypes. The following QTI datatypes
@@ -38,7 +37,7 @@ use qtism\common\Comparable;
  * * String
  * * Uri
  */
-abstract class QtiScalar implements Comparable
+abstract class QtiScalar implements QtiDatatype
 {
     /**
      * The value of the Scalar object.
