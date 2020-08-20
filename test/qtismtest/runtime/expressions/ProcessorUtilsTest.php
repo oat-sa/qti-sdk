@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions;
 
+use InvalidArgumentException;
 use qtism\runtime\expressions\Utils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
@@ -21,7 +22,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
      */
     public function testSanitizeVariableRefInvalid($value)
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $ref = Utils::sanitizeVariableRef($value);
     }
 

@@ -105,7 +105,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('10');
         $operands[] = new QtiInteger(100);
         $processor = new SubstringProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -116,7 +116,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('Wrong Cardinality');
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('Wrong'), new QtiString('Cardinality')]);
         $processor = new SubstringProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -124,7 +124,7 @@ class SubstringProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(false);
         $operands = new OperandsCollection([new QtiString('only 1 operand')]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new SubstringProcessor($expression, $operands);
     }
 
@@ -132,7 +132,7 @@ class SubstringProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(false);
         $operands = new OperandsCollection([new QtiString('exactly'), new QtiString('three'), new QtiString('operands')]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new SubstringProcessor($expression, $operands);
     }
 

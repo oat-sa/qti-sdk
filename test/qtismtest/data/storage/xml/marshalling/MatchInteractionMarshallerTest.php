@@ -107,10 +107,8 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element.");
 
         $marshaller->unmarshall($element);
     }
@@ -129,10 +127,8 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A matchInteraction element must contain exactly 2 simpleMatchSet elements, 1' given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A matchInteraction element must contain exactly 2 simpleMatchSet elements, 1' given.");
 
         $marshaller->unmarshall($element);
     }
@@ -279,7 +275,8 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $expectedMsg = "The mandatory attribute 'shuffle' is missing from the 'matchInteraction' element.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
     }
@@ -303,7 +300,8 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $expectedMsg = "The mandatory attribute 'maxAssociations' is missing from the 'matchInteraction' element.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
     }

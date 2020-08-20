@@ -106,7 +106,8 @@ class GapTextMarshallerTest extends QtiSmTestCase
         // to unmarshall a gapText containing other stuff than plain/text
         // in a QTI 2.0 context.
         $expectedMsg = "A 'gapText' element must only contain text. Children elements found.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="0">Some text and a <printedVariable identifier="myVar"/></gapText>
 	    ');
@@ -118,7 +119,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
     public function testUnmarshallInvalid21()
     {
         // Only textRun and/or printedVariable.
-        $this->setExpectedException(UnmarshallingException::class);
+        $this->expectException(UnmarshallingException::class);
         $element = $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
 	    ');

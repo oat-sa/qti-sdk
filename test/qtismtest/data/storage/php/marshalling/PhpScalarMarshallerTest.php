@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\php\marshalling;
 
+use InvalidArgumentException;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 use stdClass;
@@ -25,7 +26,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 
     public function testMarshallWrongDataType()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpScalarMarshaller($ctx, new stdClass());
     }

@@ -83,10 +83,8 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'associateInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'associateInteraction' element.");
 
         $marshaller->unmarshall($element);
     }
@@ -187,7 +185,8 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $expectedMsg = "The mandatory attribute 'maxAssociations' is missing from the 'associateInteraction' element.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
     }
@@ -206,7 +205,8 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $expectedMsg = "The mandatory attribute 'shuffle' is missing from the 'associateInteraction' element.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
     }

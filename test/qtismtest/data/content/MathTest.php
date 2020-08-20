@@ -4,6 +4,7 @@ namespace qtismtest\data\content;
 
 use qtism\data\content\Math;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
 class MathTest extends QtiSmTestCase
 {
@@ -12,7 +13,7 @@ class MathTest extends QtiSmTestCase
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"></m:mathS>';
         $math = new Math($xml);
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $dom = $math->getXml();
     }
 
@@ -21,7 +22,7 @@ class MathTest extends QtiSmTestCase
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/YogourtML"></m:math>';
         $math = new Math($xml);
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $dom = $math->getXml();
     }
 

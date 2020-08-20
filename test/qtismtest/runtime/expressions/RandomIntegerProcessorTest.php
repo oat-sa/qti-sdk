@@ -39,7 +39,7 @@ class RandomIntegerProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createComponentFromXml('<randomInteger min="100" max="10"/>');
         $processor = new RandomIntegerProcessor($expression);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 }

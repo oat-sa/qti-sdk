@@ -3,6 +3,7 @@
 namespace qtismtest\common\collections;
 
 use DateTime;
+use InvalidArgumentException;
 use qtism\common\collections\Container;
 use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiBoolean;
@@ -71,7 +72,7 @@ class ContainerTest extends QtiSmTestCase
     {
         $container = $this->getContainer();
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $container[] = $value;
     }
 
@@ -277,7 +278,8 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testInvalidDatatype($value, $expectedMsg)
     {
-        $this->setExpectedException(\InvalidArgumentException::class, $expectedMsg);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $container = new Container([$value]);
     }
 
@@ -317,10 +319,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDetachNotFound()
     {
-        $this->setExpectedException(
-            \UnexpectedValueException::class,
-            "The object you want to detach could not be found in the collection."
-        );
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("The object you want to detach could not be found in the collection.");
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -329,20 +329,16 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDetachNotObject()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "You can only detach 'objects' into an AbstractCollection, 'NULL' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only detach 'objects' into an AbstractCollection, 'NULL' given.");
         $container = new Container();
         $container->detach(null);
     }
 
     public function testReplaceNotFound()
     {
-        $this->setExpectedException(
-            \UnexpectedValueException::class,
-            "The object you want to replace could not be found."
-        );
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("The object you want to replace could not be found.");
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -351,10 +347,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testReplaceToReplaceNotObject()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only replace 'objects' into an AbstractCollection, 'NULL' given.");
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -363,10 +357,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testReplaceReplacementNotObject()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only replace 'objects' into an AbstractCollection, 'NULL' given.");
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -375,10 +367,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testMergeNotCompliantTypes()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Only collections with compliant types can be merged ('qtism\common\collections\Container' vs 'qtism\common\collections\StringCollection')."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Only collections with compliant types can be merged ('qtism\common\collections\Container' vs 'qtism\common\collections\StringCollection').");
 
         $container1 = new Container();
         $container2 = new StringCollection();
@@ -387,10 +377,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDiffNotCompliantTypes()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Difference may apply only on two collections of the same type."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Difference may apply only on two collections of the same type.");
 
         $container1 = new Container();
         $container2 = new StringCollection();
@@ -399,10 +387,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testIntersectNotCompliantTypes()
     {
-        $this->setExpectedException(
-            \InvalidArgumentException::class,
-            "Intersection may apply only on two collections of the same type."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Intersection may apply only on two collections of the same type.");
 
         $container1 = new Container();
         $container2 = new StringCollection();

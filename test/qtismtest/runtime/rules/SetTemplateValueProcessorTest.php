@@ -84,7 +84,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $state = new State([$tpl1]);
         $processor->setState($state);
 
-        $this->setExpectedException(RuleProcessingException::class);
+        $this->expectException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -101,7 +101,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException(RuleProcessingException::class);
+        $this->expectException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -190,9 +190,9 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $state = new State([$tpl]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            "No variable with identifier 'TPLXXXX' to be set in the current state.",
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("No variable with identifier 'TPLXXXX' to be set in the current state.");
+        $this->expectExceptionCode(
             RuleProcessingException::NONEXISTENT_VARIABLE
         );
 

@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\rules;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -120,7 +121,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
 			</responseCondition>
 		');
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $engine = new OutcomeConditionProcessor($rule);
     }
 

@@ -41,10 +41,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     {
         $manager = new FileSystemFileManager('/root');
 
-        $this->setExpectedException(
-            FileManagerException::class,
-            "An error occurred while creating a QTI FileSystemFile object."
-        );
+        $this->expectException(FileManagerException::class);
+        $this->expectExceptionMessage("An error occurred while creating a QTI FileSystemFile object.");
 
         $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
     }
@@ -53,10 +51,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     {
         $manager = new FileSystemFileManager('/root');
 
-        $this->setExpectedException(
-            FileManagerException::class,
-            "An error occurred while creating a QTI FileSystemFile object."
-        );
+        $this->expectException(FileManagerException::class);
+        $this->expectExceptionMessage("An error occurred while creating a QTI FileSystemFile object.");
 
         $manager->createFromData('Some <em>text</em>...', 'text/html');
     }
@@ -95,10 +91,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
         unlink($mFile->getPath());
 
-        $this->setExpectedException(
-            FileManagerException::class,
-            "An error occurred while retrieving a QTI FileSystemFile object."
-        );
+        $this->expectException(FileManagerException::class);
+        $this->expectExceptionMessage("An error occurred while retrieving a QTI FileSystemFile object.");
 
         $manager->retrieve($mFile->getIdentifier());
     }
@@ -112,9 +106,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
         unlink($mFile->getPath());
 
-        $this->setExpectedException(
-            FileManagerException::class
-        );
+        $this->expectException(FileManagerException::class);
 
         $manager->delete($mFile);
     }

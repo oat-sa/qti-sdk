@@ -114,7 +114,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(UnmarshallingException::class);
+        $this->expectException(UnmarshallingException::class);
         $component = $marshaller->unmarshall($element);
     }
 }

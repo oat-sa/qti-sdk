@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\common;
 
 use DOMDocument;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
@@ -11,6 +12,7 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\RecordContainer;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
 class RecordContainerTest extends QtiSmTestCase
 {
@@ -42,27 +44,27 @@ class RecordContainerTest extends QtiSmTestCase
 
     public function testInvalidInstantiationOne()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $record = new RecordContainer([new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
     }
 
     public function testInvalidUseOne()
     {
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $record = new RecordContainer();
         $record[] = new QtiString('string');
     }
 
     public function testInvalidUseTwo()
     {
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $record = new RecordContainer();
         $record[111] = new QtiString('string');
     }
 
     public function testInvalidUseThree()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         // try with a datatype not supported by the QTI Runtime Model.
         $record = new RecordContainer();
         $record['document'] = new DOMDocument();
@@ -97,7 +99,7 @@ class RecordContainerTest extends QtiSmTestCase
         $value->setPartOfRecord(true);
         $valueCollection[] = $value;
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $record = RecordContainer::createFromDataModel($valueCollection);
     }
 }

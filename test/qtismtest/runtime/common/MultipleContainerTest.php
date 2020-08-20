@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
@@ -34,19 +35,19 @@ class MultipleContainerTest extends QtiSmTestCase
 
     public function testCreationEmptyWrongBaseType1()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $container = new MultipleContainer('invalid');
     }
 
     public function testCreationEmptyWrongBaseType2()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $container = new MultipleContainer(14);
     }
 
     public function testCreationWithWrongValues()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $data = [new QtiPoint(20, 20)];
         $container = new MultipleContainer(BaseType::DURATION, $data);
     }
@@ -80,7 +81,7 @@ class MultipleContainerTest extends QtiSmTestCase
      */
     public function testCreateFromDataModelInvalid($baseType, ValueCollection $valueCollection)
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $container = MultipleContainer::createFromDataModel($valueCollection, $baseType);
     }
 

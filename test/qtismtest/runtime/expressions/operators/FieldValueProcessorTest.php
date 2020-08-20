@@ -18,7 +18,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
     }
 
@@ -28,7 +28,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new RecordContainer();
         $operands[] = new RecordContainer();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
     }
 
@@ -50,7 +50,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         // null value as operand.
         $operands[] = null;
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
         $result = $processor->process();
     }
@@ -62,7 +62,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10);
         $processor = new FieldValueProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -73,7 +73,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiPoint(1, 2);
         $processor = new FieldValueProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -85,7 +85,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
 
         // Wrong container (Multiple, Ordered)
         $processor = new FieldValueProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

@@ -110,17 +110,15 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     public function testUnmarshallInvalid($input)
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->setExpectedException(UnmarshallingException::class);
+        $this->expectException(UnmarshallingException::class);
         $unmarshaller->unmarshall($input);
     }
 
     public function testUnmarshallNoAssociative()
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The '". Unmarshaller::class."::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The '". Unmarshaller::class."::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given.");
         $unmarshaller->unmarshall(true);
     }
 
@@ -128,10 +126,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "Unknown QTI baseType 'unknownbasetype'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("Unknown QTI baseType 'unknownbasetype'.");
 
         $unmarshaller->unmarshall('{ "list" : { "unknownbasetype" : ["_id1", "id2", "ID3"] } }');
     }
@@ -140,10 +136,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "A value does not satisfy its baseType."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A value does not satisfy its baseType.");
 
         $unmarshaller->unmarshall('{ "list" : { "identifier" : [true, "id2", "ID3"] } }');
     }

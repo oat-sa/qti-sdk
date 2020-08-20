@@ -124,9 +124,9 @@ class MapResponseProcessorTest extends QtiSmTestCase
 
     public function testVariableNotDefined()
     {
-        $this->setExpectedException(
-            ExpressionProcessingException::class,
-            "No variable with identifier 'INVALID' could be found while processing MapResponse.",
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage("No variable with identifier 'INVALID' could be found while processing MapResponse.");
+        $this->expectExceptionCode(
             ExpressionProcessingException::NONEXISTENT_VARIABLE
         );
 
@@ -228,13 +228,13 @@ class MapResponseProcessorTest extends QtiSmTestCase
         // Empty state.
         // An exception is raised because no RESPONSE variable found.
         $state->reset();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $mapResponseProcessor->process();
     }
 
     public function testOutcomeDeclaration()
     {
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $variableDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="response1" baseType="integer" cardinality="multiple">
 				<mapping>

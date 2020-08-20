@@ -222,7 +222,8 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $component->setLookupTable($matchTable);
 
         $expectedMsg = "No mapping entry found for QTI class name 'matchTable'.";
-        $this->setExpectedException(MarshallerNotFoundException::class, $expectedMsg);
+        $this->expectException(MarshallerNotFoundException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
     }
@@ -390,7 +391,8 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $expectedMsg = "No mapping entry found for QTI class name 'matchTable'.";
-        $this->setExpectedException(MarshallerNotFoundException::class, $expectedMsg);
+        $this->expectException(MarshallerNotFoundException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
     }

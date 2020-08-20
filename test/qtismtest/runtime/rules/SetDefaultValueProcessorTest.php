@@ -66,9 +66,9 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $state = new State();
         $processor->setState($state);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            "No variable with identifier 'RESPONSE' to be set in the current state.",
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("No variable with identifier 'RESPONSE' to be set in the current state.");
+        $this->expectExceptionCode(
             RuleProcessingException::NONEXISTENT_VARIABLE
         );
 
@@ -88,9 +88,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $state = new State([$response]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            RuleProcessingException::class
-        );
+        $this->expectException(RuleProcessingException::class);
 
         $processor->process();
     }

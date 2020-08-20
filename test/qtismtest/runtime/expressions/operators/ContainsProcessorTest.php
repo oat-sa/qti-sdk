@@ -390,7 +390,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('identifier3'), new QtiString('identifier4'), null, new QtiString('identifier2')]);
         $operands[] = new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('identifier3'), new QtiIdentifier('identifier2')]);
         $processor = new ContainsProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -401,7 +401,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(25.0)]);
         $processor = new ContainsProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -412,7 +412,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $processor = new ContainsProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -423,7 +423,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $operands[] = new RecordContainer(['1' => new QtiInteger(1), '2' => new QtiInteger(2)]);
         $processor = new ContainsProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -431,7 +431,7 @@ class ContainsProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)])]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new ContainsProcessor($expression, $operands);
     }
 
@@ -442,7 +442,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(25)]);
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(25)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new ContainsProcessor($expression, $operands);
     }
 

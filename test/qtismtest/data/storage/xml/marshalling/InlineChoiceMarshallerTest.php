@@ -87,7 +87,8 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
     public function testUnmarshallErrorIfPrintedVariable20()
     {
         $expectedMsg = "An 'inlineChoice' element must only contain text. Children elements found.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
 
         $element = $this->createDOMElement('<inlineChoice identifier="choice1">var: <printedVariable identifier="pr1"/></inlineChoice>');
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);

@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\php;
 
+use InvalidArgumentException;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpVariable;
 use qtismtest\QtiSmTestCase;
@@ -57,7 +58,7 @@ class PhpArgumentTest extends QtiSmTestCase
 
     public function testObject()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $arg = new PhpArgument(new stdClass());
     }
 }

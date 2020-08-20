@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
@@ -11,7 +12,9 @@ use qtism\common\datatypes\QtiShape;
 use qtism\common\enums\BaseType;
 use qtism\data\storage\Utils;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 use stdClass;
+use UnexpectedValueException;
 
 class UtilsTest extends QtiSmTestCase
 {
@@ -30,7 +33,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToIntegerInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
     }
 
@@ -49,7 +52,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToFloatInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
     }
 
@@ -83,7 +86,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testIntOrIdentifierInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
     }
 
@@ -92,7 +95,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToBooleanInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
     }
 
@@ -113,7 +116,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToPointInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::POINT);
     }
 
@@ -137,7 +140,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToDurationInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::DURATION);
     }
 
@@ -157,7 +160,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToPairInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::PAIR);
     }
 
@@ -177,7 +180,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToDirectedPairInvalid($string)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
     }
 
@@ -202,7 +205,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToCoordsInvalid($string, $shape)
     {
-        $this->setExpectedException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $coords = Utils::stringToCoords($string, $shape);
     }
 
@@ -211,7 +214,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testStringToCoordsInvalidShapes($string, $shape)
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $coords = Utils::stringToCoords($string, $shape);
     }
 
@@ -228,19 +231,19 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testInvalidUriToSanitize($uri)
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $uri = Utils::sanitizeUri($uri);
     }
 
     public function testUnsupportedFile()
     {
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         Utils::stringToDatatype('not supported', BaseType::FILE);
     }
 
     public function testUnknownType()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         Utils::stringToDatatype('test', 'test');
     }
 

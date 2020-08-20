@@ -39,7 +39,7 @@ class RandomFloatProcessorTest extends QtiSmTestCase
         $processor = new RandomFloatProcessor($expression);
         $processor->setExpression($expression);
 
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 }

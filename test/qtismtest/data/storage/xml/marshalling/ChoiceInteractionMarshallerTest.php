@@ -82,10 +82,8 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
             </choiceInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the choiceInteraction element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the choiceInteraction element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -225,7 +223,8 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $expectedMsg = "The mandatory 'shuffle' attribute is missing from the choiceInteraction element.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
 
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $marshaller->unmarshall($element);
@@ -242,10 +241,8 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 	        </choiceInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'maxChoices' attribute is missing from the choiceInteraction element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'maxChoices' attribute is missing from the choiceInteraction element.");
 
         $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }

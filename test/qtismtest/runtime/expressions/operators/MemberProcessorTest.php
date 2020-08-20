@@ -84,7 +84,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::IDENTIFIER, [new QtiIdentifier('String2'), new QtiIdentifier('String1'), null]);
         $processor = new MemberProcessor($expression, $operands);
 
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -95,7 +95,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPair('A', 'B');
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
         $processor = new MemberProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -106,7 +106,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(13, 37)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
         $processor = new MemberProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -117,7 +117,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(13, 37);
         $operands[] = new RecordContainer(['key' => new QtiString('value')]);
         $processor = new MemberProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -126,7 +126,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
         $operands[] = new QtiPoint(13, 37);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new MemberProcessor($expression, $operands);
     }
 
@@ -137,7 +137,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(13, 37);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new MemberProcessor($expression, $operands);
     }
 

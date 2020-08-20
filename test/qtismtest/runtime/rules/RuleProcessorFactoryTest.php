@@ -5,6 +5,7 @@ namespace qtismtest\runtime\rules;
 use qtism\runtime\rules\RuleProcessorFactory;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rules\SetOutcomeValueProcessor;
+use RuntimeException;
 
 class RuleProcessorFactoryTest extends QtiSmTestCase
 {
@@ -31,7 +32,7 @@ class RuleProcessorFactoryTest extends QtiSmTestCase
 			</product>');
 
         $factory = new RuleProcessorFactory();
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $processor = $factory->createProcessor($rule);
     }
 }

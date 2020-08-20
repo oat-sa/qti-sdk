@@ -5,6 +5,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\XInclude;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
 class XIncludeMarshallerTest extends QtiSmTestCase
 {
@@ -38,7 +39,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->setExpectedException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $xml = $xinclude->getXml();
     }
 }

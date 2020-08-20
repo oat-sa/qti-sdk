@@ -3,6 +3,7 @@
 namespace qtismtest\common\datatypes;
 
 use DateInterval;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtismtest\QtiSmTestCase;
 
@@ -22,7 +23,7 @@ class DurationTest extends QtiSmTestCase
      */
     public function testInvalidDurationCreation($intervalSpec)
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $duration = new QtiDuration($intervalSpec);
     }
 

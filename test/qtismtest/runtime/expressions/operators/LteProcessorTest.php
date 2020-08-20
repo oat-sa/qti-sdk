@@ -58,7 +58,7 @@ class LteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(1);
         $operands[] = new QtiBoolean(true);
         $processor = new LteProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -69,7 +69,7 @@ class LteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(1, 2);
         $operands[] = new QtiInteger(2);
         $processor = new LteProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -80,7 +80,7 @@ class LteProcessorTest extends QtiSmTestCase
         $operands[] = new RecordContainer(['A' => new QtiInteger(1)]);
         $operands[] = new QtiInteger(2);
         $processor = new LteProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -88,7 +88,7 @@ class LteProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new LteProcessor($expression, $operands);
     }
 
@@ -96,7 +96,7 @@ class LteProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new LteProcessor($expression, $operands);
     }
 

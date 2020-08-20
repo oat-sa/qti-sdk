@@ -614,9 +614,9 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution()
     {
-        $this->setExpectedException(
-            XmlStorageException::class,
-            "An error occurred while unreferencing item reference with identifier 'Q01'.",
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage("An error occurred while unreferencing item reference with identifier 'Q01'.");
+        $this->expectExceptionCode(
             XmlStorageException::RESOLUTION
         );
 
@@ -696,7 +696,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     public function testLoadAssociationValidityConstraintsInvalidAgainstXsd()
     {
-        $this->setExpectedException(XmlStorageException::class);
+        $this->expectException(XmlStorageException::class);
 
         $doc = new XmlCompactDocument('2.1');
         $file = self::samplesDir() . 'custom/runtime/validate_response/association_constraints_xsd_invalid.xml';

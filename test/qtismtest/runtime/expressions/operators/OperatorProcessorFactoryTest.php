@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
@@ -53,7 +54,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $expression = $this->createComponentFromXml('<baseValue baseType="string">String!</baseValue>');
         $factory = new OperatorProcessorFactory();
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $processor = $factory->createProcessor($expression);
     }
 
@@ -85,10 +86,8 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new OperatorProcessorFactory();
 
-        $this->setExpectedException(
-            \RuntimeException::class,
-            "Only custom operators with a 'class' attribute value can be processed."
-        );
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage("Only custom operators with a 'class' attribute value can be processed.");
 
         $factory->createProcessor($expression);
     }
@@ -104,10 +103,8 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new OperatorProcessorFactory();
 
-        $this->setExpectedException(
-            \RuntimeException::class,
-            "No custom operator implementation found for class 'org.qtism.test.Unknown'"
-        );
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage("No custom operator implementation found for class 'org.qtism.test.Unknown'");
 
         $factory->createProcessor($expression);
     }

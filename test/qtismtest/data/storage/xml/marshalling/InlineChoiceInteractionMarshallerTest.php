@@ -95,10 +95,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
             </inlineChoiceInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -116,10 +114,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
             </inlineChoiceInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The value of the attribute 'responseIdentifier' for element 'inlineChoiceInteraction' is not a valid identifier."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the attribute 'responseIdentifier' for element 'inlineChoiceInteraction' is not a valid identifier.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -137,10 +133,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
             </inlineChoiceInteraction>
         ');
 
-        $this->setExpectedException(
-            UnmarshallingException::class,
-            "The mandatory 'responseIdentifier' attribute is missing from the 'inlineChoiceInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'inlineChoiceInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -171,7 +165,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
     public function testUnmarshallErrorIfoShuffle20()
     {
         $expectedMsg = "The mandatory 'shuffle' attribute is missing from the 'inlineChoiceInteraction' element.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
 
         $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE">

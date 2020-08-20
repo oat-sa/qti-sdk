@@ -93,7 +93,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10);
         $processor = new RandomProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -103,7 +103,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new RecordContainer(['A' => new QtiInteger(1)]);
         $processor = new RandomProcessor($expression, $operands);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -111,7 +111,7 @@ class RandomProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
     }
@@ -122,7 +122,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new MultipleContainer(BaseType::PAIR);
         $operands[] = new MultipleContainer(BaseType::PAIR);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
     }

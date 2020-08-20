@@ -47,7 +47,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
 
-        $this->setExpectedException(\LogicException::class, 'Cannot resolve template location before loading any file.');
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cannot resolve template location before loading any file.');
         $doc->resolveTemplateLocation();
     }
 
@@ -67,7 +68,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $doc->load($file, true);
 
-        $this->setExpectedException(XmlStorageException::class);
+        $this->expectException(XmlStorageException::class);
         $doc->resolveTemplateLocation();
     }
 
@@ -95,7 +96,9 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $doc->load($file, true);
 
-        $this->setExpectedException(XmlStorageException::class, "'responseProcessingZ' components are not supported in QTI version '2.1.0'.", XmlStorageException::VERSION);
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage("'responseProcessingZ' components are not supported in QTI version '2.1.0'.");
+        $this->expectExceptionCode( XmlStorageException::VERSION);
         $doc->resolveTemplateLocation();
     }
 
@@ -123,7 +126,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $doc->load($file, true);
 
-        $this->setExpectedException(XmlStorageException::class, null, XmlStorageException::XSD_VALIDATION);
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionCode(XmlStorageException::XSD_VALIDATION);
         $doc->resolveTemplateLocation(true);
     }
 

@@ -42,7 +42,7 @@ class MinProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $result);
 
         $rec['A'] = new QtiInteger(1);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

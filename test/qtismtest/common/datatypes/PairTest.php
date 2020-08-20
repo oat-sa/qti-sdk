@@ -2,6 +2,7 @@
 
 namespace qtismtest\common\datatypes;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiPair;
 use qtismtest\QtiSmTestCase;
 
@@ -25,13 +26,13 @@ class PairTest extends QtiSmTestCase
 
     public function testInvalidFirstIdentifier()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $pair = new QtiPair('_33', '33tt');
     }
 
     public function testInvalidSecondIdentifier()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $pair = new QtiPair('33tt', '_33');
     }
 }

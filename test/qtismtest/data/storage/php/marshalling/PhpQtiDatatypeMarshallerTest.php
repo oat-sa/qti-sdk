@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\php\marshalling;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -35,7 +36,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 
     public function testMarshallWrongDataType()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new stdClass());
     }
@@ -57,10 +58,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiInteger(1337));
 
-        $this->setExpectedException(
-            PhpMarshallingException::class,
-            "Cannot deal with QtiDatatype '" . QtiInteger::class . "'"
-        );
+        $this->expectException(PhpMarshallingException::class);
+        $this->expectExceptionMessage("Cannot deal with QtiDatatype '" . QtiInteger::class . "'");
 
         $marshaller->marshall();
     }
@@ -71,10 +70,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiCoords(QtiShape::CIRCLE, [10, 10, 5]));
 
         $this->getStream()->close();
-        $this->setExpectedException(
-            PhpMarshallingException::class,
-            "An error occurred while marshalling a QtiDatatype object."
-        );
+        $this->expectException(PhpMarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
 
         $marshaller->marshall();
     }
@@ -85,10 +82,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiPair('A', 'B'));
 
         $this->getStream()->close();
-        $this->setExpectedException(
-            PhpMarshallingException::class,
-            "An error occurred while marshalling a QtiDatatype object."
-        );
+        $this->expectException(PhpMarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
 
         $marshaller->marshall();
     }
@@ -99,10 +94,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiDuration("PT30S"));
 
         $this->getStream()->close();
-        $this->setExpectedException(
-            PhpMarshallingException::class,
-            "An error occurred while marshalling a QtiDatatype object."
-        );
+        $this->expectException(PhpMarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
 
         $marshaller->marshall();
     }
@@ -113,10 +106,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiIdentifier("MYID"));
 
         $this->getStream()->close();
-        $this->setExpectedException(
-            PhpMarshallingException::class,
-            "An error occurred while marshalling a QtiDatatype object."
-        );
+        $this->expectException(PhpMarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
 
         $marshaller->marshall();
     }
@@ -127,10 +118,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiPoint(9, 9));
 
         $this->getStream()->close();
-        $this->setExpectedException(
-            PhpMarshallingException::class,
-            "An error occurred while marshalling a QtiDatatype object."
-        );
+        $this->expectException(PhpMarshallingException::class);
+        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
 
         $marshaller->marshall();
     }

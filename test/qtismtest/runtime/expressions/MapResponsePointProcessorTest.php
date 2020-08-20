@@ -99,7 +99,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $processor = new MapResponsePointProcessor($expr);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -153,7 +153,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -182,7 +182,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -244,7 +244,9 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException(ExpressionProcessingException::class, 'The MapResponsePoint expression cannot be applied to RECORD variables.', ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage('The MapResponsePoint expression cannot be applied to RECORD variables.');
+        $this->expectExceptionCode( ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
         $result = $processor->process();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\state;
 
+use OutOfBoundsException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
@@ -70,7 +71,7 @@ class ShufflingTest extends QtiSmTestCase
         $group2 = new ShufflingGroup($identifiers2);
         $shuffling = new Shuffling('RESPONSE', new ShufflingGroupCollection([$group1, $group2]));
 
-        $this->setExpectedException(\OutOfBoundsException::class);
+        $this->expectException(OutOfBoundsException::class);
         $identifier = $shuffling->getIdentifierAt($index);
     }
 

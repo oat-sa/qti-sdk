@@ -67,7 +67,8 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $expectedMsg = "The mandatory attribute 'paramVariable' is missing from element 'templateDeclaration'.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }
 
@@ -78,7 +79,8 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $expectedMsg = "The mandatory attribute 'mathVariable' is missing from element 'templateDeclaration'.";
-        $this->setExpectedException(UnmarshallingException::class, $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }
 }
