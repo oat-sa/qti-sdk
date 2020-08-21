@@ -44,7 +44,7 @@ class DrawingInteraction extends BlockInteraction
      * place is given as an object which must be of an image type, as
      * specified by the type attribute.
      *
-     * @var Object
+     * @var QtiObject
      * @qtism-bean-property
      */
     private $object;
@@ -53,7 +53,7 @@ class DrawingInteraction extends BlockInteraction
      * Create a new DrawingInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param Object $object The image that acts as a canvas for drawing.
+     * @param QtiObject $object The image that acts as a canvas for drawing.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -69,7 +69,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * Set the image that acts as a canvas for drawing.
      *
-     * @param Object $object An Object object representing an image.
+     * @param QtiObject $object An Object object representing an image.
      */
     public function setObject(QtiObject $object)
     {
@@ -79,7 +79,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * Get the image that acts as a canvas for drawing.
      *
-     * @return Object An Object object representing an image.
+     * @return QtiObject An Object object representing an image.
      */
     public function getObject()
     {

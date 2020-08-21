@@ -35,6 +35,8 @@ use qtism\common\enums\Cardinality;
 class OrderedContainer extends MultipleContainer implements QtiDatatype
 {
     /**
+     * @param mixed $obj
+     * @return bool
      * @see \qtism\common\collections\Container::equals()
      */
     public function equals($obj)

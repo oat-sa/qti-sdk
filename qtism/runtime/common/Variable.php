@@ -24,6 +24,10 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ValueCollection;
@@ -60,14 +64,14 @@ abstract class Variable
     /**
      * The value of the variable.
      *
-     * @var int|float|double|bool|string|Duration|Point|Pair|DirectedPair|Container
+     * @var int|float|bool|string|Duration|Point|Pair|DirectedPair|Container
      */
     private $value;
 
     /**
      * The default value of the variable.
      *
-     * @var int|float|double|bool|string|Duration|Point|Pair|DirectedPair|Container
+     * @var int|float|bool|string|Duration|Point|Pair|DirectedPair|Container
      */
     private $defaultValue = null;
 
@@ -78,7 +82,7 @@ abstract class Variable
      * @param string $identifier An identifier.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-     * @param int|float|double|bool|string|Duration|Point|Pair|DirectedPair $value A value compliant with the QTI Runtime Model.
+     * @param int|float|bool|string|QtiDuration|QtiPoint|QtiPair|QtiDirectedPair|null $value A value compliant with the QTI Runtime Model.
      * @throws InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
      */
     public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
@@ -101,7 +105,6 @@ abstract class Variable
      *
      * * If the variable is supposed to contain a Container (Multiple, Ordered or Record cardinality), the variable's value becomes an empty container.
      * * If the variable is scalar (Cardinality single), the value becomes NULL.
-     *
      */
     public function initialize()
     {
@@ -212,7 +215,7 @@ abstract class Variable
     /**
      * Get the default value of the Variable.
      *
-     * @return int|float|double|bool|string|Duration|Point|Pair|DirectedPair $value A value compliant with the QTI Runtime Model.
+     * @return int|float|double|bool|string|QtiDuration|QtiPoint|QtiPair|QtiDirectedPair|null $value A value compliant with the QTI Runtime Model.
      */
     public function getDefaultValue()
     {
@@ -506,7 +509,6 @@ abstract class Variable
     /**
      * Set the value of the Variable with its default value. If no default
      * value was given, the value of the variable becomes NULL.
-     *
      */
     public function applyDefaultValue()
     {

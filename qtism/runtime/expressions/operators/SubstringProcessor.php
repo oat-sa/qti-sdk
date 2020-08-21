@@ -54,7 +54,7 @@ class SubstringProcessor extends OperatorProcessor
     /**
      * Process the Substring operator.
      *
-     * @return bool|null Whether the first sub-expression is a substring of the second sub-expression or NULL if either sub-expression is NULL.
+     * @return QtiBoolean|null Whether the first sub-expression is a substring of the second sub-expression or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

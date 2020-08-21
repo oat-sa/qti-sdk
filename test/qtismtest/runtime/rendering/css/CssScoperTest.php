@@ -14,6 +14,8 @@ class CssScoperTest extends QtiSmTestCase
      * @param string $inputFile
      * @param string $outputFile
      * @param string $id
+     * @param bool $cssMapping
+     * @throws RenderingException
      */
     public function testOutput($inputFile, $outputFile, $id, $cssMapping = false)
     {

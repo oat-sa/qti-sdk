@@ -29,11 +29,9 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
 use qtism\data\content\PrintedVariable;
-use qtism\data\content\TextRun;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\AbstractEngine;
 use qtism\runtime\common\Container;
-use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
 
@@ -103,7 +101,7 @@ class PrintedVariableEngine extends AbstractEngine
      * * If the value to format is an OrderedContainer, and no 'index' attribue value is given, the whole container is displayed.
      * * If no specific precision is given for a float display, the precision will be by default 6.
      *
-     * @return TextRun A processed PrintedVariable as a TextRun object or the NULL value if the variable's value is NULL.
+     * @return string A processed PrintedVariable as a string or the NULL value if the variable's value is NULL.
      * @throws PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
      */
     public function process()
@@ -191,7 +189,7 @@ class PrintedVariableEngine extends AbstractEngine
      * Processes all values of a record container and merge them into
      * a single string.
      *
-     * @param RecordContainer $variable The record to process.
+     * @param Variable $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
     private function processRecord(Variable $variable)

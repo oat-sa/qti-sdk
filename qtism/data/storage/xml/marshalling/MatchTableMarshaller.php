@@ -75,7 +75,7 @@ class MatchTableMarshaller extends Marshaller
     /**
      * Create a new instance of MatchTableMarshaller.
      *
-     * @param string $version
+     * @param string $version The QTI version number on which the Marshaller operates e.g '2.1'.
      * @param int $baseType The baseType of the variableDeclaration the MatchTable belongs to.
      * @throws InvalidArgumentException If $baseType is an invalid value.
      */

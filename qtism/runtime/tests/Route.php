@@ -140,7 +140,6 @@ class Route implements Iterator
 
     /**
      * Create a new Route object.
-     *
      */
     public function __construct()
     {
@@ -463,7 +462,6 @@ class Route implements Iterator
     /**
      * Set the Route as its previous position in the RouteItem sequence. If the current
      * RouteItem is the first one prior to call next(), the Route remains in the same position.
-     *
      */
     public function previous()
     {
@@ -767,7 +765,6 @@ class Route implements Iterator
      * @param IdentifierCollection $includeCategories A collection of category identifiers to be included in the selection.
      * @param IdentifierCollection $excludeCategories A collection of category identifiers to be excluded from the selection.
      * @return AssessmentItemRefCollection A collection of filtered AssessmentItemRef objects.
-     *
      */
     public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {

@@ -24,6 +24,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\QtiScalar;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Ordered;
 use qtism\runtime\common\OrderedContainer;
@@ -109,7 +110,7 @@ class OrderedProcessor extends OperatorProcessor
      * Append a value (An orderedContainer or a primitive datatype) to a given $container.
      *
      * @param OrderedContainer $container An OrderedContainer object you want to append something to.
-     * @param scalar|OrderedContainer $value A value to append to the $container.
+     * @param QtiScalar|OrderedContainer $value A value to append to the $container.
      */
     protected static function appendValue(OrderedContainer $container, $value)
     {

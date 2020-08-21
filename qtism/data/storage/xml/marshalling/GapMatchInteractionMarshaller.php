@@ -35,6 +35,10 @@ use qtism\data\QtiComponentCollection;
 class GapMatchInteractionMarshaller extends ContentMarshaller
 {
     /**
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
@@ -77,6 +81,10 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallingException
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

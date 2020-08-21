@@ -191,7 +191,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of seconds.
      *
-     * @param int $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
+     * @param bool $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
      * @return int The value of the total duration in seconds.
      */
     public function getSeconds($total = false)
@@ -213,7 +213,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of microseconds.
      *
-     * @param bool|false $total Whether to get the total amount of microseconds, as a single integer, that represents the complete duration.
+     * @param bool $total Whether to get the total amount of microseconds, as a single integer, that represents the complete duration.
      * @return int The value of the total duration in microseconds.
      */
     public function getMicroseconds($total = false)

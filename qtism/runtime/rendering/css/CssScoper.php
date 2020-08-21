@@ -256,7 +256,7 @@ class CssScoper implements Renderable
     /**
      * Create a new CssScoper object.
      *
-     * @param bool $mapQtiClasses Whether or not to map QTI classes to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
      */
     public function __construct($mapQtiClasses = false)
     {
@@ -276,7 +276,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not map QTI classes to their qti-X CSS class equivalent.
      *
-     * @param array $mapQtiClasses
+     * @param bool $mapQtiClasses
      */
     public function mapQtiClasses($mapQtiClasses)
     {
@@ -289,6 +289,7 @@ class CssScoper implements Renderable
      * @param string $file The path to the file that has to be rescoped.
      * @param string $id The scope identifier. If not given, will be randomly generated.
      * @return string The rescoped content of $file.
+     * @throws MemoryStreamException
      * @throws RenderingException If something goes wrong while rescoping the content.
      */
     public function render($file, $id = '')
@@ -353,11 +354,17 @@ class CssScoper implements Renderable
         }
 
         $stream->close();
+
         return $this->getOutput();
     }
 
     /**
      * Initialize the object to be ready for a new rescoping.
+     *
+     * @param string $id The identifier to be used for scoping.
+     * @param string $file The path to the CSS file to be scoped.
+     * @throws MemoryStreamException
+     * @throws RenderingException
      */
     protected function init($id, $file)
     {

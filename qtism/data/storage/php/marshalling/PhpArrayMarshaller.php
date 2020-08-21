@@ -23,6 +23,7 @@
 
 namespace qtism\data\storage\php\marshalling;
 
+use qtism\common\storage\StreamAccessException;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\Utils as PhpUtils;
@@ -37,7 +38,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      * Marshall an array into PHP source code.
      *
      * @throws PhpMarshallingException If something wrong happens during marshalling.
-     * @throws StreamdAccessException
+     * @throws StreamAccessException
      */
     public function marshall()
     {

@@ -102,6 +102,9 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider createFromXmlAssessmentTestDocumentProvider
+     * @param string $version
+     * @param string $file
+     * @param string $expectedFile
      * @throws XmlStorageException
      */
     public function testcreateFromXmlAssessmentTestDocument($version, $file, $expectedFile)

@@ -67,7 +67,7 @@ abstract class AtomicInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * Set the base URI of the AtomicInline.
      *
-     * @param string $XmlBase A URI.
+     * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '')

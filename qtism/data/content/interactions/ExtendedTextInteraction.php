@@ -247,7 +247,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
      * is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @param  $expectedLength int A non negative (>= 0) integer or -1.
+     * @param int $expectedLength A non negative (>= 0) integer or -1.
      * @throws InvalidArgumentException If $expectedLength is not non negative integer nor -1.
      */
     public function setExpectedLength($expectedLength)

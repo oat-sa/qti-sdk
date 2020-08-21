@@ -195,7 +195,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the content of objects composing the RubricBlock.
      *
-     * @return BlockCollection
+     * @return FlowStaticCollection
      */
     public function getContent()
     {

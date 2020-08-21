@@ -85,7 +85,7 @@ class HotspotInteraction extends GraphicInteraction
      * Create a new HotspotInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param Object $object The associated image given as an Object object.
+     * @param QtiObject $object The associated image given as an Object object.
      * @param int $maxChoices The maximum number of choices the candidate is allowed to select as a positive (>= 0) integer.
      * @param HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
      * @param string $id The id of the bodyElement.

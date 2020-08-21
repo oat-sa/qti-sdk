@@ -346,6 +346,7 @@ class FileSystemFile implements QtiFile
      * are considered to be identical if they have the same file name,
      * mime-type and data.
      *
+     * @param mixed $obj
      * @return bool
      */
     public function equals($obj)

@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use DOMNode;
 use DOMText;
+use qtism\common\collections\AbstractCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -143,9 +144,10 @@ abstract class RecursiveMarshaller extends Marshaller
     /**
      * Empty the final stack to get the objects inside.
      *
+     * @param int $count
      * @return array The content of the final stack.
      */
-    protected function emptyFinal($count)
+    protected function emptyFinal(int $count)
     {
         $returnValue = [];
 
@@ -353,7 +355,8 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * Create a collection from DOMElement objects.
      *
-     * @return AbstractCollecton
+     * @param DOMElement $currentNode
+     * @return AbstractCollection
      */
     abstract protected function createCollection(DOMElement $currentNode);
 

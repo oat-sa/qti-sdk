@@ -59,7 +59,7 @@ class GcdProcessor extends OperatorProcessor
     /**
      * Process the Gcd operator.
      *
-     * @return int The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
+     * @return QtiInteger|null The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

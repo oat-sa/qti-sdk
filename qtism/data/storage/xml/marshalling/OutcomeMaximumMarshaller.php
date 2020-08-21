@@ -35,7 +35,7 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall an outcomeMaximum object in its DOMElement equivalent.
      *
-     * @param QtiComponent A OutcomeMaximum object.
+     * @param QtiComponent $component A OutcomeMaximum object.
      * @return DOMElement The corresponding outcomeMaximum QTI element.
      */
     protected function marshall(QtiComponent $component)
@@ -54,8 +54,9 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall an outcomeMaximum QTI element in its OutcomeMaximum object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding OutcomeMaximum object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {

@@ -47,7 +47,7 @@ class InterpolationTableMarshaller extends Marshaller
      * needs to know the baseType of the variableDeclaration that contains the interpolationTable,
      * a $baseType can be passed as an argument for instantiation.
      *
-     * @param $version
+     * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
      * @param int $baseType A value from the BaseType enumeration or -1.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */

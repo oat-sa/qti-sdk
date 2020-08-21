@@ -6,8 +6,11 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
@@ -164,6 +167,12 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
     /**
      * @dataProvider branchingMultipleOccurencesProvider
+     * @param QtiIdentifier|null $response
+     * @param string $expectedTarget
+     * @param int $occurence
+     * @throws XmlStorageException
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
      */
     public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence)
     {

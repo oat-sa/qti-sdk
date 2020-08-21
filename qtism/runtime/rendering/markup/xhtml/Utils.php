@@ -92,7 +92,7 @@ class Utils
     }
 
     /**
-     * Whether or not a given $node has the given CSS $class(es).
+     * Whether or not a given $node element has the given CSS $class(es).
      *
      * @param DOMNode $node
      * @param string|array $class A class or an array of CSS classes.

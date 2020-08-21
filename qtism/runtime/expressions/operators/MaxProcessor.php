@@ -61,7 +61,7 @@ class MaxProcessor extends OperatorProcessor
     /**
      * Process the current expression.
      *
-     * @return float|int|null The greatest of the operand values or NULL if any of the operand values is NULL.
+     * @return QtiFloat|QtiInteger|null The greatest of the operand values or NULL if any of the operand values is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

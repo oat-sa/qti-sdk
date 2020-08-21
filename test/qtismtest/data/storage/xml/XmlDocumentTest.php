@@ -201,6 +201,9 @@ class XmlDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider validInferQTIVersionProvider
+     * @param string $file
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testInferQTIVersionValid($file, $expectedVersion)
     {

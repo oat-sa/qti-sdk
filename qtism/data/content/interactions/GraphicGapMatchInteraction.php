@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
+use qtism\data\content\xhtml\QtiObject;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -76,7 +77,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * Create a new GraphicGapMatchInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
-     * @param Object $object An image as an Object object.
+     * @param QtiObject $object An image as an Object object.
      * @param GapImgCollection $gapImgs A collection of GapImg objects.
      * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.
@@ -85,7 +86,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, QtiObject $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setGapImgs($gapImgs);

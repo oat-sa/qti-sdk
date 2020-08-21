@@ -37,11 +37,14 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
 
     public static function asArray()
     {
-        return array_merge(AssessmentTestSessionState::asArray(), [
-            'NOT_SELECTED' => self::NOT_SELECTED,
-            'SOLUTION' => self::SOLUTION,
-            'REVIEW' => self::REVIEW,
-        ]);
+        return array_merge(
+            AssessmentTestSessionState::asArray(),
+            [
+                'NOT_SELECTED' => self::NOT_SELECTED,
+                'SOLUTION' => self::SOLUTION,
+                'REVIEW' => self::REVIEW,
+            ]
+        );
     }
 
     public static function getConstantByName($name)

@@ -93,7 +93,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Create a new GraphicOrderInteraction object.
      *
      * @param string $responseIdentifier The response identifier associated to the interaction.
-     * @param Object $object The image associated with the interaction as an object.
+     * @param QtiObject $object The image associated with the interaction as an object.
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects that define the choices that are to be ordered.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.

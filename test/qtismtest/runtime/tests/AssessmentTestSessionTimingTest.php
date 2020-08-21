@@ -8,18 +8,18 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSection;
+use qtism\data\AssessmentTest;
+use qtism\data\TestPart;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSessionException;
-use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
-use qtism\data\AssessmentItemRef;
-use qtism\data\AssessmentSection;
-use qtism\data\TestPart;
-use qtism\data\AssessmentTest;
 
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
@@ -124,9 +124,12 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 
     /**
      * This test aims at testing if it is possible to force the attempt to be performed
-     * event if time constraints in force are exceeded, by the use of the $allowLateSubmission
+     * even if time constraints in force are exceeded, by the use of the $allowLateSubmission
      * argument.
      *
+     * @param bool $forceLateSubmission
+     * @throws AssessmentTestSessionException
+     * @throws AssessmentItemSessionException
      */
     public function testForceLateSubmission($forceLateSubmission = true)
     {
@@ -160,6 +163,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * This test aims at testing that an exception is thrown if we move
      * to a next target item which is timed out.
      *
+     * @param bool $allowTimeout
+     * @throws AssessmentTestSessionException
      */
     public function testJumpToTargetTimeout($allowTimeout = false)
     {

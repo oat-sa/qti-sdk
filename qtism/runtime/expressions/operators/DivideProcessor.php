@@ -58,7 +58,7 @@ class DivideProcessor extends OperatorProcessor
     /**
      * Process the Divide operator.
      *
-     * @return float|null A float value that corresponds to the first expression divided by the second or NULL if either of the sub-expressions is NULL or the result is outside the value set defined by float.
+     * @return QtiFloat|null A float value that corresponds to the first expression divided by the second or NULL if either of the sub-expressions is NULL or the result is outside the value set defined by float.
      * @throws OperatorProcessingException
      */
     public function process()

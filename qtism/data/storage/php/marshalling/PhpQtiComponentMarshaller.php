@@ -154,6 +154,8 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
     }
 
     /**
+     * @param mixed $toMarshall
+     * @return bool
      * @see \qtism\data\storage\php\marshalling\PhpMarshaller::isMarshallable()
      */
     protected function isMarshallable($toMarshall)

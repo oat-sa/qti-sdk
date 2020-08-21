@@ -162,7 +162,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
-     * @param int|null $externalScored A ExternalScore object.
+     * @param int|null $externalScored A ExternalScored object.
      *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
@@ -211,7 +211,6 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the human interpretation of the outcome variable's value.
      *
      * @param string $interpretation A string.
-     *
      * @throws InvalidArgumentException If $interpretation is not a string.
      */
     public function setInterpretation($interpretation)
@@ -238,7 +237,6 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set a link (URI) to an extended interpretation of the outcome variable's value.
      *
      * @param string $longInterpretation A string.
-     *
      * @throws InvalidArgumentException If $longInterpretation is not a string.
      */
     public function setLongInterpretation($longInterpretation)
@@ -265,7 +263,6 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the normal minimum.
      *
      * @param bool|numeric $normalMinimum A numeric value.
-     *
      * @throws InvalidArgumentException If $normalMinimum is not numeric nor false.
      */
     public function setNormalMinimum($normalMinimum)
@@ -292,7 +289,6 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the normal maximum.
      *
      * @param bool|number $normalMaximum A numeric value.
-     *
      * @throws InvalidArgumentException If $normalMaximum is not a numeric value nor false.
      */
     public function setNormalMaximum($normalMaximum)
@@ -319,7 +315,6 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the mastery value. Set to false if not specified.
      *
      * @param bool|number $masteryValue A numeric value or false.
-     *
      * @throws InvalidArgumentException If $masteryValue is not numeric nor false.
      */
     public function setMasteryValue($masteryValue)

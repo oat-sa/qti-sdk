@@ -44,7 +44,7 @@ abstract class AbstractSessionManager
     /**
      * The acceptable latency time for AssessmentTestSession and AssessmentItemSession objects.
      *
-     * @var Duration
+     * @var QtiDuration
      */
     private $acceptableLatency;
 
@@ -52,7 +52,7 @@ abstract class AbstractSessionManager
      * Whether or not created AssessmentTestSession and AssessmentItemSession objects
      * must consider the minimum time constraints.
      *
-     * @var booolean
+     * @var bool
      */
     private $considerMinTime;
 
@@ -65,7 +65,7 @@ abstract class AbstractSessionManager
     /**
      * Set the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
      *
-     * @param Duration $latency
+     * @param QtiDuration $latency
      */
     public function setAcceptableLatency(QtiDuration $latency)
     {
@@ -75,7 +75,7 @@ abstract class AbstractSessionManager
     /**
      * Get the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      */
     public function getAcceptableLatency()
     {
@@ -107,6 +107,8 @@ abstract class AbstractSessionManager
     /**
      * Create a new AssessmentTestSession object.
      *
+     * @param AssessmentTest $test
+     * @param Route|null $route
      * @return AssessmentTestSession An AssessmentTestSession object.
      */
     public function createAssessmentTestSession(AssessmentTest $test, Route $route = null)
@@ -119,7 +121,7 @@ abstract class AbstractSessionManager
     /**
      * Contains the logic of instantiating the appropriate AssessmentTestSession implementation.
      *
-     * @param AssessmentTest $assessmentTest
+     * @param AssessmentTest $test
      * @param Route $route
      * @return AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
@@ -139,7 +141,7 @@ abstract class AbstractSessionManager
      *
      * @param IAssessmentItem $assessmentItem
      * @param int $navigationMode A value from the NavigationMode enumeration.
-     * @param A value from the SubmissionMode enumeration $submissionMode.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      *
      * @return AssessmentItemSession
      */

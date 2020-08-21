@@ -370,7 +370,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * SplSubject::attach implementation.
      *
-     * @param SplObserver An SplObserver object.
+     * @param SplObserver $observer An SplObserver object.
      */
     public function attach(SplObserver $observer)
     {

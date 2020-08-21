@@ -227,7 +227,6 @@ class QtiObject extends BodyElement implements FlowStatic, InlineStatic
 
     /**
      * Whether the object has a height.
-     *
      */
     public function hasHeight()
     {

@@ -171,7 +171,7 @@ class Weight extends QtiComponent implements QtiIdentifiable
     /**
      * SplSubject::attach implementation.
      *
-     * @param SplObserver An SplObserver object.
+     * @param SplObserver $observer An SplObserver object.
      */
     public function attach(SplObserver $observer)
     {

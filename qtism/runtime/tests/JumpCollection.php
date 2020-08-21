@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use InvalidArgumentException;
 use qtism\common\collections\AbstractCollection;
 
 /**
@@ -33,6 +34,7 @@ class JumpCollection extends AbstractCollection
     /**
      * Check the type of $value to ensure it has the correct datatype.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Jump object.
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */

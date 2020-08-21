@@ -95,7 +95,7 @@ class Jump
     /**
      * Set the RouteItem the candidate can jump to.
      *
-     * @param RouteItem $routeItem A RouteItem object.
+     * @param RouteItem $target A RouteItem object.
      */
     protected function setTarget(RouteItem $target)
     {

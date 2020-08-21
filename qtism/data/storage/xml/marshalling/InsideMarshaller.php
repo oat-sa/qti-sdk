@@ -39,7 +39,7 @@ class InsideMarshaller extends OperatorMarshaller
     /**
      * Unmarshall an Inside object into a QTI inside element.
      *
-     * @param QtiComponent The Inside object to marshall.
+     * @param QtiComponent $component The Inside object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI inside element.
      */
@@ -59,8 +59,8 @@ class InsideMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI inside operator element into an Inside object.
      *
-     * @param DOMElement The inside element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The inside element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent An Inside object.
      * @throws UnmarshallingException
      */

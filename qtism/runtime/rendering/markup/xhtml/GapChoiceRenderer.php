@@ -25,7 +25,6 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\AbstractRenderingContext;
 
 /**
  * GapChoice renderer, the base class of all renderers that render subclasses of
@@ -50,6 +49,9 @@ use qtism\runtime\rendering\AbstractRenderingContext;
 abstract class GapChoiceRenderer extends ChoiceRenderer
 {
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')

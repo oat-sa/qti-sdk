@@ -79,6 +79,7 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
+     * @param mixed $value
      * @see AbstractCollection::checkType()
      */
     protected function checkType($value)

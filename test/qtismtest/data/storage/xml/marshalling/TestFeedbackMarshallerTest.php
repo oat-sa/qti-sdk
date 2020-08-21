@@ -10,6 +10,7 @@ use qtism\data\TestFeedbackAccess;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
 use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
+use ReflectionException;
 
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
@@ -60,6 +61,9 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
     /**
      * @dataProvider feedbackContent
+     * @param string $xmlData
+     * @param string $expectedContent
+     * @throws ReflectionException
      */
     public function testExtractContent($xmlData, $expectedContent)
     {

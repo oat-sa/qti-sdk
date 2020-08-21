@@ -39,7 +39,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var Shape
+     * @var QtiShape
      * @qtism-bean-property
      */
     private $shape;
@@ -49,7 +49,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * The size and position of the hotspot, interpreted in conjunction with the shape.
      *
-     * @var Coords
+     * @var QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -71,7 +71,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @param string $identifier The identifier of the choice.
      * @param int $shape A value from the Shape enumeration
-     * @param Coords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
+     * @param QtiCoords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
@@ -103,7 +103,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Get the shape of the associableHotspot.
      *
-     * @return Shape A Shape object.
+     * @return QtiShape A Shape object.
      */
     public function getShape()
     {
@@ -113,7 +113,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Set the coords of the associableHotspot.
      *
-     * @param Coords $coords A Coords object.
+     * @param QtiCoords $coords A QtiCoords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -123,7 +123,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * Get the coords of the associableHotspot.
      *
-     * @return Coords A Coords object.
+     * @return QtiCoords A QtiCoords object.
      */
     public function getCoords()
     {

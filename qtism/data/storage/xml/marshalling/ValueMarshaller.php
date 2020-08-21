@@ -74,7 +74,7 @@ class ValueMarshaller extends Marshaller
     /**
      * Create a new instance of ValueMarshaller.
      *
-     * @param string $version
+     * @param string $version The QTI version number on which the Marshaller operates.
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration nor -1.
      */

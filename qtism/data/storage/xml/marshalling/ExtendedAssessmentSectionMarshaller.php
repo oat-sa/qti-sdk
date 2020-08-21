@@ -59,7 +59,9 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      *
      * @param DOMElement $element
      * @param QtiComponentCollection $children
+     * @param AssessmentSection|null $assessmentSection
      * @return QtiComponent
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
     {

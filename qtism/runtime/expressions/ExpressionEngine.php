@@ -67,7 +67,7 @@ class ExpressionEngine extends AbstractEngine
     /**
      * The OperatorProcessorFactory object.
      *
-     * @var OperatorProcessingException
+     * @var OperatorProcessorFactory
      */
     private $operatorProcessorFactory;
 
@@ -141,7 +141,7 @@ class ExpressionEngine extends AbstractEngine
     }
 
     /**
-     * Get the OperatorProcessorFactory object currenlty in use.
+     * Get the OperatorProcessorFactory object currently in use.
      *
      * @return OperatorProcessorFactory
      */

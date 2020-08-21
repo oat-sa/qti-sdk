@@ -61,7 +61,7 @@ class SumProcessor extends OperatorProcessor
     /**
      * Process the Sum operator.
      *
-     * @return int|float|null A single integer/float that corresponds to the sum of the numerical values of the sub-expressions. If any of the sub-expressions are NULL, the operator results in NULL.
+     * @return QtiInteger|QtiFloat|null A single integer/float that corresponds to the sum of the numerical values of the sub-expressions. If any of the sub-expressions are NULL, the operator results in NULL.
      * @throws OperatorProcessingException If invalid operands are given.
      */
     public function process()

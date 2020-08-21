@@ -69,6 +69,8 @@ class MultipleContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validCreateFromDataModelProvider
+     * @param int $baseType
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelValid($baseType, ValueCollection $valueCollection)
     {
@@ -78,6 +80,8 @@ class MultipleContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidCreateFromDataModelProvider
+     * @param int $baseType
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelInvalid($baseType, ValueCollection $valueCollection)
     {
@@ -138,8 +142,10 @@ class MultipleContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider distinctProvider
+     * @param MultipleContainer $originalContainer
+     * @param MultipleContainer $expectedContainer
      */
-    public function testDistinct($originalContainer, $expectedContainer)
+    public function testDistinct(MultipleContainer $originalContainer, MultipleContainer $expectedContainer)
     {
         $distinctContainer = $originalContainer->distinct();
         $this->assertTrue($distinctContainer->equals($expectedContainer));
@@ -152,7 +158,7 @@ class MultipleContainerTest extends QtiSmTestCase
             [new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER)],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5)])],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
-            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)], null), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5), null]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
         ];
     }
 }

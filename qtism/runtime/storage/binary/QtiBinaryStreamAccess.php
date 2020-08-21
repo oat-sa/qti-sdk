@@ -18,7 +18,6 @@
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
- * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -233,6 +232,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a record field value from the current binary stream. A record field is
      * composed of a key string and a value.
      *
+     * @param bool $isNull
      * @return array An array where the value at index 0 is the key string and index 1 is the value.
      * @throws QtiBinaryStreamAccessException
      */
@@ -261,6 +261,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Write a record field value in the current binary stream. A record field is composed of a key string and a value.
      *
      * @param array $recordField An array where index 0 is the key string, and the index 1 is the value.
+     * @param bool $isNull
      * @throws QtiBinaryStreamAccessException
      */
     public function writeRecordField(array $recordField, $isNull = false)
@@ -320,7 +321,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a Point from the current binary stream.
      *
-     * @return Point A Point object.
+     * @return QtiPoint A Point object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readPoint()
@@ -336,7 +337,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Point in the current binary stream.
      *
-     * @param Point $point A Point object.
+     * @param QtiPoint $point A Point object.
      * @throws QtiBinaryStreamAccessException
      */
     public function writePoint(QtiPoint $point)
@@ -353,7 +354,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a Pair from the current binary stream.
      *
-     * @return Pair A Pair object.
+     * @return QtiPair A Pair object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readPair()
@@ -369,7 +370,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Pair in the current binary stream.
      *
-     * @param Pair $pair A Pair object.
+     * @param QtiPair $pair A Pair object.
      * @throws QtiBinaryStreamAccessException
      */
     public function writePair(QtiPair $pair)
@@ -386,7 +387,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a DirectedPair from the current binary stream.
      *
-     * @return Pair A DirectedPair object.
+     * @return QtiDirectedPair A DirectedPair object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readDirectedPair()
@@ -402,7 +403,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a DirectedPair in the current binary stream.
      *
-     * @param DirectedPair $directedPair A DirectedPair object.
+     * @param QtiDirectedPair $directedPair A DirectedPair object.
      * @throws QtiBinaryStreamAccessException
      */
     public function writeDirectedPair(QtiDirectedPair $directedPair)
@@ -419,7 +420,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a Duration from the current binary stream.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readDuration()
@@ -435,7 +436,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Duration in the current binary stream.
      *
-     * @param Duration $duration A Duration object.
+     * @param QtiDuration $duration A Duration object.
      * @throws QtiBinaryStreamAccessException
      */
     public function writeDuration(QtiDuration $duration)
@@ -854,8 +855,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a File object in the current binary stream.
      *
-     * @return QtiFile
+     * @param QtiFile $file
      * @throws QtiBinaryStreamAccessException
+     * @throws BinaryStreamAccessException
      */
     public function writeFile(QtiFile $file)
     {

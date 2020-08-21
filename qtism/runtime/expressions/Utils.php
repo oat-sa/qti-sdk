@@ -35,6 +35,7 @@ class Utils
     /**
      * Removes trailing and ending braces ('{' and '}') from a variableRef.
      *
+     * @param string $variableRef
      * @return string A sanitized variableRef.
      */
     public static function sanitizeVariableRef($variableRef)

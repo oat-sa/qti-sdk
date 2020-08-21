@@ -37,6 +37,7 @@ class LibXmlErrorCollection extends AbstractCollection
     /**
      * Check if $value is a LibXMLError object.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a LibXMLError object.
      */
     protected function checkType($value)

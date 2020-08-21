@@ -34,6 +34,7 @@ class OutcomeDeclarationCollection extends QtiIdentifiableCollection
     /**
      * Check if a given $value is an instance of OutcomeDeclaration.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of OutcomeDeclaration.
      */
     protected function checkType($value)

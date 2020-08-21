@@ -48,7 +48,7 @@ class GapImg extends GapChoice
     /**
      * The image as an Object object.
      *
-     * @var Object
+     * @var QtiObject
      * @qtism-bean-property
      */
     private $object;
@@ -58,7 +58,7 @@ class GapImg extends GapChoice
      *
      * @param string $identifier The identifier of the response associated to the GapImg object.
      * @param int $matchMax The maximum number of choice association.
-     * @param Object $object An image as an Object object.
+     * @param QtiObject $object An image as an Object object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -113,7 +113,7 @@ class GapImg extends GapChoice
     /**
      * Set the Object representing the GapImg's image.
      *
-     * @param Object $object An Object object.
+     * @param QtiObject $object An Object object.
      */
     public function setObject(QtiObject $object)
     {
@@ -123,7 +123,7 @@ class GapImg extends GapChoice
     /**
      * Get the Object representing the GapImg's image.
      *
-     * @return Object An Object object.
+     * @return QtiObject An Object object.
      */
     public function getObject()
     {

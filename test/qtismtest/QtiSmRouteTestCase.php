@@ -30,6 +30,7 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
      * * Q2 - S1 - T1
      * * Q3 - S1 - T1
      *
+     * @param string $routeClass
      * @return Route
      */
     public static function buildSimpleRoute($routeClass = Route::class)

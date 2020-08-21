@@ -5,6 +5,7 @@ namespace qtismtest\data\storage\xml;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItem;
 
@@ -12,6 +13,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testLoad($uri, $expectedVersion)
     {
@@ -25,6 +29,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testLoadFromString($uri, $expectedVersion)
     {
@@ -38,6 +45,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testWrite($uri, $expectedVersion)
     {
@@ -61,6 +71,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testSaveToString($uri, $expectedVersion)
     {

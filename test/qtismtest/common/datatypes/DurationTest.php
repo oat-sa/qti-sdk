@@ -10,6 +10,7 @@ class DurationTest extends QtiSmTestCase
 {
     /**
      * @dataProvider validDurationProvider
+     * @param string $intervalSpec
      */
     public function testValidDurationCreation($intervalSpec)
     {
@@ -19,6 +20,7 @@ class DurationTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidDurationProvider
+     * @param string $intervalSpec
      */
     public function testInvalidDurationCreation($intervalSpec)
     {
@@ -81,7 +83,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @dataProvider toStringProvider
      *
-     * @param Duration $duration
+     * @param QtiDuration $duration
      * @param string $expected
      */
     public function testToString(QtiDuration $duration, $expected)
@@ -148,8 +150,8 @@ class DurationTest extends QtiSmTestCase
     /**
      * @dataProvider shorterThanProvider
      *
-     * @param Duration $duration1
-     * @param Duration $duration2
+     * @param QtiDuration $duration1
+     * @param QtiDuration $duration2
      * @param bool $expected
      */
     public function testShorterThan(QtiDuration $duration1, QtiDuration $duration2, $expected)
@@ -160,8 +162,8 @@ class DurationTest extends QtiSmTestCase
     /**
      * @dataProvider longerThanOrEqualsProvider
      *
-     * @param Duration $duration1
-     * @param Duration $duration2
+     * @param QtiDuration $duration1
+     * @param QtiDuration $duration2
      * @param bool $expected
      */
     public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected)

@@ -75,7 +75,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * Set the inline components contained by the SimpleInline object.
      *
-     * @param QtiComponentCollection $content A collection of Inline components.
+     * @param InlineCollection $content A collection of Inline components.
      */
     public function setContent(InlineCollection $content)
     {

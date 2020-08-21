@@ -214,7 +214,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return A strictly positive (> 0) integer or -1 if undefined.
+     * @return int A strictly positive (> 0) integer or -1 if undefined.
      */
     public function getExpectedLength()
     {

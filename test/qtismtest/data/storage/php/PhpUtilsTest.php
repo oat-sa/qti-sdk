@@ -9,6 +9,8 @@ class PhpUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider doubleQuotedPhpStringDataProvider
+     * @param string $input
+     * @param string $expected
      */
     public function testDoubleQuotedPhpString($input, $expected)
     {

@@ -38,8 +38,11 @@ class QtiVersionTest extends QtiSmTestCase
 
     /**
      * @dataProvider versionsToCreate
+     * @param string $version
+     * @param string $expectedVersion
+     * @param string $expectedClass
      */
-    public function testCreateWithSupportedVersion($version, $expectedVersion, $expectedClass)
+    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass)
     {
         $versionObject = QtiVersion::create($version);
         $this->assertInstanceOf($expectedClass, $versionObject);

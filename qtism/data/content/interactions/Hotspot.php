@@ -52,14 +52,14 @@ interface Hotspot
     /**
      * Set the coords of the hotspot.
      *
-     * @param Coords $coords A Coords object.
+     * @param QtiCoords $coords A Coords object.
      */
     public function setCoords(QtiCoords $coords);
 
     /**
      * Get the coords of the hotspot.
      *
-     * @return Coords A Coords object.
+     * @return QtiCoords A Coords object.
      */
     public function getCoords();
 

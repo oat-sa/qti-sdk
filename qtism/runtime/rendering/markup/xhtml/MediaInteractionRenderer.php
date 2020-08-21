@@ -141,6 +141,9 @@ class MediaInteractionRenderer extends InteractionRenderer
     }
 
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
@@ -156,6 +159,9 @@ class MediaInteractionRenderer extends InteractionRenderer
     }
 
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')

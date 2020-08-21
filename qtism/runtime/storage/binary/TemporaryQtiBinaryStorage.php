@@ -42,8 +42,8 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      * Persist the binary stream $stream which contains the binary equivalent of $assessmentTestSession in
      * the temporary directory of the file system.
      *
-     * @param AssessmentTestSession The AssessmentTestSession to be persisted.
-     * @param MemoryStream The MemoryStream to be stored in the temporary directory of the host file system.
+     * @param AssessmentTestSession $assessmentTestSession The AssessmentTestSession to be persisted.
+     * @param MemoryStream $stream The MemoryStream to be stored in the temporary directory of the host file system.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
     protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream)

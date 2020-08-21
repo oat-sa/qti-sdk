@@ -24,6 +24,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use DOMText;
 use qtism\data\content\TextRun;
 use qtism\data\QtiComponent;
 
@@ -36,7 +37,7 @@ class TextRunMarshaller extends Marshaller
      * Marshall a TextRun object into a DOMElement object.
      *
      * @param QtiComponent $component A TextRun object.
-     * @return DOMElement The according DOMElement object.
+     * @return DOMText The according DOMElement object.
      */
     protected function marshall(QtiComponent $component)
     {

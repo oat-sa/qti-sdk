@@ -182,7 +182,7 @@ class Utils
      *
      * @param string $string Coordinates as a string.
      * @param int $shape A value from the Shape enumeration.
-     * @return Coords A Coords object.
+     * @return QtiCoords A Coords object.
      * @throws UnexpectedValueException If $string cannot be converted to a Coords object.
      * @throws InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
      */

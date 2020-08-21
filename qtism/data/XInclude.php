@@ -60,6 +60,7 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
     }
 
     /**
+     * @param string $xmlBase
      * @see \qtism\data\content\Flow::setXmlBase()
      */
     public function setXmlBase($xmlBase = '')

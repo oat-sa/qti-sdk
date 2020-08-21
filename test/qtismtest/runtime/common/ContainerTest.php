@@ -55,6 +55,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validValueProvider
+     * @param mixed $value
      */
     public function testAddValid($value)
     {
@@ -68,6 +69,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidValueProvider
+     * @param mixed $value
      */
     public function testAddInvalid($value)
     {
@@ -89,6 +91,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validValueCollectionProvider
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelValid(ValueCollection $valueCollection)
     {
@@ -98,24 +101,31 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validEqualsPrimitiveProvider
+     * @param Container $a
+     * @param Container $b
      */
-    public function testEqualsPrimitiveValid($a, $b)
+    public function testEqualsPrimitiveValid(Container $a, Container $b)
     {
         $this->assertTrue($a->equals($b));
     }
 
     /**
      * @dataProvider invalidEqualsPrimitiveProvider
+     * @param Container $a
+     * @param mixed $b
      */
-    public function testEqualsPrimitiveInvalid($a, $b)
+    public function testEqualsPrimitiveInvalid(Container $a, $b)
     {
         $this->assertFalse($a->equals($b));
     }
 
     /**
      * @dataProvider occurencesProvider
+     * @param Container $container
+     * @param mixed $lookup
+     * @param mixed $expected
      */
-    public function testOccurences($container, $lookup, $expected)
+    public function testOccurences(Container $container, $lookup, $expected)
     {
         $this->assertEquals($expected, $container->occurences($lookup));
     }

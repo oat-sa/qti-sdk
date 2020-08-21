@@ -38,7 +38,7 @@ class IndexMarshaller extends OperatorMarshaller
     /**
      * Unmarshall an Index object into a QTI index element.
      *
-     * @param QtiComponent The Index object to marshall.
+     * @param QtiComponent $component The Index object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI index element.
      */
@@ -57,8 +57,8 @@ class IndexMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI index operator element into an Index object.
      *
-     * @param DOMElement The index element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The index element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent An Index object.
      * @throws UnmarshallingException
      */

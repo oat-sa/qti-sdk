@@ -37,9 +37,9 @@ use qtism\data\QtiComponentCollection;
 class EqualMarshaller extends OperatorMarshaller
 {
     /**
-     * Unmarshall an Equal object into a QTI equal element.
+     * Marshall an Equal object into a QTI equal element.
      *
-     * @param QtiComponent The Equal object to marshall.
+     * @param QtiComponent $component The Equal object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI equal element.
      */
@@ -71,8 +71,8 @@ class EqualMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI equal operator element into an Equal object.
      *
-     * @param DOMElement The equal element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The equal element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent An Equal object.
      * @throws UnmarshallingException
      */

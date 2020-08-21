@@ -194,6 +194,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * Get a copy of the collection as an array. This method is implemented in order
      * to implement ArrayObject in a near future.
      *
+     * @param bool $preserveKeys
      * @return array The collection as an array of data.
      */
     public function getArrayCopy($preserveKeys = false)
@@ -394,7 +395,6 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Reset the keys of the collection. This method is similar
      * in behaviour with PHP's array_values.
-     *
      */
     public function resetKeys()
     {

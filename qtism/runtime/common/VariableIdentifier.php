@@ -81,7 +81,6 @@ class VariableIdentifier
      *
      * @param string $identifier A prefixed identifier.
      * @throws InvalidArgumentException If $identifier is not a valid variable identifier.
-     *
      */
     public function __construct($identifier)
     {

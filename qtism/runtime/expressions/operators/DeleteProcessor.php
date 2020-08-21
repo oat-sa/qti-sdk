@@ -28,6 +28,7 @@ use qtism\common\Comparable;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Delete;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -62,7 +63,7 @@ class DeleteProcessor extends OperatorProcessor
     /**
      * Process the Delete operator.
      *
-     * @return Container A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
+     * @return Container|null A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
      * @throws OperatorProcessingException
      */
     public function process()

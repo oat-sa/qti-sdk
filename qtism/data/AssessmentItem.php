@@ -692,7 +692,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * SplSubject::attach implementation.
      *
-     * @param SplObserver An SplObserver object.
+     * @param SplObserver $observer An SplObserver object.
      */
     public function attach(SplObserver $observer)
     {

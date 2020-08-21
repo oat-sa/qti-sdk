@@ -97,20 +97,19 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Whether or not the rubrickBlock components contained
-     * in the document should be separated from the document.
+     * Whether or not the rubrickBlock components contained in the document
+     * should be separated from the document.
      *
-     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save()
-     * will:
+     * If $explodedRubricBlocks is set to true, a call to
+     * XmlCompactDocument::save() will make the following rules to be applied:
      *
      * * rubricBlock components will be removed from the document.
-     * * replace the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes.
+     * * a replacement of the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes will occur.
      * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
      *
-     * Please note that this is took under consideration only when the XmlDocument::save() method
-     * is used.
+     * Please note that this is taken under consideration only when the XmlDocument::save() method is used.
      *
-     * @param bool $explodeRubricBlocks
+     * @param bool $explodeRubricBlocks Whether rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
      */
     public function setExplodeRubricBlocks($explodeRubricBlocks)
     {
@@ -307,6 +306,9 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
+     * @param QtiComponent $documentComponent
+     * @param string $uri
+     * @throws XmlStorageException
      * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)

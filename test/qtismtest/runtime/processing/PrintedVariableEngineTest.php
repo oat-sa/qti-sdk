@@ -31,16 +31,17 @@ use qtismtest\QtiSmTestCase;
 class PrintedVariableEngineTest extends QtiSmTestCase
 {
     /**
-     * @param mixed $value
+     * @dataProvider printedVariableProvider
      * @param string $expected
+     * @param string $identifier
+     * @param State $state
      * @param string $format
      * @param bool $powerForm
      * @param int|string $base
-     * @param $integer |string $index
+     * @param integer|string $index
      * @param string $delimiter
      * @param string $field
-     * @param stribng $mappingIndicator
-     * @dataProvider printedVariableProvider
+     * @param string $mappingIndicator
      */
     public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
     {
@@ -314,12 +315,12 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      *
      * @dataProvider newProvider
      *
-     * @param $expected int
-     * @param $id string
-     * @param $state State
+     * @param int $expected
+     * @param string $id
+     * @param State $state
      */
 
-    public function testForNewProvider($expected, $id, $state)
+    public function testForNewProvider($expected, $id, State $state)
     {
         $printedVariable = new PrintedVariable($id);
         $printedVariable->setFormat('%d');

@@ -54,7 +54,7 @@ class Inside extends Operator
      *
      * The size and position of the area, interpreted in conjunction with the shape.
      *
-     * @var Coords
+     * @var QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -64,7 +64,7 @@ class Inside extends Operator
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
      * @param int $shape A value from the Shape enumeration
-     * @param Coords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
+     * @param QtiCoords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
      * @throws InvalidArgumentException If the $expressions count exceeds 1 or if $shape is not a value from the Shape enumeration.
      */
     public function __construct(ExpressionCollection $expressions, $shape, QtiCoords $coords)
@@ -103,7 +103,7 @@ class Inside extends Operator
     /**
      * Set the coordinates.
      *
-     * @param Coords $coords A Coords object.
+     * @param QtiCoords $coords A Coords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -113,7 +113,7 @@ class Inside extends Operator
     /**
      * Get the coordinates
      *
-     * @return Coords A Coords object.
+     * @return QtiCoords A Coords object.
      */
     public function getCoords()
     {

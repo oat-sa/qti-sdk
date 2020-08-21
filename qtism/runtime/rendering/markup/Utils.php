@@ -45,7 +45,7 @@ class Utils
      * @param bool $powerForm Render float values in 'e' or 'E' format.
      * @param int|string $base The number base to use when formatting integer variables (can be a variable reference).
      * @param int|string $index The index to use when displaying ordered cardinality variables (can be a variable reference).
-     * @param int $delimiter The delimiter to use between values when displaying ordered, multiple, or record cardinality variables.
+     * @param string $delimiter The delimiter to use between values when displaying ordered, multiple, or record cardinality variables.
      * @param string $field The field specifier to use when displaying variables of record cardinality.
      * @param string $mappingIndicator The mapping indicator to use between field name and field value when displaying record cardinality variables.
      * @return string The formatted variable or an error message.

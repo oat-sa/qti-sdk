@@ -147,7 +147,6 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
-     *
      */
     public function setShuffle($shuffle)
     {

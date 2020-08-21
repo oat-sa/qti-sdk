@@ -70,7 +70,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * Process the StatsOperator.
      *
-     * @return float A single float or NULL if the sub-expression or any value contained therein is NULL.
+     * @return QtiFloat A single float or NULL if the sub-expression or any value contained therein is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

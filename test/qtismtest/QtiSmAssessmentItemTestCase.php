@@ -34,6 +34,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * The responseProcessing for item of the session is the template 'match_correct'.
      *
+     * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
      */
     protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
@@ -74,6 +75,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
      * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
      *
+     * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
      */
     protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)

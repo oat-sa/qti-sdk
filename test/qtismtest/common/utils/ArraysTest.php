@@ -9,6 +9,7 @@ class ArraysTest extends QtiSmTestCase
 {
     /**
      * @dataProvider isAssocValidProvider
+     * @param array $array
      */
     public function testIsAssocValid(array $array)
     {
@@ -17,6 +18,7 @@ class ArraysTest extends QtiSmTestCase
 
     /**
      * @dataProvider isAssocInvalidProvider
+     * @param array $array
      */
     public function testIsAssocInvalid(array $array)
     {

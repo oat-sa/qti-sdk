@@ -84,7 +84,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Create a new GraphicAssociateInteraction.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param Object $object The associated image as an Object object.
+     * @param QtiObject $object The associated image as an Object object.
      * @param AssociableHotspotCollection $associableHotspots The hotspots that define the choices that are to be associated by the candidate.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.

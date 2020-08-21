@@ -24,6 +24,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
 use qtism\data\state\MatchTableEntry;
@@ -76,7 +77,7 @@ class MatchTableEntryMarshaller extends Marshaller
      * has a specific constructor because its parameteric. It needs to know
      * the baseType of its targetValue, which is defined by its parent variableDeclaration.
      *
-     * @param string $version
+     * @param string $version The QTI version number on which the Marshaller has to operate e.g. '2.1'.
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
      */

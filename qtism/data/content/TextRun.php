@@ -23,6 +23,8 @@
 
 namespace qtism\data\content;
 
+use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -84,7 +86,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
     /**
      * Set the base URI.
      *
-     * @param string $base A URI.
+     * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '')

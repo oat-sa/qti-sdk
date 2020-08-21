@@ -26,6 +26,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider inferBaseTypeProvider
+     * @param mixed $value
+     * @param int|bool $expectedBaseType
      */
     public function testInferBaseType($value, $expectedBaseType)
     {
@@ -34,6 +36,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider inferCardinalityProvider
+     * @param mixed $value
+     * @param int|bool $expectedCardinality
      */
     public function testInferCardinality($value, $expectedCardinality)
     {
@@ -64,6 +68,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider throwTypingErrorProvider
+     * @param mixed $value
+     * @param string $expectedMsg
      */
     public function testThrowTypingError($value, $expectedMsg)
     {
@@ -75,6 +81,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider floatArrayToIntegerProvider
+     * @param array $floatArray
+     * @param array $integerArray
      */
     public function testFloatArrayToInteger($floatArray, $integerArray)
     {
@@ -83,6 +91,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider integerArrayToFloatProvider
+     * @param array $integerArray
+     * @param array $floatArray
      */
     public function testIntegerArrayToFloat($integerArray, $floatArray)
     {

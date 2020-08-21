@@ -42,6 +42,7 @@ class Tr extends BodyElement
     /**
      * Create a new Tr object.
      *
+     * @param TableCellCollection $content
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.

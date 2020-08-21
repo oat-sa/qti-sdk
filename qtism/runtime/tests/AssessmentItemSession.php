@@ -341,7 +341,7 @@ class AssessmentItemSession extends State
      *
      * The time reference is used to inform the session "what time it is" prior to interacting with it.
      *
-     * @param DateTime $timeReference A DateTime object.
+     * @param \DateTime $timeReference A DateTime object.
      */
     public function setTimeReference(\DateTime $timeReference)
     {
@@ -364,7 +364,7 @@ class AssessmentItemSession extends State
      * Get the acceptable latency time to be applied when timelimits
      * are in force.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      */
     public function getAcceptableLatency()
     {
@@ -588,7 +588,6 @@ class AssessmentItemSession extends State
          * cannot be seen during the test. Whether or not the candidate can return to review
          * their responses and/or any item-level feedback after the test, is outside the scope
          * of this specification. Simultaneous mode is typical of paper-based tests.
-         *
          */
         $maxAttempts = $this->itemSessionControl->getMaxAttempts();
         if ($this->submissionMode === SubmissionMode::SIMULTANEOUS) {
@@ -839,7 +838,6 @@ class AssessmentItemSession extends State
     /**
      * Update the duration built-in variable. The update will only take
      * place if the current state of the item session is INTERACTING.
-     *
      */
     public function updateDuration()
     {
@@ -863,7 +861,7 @@ class AssessmentItemSession extends State
     /**
      * Get the time that remains to the candidate to submit its responses.
      *
-     * @return false|Duration A Duration object or false if there is no time limit.
+     * @return false|QtiDuration A Duration object or false if there is no time limit.
      */
     public function getRemainingTime()
     {
@@ -1080,7 +1078,8 @@ class AssessmentItemSession extends State
      * Get a cloned $duration with the acceptable latency of the item
      * session added.
      *
-     * @return Duration $duration + acceptable latency.
+     * @param QtiDuration $duration
+     * @return QtiDuration $duration + acceptable latency.
      */
     protected function getDurationWithLatency(QtiDuration $duration)
     {

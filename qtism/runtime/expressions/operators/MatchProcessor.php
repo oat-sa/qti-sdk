@@ -64,7 +64,7 @@ class MatchProcessor extends OperatorProcessor
     /**
      * Process the Match Expression object.
      *
-     * @return bool|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
+     * @return QtiBoolean|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()

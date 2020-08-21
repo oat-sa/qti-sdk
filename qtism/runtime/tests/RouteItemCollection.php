@@ -34,6 +34,7 @@ class RouteItemCollection extends AbstractCollection
     /**
      * Check whether $value is an instance of RouteItem.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteItem.
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */

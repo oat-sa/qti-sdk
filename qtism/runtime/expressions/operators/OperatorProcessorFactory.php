@@ -39,7 +39,6 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
 {
     /**
      * Create a new OperatorProcessorFactory object.
-     *
      */
     public function __construct()
     {
@@ -49,7 +48,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
     /**
      * Create the OperatorProcessor relevant to the given $expression.
      *
-     * @param Expression $expression The Operator object you want to get the processor.
+     * @param QtiComponent $expression The Operator object you want to get the processor.
      * @param OperandsCollection $operands The operands to be involved in the Operator object.
      * @return OperatorProcessor An OperatorProcessor object ready to process $expression.
      * @throws OperatorProcessingException If the $operands count is not compliant with the Operator object to be processed.

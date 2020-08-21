@@ -35,7 +35,6 @@ class ExitTemplate extends QtiComponent implements TemplateRule
 {
     /**
      * Create a new ExitTemplate object.
-     *
      */
     public function __construct()
     {

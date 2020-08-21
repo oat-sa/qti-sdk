@@ -57,7 +57,7 @@ class AndProcessor extends OperatorProcessor
     /**
      * Process the current expression.
      *
-     * @return bool True if the expression is true, false otherwise.
+     * @return QtiBoolean True if the expression is true, false otherwise.
      * @throws OperatorProcessingException
      */
     public function process()

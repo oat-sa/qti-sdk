@@ -91,7 +91,7 @@ class MediaInteraction extends BlockInteraction
      *
      * The media object itself.
      *
-     * @var Object
+     * @var QtiObject
      * @qtism-bean-property
      */
     private $object;
@@ -101,7 +101,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
      * @param bool $autostart Whether the media has to be played immediately after the begining of the attempt.
-     * @param Object $object The media object itself.
+     * @param QtiObject $object The media object itself.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -242,7 +242,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set the media object itself.
      *
-     * @param Object $object
+     * @param QtiObject $object
      */
     public function setObject(QtiObject $object)
     {
@@ -252,7 +252,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Get the media object itself.
      *
-     * @return Object
+     * @return QtiObject
      */
     public function getObject()
     {

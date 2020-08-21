@@ -35,6 +35,7 @@ class SelectableRouteCollection extends AbstractCollection
     /**
      * Check if $value is a Route object
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Route object.
      */
     protected function checkType($value)

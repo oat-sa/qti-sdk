@@ -35,7 +35,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @dataProvider unmarshallScalarProvider
      *
-     * @param Scalar $expectedScalar
+     * @param QtiScalar $expectedScalar
      * @param string $json
      */
     public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json)

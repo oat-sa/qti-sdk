@@ -69,7 +69,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @dataProvider marshallOrderedProvider
      *
-     * @param OrederedContainer $ordered
+     * @param OrderedContainer $ordered
      * @param string $expectedJson
      */
     public function testMarshallOrdered(OrderedContainer $ordered, $expectedJson)
@@ -110,7 +110,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallInvalidInput($input)
     {
         $this->expectException(MarshallingException::class);
-        $this->expectExceptionMessage("The '" . Marshaller::class. "::marshall' method only takes State, QtiDatatype and null values as arguments");
+        $this->expectExceptionMessage("The '" . Marshaller::class . "::marshall' method only takes State, QtiDatatype and null values as arguments");
         $this->expectExceptionCode(MarshallingException::NOT_SUPPORTED);
         $marshaller = new Marshaller();
         $marshaller->marshall($input);

@@ -49,7 +49,7 @@ class TimeLimits extends QtiComponent
      *
      * null = unlimited
      *
-     * @var Duration
+     * @var QtiDuration
      * @qtism-bean-property
      */
     private $minTime = null;
@@ -59,7 +59,7 @@ class TimeLimits extends QtiComponent
      *
      * null = unlimited
      *
-     * @var Duration
+     * @var QtiDuration
      * @qtism-bean-property
      */
     private $maxTime = null;
@@ -78,9 +78,9 @@ class TimeLimits extends QtiComponent
     /**
      * Create a new instance of TimeLimits.
      *
-     * @param Duration $minTime The minimum time. Give null if not defined.
-     * @param Duration $maxTime The maximum time. Give null if not defined.
-     * @param string $allowLateSubmission Wether it allows late submission of responses.
+     * @param QtiDuration $minTime The minimum time. Give null if not defined.
+     * @param QtiDuration $maxTime The maximum time. Give null if not defined.
+     * @param bool $allowLateSubmission Whether it allows late submission of responses.
      */
     public function __construct($minTime = null, $maxTime = null, $allowLateSubmission = false)
     {
@@ -92,7 +92,7 @@ class TimeLimits extends QtiComponent
     /**
      * Get the minimum time.
      *
-     * @return Duration A Duration object or null if unlimited.
+     * @return QtiDuration A Duration object or null if unlimited.
      */
     public function getMinTime()
     {
@@ -112,7 +112,7 @@ class TimeLimits extends QtiComponent
     /**
      * Set the minimum time.
      *
-     * @param Duration $minTime A Duration object or null if unlimited.
+     * @param QtiDuration $minTime A Duration object or null if unlimited.
      */
     public function setMinTime(QtiDuration $minTime = null)
     {
@@ -127,7 +127,7 @@ class TimeLimits extends QtiComponent
     /**
      * Get the maximum time. Returns null if unlimited
      *
-     * @return Duration A Duration object or null if unlimited.
+     * @return QtiDuration A Duration object or null if unlimited.
      */
     public function getMaxTime()
     {
@@ -147,7 +147,7 @@ class TimeLimits extends QtiComponent
     /**
      * Set the maximum time or null if unlimited.
      *
-     * @param Duration $maxTime A duration object or null if unlimited.
+     * @param QtiDuration $maxTime A duration object or null if unlimited.
      */
     public function setMaxTime(QtiDuration $maxTime = null)
     {

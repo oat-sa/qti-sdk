@@ -32,9 +32,9 @@ use Exception;
 class StorageException extends Exception
 {
     /**
-     * The error code to be used when the nature of the error
-     * is unknown. Should be used in absolute necessity. Otherwise,
-     * use the appropriate error code.
+     * The error code to be used when the nature of the error is unknown.
+     * Should be used in absolute necessity. Otherwise, use the appropriate
+     * error code.
      *
      * @var int
      */

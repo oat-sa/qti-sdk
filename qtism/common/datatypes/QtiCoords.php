@@ -103,7 +103,6 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Get the shape on which the coordinates apply.
      *
      * @return int A value from the Shape enumeration.
-     *
      */
     public function getShape()
     {

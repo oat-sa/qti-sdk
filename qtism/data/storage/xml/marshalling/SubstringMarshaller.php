@@ -56,8 +56,8 @@ class SubstringMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI substring operator element into a Substring object.
      *
-     * @param DOMElement The substring element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The substring element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A Substring object.
      * @throws UnmarshallingException
      */

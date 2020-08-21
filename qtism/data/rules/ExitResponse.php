@@ -47,7 +47,6 @@ class ExitResponse extends QtiComponent implements ResponseRule
 
     /**
      * Create a new ExitResponse object.
-     *
      */
     public function __construct()
     {

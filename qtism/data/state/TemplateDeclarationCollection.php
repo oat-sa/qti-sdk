@@ -34,6 +34,7 @@ class TemplateDeclarationCollection extends QtiIdentifiableCollection
     /**
      * Check if a given $value is an instance of TemplateDeclaration.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of TemplateDeclaration.
      */
     protected function checkType($value)

@@ -75,7 +75,7 @@ class MapEntryMarshaller extends Marshaller
     /**
      * Create a new instance of ValueMarshaller.
      *
-     * @param string
+     * @param string The QTI version number on which the Marshaller operates e.g. '2.1'.
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
      */

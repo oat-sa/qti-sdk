@@ -23,8 +23,7 @@ class BeanPropertyTest extends QtiSmTestCase
     {
         $this->expectException(BeanException::class);
         $this->expectExceptionMessage("The property with name 'anotherUselessProperty' for class '" . SimpleBean::class . "' is not annotated.");
-        $this->expectExceptionCode(BeanException::NO_PROPERTY
-        );
+        $this->expectExceptionCode(BeanException::NO_PROPERTY);
 
         $beanProperty = new BeanProperty(SimpleBean::class, 'anotherUselessProperty');
     }

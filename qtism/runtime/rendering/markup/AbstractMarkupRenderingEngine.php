@@ -25,6 +25,7 @@ namespace qtism\runtime\rendering\markup;
 
 use DOMDocument;
 use DOMDocumentFragment;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\utils\Url;
 use qtism\data\content\FeedbackElement;
 use qtism\data\content\Flow;
@@ -32,14 +33,14 @@ use qtism\data\content\interactions\Choice;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\RubricBlock;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 use qtism\data\ViewCollection;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\State;
 use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\RenderingException;
 use SplStack;
-use qtism\runtime\common\Container;
-use qtism\common\datatypes\QtiIdentifier;
 
 /**
  * The base class to be used by any rendering engines.
@@ -247,7 +248,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     private $state;
 
     /**
-     * Wether choices in shufflable interactions
+     * Whether choices in shufflable interactions
      * must be shuffled.
      *
      * @var bool
@@ -272,7 +273,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
     /**
      * Create a new AbstractRenderingObject.
-     *
      */
     public function __construct()
     {
@@ -470,7 +470,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Create the final rendering as it must be rendered by the final
+     * Create the final rendering of the rendered $component as it must be rendered by the final
      * implementation.
      *
      * @return mixed
@@ -618,7 +618,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Register a $renderer object to a given $qtiClassName.
      *
      * @param string $qtiClassName A QTI class name.
-     * @param AbstractRenderer $renderer An AbstractRenderer object.
+     * @param AbstractMarkupRenderer $renderer An AbstractRenderer object.
      */
     public function registerRenderer($qtiClassName, AbstractMarkupRenderer $renderer)
     {
@@ -633,7 +633,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * QtiComponent $component.
      *
      * @param QtiComponent $component A QtiComponent object you want to get the appropriate AbstractRenderer implementation.
-     * @return AbstractRenderer The AbstractRenderer implementation to render $component.
+     * @return AbstractMarkupRenderer The AbstractRenderer implementation to render $component.
      * @throws RenderingException If no implementation of AbstractRenderer is registered for $component.
      */
     public function getRenderer(QtiComponent $component)

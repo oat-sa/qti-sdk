@@ -53,7 +53,9 @@ class Format
      * than 32 characters for compatibility with version 1. They are always compared case-sensitively.
      *
      * @link http://www.w3.org/TR/2000/REC-xml-20001006
-     * @return bool Wether $string is a valid identifier.
+     * @param string $string
+     * @param bool $strict
+     * @return bool Whether $string is a valid identifier.
      */
     public static function isIdentifier($string, $strict = true)
     {
@@ -82,7 +84,7 @@ class Format
      * Extensible Markup Language (XML) 1.0 (Second Edition). Identifiers should have no more
      * than 32 characters for compatibility with version 1. They are always compared case-sensitively.
      *
-     * @param $dirtyIdentifier string The string of the identifier to sanitize.
+     * @param string $dirtyIdentifier The string of the identifier to sanitize.
      *
      * @return string A valid  qti-identifier representation of the $identifier set as paramter
      * @link http://www.w3.org/TR/2000/REC-xml-20001006
@@ -425,7 +427,7 @@ class Format
      *
      * @param float $float
      * @param string $x The character to be used as the 'times' operator.
-     * @param false|int $precision The number of requested significant numbers after the decimal separator.
+     * @param int|false $precision The number of requested significant numbers after the decimal separator.
      * @return string
      */
     public static function scale10($float, $x = 'x', $precision = false)

@@ -72,7 +72,7 @@ class SelectPointInteraction extends GraphicInteraction
      * Create a new SelectPointInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param Object $object The associated image as an Object object.
+     * @param QtiObject $object The associated image as an Object object.
      * @param int $maxChoices The maximum number of choices that the candidate is allowed to select as a positive (>= 0) integer.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.

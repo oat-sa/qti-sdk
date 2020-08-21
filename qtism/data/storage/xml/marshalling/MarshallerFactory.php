@@ -65,7 +65,6 @@ abstract class MarshallerFactory
 
     /**
      * Create a new instance of MarshallerFactory.
-     *
      */
     public function __construct()
     {
@@ -388,7 +387,7 @@ abstract class MarshallerFactory
     /**
      * Create a marshaller for a given QtiComponent or DOMElement object, depending on the current mapping
      * of the MarshallerFactory. If no mapping entry can be found, the factory will perform a ultimate
-     * trial in the qtism\\data\\storage\\xml\\marshalling namespace to find the relevant Marshaller object.
+     * trial in the qtism\data\storage\xml\marshalling namespace to find the relevant Marshaller object.
      *
      * The newly created marshaller will be set up with the MarshallerFactory itself as its MarshallerFactory
      * object (yes, we know, this is highly recursive but necessary x)).

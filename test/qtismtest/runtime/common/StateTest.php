@@ -147,7 +147,7 @@ class StateTest extends QtiSmTestCase
         $state = new State();
 
         $this->expectException(OutOfRangeException::class);
-        $this->expectExceptionMessage('A State object can only be adressed by a valid string.');
+        $this->expectExceptionMessage('A State object can only be addressed by a valid string.');
 
         $state[true] = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
     }

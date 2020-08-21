@@ -40,7 +40,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * The image to be used as a stage onto which individual positionObjectInteractions
      * allow the candidate to place their objects.
      *
-     * @var Object
+     * @var QtiObject
      * @qtism-bean-property
      */
     private $object;
@@ -56,7 +56,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Set the image to be used as a stage.
      *
-     * @param Object $object An Object object.
+     * @param QtiObject $object An Object object.
      * @qtism-bean-property
      */
     public function setObject(QtiObject $object)
@@ -67,7 +67,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Get the image to be used as a stage.
      *
-     * @return Object An Object object.
+     * @return QtiObject An Object object.
      * @qtism-bean-property
      */
     public function getObject()
@@ -78,7 +78,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Create a new PositionObjectStage object.
      *
-     * @param Object $object The image to be used as a stage.
+     * @param QtiObject $object The image to be used as a stage.
      * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
      */
     public function __construct(QtiObject $object, PositionObjectInteractionCollection $positionObjectInteractions)

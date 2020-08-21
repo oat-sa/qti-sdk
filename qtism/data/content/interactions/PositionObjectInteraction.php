@@ -55,7 +55,7 @@ class PositionObjectInteraction extends Interaction
      * several position object interactions and is therefore defined in a class
      * of its own: positionObjectStage.
      *
-     * @var Point
+     * @var QtiPoint
      * @qtism-bean-property
      */
     private $centerPoint = null;
@@ -90,7 +90,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * The image to be positioned on the stage by the candidate.
      *
-     * @var Object
+     * @var QtiObject
      * @qtism-bean-property
      */
     private $object;
@@ -99,7 +99,7 @@ class PositionObjectInteraction extends Interaction
      * Create a new PositionObjectInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param Object $object An image as an Object object.
+     * @param QtiObject $object An image as an Object object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -116,7 +116,7 @@ class PositionObjectInteraction extends Interaction
      * Set the centerPoint attribute. Give the null value if there is no centerPoint
      * specified.
      *
-     * @param Point $centerPoint A Point object or null.
+     * @param QtiPoint $centerPoint A Point object or null.
      */
     public function setCenterPoint(QtiPoint $centerPoint = null)
     {
@@ -127,7 +127,7 @@ class PositionObjectInteraction extends Interaction
      * Get the centerPoint attribute. The null value is returned if there is no centerPoint
      * specified.
      *
-     * @return Point A Point object or null.
+     * @return QtiPoint A Point object or null.
      */
     public function getCenterPoint()
     {
@@ -216,7 +216,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Set the image to be positioned on the stage by the candidate.
      *
-     * @param Object $object An image as an Object object.
+     * @param QtiObject $object An image as an Object object.
      */
     public function setObject(QtiObject $object)
     {
@@ -226,7 +226,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Get the image to be positioned on the stage by the candidate.
      *
-     * @return Object An image as an Object object.
+     * @return QtiObject An image as an Object object.
      */
     public function getObject()
     {

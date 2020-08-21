@@ -38,7 +38,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a MathOperator object into a QTI mathOperator element.
      *
-     * @param QtiComponent The MathOperator object to marshall.
+     * @param QtiComponent $component The MathOperator object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI mathOperator element.
      */
@@ -58,8 +58,8 @@ class MathOperatorMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI mathOperator operator element into a MathsOperator object.
      *
-     * @param DOMElement The mathOperator element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The mathOperator element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A MathOperator object.
      * @throws UnmarshallingException
      */

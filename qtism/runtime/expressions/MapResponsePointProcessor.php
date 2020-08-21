@@ -66,7 +66,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
      * * The targeted variable has no areaMapping.
      * * The target variable has the RECORD cardinality.
      *
-     * @return float A transformed float value according to the areaMapping of the target variable.
+     * @return QtiFloat A transformed float value according to the areaMapping of the target variable.
      * @throws ExpressionProcessingException
      */
     public function process()
@@ -117,6 +117,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
                     if (count($mapped) === 0) {
                         return new QtiFloat($areaMapping->getDefaultValue());
                     } elseif ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
+                        // Check upper and lower bound.
                         return new QtiFloat($areaMapping->getLowerBound());
                     } elseif ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
                         return new QtiFloat($areaMapping->getUpperBound());

@@ -91,8 +91,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
     /**
      * @dataProvider wrongCardinalityProvider
-     *
-     * @param OperandsCollection $operands
+     * @param array $operands
      */
     public function testWrongCardinality(array $operands)
     {
@@ -112,7 +111,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @dataProvider wrongBaseTypeProvider
      *
-     * @param OperandsCollection $operands
+     * @param array $operands
      */
     public function testWrongBaseType(array $operands)
     {

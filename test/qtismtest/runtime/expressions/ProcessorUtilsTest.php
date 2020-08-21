@@ -11,6 +11,8 @@ class ProcessorUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider sanitizeVariableRefValidProvider
+     * @param string $value
+     * @param string $expected
      */
     public function testSanitizeVariableRefValid($value, $expected)
     {
@@ -19,6 +21,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider sanitizeVariableRefInvalidProvider
+     * @param mixed $value
      */
     public function testSanitizeVariableRefInvalid($value)
     {

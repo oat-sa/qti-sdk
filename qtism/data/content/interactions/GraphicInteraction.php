@@ -37,7 +37,7 @@ abstract class GraphicInteraction extends BlockInteraction
      * Each graphical interaction has an associated image which is given as an
      * object that must be of an image type, as specified by the type attribute.
      *
-     * @var Object
+     * @var QtiObject
      * @qtism-bean-property
      */
     private $object;
@@ -46,7 +46,7 @@ abstract class GraphicInteraction extends BlockInteraction
      * Create a GraphicInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param Object $object The associated image as an Object object.
+     * @param QtiObject $object The associated image as an Object object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -62,7 +62,7 @@ abstract class GraphicInteraction extends BlockInteraction
     /**
      * Set the associated image given as an object.
      *
-     * @param Object $object An Object object.
+     * @param QtiObject $object An Object object.
      */
     public function setObject(QtiObject $object)
     {
@@ -72,7 +72,7 @@ abstract class GraphicInteraction extends BlockInteraction
     /**
      * Get the associated image given as an object.
      *
-     * @return Object An Object object.
+     * @return QtiObject An Object object.
      */
     public function getObject()
     {

@@ -43,7 +43,7 @@ class IsNullProcessor extends OperatorProcessor
     /**
      * Set the Expression object to be processed.
      *
-     * @param Expression An IsNull object.
+     * @param Expression $expression An IsNull object.
      * @throws InvalidArgumentException If the $expression is not an IsNull QTI Data Model Expression object.
      */
     public function setExpression(Expression $expression)
@@ -59,7 +59,7 @@ class IsNullProcessor extends OperatorProcessor
     /**
      * Process the IsNullExpression object from the QTI Data Model.
      *
-     * @return bool Whether the sub-expression is considered to be NULL.
+     * @return QtiBoolean Whether the sub-expression is considered to be NULL.
      * @throws OperatorProcessingException If something goes wrong.
      */
     public function process()

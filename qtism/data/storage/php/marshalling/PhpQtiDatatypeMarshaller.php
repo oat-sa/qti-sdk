@@ -78,6 +78,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
     /**
      * Whether the $toMarshall value can be marshalled by this implementation.
      *
+     * @param mixed $toMarshall
      * @return bool.
      */
     protected function isMarshallable($toMarshall)

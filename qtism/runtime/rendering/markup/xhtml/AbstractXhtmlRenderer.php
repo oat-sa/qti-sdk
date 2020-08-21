@@ -44,7 +44,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     private $replacementTagName = '';
 
     /**
-     * A set of additional CSS classes to be added
+     * A set of additional QTI specific classes to be added
      * to the rendered element.
      *
      * @var array
@@ -65,6 +65,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      *
+     * @param QtiComponent $component
+     * @param string $base
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
      * @throws RenderingException If an error occurs while rendering $component.
      */
@@ -125,6 +127,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -137,6 +140,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -150,6 +154,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
