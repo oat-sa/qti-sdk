@@ -126,9 +126,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
     {
         $this->expectException(ExpressionProcessingException::class);
         $this->expectExceptionMessage("No variable with identifier 'INVALID' could be found while processing MapResponse.");
-        $this->expectExceptionCode(
-            ExpressionProcessingException::NONEXISTENT_VARIABLE
-        );
+        $this->expectExceptionCode(ExpressionProcessingException::NONEXISTENT_VARIABLE);
 
         $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="INVALID"/>');
         $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);

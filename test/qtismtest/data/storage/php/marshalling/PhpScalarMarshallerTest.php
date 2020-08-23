@@ -38,7 +38,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
             ["\$integer_0 = 10;\n", 10],
             ["\$double_0 = 10.44;\n", 10.44],
             ["\$string_0 = \"\";\n", ''],
-            ["\$string_0 = \"Hello!\";\n", "Hello!"],
+            ["\$string_0 = \"Hello!\";\n", 'Hello!'],
             ["\$boolean_0 = true;\n", true],
             ["\$boolean_0 = false;\n", false],
             ["\$string_0 = \"Hello \\n there!\";\n", "Hello \n there!"],

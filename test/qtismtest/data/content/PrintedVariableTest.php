@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content;
 
+use InvalidArgumentException;
 use qtism\data\content\PrintedVariable;
 use qtismtest\QtiSmTestCase;
 
@@ -9,7 +10,7 @@ class PrintedVariableTest extends QtiSmTestCase
 {
     public function testCreatePrintedVariableWrongIdentifier()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'identifier' argument must be a valid QTI identifier, '999' given.");
 
         $printedVariable = new PrintedVariable('999');
@@ -17,7 +18,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetFormatWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'format' argument must be a string with at most 256 characters, '999' given.");
 
         $printedVariable = new PrintedVariable('ABC');
@@ -26,7 +27,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetPowerFormWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'powerForm' argument must be a boolean value, 'integer' given.");
 
         $printedVariable = new PrintedVariable('ABC');
@@ -35,7 +36,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetBaseWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'base' argument must be an integer or a variable reference, '999.9' given.");
 
         $printedVariable = new PrintedVariable('ABC');
@@ -44,7 +45,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetIndexWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'index' argument must be an integer or a variable reference, '999.9' given.");
 
         $printedVariable = new PrintedVariable('ABC');
@@ -53,7 +54,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetDelimiterWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'delimiter' argument must be a non-empty string, 'double' given.");
 
         $printedVariable = new PrintedVariable('ABC');
@@ -62,7 +63,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetFieldWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'field' argument must be a non-empty string, 'double' given.");
 
         $printedVariable = new PrintedVariable('ABC');
@@ -71,7 +72,7 @@ class PrintedVariableTest extends QtiSmTestCase
 
     public function testSetMappingIndicatorWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'mappingIndicator' argument must be a non-empty string with at most 256 characters, 'double' given.");
 
         $printedVariable = new PrintedVariable('ABC');

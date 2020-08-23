@@ -110,7 +110,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.");
+        $this->expectExceptionMessage('A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.');
 
         $matchInteraction = new MatchInteraction(
             'RESPONSE',

@@ -13,9 +13,9 @@ class ChoiceInteractionTest extends QtiSmTestCase
     public function testCreateEmptyChoiceList()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.");
+        $this->expectExceptionMessage('A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.');
 
-        $choiceInteraction = new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection());
+        new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection());
     }
 
     public function testSetShuffleWrongType()

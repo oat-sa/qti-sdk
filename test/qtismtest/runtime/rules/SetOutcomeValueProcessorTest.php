@@ -211,9 +211,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
 
         $this->expectException(RuleProcessingException::class);
         $this->expectExceptionMessage("No variable with identifier 'SCOREXXXX' to be set in the current state.");
-        $this->expectExceptionCode(
-            RuleProcessingException::NONEXISTENT_VARIABLE
-        );
+        $this->expectExceptionCode(RuleProcessingException::NONEXISTENT_VARIABLE);
 
         $processor->process();
     }

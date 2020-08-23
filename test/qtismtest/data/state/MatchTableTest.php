@@ -13,7 +13,7 @@ class MatchTableTest extends QtiSmTestCase
     public function testCreateNotEnoughMatchTableEntries()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A MatchTable object must contain at least one MatchTableEntry object.");
+        $this->expectExceptionMessage('A MatchTable object must contain at least one MatchTableEntry object.');
 
         new MatchTable(new MatchTableEntryCollection());
     }

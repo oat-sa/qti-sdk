@@ -65,7 +65,7 @@ class AssessmentTestSeekerTest extends QtiSmTestCase
 
         try {
             $pos = $seeker->seekPosition(new AssessmentItemRef('Q05', 'Q05.xml'));
-            $this->assertFalse(true, "Nothing should be found for Q05.");
+            $this->assertFalse(true, 'Nothing should be found for Q05.');
         } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }
