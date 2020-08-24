@@ -20,6 +20,8 @@ class UtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider validIntegerProvider
+     * @param string $string
+     * @param int $expected
      */
     public function testStringToInteger($string, $expected)
     {
@@ -30,6 +32,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidIntegerProvider
+     * @param string $string
      */
     public function testStringToIntegerInvalid($string)
     {
@@ -39,6 +42,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFloatProvider
+     * @param string $string
+     * @param float $expected
      */
     public function testStringToFloatValid($string, $expected)
     {
@@ -49,6 +54,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidFloatProvider
+     * @param string $string
      */
     public function testStringToFloatInvalid($string)
     {
@@ -58,6 +64,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validBooleanProvider
+     * @param string $string
+     * @param bool $expected
      */
     public function testStringToBooleanValid($string, $expected)
     {
@@ -92,6 +100,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidBooleanProvider
+     * @param string $string
      */
     public function testStringToBooleanInvalid($string)
     {
@@ -101,6 +110,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validPointProvider
+     * @param string $string
+     * @param QtiPoint $expected
      */
     public function testStringToPointValid($string, $expected)
     {
@@ -113,6 +124,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidPointProvider
+     * @param string $string
      */
     public function testStringToPointInvalid($string)
     {
@@ -122,6 +134,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validDurationProvider
+     * @param string $string
+     * @param QtiDuration $expected
      */
     public function testStringToDurationValid($string, $expected)
     {
@@ -137,6 +151,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidDurationProvider
+     * @param string $string
      */
     public function testStringToDurationInvalid($string)
     {
@@ -146,6 +161,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validPairProvider
+     * @param string $string
+     * @param QtiPair $expected
      */
     public function testStringToPairValid($string, $expected)
     {
@@ -157,6 +174,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidPairProvider
+     * @param string $string
      */
     public function testStringToPairInvalid($string)
     {
@@ -166,6 +184,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validPairProvider
+     * @param string $string
+     * @param QtiDirectedPair $expected
      */
     public function testStringToDirectedPairValid($string, $expected)
     {
@@ -177,6 +197,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidPairProvider
+     * @param string $string
      */
     public function testStringToDirectedPairInvalid($string)
     {
@@ -186,13 +207,15 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validCoordsProvider
+     * @param string $string
+     * @param QtiShape $shape
      */
     public function testStringToCoords($string, $shape)
     {
         $coords = Utils::stringToCoords($string, $shape);
         $this->assertInstanceOf(QtiCoords::class, $coords);
 
-        $intCoords = explode(",", $string);
+        $intCoords = explode(',', $string);
         $this->assertEquals(count($intCoords), count($coords));
 
         for ($i = 0; $i < count($intCoords); $i++) {
@@ -202,6 +225,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidCoordsProvider
+     * @param string $string
+     * @param QtiShape $shape
      */
     public function testStringToCoordsInvalid($string, $shape)
     {
@@ -211,6 +236,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidShapeProvider
+     * @param string $string
+     * @param mixed $shape
      */
     public function testStringToCoordsInvalidShapes($string, $shape)
     {
@@ -220,6 +247,8 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider validUriToSanitizeProvider
+     * @param string $uri
+     * @param string $expected
      */
     public function testValidUriToSanitize($uri, $expected)
     {
@@ -228,6 +257,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidUriToSanitizeProvider
+     * @param string $uri
      */
     public function testInvalidUriToSanitize($uri)
     {

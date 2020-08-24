@@ -37,7 +37,6 @@ class ExpressionProcessorFactory implements ProcessorFactory
 {
     /**
      * Create a new ExpressionProcessorFactory object.
-     *
      */
     public function __construct()
     {

@@ -59,6 +59,9 @@ class HotspotChoiceRenderer extends HotspotRenderer
     }
 
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\HotspotRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')

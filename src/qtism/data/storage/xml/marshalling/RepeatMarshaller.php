@@ -38,8 +38,8 @@ class RepeatMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a Repeat object into a QTI repeat element.
      *
-     * @param QtiComponent The Repeat object to marshall.
-     * @param array An array of child DOMEelement objects.
+     * @param QtiComponent $component The Repeat object to marshall.
+     * @param array $elements An array of child DOMElement objects.
      * @return DOMElement The marshalled QTI repeat element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

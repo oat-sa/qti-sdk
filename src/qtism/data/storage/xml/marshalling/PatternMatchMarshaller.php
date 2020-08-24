@@ -56,8 +56,8 @@ class PatternMatchMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI patternMatch operator element into an PatternMatch object.
      *
-     * @param DOMElement The patternMatch element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The patternMatch element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A PatternMatch object.
      * @throws UnmarshallingException
      */

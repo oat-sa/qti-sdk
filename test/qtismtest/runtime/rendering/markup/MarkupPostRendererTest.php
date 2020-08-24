@@ -11,6 +11,8 @@ class MarkupPostRendererTest extends QtiSmTestCase
 {
     /**
      * @dataProvider xmlDeclarationCleanUpProvider
+     * @param string $relativeUri
+     * @throws RenderingException
      */
     public function testXmlDeclarationCleanUp($relativeUri)
     {

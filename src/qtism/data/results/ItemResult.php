@@ -102,7 +102,7 @@ class ItemResult extends QtiComponent
      *
      * Multiplicity [0,*]
      *
-     * @var VariableCollection
+     * @var ItemVariableCollection
      */
     protected $itemVariables;
 

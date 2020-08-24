@@ -46,7 +46,7 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall an numberResponded QTI element in its NumberResponded object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding NumberResponded object.
      */
     protected function unmarshall(DOMElement $element)

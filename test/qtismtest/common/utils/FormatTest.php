@@ -10,6 +10,7 @@ class FormatTest extends QtiSmTestCase
 {
     /**
      * @dataProvider validIdentifierFormatProvider
+     * @param string $string
      */
     public function testValidIdentifierFormat($string)
     {
@@ -18,6 +19,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidIdentifierFormatProvider
+     * @param string $string
      */
     public function testInvalidIdentifierFormat($string)
     {
@@ -26,6 +28,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validVariableRefFormatProvider
+     * @param string $string
      */
     public function testValidVariableRefFormat($string)
     {
@@ -34,6 +37,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidVariableRefFormatProvider
+     * @param string $string
      */
     public function testInvalidVariableRefFormat($string)
     {
@@ -42,6 +46,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validCoordinatesFormatProvider
+     * @param string $string
      */
     public function testValidCoordinatesFormat($string)
     {
@@ -50,6 +55,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidCoordinatesFormatProvider
+     * @param string $string
      */
     public function testInvalidCoordinatesFormat($string)
     {
@@ -58,6 +64,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validUriFormatProvider
+     * @param string $string
      */
     public function testValidUriFormat($string)
     {
@@ -66,6 +73,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validClassFormatProvider
+     * @param string $string
      */
     public function testValidClassFormatProvider($string)
     {
@@ -74,6 +82,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidClassFormatProvider
+     * @param string $string
      */
     public function testInvalidClassFormatProvider($string)
     {
@@ -82,6 +91,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validString256FormatProvider
+     * @param string $string
      */
     public function testValidString256Provider($string)
     {
@@ -90,6 +100,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidString256FormatProvider
+     * @param string $string
      */
     public function testInvalidString256Provider($string)
     {
@@ -98,6 +109,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFileFormatProvider
+     * @param string $string
      */
     public function testValidFile($string)
     {
@@ -106,6 +118,10 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider scale10Provider
+     * @param float $float
+     * @param string $expected
+     * @param string $x
+     * @param int|bool $precision
      */
     public function testScale10($float, $expected, $x = 'x', $precision = false)
     {
@@ -116,7 +132,7 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider isPrintfIsoFormatProvider
      *
      * @param string $input
-     * @param string $expected
+     * @param bool $expected
      */
     public function testIsPrintfIsoFormat($input, $expected)
     {
@@ -147,6 +163,8 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider sanitizeProvider
+     * @param string $dirty
+     * @param mixed $clean
      */
     public function testSanitizeIdentifier($dirty, $clean)
     {
@@ -157,6 +175,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider sanitizeProvider2
+     * @param mixed $dirty
      */
     public function testSanitizeIdentifier2($dirty)
     {

@@ -237,7 +237,6 @@ class OutcomeVariable extends Variable
      *
      * If no default value is described, and the cardinality is single and the baseType
      * is integer or float, the value of the variable becomes 0.
-     *
      */
     public function applyDefaultValue()
     {

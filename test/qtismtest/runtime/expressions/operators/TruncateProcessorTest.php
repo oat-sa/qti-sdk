@@ -183,9 +183,8 @@ class TruncateProcessorTest extends QtiSmTestCase
 
     /**
      * @dataProvider provider
-     *
-     * @val float
-     * @val integer
+     * @param float $val
+     * @param integer $expected
      */
 
     public function testForProvider($val, $expected)

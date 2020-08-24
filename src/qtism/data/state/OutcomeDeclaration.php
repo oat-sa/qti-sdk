@@ -370,7 +370,7 @@ class OutcomeDeclaration extends VariableDeclaration
     }
 
     /**
-     * Set external score attribute to determine how scoring should be proceed
+     * Set external scored attribute to determine how scoring should be proceed
      *
      * @param int|null $externalScored
      */

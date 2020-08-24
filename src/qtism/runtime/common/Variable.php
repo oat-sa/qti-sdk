@@ -105,7 +105,6 @@ abstract class Variable
      *
      * * If the variable is supposed to contain a Container (Multiple, Ordered or Record cardinality), the variable's value becomes an empty container.
      * * If the variable is scalar (Cardinality single), the value becomes NULL.
-     *
      */
     public function initialize()
     {
@@ -550,7 +549,6 @@ abstract class Variable
     /**
      * Set the value of the Variable with its default value. If no default
      * value was given, the value of the variable becomes NULL.
-     *
      */
     public function applyDefaultValue()
     {

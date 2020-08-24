@@ -32,7 +32,6 @@ use qtism\common\utils\Format;
 use qtism\data\content\PrintedVariable;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\AbstractEngine;
-use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
 
@@ -190,7 +189,7 @@ class PrintedVariableEngine extends AbstractEngine
      * Processes all values of a record container and merge them into
      * a single string.
      *
-     * @param RecordContainer $variable The record to process.
+     * @param Variable $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
     private function processRecord(Variable $variable)

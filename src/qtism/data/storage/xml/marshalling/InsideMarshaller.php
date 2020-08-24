@@ -37,7 +37,11 @@ use qtism\data\storage\Utils;
 class InsideMarshaller extends OperatorMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
+     * Unmarshall an Inside object into a QTI inside element.
+     *
+     * @param QtiComponent $component The Inside object to marshall.
+     * @param array An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI inside element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -53,7 +57,12 @@ class InsideMarshaller extends OperatorMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
+     * Unmarshall a QTI inside operator element into an Inside object.
+     *
+     * @param DOMElement $element The inside element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent An Inside object.
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {

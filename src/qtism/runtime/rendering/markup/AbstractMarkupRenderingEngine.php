@@ -315,7 +315,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
     /**
      * Create a new AbstractRenderingObject.
-     *
      */
     public function __construct()
     {

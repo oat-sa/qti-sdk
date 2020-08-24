@@ -264,7 +264,7 @@ class AssessmentSection extends SectionPart
      * Set the section rubrics to presented to the candidate with each
      * item contained by the section.
      *
-     * @param RubricBlockCollection A collection of RubricBlock objects.
+     * @param RubricBlockCollection $rubricBlocks A collection of RubricBlock objects.
      */
     public function setRubricBlocks(RubricBlockCollection $rubricBlocks)
     {

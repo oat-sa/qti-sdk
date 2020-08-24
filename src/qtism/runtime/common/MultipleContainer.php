@@ -88,6 +88,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
+     * @param mixed $value
      * @see \qtism\common\collections\Container::checkType()
      */
     protected function checkType($value)

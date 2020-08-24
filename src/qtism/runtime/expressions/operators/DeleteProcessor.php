@@ -51,7 +51,7 @@ class DeleteProcessor extends OperatorProcessor
     /**
      * Process the Delete operator.
      *
-     * @return Container A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
+     * @return Container|null A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
      * @throws OperatorProcessingException
      */
     public function process()

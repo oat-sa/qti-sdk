@@ -682,7 +682,6 @@ class AssessmentItemSession extends State
          * cannot be seen during the test. Whether or not the candidate can return to review
          * their responses and/or any item-level feedback after the test, is outside the scope
          * of this specification. Simultaneous mode is typical of paper-based tests.
-         *
          */
         if ($submissionMode === SubmissionMode::SIMULTANEOUS) {
             $maxAttempts = 1;

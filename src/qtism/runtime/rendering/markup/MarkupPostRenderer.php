@@ -211,7 +211,8 @@ class MarkupPostRenderer implements Renderable
         }
 
         /*
-         * 2. Transform qtism-if, qtism-printVariable, qtism-include statements into PHP statements.
+         * 2. Transform qtism-if, qtism-printVariable, qtism-include statements
+         * into PHP statements.
          */
         if ($this->isTemplateOriented() === true) {
             $output = preg_replace('/<!--\s+qtism-if\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);

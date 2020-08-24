@@ -13,6 +13,9 @@ class FileSystemFileTest extends QtiSmTestCase
      * @dataProvider retrieveProvider
      *
      * @param string $path The path to the QTI file instance.
+     * @param string $expectedFilename
+     * @param string $expectedMimeType
+     * @param string $expectedData
      */
     public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData)
     {

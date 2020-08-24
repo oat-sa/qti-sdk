@@ -401,6 +401,7 @@ class CssScoper implements Renderable
      * @param string $file The path to the file that has to be rescoped.
      * @param string $id The scope identifier. If not given, will be randomly generated.
      * @return string The rescoped content of $file.
+     * @throws MemoryStreamException
      * @throws RenderingException If something goes wrong while rescoping the content.
      */
     public function render($file, $id = '')
@@ -474,6 +475,7 @@ class CssScoper implements Renderable
      *
      * @param string $id The identifier to be used for scoping.
      * @param string $file The path to the CSS file to be scoped.
+     * @throws MemoryStreamException
      * @throws RenderingException
      */
     protected function init($id, $file)

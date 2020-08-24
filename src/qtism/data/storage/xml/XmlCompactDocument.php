@@ -106,15 +106,19 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Whether or not the rubrickBlock components contained in the document should be separated from the document.
+     * Whether or not the rubrickBlock components contained in the document
+     * should be separated from the document.
      *
-     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save() will make the following rules to be applied:
+     * If $explodedRubricBlocks is set to true, a call to
+     * XmlCompactDocument::save() will make the following rules to be applied:
      *
      * * rubricBlock components will be removed from the document.
      * * a replacement of the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes will occur.
      * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
      *
-     * @param bool $explodeRubricBlocks Wheter rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
+     * Please note that this is taken under consideration only when the XmlDocument::save() method is used.
+     *
+     * @param bool $explodeRubricBlocks Whether rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
      */
     public function setExplodeRubricBlocks($explodeRubricBlocks)
     {
@@ -161,7 +165,7 @@ class XmlCompactDocument extends XmlDocument
      * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
      *
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
-     * @param FileResolver (optional) $resolver A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
+     * @param FileResolver $resolver (optional) A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
      * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
@@ -377,6 +381,9 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
+     * @param QtiComponent $documentComponent
+     * @param string $uri
+     * @throws XmlStorageException
      * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)

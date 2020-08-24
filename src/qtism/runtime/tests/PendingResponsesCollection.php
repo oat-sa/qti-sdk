@@ -32,6 +32,7 @@ use qtism\common\collections\AbstractCollection;
 class PendingResponsesCollection extends AbstractCollection
 {
     /**
+     * @param mixed $value
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)

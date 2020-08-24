@@ -34,6 +34,7 @@ class ResponseDeclarationCollection extends QtiIdentifiableCollection
     /**
      * Check if a given $value is an instance of ResponseDeclaration.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ResponseDeclaration.
      */
     protected function checkType($value)

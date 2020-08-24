@@ -40,6 +40,9 @@ use qtism\data\QtiComponent;
 class HottextInteractionRenderer extends InteractionRenderer
 {
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')

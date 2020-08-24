@@ -119,7 +119,6 @@ class AnyNProcessor extends OperatorProcessor
         if ($trueCount >= $min && $trueCount <= $max) {
             return new QtiBoolean(true);
         } elseif ($trueCount + $nullCount >= $min && $trueCount + $nullCount <= $max) {
-            // Should we return false or null?
             // It could have match if nulls were true values.
             return null;
         } else {

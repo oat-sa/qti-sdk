@@ -36,6 +36,10 @@ use qtism\data\QtiComponentCollection;
 class PromptMarshaller extends ContentMarshaller
 {
     /**
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
@@ -50,7 +54,7 @@ class PromptMarshaller extends ContentMarshaller
         if (Version::compare($this->getVersion(), '2.2.0', '<')) {
             $exclusion[] = 'a';
         }
-        
+
         foreach ($children as $c) {
             if (in_array($c->getQtiClassName(), $exclusion) === true) {
                 $error = true;
@@ -79,6 +83,9 @@ class PromptMarshaller extends ContentMarshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

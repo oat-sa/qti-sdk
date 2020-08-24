@@ -38,6 +38,10 @@ use qtism\data\ShowHide;
 class InlineChoiceMarshaller extends ContentMarshaller
 {
     /**
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
@@ -87,6 +91,9 @@ class InlineChoiceMarshaller extends ContentMarshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

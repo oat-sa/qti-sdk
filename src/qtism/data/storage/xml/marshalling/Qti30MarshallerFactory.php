@@ -25,39 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
 use ReflectionClass;
-use qtism\data\storage\xml\marshalling\SsmlSubMarshaller;
-use qtism\data\storage\xml\marshalling\InfoControlMarshaller;
-use qtism\data\storage\xml\marshalling\TemplateElementMarshaller;
-use qtism\data\storage\xml\marshalling\RubricBlockMarshaller;
-use qtism\data\storage\xml\marshalling\FeedbackElementMarshaller;
-use qtism\data\storage\xml\marshalling\PromptMarshaller;
-use qtism\data\storage\xml\marshalling\PrintedVariableMarshaller;
-use qtism\data\storage\xml\marshalling\PositionObjectInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\TextInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\InlineChoiceInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\EndAttemptInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\CustomInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\UploadInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\SliderInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\ChoiceInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\MediaInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\MatchInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\HottextInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\SelectPointInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\HotspotInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\GraphicOrderInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\GraphicGapMatchInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\GraphicAssociateInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\GapMatchInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\DrawingInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\AssociateInteractionMarshaller;
-use qtism\data\storage\xml\marshalling\SimpleChoiceMarshaller;
-use qtism\data\storage\xml\marshalling\InlineChoiceMarshaller;
-use qtism\data\storage\xml\marshalling\HottextMarshaller;
-use qtism\data\storage\xml\marshalling\HotspotMarshaller;
-use qtism\data\storage\xml\marshalling\SimpleAssociableChoiceMarshaller;
-use qtism\data\storage\xml\marshalling\GapChoiceMarshaller;
-use qtism\data\storage\xml\marshalling\GapMarshaller;
+use ReflectionException;
 
 /**
  * A QTI 3.0.0 (aQTI) MarshallerFactory
@@ -160,6 +128,7 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
      * @param ReflectionClass $class
      * @param array $args
      * @return Marshaller
+     * @throws ReflectionException
      * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)

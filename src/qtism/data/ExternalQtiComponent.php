@@ -157,7 +157,6 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
      */
     protected function buildTargetNamespace()
     {
-        return;
     }
 
     /**

@@ -112,7 +112,7 @@ class MatchTableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A MatchTable object.
-     * @throws \UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
+     * @throws UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
      */
     protected function unmarshall(DOMElement $element)
     {

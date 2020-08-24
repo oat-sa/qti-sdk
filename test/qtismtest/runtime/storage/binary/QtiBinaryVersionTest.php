@@ -51,6 +51,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
     /**
      * @dataProvider legacyFeaturesToTest
      * @param int $versionNumber
+     * @param array $expectedFeatures
      * @throws BinaryStreamAccessException
      */
     public function testLegacyFeatures(int $versionNumber, array $expectedFeatures)
@@ -87,6 +88,9 @@ class QtiBinaryVersionTest extends QtiSmTestCase
 
     /**
      * @dataProvider masterFeaturesToTest
+     * @param int $versionNumber
+     * @param array $expectedFeatures
+     * @throws BinaryStreamAccessException
      */
     public function testMasterFeatures(int $versionNumber, array $expectedFeatures)
     {

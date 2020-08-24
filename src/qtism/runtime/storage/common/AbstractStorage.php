@@ -28,17 +28,17 @@ use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentTestSession;
 
 /**
- * The AbstractStorage class is extended by any class that claims to offer an AssessmentTestSession Storage Service.
- *
- * It will provide all the functionalities to make AssessmentTestSession objects
- * persistant and retrievable at will. An instance of AbstractStorage is dedicated
- * to store AssessmentTestSession of a unique AssessmentTest definition. To deal with
- * AssessmentTestSession objects bound to various AssessmentTest definitions, different
- * instances of AbstractStorage must be used.
+ * The AbstractStorage class is extended by any class that claims to offer an
+ * AssessmentTestSession Storage Service. It will provide all the
+ * functionalities to make AssessmentTestSession objects persistant and
+ * retrievable at will. An instance of AbstractStorage is dedicated to store
+ * AssessmentTestSession of a unique AssessmentTest definition. To deal with
+ * AssessmentTestSession objects bound to various AssessmentTest definitions,
+ * different instances of AbstractStorage must be used.
  *
  * An AssessmentTestSession Storage Service must be able to:
  *
- * * Instantiate a new AssessmentTestSession object, and assign it a unique identifier.
+ * * Instantiate a new AssessmentTestSession object and assign it a unique identifier.
  * * Persist an AssessmentTestSession object for a later retrieval.
  * * Retrieve an AssessmentTestSession from its session ID.
  */

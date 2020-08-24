@@ -71,7 +71,7 @@ abstract class QtiDocument
      *
      * @return string A Semantic Versioning version number with major, minor and patch version e.g. '2.1.0'.
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return (string)$this->version;
     }

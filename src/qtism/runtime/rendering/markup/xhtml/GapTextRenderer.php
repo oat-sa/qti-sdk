@@ -47,6 +47,9 @@ use qtism\data\QtiComponent;
 class GapTextRenderer extends GapChoiceRenderer
 {
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\GapChoiceRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')

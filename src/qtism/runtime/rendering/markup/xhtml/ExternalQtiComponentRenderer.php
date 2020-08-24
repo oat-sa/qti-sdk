@@ -34,6 +34,9 @@ use RuntimeException;
 class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
 {
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendElement()
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
@@ -42,6 +45,10 @@ class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
     }
 
     /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
+     * @throws RenderingException
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')

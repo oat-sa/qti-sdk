@@ -111,7 +111,7 @@ class RecordContainer extends Container implements QtiDatatype
             if (!empty($fieldIdentifier)) {
                 $container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
             } else {
-                $msg = 'Cannot include ' . Value::class . " '" . $value->getValue() . "' in the RecordContainer ";
+                $msg = 'Cannot include ' . Value::class . "'" . $value->getValue() . "' in the RecordContainer ";
                 $msg .= 'because it has no fieldIdentifier specified.';
                 throw new InvalidArgumentException($msg);
             }

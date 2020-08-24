@@ -64,8 +64,8 @@ class ResponseProcessingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI responseProcessing element.
      *
      * @param DOMElement $element A DOMElement object.
+     * @param ResponseProcessing|null $responseProcessing
      * @return QtiComponent A ResponseProcessing object.
-     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element, ResponseProcessing $responseProcessing = null)
     {

@@ -62,7 +62,7 @@ abstract class Marshaller
     private $version;
 
     /**
-     * An array containing the name of classes
+     * An array containing the name of classes 
      * that are allowed to have their 'dir' attribute set.
      *
      * @var string[]
@@ -236,7 +236,7 @@ abstract class Marshaller
     /**
      * Create a new Marshaller object.
      *
-     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
+     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1.0'.
      */
     public function __construct($version)
     {

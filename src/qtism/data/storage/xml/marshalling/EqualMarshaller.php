@@ -37,7 +37,11 @@ use qtism\data\QtiComponentCollection;
 class EqualMarshaller extends OperatorMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
+     * Marshall an Equal object into a QTI equal element.
+     *
+     * @param QtiComponent $component The Equal object to marshall.
+     * @param array An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI equal element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -65,7 +69,12 @@ class EqualMarshaller extends OperatorMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
+     * Unmarshall a QTI equal operator element into an Equal object.
+     *
+     * @param DOMElement $element The equal element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent An Equal object.
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {

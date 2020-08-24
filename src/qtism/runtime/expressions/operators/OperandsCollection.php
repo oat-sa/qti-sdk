@@ -48,6 +48,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * Check if $value is a QTI Runtime compliant value.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a QTI Runtime compliant value.
      */
     protected function checkType($value)
@@ -481,6 +482,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
+     * @param mixed $value
      * @see \qtism\common\collections\Stack::push()
      */
     public function push($value)
@@ -492,6 +494,8 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
+     * @param int $count
+     * @return array|OperandsCollection
      * @see \qtism\common\collections\Stack::pop()
      */
     public function pop($count = 1)

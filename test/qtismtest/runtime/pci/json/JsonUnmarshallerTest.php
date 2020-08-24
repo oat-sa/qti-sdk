@@ -21,9 +21,9 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\pci\json\Unmarshaller;
+use qtism\runtime\pci\json\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 use stdClass;
-use qtism\runtime\pci\json\UnmarshallingException;
 
 class JsonUnmarshallerTest extends QtiSmTestCase
 {
@@ -118,7 +118,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
         $this->expectException(UnmarshallingException::class);
-        $this->expectExceptionMessage("The '". Unmarshaller::class."::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given.");
+        $this->expectExceptionMessage("The '" . Unmarshaller::class . "::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given.");
         $unmarshaller->unmarshall(true);
     }
 
@@ -137,7 +137,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller = self::createUnmarshaller();
 
         $this->expectException(UnmarshallingException::class);
-        $this->expectExceptionMessage("A value does not satisfy its baseType.");
+        $this->expectExceptionMessage('A value does not satisfy its baseType.');
 
         $unmarshaller->unmarshall('{ "list" : { "identifier" : [true, "id2", "ID3"] } }');
     }

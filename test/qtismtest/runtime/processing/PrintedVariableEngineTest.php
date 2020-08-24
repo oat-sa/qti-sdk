@@ -31,16 +31,17 @@ use qtismtest\QtiSmTestCase;
 class PrintedVariableEngineTest extends QtiSmTestCase
 {
     /**
-     * @param mixed $value
+     * @dataProvider printedVariableProvider
      * @param string $expected
+     * @param string $identifier
+     * @param State $state
      * @param string $format
      * @param bool $powerForm
      * @param int|string $base
-     * @param $integer |string $index
+     * @param integer|string $index
      * @param string $delimiter
      * @param string $field
-     * @param stribng $mappingIndicator
-     * @dataProvider printedVariableProvider
+     * @param string $mappingIndicator
      */
     public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
     {
@@ -286,7 +287,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
     public function testPrintedVariableWithUnknownValueType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.");
+        $this->expectExceptionMessage('The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.');
 
         new PrintedVariableEngine(new TextRun('crash'));
     }
@@ -302,7 +303,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
         try {
             $engine->process();
-            $this->assertFalse(true, "Should not be able to process a printed variable rendering from a QTI File.");
+            $this->assertFalse(true, 'Should not be able to process a printed variable rendering from a QTI File.');
         } catch (PrintedVariableProcessingException $e) {
             $this->assertEquals("The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.", $e->getMessage());
         }
@@ -314,15 +315,15 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      *
      * @dataProvider newProvider
      *
-     * @param $expected int
-     * @param $id string
-     * @param $state State
+     * @param int $expected
+     * @param string $id
+     * @param State $state
      */
 
-    public function testForNewProvider($expected, $id, $state)
+    public function testForNewProvider($expected, $id, State $state)
     {
         $printedVariable = new PrintedVariable($id);
-        $printedVariable->setFormat("%d");
+        $printedVariable->setFormat('%d');
 
         $engine = new PrintedVariableEngine($printedVariable);
         $engine->setContext($state);
@@ -339,10 +340,10 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $state->setVariable(new OutcomeVariable('test4', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(98.0)));
 
         return [
-            [97, "test1", $state],
-            [97, "test2", $state],
-            [97, "test3", $state],
-            [98, "test4", $state],
+            [97, 'test1', $state],
+            [97, 'test2', $state],
+            [97, 'test3', $state],
+            [98, 'test4', $state],
         ];
     }
 }

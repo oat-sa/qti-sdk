@@ -46,7 +46,7 @@ class TimeConstraint
      * The Duration spent by the candidate on the source of
      * the TimeConstraint.
      *
-     * @var Duration
+     * @var QtiDuration
      */
     private $duration;
 
@@ -64,7 +64,7 @@ class TimeConstraint
      * Create a new TimeConstraint object.
      *
      * @param QtiComponent $source The TestPart or SectionPart the constraint applies on.
-     * @param Duration $duration The already spent duration by the candidate on $source.
+     * @param QtiDuration $duration The already spent duration by the candidate on $source.
      * @param int $navigationMode The current navigation mode.
      */
     public function __construct(QtiComponent $source, QtiDuration $duration, $navigationMode = NavigationMode::LINEAR)
@@ -98,7 +98,7 @@ class TimeConstraint
      * Set the Duration object representing the time already spent by the candidate
      * on the source of the time constraint.
      *
-     * @param Duration $duration A Duration object.
+     * @param QtiDuration $duration A Duration object.
      */
     protected function setDuration(QtiDuration $duration)
     {
@@ -109,7 +109,7 @@ class TimeConstraint
      * Get the Duration object representing the time already spent by the candidate
      * on the source of the time constraint.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      */
     public function getDuration()
     {

@@ -68,7 +68,7 @@ class ExpressionEngine extends AbstractEngine
     /**
      * The OperatorProcessorFactory object.
      *
-     * @var OperatorProcessingException
+     * @var OperatorProcessorFactory
      */
     private $operatorProcessorFactory;
 

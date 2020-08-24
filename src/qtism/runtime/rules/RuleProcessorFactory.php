@@ -37,7 +37,6 @@ class RuleProcessorFactory implements ProcessorFactory
 {
     /**
      * Create a new RuleProcessorFactory object.
-     *
      */
     public function __construct()
     {

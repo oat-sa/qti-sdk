@@ -1764,6 +1764,7 @@ class AssessmentTestSession extends State
     /**
      * Get a variable from any scope of the AssessmentTestSession.
      *
+     * @param string $variableIdentifier
      * @return Variable A Variable object or null if no Variable object could be found for $variableIdentifier.
      */
     public function getVariable($variableIdentifier)
@@ -1801,6 +1802,7 @@ class AssessmentTestSession extends State
      * Please note that if the requested variable is a duration, the durationUpdate() method
      * will be called to return an accurate result.
      *
+     * @param string $offset
      * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
      * @throws OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
      */
@@ -1880,6 +1882,8 @@ class AssessmentTestSession extends State
     /**
      * Set the value of a variable with identifier $offset.
      *
+     * @param string $offset
+     * @param mixed $value
      * @throws OutOfRangeException If $offset is not a string or an invalid variable identifier.
      * @throws OutOfBoundsException If the variable with identifier $offset cannot be found.
      */
@@ -1972,6 +1976,7 @@ class AssessmentTestSession extends State
      * Check if a given variable identified by $offset exists in the global scope
      * of the AssessmentTestSession.
      *
+     * @param string $offset
      * @return bool Whether the variable identified by $offset exists in the current context.
      * @throws OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
      */
@@ -2169,6 +2174,7 @@ class AssessmentTestSession extends State
      * Add an item session to the current assessment test session.
      *
      * @param AssessmentItemSession $session
+     * @param int $occurence
      * @throws LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
      */
     protected function addItemSession(AssessmentItemSession $session, $occurence = 0)

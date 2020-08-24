@@ -33,6 +33,8 @@ use qtism\data\QtiComponent;
 class ItemSessionControlMarshaller extends Marshaller
 {
     /**
+     * @param QtiComponent $component
+     * @return DOMElement
      * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
      */
     protected function marshall(QtiComponent $component)
@@ -51,6 +53,8 @@ class ItemSessionControlMarshaller extends Marshaller
     }
 
     /**
+     * @param DOMElement $element
+     * @return ItemSessionControl
      * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
      */
     protected function unmarshall(DOMElement $element)

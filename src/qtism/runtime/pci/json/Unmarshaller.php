@@ -67,7 +67,7 @@ class Unmarshaller
     /**
      * Create a new JSON Unmarshaller object.
      *
-     * @param FileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
+     * @param FileManager $fileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
      */
     public function __construct(FileManager $fileManager)
     {

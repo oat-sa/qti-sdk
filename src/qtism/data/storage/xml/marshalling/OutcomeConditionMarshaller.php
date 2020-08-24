@@ -40,6 +40,10 @@ use qtism\data\rules\OutcomeRuleCollection;
 class OutcomeConditionMarshaller extends RecursiveMarshaller
 {
     /**
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return OutcomeCondition
+     * @throws UnmarshallingException
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
@@ -76,6 +80,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
@@ -90,6 +97,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
+     * @param DOMNode $element
+     * @return bool
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
      */
     protected function isElementFinal(DOMNode $element)
@@ -100,6 +109,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @return bool
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
      */
     protected function isComponentFinal(QtiComponent $component)
@@ -111,6 +122,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
+     * @param DOMElement $element
+     * @return array
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
      */
     protected function getChildrenElements(DOMElement $element)
@@ -127,6 +140,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @return array
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
      */
     protected function getChildrenComponents(QtiComponent $component)
@@ -151,6 +166,8 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     }
 
     /**
+     * @param DOMElement $currentNode
+     * @return QtiComponentCollection|OutcomeRuleCollection
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
      */
     protected function createCollection(DOMElement $currentNode)

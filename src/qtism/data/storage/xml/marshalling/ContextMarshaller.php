@@ -67,7 +67,7 @@ class ContextMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI context element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return Context A QtiComponent object.
      */
     protected function unmarshall(DOMElement $element)
     {

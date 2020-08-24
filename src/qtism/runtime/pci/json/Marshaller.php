@@ -70,7 +70,6 @@ class Marshaller
 
     /**
      * Create a new JSON Marshaller object.
-     *
      */
     public function __construct()
     {
