@@ -145,9 +145,6 @@ class RoundTo extends Operator implements Pure
         return $this->roundingMode;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'roundTo';

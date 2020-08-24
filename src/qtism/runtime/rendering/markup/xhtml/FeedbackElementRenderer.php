@@ -43,7 +43,6 @@ abstract class FeedbackElementRenderer extends BodyElementRenderer
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      * @param string $base
-     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

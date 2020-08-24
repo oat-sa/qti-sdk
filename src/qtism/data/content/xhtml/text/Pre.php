@@ -30,9 +30,6 @@ use qtism\data\content\AtomicBlock;
  */
 class Pre extends AtomicBlock
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'pre';

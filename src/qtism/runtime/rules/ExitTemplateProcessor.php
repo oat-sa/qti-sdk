@@ -45,9 +45,6 @@ class ExitTemplateProcessor extends RuleProcessor
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEMPLATE);
     }
 
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return ExitTemplate::class;

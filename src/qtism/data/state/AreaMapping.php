@@ -210,17 +210,11 @@ class AreaMapping extends QtiComponent
         return $this->getUpperBound() !== false;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'areaMapping';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = $this->getAreaMapEntries()->getArrayCopy();

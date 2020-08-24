@@ -30,9 +30,6 @@ use qtism\data\content\SimpleInline;
  */
 class Span extends SimpleInline
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'span';

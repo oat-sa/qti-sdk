@@ -113,17 +113,11 @@ class PositionObjectStage extends QtiComponent implements Block
         return $this->positionObjectInteractions;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getPositionObjectInteractions()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'positionObjectStage';

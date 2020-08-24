@@ -234,9 +234,6 @@ class PositionObjectInteraction extends Interaction
         return $this->object;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -246,17 +243,11 @@ class PositionObjectInteraction extends Interaction
         );
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'positionObjectInteraction';

@@ -110,17 +110,11 @@ class TemplateIf extends QtiComponent
         return $this->templateRules;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getExpression()], $this->getTemplateRules()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'templateIf';

@@ -47,9 +47,6 @@ class Random extends Operator implements Pure
         parent::__construct($expressions, 1, 1, [OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED], [OperatorBaseType::ANY]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'random';

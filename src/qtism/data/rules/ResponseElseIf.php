@@ -105,17 +105,11 @@ class ResponseElseIf extends QtiComponent
         $this->responseRules = $responseRules;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'responseElseIf';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

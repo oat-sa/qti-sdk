@@ -75,9 +75,6 @@ class IntegerModulusProcessor extends OperatorProcessor
         return new QtiInteger((int)($operand1->getValue() % $operand2->getValue()));
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return IntegerModulus::class;

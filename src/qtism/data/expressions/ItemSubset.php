@@ -143,9 +143,6 @@ class ItemSubset extends Expression implements Pure
         return $this->excludeCategories;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'itemSubset';

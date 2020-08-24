@@ -664,9 +664,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $this->modalFeedbacks;
     }
 
-    /**
-     * @see \qtism\data\IAssessmentItem::getModalFeedbackRules()
-     */
     public function getModalFeedbackRules()
     {
         $modalFeedbackRules = new ModalFeedbackRuleCollection();
@@ -687,7 +684,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * Get the response variable identifiers related to the endAttemptInteraction in the item content.
      *
      * @return IdentifierCollection
-     * @see \qtism\data\IAssessmentItem::getEndAttemptIdentifiers()
      */
     public function getEndAttemptIdentifiers()
     {
@@ -700,9 +696,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $endAttemptIdentifiers;
     }
 
-    /**
-     * @see \qtism\data\IAssessmentItem::getShufflings()
-     */
     public function getShufflings()
     {
         $classNames = [
@@ -726,9 +719,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $shufflings;
     }
 
-    /**
-     * @see \qtism\data\IAssessmentItem::getResponseValidityConstraints()
-     */
     public function getResponseValidityConstraints()
     {
         $classNames = [
@@ -757,17 +747,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $responseValidityConstraints;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'assessmentItem';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

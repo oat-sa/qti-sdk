@@ -36,7 +36,6 @@ use qtism\data\rules\SetDefaultValue;
  * From IMS QTI:
  *
  * The response variable or outcome variable to have its default value set.
- *
  */
 class SetDefaultValueProcessor extends RuleProcessor
 {
@@ -84,9 +83,6 @@ class SetDefaultValueProcessor extends RuleProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return SetDefaultValue::class;

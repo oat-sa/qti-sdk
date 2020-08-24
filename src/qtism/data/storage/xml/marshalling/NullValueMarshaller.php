@@ -54,9 +54,6 @@ class NullValueMarshaller extends Marshaller
         return new NullValue();
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'null';

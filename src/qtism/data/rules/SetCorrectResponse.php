@@ -113,17 +113,11 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
         return $this->expression;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'setCorrectResponse';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getExpression()]);

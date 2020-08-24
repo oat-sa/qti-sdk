@@ -87,9 +87,6 @@ class PatternMatch extends Operator implements Pure
         return $this->pattern;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'patternMatch';

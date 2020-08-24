@@ -121,9 +121,6 @@ class EqualRoundedProcessor extends OperatorProcessor
         return new QtiBoolean($rounded[0]->getValue() == $rounded[1]->getValue());
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return EqualRounded::class;

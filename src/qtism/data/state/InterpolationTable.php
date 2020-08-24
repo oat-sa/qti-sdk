@@ -86,17 +86,11 @@ class InterpolationTable extends LookupTable
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getQtiClassName()
     {
         return 'interpolationTable';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getComponents()
     {
         $comp = array_merge(

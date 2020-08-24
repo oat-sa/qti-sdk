@@ -67,9 +67,6 @@ class RandomFloatProcessor extends ExpressionProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return RandomFloat::class;

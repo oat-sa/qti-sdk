@@ -46,8 +46,6 @@ trait FlowTrait
 
     /**
      * setXmlBase method implementation.
-     *
-     * @see \qtism\data\content\Flow::setXmlBase()
      */
     public function setXmlBase($xmlBase = '')
     {
@@ -61,8 +59,6 @@ trait FlowTrait
 
     /**
      * getXmlBase method implementation.
-     *
-     * @see \qtism\data\content\Flow::getXmlBase()
      */
     public function getXmlBase()
     {
@@ -71,8 +67,6 @@ trait FlowTrait
 
     /**
      * hasXmlBase method implementation.
-     *
-     * @see \qtism\data\content\Flow::hasXmlBase()
      */
     public function hasXmlBase()
     {

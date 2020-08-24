@@ -151,17 +151,11 @@ class InterpolationTableEntry extends QtiComponent
         return $this->includeBoundary;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'interpolationTableEntry';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

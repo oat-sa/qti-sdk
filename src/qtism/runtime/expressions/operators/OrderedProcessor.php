@@ -112,9 +112,6 @@ class OrderedProcessor extends OperatorProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Ordered::class;

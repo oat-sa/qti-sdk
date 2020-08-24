@@ -122,7 +122,6 @@ class State extends AbstractCollection
     /**
      * @param string $offset
      * @param mixed $value
-     * @see \qtism\common\collections\AbstractCollection::offsetSet()
      */
     public function offsetSet($offset, $value)
     {
@@ -144,7 +143,6 @@ class State extends AbstractCollection
     /**
      * @param string $offset
      * @return mixed|null
-     * @see \qtism\common\collections\AbstractCollection::offsetGet()
      */
     public function offsetGet($offset)
     {
@@ -248,7 +246,6 @@ class State extends AbstractCollection
 
     /**
      * @param mixed $value
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {

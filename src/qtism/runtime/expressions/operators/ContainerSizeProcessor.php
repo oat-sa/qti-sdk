@@ -60,9 +60,6 @@ class ContainerSizeProcessor extends OperatorProcessor
         return new QtiInteger(count($operands[0]));
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return ContainerSize::class;

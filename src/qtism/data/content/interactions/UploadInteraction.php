@@ -98,17 +98,11 @@ class UploadInteraction extends BlockInteraction
         return $this->getType() !== '';
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         return parent::getComponents();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'uploadInteraction';

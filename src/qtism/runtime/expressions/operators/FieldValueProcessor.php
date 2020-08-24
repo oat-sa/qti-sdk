@@ -56,9 +56,6 @@ class FieldValueProcessor extends OperatorProcessor
         return $operands[0][$fieldIdentifier];
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return FieldValue::class;

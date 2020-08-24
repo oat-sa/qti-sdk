@@ -54,9 +54,6 @@ class ExitTemplateMarshaller extends Marshaller
         return new ExitTemplate();
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'exitTemplate';

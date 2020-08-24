@@ -76,9 +76,6 @@ class MathConstant extends Expression implements Pure
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'mathConstant';

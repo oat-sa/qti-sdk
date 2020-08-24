@@ -125,26 +125,17 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         return new MemoryStream($read);
     }
 
-    /**
-     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStorage::createBinaryStreamAccess()
-     */
     protected function createBinaryStreamAccess(IStream $stream)
     {
         return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
     }
 
-    /**
-     * @see \qtism\runtime\storage\common\AbstractStorage::exists()
-     */
     public function exists($sessionId)
     {
         $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         return @is_readable($path);
     }
 
-    /**
-     * @see \qtism\runtime\storage\common\AbstractStorage::delete()
-     */
     public function delete(AssessmentTestSession $assessmentTestSession)
     {
         $fileManager = $this->getManager()->getFileManager();

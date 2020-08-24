@@ -83,25 +83,16 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
         return $this->xmlBase;
     }
 
-    /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
-     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'hr';

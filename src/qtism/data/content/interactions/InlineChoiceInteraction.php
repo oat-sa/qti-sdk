@@ -175,9 +175,6 @@ class InlineChoiceInteraction extends InlineInteraction
         return $this->content;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -187,17 +184,11 @@ class InlineChoiceInteraction extends InlineInteraction
         );
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'inlineChoiceInteraction';

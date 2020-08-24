@@ -52,9 +52,6 @@ class IsNullProcessor extends OperatorProcessor
         return new QtiBoolean($operands->containsNull());
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return IsNull::class;

@@ -36,9 +36,6 @@ use qtism\data\QtiComponent;
  */
 class GraphicAssociateInteractionRenderer extends GraphicInteractionRenderer
 {
-    /**
-     * @see \qtism\runtime\rendering\markup\xhtml\GraphicInteractionRenderer::appendAttributes()
-     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         parent::appendAttributes($fragment, $component, $base);

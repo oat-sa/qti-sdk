@@ -95,9 +95,6 @@ class DeleteProcessor extends OperatorProcessor
         return $returnValue;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Delete::class;

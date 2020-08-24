@@ -75,9 +75,6 @@ class TemplateConstraintProcessor extends RuleProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return TemplateConstraint::class;

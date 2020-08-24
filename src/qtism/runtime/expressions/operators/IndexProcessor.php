@@ -93,9 +93,6 @@ class IndexProcessor extends OperatorProcessor
         return $operands[0][$n];
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Index::class;

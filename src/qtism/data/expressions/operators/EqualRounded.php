@@ -128,9 +128,6 @@ class EqualRounded extends Operator implements Pure
         return $this->figures;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'equalRounded';

@@ -180,9 +180,6 @@ class GapMatchInteraction extends BlockInteraction
         return $this->content;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -204,9 +201,6 @@ class GapMatchInteraction extends BlockInteraction
         return $responseValidityConstraint;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -214,9 +208,6 @@ class GapMatchInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getGapChoices()->getArrayCopy(), $this->getContent()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'gapMatchInteraction';

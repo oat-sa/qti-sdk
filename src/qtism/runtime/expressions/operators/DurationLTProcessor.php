@@ -75,9 +75,6 @@ class DurationLTProcessor extends OperatorProcessor
         return new QtiBoolean($operands[0]->shorterThan($operands[1]));
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return DurationLT::class;

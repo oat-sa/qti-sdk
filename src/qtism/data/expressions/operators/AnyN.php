@@ -133,9 +133,6 @@ class AnyN extends Operator implements Pure
         return $this->max;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'anyN';

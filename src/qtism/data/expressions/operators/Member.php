@@ -52,9 +52,6 @@ class Member extends Operator implements Pure
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED], [OperatorBaseType::SAME]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'member';

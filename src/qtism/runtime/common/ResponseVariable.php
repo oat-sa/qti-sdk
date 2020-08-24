@@ -215,9 +215,6 @@ class ResponseVariable extends Variable
         }
     }
 
-    /**
-     * @see \qtism\runtime\common\Variable::__clone()
-     */
     public function __clone()
     {
         parent::__clone();

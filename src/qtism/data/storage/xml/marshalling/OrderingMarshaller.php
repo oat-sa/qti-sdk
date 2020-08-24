@@ -64,9 +64,6 @@ class OrderingMarshaller extends Marshaller
         return $object;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'ordering';

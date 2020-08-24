@@ -143,9 +143,6 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return $this->getContent();
@@ -181,25 +178,16 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
         return $this->matchMin;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\AssociableChoice::setMatchGroup()
-     */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
         $this->matchGroup = $matchGroup;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\AssociableChoice::getMatchGroup()
-     */
     public function getMatchGroup()
     {
         return $this->matchGroup;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'simpleAssociableChoice';

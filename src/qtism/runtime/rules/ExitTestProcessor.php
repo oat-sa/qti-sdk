@@ -45,9 +45,6 @@ class ExitTestProcessor extends RuleProcessor
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEST);
     }
 
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return ExitTest::class;

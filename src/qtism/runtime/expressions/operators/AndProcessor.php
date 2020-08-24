@@ -75,9 +75,6 @@ class AndProcessor extends OperatorProcessor
         return new QtiBoolean(true);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return AndOperator::class;

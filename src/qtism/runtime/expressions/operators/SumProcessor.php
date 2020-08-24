@@ -85,9 +85,6 @@ class SumProcessor extends OperatorProcessor
         return ($floatCount > 0) ? new QtiFloat((float)$returnValue) : new QtiInteger((int)$returnValue);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Sum::class;

@@ -124,9 +124,6 @@ class TemplateDeclaration extends VariableDeclaration
         return $this->mathVariable;
     }
 
-    /**
-     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'templateDeclaration';

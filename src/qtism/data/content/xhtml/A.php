@@ -132,9 +132,6 @@ class A extends SimpleInline
         return $this->getType() !== '';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'a';

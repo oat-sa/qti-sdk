@@ -34,7 +34,6 @@ class AssessmentItemSessionCollection extends AbstractCollection
 {
     /**
      * @param mixed $value
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {

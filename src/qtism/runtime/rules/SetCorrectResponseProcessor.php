@@ -35,7 +35,6 @@ use qtism\data\rules\SetCorrectResponse;
  * From IMS QTI:
  *
  * The response variable to have its correct value set.
- *
  */
 class SetCorrectResponseProcessor extends RuleProcessor
 {
@@ -83,9 +82,6 @@ class SetCorrectResponseProcessor extends RuleProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return SetCorrectResponse::class;

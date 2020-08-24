@@ -226,16 +226,12 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
 
     /**
      * Whether the object has a height.
-     *
      */
     public function hasHeight()
     {
         return $this->height >= 0;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return $this->getContent();
@@ -261,9 +257,6 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
         return $this->content;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'object';

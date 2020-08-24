@@ -69,9 +69,6 @@ class InsideProcessor extends OperatorProcessor
         return new QtiBoolean($coords->inside($operand));
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Inside::class;

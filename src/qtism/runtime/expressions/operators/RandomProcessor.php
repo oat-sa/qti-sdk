@@ -62,9 +62,6 @@ class RandomProcessor extends OperatorProcessor
         return $operand[mt_rand(0, $maxIndex)];
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Random::class;

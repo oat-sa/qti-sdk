@@ -68,9 +68,6 @@ class DurationGTEProcessor extends OperatorProcessor
         return new QtiBoolean($operands[0]->longerThanOrEquals($operands[1]));
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return DurationGTE::class;

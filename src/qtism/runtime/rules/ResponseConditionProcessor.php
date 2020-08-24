@@ -39,17 +39,11 @@ use qtism\data\rules\ResponseCondition;
  */
 class ResponseConditionProcessor extends AbstractConditionProcessor
 {
-    /**
-     * @see \qtism\runtime\rules\AbstractConditionProcessor::getQtiNature()
-     */
     public function getQtiNature()
     {
         return 'response';
     }
 
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return ResponseCondition::class;

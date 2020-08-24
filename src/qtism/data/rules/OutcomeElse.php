@@ -71,17 +71,11 @@ class OutcomeElse extends QtiComponent
         $this->outcomeRules = $outcomeRules;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'outcomeElse';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = $this->getOutcomeRules()->getArrayCopy();

@@ -187,9 +187,6 @@ class GraphicAssociateInteraction extends GraphicInteraction
         return $this->minAssociations;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -211,17 +208,11 @@ class GraphicAssociateInteraction extends GraphicInteraction
         return $responseValidityConstraint;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getAssociableHotspots()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'graphicAssociateInteraction';

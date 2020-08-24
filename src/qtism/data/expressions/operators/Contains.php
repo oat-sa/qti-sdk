@@ -58,9 +58,6 @@ class Contains extends Operator implements Pure
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SAME], [OperatorBaseType::SAME]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'contains';

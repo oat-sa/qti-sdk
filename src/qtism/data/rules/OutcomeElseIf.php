@@ -113,17 +113,11 @@ class OutcomeElseIf extends QtiComponent
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'outcomeElseIf';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge([$this->getExpression()], $this->getOutcomeRules()->getArrayCopy());

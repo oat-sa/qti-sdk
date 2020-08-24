@@ -63,9 +63,6 @@ abstract class CustomOperatorProcessor extends OperatorProcessor
         parent::__construct($expression, $operands);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return CustomOperator::class;

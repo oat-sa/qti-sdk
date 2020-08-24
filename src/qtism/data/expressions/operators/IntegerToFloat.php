@@ -51,9 +51,6 @@ class IntegerToFloat extends Operator implements Pure
         parent::__construct($expressions, 1, 1, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'integerToFloat';

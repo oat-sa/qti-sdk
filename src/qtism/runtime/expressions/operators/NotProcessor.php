@@ -67,9 +67,6 @@ class NotProcessor extends OperatorProcessor
         return new QtiBoolean(!$operand->getValue());
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return NotOperator::class;

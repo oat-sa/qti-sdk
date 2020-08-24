@@ -66,9 +66,6 @@ class RecordContainer extends Container implements QtiDatatype
         }
     }
 
-    /**
-     * @see \qtism\common\collections\Container::getCardinality()
-     */
     public function getCardinality()
     {
         return Cardinality::RECORD;
@@ -120,17 +117,11 @@ class RecordContainer extends Container implements QtiDatatype
         return $container;
     }
 
-    /**
-     * @see \qtism\common\collections\Container::getToStringBounds()
-     */
     protected function getToStringBounds()
     {
         return ['{', '}'];
     }
 
-    /**
-     * @see \qtism\common\datatypes\QtiDatatype::getBaseType()
-     */
     public function getBaseType()
     {
         return -1;

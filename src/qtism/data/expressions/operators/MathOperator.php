@@ -118,9 +118,6 @@ class MathOperator extends Operator implements Pure
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'mathOperator';

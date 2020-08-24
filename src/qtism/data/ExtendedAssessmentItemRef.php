@@ -572,9 +572,6 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         return $compactRef;
     }
 
-    /**
-     * @see \qtism\data\AssessmentItemRef::getComponents()
-     */
     public function getComponents()
     {
         $components = array_merge(

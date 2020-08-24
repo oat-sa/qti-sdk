@@ -169,17 +169,11 @@ class AssociationValidityConstraint extends QtiComponent
         return $this->maxConstraint;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'associationValidityConstraint';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

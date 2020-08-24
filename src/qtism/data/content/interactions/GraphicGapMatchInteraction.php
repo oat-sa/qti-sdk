@@ -147,9 +147,6 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         return $this->associableHotspots;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -171,9 +168,6 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         return $responseValidityConstraint;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         $prompt = $this->getPrompt();
@@ -191,9 +185,6 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         );
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'graphicGapMatchInteraction';

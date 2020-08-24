@@ -90,9 +90,6 @@ class Repeat extends Operator implements Pure
         return $this->numberRepeats;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'repeat';

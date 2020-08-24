@@ -112,9 +112,6 @@ abstract class Operator extends Expression
         return $this->expressions;
     }
 
-    /**
-     * @see \qtism\data\expressions\Expression::getComponents()
-     */
     public function getComponents()
     {
         $comp = $this->getExpressions()->getArrayCopy();

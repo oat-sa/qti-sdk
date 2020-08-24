@@ -120,9 +120,6 @@ class ExtendedTestPart extends TestPart
         return $ref;
     }
 
-    /**
-     * @see \qtism\data\TestPart::getComponents()
-     */
     public function getComponents()
     {
         $components = array_merge(

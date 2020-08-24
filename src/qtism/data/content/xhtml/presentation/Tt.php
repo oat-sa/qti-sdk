@@ -45,9 +45,6 @@ class Tt extends SimpleInline
         parent::__construct($id, $class, $lang, $label);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'tt';

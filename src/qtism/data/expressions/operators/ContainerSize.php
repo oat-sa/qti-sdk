@@ -49,9 +49,6 @@ class ContainerSize extends Operator implements Pure
         parent::__construct($expressions, 1, 1, [Cardinality::MULTIPLE, Cardinality::ORDERED], [OperatorBaseType::ANY]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'containerSize';

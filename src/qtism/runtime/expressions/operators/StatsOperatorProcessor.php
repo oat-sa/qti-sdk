@@ -176,9 +176,6 @@ class StatsOperatorProcessor extends OperatorProcessor
         return $returnValue;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return StatsOperator::class;

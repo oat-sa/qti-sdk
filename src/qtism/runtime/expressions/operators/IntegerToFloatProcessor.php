@@ -67,9 +67,6 @@ class IntegerToFloatProcessor extends OperatorProcessor
         return new QtiFloat((float)$operand->getValue());
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return IntegerToFloat::class;

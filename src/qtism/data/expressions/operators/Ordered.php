@@ -53,9 +53,6 @@ class Ordered extends Operator implements Pure
         parent::__construct($expressions, 0, -1, [Cardinality::SINGLE, Cardinality::ORDERED], [OperatorBaseType::SAME]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'ordered';

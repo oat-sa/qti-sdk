@@ -54,9 +54,6 @@ class DefaultProcessor extends ExpressionProcessor
         return ($var === null) ? null : $var->getDefaultValue();
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return DefaultVal::class;

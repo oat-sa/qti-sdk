@@ -69,9 +69,6 @@ class RubricBlockRefMarshaller extends Marshaller
         }
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'rubricBlockRef';

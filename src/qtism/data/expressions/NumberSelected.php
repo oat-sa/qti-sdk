@@ -33,9 +33,6 @@ namespace qtism\data\expressions;
  */
 class NumberSelected extends ItemSubset
 {
-    /**
-     * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'numberSelected';

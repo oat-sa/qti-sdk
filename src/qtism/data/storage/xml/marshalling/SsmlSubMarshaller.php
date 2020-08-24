@@ -58,9 +58,6 @@ class SsmlSubMarshaller extends Marshaller
         return new Sub($element->ownerDocument->saveXML($node));
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'sub';

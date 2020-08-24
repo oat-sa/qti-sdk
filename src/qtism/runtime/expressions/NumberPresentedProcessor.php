@@ -66,9 +66,6 @@ class NumberPresentedProcessor extends ItemSubsetProcessor
         return new QtiInteger($numberPresented);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return NumberPresented::class;

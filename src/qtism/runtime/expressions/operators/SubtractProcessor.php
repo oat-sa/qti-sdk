@@ -72,9 +72,6 @@ class SubtractProcessor extends OperatorProcessor
         return (is_int($subtract) === true) ? new QtiInteger($subtract) : new QtiFloat($subtract);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Subtract::class;

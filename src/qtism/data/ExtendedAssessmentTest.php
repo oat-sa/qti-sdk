@@ -115,9 +115,6 @@ class ExtendedAssessmentTest extends AssessmentTest
         return $ref;
     }
 
-    /**
-     * @see \qtism\data\AssessmentTest::getComponents()
-     */
     public function getComponents()
     {
         $components = array_merge(

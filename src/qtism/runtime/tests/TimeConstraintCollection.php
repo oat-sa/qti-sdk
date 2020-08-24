@@ -36,7 +36,6 @@ class TimeConstraintCollection extends AbstractCollection
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TimeConstraint.
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {

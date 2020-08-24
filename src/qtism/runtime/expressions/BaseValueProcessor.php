@@ -39,7 +39,6 @@ class BaseValueProcessor extends ExpressionProcessor
      * Process the BaseValue.
      *
      * @return mixed A QTI Runtime compliant scalar value.
-     * @see \qtism\runtime\common\Processable::process()
      */
     public function process()
     {
@@ -48,9 +47,6 @@ class BaseValueProcessor extends ExpressionProcessor
         return RuntimeUtils::valueToRuntime($expression->getValue(), $expression->getBaseType());
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return BaseValue::class;

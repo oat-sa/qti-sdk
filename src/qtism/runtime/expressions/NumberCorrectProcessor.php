@@ -66,9 +66,6 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
         return new QtiInteger($numberCorrect);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return NumberCorrect::class;

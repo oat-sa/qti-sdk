@@ -541,9 +541,6 @@ class MathOperatorProcessor extends OperatorProcessor
         return new QtiFloat((float)deg2rad($operand->getValue()));
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return MathOperator::class;

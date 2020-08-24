@@ -79,9 +79,6 @@ class DivideProcessor extends OperatorProcessor
         return is_nan($divide) ? null : new QtiFloat($divide);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Divide::class;

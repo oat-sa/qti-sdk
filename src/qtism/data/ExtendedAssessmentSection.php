@@ -99,9 +99,6 @@ class ExtendedAssessmentSection extends AssessmentSection
         return $extended;
     }
 
-    /**
-     * @see \qtism\data\AssessmentSection::getComponents()
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();

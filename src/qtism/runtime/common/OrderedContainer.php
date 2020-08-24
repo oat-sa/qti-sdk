@@ -37,7 +37,6 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     /**
      * @param mixed $obj
      * @return bool
-     * @see \qtism\common\collections\Container::equals()
      */
     public function equals($obj)
     {
@@ -67,17 +66,11 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
         return false;
     }
 
-    /**
-     * @see \qtism\runtime\common\MultipleContainer::getCardinality()
-     */
     public function getCardinality()
     {
         return Cardinality::ORDERED;
     }
 
-    /**
-     * @see \qtism\runtime\common\MultipleContainer::getToStringBounds()
-     */
     protected function getToStringBounds()
     {
         return ['<', '>'];

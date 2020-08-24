@@ -45,9 +45,6 @@ class SsmlSubRenderer extends ExternalQtiComponentRenderer
         parent::__construct($renderingEngine);
     }
 
-    /**
-     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
-     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         try {

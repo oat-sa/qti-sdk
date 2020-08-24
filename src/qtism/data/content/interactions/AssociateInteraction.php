@@ -240,9 +240,6 @@ class AssociateInteraction extends BlockInteraction
         return $this->simpleAssociableChoices;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -265,9 +262,6 @@ class AssociateInteraction extends BlockInteraction
         return $responseValidityConstraint;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -275,9 +269,6 @@ class AssociateInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleAssociableChoices()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'associateInteraction';

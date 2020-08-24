@@ -148,7 +148,6 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
-     *
      */
     public function setShuffle($shuffle)
     {
@@ -251,9 +250,6 @@ class ChoiceInteraction extends BlockInteraction
         return $this->orientation;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -263,17 +259,11 @@ class ChoiceInteraction extends BlockInteraction
         );
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'choiceInteraction';
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();

@@ -213,17 +213,11 @@ class AssessmentItemRef extends SectionPart
         $this->templateDefaults = $templateDefaults;
     }
 
-    /**
-     * @see \qtism\data\SectionPart::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'assessmentItemRef';
     }
 
-    /**
-     * @see \qtism\data\SectionPart::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

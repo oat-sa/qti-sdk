@@ -41,9 +41,6 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
  */
 class Render extends Cli
 {
-    /**
-     * @see \qtism\cli\Cli::setupArguments()
-     */
     protected function setupArguments()
     {
         $arguments = new Arguments(['strict' => false]);
@@ -103,9 +100,6 @@ class Render extends Cli
         return $arguments;
     }
 
-    /**
-     * @see \qtism\cli\Cli::checkArguments()
-     */
     protected function checkArguments()
     {
         $arguments = $this->getArguments();
@@ -160,9 +154,6 @@ class Render extends Cli
      *
      * This implementations considers that all necessary checks about
      * arguments and their values were performed in \qtism\cli\Render::checkArguments().
-     *
-     * @see \qtism\cli\Cli::run()
-     * @see \qtism\cli\Render::checkArguments()
      */
     protected function run()
     {

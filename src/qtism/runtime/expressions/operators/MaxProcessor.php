@@ -101,9 +101,6 @@ class MaxProcessor extends OperatorProcessor
         return ($integerCount === $valueCount) ? new QtiInteger((int)$max) : new QtiFloat((float)$max);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Max::class;

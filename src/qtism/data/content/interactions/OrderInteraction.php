@@ -292,9 +292,6 @@ class OrderInteraction extends BlockInteraction
         return $this->orientation;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -304,9 +301,6 @@ class OrderInteraction extends BlockInteraction
         );
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -314,9 +308,6 @@ class OrderInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleChoices()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'orderInteraction';

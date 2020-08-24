@@ -41,17 +41,11 @@ use qtism\data\rules\SetOutcomeValue;
  */
 class SetOutcomeValueProcessor extends SetValueProcessor
 {
-    /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
-     */
     protected function getRuleType()
     {
         return SetOutcomeValue::class;
     }
 
-    /**
-     * @see \qtism\runtime\rules\SetValueProcessor::getRuleType()
-     */
     protected function getVariableType()
     {
         return OutcomeVariable::class;

@@ -109,17 +109,11 @@ class ShufflingGroup extends QtiComponent
         $this->identifiers = clone $this->identifiers;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'shufflingGroup';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

@@ -86,9 +86,6 @@ class StatsOperator extends Operator implements Pure
         return $this->name;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'statsOperator';

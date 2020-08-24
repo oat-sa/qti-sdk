@@ -71,9 +71,6 @@ class SubstringProcessor extends OperatorProcessor
         return new QtiBoolean($call($operand2->getValue(), $operand1->getValue(), 0, 'UTF-8') !== false);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Substring::class;

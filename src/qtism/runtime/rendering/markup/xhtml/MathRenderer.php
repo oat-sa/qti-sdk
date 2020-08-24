@@ -72,9 +72,6 @@ class MathRenderer extends ExternalQtiComponentRenderer
         return $this->namespaceOutput;
     }
 
-    /**
-     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
-     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         try {

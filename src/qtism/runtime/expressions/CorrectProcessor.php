@@ -70,9 +70,6 @@ class CorrectProcessor extends ExpressionProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Correct::class;

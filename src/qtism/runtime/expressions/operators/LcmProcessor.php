@@ -106,9 +106,6 @@ class LcmProcessor extends OperatorProcessor
         return $g;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Lcm::class;

@@ -155,9 +155,6 @@ class Variable extends Expression implements Pure
         return $this->weightIdentifier;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'variable';

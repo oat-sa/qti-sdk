@@ -66,9 +66,6 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
         return new QtiInteger($numberSelected);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return NumberSelected::class;

@@ -102,9 +102,6 @@ class MinProcessor extends OperatorProcessor
         return ($integerCount === $valueCount) ? new QtiInteger((int)$min) : new QtiFloat((float)$min);
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Min::class;

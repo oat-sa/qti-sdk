@@ -80,17 +80,11 @@ abstract class LookupTable extends QtiComponent
         $this->defaultValue = $defaultValue;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getQtiClassName()
     {
         return 'lookupTable';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

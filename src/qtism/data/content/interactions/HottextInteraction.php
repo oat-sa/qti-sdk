@@ -185,9 +185,6 @@ class HottextInteraction extends BlockInteraction
         return $this->content;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
-     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -197,17 +194,11 @@ class HottextInteraction extends BlockInteraction
         );
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'hottextInteraction';

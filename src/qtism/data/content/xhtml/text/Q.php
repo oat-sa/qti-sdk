@@ -92,9 +92,6 @@ class Q extends SimpleInline
         return $this->getCite() !== '';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'q';

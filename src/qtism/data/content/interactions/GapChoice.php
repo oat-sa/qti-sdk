@@ -143,17 +143,11 @@ abstract class GapChoice extends Choice implements AssociableChoice
         return $this->matchMin;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\AssociableChoice::setMatchGroup()
-     */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
         $this->matchGroup = $matchGroup;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\AssociableChoice::getMatchGroup()
-     */
     public function getMatchGroup()
     {
         return $this->matchGroup;

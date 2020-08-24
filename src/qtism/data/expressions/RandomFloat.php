@@ -113,9 +113,6 @@ class RandomFloat extends Expression implements Pure
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'randomFloat';

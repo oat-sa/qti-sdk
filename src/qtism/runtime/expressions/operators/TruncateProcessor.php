@@ -78,9 +78,6 @@ class TruncateProcessor extends OperatorProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Truncate::class;

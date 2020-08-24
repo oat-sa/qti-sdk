@@ -81,9 +81,6 @@ class Correct extends Expression implements Pure
         return $this->identifier;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'correct';

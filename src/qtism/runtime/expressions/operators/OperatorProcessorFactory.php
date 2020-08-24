@@ -39,7 +39,6 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
 {
     /**
      * Create a new OperatorProcessorFactory object.
-     *
      */
     public function __construct()
     {

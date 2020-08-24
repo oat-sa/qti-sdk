@@ -72,9 +72,6 @@ class BrMarshaller extends Marshaller
         return $component;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'br';

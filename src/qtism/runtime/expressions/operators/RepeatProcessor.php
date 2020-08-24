@@ -135,9 +135,6 @@ class RepeatProcessor extends OperatorProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return Repeat::class;

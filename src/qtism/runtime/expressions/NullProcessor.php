@@ -45,9 +45,6 @@ class NullProcessor extends ExpressionProcessor
         return null;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return NullValue::class;

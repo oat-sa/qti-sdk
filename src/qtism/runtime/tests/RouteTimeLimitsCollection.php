@@ -36,7 +36,6 @@ class RouteTimeLimitsCollection extends AbstractCollection
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteTimeLimit.
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {

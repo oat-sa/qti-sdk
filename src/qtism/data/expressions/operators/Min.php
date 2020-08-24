@@ -50,9 +50,6 @@ class Min extends Operator implements Pure
         parent::__construct($expressions, 1, -1, [OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'min';

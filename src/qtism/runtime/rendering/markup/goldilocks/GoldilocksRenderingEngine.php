@@ -33,7 +33,6 @@ class GoldilocksRenderingEngine extends XhtmlRenderingEngine
 {
     /**
      * Create a new AqtiRenderingEngine object.
-     *
      */
     public function __construct()
     {

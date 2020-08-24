@@ -36,7 +36,6 @@ class RouteItemCollection extends AbstractCollection
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteItem.
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {
