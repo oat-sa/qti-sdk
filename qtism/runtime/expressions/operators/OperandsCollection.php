@@ -65,7 +65,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains a QTI Runtime compliant value which is
+     * Whether the collection contains a QTI Runtime compliant value which is
      * considered to be NULL.
      *
      * * If the collection of operands is empty, true is returned.
@@ -119,7 +119,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains exclusively boolean values or containers.
+     * Whether the collection contains exclusively boolean values or containers.
      *
      * * If the collection of operands is empty, false is returned.
      * * If the collection of operands contains a NULL value or a NULL container, false is returned.
@@ -147,7 +147,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains exclusively single cardinality values. If the container
+     * Whether the collection contains exclusively single cardinality values. If the container
      * is empty or contains a null value, false is returned.
      *
      * @return bool
@@ -248,7 +248,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains only Single primitive values or MultipleContainer objects.
+     * Whether the collection contains only Single primitive values or MultipleContainer objects.
      *
      * * If the collection of operands is empty, false is returned.
      * * If the collection of operands contains a RecordContainer object, false is returned.
@@ -275,7 +275,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains only Single primitive values or OrderedContainer objects.
+     * Whether the collection contains only Single primitive values or OrderedContainer objects.
      *
      * * If the collection of operands is empty, false is returned.
      * * If the collection of operands contains a RecordContainer object, false is returned.
@@ -327,7 +327,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains exclusively OrderedContainer objects.
+     * Whether the collection contains exclusively OrderedContainer objects.
      *
      * * Returns false if the collection of operands is empty.
      * * Returns false if any of the value contained in the collection of operands is not an OrderedContainer object.
@@ -403,7 +403,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection is composed of values with the same cardinality. Please
+     * Whether the collection is composed of values with the same cardinality. Please
      * note that:
      *
      * * If the OperandsCollection is empty, false is returned.
@@ -430,7 +430,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wheter the collection of operands is composed exclusively of Point objects or Container objects
+     * Whether the collection of operands is composed exclusively of Point objects or Container objects
      * with a point baseType.
      *
      * If the collection of operands contains something other than a Point object or a null Container object
@@ -457,7 +457,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wheter the collection of operands is composed exclusively of Duration objects or Container objects
+     * Whether the collection of operands is composed exclusively of Duration objects or Container objects
      * with a duration baseType.
      *
      * If the collection of operands contains something other than a Duration object or a null Container object

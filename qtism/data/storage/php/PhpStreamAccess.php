@@ -161,7 +161,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     /**
      * Write a PHP semicolon (;) in the current stream.
      *
-     * @param bool $newline Wether a newline escape sequence follows the semicolon.
+     * @param bool $newline Whether a newline escape sequence follows the semicolon.
      * @throws StreamAccessException If an error occurs while writing the semicolon;
      */
     public function writeSemicolon($newline = true)

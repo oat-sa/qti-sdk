@@ -297,7 +297,7 @@ abstract class Marshaller
      * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param bool $withText Wether text nodes must be returned or not.
+     * @param bool $withText Whether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
     public static function getChildElements($element, $withText = false)

@@ -69,7 +69,7 @@ class QtiString extends QtiScalar
     }
 
     /**
-     * Wheter or not the current QtiString object is equal to $obj.
+     * Whether or not the current QtiString object is equal to $obj.
      *
      * Two QtiString objects are considered to be identical if their intrinsic
      * values are equals. If the current QtiString is an empty string, and $obj

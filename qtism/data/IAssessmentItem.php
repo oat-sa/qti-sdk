@@ -42,7 +42,7 @@ interface IAssessmentItem extends QtiIdentifiable
     public function setTimeDependent($timeDependent);
 
     /**
-     * Wether the item is time dependent.
+     * Whether the item is time dependent.
      *
      * @return bool
      */

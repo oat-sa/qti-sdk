@@ -152,7 +152,7 @@ class AssessmentTestSession extends State
     private $preservedOutcomeVariables;
 
     /**
-     * Wheter or not to force branch rules to be executed.
+     * Whether or not to force branch rules to be executed.
      *
      * If enabled, branch rules will be executed even if the current navigation mode is non-linear.
      *

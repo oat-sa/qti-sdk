@@ -80,7 +80,7 @@ class Substring extends Operator
     }
 
     /**
-     * Wether or not the operator is case sensitive.
+     * Whether or not the operator is case sensitive.
      *
      * @return bool
      */

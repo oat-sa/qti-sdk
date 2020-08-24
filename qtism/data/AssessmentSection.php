@@ -136,7 +136,7 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-     * Wether the section is visible.
+     * Whether the section is visible.
      *
      * @return bool true if the section is visible, false if not.
      */
