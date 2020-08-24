@@ -917,7 +917,7 @@ class CssScoper implements Renderable
     }
 
     /**
-     * Wheter the current char is escaping something.
+     * Whether the current char is escaping something.
      *
      * @return bool
      */

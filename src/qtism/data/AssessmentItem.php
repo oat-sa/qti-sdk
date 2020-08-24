@@ -101,7 +101,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     private $adaptive = false;
 
     /**
-     * Wether the item is time dependent or not.
+     * Whether the item is time dependent or not.
      *
      * @var bool
      * @qtism-bean-property
@@ -336,7 +336,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-     * Wether the AssessmentItem has a language.
+     * Whether the AssessmentItem has a language.
      *
      * @return bool
      */
@@ -390,7 +390,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-     * Wether the item is time dependent.
+     * Whether the item is time dependent.
      *
      * @return bool
      */

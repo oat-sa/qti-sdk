@@ -113,7 +113,7 @@ class ModalFeedbackRule extends QtiComponent
 
     /**
      * Set the identifier of the outcome variable that will be used has a lookup
-     * to know wheter or not the content of the modalFeedback has to be shown.
+     * to know whether or not the content of the modalFeedback has to be shown.
      *
      * @param string $outcomeIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
@@ -130,7 +130,7 @@ class ModalFeedbackRule extends QtiComponent
 
     /**
      * Get the identifier of the outcome variable that will be used has a lookup
-     * to know wheter or not the content of the modalFeedback has to be shown.
+     * to know whether or not the content of the modalFeedback has to be shown.
      *
      * @return string A QTI identifier.
      */

@@ -186,10 +186,10 @@ abstract class RecursiveMarshaller extends Marshaller
     }
 
     /**
-     * Wether an $object is marked is already processed.
+     * Whether an $object is marked is already processed.
      *
      * @param mixed $object The object to check;
-     * @return bool Wether $object is marked.
+     * @return bool Whether $object is marked.
      */
     protected function isMarked($object)
     {
@@ -336,7 +336,7 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children);
 
     /**
-     * Whether a given $element is final. In other words, wheter the $element
+     * Whether a given $element is final. In other words, whether the $element
      * has child elements.
      *
      * @param DOMNode $element
@@ -371,7 +371,7 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function marshallChildrenKnown(QtiComponent $component, array $elements);
 
     /**
-     * Wheter or not a QtiComponent object is final. In other words, whether $component
+     * Whether or not a QtiComponent object is final. In other words, whether $component
      * contains child QtiComponent objects.
      *
      * @param QtiComponent $component

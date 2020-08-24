@@ -144,7 +144,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Wheter a value for the summary attribute is defined.
+     * Whether a value for the summary attribute is defined.
      *
      * @return bool
      */
@@ -176,7 +176,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Wheter the Table contains a Caption object.
+     * Whether the Table contains a Caption object.
      *
      * @return bool
      */

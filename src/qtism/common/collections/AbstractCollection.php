@@ -143,10 +143,10 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     }
 
     /**
-     * Wether a offset exists.
+     * Whether a offset exists.
      *
      * @param mixed $offset An offset to check for.
-     * @return bool Wether the offset exist.
+     * @return bool Whether the offset exist.
      */
     public function offsetExists($offset)
     {

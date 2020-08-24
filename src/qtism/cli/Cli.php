@@ -245,7 +245,7 @@ abstract class Cli
     }
 
     /**
-     * Check wheter the verbose mode is in force.
+     * Check whether the verbose mode is in force.
      *
      * The verbose mode is in force if the CLI arguments contain
      * the -h/--help flag.

@@ -76,7 +76,7 @@ class StringMatch extends Operator implements Pure
     }
 
     /**
-     * Set Wheter or not the match is to be carried out case sensitively.
+     * Set Whether or not the match is to be carried out case sensitively.
      *
      * @param bool $caseSensitive Case sensitiveness.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean.
@@ -92,7 +92,7 @@ class StringMatch extends Operator implements Pure
     }
 
     /**
-     * Wether or not the match is to be carried out case sensitively.
+     * Whether or not the match is to be carried out case sensitively.
      *
      * @return bool True if it has to, false otherwise.
      */

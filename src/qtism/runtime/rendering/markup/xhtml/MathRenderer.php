@@ -63,7 +63,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
     }
 
     /**
-     * Wheter the resulting output must be embedded in the MathML namespace.
+     * Whether the resulting output must be embedded in the MathML namespace.
      *
      * @return bool
      */

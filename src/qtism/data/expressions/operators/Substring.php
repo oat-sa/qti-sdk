@@ -81,7 +81,7 @@ class Substring extends Operator implements Pure
     }
 
     /**
-     * Wether or not the operator is case sensitive.
+     * Whether or not the operator is case sensitive.
      *
      * @return bool
      */

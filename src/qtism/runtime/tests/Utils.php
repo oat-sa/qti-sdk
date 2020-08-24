@@ -37,7 +37,7 @@ use RuntimeException;
 class Utils
 {
     /**
-     * Wheter or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
+     * Whether or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
      *
      * Min and Max constraints will be checked first, followed by the patternMask check.
      *

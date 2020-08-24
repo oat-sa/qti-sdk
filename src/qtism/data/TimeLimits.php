@@ -160,7 +160,7 @@ class TimeLimits extends QtiComponent
     }
 
     /**
-     * Wether a candidate's response that is beyond the maxTime should be still
+     * Whether a candidate's response that is beyond the maxTime should be still
      * accepted.
      *
      * @return bool true if the candidate's response should still be accepted, false if not.
@@ -171,7 +171,7 @@ class TimeLimits extends QtiComponent
     }
 
     /**
-     * Set wether a candidate's response that is beyond the maxTime should be still
+     * Set whether a candidate's response that is beyond the maxTime should be still
      * accepted.
      *
      * @param bool $allowLateSubmission true if the candidate's response should still be accepted, false if not.

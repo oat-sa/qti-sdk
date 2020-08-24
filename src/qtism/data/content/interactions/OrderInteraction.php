@@ -216,7 +216,7 @@ class OrderInteraction extends BlockInteraction
     }
 
     /**
-     * Wether a value is defined for the minChoices attribute.
+     * Whether a value is defined for the minChoices attribute.
      *
      * @return bool
      */

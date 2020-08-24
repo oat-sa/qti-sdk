@@ -117,7 +117,7 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-     * Wheter the container is equal to $obj.
+     * Whether the container is equal to $obj.
      *
      * * If $obj is not an instance of Container, false is returned.
      * * If $obj is [A,B,C] and the container is [C,A,B], true is returned because the order does not matter.

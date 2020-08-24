@@ -312,7 +312,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      *
      * @param StreamException $e The StreamException object to deal with.
      * @param int $typeError The BinaryStreamAccess exception code to be thrown in case of error.
-     * @param bool $read Wheter or not the error occurred in a reading/writing context.
+     * @param bool $read Whether or not the error occurred in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
     protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true)

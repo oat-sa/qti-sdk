@@ -1443,7 +1443,7 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Check wheter the test session is somehow in a timeout state.
+     * Check whether the test session is somehow in a timeout state.
      *
      * This method aims at providing timeout information about the test. In other words,
      * whether the time limits in force are reached for one of the given component of the

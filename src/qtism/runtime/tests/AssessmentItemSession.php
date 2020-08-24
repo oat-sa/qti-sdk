@@ -1247,7 +1247,7 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Wheter the current session affects visibility of modal feedbacks.
+     * Whether the current session affects visibility of modal feedbacks.
      *
      * This method will detect whether or not the current is composed by a scope of
      * variable set in such a way that at least one modalFeedback elements must be displayed.
@@ -1372,7 +1372,7 @@ class AssessmentItemSession extends State
     /**
      * Check Response Validity Constraints of the item.
      *
-     * This method checks wheter or not a set of $responses are all valid against the Response Validity Constraints
+     * This method checks whether or not a set of $responses are all valid against the Response Validity Constraints
      * in force for the item managed by the AssessmentItemSession.
      *
      * @throws AssessmentItemSessionException In case of a Response Validity Constraint is not respected.

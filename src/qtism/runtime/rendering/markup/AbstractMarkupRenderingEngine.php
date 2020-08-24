@@ -524,7 +524,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Wether or not the currently explored component has been already explored.
+     * Whether or not the currently explored component has been already explored.
      *
      * @return bool
      */

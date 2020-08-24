@@ -334,8 +334,8 @@ class Utils
      *
      * @param DOMElement $element A DOMElement object.
      * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-     * @param bool $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
-     * @param bool $withText (optional) Wether text nodes must be returned or not.
+     * @param bool $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
     public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
@@ -360,7 +360,7 @@ class Utils
      * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param bool $withText Wether text nodes must be returned or not.
+     * @param bool $withText Whether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
     public static function getChildElements($element, $withText = false)

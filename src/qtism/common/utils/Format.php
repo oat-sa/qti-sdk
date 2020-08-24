@@ -226,10 +226,10 @@ class Format
     }
 
     /**
-     * Wether a given $string is a URI.
+     * Whether a given $string is a URI.
      *
      * @param string $string A string value.
-     * @return bool Wether $string is a valid URI.
+     * @return bool Whether $string is a valid URI.
      * @link http://en.wikipedia.org/wiki/Uniform_Resource_Identifier
      */
     public static function isUri($string)
@@ -244,10 +244,10 @@ class Format
     }
 
     /**
-     * Wether a given $string can be cast into an integer value.
+     * Whether a given $string can be cast into an integer value.
      *
      * @param string $string A string value.
-     * @return bool Wether $string can be cast into an integer value.
+     * @return bool Whether $string can be cast into an integer value.
      */
     public static function isInteger($string)
     {
@@ -255,10 +255,10 @@ class Format
     }
 
     /**
-     * Wether a given $string can be cast into a float value.
+     * Whether a given $string can be cast into a float value.
      *
      * @param string $string A string value e.g. '27.111'.
-     * @return bool Wether $string can be converted to a float.
+     * @return bool Whether $string can be converted to a float.
      */
     public static function isFloat($string)
     {
@@ -266,10 +266,10 @@ class Format
     }
 
     /**
-     * Wether a given $string can be cast into a pair.
+     * Whether a given $string can be cast into a pair.
      *
      * @param string $string A string value.
-     * @return bool Wether $string can be converted to a pair.
+     * @return bool Whether $string can be converted to a pair.
      */
     public static function isPair($string)
     {
@@ -285,10 +285,10 @@ class Format
     }
 
     /**
-     * Wether a given $string can be cast into a directed pair.
+     * Whether a given $string can be cast into a directed pair.
      *
      * @param string $string A string value.
-     * @return bool Wether $string can be converted to a directed pair.
+     * @return bool Whether $string can be converted to a directed pair.
      */
     public static function isDirectedPair($string)
     {
@@ -296,10 +296,10 @@ class Format
     }
 
     /**
-     * Wether a given $string can be cast into a duration.
+     * Whether a given $string can be cast into a duration.
      *
      * @param string $string A string value.
-     * @return bool Wether $string can be converted to a duration.
+     * @return bool Whether $string can be converted to a duration.
      */
     public static function isDuration($string)
     {
@@ -338,7 +338,7 @@ class Format
      * Whether a given $string can be cast into a Point datatype.
      *
      * @param string $string A string value.
-     * @return bool Wheter $string can be transformed to a Point datatype.
+     * @return bool Whether $string can be transformed to a Point datatype.
      */
     public static function isPoint($string)
     {
@@ -370,7 +370,7 @@ class Format
      * Whether or not a given string is a variable ref.
      *
      * @param string $string A given string.
-     * @return bool Wheter $string is a valid variable ref.
+     * @return bool Whether $string is a valid variable ref.
      * @example '{myIdentifier1}' is a valid variable ref but 'myIdentifier1' is not.
      */
     public static function isVariableRef($string)
@@ -392,7 +392,7 @@ class Format
      * be accepted as valid numbers to compose coordinates.
      *
      * @param string $string A given string.
-     * @return bool Wether $string is a valid coordinate collection.
+     * @return bool Whether $string is a valid coordinate collection.
      * @example '0, 20, 100, 20' is a valid coordinate collection to describe a rectangle shape.
      */
     public static function isCoords($string)

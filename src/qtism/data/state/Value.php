@@ -100,7 +100,7 @@ class Value extends QtiComponent
     }
 
     /**
-     * Set wether or not the value is part of a record.
+     * Set whether or not the value is part of a record.
      *
      * @param bool $partOfRecord
      * @throws InvalidArgumentException If $partOfRecord is not a boolean.
@@ -116,7 +116,7 @@ class Value extends QtiComponent
     }
 
     /**
-     * Wheter the value is being part of a record. Default is false.
+     * Whether the value is being part of a record. Default is false.
      *
      * @return bool
      */
