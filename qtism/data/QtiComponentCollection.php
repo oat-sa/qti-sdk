@@ -49,10 +49,6 @@ class QtiComponentCollection extends AbstractCollection
         }
     }
 
-    /**
-     * @inheritDoc
-     * @see AbstractCollection::offsetSet()
-     */
     public function offsetSet($offset, $value)
     {
         if (empty($offset)) {
@@ -63,10 +59,6 @@ class QtiComponentCollection extends AbstractCollection
         }
     }
 
-    /**
-     * @inheritDoc
-     * @see AbstractCollection::offsetUnset()
-     */
     public function offsetUnset($offset)
     {
         if (empty($offset)) {

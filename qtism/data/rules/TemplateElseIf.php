@@ -105,18 +105,12 @@ class TemplateElseIf extends QtiComponent
         return $this->templateRules;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $merge = array_merge([$this->getExpression()], $this->getTemplateRules()->getArrayCopy());
         return new QtiComponentCollection($merge);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'templateElseIf';

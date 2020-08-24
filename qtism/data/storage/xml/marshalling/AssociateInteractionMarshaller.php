@@ -38,7 +38,6 @@ class AssociateInteractionMarshaller extends ContentMarshaller
      * @param QtiComponentCollection $children
      * @return mixed
      * @throws UnmarshallingException
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -87,7 +86,6 @@ class AssociateInteractionMarshaller extends ContentMarshaller
      * @param array $elements
      * @return DOMElement
      * @throws MarshallingException
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -129,9 +127,6 @@ class AssociateInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

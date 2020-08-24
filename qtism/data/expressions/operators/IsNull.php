@@ -45,9 +45,6 @@ class IsNull extends Operator
         parent::__construct($expressions, 1, 1, [OperatorCardinality::ANY], [OperatorBaseType::ANY]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'isNull';

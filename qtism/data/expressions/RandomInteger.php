@@ -151,9 +151,6 @@ class RandomInteger extends Expression
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'randomInteger';

@@ -138,9 +138,6 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
         }
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentItemRef';

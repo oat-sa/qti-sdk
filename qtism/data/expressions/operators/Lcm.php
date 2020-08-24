@@ -49,9 +49,6 @@ class Lcm extends Operator
         parent::__construct($expressions, 1, -1, [Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED], [OperatorBaseType::INTEGER]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'lcm';

@@ -424,9 +424,6 @@ class Route implements Iterator
         $this->registerAssessmentSection($routeItem);
     }
 
-    /**
-     * @see Iterator::rewind()
-     */
     public function rewind()
     {
         $this->setPosition(0);

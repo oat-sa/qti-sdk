@@ -101,9 +101,6 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
         return $result;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return OutcomeMaximum::class;

@@ -37,7 +37,6 @@ class ItemSubsetMarshaller extends Marshaller
     /**
      * @param QtiComponent $component
      * @return DOMElement
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
      */
     protected function marshall(QtiComponent $component)
     {
@@ -64,7 +63,6 @@ class ItemSubsetMarshaller extends Marshaller
     /**
      * @param DOMElement $element
      * @return ItemSubset
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -87,9 +85,6 @@ class ItemSubsetMarshaller extends Marshaller
         return $object;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'itemSubset';

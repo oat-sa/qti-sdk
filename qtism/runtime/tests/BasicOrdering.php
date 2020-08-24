@@ -28,9 +28,6 @@ namespace qtism\runtime\tests;
  */
 class BasicOrdering extends AbstractOrdering
 {
-    /**
-     * @see \qtism\runtime\tests\AbstractOrdering::order()
-     */
     public function order()
     {
         if (($ordering = $this->getAssessmentSection()->getOrdering()) !== null && $ordering->getShuffle() === true) {

@@ -197,17 +197,11 @@ class Selection extends QtiComponent implements IExternal
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'selection';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

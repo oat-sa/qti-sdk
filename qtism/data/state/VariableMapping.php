@@ -119,17 +119,11 @@ class VariableMapping extends QtiComponent
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'variableMapping';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

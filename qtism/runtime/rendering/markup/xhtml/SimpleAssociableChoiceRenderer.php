@@ -50,7 +50,6 @@ class SimpleAssociableChoiceRenderer extends ChoiceRenderer
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      * @param string $base
-     * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

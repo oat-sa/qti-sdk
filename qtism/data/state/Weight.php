@@ -132,17 +132,11 @@ class Weight extends QtiComponent implements QtiIdentifiable
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'weight';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

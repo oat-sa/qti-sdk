@@ -48,9 +48,6 @@ class DurationGTE extends Operator
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::DURATION]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'durationGTE';

@@ -36,7 +36,6 @@ class JumpCollection extends AbstractCollection
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Jump object.
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {

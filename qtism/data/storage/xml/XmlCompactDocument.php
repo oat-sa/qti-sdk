@@ -309,7 +309,6 @@ class XmlCompactDocument extends XmlDocument
      * @param QtiComponent $documentComponent
      * @param string $uri
      * @throws XmlStorageException
-     * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)
     {

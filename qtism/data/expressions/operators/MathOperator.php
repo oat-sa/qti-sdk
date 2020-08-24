@@ -117,9 +117,6 @@ class MathOperator extends Operator
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'mathOperator';

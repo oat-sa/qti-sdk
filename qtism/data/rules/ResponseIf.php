@@ -110,17 +110,11 @@ class ResponseIf extends QtiComponent
         return $this->responseRules;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'responseIf';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

@@ -183,17 +183,11 @@ class HotspotInteraction extends GraphicInteraction
         return $this->hotspotChoices;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getHotspotChoices()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'hotspotInteraction';

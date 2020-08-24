@@ -37,9 +37,6 @@ use qtism\data\QtiComponentCollection;
  */
 class ExitResponse extends QtiComponent implements ResponseRule
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'exitResponse';
@@ -52,9 +49,6 @@ class ExitResponse extends QtiComponent implements ResponseRule
     {
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

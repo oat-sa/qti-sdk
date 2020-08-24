@@ -130,7 +130,6 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
      * @param array $args
      * @return Marshaller
      * @throws ReflectionException
-     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

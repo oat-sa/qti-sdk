@@ -32,9 +32,6 @@ use qtism\data\content\SimpleInline;
  */
 class VarElement extends SimpleInline
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'var';

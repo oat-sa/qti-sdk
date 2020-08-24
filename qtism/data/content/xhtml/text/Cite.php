@@ -30,9 +30,6 @@ use qtism\data\content\SimpleInline;
  */
 class Cite extends SimpleInline
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'cite';

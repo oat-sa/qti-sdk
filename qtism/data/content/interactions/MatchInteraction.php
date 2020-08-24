@@ -240,9 +240,6 @@ class MatchInteraction extends BlockInteraction
         return $matchSets[1];
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -250,9 +247,6 @@ class MatchInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleMatchSets()->getArrayCopy()));
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'matchInteraction';

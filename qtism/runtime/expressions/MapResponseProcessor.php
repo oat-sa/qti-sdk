@@ -166,9 +166,6 @@ class MapResponseProcessor extends ExpressionProcessor
         }
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return MapResponse::class;

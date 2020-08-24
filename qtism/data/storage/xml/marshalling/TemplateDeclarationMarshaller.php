@@ -85,9 +85,6 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
         }
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'templateDeclaration';

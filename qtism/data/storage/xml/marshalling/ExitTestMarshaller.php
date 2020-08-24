@@ -54,9 +54,6 @@ class ExitTestMarshaller extends Marshaller
         return new ExitTest();
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'exitTest';

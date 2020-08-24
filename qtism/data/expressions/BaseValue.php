@@ -110,9 +110,6 @@ class BaseValue extends Expression
         $this->value = $value;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'baseValue';

@@ -485,7 +485,6 @@ class OperandsCollection extends AbstractCollection implements Stack
 
     /**
      * @param mixed $value
-     * @see \qtism\common\collections\Stack::push()
      */
     public function push($value)
     {
@@ -498,7 +497,6 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * @param int $count
      * @return array|OperandsCollection
-     * @see \qtism\common\collections\Stack::pop()
      */
     public function pop($count = 1)
     {

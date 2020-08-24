@@ -233,17 +233,11 @@ class PositionObjectInteraction extends Interaction
         return $this->object;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'positionObjectInteraction';

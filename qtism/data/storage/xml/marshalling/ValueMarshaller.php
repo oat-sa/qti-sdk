@@ -157,9 +157,6 @@ class ValueMarshaller extends Marshaller
         return $object;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'value';

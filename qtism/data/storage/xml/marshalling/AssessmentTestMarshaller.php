@@ -183,9 +183,6 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
         }
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentTest';

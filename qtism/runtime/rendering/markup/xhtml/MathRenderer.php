@@ -39,7 +39,6 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * @param QtiComponent $component
      * @param string $base
      * @throws RenderingException
-     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

@@ -87,9 +87,6 @@ class Index extends Operator
         return $this->n;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'index';

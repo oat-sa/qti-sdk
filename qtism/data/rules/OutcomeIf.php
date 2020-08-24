@@ -117,17 +117,11 @@ class OutcomeIf extends QtiComponent
         return $this->outcomeRules;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'outcomeIf';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

@@ -139,17 +139,11 @@ class SelectPointInteraction extends GraphicInteraction
         }
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'selectPointInteraction';

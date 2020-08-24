@@ -149,9 +149,6 @@ class TestVariablesProcessor extends ItemSubsetProcessor
         return $result;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return TestVariables::class;

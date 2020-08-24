@@ -97,25 +97,16 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
         }
     }
 
-    /**
-     * @see \qtism\data\content\Flow::getXmlBase()
-     */
     public function getXmlBase()
     {
         return $this->xmlBase;
     }
 
-    /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
-     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'div';

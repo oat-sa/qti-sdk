@@ -80,9 +80,6 @@ class FieldValue extends Operator
         return $this->fieldIdentifier;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'fieldValue';

@@ -148,17 +148,11 @@ class ResponseCondition extends QtiComponent implements ResponseRule
         return $this->getResponseElse() !== null;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'responseCondition';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

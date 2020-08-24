@@ -117,17 +117,11 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
         $this->expression = $expression;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'lookupOutcomeValue';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = [$this->getExpression()];

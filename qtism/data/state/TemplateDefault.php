@@ -116,17 +116,11 @@ class TemplateDefault extends QtiComponent
         $this->expression = $expression;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'templateDefault';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getExpression()]);

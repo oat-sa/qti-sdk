@@ -93,9 +93,6 @@ class AssessmentSectionRef extends SectionPart
         return $this->href;
     }
 
-    /**
-     * @see \qtism\data\SectionPart::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'assessmentSectionRef';

@@ -30,9 +30,6 @@ use qtism\data\content\SimpleInline;
  */
 class Kbd extends SimpleInline
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'kbd';

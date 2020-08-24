@@ -486,17 +486,11 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
         return $this->format;
     }
 
-    /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
-     */
     public function getComponents()
     {
         return parent::getComponents();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'extendedTextInteraction';

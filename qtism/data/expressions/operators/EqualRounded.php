@@ -127,9 +127,6 @@ class EqualRounded extends Operator
         return $this->figures;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'equalRounded';

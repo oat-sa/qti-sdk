@@ -91,9 +91,6 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
         return $result;
     }
 
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
-     */
     protected function getExpressionType()
     {
         return OutcomeMinimum::class;

@@ -88,7 +88,6 @@ class MultipleContainer extends Container implements QtiDatatype
 
     /**
      * @param mixed $value
-     * @see \qtism\common\collections\Container::checkType()
      */
     protected function checkType($value)
     {
@@ -117,17 +116,11 @@ class MultipleContainer extends Container implements QtiDatatype
         return $container;
     }
 
-    /**
-     * @see \qtism\common\collections\Container::getToStringBounds()
-     */
     protected function getToStringBounds()
     {
         return ['[', ']'];
     }
 
-    /**
-     * @see \qtism\common\collections\Container::getCardinality()
-     */
     public function getCardinality()
     {
         return Cardinality::MULTIPLE;

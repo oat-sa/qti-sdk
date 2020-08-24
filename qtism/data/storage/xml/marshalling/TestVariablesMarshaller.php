@@ -90,9 +90,6 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
         }
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'testVariables';

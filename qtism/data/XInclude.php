@@ -61,7 +61,6 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
 
     /**
      * @param string $xmlBase
-     * @see \qtism\data\content\Flow::setXmlBase()
      */
     public function setXmlBase($xmlBase = '')
     {
@@ -73,33 +72,21 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
         }
     }
 
-    /**
-     * @see \qtism\data\content\Flow::getXmlBase()
-     */
     public function getXmlBase()
     {
         return $this->xmlBase;
     }
 
-    /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
-     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
     }
 
-    /**
-     * @see \qtism\data\ExternalQtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'include';
     }
 
-    /**
-     * @see \qtism\data\ExternalQtiComponent::buildTargetNamespace()
-     */
     protected function buildTargetNamespace()
     {
         $this->setTargetNamespace('http://www.w3.org/2001/XInclude');

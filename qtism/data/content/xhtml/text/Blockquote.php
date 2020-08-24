@@ -92,9 +92,6 @@ class Blockquote extends SimpleBlock
         return $this->getCite() !== '';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'blockquote';

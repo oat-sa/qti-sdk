@@ -50,9 +50,6 @@ class Match extends Operator
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SAME], [OperatorCardinality::SAME]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'match';

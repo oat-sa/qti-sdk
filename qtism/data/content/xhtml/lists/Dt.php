@@ -84,9 +84,6 @@ class Dt extends DlElement
         return $this->getContent();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'dt';

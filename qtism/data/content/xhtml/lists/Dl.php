@@ -94,9 +94,6 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
         return $this->getContent();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'dl';
@@ -128,9 +125,6 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic
         return $this->xmlBase;
     }
 
-    /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
-     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';

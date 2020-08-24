@@ -177,9 +177,6 @@ class HotspotChoice extends Choice implements Hotspot
         return new QtiComponentCollection();
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'hotspotChoice';

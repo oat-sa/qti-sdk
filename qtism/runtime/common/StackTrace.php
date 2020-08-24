@@ -58,7 +58,6 @@ class StackTrace extends AbstractCollection implements Stack
 
     /**
      * @param mixed $value
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     public function checkType($value)
     {

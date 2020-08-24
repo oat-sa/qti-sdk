@@ -96,9 +96,6 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
         return $this->variableName;
     }
 
-    /**
-     * @see \qtism\data\storage\php\marshalling\PhpMarshaller::marshall()
-     */
     public function marshall()
     {
         $ctx = $this->getContext();
@@ -156,7 +153,6 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
     /**
      * @param mixed $toMarshall
      * @return bool
-     * @see \qtism\data\storage\php\marshalling\PhpMarshaller::isMarshallable()
      */
     protected function isMarshallable($toMarshall)
     {

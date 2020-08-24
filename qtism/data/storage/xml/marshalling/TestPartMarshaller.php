@@ -42,7 +42,6 @@ class TestPartMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      * @throws MarshallingException
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
      */
     protected function marshall(QtiComponent $component)
     {
@@ -91,7 +90,6 @@ class TestPartMarshaller extends Marshaller
      * @param DOMElement $element
      * @return TestPart
      * @throws UnmarshallingException
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -176,9 +174,6 @@ class TestPartMarshaller extends Marshaller
         }
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'testPart';

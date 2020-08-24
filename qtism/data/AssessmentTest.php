@@ -376,17 +376,11 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         $this->testFeedbacks = $testFeedbacks;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'assessmentTest';
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

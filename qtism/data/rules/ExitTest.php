@@ -33,9 +33,6 @@ use qtism\data\QtiComponentCollection;
  */
 class ExitTest extends QtiComponent implements OutcomeRule
 {
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'exitTest';
@@ -48,9 +45,6 @@ class ExitTest extends QtiComponent implements OutcomeRule
     {
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();

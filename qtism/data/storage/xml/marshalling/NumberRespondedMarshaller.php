@@ -60,9 +60,6 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller
         return $object;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
-     */
     public function getExpectedQtiClassName()
     {
         return 'numberResponded';

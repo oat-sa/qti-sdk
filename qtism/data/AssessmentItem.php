@@ -719,9 +719,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         }
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
-     */
     public function getComponents()
     {
         $comp = array_merge(

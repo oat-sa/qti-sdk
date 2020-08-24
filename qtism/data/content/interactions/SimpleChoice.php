@@ -82,9 +82,6 @@ class SimpleChoice extends Choice
         return $this->content;
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'simpleChoice';

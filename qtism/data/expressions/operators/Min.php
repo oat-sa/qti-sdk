@@ -49,9 +49,6 @@ class Min extends Operator
         parent::__construct($expressions, 1, -1, [OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
     }
 
-    /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
-     */
     public function getQtiClassName()
     {
         return 'min';
