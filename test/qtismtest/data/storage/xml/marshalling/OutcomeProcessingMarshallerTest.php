@@ -12,6 +12,11 @@ use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeProcessingMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OutcomeProcessingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

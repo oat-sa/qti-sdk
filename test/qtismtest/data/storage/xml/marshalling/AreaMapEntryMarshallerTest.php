@@ -10,6 +10,11 @@ use qtism\data\state\AreaMapEntry;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class AreaMapEntryMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AreaMapEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

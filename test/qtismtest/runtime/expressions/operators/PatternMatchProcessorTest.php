@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -13,6 +14,11 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\PatternMatchProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PatternMatchProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class PatternMatchProcessorTest extends QtiSmTestCase
 {
     /**
@@ -21,6 +27,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
      * @param string $string
      * @param string $pattern
      * @param bool $expected
+     * @throws MarshallerNotFoundException
      */
     public function testPatternMatch($string, $pattern, $expected)
     {
@@ -35,6 +42,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
      *
      * @param string $string
      * @param string $pattern
+     * @throws MarshallerNotFoundException
      */
     public function testNull($string, $pattern)
     {
@@ -92,6 +100,9 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function patternMatchProvider()
     {
         return [
@@ -108,6 +119,9 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function nullProvider()
     {
         return [
@@ -117,6 +131,11 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $pattern
+     * @return \qtism\data\QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression($pattern)
     {
         return $this->createComponentFromXml('

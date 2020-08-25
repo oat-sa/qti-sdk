@@ -69,11 +69,17 @@ class TemplateElse extends QtiComponent
         return $this->templateRules;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getTemplateRules()->getArrayCopy());
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateElse';

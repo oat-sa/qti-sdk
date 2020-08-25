@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\SubtractProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class SubtractProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class SubtractProcessorTest extends QtiSmTestCase
 {
     public function testSubtract()
@@ -78,6 +83,10 @@ class SubtractProcessorTest extends QtiSmTestCase
         $processor = new SubtractProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

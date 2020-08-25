@@ -93,6 +93,8 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param QtiComponent $component An InterpolationTable object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -114,6 +116,7 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An InterpolationTable object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If $element does not contain any interpolationTableEntry QTI elements.
      */
     protected function unmarshall(DOMElement $element)
@@ -145,6 +148,9 @@ class InterpolationTableMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'interpolationTable';

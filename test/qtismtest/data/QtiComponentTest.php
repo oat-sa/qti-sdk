@@ -9,6 +9,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiIdentifiableCollection;
 
+/**
+ * Class QtiComponentTest
+ *
+ * @package qtismtest\data
+ */
 class QtiComponentTest extends QtiSmTestCase
 {
     public function testGetComponentByIdOrClassNameSimple()

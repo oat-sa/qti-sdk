@@ -44,6 +44,9 @@ class Th extends TableCell
         parent::__construct($id, $class, $lang, $label);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'th';

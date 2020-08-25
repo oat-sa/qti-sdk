@@ -46,6 +46,8 @@ trait FlowTrait
 
     /**
      * setXmlBase method implementation.
+     *
+     * @param string $xmlBase
      */
     public function setXmlBase($xmlBase = '')
     {

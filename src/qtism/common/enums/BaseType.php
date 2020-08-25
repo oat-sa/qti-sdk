@@ -171,6 +171,9 @@ class BaseType implements Enumeration
      */
     const COORDS = 12;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [

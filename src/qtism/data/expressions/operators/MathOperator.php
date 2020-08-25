@@ -118,6 +118,9 @@ class MathOperator extends Operator implements Pure
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'mathOperator';

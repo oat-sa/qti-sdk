@@ -13,6 +13,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IntegerToFloatProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class IntegerToFloatProcessorTest extends QtiSmTestCase
 {
     public function testIntegerToFloat()
@@ -118,6 +123,10 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

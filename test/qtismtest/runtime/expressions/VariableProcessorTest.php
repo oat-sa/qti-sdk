@@ -28,6 +28,11 @@ use qtism\runtime\expressions\VariableProcessor;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VariableProcessorTest
+ *
+ * @package qtismtest\runtime\expressions
+ */
 class VariableProcessorTest extends QtiSmTestCase
 {
     public function testSimple()

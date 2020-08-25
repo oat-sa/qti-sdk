@@ -5,6 +5,11 @@ namespace qtismtest\common\datatypes;
 use qtism\common\datatypes\QtiPoint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PointTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class PointTest extends QtiSmTestCase
 {
     public function testEquality()

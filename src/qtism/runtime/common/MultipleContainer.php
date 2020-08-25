@@ -117,11 +117,17 @@ class MultipleContainer extends Container implements QtiDatatype
         return $container;
     }
 
+    /**
+     * @return array
+     */
     protected function getToStringBounds()
     {
         return ['[', ']'];
     }
 
+    /**
+     * @return int
+     */
     public function getCardinality()
     {
         return Cardinality::MULTIPLE;

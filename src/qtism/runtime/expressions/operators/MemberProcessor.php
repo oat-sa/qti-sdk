@@ -85,6 +85,9 @@ class MemberProcessor extends OperatorProcessor
         return new QtiBoolean($operand2->contains($operand1));
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Member::class;

@@ -224,11 +224,17 @@ class Mapping extends QtiComponent
         return $this->mapEntries;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'mapping';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getMapEntries()->getArrayCopy());

@@ -7,14 +7,18 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\php\PhpStorageException;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSessionState;
+use qtism\runtime\tests\OrderingException;
 use qtism\runtime\tests\TimeConstraintCollection;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\data\AssessmentItemRef;
@@ -23,6 +27,11 @@ use qtism\data\TestPart;
 use qtism\data\AssessmentTest;
 use qtism\common\datatypes\QtiFloat;
 
+/**
+ * Class AssessmentTestSessionTimingTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testTestPartAssessmentSectionsDurations()
@@ -174,6 +183,12 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * even if time constraints in force are exceeded, by the use of the $allowLateSubmission
      * argument.
      *
+     * @param bool $forceLateSubmission
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws XmlStorageException
+     * @throws PhpStorageException
+     * @throws OrderingException
      */
     public function testForceLateSubmission($forceLateSubmission = true)
     {

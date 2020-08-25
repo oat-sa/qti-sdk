@@ -32,6 +32,11 @@ use qtism\data\state\MatchTableEntryCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeDeclarationTest
+ *
+ * @package qtismtest\data\state
+ */
 class OutcomeDeclarationTest extends QtiSmTestCase
 {
     /** @var OutcomeDeclaration */

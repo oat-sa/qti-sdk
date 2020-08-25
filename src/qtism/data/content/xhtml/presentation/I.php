@@ -45,6 +45,9 @@ class I extends SimpleInline
         parent::__construct($id, $class, $lang, $label);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'i';

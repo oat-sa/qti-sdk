@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\common\collections\StringCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StringCollectionTest
+ *
+ * @package qtismtest\common\collections
+ */
 class StringCollectionTest extends QtiSmTestCase
 {
     /**

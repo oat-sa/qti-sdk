@@ -301,6 +301,7 @@ class QtiDuration implements QtiDatatype
      * For instance, PT1S + PT1S = PT2S.
      *
      * @param QtiDuration|DateInterval $duration A QtiDuration or DateInterval object.
+     * @throws Exception
      */
     public function add($duration)
     {
@@ -329,6 +330,7 @@ class QtiDuration implements QtiDatatype
      * For instance P2S - P1S = P1S
      *
      * @param QtiDuration $duration
+     * @throws Exception
      */
     public function sub(QtiDuration $duration)
     {

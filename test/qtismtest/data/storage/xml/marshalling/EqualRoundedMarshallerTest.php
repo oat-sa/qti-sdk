@@ -11,6 +11,11 @@ use qtism\data\expressions\operators\EqualRounded;
 use qtism\data\expressions\operators\RoundingMode;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class EqualRoundedMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class EqualRoundedMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

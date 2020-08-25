@@ -9,6 +9,11 @@ use qtismtest\QtiSmTestCase;
 use ReflectionClass;
 use stdClass;
 
+/**
+ * Class ReflectionTest
+ *
+ * @package qtismtest\common\utils
+ */
 class ReflectionTest extends QtiSmTestCase
 {
     /**
@@ -40,6 +45,9 @@ class ReflectionTest extends QtiSmTestCase
         $this->assertInstanceOf(stdClass::class, $instance);
     }
 
+    /**
+     * @return array
+     */
     public function shortClassNameProvider()
     {
         return [

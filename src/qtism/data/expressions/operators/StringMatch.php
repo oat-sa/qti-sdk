@@ -129,6 +129,9 @@ class StringMatch extends Operator implements Pure
         return $this->substring;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'stringMatch';

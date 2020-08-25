@@ -10,6 +10,11 @@ use qtism\data\state\AreaMapEntryCollection;
 use qtism\data\state\AreaMapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AreaMappingTest
+ *
+ * @package qtismtest\data\state
+ */
 class AreaMappingTest extends QtiSmTestCase
 {
     public function testCreateNoAreaMapEntries()

@@ -116,11 +116,17 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
         return $this->title;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'infoControl';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getContent()->getArrayCopy());

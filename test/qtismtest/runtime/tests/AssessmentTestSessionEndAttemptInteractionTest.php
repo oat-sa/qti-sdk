@@ -11,6 +11,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionEndAttemptInteractionTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testEndAttemptInteraction()

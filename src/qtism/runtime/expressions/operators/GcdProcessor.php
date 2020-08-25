@@ -116,6 +116,9 @@ class GcdProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Gcd::class;

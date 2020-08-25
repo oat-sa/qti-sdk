@@ -15,6 +15,11 @@ use qtism\data\TestPartCollection;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestTest
+ *
+ * @package qtismtest\data
+ */
 class AssessmentTestTest extends QtiSmTestCase
 {
     public function testTimeLimits()

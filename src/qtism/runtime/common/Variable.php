@@ -538,6 +538,10 @@ abstract class Variable
         return $values;
     }
 
+    /**
+     * @param QtiDatatype $value
+     * @return Value
+     */
     private function createValue(QtiDatatype $value): Value
     {
         return new Value(StorageUtils::stringToDatatype(

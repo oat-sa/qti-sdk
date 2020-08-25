@@ -5,13 +5,24 @@ namespace qtismtest\runtime\tests;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class AssessmentItemSessionStateTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return AssessmentItemSessionState::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -26,6 +37,9 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -40,6 +54,9 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

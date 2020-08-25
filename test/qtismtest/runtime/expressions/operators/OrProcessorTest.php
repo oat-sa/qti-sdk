@@ -14,6 +14,11 @@ use qtism\runtime\expressions\operators\OrProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class OrProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class OrProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
@@ -107,6 +112,10 @@ class OrProcessorTest extends QtiSmTestCase
         $this->assertSame(false, $result->getValue());
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

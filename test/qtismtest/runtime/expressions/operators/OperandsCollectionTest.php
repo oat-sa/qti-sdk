@@ -16,6 +16,11 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OperandsCollectionProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class OperandsCollectionProcessorTest extends QtiSmTestCase
 {
     private $operands = null;

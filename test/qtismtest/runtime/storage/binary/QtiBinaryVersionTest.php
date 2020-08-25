@@ -5,10 +5,17 @@ namespace qtismtest\runtime\storage\binary;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryVersion;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiBinaryVersionTest
+ *
+ * @package qtismtest\runtime\storage\binary
+ */
 class QtiBinaryVersionTest extends QtiSmTestCase
 {
     public function testPersist()
@@ -53,6 +60,8 @@ class QtiBinaryVersionTest extends QtiSmTestCase
      * @param int $versionNumber
      * @param array $expectedFeatures
      * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testLegacyFeatures(int $versionNumber, array $expectedFeatures)
     {
@@ -69,6 +78,9 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function legacyFeaturesToTest(): array
     {
         return $this->createFeatureArray(
@@ -91,6 +103,8 @@ class QtiBinaryVersionTest extends QtiSmTestCase
      * @param int $versionNumber
      * @param array $expectedFeatures
      * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testMasterFeatures(int $versionNumber, array $expectedFeatures)
     {
@@ -107,6 +121,9 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function masterFeaturesToTest(): array
     {
         return $this->createFeatureArray(
@@ -116,6 +133,10 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         );
     }
 
+    /**
+     * @param array $features
+     * @return array
+     */
     private function createFeatureArray(array $features): array
     {
         $return = [];
@@ -131,6 +152,13 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         return $return;
     }
 
+    /**
+     * @param int $versionNumber
+     * @param string $branch
+     * @return QtiBinaryStreamAccess
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
+     */
     public function createAccessMock(int $versionNumber, string $branch): QtiBinaryStreamAccess
     {
         $binary = chr($versionNumber);

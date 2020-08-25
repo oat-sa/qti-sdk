@@ -13,6 +13,11 @@ use qtism\runtime\expressions\operators\RoundProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RoundProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class RoundProcessorTest extends QtiSmTestCase
 {
     public function testRound()
@@ -139,6 +144,10 @@ class RoundProcessorTest extends QtiSmTestCase
         $processor = new RoundProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -78,6 +78,9 @@ class Cardinality implements Enumeration
      */
     const RECORD = 3;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [

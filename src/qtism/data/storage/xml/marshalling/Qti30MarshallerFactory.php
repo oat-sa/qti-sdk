@@ -128,7 +128,6 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
      * @param ReflectionClass $class
      * @param array $args
      * @return Marshaller
-     * @throws ReflectionException
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

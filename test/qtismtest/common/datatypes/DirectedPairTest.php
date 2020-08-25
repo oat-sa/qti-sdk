@@ -6,6 +6,11 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DirectedPairTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class DirectedPairTest extends QtiSmTestCase
 {
     public function testEquality()

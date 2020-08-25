@@ -41,6 +41,7 @@ class ContextMarshaller extends Marshaller
      *
      * @param QtiComponent $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException If an error occurs during the marshalling process.
      */
     protected function marshall(QtiComponent $component)
@@ -68,6 +69,7 @@ class ContextMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return Context A QtiComponent object.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {

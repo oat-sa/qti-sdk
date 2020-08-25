@@ -45,6 +45,9 @@ class ExitTemplateProcessor extends RuleProcessor
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEMPLATE);
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return ExitTemplate::class;

@@ -33,6 +33,12 @@ use qtism\data\TestFeedbackRefCollection;
  */
 class ExtendedTestPartMarshaller extends TestPartMarshaller
 {
+    /**
+     * @param QtiComponent $component
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
@@ -46,6 +52,12 @@ class ExtendedTestPartMarshaller extends TestPartMarshaller
         return $element;
     }
 
+    /**
+     * @param DOMElement $element
+     * @return ExtendedTestPart|\qtism\data\TestPart
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);

@@ -11,6 +11,11 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Em;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InfoControlMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class InfoControlMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

@@ -45,6 +45,9 @@ class NullProcessor extends ExpressionProcessor
         return null;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return NullValue::class;

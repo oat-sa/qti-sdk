@@ -168,7 +168,7 @@ abstract class AbstractStorage
      * Finally, if an unexpected error occurs while deleting the AssessmentTestSession object (e.g. network issue, ...),
      * a StorageException is thrown.
      *
-     * @param AssessmentTestSession The AssessmentTestSession object to be deleted.
+     * @param AssessmentTestSession $assessmentTestSession The AssessmentTestSession object to be deleted.
      * @return bool
      * @throws StorageException If an error occurs while deleting the AssessmentTestSession object.
      */

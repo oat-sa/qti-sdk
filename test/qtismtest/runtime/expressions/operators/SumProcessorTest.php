@@ -14,6 +14,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\Processable;
 use RuntimeException;
 
+/**
+ * Class SumProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class SumProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -98,6 +103,10 @@ class SumProcessorTest extends QtiSmTestCase
         $this->assertTrue($result === null);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     private function createFakeSumComponent()
     {
         return $this->createComponentFromXml('

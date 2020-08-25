@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\StringMatchProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class StringMatchProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class StringMatchProcessorTest extends QtiSmTestCase
 {
     public function testStringMatch()
@@ -92,6 +97,11 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $processor = new StringMatchProcessor($expression, $operands);
     }
 
+    /**
+     * @param bool $caseSensitive
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($caseSensitive = true)
     {
         $str = ($caseSensitive === true) ? 'true' : 'false';

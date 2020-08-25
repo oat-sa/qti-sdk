@@ -15,6 +15,11 @@ use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class GraphicAssociateInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

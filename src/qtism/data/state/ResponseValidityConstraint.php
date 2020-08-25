@@ -259,11 +259,29 @@ class ResponseValidityConstraint extends QtiComponent
         $this->getAssociationValidityConstraints()->remove($associationValidityConstraint);
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'responseValidityConstraint';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection(

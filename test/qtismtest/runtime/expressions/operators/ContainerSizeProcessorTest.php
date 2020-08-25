@@ -14,6 +14,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class ContainerSizeProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class ContainerSizeProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
@@ -84,6 +89,10 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $this->assertEquals(3, $result->getValue());
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

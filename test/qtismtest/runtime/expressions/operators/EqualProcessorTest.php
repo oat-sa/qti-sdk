@@ -17,6 +17,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class EqualProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class EqualProcessorTest extends QtiSmTestCase
 {
     public function testExact()
@@ -249,6 +254,14 @@ class EqualProcessorTest extends QtiSmTestCase
         $processor = new EqualProcessor($expression, $operands);
     }
 
+    /**
+     * @param $toleranceMode
+     * @param array $tolerance
+     * @param bool $includeLowerBound
+     * @param bool $includeUpperBound
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($toleranceMode, array $tolerance = [], $includeLowerBound = true, $includeUpperBound = true)
     {
         $tm = ($toleranceMode != ToleranceMode::EXACT) ? ('tolerance="' . implode(' ', $tolerance) . '"') : '';

@@ -147,6 +147,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         return $this->associableHotspots;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -168,6 +171,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         return $responseValidityConstraint;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $prompt = $this->getPrompt();
@@ -185,6 +191,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         );
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'graphicGapMatchInteraction';

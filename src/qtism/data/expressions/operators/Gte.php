@@ -47,6 +47,9 @@ class Gte extends Operator implements Pure
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'gte';

@@ -7,6 +7,11 @@ use DOMElement;
 use qtism\data\ItemSessionControl;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ItemSessionControlMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ItemSessionControlMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

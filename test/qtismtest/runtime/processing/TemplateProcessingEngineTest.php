@@ -11,6 +11,11 @@ use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\processing\TemplateProcessingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateProcessingEngineTest
+ *
+ * @package qtismtest\runtime\processing
+ */
 class TemplateProcessingEngineTest extends QtiSmTestCase
 {
     public function testWrongInput()

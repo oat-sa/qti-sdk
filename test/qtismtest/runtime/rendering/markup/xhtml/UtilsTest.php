@@ -8,6 +8,11 @@ use qtism\data\ShufflableCollection;
 use qtism\runtime\rendering\markup\xhtml\Utils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RenderingMarkupXhtmlUtils
+ *
+ * @package qtismtest\runtime\rendering\markup\xhtml
+ */
 class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 {
     public function testShuffleWithFixed()

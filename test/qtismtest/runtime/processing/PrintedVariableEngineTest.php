@@ -28,6 +28,11 @@ use qtism\runtime\processing\PrintedVariableEngine;
 use qtism\runtime\processing\PrintedVariableProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PrintedVariableEngineTest
+ *
+ * @package qtismtest\runtime\processing
+ */
 class PrintedVariableEngineTest extends QtiSmTestCase
 {
     /**
@@ -59,6 +64,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $this->assertEquals($expected, $engine->process());
     }
 
+    /**
+     * @return array
+     */
     public function printedVariableProvider()
     {
         $state = new State();
@@ -330,6 +338,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $this->assertEquals($expected, $engine->process());
     }
 
+    /**
+     * @return array
+     */
     public function newProvider()
     {
         $state = new State();

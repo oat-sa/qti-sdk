@@ -7,6 +7,11 @@ use DOMElement;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VariableMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class VariableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallWeight()

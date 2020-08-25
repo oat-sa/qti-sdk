@@ -5,6 +5,11 @@ namespace qtismtest\data\content\xhtml;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ObjectTest
+ *
+ * @package qtismtest\data\content\xhtml
+ */
 class ObjectTest extends QtiSmTestCase
 {
     public function testCreateWrongData()

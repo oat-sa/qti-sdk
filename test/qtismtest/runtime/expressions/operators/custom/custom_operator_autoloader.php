@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @param $class
+ */
 function custom_operator_autoloader($class)
 {
     $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);

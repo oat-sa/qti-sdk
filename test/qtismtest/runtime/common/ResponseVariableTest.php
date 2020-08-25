@@ -16,6 +16,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\Mapping;
 
+/**
+ * Class ResponseVariableTest
+ *
+ * @package qtismtest\runtime\common
+ */
 class ResponseVariableTest extends QtiSmTestCase
 {
     public function testCreateFromVariableDeclarationExtended()

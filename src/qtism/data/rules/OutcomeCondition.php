@@ -148,11 +148,17 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
         return $this->getOutcomeElse() !== null;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'outcomeCondition';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

@@ -37,6 +37,8 @@ class SetDefaultValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SetDefaultValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -54,6 +56,7 @@ class SetDefaultValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SetDefaultValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -74,6 +77,9 @@ class SetDefaultValueMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'setDefaultValue';

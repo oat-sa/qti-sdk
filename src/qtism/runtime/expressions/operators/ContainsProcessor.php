@@ -114,6 +114,9 @@ class ContainsProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Contains::class;

@@ -6,6 +6,11 @@ use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\TemplateConstraintProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConstraintProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class TemplateConstraintProcessorTest extends QtiSmTestCase
 {
     public function testTemplateConstraintNullResult()

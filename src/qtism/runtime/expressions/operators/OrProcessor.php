@@ -80,6 +80,9 @@ class OrProcessor extends OperatorProcessor
         return new QtiBoolean(false);
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return OrOperator::class;

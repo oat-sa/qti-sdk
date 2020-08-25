@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -13,13 +14,18 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class LcmProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class LcmProcessorTest extends QtiSmTestCase
 {
     /**
      * @dataProvider lcmProvider
-     *
      * @param array $operands
      * @param int $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLcm(array $operands, $expected)
     {
@@ -57,8 +63,8 @@ class LcmProcessorTest extends QtiSmTestCase
 
     /**
      * @dataProvider lcmWithNullValuesProvider
-     *
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testGcdWithNullValues(array $operands)
     {
@@ -68,6 +74,9 @@ class LcmProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return array
+     */
     public function lcmProvider()
     {
         return [
@@ -86,6 +95,9 @@ class LcmProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function lcmWithNullValuesProvider()
     {
         return [
@@ -98,6 +110,10 @@ class LcmProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

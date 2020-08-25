@@ -20,6 +20,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class RepeatProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class RepeatProcessorTest extends QtiSmTestCase
 {
     public function testRepeatScalarOnly()
@@ -167,6 +172,11 @@ class RepeatProcessorTest extends QtiSmTestCase
         $processor = new RepeatProcessor($expression, $operands);
     }
 
+    /**
+     * @param int $numberRepeats
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($numberRepeats = 1)
     {
         return $this->createComponentFromXml('

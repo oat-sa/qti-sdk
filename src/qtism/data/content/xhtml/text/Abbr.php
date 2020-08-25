@@ -34,6 +34,9 @@ use qtism\data\content\SimpleInline;
  */
 class Abbr extends SimpleInline
 {
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'abbr';

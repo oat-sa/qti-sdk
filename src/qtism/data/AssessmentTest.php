@@ -142,6 +142,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     private $testFeedbacks;
 
+    /**
+     * AssessmentTest constructor.
+     *
+     * @param $identifier
+     * @param $title
+     * @param TestPartCollection|null $testParts
+     */
     public function __construct($identifier, $title, TestPartCollection $testParts = null)
     {
         $this->setObservers(new SplObjectStorage());
@@ -372,11 +379,29 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         $this->testFeedbacks = $testFeedbacks;
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentTest';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(
@@ -444,12 +469,12 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * on which path a shortcut between the prevItem and the targetItem can be used : if it's the case, a new
      * path, taking the shortcut, is created.
      *
-     * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known
-     * @param $prevItem AssessmentItem the last AssessmentItem that will be prompted before the branch.
-     * @param $targetItem AssessmentItem the first AssessmentItem that will be prompted after the branch.
-     * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
+     * @param array $paths of \qtism\data\AssessmentItemRefCollection The list of possible paths already known
+     * @param AssessmentItem $prevItem the last AssessmentItem that will be prompted before the branch.
+     * @param AssessmentItem $targetItem the first AssessmentItem that will be prompted after the branch.
+     * @param array $itemidToIndex of int A hashmap with identifier as keys, int array's indexes as values. It's
      * necessary to check for backward branching.
-     * @param $component QtiComponent The BranchRule's QtiComponent.
+     * @param QtiComponent $component The BranchRule's QtiComponent.
      * @return array of \qtism\data\AssessmentItemRefCollection Returns the paths that can be added to the possible
      * paths due to the new possibilities afforded by the branch.
      * @throws BranchRuleTargetException if backward or recursive branching is found.
@@ -772,17 +797,17 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * First analyse the branch, behave appropriate if special EXIT mention, finds where the branch can create
      * shortcuts in the paths and adds these to the possible paths.
      *
-     * @param $branch BranchRule The BranchRule to analyse.
-     * @param $component QtiComponent The BranchRule's QtiComponent.
-     * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known.
-     * @param $succsItem array of array of string For each AssessmentItem + the start (indexed as 0), a list of the
+     * @param BranchRule $branch The BranchRule to analyse.
+     * @param QtiComponent $component The BranchRule's QtiComponent.
+     * @param array $paths of \qtism\data\AssessmentItemRefCollection The list of possible paths already known.
+     * @param array $succsItem of array of string For each AssessmentItem + the start (indexed as 0), a list of the
      * identifiers of the possible successor after the AssessmentItem. Necessary to avoid duplicating branches thus
      * paths. Argument passed by reference
-     * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
+     * @param array $itemidToIndex of int A hashmap with identifier as keys, int array's indexes as values. It's
      * necessary to check for backward branching.
-     * @param $items AssessmentItemRefCollection The collection of all items in this AssessmentTest.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @param $testparts AssessmentTest The collection of all tests in this AssessmentTest.
+     * @param AssessmentItemRefCollection $items The collection of all items in this AssessmentTest.
+     * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
+     * @param AssessmentTest $testparts The collection of all tests in this AssessmentTest.
      * @return array of \qtism\data\AssessmentItemRefCollection The list of possible paths updated with the new
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.
@@ -969,6 +994,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return array of qtism\data\AssessmentItemRefCollection An array with all shortest possible paths
      * for this AssessmentTest.
+     * @throws BranchRuleTargetException
      */
     public function getShortestPaths()
     {
@@ -999,6 +1025,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return array of qtism\data\AssessmentItemRefCollection An array with all longest possible paths
      * for this AssessmentTest.
+     * @throws BranchRuleTargetException
      */
     public function getLongestPaths()
     {

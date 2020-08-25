@@ -16,6 +16,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IsNullProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class IsNullProcessorTest extends QtiSmTestCase
 {
     public function testWithEmptyString()
@@ -109,6 +114,10 @@ class IsNullProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     private function getFakeExpression()
     {
         return $this->createComponentFromXml('

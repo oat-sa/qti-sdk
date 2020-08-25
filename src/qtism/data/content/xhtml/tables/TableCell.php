@@ -347,6 +347,15 @@ abstract class TableCell extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return FlowCollection|\qtism\data\QtiComponentCollection
+     */
+    /**
+     * @return FlowCollection
+     */
+    /**
+     * @return FlowCollection
+     */
     public function getComponents()
     {
         return $this->getContent();

@@ -78,6 +78,9 @@ class TruncateProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Truncate::class;

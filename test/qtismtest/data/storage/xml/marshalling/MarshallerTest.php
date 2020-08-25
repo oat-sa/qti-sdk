@@ -14,6 +14,11 @@ use ReflectionClass;
 use RuntimeException;
 use stdClass;
 
+/**
+ * Class MarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class MarshallerTest extends QtiSmTestCase
 {
     public function testCradle()

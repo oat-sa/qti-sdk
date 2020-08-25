@@ -34,6 +34,11 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseVariableMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ResponseVariableMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

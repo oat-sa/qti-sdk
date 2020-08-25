@@ -90,6 +90,9 @@ class AssociationValidityConstraintMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'associationValidityConstraint';

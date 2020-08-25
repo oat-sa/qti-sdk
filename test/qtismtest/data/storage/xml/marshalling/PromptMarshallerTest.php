@@ -11,6 +11,11 @@ use qtism\data\content\xhtml\A;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PromptMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class PromptMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\data\content\RubricBlockRef;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RubricBlockRefTest
+ *
+ * @package qtismtest\data\content
+ */
 class RubricBlockRefTest extends QtiSmTestCase
 {
     public function testCreateWrongIdentifierType()

@@ -43,6 +43,7 @@ use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
+use ReflectionException;
 use SplObjectStorage;
 
 /**
@@ -169,6 +170,7 @@ class XmlCompactDocument extends XmlDocument
      * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
+     * @throws ReflectionException
      */
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1')
     {
@@ -362,6 +364,7 @@ class XmlCompactDocument extends XmlDocument
      * @param FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
      * @return XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
      * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
+     * @throws ReflectionException
      */
     protected static function resolveAssessmentSectionRef(XmlDocument $sourceDocument, AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
     {
@@ -384,6 +387,7 @@ class XmlCompactDocument extends XmlDocument
      * @param QtiComponent $documentComponent
      * @param string $uri
      * @throws XmlStorageException
+     * @throws marshalling\MarshallingException
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)
     {

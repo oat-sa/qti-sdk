@@ -143,11 +143,17 @@ abstract class GapChoice extends Choice implements AssociableChoice
         return $this->matchMin;
     }
 
+    /**
+     * @param IdentifierCollection $matchGroup
+     */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
         $this->matchGroup = $matchGroup;
     }
 
+    /**
+     * @return IdentifierCollection
+     */
     public function getMatchGroup()
     {
         return $this->matchGroup;

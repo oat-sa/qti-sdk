@@ -63,6 +63,9 @@ abstract class CustomOperatorProcessor extends OperatorProcessor
         parent::__construct($expression, $operands);
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return CustomOperator::class;

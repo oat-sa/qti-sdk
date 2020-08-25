@@ -182,6 +182,9 @@ class HotspotInteraction extends GraphicInteraction
         return $this->hotspotChoices;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -191,6 +194,9 @@ class HotspotInteraction extends GraphicInteraction
         );
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $array = [];
@@ -203,6 +209,9 @@ class HotspotInteraction extends GraphicInteraction
         return new QtiComponentCollection(array_merge($array, $this->getHotspotChoices()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'hotspotInteraction';

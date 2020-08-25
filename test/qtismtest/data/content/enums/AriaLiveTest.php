@@ -26,13 +26,24 @@ namespace qtismtest\data\content\enums;
 use qtism\data\content\enums\AriaLive;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class AriaLiveTest
+ *
+ * @package qtismtest\data\content\enums
+ */
 class AriaLiveTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return AriaLive::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -42,6 +53,9 @@ class AriaLiveTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -51,6 +65,9 @@ class AriaLiveTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

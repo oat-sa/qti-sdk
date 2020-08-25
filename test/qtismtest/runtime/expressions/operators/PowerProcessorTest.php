@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\PowerProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class PowerProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class PowerProcessorTest extends QtiSmTestCase
 {
     public function testPowerNormal()
@@ -142,6 +147,10 @@ class PowerProcessorTest extends QtiSmTestCase
         $processor = new PowerProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -100,6 +100,9 @@ class PowerProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Power::class;

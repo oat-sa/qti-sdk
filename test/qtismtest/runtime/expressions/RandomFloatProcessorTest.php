@@ -7,6 +7,11 @@ use qtism\runtime\expressions\RandomFloatProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RandomFloatProcessorTest
+ *
+ * @package qtismtest\runtime\expressions
+ */
 class RandomFloatProcessorTest extends QtiSmTestCase
 {
     public function testSimple()

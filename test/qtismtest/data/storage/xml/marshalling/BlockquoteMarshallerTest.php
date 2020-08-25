@@ -12,6 +12,11 @@ use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\text\H4;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BlockquoteMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class BlockquoteMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

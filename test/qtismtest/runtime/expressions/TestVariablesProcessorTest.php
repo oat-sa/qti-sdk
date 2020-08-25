@@ -11,12 +11,20 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\TestVariables;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\TestVariablesProcessor;
+use qtism\runtime\tests\AssessmentItemSessionException;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class TestVariablesProcessorTest
+ *
+ * @package qtismtest\runtime\expressions
+ */
 class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
@@ -24,6 +32,9 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
      *
      * @param TestVariables $expression
      * @param int $expectedResult
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
      */
     public function testTestVariables(TestVariables $expression, $expectedResult)
     {
@@ -109,6 +120,9 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
         $this->assertTrue($result->equals($expectedResult));
     }
 
+    /**
+     * @return array
+     */
     public function testVariablesProvider()
     {
         return [
@@ -144,6 +158,15 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param $variableIdentifier
+     * @param int $baseType
+     * @param string $weightIdentifier
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return TestVariables
+     */
     protected static function getTestVariables($variableIdentifier, $baseType = -1, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $testVariables = new TestVariables($variableIdentifier, $baseType, $weightIdentifier);

@@ -7,6 +7,11 @@ use DateTimeZone;
 use qtism\common\utils\Time as TimeUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TimeTest
+ *
+ * @package qtismtest\common\utils
+ */
 class TimeTest extends QtiSmTestCase
 {
     /**
@@ -28,6 +33,10 @@ class TimeTest extends QtiSmTestCase
         $this->assertEquals('2014-07-15 14:56:20', $utcTime->format('Y-m-d H:i:s'));
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function timeDiffSecondsProvider()
     {
         $tz = new DateTimeZone('UTC');

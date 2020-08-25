@@ -75,6 +75,9 @@ class FileSystemFile implements QtiFile
         $this->setPath($path);
     }
 
+    /**
+     * @param $path
+     */
     private function readInfo($path)
     {
         // Retrieve filename and mime type.
@@ -346,6 +349,7 @@ class FileSystemFile implements QtiFile
      * are considered to be identical if they have the same file name,
      * mime-type and data.
      *
+     * @param mixed $obj
      * @return bool
      */
     public function equals($obj)

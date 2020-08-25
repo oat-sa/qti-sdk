@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\data\content\Stylesheet;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StylesheetTest
+ *
+ * @package qtismtest\data\content
+ */
 class StylesheetTest extends QtiSmTestCase
 {
     public function testCreateWrongHref()

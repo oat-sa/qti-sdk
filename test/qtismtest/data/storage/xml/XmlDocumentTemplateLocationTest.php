@@ -7,6 +7,11 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlDocumentTemplateLocationTest
+ *
+ * @package qtismtest\data\storage\xml
+ */
 class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 {
     /**
@@ -36,6 +41,9 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         $this->assertEquals('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $responseProcessings[0]->getTemplate());
     }
 
+    /**
+     * @return array
+     */
     public function correctlyFormedProvider()
     {
         return [
@@ -73,6 +81,9 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         $doc->resolveTemplateLocation();
     }
 
+    /**
+     * @return array
+     */
     public function wrongTargetProvider()
     {
         return [
@@ -103,6 +114,9 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         $doc->resolveTemplateLocation();
     }
 
+    /**
+     * @return array
+     */
     public function invalidTargetNoValidationProvider()
     {
         return [
@@ -132,6 +146,9 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         $doc->resolveTemplateLocation(true);
     }
 
+    /**
+     * @return array
+     */
     public function invalidTargetValidationProvider()
     {
         return [

@@ -12,6 +12,11 @@ use qtism\data\TestPart;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\LibXmlErrorCollection;
 
+/**
+ * Class XmlAssessmentTestDocumentTest
+ *
+ * @package qtismtest\data\storage\xml
+ */
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {
     public function testLoad()
@@ -118,6 +123,9 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider includeAssessmentSectionRefsInTestPartsProvider
+     * @param string $file
+     * @param bool $filesystem
+     * @throws XmlStorageException
      */
     public function testIncludeAssessmentSectionRefsInTestParts($file, $filesystem)
     {
@@ -154,6 +162,9 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
 
+    /**
+     * @return array
+     */
     public function includeAssessmentSectionRefsInTestPartsProvider()
     {
         return [
@@ -164,6 +175,9 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider testIncludeAssessmentSectionRefsMixedProvider
+     * @param string $file
+     * @param bool $filesystem
+     * @throws XmlStorageException
      */
     public function testIncludeAssessmentSectionRefsMixed($file, $filesystem)
     {
@@ -209,6 +223,9 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this->assertInstanceOf(AssessmentItemRef::class, $section->getSectionParts()['Q04']);
     }
 
+    /**
+     * @return array
+     */
     public function testIncludeAssessmentSectionRefsMixedProvider()
     {
         return [
@@ -219,6 +236,10 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $uri
+     * @return string
+     */
     private static function decorateUri($uri)
     {
         return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;

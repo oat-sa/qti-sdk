@@ -9,6 +9,11 @@ use qtism\data\state\MapEntry;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class MapEntryMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class MapEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

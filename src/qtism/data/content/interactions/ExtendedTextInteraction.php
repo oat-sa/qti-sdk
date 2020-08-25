@@ -487,6 +487,15 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
         return $this->format;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -497,11 +506,29 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
         );
     }
 
+    /**
+     * @return \qtism\data\QtiComponentCollection
+     */
+    /**
+     * @return \qtism\data\QtiComponentCollection
+     */
+    /**
+     * @return \qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return parent::getComponents();
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'extendedTextInteraction';

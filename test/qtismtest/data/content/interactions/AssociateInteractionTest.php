@@ -8,6 +8,11 @@ use qtism\data\content\interactions\SimpleAssociableChoice;
 use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssociateInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class AssociateInteractionTest extends QtiSmTestCase
 {
     public function testCreateNoAssociableChoices()

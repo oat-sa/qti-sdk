@@ -148,6 +148,7 @@ class Utils
      * Extract qtism-if/qtism-endif statements around a given $node.
      *
      * @param DOMElement $node
+     * @param int $type
      * @return array An array of DOMComment objects.
      */
     public static function extractStatements(DOMElement $node, $type = self::EXTRACT_IF)

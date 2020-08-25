@@ -41,6 +41,8 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -61,6 +63,7 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      * @param QtiComponentCollection $children
      * @param AssessmentSection|null $assessmentSection
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)

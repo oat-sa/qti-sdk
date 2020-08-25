@@ -93,6 +93,9 @@ class IndexProcessor extends OperatorProcessor
         return $operands[0][$n];
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Index::class;

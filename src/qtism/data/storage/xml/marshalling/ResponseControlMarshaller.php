@@ -35,6 +35,7 @@ use qtism\data\rules\ResponseIf;
 use qtism\data\rules\ResponseRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * A Marshaller used to marshall/unmarshall ResponseCondition components.
@@ -45,8 +46,9 @@ class ResponseControlMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -77,6 +79,7 @@ class ResponseControlMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
@@ -151,6 +154,9 @@ class ResponseControlMarshaller extends RecursiveMarshaller
         return new ResponseRuleCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

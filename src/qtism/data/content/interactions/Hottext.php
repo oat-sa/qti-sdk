@@ -89,11 +89,17 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
         return $this->content;
     }
 
+    /**
+     * @return InlineStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'hottext';

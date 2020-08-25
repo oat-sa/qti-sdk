@@ -250,6 +250,15 @@ class ChoiceInteraction extends BlockInteraction
         return $this->orientation;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -259,11 +268,29 @@ class ChoiceInteraction extends BlockInteraction
         );
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'choiceInteraction';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();

@@ -14,6 +14,11 @@ use qtism\runtime\tests\TestResultsSubmission;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtismtest\runtime\tests\mocks\SimpleResultsSubmittableTestSessionFactory;
 
+/**
+ * Class AssessmentTestSessionResultsTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testTestResultsSubmissionNonLinearOutcomeProcessing()

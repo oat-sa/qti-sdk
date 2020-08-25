@@ -112,6 +112,9 @@ class OrderedProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Ordered::class;

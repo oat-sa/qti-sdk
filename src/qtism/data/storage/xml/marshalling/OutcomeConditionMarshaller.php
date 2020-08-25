@@ -172,6 +172,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

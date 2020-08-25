@@ -7,6 +7,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\rules\SetOutcomeValueProcessor;
 use RuntimeException;
 
+/**
+ * Class RuleProcessorFactoryTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class RuleProcessorFactoryTest extends QtiSmTestCase
 {
     public function testCreateProcessor()

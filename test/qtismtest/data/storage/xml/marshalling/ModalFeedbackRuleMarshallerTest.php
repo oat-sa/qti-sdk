@@ -8,6 +8,11 @@ use qtism\data\ShowHide;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ModalFeedbackRuleMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallNoTitle()

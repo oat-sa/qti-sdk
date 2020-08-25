@@ -8,6 +8,11 @@ use qtism\data\state\Weight;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class WeightMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class WeightMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -234,6 +234,15 @@ class PositionObjectInteraction extends Interaction
         return $this->object;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -243,11 +252,29 @@ class PositionObjectInteraction extends Interaction
         );
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'positionObjectInteraction';

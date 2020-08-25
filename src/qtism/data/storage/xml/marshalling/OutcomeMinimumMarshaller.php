@@ -79,6 +79,9 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'outcomeMinimum';

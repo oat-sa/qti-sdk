@@ -7,12 +7,18 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\MathFunctions;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class MathOperatorProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class MathOperatorProcessorTest extends QtiSmTestCase
 {
     /**
@@ -20,6 +26,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand operand in radians
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSin($operand, $expected)
     {
@@ -36,6 +43,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCos($operand, $expected)
     {
@@ -52,6 +60,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testTan($operand, $expected)
     {
@@ -68,6 +77,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSec($operand, $expected)
     {
@@ -84,6 +94,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCsc($operand, $expected)
     {
@@ -100,6 +111,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCot($operand, $expected)
     {
@@ -116,6 +128,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAsin($operand, $expected)
     {
@@ -133,6 +146,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $operand1
      * @param number $operand2
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAtan2($operand1, $operand2, $expected)
     {
@@ -149,6 +163,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAsec($operand, $expected)
     {
@@ -165,6 +180,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAcsc($operand, $expected)
     {
@@ -181,6 +197,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAcot($operand, $expected)
     {
@@ -197,6 +214,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLog($operand, $expected)
     {
@@ -213,6 +231,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLn($operand, $expected)
     {
@@ -229,6 +248,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSinh($operand, $expected)
     {
@@ -245,6 +265,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCosh($operand, $expected)
     {
@@ -261,6 +282,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testTanh($operand, $expected)
     {
@@ -277,6 +299,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSech($operand, $expected)
     {
@@ -293,6 +316,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCsch($operand, $expected)
     {
@@ -309,6 +333,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCoth($operand, $expected)
     {
@@ -325,6 +350,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAbs($operand, $expected)
     {
@@ -341,6 +367,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testExp($operand, $expected)
     {
@@ -357,6 +384,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSignum($operand, $expected)
     {
@@ -373,6 +401,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testFloor($operand, $expected)
     {
@@ -388,6 +417,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCeil($operand, $expected)
     {
@@ -403,6 +433,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testToDegrees($operand, $expected)
     {
@@ -419,6 +450,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testToRadians($operand, $expected)
     {
@@ -435,6 +467,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param $operand
      * @param $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAcos($operand, $expected)
     {
@@ -451,6 +484,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param $operand
      * @param $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAtan($operand, $expected)
     {
@@ -462,6 +496,10 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $this->assertTrue(!$result instanceof QtiInteger);
     }
 
+    /**
+     * @param $expected
+     * @param $value
+     */
     protected function assertEqualsRounded($expected, $value)
     {
         if (is_null($expected)) {
@@ -543,6 +581,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
+    /**
+     * @return array
+     */
     public function sinProvider()
     {
         return [
@@ -551,6 +592,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function cosProvider()
     {
         return [
@@ -559,6 +603,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function tanProvider()
     {
         return [
@@ -567,6 +614,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function secProvider()
     {
         return [
@@ -574,6 +624,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function cscProvider()
     {
         return [
@@ -581,6 +634,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function cotProvider()
     {
         return [
@@ -588,6 +644,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function asinProvider()
     {
         return [
@@ -597,6 +656,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function acosProvider()
     {
         return [
@@ -604,6 +666,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function atanProvider()
     {
         return [
@@ -611,6 +676,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function atan2Provider()
     {
         $data = [
@@ -640,6 +708,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         return $data;
     }
 
+    /**
+     * @return array
+     */
     public function asecProvider()
     {
         return [
@@ -650,6 +721,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function acscProvider()
     {
         return [
@@ -659,6 +733,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function acotProvider()
     {
         return [
@@ -667,6 +744,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sinhProvider()
     {
         return [
@@ -678,6 +758,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function coshProvider()
     {
         return [
@@ -690,6 +773,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function tanhProvider()
     {
         return [
@@ -701,6 +787,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sechProvider()
     {
         return [
@@ -713,6 +802,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function cschProvider()
     {
         return [
@@ -725,6 +817,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function cothProvider()
     {
         return [
@@ -738,6 +833,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function logProvider()
     {
         return [
@@ -748,6 +846,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function lnProvider()
     {
         return [
@@ -758,6 +859,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function expProvider()
     {
         return [
@@ -770,6 +874,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function absProvider()
     {
         return [
@@ -786,6 +893,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function signumProvider()
     {
         return [
@@ -800,6 +910,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function floorProvider()
     {
         return [
@@ -815,6 +928,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function ceilProvider()
     {
         return [
@@ -830,6 +946,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function toDegreesProvider()
     {
         return [
@@ -843,6 +962,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function toRadiansProvider()
     {
         return [
@@ -858,6 +980,11 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $constant
+     * @return \qtism\data\QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression($constant)
     {
         return $this->createComponentFromXml('

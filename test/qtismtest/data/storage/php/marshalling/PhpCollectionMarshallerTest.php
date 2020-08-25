@@ -7,6 +7,11 @@ use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 
+/**
+ * Class PhpCollectionMarshallerTest
+ *
+ * @package qtismtest\data\storage\php\marshalling
+ */
 class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     public function testEmptyCollection()

@@ -73,6 +73,16 @@ class MatchInteraction extends BlockInteraction
      */
     private $simpleMatchSets;
 
+    /**
+     * MatchInteraction constructor.
+     *
+     * @param $responseIdentifier
+     * @param SimpleMatchSetCollection $simpleMatchSets
+     * @param string $id
+     * @param string $class
+     * @param string $lang
+     * @param string $label
+     */
     public function __construct($responseIdentifier, SimpleMatchSetCollection $simpleMatchSets, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -242,6 +252,15 @@ class MatchInteraction extends BlockInteraction
         return $matchSets[1];
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -263,6 +282,15 @@ class MatchInteraction extends BlockInteraction
         return $responseValidityConstraint;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -270,6 +298,15 @@ class MatchInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleMatchSets()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'matchInteraction';

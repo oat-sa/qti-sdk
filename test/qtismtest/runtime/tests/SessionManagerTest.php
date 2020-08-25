@@ -9,6 +9,11 @@ use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\tests\AssessmentTestSession;
 
+/**
+ * Class SessionManagerTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class SessionManagerTest extends QtiSmTestCase
 {
     private $test;

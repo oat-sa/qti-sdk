@@ -13,6 +13,11 @@ use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetDefaultValueProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetDefaultValueProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class SetDefaultValueProcessorTest extends QtiSmTestCase
 {
     public function testDefaultValueOnResponseSimple()

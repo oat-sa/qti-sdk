@@ -10,6 +10,11 @@ use qtism\data\state\MapEntryCollection;
 use qtism\data\state\Mapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MappingMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class MappingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

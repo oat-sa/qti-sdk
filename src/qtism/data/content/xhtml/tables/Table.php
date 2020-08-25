@@ -307,6 +307,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
         return $this->tbodies;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $array = [];
@@ -330,6 +333,15 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
         return new QtiComponentCollection($array);
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'table';

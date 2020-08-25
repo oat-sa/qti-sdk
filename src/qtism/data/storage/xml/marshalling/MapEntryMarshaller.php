@@ -137,6 +137,9 @@ class MapEntryMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'mapEntry';

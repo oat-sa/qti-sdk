@@ -12,6 +12,11 @@ use qtism\data\content\xhtml\text\P;
 use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AtomicBlockMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AtomicBlockMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallP()

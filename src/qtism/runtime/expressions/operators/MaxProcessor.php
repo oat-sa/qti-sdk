@@ -101,6 +101,9 @@ class MaxProcessor extends OperatorProcessor
         return ($integerCount === $valueCount) ? new QtiInteger((int)$max) : new QtiFloat((float)$max);
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Max::class;

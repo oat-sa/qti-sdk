@@ -36,6 +36,11 @@ use qtism\data\TestPartCollection;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentTestMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMaximal()

@@ -7,6 +7,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\BaseValueProcessor;
 use RuntimeException;
 
+/**
+ * Class ExpressionProcessorFactoryTest
+ *
+ * @package qtismtest\runtime\expressions
+ */
 class ExpressionProcessorFactoryTest extends QtiSmTestCase
 {
     public function testCreateProcessor()

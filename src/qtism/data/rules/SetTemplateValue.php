@@ -119,11 +119,17 @@ class SetTemplateValue extends QtiComponent implements TemplateRule
         return $this->expression;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'setTemplateValue';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getExpression()]);

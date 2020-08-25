@@ -125,6 +125,9 @@ class MatchTableEntryMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'matchTableEntry';

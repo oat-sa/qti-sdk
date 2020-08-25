@@ -7,6 +7,11 @@ use DOMElement;
 use qtism\data\expressions\RandomInteger;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RandomIntegerMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class RandomIntegerMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

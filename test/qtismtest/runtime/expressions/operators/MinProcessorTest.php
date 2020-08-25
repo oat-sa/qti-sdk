@@ -14,6 +14,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MinProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class MinProcessorTest extends QtiSmTestCase
 {
     public function testWrongBaseType()
@@ -102,6 +107,10 @@ class MinProcessorTest extends QtiSmTestCase
         $this->assertEquals(1.0, $result->getValue());
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

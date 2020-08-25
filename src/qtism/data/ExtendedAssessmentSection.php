@@ -99,6 +99,9 @@ class ExtendedAssessmentSection extends AssessmentSection
         return $extended;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();

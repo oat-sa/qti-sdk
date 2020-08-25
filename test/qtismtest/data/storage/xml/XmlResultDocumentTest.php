@@ -33,6 +33,11 @@ use qtism\data\storage\xml\XmlResultDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlResultDocumentTest
+ *
+ * @package qtismtest\data\storage\xml
+ */
 class XmlResultDocumentTest extends QtiSmTestCase
 {
     public function testLoad()
@@ -107,6 +112,9 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $xmlDoc->getVersion());
     }
 
+    /**
+     * @return array
+     */
     public function inferVersionAndSchemaValidateProvider(): array
     {
         return [
@@ -145,6 +153,9 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
     }
 
+    /**
+     * @return array
+     */
     public function changeVersionProvider(): array
     {
         $path = self::samplesDir() . 'results/simple-assessment-result';

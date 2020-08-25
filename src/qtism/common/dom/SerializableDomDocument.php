@@ -34,6 +34,9 @@ class SerializableDomDocument extends DOMDocument
 {
     private $xmlData;
 
+    /**
+     * @return array
+     */
     public function __sleep()
     {
         $this->xmlData = $this->saveXML();

@@ -75,6 +75,9 @@ class AndProcessor extends OperatorProcessor
         return new QtiBoolean(true);
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return AndOperator::class;

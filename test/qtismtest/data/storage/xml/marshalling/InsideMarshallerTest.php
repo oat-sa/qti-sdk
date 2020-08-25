@@ -11,6 +11,11 @@ use qtism\data\expressions\operators\Inside;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InsideMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class InsideMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

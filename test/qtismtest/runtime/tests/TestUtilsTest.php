@@ -17,16 +17,27 @@ use qtism\runtime\tests\Utils as TestUtils;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class TestUtilsTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class TestUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider isResponseValidProvider
+     * @param $expected
+     * @param QtiDatatype|null $response
+     * @param ResponseValidityConstraint $constraint
      */
-    public function testIsResponseValid($expected, QtiDatatype $response = null, ResponseValidityConstraint $constraint)
+    public function testIsResponseValid($expected, $response, ResponseValidityConstraint $constraint)
     {
         $this->assertEquals($expected, TestUtils::isResponseValid($response, $constraint));
     }
 
+    /**
+     * @return array
+     */
     public function isResponseValidProvider()
     {
         $tests = [

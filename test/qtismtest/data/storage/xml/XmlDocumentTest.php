@@ -6,6 +6,7 @@ use DOMDocument;
 use InvalidArgumentException;
 use LogicException;
 use qtism\data\AssessmentItem;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
@@ -19,6 +20,11 @@ use qtism\data\content\TemplateBlock;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\interactions\Prompt;
 
+/**
+ * Class XmlDocumentTest
+ *
+ * @package qtismtest\data\storage\xml
+ */
 class XmlDocumentTest extends QtiSmTestCase
 {
     public function testRubricBlockRuptureNoValidation()
@@ -489,8 +495,11 @@ class XmlDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @throws XmlStorageException
      * @dataProvider saveNoComponentProvider
+     * @param string $file
+     * @param bool $filesystem
+     * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testSaveNoComponent($file, $filesystem)
     {
@@ -506,6 +515,9 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->save($file);
     }
 
+    /**
+     * @return array
+     */
     public function saveNoComponentProvider()
     {
         return [
@@ -592,6 +604,9 @@ class XmlDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider validInferQTIVersionProvider
+     * @param string $file
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testInferQTIVersionValid($file, $expectedVersion)
     {
@@ -600,6 +615,9 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $dom->getVersion());
     }
 
+    /**
+     * @return array
+     */
     public function validInferQTIVersionProvider()
     {
         return [
@@ -644,6 +662,9 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
     }
 
+    /**
+     * @return array
+     */
     public function changeVersionProvider(): array
     {
         $path = self::samplesDir() . 'ims/tests/empty_tests/empty_test_';

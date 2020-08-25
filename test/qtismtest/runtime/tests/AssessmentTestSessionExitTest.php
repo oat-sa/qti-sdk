@@ -11,6 +11,11 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionExitTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testExitSection()

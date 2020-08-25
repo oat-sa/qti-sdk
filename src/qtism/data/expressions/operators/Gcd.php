@@ -52,6 +52,9 @@ class Gcd extends Operator implements Pure
         parent::__construct($expressions, 1, -1, [Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED], [OperatorBaseType::INTEGER]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'gcd';

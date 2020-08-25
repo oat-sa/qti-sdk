@@ -39,11 +39,17 @@ use qtism\data\rules\OutcomeCondition;
  */
 class OutcomeConditionProcessor extends AbstractConditionProcessor
 {
+    /**
+     * @return string
+     */
     public function getQtiNature()
     {
         return 'outcome';
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return OutcomeCondition::class;

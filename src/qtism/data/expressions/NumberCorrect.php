@@ -32,6 +32,9 @@ namespace qtism\data\expressions;
  */
 class NumberCorrect extends ItemSubset
 {
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'numberCorrect';

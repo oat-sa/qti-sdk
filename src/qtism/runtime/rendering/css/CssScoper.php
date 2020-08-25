@@ -385,11 +385,17 @@ class CssScoper implements Renderable
         $this->mapQtiPseudoClasses = $mapQtiPseudoClasses;
     }
 
+    /**
+     * @param $webComponentFriendly
+     */
     public function setWebComponentFriendly($webComponentFriendly)
     {
         $this->webComponentFriendly = $webComponentFriendly;
     }
 
+    /**
+     * @return bool
+     */
     public function isWebComponentFriendly()
     {
         return $this->webComponentFriendly;

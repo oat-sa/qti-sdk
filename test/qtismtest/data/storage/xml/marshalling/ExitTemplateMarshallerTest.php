@@ -6,6 +6,11 @@ use DOMDocument;
 use qtism\data\rules\ExitTemplate;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExitTemplateMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ExitTemplateMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

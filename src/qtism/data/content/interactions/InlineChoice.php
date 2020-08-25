@@ -78,11 +78,17 @@ class InlineChoice extends Choice
         return $this->content;
     }
 
+    /**
+     * @return TextOrVariableCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'inlineChoice';

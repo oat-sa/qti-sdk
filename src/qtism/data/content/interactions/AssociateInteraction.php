@@ -240,6 +240,15 @@ class AssociateInteraction extends BlockInteraction
         return $this->simpleAssociableChoices;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -262,6 +271,15 @@ class AssociateInteraction extends BlockInteraction
         return $responseValidityConstraint;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -269,6 +287,15 @@ class AssociateInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleAssociableChoices()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'associateInteraction';

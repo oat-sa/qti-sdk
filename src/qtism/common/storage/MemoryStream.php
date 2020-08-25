@@ -123,6 +123,9 @@ class MemoryStream implements IStream
         return $this->length;
     }
 
+    /**
+     * @param $i
+     */
     protected function incrementLength($i)
     {
         $this->length += $i;

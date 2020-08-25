@@ -6,6 +6,11 @@ use qtism\runtime\rules\ExitTestProcessor;
 use qtism\runtime\rules\RuleProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExitTestProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class ExitTestProcessorTest extends QtiSmTestCase
 {
     public function testExitTest()

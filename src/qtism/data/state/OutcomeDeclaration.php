@@ -347,11 +347,29 @@ class OutcomeDeclaration extends VariableDeclaration
         $this->lookupTable = $lookupTable;
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'outcomeDeclaration';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = parent::getComponents()->getArrayCopy();

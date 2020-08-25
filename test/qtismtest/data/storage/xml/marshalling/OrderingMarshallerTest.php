@@ -7,6 +7,11 @@ use DOMElement;
 use qtism\data\rules\Ordering;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderingMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OrderingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -10,8 +10,17 @@ use qtism\data\AssessmentItemRef;
 use qtism\data\SectionPartCollection;
 use qtism\data\content\RubricBlockCollection;
 
+/**
+ * Class XmlAssessmentSectionDocumentTest
+ *
+ * @package qtismtest\data\storage\xml
+ */
 class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
 {
+    /**
+     * @param AssessmentSection|null $assessmentSection
+     * @throws \qtism\data\storage\xml\XmlStorageException
+     */
     public function testLoad(AssessmentSection $assessmentSection = null)
     {
         if (empty($assessmentSection)) {

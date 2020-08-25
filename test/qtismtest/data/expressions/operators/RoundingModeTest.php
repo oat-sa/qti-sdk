@@ -5,13 +5,24 @@ namespace qtismtest\data\expressions\operators;
 use qtism\data\expressions\operators\RoundingMode;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class RoundingModeTest
+ *
+ * @package qtismtest\data\expressions\operators
+ */
 class RoundingModeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return RoundingMode::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -20,6 +31,9 @@ class RoundingModeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -28,6 +42,9 @@ class RoundingModeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

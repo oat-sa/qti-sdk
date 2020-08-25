@@ -14,6 +14,11 @@ use qtism\data\state\ResponseDeclarationCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class AssessmentItemMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AssessmentItemMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

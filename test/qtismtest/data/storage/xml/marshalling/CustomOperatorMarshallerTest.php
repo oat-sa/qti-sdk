@@ -11,6 +11,11 @@ use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CustomOperatorMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class CustomOperatorMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallNoLaxContent()

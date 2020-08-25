@@ -56,6 +56,9 @@ class DurationLT extends Operator implements Pure
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::DURATION]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'durationLT';

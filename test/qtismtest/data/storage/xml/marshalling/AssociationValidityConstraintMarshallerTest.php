@@ -8,6 +8,11 @@ use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class AssociationValidityConstraintMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallSimple()

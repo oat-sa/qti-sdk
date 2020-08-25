@@ -5,13 +5,24 @@ namespace qtismtest\data\content\interactions;
 use qtism\data\content\interactions\TextFormat;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class TextFormatTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class TextFormatTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return TextFormat::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -21,6 +32,9 @@ class TextFormatTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -30,6 +44,9 @@ class TextFormatTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

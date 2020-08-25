@@ -9,6 +9,11 @@ use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ShufflingTest
+ *
+ * @package qtismtest\data\state
+ */
 class ShufflingTest extends QtiSmTestCase
 {
     public function testShufflingShuffle()
@@ -62,6 +67,7 @@ class ShufflingTest extends QtiSmTestCase
 
     /**
      * @dataProvider getIdentifierAtWithInvalidIndexesProvider
+     * @param mixed $index
      */
     public function testGetIdentifierAtWithInvalidIndexes($index)
     {
@@ -75,6 +81,9 @@ class ShufflingTest extends QtiSmTestCase
         $identifier = $shuffling->getIdentifierAt($index);
     }
 
+    /**
+     * @return array
+     */
     public function getIdentifierAtWithInvalidIndexesProvider()
     {
         return [

@@ -36,7 +36,6 @@ class Qti222MarshallerFactory extends Qti221MarshallerFactory
      * @param ReflectionClass $class
      * @param array $args
      * @return mixed
-     * @throws \ReflectionException
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

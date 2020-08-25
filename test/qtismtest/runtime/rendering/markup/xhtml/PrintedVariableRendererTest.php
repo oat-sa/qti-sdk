@@ -12,6 +12,11 @@ use qtism\runtime\rendering\markup\xhtml\PrintedVariableRenderer;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PrintedVariableRendererTest
+ *
+ * @package qtismtest\runtime\rendering\markup\xhtml
+ */
 class PrintedVariableRendererTest extends QtiSmTestCase
 {
     public function testRenderContextStatic()

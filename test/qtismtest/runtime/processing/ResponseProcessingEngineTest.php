@@ -13,6 +13,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseProcessingEngineTest
+ *
+ * @package qtismtest\runtime\processing
+ */
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {
     public function testResponseProcessingMatchCorrect()

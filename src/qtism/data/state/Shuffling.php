@@ -58,6 +58,7 @@ class Shuffling extends QtiComponent
     /**
      * Create a new Shuffling object.
      *
+     * @param string $responseIdentifier
      * @param ShufflingGroupCollection $shufflingGroups
      * @throws InvalidArgumentException If $shufflingGroups does not contain 1 to 2 ShufflingGroup objects.
      */
@@ -200,11 +201,17 @@ class Shuffling extends QtiComponent
         $this->setShufflingGroups($newGroups);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'shuffling';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getShufflingGroups()->getArrayCopy());

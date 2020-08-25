@@ -31,6 +31,9 @@ namespace qtism\data\expressions;
  */
 class NullValue extends Expression implements Pure
 {
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'null';

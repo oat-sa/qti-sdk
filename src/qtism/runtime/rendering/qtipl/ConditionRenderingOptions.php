@@ -52,7 +52,7 @@ class ConditionRenderingOptions
     /**
      * Creates a new instance of a ConditionRenderingOptions.
      *
-     * @param $indentation int The number spaces of indentation in an if/else loop
+     * @param int $indentation The number spaces of indentation in an if/else loop
      */
 
     public function __construct($indentation)

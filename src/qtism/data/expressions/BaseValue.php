@@ -110,6 +110,9 @@ class BaseValue extends Expression implements Pure
         $this->value = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'baseValue';

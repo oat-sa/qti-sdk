@@ -8,6 +8,11 @@ use qtism\data\state\MapEntryCollection;
 use qtism\data\state\Mapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MappingTest
+ *
+ * @package qtismtest\data\state
+ */
 class MappingTest extends QtiSmTestCase
 {
     public function testCreateNoMapEntries()

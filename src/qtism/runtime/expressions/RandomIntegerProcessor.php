@@ -77,6 +77,9 @@ class RandomIntegerProcessor extends ExpressionProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return RandomInteger::class;

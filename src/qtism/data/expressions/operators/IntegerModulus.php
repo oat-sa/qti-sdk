@@ -48,6 +48,9 @@ class IntegerModulus extends Operator implements Pure
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'integerModulus';

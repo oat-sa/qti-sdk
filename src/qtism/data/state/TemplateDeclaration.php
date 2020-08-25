@@ -63,6 +63,14 @@ class TemplateDeclaration extends VariableDeclaration
      */
     private $mathVariable = false;
 
+    /**
+     * TemplateDeclaration constructor.
+     *
+     * @param $identifier
+     * @param int $baseType
+     * @param int $cardinality
+     * @param DefaultValue|null $defaultValue
+     */
     public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
@@ -124,6 +132,9 @@ class TemplateDeclaration extends VariableDeclaration
         return $this->mathVariable;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateDeclaration';

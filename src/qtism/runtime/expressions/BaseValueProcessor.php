@@ -47,6 +47,9 @@ class BaseValueProcessor extends ExpressionProcessor
         return RuntimeUtils::valueToRuntime($expression->getValue(), $expression->getBaseType());
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return BaseValue::class;

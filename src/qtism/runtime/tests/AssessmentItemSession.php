@@ -24,6 +24,7 @@
 namespace qtism\runtime\tests;
 
 use DateTime;
+use Exception;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use qtism\common\datatypes\QtiBoolean;
@@ -42,6 +43,7 @@ use qtism\data\ShowHide;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ShufflingCollection;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\common\OutcomeVariable;
@@ -758,6 +760,7 @@ class AssessmentItemSession extends State
      * @param bool $responseProcessing (optional) Whether to execute the responseProcessing or not.
      * @param bool $forceLateSubmission (optional) Force the acceptance of late response submission. In this case, responses that are received out of the time frame indicated by the time limits in force are accepted anyway.
      * @throws AssessmentItemSessionException If the time limits in force are not respected, an error occurs during response processing, a state violation occurs.
+     * @throws PhpStorageException
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false)
     {
@@ -954,6 +957,7 @@ class AssessmentItemSession extends State
      * call to the beginCandidateSession() method.
      *
      * @throws AssessmentItemSessionException If a state violation occurs.
+     * @throws PhpStorageException
      */
     public function endCandidateSession()
     {
@@ -972,7 +976,8 @@ class AssessmentItemSession extends State
     /**
      * Get the time that remains to the candidate to submit its responses.
      *
-     * @return false|QtiDuration A Duration object or false if there is no time limit.
+     * @return QtiDuration|false A Duration object or false if there is no time limit.
+     * @throws Exception
      */
     public function getRemainingTime()
     {
@@ -1375,6 +1380,7 @@ class AssessmentItemSession extends State
      * This method checks whether or not a set of $responses are all valid against the Response Validity Constraints
      * in force for the item managed by the AssessmentItemSession.
      *
+     * @param State $responses
      * @throws AssessmentItemSessionException In case of a Response Validity Constraint is not respected.
      */
     public function checkResponseValidityConstraints(State $responses)

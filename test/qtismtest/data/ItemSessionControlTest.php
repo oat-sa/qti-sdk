@@ -5,6 +5,11 @@ namespace qtismtest\data;
 use qtism\data\ItemSessionControl;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ItemSessionControlTest
+ *
+ * @package qtismtest\data
+ */
 class ItemSessionControlTest extends QtiSmTestCase
 {
     public function testIsDefault()

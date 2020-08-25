@@ -13,6 +13,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ImplodeProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators\custom
+ */
 class ImplodeProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperandsOne()
@@ -88,6 +93,10 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $this->assertEquals('Hello-World', $result->getValue());
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

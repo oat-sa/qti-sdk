@@ -46,6 +46,9 @@ class IsNull extends Operator implements Pure
         parent::__construct($expressions, 1, 1, [OperatorCardinality::ANY], [OperatorBaseType::ANY]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'isNull';

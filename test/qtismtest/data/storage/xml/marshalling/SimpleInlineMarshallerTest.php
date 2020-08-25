@@ -19,6 +19,11 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class SimpleInlineMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class SimpleInlineMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

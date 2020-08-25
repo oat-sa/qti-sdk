@@ -6,6 +6,11 @@ use qtism\common\utils\Php as PhpUtils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class PhpTest
+ *
+ * @package qtismtest\common\utils
+ */
 class PhpTest extends QtiSmTestCase
 {
     /**
@@ -19,6 +24,9 @@ class PhpTest extends QtiSmTestCase
         $this->assertEquals($expected, PhpUtils::displayType($value));
     }
 
+    /**
+     * @return array
+     */
     public function displayTypeProvider()
     {
         return [

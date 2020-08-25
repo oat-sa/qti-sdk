@@ -39,11 +39,17 @@ use qtism\data\rules\ResponseCondition;
  */
 class ResponseConditionProcessor extends AbstractConditionProcessor
 {
+    /**
+     * @return string
+     */
     public function getQtiNature()
     {
         return 'response';
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return ResponseCondition::class;

@@ -145,6 +145,9 @@ class EqualProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Equal::class;

@@ -15,6 +15,11 @@ use qtism\runtime\expressions\operators\OrderedProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class OrderedProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class OrderedProcessorTest extends QtiSmTestCase
 {
     public function testNull()
@@ -159,6 +164,10 @@ class OrderedProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

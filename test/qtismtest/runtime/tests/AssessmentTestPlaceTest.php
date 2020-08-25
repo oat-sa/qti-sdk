@@ -5,13 +5,24 @@ namespace qtismtest\runtime\tests;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class AssessmentTestPlaceTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestPlaceTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return AssessmentTestPlace::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -22,6 +33,9 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -32,6 +46,9 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

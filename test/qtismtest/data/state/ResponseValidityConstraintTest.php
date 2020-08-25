@@ -8,6 +8,11 @@ use qtism\data\state\AssociationValidityConstraintCollection;
 use qtism\data\state\ResponseValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseValidityConstraintTest
+ *
+ * @package qtismtest\data\state
+ */
 class ResponseValidityConstraintTest extends QtiSmTestCase
 {
     /**
@@ -15,6 +20,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      *
      * @param int $minConstraint
      * @param int $maxConstraint
+     * @param string $patternMask
      */
     public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '')
     {
@@ -25,6 +31,9 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
         $this->assertEquals($patternMask, $responseValidityConstraint->getPatternMask());
     }
 
+    /**
+     * @return array
+     */
     public function successfulInstantiationBasicProvider()
     {
         return [
@@ -44,6 +53,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      * @param int $minConstraint
      * @param int $maxConstraint
      * @param string $msg
+     * @param string $patternMask
      */
     public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')
     {
@@ -52,6 +62,9 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
         $responseValidityConstraint = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
     }
 
+    /**
+     * @return array
+     */
     public function unsuccessfulInstantiationProvider()
     {
         return [

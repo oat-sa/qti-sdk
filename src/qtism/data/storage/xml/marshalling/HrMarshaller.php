@@ -37,7 +37,6 @@ class HrMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Hr object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -72,6 +71,9 @@ class HrMarshaller extends Marshaller
         return $component;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'hr';

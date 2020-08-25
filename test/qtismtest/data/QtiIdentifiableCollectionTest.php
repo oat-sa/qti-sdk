@@ -6,6 +6,11 @@ use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiIdentifiableCollectionTest
+ *
+ * @package qtismtest\data
+ */
 class QtiIdentifiableCollectionTest extends QtiSmTestCase
 {
     public function testWithWeights()

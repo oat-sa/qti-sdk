@@ -90,6 +90,9 @@ class Colgroup extends BodyElement
         return $this->span;
     }
 
+    /**
+     * @return ColCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
@@ -115,6 +118,9 @@ class Colgroup extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'colgroup';

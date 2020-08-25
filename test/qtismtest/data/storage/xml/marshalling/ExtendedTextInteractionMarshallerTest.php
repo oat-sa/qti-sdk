@@ -7,6 +7,11 @@ use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtism\data\content\interactions\TextFormat;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedTextInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal21()

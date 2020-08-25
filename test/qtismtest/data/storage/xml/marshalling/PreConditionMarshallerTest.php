@@ -9,6 +9,11 @@ use qtism\data\expressions\BaseValue;
 use qtism\data\rules\PreCondition;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PreConditionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class PreConditionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

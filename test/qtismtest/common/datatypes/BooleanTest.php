@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BooleanTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class BooleanTest extends QtiSmTestCase
 {
     public function testWrongValue()

@@ -10,6 +10,11 @@ use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GraphicOrderInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class GraphicOrderInteractionTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughHotspotChoices()

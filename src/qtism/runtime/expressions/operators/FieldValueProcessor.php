@@ -56,6 +56,9 @@ class FieldValueProcessor extends OperatorProcessor
         return $operands[0][$fieldIdentifier];
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return FieldValue::class;

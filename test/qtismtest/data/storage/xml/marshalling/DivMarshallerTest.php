@@ -15,6 +15,11 @@ use qtism\data\content\xhtml\text\P;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DivMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class DivMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

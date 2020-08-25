@@ -11,6 +11,11 @@ use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MathOperatorMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class MathOperatorMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

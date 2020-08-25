@@ -8,6 +8,11 @@ use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ChoiceInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class ChoiceInteractionTest extends QtiSmTestCase
 {
     public function testCreateEmptyChoiceList()

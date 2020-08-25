@@ -23,8 +23,11 @@
 
 namespace qtismtest\data\storage\php;
 
+use qtism\common\beans\BeanException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\xhtml\text\Span;
@@ -33,10 +36,12 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\NavigationMode;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\SubmissionMode;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItem;
@@ -48,9 +53,19 @@ use qtism\data\AssessmentTest;
 use qtism\data\rules\Selection;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\AssessmentItemRef;
+use ReflectionException;
 
+/**
+ * Class PhpDocumentTest
+ *
+ * @package qtismtest\data\storage\php
+ */
 class PhpDocumentTest extends QtiSmTestCase
 {
+    /**
+     * @param string $path
+     * @throws PhpStorageException
+     */
     public function testSimpleLoad($path = '')
     {
         $doc = new PhpDocument();
@@ -223,6 +238,13 @@ class PhpDocumentTest extends QtiSmTestCase
      * @dataProvider loadTestSamplesDataProvider
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.
+     * @throws PhpStorageException
+     * @throws XmlStorageException
+     * @throws ReflectionException
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
+     * @throws PhpMarshallingException
      */
     public function testLoadTestSamples($testUri, $rootType)
     {
@@ -265,6 +287,9 @@ class PhpDocumentTest extends QtiSmTestCase
         $this->assertFalse(file_exists($file));
     }
 
+    /**
+     * @return array
+     */
     public function loadTestSamplesDataProvider()
     {
         return [
@@ -374,7 +399,12 @@ class PhpDocumentTest extends QtiSmTestCase
     }
 
     /**
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
      * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws StreamAccessException
      */
     public function testBodyElement()
     {

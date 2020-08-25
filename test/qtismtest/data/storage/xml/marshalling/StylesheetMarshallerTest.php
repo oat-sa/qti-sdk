@@ -7,6 +7,11 @@ use DOMElement;
 use qtism\data\content\Stylesheet;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StylesheetMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class StylesheetMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallOne()

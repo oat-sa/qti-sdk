@@ -12,6 +12,11 @@ use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VariableDeclarationMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class VariableDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

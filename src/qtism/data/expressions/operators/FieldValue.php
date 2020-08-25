@@ -81,6 +81,9 @@ class FieldValue extends Operator implements Pure
         return $this->fieldIdentifier;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'fieldValue';

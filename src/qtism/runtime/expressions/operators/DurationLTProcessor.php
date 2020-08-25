@@ -75,6 +75,9 @@ class DurationLTProcessor extends OperatorProcessor
         return new QtiBoolean($operands[0]->shorterThan($operands[1]));
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return DurationLT::class;

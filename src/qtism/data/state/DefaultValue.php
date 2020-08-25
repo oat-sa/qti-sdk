@@ -120,11 +120,17 @@ class DefaultValue extends QtiComponent
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'defaultValue';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getValues()->getArrayCopy());

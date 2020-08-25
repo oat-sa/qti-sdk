@@ -94,6 +94,9 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
         return $this->getPrompt() !== null;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $array = [];

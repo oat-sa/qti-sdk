@@ -100,6 +100,9 @@ class ItemBody extends BodyElement
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'itemBody';

@@ -5,6 +5,11 @@ namespace qtismtest\data\storage\php;
 use qtism\data\storage\php\Utils as PhpUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PhpUtilsTest
+ *
+ * @package qtismtest\data\storage\php
+ */
 class PhpUtilsTest extends QtiSmTestCase
 {
     /**
@@ -17,6 +22,9 @@ class PhpUtilsTest extends QtiSmTestCase
         $this->assertEquals($expected, PhpUtils::doubleQuotedPhpString($input));
     }
 
+    /**
+     * @return array
+     */
     public function doubleQuotedPhpStringDataProvider()
     {
         return [

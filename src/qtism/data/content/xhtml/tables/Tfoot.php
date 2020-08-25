@@ -81,11 +81,17 @@ class Tfoot extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return TrCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'tfoot';

@@ -88,6 +88,9 @@ class SelectionMarshaller extends Marshaller
         return $object;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'selection';

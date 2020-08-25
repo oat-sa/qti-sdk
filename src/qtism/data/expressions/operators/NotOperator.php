@@ -46,6 +46,9 @@ class NotOperator extends Operator implements Pure
         parent::__construct($expressions, 1, 1, [OperatorCardinality::SINGLE], [OperatorBaseType::BOOLEAN]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'not';

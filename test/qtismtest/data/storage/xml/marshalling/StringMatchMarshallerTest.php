@@ -10,6 +10,11 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\StringMatch;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StringMatchMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class StringMatchMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -11,6 +11,11 @@ use qtism\runtime\rules\SetCorrectResponseProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 
+/**
+ * Class SetCorrectValueProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class SetCorrectValueProcessorTest extends QtiSmTestCase
 {
     public function testSetCorrectResponseSimple()

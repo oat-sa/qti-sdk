@@ -6,12 +6,15 @@ use InvalidArgumentException;
 use qtism\data\state\AssociationValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssociationValidityConstraintTest
+ *
+ * @package qtismtest\data\state
+ */
 class AssociationValidityConstraintTest extends QtiSmTestCase
 {
     /**
      * @dataProvider successfulInstantiationProvider
-     *
-     * @param int $identifier
      * @param int $minConstraint
      * @param int $maxConstraint
      */
@@ -23,6 +26,9 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
         $this->assertEquals($maxConstraint, $associationValidityConstraint->getMaxConstraint());
     }
 
+    /**
+     * @return array
+     */
     public function successfulInstantiationProvider()
     {
         return [
@@ -49,6 +55,9 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
         $associationValidityConstraint = new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);
     }
 
+    /**
+     * @return array
+     */
     public function unsuccessfulInstantiationProvider()
     {
         return [

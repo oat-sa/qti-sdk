@@ -76,7 +76,6 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param QtiComponent $component
      * @param string $base
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
-     * @throws RenderingException If an error occurs while rendering $component.
      */
     public function render($component, $base = '')
     {

@@ -36,6 +36,11 @@ use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\SessionStatus;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ItemResultMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ItemResultMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

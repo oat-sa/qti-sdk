@@ -431,6 +431,9 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param \qtism\data\state\Shuffling $shuffling
      */
+    /**
+     * @param Shuffling $shuffling
+     */
     public function removeShuffling(Shuffling $shuffling)
     {
         $this->getShufflings()->detach($shuffling);
@@ -572,6 +575,15 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         return $compactRef;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $components = array_merge(

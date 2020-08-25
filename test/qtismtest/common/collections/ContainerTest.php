@@ -22,6 +22,11 @@ use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 use UnexpectedValueException;
 
+/**
+ * Class ContainerTest
+ *
+ * @package qtismtest\common\collections
+ */
 class ContainerTest extends QtiSmTestCase
 {
     /**
@@ -55,6 +60,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validValueProvider
+     * @param mixed $value
      */
     public function testAddValid($value)
     {
@@ -68,6 +74,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidValueProvider
+     * @param mixed $value
      */
     public function testAddInvalid($value)
     {
@@ -89,6 +96,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validValueCollectionProvider
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelValid(ValueCollection $valueCollection)
     {
@@ -98,6 +106,8 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validEqualsPrimitiveProvider
+     * @param $a
+     * @param $b
      */
     public function testEqualsPrimitiveValid($a, $b)
     {
@@ -106,6 +116,8 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidEqualsPrimitiveProvider
+     * @param $a
+     * @param $b
      */
     public function testEqualsPrimitiveInvalid($a, $b)
     {
@@ -114,12 +126,18 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider occurencesProvider
+     * @param $container
+     * @param $lookup
+     * @param $expected
      */
     public function testOccurences($container, $lookup, $expected)
     {
         $this->assertEquals($expected, $container->occurences($lookup));
     }
 
+    /**
+     * @return array
+     */
     public function validValueProvider()
     {
         return [
@@ -138,6 +156,10 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function invalidValueProvider()
     {
         return [
@@ -146,6 +168,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validEqualsPrimitiveProvider()
     {
         return [
@@ -160,6 +185,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidEqualsPrimitiveProvider()
     {
         return [
@@ -171,6 +199,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function occurencesProvider()
     {
         return [
@@ -192,6 +223,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validValueCollectionProvider()
     {
         $returnValue = [];
@@ -259,6 +293,9 @@ class ContainerTest extends QtiSmTestCase
         $this->assertEquals($expected, $container->__toString());
     }
 
+    /**
+     * @return array
+     */
     public function toStringProvider()
     {
         $returnValue = [];
@@ -284,6 +321,9 @@ class ContainerTest extends QtiSmTestCase
         $container = new Container([$value]);
     }
 
+    /**
+     * @return array
+     */
     public function invalidDatatypeProvider()
     {
         $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";

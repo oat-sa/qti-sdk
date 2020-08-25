@@ -12,6 +12,11 @@ use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\text\H1;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ItemBodyMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ItemBodyMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

@@ -12,6 +12,11 @@ use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TemplateDeclarationMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

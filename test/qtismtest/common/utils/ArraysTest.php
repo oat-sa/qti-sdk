@@ -5,6 +5,11 @@ namespace qtismtest\common\utils;
 use qtism\common\utils\Arrays;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ArraysTest
+ *
+ * @package qtismtest\common\utils
+ */
 class ArraysTest extends QtiSmTestCase
 {
     /**
@@ -25,6 +30,9 @@ class ArraysTest extends QtiSmTestCase
         $this->assertFalse(Arrays::isAssoc($array));
     }
 
+    /**
+     * @return array
+     */
     public function isAssocValidProvider()
     {
         return [
@@ -32,6 +40,9 @@ class ArraysTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isAssocInvalidProvider()
     {
         return [

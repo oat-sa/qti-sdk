@@ -26,6 +26,11 @@ namespace qtism\data\results;
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
+/**
+ * Class ItemResultCollection
+ *
+ * @package qtism\data\results
+ */
 class ItemResultCollection extends QtiComponentCollection
 {
     /**

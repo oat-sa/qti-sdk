@@ -68,6 +68,9 @@ class QtiFloat extends QtiScalar
         return Cardinality::SINGLE;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return '' . $this->getValue();

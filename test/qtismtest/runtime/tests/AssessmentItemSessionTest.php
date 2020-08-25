@@ -23,6 +23,11 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
     public function testExternalScored()

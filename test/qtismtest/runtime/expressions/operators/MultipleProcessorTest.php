@@ -15,6 +15,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MultipleProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class MultipleProcessorTest extends QtiSmTestCase
 {
     public function testNull()
@@ -159,6 +164,10 @@ class MultipleProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

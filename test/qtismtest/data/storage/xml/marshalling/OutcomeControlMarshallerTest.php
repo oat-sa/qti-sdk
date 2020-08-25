@@ -13,6 +13,11 @@ use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeControlMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OutcomeControlMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallIfMinimal()

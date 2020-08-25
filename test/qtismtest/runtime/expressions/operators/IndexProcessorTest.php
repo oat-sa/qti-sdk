@@ -15,6 +15,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IndexProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class IndexProcessorTest extends QtiSmTestCase
 {
     public function testIndexNumeric()
@@ -147,6 +152,11 @@ class IndexProcessorTest extends QtiSmTestCase
         $processor = new IndexProcessor($expression, $operands);
     }
 
+    /**
+     * @param int $n
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($n = -1)
     {
         if ($n === -1) {

@@ -8,6 +8,11 @@ use qtism\data\content\interactions\Gap;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GapMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class GapMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall20()

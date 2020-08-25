@@ -26,6 +26,11 @@ namespace qtism\data\results;
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
+/**
+ * Class SessionIdentifierCollection
+ *
+ * @package qtism\data\results
+ */
 class SessionIdentifierCollection extends QtiComponentCollection
 {
     /**

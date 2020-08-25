@@ -41,6 +41,7 @@ class TestPartMarshaller extends Marshaller
     /**
      * @param QtiComponent $component
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -89,6 +90,7 @@ class TestPartMarshaller extends Marshaller
     /**
      * @param DOMElement $element
      * @return TestPart
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -174,6 +176,15 @@ class TestPartMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'testPart';

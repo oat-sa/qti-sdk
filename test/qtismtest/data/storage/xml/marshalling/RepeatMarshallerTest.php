@@ -12,6 +12,11 @@ use qtism\data\expressions\operators\MathOperator;
 use qtism\data\expressions\operators\Repeat;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RepeatMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class RepeatMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

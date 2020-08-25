@@ -11,6 +11,11 @@ use qtism\data\content\xhtml\text\Strong;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SimpleChoiceMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class SimpleChoiceMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

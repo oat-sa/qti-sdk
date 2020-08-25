@@ -10,6 +10,11 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Substring;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SubstringMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class SubstringMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

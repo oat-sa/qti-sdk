@@ -76,6 +76,9 @@ class StringMatchProcessor extends OperatorProcessor
         return new QtiBoolean($func($operands[0]->getValue(), $operands[1]->getValue()) === 0);
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return StringMatch::class;

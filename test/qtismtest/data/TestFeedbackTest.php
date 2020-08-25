@@ -6,6 +6,11 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\TestFeedback;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestFeedbackTest
+ *
+ * @package qtismtest\data
+ */
 class TestFeedbackTest extends QtiSmTestCase
 {
     public function testSetAccessWrongType()

@@ -35,6 +35,11 @@ use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use RuntimeException;
 
+/**
+ * Class Marshaller
+ *
+ * @package qtism\data\storage\xml\marshalling
+ */
 abstract class Marshaller
 {
     /**
@@ -304,6 +309,12 @@ abstract class Marshaller
         return $this->version;
     }
 
+    /**
+     * @param $method
+     * @param $args
+     * @return DOMElement|mixed
+     * @throws MarshallingException
+     */
     public function __call($method, $args)
     {
         if ($method == 'marshall' || $method == 'unmarshall') {
@@ -715,6 +726,10 @@ abstract class Marshaller
         }
     }
 
+    /**
+     * @param QtiComponent $component
+     * @return DOMElement
+     */
     protected function createElement(QtiComponent $component)
     {
         $localName = $component->getQtiClassName();

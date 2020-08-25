@@ -37,6 +37,8 @@ class LookupOutcomeValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A LookupOutcomeValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -55,6 +57,7 @@ class LookupOutcomeValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A LookupOutcomeValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -76,6 +79,9 @@ class LookupOutcomeValueMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'lookupOutcomeValue';

@@ -229,6 +229,15 @@ class Equal extends Operator implements Pure
         return $this->includeUpperBound;
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'equal';

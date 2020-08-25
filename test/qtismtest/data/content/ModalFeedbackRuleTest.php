@@ -6,6 +6,11 @@ use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ModalFeedbackRuleTest
+ *
+ * @package qtismtest\data\content
+ */
 class ModalFeedbackRuleTest extends QtiSmTestCase
 {
     public function testCreateWrongOutcomeIdentifier()

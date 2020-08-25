@@ -7,6 +7,11 @@ use qtism\data\XInclude;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class XIncludeMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class XIncludeMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

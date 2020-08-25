@@ -6,6 +6,11 @@ use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
 
+/**
+ * Class QtiSmPhpMarshallerTestCase
+ *
+ * @package qtismtest
+ */
 abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
 {
     /**
@@ -43,6 +48,9 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
         unset($stream);
     }
 
+    /**
+     * @return PhpMarshallingContext
+     */
     public function createMarshallingContext()
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
@@ -50,6 +58,9 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
         return $ctx;
     }
 
+    /**
+     * @param MemoryStream $stream
+     */
     protected function setStream(MemoryStream $stream)
     {
         $this->stream = $stream;
@@ -73,6 +84,9 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
         return $this->streamAccess;
     }
 
+    /**
+     * @param PhpStreamAccess $streamAccess
+     */
     protected function setStreamAccess(PhpStreamAccess $streamAccess)
     {
         $this->streamAccess = $streamAccess;

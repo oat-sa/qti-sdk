@@ -89,6 +89,9 @@ class PatternMatchProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return PatternMatch::class;

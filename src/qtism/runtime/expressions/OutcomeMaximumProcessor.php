@@ -101,6 +101,9 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
         return $result;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return OutcomeMaximum::class;

@@ -41,11 +41,17 @@ use qtism\data\rules\SetOutcomeValue;
  */
 class SetOutcomeValueProcessor extends SetValueProcessor
 {
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return SetOutcomeValue::class;
     }
 
+    /**
+     * @return mixed|string
+     */
     protected function getVariableType()
     {
         return OutcomeVariable::class;

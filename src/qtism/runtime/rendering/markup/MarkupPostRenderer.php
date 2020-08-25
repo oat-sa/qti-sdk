@@ -27,6 +27,11 @@ use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\markup\Utils;
 
+/**
+ * Class MarkupPostRenderer
+ *
+ * @package qtism\runtime\rendering\markup
+ */
 class MarkupPostRenderer implements Renderable
 {
     /**
@@ -185,6 +190,11 @@ class MarkupPostRenderer implements Renderable
         return $this->fragmentPrefix;
     }
 
+    /**
+     * @param mixed $document
+     * @return mixed|string|string[]|null
+     * @throws RenderingException
+     */
     public function render($document)
     {
         if ($document->documentElement === null) {

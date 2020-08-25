@@ -14,6 +14,11 @@ use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateProcessingMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TemplateProcessingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

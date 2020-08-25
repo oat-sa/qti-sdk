@@ -36,6 +36,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\results\ItemResultBuilder;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class ItemResultBuilderTest
+ *
+ * @package qtismtest\runtime\results
+ */
 class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 {
     public function testBasic()

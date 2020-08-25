@@ -5,6 +5,7 @@ namespace qtismtest\data\storage\xml;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\NavigationMode;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\SubmissionMode;
@@ -22,12 +23,18 @@ use qtism\data\state\ValueCollection;
 use qtism\data\state\DefaultValue;
 use qtism\data\AssessmentTest;
 
+/**
+ * Class XmlAssessmentDocumentQTIGuideTest
+ *
+ * @package qtismtest\data\storage\xml
+ */
 class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 {
     /**
      * @dataProvider qtiImplementationGuideAssessmentTestFiles
      *
      * @param string $uri The URI describing the file to load.
+     * @throws XmlStorageException
      */
     public function testLoadNoSchemaValidate($uri)
     {
@@ -41,6 +48,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @dataProvider qtiImplementationGuideAssessmentTestFiles
      *
      * @param string $uri The URI describing the file to load.
+     * @throws XmlStorageException
      */
     public function testLoadFromStringNoSchemaValidate($uri)
     {
@@ -54,6 +62,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @dataProvider qtiImplementationGuideAssessmentTestFiles
      *
      * @param string $uri The URI describing the file to load.
+     * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testLoadSaveSchemaValidate($uri)
     {
@@ -78,6 +88,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @dataProvider qtiImplementationGuideAssessmentTestFiles
      *
      * @param string $uri The URI describing the file to load.
+     * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testLoadSaveToStringSchemaValidate($uri)
     {
@@ -99,6 +111,9 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function qtiImplementationGuideAssessmentTestFiles()
     {
         return [
@@ -122,6 +137,10 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param null $assessmentTest
+     * @throws XmlStorageException
+     */
     public function testLoadInteractionMixSachsen($assessmentTest = null)
     {
         if (empty($assessmentTest)) {
@@ -265,6 +284,10 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this->assertFalse(file_exists($file));
     }
 
+    /**
+     * @param $uri
+     * @return string
+     */
     private static function decorateUri($uri)
     {
         return self::samplesDir() . 'ims/tests/' . $uri;

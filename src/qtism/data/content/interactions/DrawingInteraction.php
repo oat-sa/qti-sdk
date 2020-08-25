@@ -86,6 +86,9 @@ class DrawingInteraction extends BlockInteraction
         return $this->object;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -93,6 +96,9 @@ class DrawingInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), [$this->getObject()]));
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'drawingInteraction';

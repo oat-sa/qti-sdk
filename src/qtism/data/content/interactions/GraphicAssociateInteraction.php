@@ -187,6 +187,9 @@ class GraphicAssociateInteraction extends GraphicInteraction
         return $this->minAssociations;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
     public function getResponseValidityConstraint()
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -208,11 +211,29 @@ class GraphicAssociateInteraction extends GraphicInteraction
         return $responseValidityConstraint;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getAssociableHotspots()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'graphicAssociateInteraction';

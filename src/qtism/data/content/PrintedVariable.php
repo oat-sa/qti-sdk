@@ -438,11 +438,17 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
         return $this->mappingIndicator;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'printedVariable';

@@ -11,6 +11,11 @@ use qtism\data\content\interactions\GraphicAssociateInteraction;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GraphicAssociateInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class GraphicAssociateInteractionTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughAssociableHotspots()

@@ -52,6 +52,9 @@ class AndOperator extends Operator implements Pure
         parent::__construct($expressions, 1, -1, [Cardinality::SINGLE], [OperatorBaseType::BOOLEAN]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'and';

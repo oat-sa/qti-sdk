@@ -11,6 +11,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionPreConditionsTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testInstantiationSample1()

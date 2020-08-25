@@ -7,6 +7,11 @@ use DOMElement;
 use qtism\data\rules\ExitTest;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExitTestMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ExitTestMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

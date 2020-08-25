@@ -37,6 +37,9 @@ class DefaultValueMarshaller extends Marshaller
 {
     private $baseType = -1;
 
+    /**
+     * @param int $baseType
+     */
     public function setBaseType($baseType = -1)
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -47,6 +50,9 @@ class DefaultValueMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return int
+     */
     public function getBaseType()
     {
         return $this->baseType;
@@ -69,6 +75,8 @@ class DefaultValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A DefaultValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -94,6 +102,7 @@ class DefaultValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A DefaultValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
      */
     protected function unmarshall(DOMElement $element)
@@ -118,6 +127,9 @@ class DefaultValueMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'defaultValue';

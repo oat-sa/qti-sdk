@@ -16,6 +16,11 @@ use RuntimeException;
 
 require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
 
+/**
+ * Class OperatorProcessorFactoryTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class OperatorProcessorFactoryTest extends QtiSmTestCase
 {
     public function setUp()

@@ -76,6 +76,9 @@ class ProductProcessor extends OperatorProcessor
         return (is_int($returnValue)) ? new QtiInteger($returnValue) : new QtiFloat($returnValue);
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Product::class;

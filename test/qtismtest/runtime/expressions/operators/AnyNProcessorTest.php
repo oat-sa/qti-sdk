@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
@@ -17,16 +18,20 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class AnyNProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class AnyNProcessorTest extends QtiSmTestCase
 {
     /**
-     *
      * @dataProvider anyNProvider
-     *
      * @param int $min
      * @param int $max
      * @param array $booleans
      * @param bool $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAnyN($min, $max, array $booleans, $expected)
     {
@@ -147,6 +152,12 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @param $min
+     * @param $max
+     * @return \qtism\data\QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression($min, $max)
     {
         return $this->createComponentFromXml('
@@ -158,6 +169,9 @@ class AnyNProcessorTest extends QtiSmTestCase
 		');
     }
 
+    /**
+     * @return array
+     */
     public function anyNProvider()
     {
         $returnValue = [];

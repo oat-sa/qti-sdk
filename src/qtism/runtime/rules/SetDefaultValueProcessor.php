@@ -83,6 +83,9 @@ class SetDefaultValueProcessor extends RuleProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return SetDefaultValue::class;

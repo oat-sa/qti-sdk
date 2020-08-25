@@ -5,6 +5,11 @@ namespace qtismtest\common\dom;
 use qtism\common\dom\SerializableDomDocument;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VersionTest
+ *
+ * @package qtismtest\common\dom
+ */
 class VersionTest extends QtiSmTestCase
 {
     public function testSerialization()

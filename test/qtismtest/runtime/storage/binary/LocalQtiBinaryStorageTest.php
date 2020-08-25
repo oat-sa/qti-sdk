@@ -28,6 +28,11 @@ use qtism\common\datatypes\QtiFile;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 
+/**
+ * Class LocalQtiBinaryStorageTest
+ *
+ * @package qtismtest\runtime\storage\binary
+ */
 class LocalQtiBinaryStorageTest extends QtiSmTestCase
 {
     public function testLocalQtiBinaryStorage()

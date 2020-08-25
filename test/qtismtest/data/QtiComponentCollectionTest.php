@@ -11,6 +11,11 @@ use qtismtest\QtiSmTestCase;
 use RuntimeException;
 use stdClass;
 
+/**
+ * Class QtiComponentCollectionTest
+ *
+ * @package qtismtest\data
+ */
 class QtiComponentCollectionTest extends QtiSmTestCase
 {
     public function testInsertWrongType()

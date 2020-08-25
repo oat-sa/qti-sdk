@@ -25,10 +25,13 @@ namespace qtism\data\storage\php;
 
 use Exception;
 use qtism\common\beans\Bean;
+use qtism\common\beans\BeanException;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentTest;
@@ -44,6 +47,7 @@ use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtism\data\storage\php\Utils as PhpUtils;
+use ReflectionException;
 use SplStack;
 
 /**
@@ -57,6 +61,11 @@ class PhpDocument extends QtiDocument
      *
      * @param string $url A URL (Uniform Resource Locator) describing where to save the document.
      * @throws PhpStorageException If an error occurs while saving.
+     * @throws ReflectionException
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
+     * @throws marshalling\PhpMarshallingException
      */
     public function save($url)
     {
@@ -175,6 +184,10 @@ class PhpDocument extends QtiDocument
         }
     }
 
+    /**
+     * @param $object
+     * @return string
+     */
     protected static function getBaseImplementation($object)
     {
         if ($object instanceof ExtendedAssessmentTest) {

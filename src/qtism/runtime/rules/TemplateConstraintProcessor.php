@@ -75,6 +75,9 @@ class TemplateConstraintProcessor extends RuleProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return TemplateConstraint::class;

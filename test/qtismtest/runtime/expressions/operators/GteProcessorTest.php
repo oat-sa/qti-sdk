@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class GteProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class GteProcessorTest extends QtiSmTestCase
 {
     public function testGte()
@@ -100,6 +105,10 @@ class GteProcessorTest extends QtiSmTestCase
         $processor = new GteProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -86,11 +86,17 @@ class OutcomeProcessing extends QtiComponent
         $this->outcomeRules = $outcomeRules;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'outcomeProcessing';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getOutcomeRules()->getArrayCopy());

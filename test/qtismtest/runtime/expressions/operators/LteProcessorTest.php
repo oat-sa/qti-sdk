@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class LteProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class LteProcessorTest extends QtiSmTestCase
 {
     public function testLte()
@@ -100,6 +105,10 @@ class LteProcessorTest extends QtiSmTestCase
         $processor = new LteProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

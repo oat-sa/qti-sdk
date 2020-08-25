@@ -70,6 +70,9 @@ class CorrectProcessor extends ExpressionProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Correct::class;

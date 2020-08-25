@@ -24,6 +24,7 @@
 namespace qtism\runtime\results;
 
 use DateTime;
+use Exception;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\results\ItemResult;
 use qtism\data\results\SessionStatus;
@@ -42,6 +43,7 @@ class ItemResultBuilder extends AbstractResultBuilder
      * Build ItemResult
      *
      * @return ItemResult
+     * @throws Exception
      */
     public function buildResult()
     {

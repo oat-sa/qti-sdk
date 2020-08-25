@@ -14,6 +14,11 @@ use qtism\data\rules\OutcomeElse;
 use qtism\data\rules\OutcomeElseIf;
 use qtism\data\expressions\operators\Equal;
 
+/**
+ * Class OutcomeConditionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OutcomeConditionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallIfMinimal()

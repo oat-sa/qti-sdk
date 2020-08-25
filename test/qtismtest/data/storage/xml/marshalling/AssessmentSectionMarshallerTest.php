@@ -18,6 +18,11 @@ use qtism\data\SectionPartCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class AssessmentSectionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AssessmentSectionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

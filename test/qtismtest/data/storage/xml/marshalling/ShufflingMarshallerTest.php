@@ -10,6 +10,11 @@ use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ShufflingMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ShufflingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

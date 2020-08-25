@@ -12,6 +12,11 @@ use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class AssociateInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

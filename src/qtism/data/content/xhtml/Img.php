@@ -269,6 +269,9 @@ class Img extends AtomicInline
         return $this->getWidth() >= 0;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'img';

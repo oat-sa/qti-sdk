@@ -17,6 +17,11 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionTimingTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 {
     public function testBeginItemSession()

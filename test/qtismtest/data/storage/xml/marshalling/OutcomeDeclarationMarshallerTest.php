@@ -15,12 +15,18 @@ use qtism\data\state\MatchTableEntryCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\View;
 use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 
+/**
+ * Class OutcomeDeclarationMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -61,6 +67,11 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 
     /**
      * @dataProvider qtiVersionsToTestForExternalScored
+     * @param $qtiVersion
+     * @param $externalScored
+     * @param $expectedExternalScored
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     public function testMarshallExternalScored($qtiVersion, $externalScored, $expectedExternalScored)
     {
@@ -81,6 +92,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals('single', $element->getAttribute('cardinality'));
     }
 
+    /**
+     * @return array
+     */
     public function qtiVersionsToTestForExternalScored()
     {
         return [

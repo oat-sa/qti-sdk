@@ -38,6 +38,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
@@ -103,6 +104,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -13,6 +14,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class GcdProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class GcdProcessorTest extends QtiSmTestCase
 {
     /**
@@ -20,6 +26,7 @@ class GcdProcessorTest extends QtiSmTestCase
      *
      * @param array $operands
      * @param int $expected
+     * @throws MarshallerNotFoundException
      */
     public function testGcd(array $operands, $expected)
     {
@@ -57,8 +64,8 @@ class GcdProcessorTest extends QtiSmTestCase
 
     /**
      * @dataProvider gcdWithNullValuesProvider
-     *
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testGcdWithNullValues(array $operands)
     {
@@ -68,6 +75,9 @@ class GcdProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return array
+     */
     public function gcdProvider()
     {
         return [
@@ -86,6 +96,9 @@ class GcdProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function gcdWithNullValuesProvider()
     {
         return [
@@ -98,6 +111,10 @@ class GcdProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

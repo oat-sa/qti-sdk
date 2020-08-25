@@ -20,6 +20,11 @@ use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentItemRefTest
+ *
+ * @package qtismtest\data
+ */
 class ExtendedAssessmentItemRefTest extends QtiSmTestCase
 {
     public function testCreateFromAssessmentItemRef()

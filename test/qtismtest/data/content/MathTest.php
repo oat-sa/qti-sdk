@@ -7,6 +7,11 @@ use qtism\data\content\Math;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class MathTest
+ *
+ * @package qtismtest\data\content
+ */
 class MathTest extends QtiSmTestCase
 {
     public function testMalformedXml()

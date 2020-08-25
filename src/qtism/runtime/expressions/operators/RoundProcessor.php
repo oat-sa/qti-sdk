@@ -72,6 +72,9 @@ class RoundProcessor extends OperatorProcessor
         return new QtiInteger((int)round($operand->getValue(), 0, $mode));
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Round::class;

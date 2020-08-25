@@ -12,6 +12,11 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

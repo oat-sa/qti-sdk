@@ -259,21 +259,57 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
         return $this->getHotspotLabel() !== '';
     }
 
+    /**
+     * @param IdentifierCollection $matchGroup
+     */
+    /**
+     * @param IdentifierCollection $matchGroup
+     */
+    /**
+     * @param IdentifierCollection $matchGroup
+     */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
         $this->matchGroup = $matchGroup;
     }
 
+    /**
+     * @return IdentifierCollection
+     */
+    /**
+     * @return IdentifierCollection
+     */
+    /**
+     * @return IdentifierCollection
+     */
     public function getMatchGroup()
     {
         return $this->matchGroup;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'associableHotspot';

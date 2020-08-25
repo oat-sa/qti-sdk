@@ -33,6 +33,11 @@ use qtism\data\results\ResultTemplateVariable;
 use qtism\data\results\TestResult;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestResultMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TestResultMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

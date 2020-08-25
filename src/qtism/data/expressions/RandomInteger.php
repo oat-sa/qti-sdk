@@ -151,6 +151,9 @@ class RandomInteger extends Expression implements Pure
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'randomInteger';

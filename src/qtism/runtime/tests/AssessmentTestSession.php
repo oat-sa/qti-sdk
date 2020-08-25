@@ -45,6 +45,7 @@ use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\ShowHide;
 use qtism\data\state\Weight;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\TestFeedbackRefCollection;
@@ -243,6 +244,9 @@ class AssessmentTestSession extends State
      * Set the current time of the running assessment test session.
      *
      * @param DateTime $time
+     * @throws AssessmentTestSessionException
+     * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     public function setTime(DateTime $time)
     {
@@ -757,6 +761,8 @@ class AssessmentTestSession extends State
      * End the test session.
      *
      * @throws AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
+     * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     public function endTestSession()
     {
@@ -838,7 +844,6 @@ class AssessmentTestSession extends State
      * @param State $responses The responses for the curent item in the sequence.
      * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
      * @throws AssessmentTestSessionException
-     * @throws AssessmentItemSessionException
      */
     public function endAttempt(State $responses, $allowLateSubmission = false)
     {
@@ -895,7 +900,9 @@ class AssessmentTestSession extends State
      *
      * If there is no more following RouteItems in the Route sequence, the test session ends gracefully.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition e.g. branching, preConditions, ...
+     * @throws PhpStorageException
      */
     public function moveNext()
     {
@@ -937,7 +944,9 @@ class AssessmentTestSession extends State
      *
      * If there is no more previous RouteItems that are not timed out in the Route sequence, the current RouteItem remains the same.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition e.g. branching, preConditions, ...
+     * @throws PhpStorageException
      */
     public function moveBack()
     {
@@ -972,7 +981,9 @@ class AssessmentTestSession extends State
      * mode must be NONLINEAR to be able to jump.
      *
      * @param int $position The position in the route the jump has to be made.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
+     * @throws PhpStorageException
      */
     public function jumpTo($position)
     {
@@ -1321,6 +1332,7 @@ class AssessmentTestSession extends State
      * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
      *
      * @return bool
+     * @throws AssessmentTestSessionException
      */
     public function canMoveBackward()
     {
@@ -1346,6 +1358,7 @@ class AssessmentTestSession extends State
      * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
      *
      * @param int $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
+     * @param string $identifier
      * @return JumpCollection A collection of Jump objects.
      */
     public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = '')
@@ -2048,8 +2061,7 @@ class AssessmentTestSession extends State
     /**
      * Apply the templateDefault values to the current item $session and also apply its templateProcessing.
      *
-     * param \qtism\runtime\tests\AssessmentItemSession $session
-     *
+     * @param AssessmentItemSession $session
      * @throws ExpressionProcessingException|OperatorProcessingException If something wrong happens when initializing templateDefaults.
      */
     protected function applyTemplateDefaults(AssessmentItemSession $session)
@@ -2257,7 +2269,6 @@ class AssessmentTestSession extends State
      *
      * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
      * @param int $occurence The occurence number of the item bound to $assessmentItemSession.
-     * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
      */
     protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
     {
@@ -2270,7 +2281,6 @@ class AssessmentTestSession extends State
      *
      * This method is triggered once at the end of the AssessmentTestSession.
      *
-     * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
      */
     protected function submitTestResults()
     {
@@ -2281,7 +2291,9 @@ class AssessmentTestSession extends State
      * Submit responses due to the simultaneous submission mode in force.
      *
      * @return PendingResponsesCollection The collection of PendingResponses objects that were processed.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
+     * @throws PhpStorageException
      */
     protected function defferedResponseSubmission()
     {
@@ -2344,6 +2356,8 @@ class AssessmentTestSession extends State
      * @param bool $ignoreBranchings Whether or not to ignore branching.
      * @param bool $ignorePreConditions Whether or not to ignore preConditions.
      * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
+     * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
     {
@@ -2428,6 +2442,8 @@ class AssessmentTestSession extends State
      * is simultaneous, the pending responses are processed.
      *
      * @throws AssessmentTestSessionException If the test is currently not running.
+     * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     public function moveNextTestPart()
     {
@@ -2637,6 +2653,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the SUSPENDED state.
      * @throws AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
      * @throws UnexpectedValueException If the current item session cannot be retrieved.
+     * @throws PhpStorageException
      */
     public function suspend()
     {
@@ -3011,6 +3028,9 @@ class AssessmentTestSession extends State
         return true;
     }
 
+    /**
+     * @param RouteItem $routeItem
+     */
     protected function initializeAssessmentItemSession(RouteItem $routeItem)
     {
         $itemRef = $routeItem->getAssessmentItemRef();

@@ -2,6 +2,11 @@
 
 namespace qtismtest\common\beans\mocks;
 
+/**
+ * Class NotStrictConstructorBean
+ *
+ * @package qtismtest\common\beans\mocks
+ */
 class NotStrictConstructorBean
 {
     /**
@@ -40,31 +45,50 @@ class NotStrictConstructorBean
         $this->setHair($hairColor);
     }
 
+    /**
+     * @param $firstName
+     */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstName()
     {
         return $this->girstName;
     }
 
+    /**
+     * @param $lastName
+     * @return string
+     */
     public function setLastName($lastName)
     {
         return $this->lastName;
     }
 
+    /**
+     * @return string
+     */
     public function getLastName()
     {
         return $this->lastName;
     }
 
+    /**
+     * @param $hair
+     */
     public function setHair($hair)
     {
         $this->hair = $hair;
     }
 
+    /**
+     * @return string
+     */
     public function getHair()
     {
         return $this->hair;

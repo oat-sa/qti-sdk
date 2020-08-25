@@ -30,6 +30,9 @@ use qtism\data\content\SimpleInline;
  */
 class Samp extends SimpleInline
 {
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'samp';

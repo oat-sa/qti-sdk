@@ -16,6 +16,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\NumberCorrectProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class NumberCorrectProcessorTest
+ *
+ * @package qtismtest\runtime\expressions
+ */
 class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase
 {
     public function testNumberCorrect()
@@ -121,6 +126,12 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase
         $session->moveNext();
     }
 
+    /**
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return NumberCorrect
+     */
     protected static function getNumberCorrect($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $numberCorrect = new NumberCorrect();

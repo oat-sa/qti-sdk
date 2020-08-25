@@ -171,6 +171,9 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
         return $this->identifier;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'feedbackInline';

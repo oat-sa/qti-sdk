@@ -176,6 +176,9 @@ class StatsOperatorProcessor extends OperatorProcessor
         return $returnValue;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return StatsOperator::class;

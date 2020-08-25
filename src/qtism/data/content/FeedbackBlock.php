@@ -201,11 +201,17 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
         return $this->content;
     }
 
+    /**
+     * @return FlowCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'feedbackBlock';

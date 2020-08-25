@@ -6,6 +6,11 @@ use DOMDocument;
 use qtism\data\expressions\RandomFloat;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RandomFloatMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class RandomFloatMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -106,6 +106,9 @@ class LcmProcessor extends OperatorProcessor
         return $g;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Lcm::class;

@@ -8,6 +8,11 @@ use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 
+/**
+ * Class CompactMarshallerFactoryTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class CompactMarshallerFactoryTest extends QtiSmTestCase
 {
     public function testInstantiation()

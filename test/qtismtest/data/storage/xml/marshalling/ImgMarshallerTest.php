@@ -28,6 +28,11 @@ use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class ImgMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

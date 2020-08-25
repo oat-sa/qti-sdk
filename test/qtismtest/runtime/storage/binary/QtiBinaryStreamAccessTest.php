@@ -21,7 +21,10 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\state\CorrectResponse;
@@ -48,6 +51,11 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiBinaryStreamAccessTest
+ *
+ * @package qtismtest\runtime\storage\binary
+ */
 class QtiBinaryStreamAccessTest extends QtiSmTestCase
 {
     /**
@@ -56,6 +64,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
      * @param Variable $variable
      * @param string $binary
      * @param mixed $expectedValue
+     * @param int $valueType
+     * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccess::RW_VALUE)
     {
@@ -98,6 +110,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function readVariableValueProvider()
     {
         $returnValue = [];
@@ -485,6 +500,11 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
      * @dataProvider writeVariableValueProvider
      *
      * @param Variable $variable
+     * @param int $valueType
+     * @throws QtiBinaryStreamAccessException
+     * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccess::RW_VALUE)
     {
@@ -545,6 +565,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function writeVariableValueProvider()
     {
         $rw_value = QtiBinaryStreamAccess::RW_VALUE;

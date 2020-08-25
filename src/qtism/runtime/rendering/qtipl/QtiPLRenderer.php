@@ -66,10 +66,12 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
 
     /**
      * Creates a new QtiPLRenderer object.
+     *
+     * @param ConditionRenderingOptions $cro
      */
-    public function __construct($cro)
+    public function __construct(ConditionRenderingOptions $cro)
     {
-        $this->setCRO($cro);
+        parent::__construct($cro);
         $this->registry = [];
         $this->registry['anyN'] = new operators\AnyNQtiPLRenderer($cro);
         $this->registry['baseValue'] = new expressions\BaseValueQtiPLRenderer($cro);
@@ -132,7 +134,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws RenderingException If something goes wrong while rendering the component.
+     * @throws RenderingException
      */
     public function render($something)
     {
@@ -150,6 +152,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return string The default QtiPL rendering for an Operator
+     * @throws RenderingException
      */
     public function getDefaultRendering($something)
     {
@@ -191,6 +194,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     /**
      * @param string $childElement The child element of the expression to render.
      * @return string The child Element in the open and close child elements
+     * @throws RenderingException
      */
     public function writeChildElement($childElement)
     {
@@ -200,6 +204,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     /**
      * @param array of string $childElements The child elements of the expression to render.
      * @return string The child Elements in the open and close child elements
+     * @throws RenderingException
      */
     public function writeChildElements($childElements = [])
     {

@@ -17,6 +17,11 @@ use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 use stdClass;
 
+/**
+ * Class PhpQtiDatatypeMarshallerTest
+ *
+ * @package qtismtest\data\storage\php\marshalling
+ */
 class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
@@ -24,6 +29,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param QtiDatatype $qtiDatatype
+     * @throws PhpMarshallingException
      */
     public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype)
     {
@@ -41,6 +47,9 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new stdClass());
     }
 
+    /**
+     * @return array
+     */
     public function marshallDataProvider()
     {
         return [

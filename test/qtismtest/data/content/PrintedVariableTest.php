@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\data\content\PrintedVariable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PrintedVariableTest
+ *
+ * @package qtismtest\data\content
+ */
 class PrintedVariableTest extends QtiSmTestCase
 {
     public function testCreatePrintedVariableWrongIdentifier()

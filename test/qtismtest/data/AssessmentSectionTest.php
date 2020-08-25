@@ -7,6 +7,11 @@ use qtism\data\AssessmentSection;
 use qtism\data\rules\Ordering;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentSectionTest
+ *
+ * @package qtismtest\data
+ */
 class AssessmentSectionTest extends QtiSmTestCase
 {
     public function testSetTitleWrongType()

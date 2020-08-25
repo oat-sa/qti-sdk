@@ -51,6 +51,9 @@ class Max extends Operator implements Pure
         parent::__construct($expressions, 1, -1, [Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'max';

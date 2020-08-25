@@ -166,6 +166,15 @@ class MapResponseProcessor extends ExpressionProcessor
         }
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return MapResponse::class;

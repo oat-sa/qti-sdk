@@ -18,6 +18,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MemberProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class MemberProcessorTest extends QtiSmTestCase
 {
     public function testMultiple()
@@ -154,6 +159,10 @@ class MemberProcessorTest extends QtiSmTestCase
         $this->assertTrue($result->getValue());
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

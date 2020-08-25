@@ -31,6 +31,11 @@ use qtism\data\results\SessionIdentifier;
 use qtism\data\results\SessionIdentifierCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ContextMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ContextMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

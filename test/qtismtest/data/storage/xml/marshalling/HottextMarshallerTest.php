@@ -9,6 +9,11 @@ use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class HottextMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class HottextMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

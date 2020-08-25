@@ -38,7 +38,6 @@ class BaseValueQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws RenderingException If something goes wrong while rendering the component.
      */
     public function render($something)
     {

@@ -5,13 +5,24 @@ namespace qtismtest\data\expressions\operators;
 use qtism\data\expressions\operators\MathFunctions;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class MathFunctionsTest
+ *
+ * @package qtismtest\data\expressions\operators
+ */
 class MathFunctionsTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return MathFunctions::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -46,6 +57,9 @@ class MathFunctionsTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -80,6 +94,9 @@ class MathFunctionsTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

@@ -139,6 +139,9 @@ class SelectPointInteraction extends GraphicInteraction
         }
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -148,11 +151,17 @@ class SelectPointInteraction extends GraphicInteraction
         );
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'selectPointInteraction';

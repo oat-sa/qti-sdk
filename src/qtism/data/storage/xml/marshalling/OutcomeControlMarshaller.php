@@ -36,6 +36,7 @@ use qtism\data\rules\OutcomeIf;
 use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * Marshalling/Unmarshalling implementation for the abstract OutcomeControl QTI
@@ -47,8 +48,9 @@ class OutcomeControlMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -79,6 +81,7 @@ class OutcomeControlMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
@@ -153,6 +156,9 @@ class OutcomeControlMarshaller extends RecursiveMarshaller
         return new OutcomeRuleCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

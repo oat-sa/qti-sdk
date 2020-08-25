@@ -82,6 +82,9 @@ class SetCorrectResponseProcessor extends RuleProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return SetCorrectResponse::class;

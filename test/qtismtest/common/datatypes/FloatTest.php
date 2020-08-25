@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class FloatTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class FloatTest extends QtiSmTestCase
 {
     public function testWrongValue()

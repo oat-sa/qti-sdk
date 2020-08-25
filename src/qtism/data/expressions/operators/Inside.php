@@ -121,6 +121,9 @@ class Inside extends Operator implements Pure
         return $this->coords;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'inside';

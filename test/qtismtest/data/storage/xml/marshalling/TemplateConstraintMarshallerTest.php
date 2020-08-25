@@ -9,6 +9,11 @@ use qtism\data\expressions\RandomInteger;
 use qtism\data\rules\TemplateConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConstraintMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TemplateConstraintMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

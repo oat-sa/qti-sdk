@@ -664,6 +664,15 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $this->modalFeedbacks;
     }
 
+    /**
+     * @return array|ModalFeedbackRuleCollection
+     */
+    /**
+     * @return array|ModalFeedbackRuleCollection
+     */
+    /**
+     * @return array|ModalFeedbackRuleCollection
+     */
     public function getModalFeedbackRules()
     {
         $modalFeedbackRules = new ModalFeedbackRuleCollection();
@@ -696,6 +705,15 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $endAttemptIdentifiers;
     }
 
+    /**
+     * @return array|ShufflingCollection
+     */
+    /**
+     * @return array|ShufflingCollection
+     */
+    /**
+     * @return array|ShufflingCollection
+     */
     public function getShufflings()
     {
         $classNames = [
@@ -719,6 +737,15 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $shufflings;
     }
 
+    /**
+     * @return array|ResponseValidityConstraintCollection
+     */
+    /**
+     * @return array|ResponseValidityConstraintCollection
+     */
+    /**
+     * @return array|ResponseValidityConstraintCollection
+     */
     public function getResponseValidityConstraints()
     {
         $classNames = [
@@ -747,11 +774,29 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $responseValidityConstraints;
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentItem';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

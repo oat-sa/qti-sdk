@@ -90,6 +90,9 @@ class ItemSessionControlMarshaller extends Marshaller
         return $object;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'itemSessionControl';

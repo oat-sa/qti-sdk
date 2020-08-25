@@ -62,6 +62,9 @@ class RandomProcessor extends OperatorProcessor
         return $operand[mt_rand(0, $maxIndex)];
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Random::class;

@@ -142,6 +142,9 @@ class LookupOutcomeValueProcessor extends RuleProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return LookupOutcomeValue::class;

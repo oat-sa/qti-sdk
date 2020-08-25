@@ -38,6 +38,8 @@ class AreaMappingMarshaller extends Marshaller
      *
      * @param QtiComponent $component An AreaMapping object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -67,7 +69,7 @@ class AreaMappingMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An AreaMapping object.
-     * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -96,6 +98,9 @@ class AreaMappingMarshaller extends Marshaller
         return $object;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'areaMapping';

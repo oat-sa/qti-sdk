@@ -18,6 +18,11 @@ use qtism\data\state\MatchTable;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\common\datatypes\QtiDuration;
 
+/**
+ * Class ResponseDeclarationMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

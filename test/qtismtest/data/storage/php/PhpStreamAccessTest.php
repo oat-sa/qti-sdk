@@ -12,6 +12,11 @@ use qtismtest\QtiSmTestCase;
 use stdClass;
 use qtism\common\storage\StreamAccessException;
 
+/**
+ * Class PhpStreamAccessTest
+ *
+ * @package qtismtest\data\storage\php
+ */
 class PhpStreamAccessTest extends QtiSmTestCase
 {
     /**
@@ -69,6 +74,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
      * @dataProvider writeScalarDataProvider
      * @param string $toWrite
      * @param string $expected
+     * @throws StreamAccessException
      */
     public function testWriteScalar($toWrite, $expected)
     {
@@ -351,6 +357,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
      * @param string $expected
      * @param string $funcname
      * @param PhpArgumentCollection $arguments
+     * @throws StreamAccessException
      */
     public function testWriteFunctionCall($expected, $funcname, PhpArgumentCollection $arguments = null)
     {
@@ -419,6 +426,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
      * @param string $expected
      * @param string $classname
      * @param PhpArgumentCollection $arguments
+     * @throws StreamAccessException
      */
     public function testWriteInstantiation($expected, $classname, PhpArgumentCollection $arguments = null)
     {
@@ -492,6 +500,9 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $access->writeArguments($arguments);
     }
 
+    /**
+     * @return array
+     */
     public function writeScalarDataProvider()
     {
         return [
@@ -515,6 +526,9 @@ class PhpStreamAccessTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function writeFunctionCallDataProvider()
     {
         return [
@@ -524,6 +538,9 @@ class PhpStreamAccessTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function writeInstantiationDataProvider()
     {
         return [

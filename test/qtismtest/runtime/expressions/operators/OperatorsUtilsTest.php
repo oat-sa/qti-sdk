@@ -6,6 +6,11 @@ use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class OperatorsUtilsTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class OperatorsUtilsTest extends QtiSmTestCase
 {
     /**
@@ -159,6 +164,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         $this->assertEquals($message, OperatorsUtils::lastPregErrorMessage());
     }
 
+    /**
+     * @return array
+     */
     public function pregAddDelimiterProvider()
     {
         return [
@@ -176,6 +184,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function escapeSymbolsProvider()
     {
         return [
@@ -185,6 +196,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getPrecedingBackslashesCountProvider()
     {
         return [
@@ -199,6 +213,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function gcdProvider()
     {
         return [
@@ -211,6 +228,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function lcmProvider()
     {
         return [
@@ -222,6 +242,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function meanProvider()
     {
         return [
@@ -239,6 +262,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function varianceProvider()
     {
         return [
@@ -255,6 +281,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function standardDeviationProvider()
     {
         // The equality test will be done with 2 significant figures.
@@ -270,6 +299,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validCustomOperatorClassToPhpClassProvider()
     {
         return [
@@ -279,6 +311,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidCustomOperatorClassToPhpClassProvider()
     {
         return [
@@ -290,6 +325,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function lastPregErrorMessageProvider()
     {
         return [

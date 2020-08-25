@@ -73,6 +73,9 @@ class IntegerDivideProcessor extends OperatorProcessor
         return new QtiInteger((int)floor($operand1->getValue() / $operand2->getValue()));
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return IntegerDivide::class;

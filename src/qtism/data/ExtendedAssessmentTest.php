@@ -115,6 +115,9 @@ class ExtendedAssessmentTest extends AssessmentTest
         return $ref;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $components = array_merge(

@@ -9,6 +9,11 @@ use qtism\data\ItemSessionControl;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExpressionEngineTest
+ *
+ * @package qtismtest\runtime\expressions
+ */
 class ExpressionEngineTest extends QtiSmTestCase
 {
     public function testExpressionEngineBaseValue()

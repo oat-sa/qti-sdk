@@ -29,8 +29,19 @@ use qtism\data\results\CandidateResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 
+/**
+ * Class CandidateResponseMarshaller
+ *
+ * @package qtism\data\storage\xml\marshalling
+ */
 class CandidateResponseMarshaller extends Marshaller
 {
+    /**
+     * @param QtiComponent $component
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
@@ -48,6 +59,11 @@ class CandidateResponseMarshaller extends Marshaller
         return $element;
     }
 
+    /**
+     * @param DOMElement $element
+     * @return QtiComponent|CandidateResponse
+     * @throws MarshallerNotFoundException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $valuesElements = self::getChildElementsByTagName($element, 'value');
@@ -66,6 +82,9 @@ class CandidateResponseMarshaller extends Marshaller
         return new CandidateResponse($valueCollection);
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'candidateResponse';

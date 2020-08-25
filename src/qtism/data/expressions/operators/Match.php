@@ -51,6 +51,9 @@ class Match extends Operator implements Pure
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SAME], [OperatorBaseType::SAME]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'match';

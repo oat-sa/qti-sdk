@@ -7,6 +7,11 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateVariableTest
+ *
+ * @package qtismtest\runtime\common
+ */
 class TemplateVariableTest extends QtiSmTestCase
 {
     public function testCreateFromDataModel()

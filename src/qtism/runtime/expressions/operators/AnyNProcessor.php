@@ -126,6 +126,9 @@ class AnyNProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return AnyN::class;

@@ -54,6 +54,9 @@ class DefaultProcessor extends ExpressionProcessor
         return ($var === null) ? null : $var->getDefaultValue();
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return DefaultVal::class;

@@ -60,6 +60,9 @@ class NumberPresentedMarshaller extends ItemSubsetMarshaller
         return $object;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'numberPresented';

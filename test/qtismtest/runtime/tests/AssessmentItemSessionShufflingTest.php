@@ -7,6 +7,11 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionShufflingTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
 {
     public function testShufflingOccurs()

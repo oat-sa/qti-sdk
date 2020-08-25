@@ -37,6 +37,8 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
      *
      * @param QtiComponent $component An AssessmentSectionRef object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -53,6 +55,7 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An AssessmentSectionRef object.
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -74,6 +77,9 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentSectionRef';

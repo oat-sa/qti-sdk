@@ -87,6 +87,9 @@ class PatternMatch extends Operator implements Pure
         return $this->pattern;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'patternMatch';

@@ -37,7 +37,6 @@ class MathMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Math object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -49,7 +48,6 @@ class MathMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Math object.
-     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -58,6 +56,9 @@ class MathMarshaller extends Marshaller
         return new Math($element->ownerDocument->saveXML($node));
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'math';

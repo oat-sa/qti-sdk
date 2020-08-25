@@ -41,6 +41,9 @@ class UtilsTest extends TestCase
         $this->assertEquals($expected, Utils::isQtiInteger($integer));
     }
 
+    /**
+     * @return array
+     */
     public function integersToTest(): array
     {
         return [
@@ -56,12 +59,17 @@ class UtilsTest extends TestCase
 
     /**
      * @dataProvider stringsToNormalize
+     * @param string $string
+     * @param string $normalizedString
      */
     public function testNormalizeString($string, $normalizedString)
     {
         $this->assertEquals($normalizedString, Utils::normalizeString($string));
     }
 
+    /**
+     * @return array
+     */
     public function stringsToNormalize()
     {
         return [

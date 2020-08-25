@@ -5,13 +5,24 @@ namespace qtismtest\common\enums;
 use qtism\common\enums\BaseType;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class BaseTypeTest
+ *
+ * @package qtismtest\common\enums
+ */
 class BaseTypeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return BaseType::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -31,6 +42,9 @@ class BaseTypeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -50,6 +64,9 @@ class BaseTypeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

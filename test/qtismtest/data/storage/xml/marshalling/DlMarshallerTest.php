@@ -12,6 +12,11 @@ use qtism\data\content\xhtml\lists\DlElementCollection;
 use qtism\data\content\xhtml\lists\Dt;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DlMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class DlMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

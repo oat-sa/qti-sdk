@@ -31,6 +31,11 @@ use qtism\data\state\WeightCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentItemRefMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

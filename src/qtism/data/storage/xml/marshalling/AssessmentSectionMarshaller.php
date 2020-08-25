@@ -42,6 +42,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param QtiComponentCollection $children
      * @param AssessmentSection|null $assessmentSection
      * @return AssessmentSection
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
@@ -121,6 +122,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
@@ -229,6 +231,15 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
         return new SectionPartCollection();
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

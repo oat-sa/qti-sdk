@@ -10,6 +10,11 @@ use qtism\runtime\rules\LookupOutcomeValueProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rules\RuleProcessingException;
 
+/**
+ * Class LookupOutcomeValueProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class LookupOutcomeValueProcessorTest extends QtiSmTestCase
 {
     public function testLookupOutcomeValueSimpleMatchTable()

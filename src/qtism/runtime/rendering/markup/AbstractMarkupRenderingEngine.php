@@ -423,6 +423,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         return $this->currentInteraction;
     }
 
+    /**
+     * @param mixed $component
+     * @param string $base
+     * @return mixed
+     * @throws RenderingException
+     */
     public function render($component, $base = '')
     {
         // Reset the engine to its initial state.
@@ -548,6 +554,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Create the final rendering of the rendered $component as it must be rendered by the final
      * implementation.
      *
+     * @param QtiComponent $component
      * @return mixed
      */
     protected function createFinalRendering(QtiComponent $component)
@@ -733,11 +740,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $this->ignoreClasses = $ignoreClasses;
     }
 
+    /**
+     * @return array
+     */
     public function getIgnoreClasses()
     {
         return $this->ignoreClasses;
     }
 
+    /**
+     * @param $classes
+     */
     public function ignoreQtiClasses($classes)
     {
         if (is_string($classes) === true) {
@@ -984,6 +997,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         return self::isChoice($component) && $this->getChoiceShowHidePolicy() === self::TEMPLATE_ORIENTED && $component->hasTemplateIdentifier();
     }
 
+    /**
+     * @param QtiComponent $component
+     * @return bool
+     */
     protected function mustIncludeChoiceComponent(QtiComponent $component)
     {
         $shufflables = [
@@ -1135,6 +1152,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $rendering->appendChild($endifStmtCmt);
     }
 
+    /**
+     * @param QtiComponent $component
+     * @param DOMDocumentFragment $rendering
+     */
     protected function includeChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         $choiceIndex = $this->choiceCounter;
@@ -1261,11 +1282,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         return $this->printedVariablePolicy;
     }
 
+    /**
+     * @param $shufflingPolicy
+     */
     public function setShufflingPolicy($shufflingPolicy)
     {
         $this->shufflingPolicy = $shufflingPolicy;
     }
 
+    /**
+     * @return int
+     */
     public function getShufflingPolicy()
     {
         return $this->shufflingPolicy;

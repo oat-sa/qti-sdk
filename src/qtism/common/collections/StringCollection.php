@@ -33,6 +33,7 @@ class StringCollection extends AbstractCollection
     /**
      * Check if $value is a valid string.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)

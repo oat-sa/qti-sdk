@@ -112,6 +112,9 @@ abstract class Operator extends Expression
         return $this->expressions;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = $this->getExpressions()->getArrayCopy();

@@ -6,6 +6,11 @@ use qtism\data\processing\TemplateProcessing;
 use qtism\runtime\processing\Utils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ProcessingUtilsTest
+ *
+ * @package qtismtest\runtime\processing
+ */
 class ProcessingUtilsTest extends QtiSmTestCase
 {
     /**
@@ -22,6 +27,10 @@ class ProcessingUtilsTest extends QtiSmTestCase
         );
     }
 
+    /**
+     * @return array
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function impactedVariablesProvider()
     {
         $data = [];

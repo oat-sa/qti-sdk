@@ -8,6 +8,11 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BaseValueMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class BaseValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

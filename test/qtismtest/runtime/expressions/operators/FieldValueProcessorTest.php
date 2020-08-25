@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class FieldValueProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class FieldValueProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
@@ -106,6 +111,11 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $result);
     }
 
+    /**
+     * @param string $identifier
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($identifier = '')
     {
         // The following XML Component creation

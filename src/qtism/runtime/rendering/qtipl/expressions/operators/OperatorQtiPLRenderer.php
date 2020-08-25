@@ -135,6 +135,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return string The default QtiPL rendering for an Operator
+     * @throws RenderingException
      */
     public function getDefaultRendering($something)
     {
@@ -149,6 +150,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      * @param mixed $something Something to render into another consitution.
      * @return string The default QtiPL rendering for an Operator with a specific sign and
      * 2 sub-expressions
+     * @throws RenderingException
      */
     private function renderWithSignAsOperator($something)
     {

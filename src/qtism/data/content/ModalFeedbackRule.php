@@ -203,11 +203,17 @@ class ModalFeedbackRule extends QtiComponent
         return $this->getTitle() !== '';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'modalFeedbackRule';

@@ -25,6 +25,11 @@ use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TableMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

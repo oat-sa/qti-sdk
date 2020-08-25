@@ -9,6 +9,11 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestVariablesMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TestVariablesMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

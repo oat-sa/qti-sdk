@@ -223,6 +223,9 @@ class CustomOperator extends Operator implements IExternal, Pure
         return $this->externalComponent;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'customOperator';

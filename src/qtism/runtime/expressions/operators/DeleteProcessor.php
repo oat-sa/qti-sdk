@@ -95,6 +95,9 @@ class DeleteProcessor extends OperatorProcessor
         return $returnValue;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Delete::class;

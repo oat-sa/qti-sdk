@@ -27,12 +27,18 @@ use InvalidArgumentException;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\AbstractEngine;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
 use qtism\runtime\rules\RuleProcessingException;
 
+/**
+ * Class ResponseProcessingEngine
+ *
+ * @package qtism\runtime\processing
+ */
 class ResponseProcessingEngine extends AbstractEngine
 {
     /**
@@ -152,7 +158,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * * ExpressionProcessingException: If an Expression within a ResponseRule produces an error.
      * * ResponseProcessingException: If there is a problem with the response processing template processing bound to the ResponseProcessing.
      *
-     * @throws ProcessingException
+     * @throws PhpStorageException
      */
     public function process()
     {

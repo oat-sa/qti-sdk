@@ -10,6 +10,11 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class HottextInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class HottextInteractionTest extends QtiSmTestCase
 {
     public function testCreateNoContent()

@@ -120,6 +120,9 @@ class ExtendedTestPart extends TestPart
         return $ref;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $components = array_merge(

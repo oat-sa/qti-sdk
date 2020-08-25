@@ -144,6 +144,9 @@ class RoundToProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return RoundTo::class;

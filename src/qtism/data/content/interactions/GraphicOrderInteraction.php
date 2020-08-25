@@ -220,6 +220,15 @@ class GraphicOrderInteraction extends GraphicInteraction
         return $this->getMaxChoices() > -1;
     }
 
+    /**
+     * @return ResponseValidityConstraint|null
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
+    /**
+     * @return ResponseValidityConstraint
+     */
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
@@ -229,11 +238,29 @@ class GraphicOrderInteraction extends GraphicInteraction
         );
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getHotspotChoices()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'graphicOrderInteraction';

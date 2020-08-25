@@ -38,11 +38,17 @@ use qtism\data\rules\TemplateCondition;
  */
 class TemplateConditionProcessor extends AbstractConditionProcessor
 {
+    /**
+     * @return string
+     */
     public function getQtiNature()
     {
         return 'template';
     }
 
+    /**
+     * @return string
+     */
     protected function getRuleType()
     {
         return TemplateCondition::class;

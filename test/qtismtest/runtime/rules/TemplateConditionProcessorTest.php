@@ -5,6 +5,7 @@ namespace qtismtest\runtime\rules;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -12,6 +13,11 @@ use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\rules\TemplateConditionProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConditionProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class TemplateConditionProcessorTest extends QtiSmTestCase
 {
     public function testTemplateConditionSimpleIf1()
@@ -74,6 +80,9 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
     /**
      * @depends      testTemplateConditionSimpleIf2
      * @dataProvider templateConditionSimpleIfElseIfElseProvider
+     * @param int $controlValue
+     * @param int $expectedTpl1Value
+     * @throws MarshallerNotFoundException
      */
     public function testTemplateConditionSimpleIfElseIfElse($controlValue, $expectedTpl1Value)
     {
@@ -117,6 +126,9 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
         $this->assertEquals($expectedTpl1Value, $state['TPL1']->getValue());
     }
 
+    /**
+     * @return array
+     */
     public function templateConditionSimpleIfElseIfElseProvider()
     {
         return [

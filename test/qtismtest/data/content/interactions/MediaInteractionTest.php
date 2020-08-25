@@ -7,6 +7,11 @@ use qtism\data\content\interactions\MediaInteraction;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MediaInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class MediaInteractionTest extends QtiSmTestCase
 {
     public function testCreateWrongAutostartType()

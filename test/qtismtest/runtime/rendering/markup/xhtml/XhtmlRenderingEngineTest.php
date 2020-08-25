@@ -9,6 +9,11 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XhtmlRenderingEngineTest
+ *
+ * @package qtismtest\runtime\rendering\markup\xhtml
+ */
 class XhtmlRenderingEngineTest extends QtiSmTestCase
 {
     public function testVerySimple()

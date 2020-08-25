@@ -17,6 +17,11 @@ use qtism\data\content\xhtml\text\P;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class GapMatchInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

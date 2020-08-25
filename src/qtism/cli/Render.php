@@ -32,6 +32,7 @@ use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * Render CLI Module.
@@ -41,6 +42,9 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
  */
 class Render extends Cli
 {
+    /**
+     * @return Arguments
+     */
     protected function setupArguments()
     {
         $arguments = new Arguments(['strict' => false]);
@@ -221,6 +225,7 @@ class Render extends Cli
      * @param XmlDocument $doc the QTI XML document to be rendered.
      * @param GoldilocksRenderingEngine $renderer An instance of GoldilocksRenderingEngine
      * @return string The rendered data as a string.
+     * @throws RenderingException
      */
     private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer)
     {
@@ -308,6 +313,7 @@ class Render extends Cli
      * @param XmlDocument $doc The QTI XML document to be rendered.
      * @param XhtmlRenderingEngine $renderer
      * @return string The raw rendering data.
+     * @throws RenderingException
      */
     private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer)
     {

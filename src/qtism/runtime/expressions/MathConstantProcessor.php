@@ -51,6 +51,9 @@ class MathConstantProcessor extends ExpressionProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return MathConstant::class;

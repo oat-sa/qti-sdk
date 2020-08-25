@@ -38,6 +38,8 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A ResponseDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -67,6 +69,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A ResponseDeclaration object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -106,6 +109,9 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'responseDeclaration';

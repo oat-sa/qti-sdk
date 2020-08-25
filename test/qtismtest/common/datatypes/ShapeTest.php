@@ -5,13 +5,24 @@ namespace qtismtest\common\datatypes;
 use qtism\common\datatypes\QtiShape;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class ShapeTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class ShapeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return QtiShape::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -23,6 +34,9 @@ class ShapeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -34,6 +48,9 @@ class ShapeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

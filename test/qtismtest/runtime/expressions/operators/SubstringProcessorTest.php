@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\SubstringProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class SubstringProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class SubstringProcessorTest extends QtiSmTestCase
 {
     public function testCaseSensitive()
@@ -136,6 +141,11 @@ class SubstringProcessorTest extends QtiSmTestCase
         $processor = new SubstringProcessor($expression, $operands);
     }
 
+    /**
+     * @param bool $caseSensitive
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($caseSensitive = true)
     {
         $str = ($caseSensitive === true) ? 'true' : 'false';

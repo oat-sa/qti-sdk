@@ -41,6 +41,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\IStream;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
@@ -85,7 +86,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param IStream $stream The IStream object to be accessed.
      * @param FileManager $fileManager The FileManager object to handle file variable.
-     * @throws BinaryStreamAccessException If $stream is not open yet.
+     * @throws StreamAccessException
      */
     public function __construct(IStream $stream, FileManager $fileManager)
     {
@@ -192,6 +193,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Write the value of $variable in the current binary stream.
      *
      * @param Variable $variable A QTI Runtime Variable object.
+     * @param int $valueType
      * @throws QtiBinaryStreamAccessException
      */
     public function writeVariableValue(Variable $variable, $valueType = self::RW_VALUE)
@@ -271,6 +273,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read a record field value from the current binary stream. A record field is
      * composed of a key string and a value.
      *
+     * @param bool $isNull
      * @return array An array where the value at index 0 is the key string and index 1 is the value.
      * @throws QtiBinaryStreamAccessException
      */
@@ -299,6 +302,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Write a record field value in the current binary stream. A record field is composed of a key string and a value.
      *
      * @param array $recordField An array where index 0 is the key string, and the index 1 is the value.
+     * @param bool $isNull
      * @throws QtiBinaryStreamAccessException
      */
     public function writeRecordField(array $recordField, $isNull = false)
@@ -1062,6 +1066,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Write a QtiFile object in the current binary stream.
      *
      * @param QtiFile $file
+     * @throws BinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeFile(QtiFile $file)
     {

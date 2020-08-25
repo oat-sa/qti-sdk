@@ -8,6 +8,11 @@ use qtism\data\state\InterpolationTableEntry;
 use qtism\data\state\InterpolationTableEntryCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InterpolationTableTest
+ *
+ * @package qtismtest\data\state
+ */
 class InterpolationTableTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughInterpolationEntries()

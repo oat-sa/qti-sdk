@@ -49,7 +49,7 @@ abstract class AbstractSessionManager
     /**
      * Create a new AbstractSessionManager object.
      *
-     * @param FileManager A FileManager object.
+     * @param FileManager $fileManager A FileManager object.
      */
     public function __construct(FileManager $fileManager)
     {

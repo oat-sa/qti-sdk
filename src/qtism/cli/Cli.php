@@ -139,7 +139,7 @@ abstract class Cli
     /**
      * Set the parsed arguments to the CLI Module.
      *
-     * @param cli\Arguments $arguments An Arguments object from php-cli-tools.
+     * @param Arguments $arguments An Arguments object from php-cli-tools.
      */
     private function setArguments(Arguments $arguments)
     {
@@ -198,6 +198,9 @@ abstract class Cli
         exit(self::EXIT_FAILURE);
     }
 
+    /**
+     * @param $longName
+     */
     protected function missingArgument($longName)
     {
         $arguments = $this->getArguments();

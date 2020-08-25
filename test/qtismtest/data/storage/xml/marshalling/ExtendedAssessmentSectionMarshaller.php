@@ -10,6 +10,11 @@ use qtism\data\SectionPartCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentSectionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

@@ -30,6 +30,11 @@ use qtism\data\results\SessionIdentifier;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SessionIdentifierMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class SessionIdentifierMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

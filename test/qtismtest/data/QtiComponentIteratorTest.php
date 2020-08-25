@@ -8,8 +8,14 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Sum;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiComponentIteratorTest
+ *
+ * @package qtismtest\data
+ */
 class QtiComponentIteratorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -103,8 +109,10 @@ class QtiComponentIteratorTest extends QtiSmTestCase
     /**
      * @dataProvider testClassSelectionProvider
      *
+     * @param string $file
      * @param int $iterations
      * @param array $classNames
+     * @throws XmlStorageException
      */
     public function testClassSelection($file, $iterations, array $classNames)
     {
@@ -128,6 +136,9 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function testClassSelectionProvider()
     {
         $dir = self::samplesDir();

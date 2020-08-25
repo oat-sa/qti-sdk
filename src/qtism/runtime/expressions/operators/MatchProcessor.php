@@ -79,6 +79,9 @@ class MatchProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Match::class;

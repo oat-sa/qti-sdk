@@ -15,6 +15,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class InsideProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class InsideProcessorTest extends QtiSmTestCase
 {
     public function testRect()
@@ -147,6 +152,12 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
     }
 
+    /**
+     * @param null $point
+     * @param QtiCoords|null $coords
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($point = null, QtiCoords $coords = null)
     {
         $point = (is_null($point) || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;

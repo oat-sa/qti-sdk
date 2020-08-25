@@ -23,6 +23,11 @@
 
 namespace qtism\common\utils;
 
+/**
+ * Class Php
+ *
+ * @package qtism\common\utils
+ */
 class Php
 {
     /**

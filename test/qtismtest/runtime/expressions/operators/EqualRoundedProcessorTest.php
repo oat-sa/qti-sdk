@@ -16,6 +16,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class EqualRoundedProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class EqualRoundedProcessorTest extends QtiSmTestCase
 {
     public function testSignificantFigures()
@@ -118,6 +123,12 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $processor = new EqualRoundedProcessor($expression, $operands);
     }
 
+    /**
+     * @param $roundingMode
+     * @param $figures
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression($roundingMode, $figures)
     {
         $roundingMode = RoundingMode::getNameByConstant($roundingMode);

@@ -7,6 +7,11 @@ use qtism\data\TestFeedbackAccess;
 use qtism\data\TestFeedbackRef;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestFeedbackRefTest
+ *
+ * @package qtismtest\data
+ */
 class TestFeedbackRefTest extends QtiSmTestCase
 {
     public function testSetAccessWrongType()

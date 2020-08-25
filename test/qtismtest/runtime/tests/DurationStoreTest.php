@@ -13,6 +13,11 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\DurationStore;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DurationStoreTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class DurationStoreTest extends QtiSmTestCase
 {
     public function testInstantiation()

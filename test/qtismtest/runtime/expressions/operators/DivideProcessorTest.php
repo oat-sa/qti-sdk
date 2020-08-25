@@ -13,6 +13,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DivideProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class DivideProcessorTest extends QtiSmTestCase
 {
     public function testDivide()
@@ -126,6 +131,10 @@ class DivideProcessorTest extends QtiSmTestCase
         $processor = new DivideProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -54,6 +54,9 @@ class ExitTemplateMarshaller extends Marshaller
         return new ExitTemplate();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'exitTemplate';

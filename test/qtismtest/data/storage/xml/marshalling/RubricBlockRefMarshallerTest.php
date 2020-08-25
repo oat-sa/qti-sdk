@@ -7,6 +7,11 @@ use qtism\data\content\RubricBlockRef;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RubricBlockRefMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class RubricBlockRefMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

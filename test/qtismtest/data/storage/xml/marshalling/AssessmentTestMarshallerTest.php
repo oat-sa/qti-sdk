@@ -24,6 +24,11 @@ use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class AssessmentTestMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class IntOrIdentifierTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class IntOrIdentifierTest extends QtiSmTestCase
 {
     public function testWrongValue()

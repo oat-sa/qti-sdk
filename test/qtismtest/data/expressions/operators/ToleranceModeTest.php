@@ -5,13 +5,24 @@ namespace qtismtest\data\expressions\operators;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class ToleranceModeTest
+ *
+ * @package qtismtest\data\expressions\operators
+ */
 class ToleranceModeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return ToleranceMode::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -21,6 +32,9 @@ class ToleranceModeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -30,6 +44,9 @@ class ToleranceModeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

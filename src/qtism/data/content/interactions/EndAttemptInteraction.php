@@ -103,11 +103,17 @@ class EndAttemptInteraction extends InlineInteraction
         return $this->title;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'endAttemptInteraction';

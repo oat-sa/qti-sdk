@@ -16,6 +16,11 @@ use qtism\data\TestFeedbackAccess;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TestFeedbackMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

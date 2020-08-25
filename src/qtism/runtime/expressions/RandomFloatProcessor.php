@@ -67,6 +67,9 @@ class RandomFloatProcessor extends ExpressionProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return RandomFloat::class;

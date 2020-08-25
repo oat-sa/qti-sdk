@@ -14,6 +14,11 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\expressions\operators\NotOperator;
 use qtism\data\expressions\operators\Equal;
 
+/**
+ * Class TestPartMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TestPartMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

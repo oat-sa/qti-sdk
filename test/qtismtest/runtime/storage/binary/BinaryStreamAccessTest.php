@@ -9,6 +9,11 @@ use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BinaryStreamAccessTest
+ *
+ * @package qtismtest\runtime\storage\binary
+ */
 class BinaryStreamAccessTest extends QtiSmTestCase
 {
     private $emptyStream;

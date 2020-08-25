@@ -101,5 +101,8 @@ abstract class SetValueProcessor extends RuleProcessor
         }
     }
 
+    /**
+     * @return mixed
+     */
     abstract protected function getVariableType();
 }

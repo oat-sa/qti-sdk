@@ -28,6 +28,9 @@ namespace qtism\data\content\xhtml\tables;
  */
 class Td extends TableCell
 {
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'td';

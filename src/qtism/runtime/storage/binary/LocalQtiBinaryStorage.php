@@ -25,8 +25,10 @@ namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\IStream;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentTest;
 use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AbstractSessionManager;
@@ -125,17 +127,31 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         return new MemoryStream($read);
     }
 
+    /**
+     * @param IStream $stream
+     * @return BinaryStreamAccess|QtiBinaryStreamAccess
+     * @throws StreamAccessException
+     */
     protected function createBinaryStreamAccess(IStream $stream)
     {
         return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
     }
 
+    /**
+     * @param string $sessionId
+     * @return bool
+     */
     public function exists($sessionId)
     {
         $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         return @is_readable($path);
     }
 
+    /**
+     * @param AssessmentTestSession $assessmentTestSession
+     * @return bool
+     * @throws StorageException
+     */
     public function delete(AssessmentTestSession $assessmentTestSession)
     {
         $fileManager = $this->getManager()->getFileManager();

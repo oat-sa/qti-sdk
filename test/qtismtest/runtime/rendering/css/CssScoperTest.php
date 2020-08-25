@@ -6,6 +6,11 @@ use qtism\runtime\rendering\css\CssScoper;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rendering\RenderingException;
 
+/**
+ * Class CssScoperTest
+ *
+ * @package qtismtest\runtime\rendering\css
+ */
 class CssScoperTest extends QtiSmTestCase
 {
     /**
@@ -17,6 +22,8 @@ class CssScoperTest extends QtiSmTestCase
      * @param bool $cssMapping
      * @param bool $pseudoClassMapping
      * @param bool $wcFriendly
+     * @throws RenderingException
+     * @throws \qtism\common\storage\MemoryStreamException
      */
     public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
     {
@@ -27,6 +34,9 @@ class CssScoperTest extends QtiSmTestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @return array
+     */
     public function testOutputProvider()
     {
         return [

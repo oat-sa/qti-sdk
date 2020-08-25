@@ -50,7 +50,7 @@ abstract class AbstractQtiPLRenderer implements Renderable
     /**
      * Sets the ConditionRenderingOptions to this QtiPLRenderer.
      *
-     * @param $cro ConditionRenderingOptions
+     * @param ConditionRenderingOptions $cro
      */
     public function setCRO($cro)
     {
@@ -60,7 +60,7 @@ abstract class AbstractQtiPLRenderer implements Renderable
     /**
      * Creates a new instance of a QtiPLRenderer.
      *
-     * @param $cro ConditionRenderingOptions The ConditionRenderingOptions assigned to this QtiPLRenderer.
+     * @param ConditionRenderingOptions $cro The ConditionRenderingOptions assigned to this QtiPLRenderer.
      */
     public function __construct($cro)
     {

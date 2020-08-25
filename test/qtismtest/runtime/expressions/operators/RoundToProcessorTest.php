@@ -15,6 +15,11 @@ use qtism\runtime\expressions\operators\RoundToProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RoundToProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class RoundToProcessorTest extends QtiSmTestCase
 {
     public function testSignificantFigures()

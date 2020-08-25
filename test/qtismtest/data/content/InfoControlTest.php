@@ -6,6 +6,11 @@ use InvalidArgumentException;
 use qtism\data\content\InfoControl;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InfoControlTest
+ *
+ * @package qtismtest\data\content
+ */
 class InfoControlTest extends QtiSmTestCase
 {
     public function testSetTitleWrongType()

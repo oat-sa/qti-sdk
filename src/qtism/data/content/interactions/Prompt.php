@@ -77,11 +77,17 @@ class Prompt extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'prompt';

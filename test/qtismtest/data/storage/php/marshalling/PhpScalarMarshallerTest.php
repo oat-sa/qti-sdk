@@ -7,6 +7,11 @@ use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 use stdClass;
 
+/**
+ * Class PhpScalarMarshallerTest
+ *
+ * @package qtismtest\data\storage\php\marshalling
+ */
 class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
@@ -14,6 +19,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param mixed $scalar
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
      */
     public function testMarshall($expectedInStream, $scalar)
     {
@@ -31,6 +37,9 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpScalarMarshaller($ctx, new stdClass());
     }
 
+    /**
+     * @return array
+     */
     public function marshallDataProvider()
     {
         return [

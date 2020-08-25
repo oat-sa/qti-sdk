@@ -16,6 +16,11 @@ use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class RubricBlockMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class RubricBlockMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

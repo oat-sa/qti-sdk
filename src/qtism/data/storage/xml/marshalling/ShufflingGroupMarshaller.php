@@ -77,6 +77,9 @@ class ShufflingGroupMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'shufflingGroup';

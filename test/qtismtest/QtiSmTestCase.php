@@ -19,6 +19,11 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 
+/**
+ * Class QtiSmTestCase
+ *
+ * @package qtismtest
+ */
 abstract class QtiSmTestCase extends TestCase
 {
     /**
@@ -97,6 +102,10 @@ abstract class QtiSmTestCase extends TestCase
         $this->outputFileSystem = $filesystem;
     }
 
+    /**
+     * @param string $version
+     * @return Qti20MarshallerFactory|Qti211MarshallerFactory|Qti21MarshallerFactory|Qti221MarshallerFactory|Qti222MarshallerFactory|Qti22MarshallerFactory|Qti30MarshallerFactory
+     */
     public function getMarshallerFactory($version = '2.1')
     {
         if (Version::compare($version, '2.0.0', '==') === true) {
@@ -187,7 +196,7 @@ abstract class QtiSmTestCase extends TestCase
      *
      * @param string $date A date
      * @param string $tz A timezone name.
-     * @return Date
+     * @return DateTime
      */
     public static function createDate($date, $tz = 'UTC')
     {
@@ -200,6 +209,7 @@ abstract class QtiSmTestCase extends TestCase
      * @param string $xmlString An XML String to transform in a QtiComponent object.
      * @param string $version A QTI version rule the creation of the component.
      * @return QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {

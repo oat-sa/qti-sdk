@@ -51,6 +51,9 @@ class OperatorCardinality extends Cardinality
      */
     const ANY = 5;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         $values = Cardinality::asArray();

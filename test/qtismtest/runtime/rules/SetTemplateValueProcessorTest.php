@@ -13,6 +13,11 @@ use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 
+/**
+ * Class SetTemplateValueProcessorTest
+ *
+ * @package qtismtest\runtime\rules
+ */
 class SetTemplateValueProcessorTest extends QtiSmTestCase
 {
     public function testSetTemplateValueSimple()

@@ -12,6 +12,11 @@ use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class PositionObjectInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

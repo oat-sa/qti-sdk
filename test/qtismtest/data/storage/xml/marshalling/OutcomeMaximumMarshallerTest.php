@@ -8,6 +8,11 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\OutcomeMaximum;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeMaximumMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OutcomeMaximumMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

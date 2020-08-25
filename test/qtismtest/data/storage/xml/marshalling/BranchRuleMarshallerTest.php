@@ -9,6 +9,11 @@ use qtism\data\expressions\BaseValue;
 use qtism\data\rules\BranchRule;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BranchRuleMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class BranchRuleMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

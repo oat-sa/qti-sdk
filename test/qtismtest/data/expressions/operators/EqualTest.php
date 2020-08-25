@@ -11,6 +11,11 @@ use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmTestCase;
 use UnexpectedValueException;
 
+/**
+ * Class EqualTest
+ *
+ * @package qtismtest\data\expressions\operators
+ */
 class EqualTest extends QtiSmTestCase
 {
     public function testInstantiationNoToleranceButRequired()

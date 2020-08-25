@@ -8,6 +8,11 @@ use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderInteractionTest
+ *
+ * @package qtismtest\data\content\interactions
+ */
 class OrderInteractionTest extends QtiSmTestCase
 {
     public function testNotEnoughChoices()

@@ -33,6 +33,11 @@ class FileSystemFileManager implements FileManager
 {
     private $storageDirectory;
 
+    /**
+     * FileSystemFileManager constructor.
+     *
+     * @param string $storageDirectory
+     */
     public function __construct($storageDirectory = '')
     {
         $this->setStorageDirectory((empty($storageDirectory) === true) ? sys_get_temp_dir() : $storageDirectory);

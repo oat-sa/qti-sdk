@@ -66,6 +66,9 @@ class GtProcessor extends OperatorProcessor
         return new QtiBoolean($operands[0]->getValue() > $operands[1]->getValue());
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Gt::class;

@@ -7,8 +7,14 @@ use qtism\data\content\ModalFeedback;
 use qtism\data\content\ModalFeedbackCollection;
 use qtism\data\ShowHide;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentItemTest
+ *
+ * @package qtismtest\data
+ */
 class AssessmentItemTest extends QtiSmTestCase
 {
     public function testModalFeedbackRules()
@@ -34,6 +40,9 @@ class AssessmentItemTest extends QtiSmTestCase
 
     /**
      * @dataProvider getResponseValidityConstraintsProvider
+     * @param $path
+     * @param array $expected
+     * @throws XmlStorageException
      */
     public function testGetResponseValidityConstraints($path, array $expected)
     {
@@ -67,6 +76,9 @@ class AssessmentItemTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function getResponseValidityConstraintsProvider()
     {
         return [

@@ -42,6 +42,7 @@ class Tr extends BodyElement
     /**
      * Create a new Tr object.
      *
+     * @param TableCellCollection $content
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -54,6 +55,9 @@ class Tr extends BodyElement
         $this->setContent($content);
     }
 
+    /**
+     * @return TableCellCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
@@ -79,6 +83,9 @@ class Tr extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'tr';

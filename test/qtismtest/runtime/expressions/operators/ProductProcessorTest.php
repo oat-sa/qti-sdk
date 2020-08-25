@@ -15,6 +15,11 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\common\Processable;
 use RuntimeException;
 
+/**
+ * Class ProductProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class ProductProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -95,6 +100,10 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     private function createFakeProductComponent()
     {
         return $this->createComponentFromXml('

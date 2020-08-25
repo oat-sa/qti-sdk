@@ -106,6 +106,9 @@ class MultipleProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Multiple::class;

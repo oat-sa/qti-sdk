@@ -4,9 +4,16 @@ namespace qtismtest;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
 
+/**
+ * Class QtiSmAssessmentItemTestCase
+ *
+ * @package qtismtest
+ */
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
     public function setUp()
@@ -19,6 +26,12 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
         parent::tearDown();
     }
 
+    /**
+     * @param $xmlString
+     * @return \qtism\data\ExtendedAssessmentItemRef
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
+     */
     protected static function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
@@ -35,6 +48,8 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * The responseProcessing for item of the session is the template 'match_correct'.
      *
      * @return AssessmentItemSession
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected static function instantiateBasicAssessmentItemSession()
     {
@@ -69,6 +84,8 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
      *
      * @return AssessmentItemSession
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected static function instantiateBasicAdaptiveAssessmentItem()
     {

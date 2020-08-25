@@ -8,6 +8,11 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TimeLimitsMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TimeLimitsMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

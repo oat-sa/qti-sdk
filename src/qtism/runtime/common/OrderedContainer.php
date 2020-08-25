@@ -66,11 +66,17 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
         return false;
     }
 
+    /**
+     * @return int
+     */
     public function getCardinality()
     {
         return Cardinality::ORDERED;
     }
 
+    /**
+     * @return array
+     */
     protected function getToStringBounds()
     {
         return ['<', '>'];

@@ -188,11 +188,17 @@ class ResponseProcessing extends QtiComponent
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'responseProcessing';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getResponseRules()->getArrayCopy());

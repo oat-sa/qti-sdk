@@ -52,6 +52,9 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
         return $xml->documentElement->getAttribute('href');
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'include';

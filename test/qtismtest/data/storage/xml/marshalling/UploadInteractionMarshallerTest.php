@@ -10,6 +10,11 @@ use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class UploadInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class UploadInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -11,6 +11,11 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetCorrectResponse;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetCorrectResponseMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

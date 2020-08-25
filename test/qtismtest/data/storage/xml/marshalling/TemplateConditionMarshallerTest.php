@@ -22,6 +22,11 @@ use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConditionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TemplateConditionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

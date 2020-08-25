@@ -78,6 +78,9 @@ class Container extends AbstractCollection implements Comparable
         parent::__construct($array);
     }
 
+    /**
+     * @param mixed $value
+     */
     protected function checkType($value)
     {
         if (!RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {

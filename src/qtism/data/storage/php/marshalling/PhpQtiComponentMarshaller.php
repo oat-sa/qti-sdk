@@ -51,6 +51,12 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      */
     private $asInstanceOf = '';
 
+    /**
+     * PhpQtiComponentMarshaller constructor.
+     *
+     * @param PhpMarshallingContext $context
+     * @param $toMarshall
+     */
     public function __construct(PhpMarshallingContext $context, $toMarshall)
     {
         parent::__construct($context, $toMarshall);

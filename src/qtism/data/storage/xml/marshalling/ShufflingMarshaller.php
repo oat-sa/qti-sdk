@@ -38,6 +38,8 @@ class ShufflingMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Shuffling object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -57,6 +59,7 @@ class ShufflingMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A ShufflingGroup object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -85,6 +88,9 @@ class ShufflingMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'shuffling';

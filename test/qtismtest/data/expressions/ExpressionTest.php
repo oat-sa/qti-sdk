@@ -14,6 +14,11 @@ use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExpressionTest
+ *
+ * @package qtismtest\data\expressions
+ */
 class ExpressionTest extends QtiSmTestCase
 {
     public function testIsPure()

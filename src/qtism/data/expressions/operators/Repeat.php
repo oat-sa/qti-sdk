@@ -90,6 +90,9 @@ class Repeat extends Operator implements Pure
         return $this->numberRepeats;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'repeat';

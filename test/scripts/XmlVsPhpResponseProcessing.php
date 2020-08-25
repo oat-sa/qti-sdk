@@ -5,6 +5,11 @@ use qtism\data\storage\xml\XmlDocument;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
+/**
+ * @param $start
+ * @param $end
+ * @return mixed
+ */
 function spentTime($start, $end)
 {
     $startTime = explode(' ', $start);

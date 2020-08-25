@@ -11,6 +11,11 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderedContainerTest
+ *
+ * @package qtismtest\runtime\common
+ */
 class OrderedContainerTest extends QtiSmTestCase
 {
     /**
@@ -43,6 +48,9 @@ class OrderedContainerTest extends QtiSmTestCase
         $this->assertEquals(Cardinality::ORDERED, $container->getCardinality());
     }
 
+    /**
+     * @return array
+     */
     public function equalsValidProvider()
     {
         return [
@@ -53,6 +61,9 @@ class OrderedContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function equalsInvalidProvider()
     {
         return [

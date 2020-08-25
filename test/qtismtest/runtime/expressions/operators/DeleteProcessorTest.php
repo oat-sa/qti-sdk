@@ -13,6 +13,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DeleteProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class DeleteProcessorTest extends QtiSmTestCase
 {
     public function testMultiple()
@@ -161,6 +166,10 @@ class DeleteProcessorTest extends QtiSmTestCase
         $processor = new DeleteProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

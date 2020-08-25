@@ -28,6 +28,9 @@ namespace qtism\runtime\tests;
  */
 class BasicOrdering extends AbstractOrdering
 {
+    /**
+     * @return SelectableRouteCollection
+     */
     public function order()
     {
         if (($ordering = $this->getAssessmentSection()->getOrdering()) !== null && $ordering->getShuffle() === true) {

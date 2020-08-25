@@ -27,6 +27,11 @@ use InvalidArgumentException;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\ExpressionProcessor;
 
+/**
+ * Class OperatorProcessor
+ *
+ * @package qtism\runtime\expressions\operators
+ */
 abstract class OperatorProcessor extends ExpressionProcessor
 {
     /**

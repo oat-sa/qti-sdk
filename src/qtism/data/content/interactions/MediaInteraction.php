@@ -259,6 +259,15 @@ class MediaInteraction extends BlockInteraction
         return $this->object;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponent = parent::getComponents();
@@ -266,6 +275,15 @@ class MediaInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponent->getArrayCopy(), [$this->getObject()]));
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'mediaInteraction';

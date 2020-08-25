@@ -8,6 +8,11 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberCorrect;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class NumberCorrectMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class NumberCorrectMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

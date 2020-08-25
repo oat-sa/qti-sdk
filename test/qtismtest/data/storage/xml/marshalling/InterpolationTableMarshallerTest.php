@@ -11,6 +11,11 @@ use qtism\data\state\InterpolationTableEntryCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class InterpolationTableMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class InterpolationTableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

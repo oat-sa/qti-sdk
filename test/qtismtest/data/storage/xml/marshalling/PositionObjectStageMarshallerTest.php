@@ -10,6 +10,11 @@ use qtism\data\content\interactions\PositionObjectStage;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PositionObjectStageMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class PositionObjectStageMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

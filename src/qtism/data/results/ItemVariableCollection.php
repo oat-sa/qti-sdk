@@ -26,6 +26,11 @@ namespace qtism\data\results;
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
+/**
+ * Class ItemVariableCollection
+ *
+ * @package qtism\data\results
+ */
 class ItemVariableCollection extends QtiComponentCollection
 {
     /**

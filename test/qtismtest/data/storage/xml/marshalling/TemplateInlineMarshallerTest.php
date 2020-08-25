@@ -10,6 +10,11 @@ use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TemplateInlineMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TemplateInlineMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -91,6 +91,9 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
         return $result;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return OutcomeMinimum::class;

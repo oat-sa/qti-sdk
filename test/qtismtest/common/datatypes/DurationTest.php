@@ -7,6 +7,11 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DurationTest
+ *
+ * @package qtismtest\common\datatypes
+ */
 class DurationTest extends QtiSmTestCase
 {
     /**
@@ -155,6 +160,9 @@ class DurationTest extends QtiSmTestCase
         $this->assertSame($expected, $duration1->longerThanOrEquals($duration2));
     }
 
+    /**
+     * @return array
+     */
     public function shorterThanProvider()
     {
         $returnValue = [];
@@ -169,6 +177,9 @@ class DurationTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function longerThanOrEqualsProvider()
     {
         $returnValue = [];
@@ -186,6 +197,9 @@ class DurationTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function validDurationProvider()
     {
         return [
@@ -195,6 +209,9 @@ class DurationTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidDurationProvider()
     {
         return [
@@ -205,6 +222,9 @@ class DurationTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function toStringProvider()
     {
         return [

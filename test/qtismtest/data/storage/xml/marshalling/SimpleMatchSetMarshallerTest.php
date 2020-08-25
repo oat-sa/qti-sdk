@@ -10,6 +10,11 @@ use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SimpleMatchSetMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

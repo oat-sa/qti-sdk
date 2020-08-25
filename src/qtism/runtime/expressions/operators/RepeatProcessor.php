@@ -135,6 +135,9 @@ class RepeatProcessor extends OperatorProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Repeat::class;

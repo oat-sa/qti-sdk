@@ -10,6 +10,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionAttemptsTest
+ *
+ * @package qtismtest\runtime\tests
+ */
 class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testMultipleAttempts()

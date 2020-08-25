@@ -19,6 +19,11 @@ use qtismtest\QtiSmTestCase;
 use stdClass;
 use qtism\runtime\common\VariableCollection;
 
+/**
+ * Class StateTest
+ *
+ * @package qtismtest\runtime\common
+ */
 class StateTest extends QtiSmTestCase
 {
     public function testInstantiation()
@@ -112,6 +117,9 @@ class StateTest extends QtiSmTestCase
         $this->assertEquals($expected, $state->containsNullOnly());
     }
 
+    /**
+     * @return array
+     */
     public function containsNullOnlyProvider()
     {
         return [
@@ -146,6 +154,9 @@ class StateTest extends QtiSmTestCase
         $this->assertEquals($expected, $state->containsValuesEqualToVariableDefaultOnly());
     }
 
+    /**
+     * @return array
+     */
     public function containsValuesEqualToVariableDefaultOnlyProvider()
     {
         $booleanNotDefault = new ResponseVariable('BOOLEAN_NOT_DEFAULT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));

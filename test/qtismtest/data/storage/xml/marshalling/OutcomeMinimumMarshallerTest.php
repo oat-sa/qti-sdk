@@ -8,6 +8,11 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\OutcomeMinimum;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeMinimumMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class OutcomeMinimumMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

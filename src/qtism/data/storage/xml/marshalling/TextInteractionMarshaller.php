@@ -40,6 +40,7 @@ class TextInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A TextEntryInteraction/ExtendedTextInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -105,6 +106,7 @@ class TextInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TextEntryInteraction/ExtendedTextInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -178,6 +180,15 @@ class TextInteractionMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

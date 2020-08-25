@@ -12,6 +12,11 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IntegerModulusProcessorTest
+ *
+ * @package qtismtest\runtime\expressions\operators
+ */
 class IntegerModulusProcessorTest extends QtiSmTestCase
 {
     public function testIntegerModulus()
@@ -97,6 +102,10 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $processor = new IntegerModulusProcessor($expression, $operands);
     }
 
+    /**
+     * @return \qtism\data\QtiComponent
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

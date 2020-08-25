@@ -6,6 +6,11 @@ use DOMDocument;
 use qtism\data\content\interactions\TextEntryInteraction;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TextEntryInteractionMarshallerTest
+ *
+ * @package qtismtest\data\storage\xml\marshalling
+ */
 class TextEntryInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal21()

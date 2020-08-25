@@ -103,21 +103,33 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
         return $this->required;
     }
 
+    /**
+     * @param IdentifierCollection $matchGroup
+     */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
         $this->matchGroup = $matchGroup;
     }
 
+    /**
+     * @return IdentifierCollection
+     */
     public function getMatchGroup()
     {
         return $this->matchGroup;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'gap';

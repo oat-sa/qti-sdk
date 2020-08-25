@@ -154,11 +154,17 @@ class AreaMapEntry extends QtiComponent
         return $this->mappedValue;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'areaMapEntry';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

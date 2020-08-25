@@ -23,6 +23,11 @@ use qtism\runtime\common\RecordContainer;
 use qtismtest\QtiSmTestCase;
 use UnexpectedValueException;
 
+/**
+ * Class OutcomeVariableTest
+ *
+ * @package qtismtest\runtime\common
+ */
 class OutcomeVariableTest extends QtiSmTestCase
 {
     public function testInstantiate()
