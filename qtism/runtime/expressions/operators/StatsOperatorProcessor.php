@@ -94,7 +94,7 @@ class StatsOperatorProcessor extends OperatorProcessor
         $qtiFuncName = Statistics::getNameByConstant($this->getExpression()->getName());
         $methodName = 'process' . ucfirst($qtiFuncName);
 
-        return call_user_func_array([$this, $methodName], []);
+        return $this->$methodName();
     }
 
     /**

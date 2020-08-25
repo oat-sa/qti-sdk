@@ -300,7 +300,7 @@ abstract class Variable
                 $className = ucfirst(Cardinality::getNameByConstant($cardinality)) . 'Container';
                 $nsClassName = 'qtism\\runtime\\common\\' . $className;
                 $callback = [$nsClassName, 'createFromDataModel'];
-                $container = call_user_func_array($callback, [$valueCollection, $baseType]);
+                $container = $callback($valueCollection, $baseType);
 
                 return $container; // return container.
             } catch (InvalidArgumentException $e) {

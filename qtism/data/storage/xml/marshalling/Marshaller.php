@@ -175,7 +175,7 @@ abstract class Marshaller
                 } else {
                     $element = $args[0];
                     if ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName())) {
-                        return call_user_func_array([$this, 'unmarshall'], $args);
+                        return $this->unmarshall(...$args);
                     } else {
                         $nodeName = (($prefix = $element->prefix) === null) ? $element->localName : "${prefix}:" . $element->localName;
                         throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");

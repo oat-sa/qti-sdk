@@ -853,7 +853,7 @@ class AssessmentItemSession extends State
             $this->setTimeReference($now);
 
             foreach ($this->onDurationUpdate as $callBack) {
-                call_user_func_array($callBack, [$this, QtiDuration::createFromDateInterval($diff)]);
+                $callBack($this, QtiDuration::createFromDateInterval($diff));
             }
         }
     }

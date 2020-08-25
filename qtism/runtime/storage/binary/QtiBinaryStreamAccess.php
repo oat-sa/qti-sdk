@@ -142,13 +142,13 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $variable->setValue(Utils::valueToRuntime(call_user_func([$this, $toCall]), $baseType));
+                    $variable->setValue(Utils::valueToRuntime($this->$toCall(), $baseType));
                 } else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
-                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime(call_user_func([$this, $toCall]), $baseType);
+                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime($this->$toCall(), $baseType);
                     }
 
                     $variable->setValue($values);
@@ -246,7 +246,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $baseType = $this->readTinyInt();
 
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
-                $value = Utils::valueToRuntime(call_user_func([$this, $toCall]), $baseType);
+                $value = Utils::valueToRuntime($this->$toCall(), $baseType);
             } else {
                 $value = null;
             }
@@ -279,7 +279,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
 
-                call_user_func([$this, $toCall], ($value instanceof QtiScalar) ? $value->getValue() : $value);
+                $this->$toCall($value instanceof QtiScalar ? $value->getValue() : $value);
             }
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while writing a Record Field.';
