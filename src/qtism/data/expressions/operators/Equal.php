@@ -232,12 +232,6 @@ class Equal extends Operator implements Pure
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'equal';

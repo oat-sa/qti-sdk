@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
 use qtism\data\content\FlowStaticCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The prompt QTI class.
@@ -78,7 +79,7 @@ class Prompt extends BodyElement
     }
 
     /**
-     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     * @return FlowStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\FlowStaticCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The simpleAssociableChoice QTI class.
@@ -144,7 +145,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     }
 
     /**
-     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     * @return FlowStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

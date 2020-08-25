@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\BlockStaticCollection;
+use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
 
 /**
@@ -198,7 +199,7 @@ class HottextInteraction extends BlockInteraction
     }
 
     /**
-     * @return BlockStaticCollection|\qtism\data\QtiComponentCollection
+     * @return BlockStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

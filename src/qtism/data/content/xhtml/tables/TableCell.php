@@ -348,12 +348,6 @@ abstract class TableCell extends BodyElement
     }
 
     /**
-     * @return FlowCollection|\qtism\data\QtiComponentCollection
-     */
-    /**
-     * @return FlowCollection
-     */
-    /**
      * @return FlowCollection
      */
     public function getComponents()

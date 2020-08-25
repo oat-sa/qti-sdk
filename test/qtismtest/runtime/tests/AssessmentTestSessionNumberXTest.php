@@ -8,7 +8,6 @@ use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-use qtism\runtime\tests\OrderingException;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
@@ -28,14 +27,14 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // Test AssessmentTestSession::numberCorrect, numberIncorrect, numberResponded, numberSelected, numberPresented
         //  with a non running test session.
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/subset/number_x.xml');
-        $this->assertEquals(0, call_user_func([$session, $method]));
-        $this->assertEquals(0, call_user_func([$session, $method], 'S01'));
-        $this->assertEquals(0, call_user_func([$session, $method], 'S01A'));
-        $this->assertEquals(0, call_user_func([$session, $method], 'S01B'));
-        $this->assertEquals(0, call_user_func([$session, $method]), 'S02');
+        $this->assertEquals(0, $session->$method());
+        $this->assertEquals(0, $session->$method('S01'));
+        $this->assertEquals(0, $session->$method('S01A'));
+        $this->assertEquals(0, $session->$method('S01B'));
+        $this->assertEquals(0, $session->$method('S02'));
 
         // query for an unexisting ID.
-        $this->assertEquals(0, call_user_func([$session, $method]), 'S0X');
+        $this->assertEquals(0, $session->$method('S0X'));
     }
 
     /**

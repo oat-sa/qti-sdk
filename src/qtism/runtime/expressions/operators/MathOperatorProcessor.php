@@ -99,7 +99,7 @@ class MathOperatorProcessor extends OperatorProcessor
 
         $qtiFuncName = MathFunctions::getNameByConstant($this->getExpression()->getName());
         $methodName = 'process' . ucfirst($qtiFuncName);
-        $result = call_user_func_array([$this, $methodName], []);
+        $result = $this->$methodName();
 
         if ($result instanceof QtiFloat && is_nan($result->getValue()) === true) {
             // outside the domain of the function.
@@ -541,12 +541,6 @@ class MathOperatorProcessor extends OperatorProcessor
         return new QtiFloat((float)deg2rad($operand->getValue()));
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

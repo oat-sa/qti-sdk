@@ -235,12 +235,6 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * @return ResponseValidityConstraint|null
-     */
-    /**
-     * @return ResponseValidityConstraint
-     */
-    /**
      * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
@@ -255,23 +249,11 @@ class PositionObjectInteraction extends Interaction
     /**
      * @return QtiComponentCollection
      */
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

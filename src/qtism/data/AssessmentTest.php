@@ -382,23 +382,11 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'assessmentTest';
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     /**
      * @return QtiComponentCollection
      */

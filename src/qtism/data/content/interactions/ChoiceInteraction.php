@@ -251,12 +251,6 @@ class ChoiceInteraction extends BlockInteraction
     }
 
     /**
-     * @return ResponseValidityConstraint|null
-     */
-    /**
-     * @return ResponseValidityConstraint
-     */
-    /**
      * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
@@ -271,23 +265,11 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'choiceInteraction';
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     /**
      * @return QtiComponentCollection
      */

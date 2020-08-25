@@ -262,23 +262,11 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'responseValidityConstraint';
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     /**
      * @return QtiComponentCollection
      */

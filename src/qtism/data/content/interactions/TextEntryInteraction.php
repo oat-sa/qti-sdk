@@ -310,12 +310,6 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     }
 
     /**
-     * @return ResponseValidityConstraint|null
-     */
-    /**
-     * @return ResponseValidityConstraint
-     */
-    /**
      * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
@@ -326,23 +320,11 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * @return QtiComponentCollection
      */
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

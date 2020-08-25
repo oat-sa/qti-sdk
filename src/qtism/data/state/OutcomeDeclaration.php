@@ -350,24 +350,12 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'outcomeDeclaration';
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
+   /**
      * @return QtiComponentCollection
      */
     public function getComponents()

@@ -262,23 +262,11 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * @param IdentifierCollection $matchGroup
      */
-    /**
-     * @param IdentifierCollection $matchGroup
-     */
-    /**
-     * @param IdentifierCollection $matchGroup
-     */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
         $this->matchGroup = $matchGroup;
     }
 
-    /**
-     * @return IdentifierCollection
-     */
-    /**
-     * @return IdentifierCollection
-     */
     /**
      * @return IdentifierCollection
      */
@@ -290,23 +278,11 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * @return QtiComponentCollection
      */
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

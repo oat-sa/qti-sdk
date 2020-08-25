@@ -25,6 +25,7 @@ namespace qtism\data\content;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 
 /**
@@ -202,7 +203,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
     }
 
     /**
-     * @return FlowCollection|\qtism\data\QtiComponentCollection
+     * @return FlowCollection|QtiComponentCollection
      */
     public function getComponents()
     {

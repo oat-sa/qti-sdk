@@ -294,23 +294,11 @@ class AssessmentSection extends SectionPart
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'assessmentSection';
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     /**
      * @return QtiComponentCollection
      */

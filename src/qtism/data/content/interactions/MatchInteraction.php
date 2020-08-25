@@ -253,12 +253,6 @@ class MatchInteraction extends BlockInteraction
     }
 
     /**
-     * @return ResponseValidityConstraint|null
-     */
-    /**
-     * @return ResponseValidityConstraint
-     */
-    /**
      * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
@@ -285,12 +279,6 @@ class MatchInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -298,12 +286,6 @@ class MatchInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleMatchSets()->getArrayCopy()));
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

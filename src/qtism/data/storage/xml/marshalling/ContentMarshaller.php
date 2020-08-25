@@ -351,12 +351,6 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getExpectedQtiClassName()
     {
         return '';

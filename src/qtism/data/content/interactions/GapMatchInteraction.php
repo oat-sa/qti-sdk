@@ -217,12 +217,6 @@ class GapMatchInteraction extends BlockInteraction
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'gapMatchInteraction';

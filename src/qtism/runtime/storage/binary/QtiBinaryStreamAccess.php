@@ -143,7 +143,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             if ($isNull === true) {
                 // Nothing more to be read.
-                call_user_func([$variable, $setterToCall], null);
+                $variable->$setterToCall(null);
                 return;
             }
 
@@ -161,23 +161,23 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     $values[$val[0]] = $val[1];
                 }
 
-                call_user_func([$variable, $setterToCall], $values);
+                $variable->$setterToCall($values);
             } else {
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $runtimeValue = Utils::valueToRuntime(call_user_func([$this, $toCall]), $baseType);
-                    call_user_func([$variable, $setterToCall], $runtimeValue);
+                    $runtimeValue = Utils::valueToRuntime($this->$toCall(), $baseType);
+                    $variable->$setterToCall($runtimeValue);
                 } else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
-                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime(call_user_func([$this, $toCall]), $baseType);
+                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime($this->$toCall(), $baseType);
                     }
 
-                    call_user_func([$variable, $setterToCall], $values);
+                    $variable->$setterToCall($values);
                 }
             }
         } catch (BinaryStreamAccessException $e) {
@@ -212,7 +212,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         }
 
         try {
-            $value = call_user_func([$variable, $getterToCall]);
+            $value = $variable->$getterToCall();
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
 
@@ -286,7 +286,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $baseType = $this->readTinyInt();
 
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
-                $value = Utils::valueToRuntime(call_user_func([$this, $toCall]), $baseType);
+                $value = Utils::valueToRuntime($this->$toCall(), $baseType);
             } else {
                 $value = null;
             }
@@ -319,7 +319,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
 
-                call_user_func([$this, $toCall], ($value instanceof QtiScalar) ? $value->getValue() : $value);
+                $this->$toCall($value instanceof QtiScalar ? $value->getValue() : $value);
             }
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while writing a Record Field.';

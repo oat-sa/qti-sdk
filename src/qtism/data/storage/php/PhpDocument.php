@@ -101,7 +101,8 @@ class PhpDocument extends QtiDocument
                 $getters = array_reverse(array_merge($bodyGetters->getArrayCopy(), $ctorGetters->getArrayCopy()));
 
                 foreach ($getters as $getter) {
-                    $stack->push(call_user_func([$component, $getter->getName()]));
+                    $getterName = $getter->getName();
+                    $stack->push($component->$getterName());
                 }
             } elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
                 // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.

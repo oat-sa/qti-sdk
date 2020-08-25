@@ -24,6 +24,7 @@
 namespace qtism\data\content;
 
 use InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -80,7 +81,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
     }
 
     /**
-     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     * @return FlowStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

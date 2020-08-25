@@ -336,12 +336,6 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'table';

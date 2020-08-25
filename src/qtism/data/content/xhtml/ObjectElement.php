@@ -30,6 +30,7 @@ use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\ObjectFlowCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -233,7 +234,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * @return ObjectFlowCollection|\qtism\data\QtiComponentCollection
+     * @return ObjectFlowCollection|QtiComponentCollection
      */
     public function getComponents()
     {

@@ -234,12 +234,6 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getExpectedQtiClassName()
     {
         return '';

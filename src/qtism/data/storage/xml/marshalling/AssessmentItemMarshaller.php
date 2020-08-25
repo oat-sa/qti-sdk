@@ -255,12 +255,6 @@ class AssessmentItemMarshaller extends Marshaller
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentItem';

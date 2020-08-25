@@ -214,23 +214,11 @@ class GraphicAssociateInteraction extends GraphicInteraction
     /**
      * @return QtiComponentCollection
      */
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getAssociableHotspots()->getArrayCopy()));
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

@@ -188,12 +188,6 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentTest';

@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
 
 /**
@@ -488,12 +489,6 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * @return ResponseValidityConstraint|null
-     */
-    /**
-     * @return ResponseValidityConstraint
-     */
-    /**
      * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
@@ -507,25 +502,13 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * @return \qtism\data\QtiComponentCollection
-     */
-    /**
-     * @return \qtism\data\QtiComponentCollection
-     */
-    /**
-     * @return \qtism\data\QtiComponentCollection
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
         return parent::getComponents();
     }
 
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     /**
      * @return string
      */

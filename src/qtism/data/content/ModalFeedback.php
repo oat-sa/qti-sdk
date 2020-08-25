@@ -26,6 +26,7 @@ namespace qtism\data\content;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 
 /**
@@ -254,7 +255,7 @@ class ModalFeedback extends QtiComponent
     }
 
     /**
-     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     * @return FlowStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

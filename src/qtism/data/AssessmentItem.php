@@ -667,12 +667,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return array|ModalFeedbackRuleCollection
      */
-    /**
-     * @return array|ModalFeedbackRuleCollection
-     */
-    /**
-     * @return array|ModalFeedbackRuleCollection
-     */
     public function getModalFeedbackRules()
     {
         $modalFeedbackRules = new ModalFeedbackRuleCollection();
@@ -708,12 +702,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return array|ShufflingCollection
      */
-    /**
-     * @return array|ShufflingCollection
-     */
-    /**
-     * @return array|ShufflingCollection
-     */
     public function getShufflings()
     {
         $classNames = [
@@ -737,12 +725,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $shufflings;
     }
 
-    /**
-     * @return array|ResponseValidityConstraintCollection
-     */
-    /**
-     * @return array|ResponseValidityConstraintCollection
-     */
     /**
      * @return array|ResponseValidityConstraintCollection
      */
@@ -777,23 +759,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return string
      */
-    /**
-     * @return string
-     */
-    /**
-     * @return string
-     */
     public function getQtiClassName()
     {
         return 'assessmentItem';
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
-    /**
-     * @return QtiComponentCollection
-     */
     /**
      * @return QtiComponentCollection
      */

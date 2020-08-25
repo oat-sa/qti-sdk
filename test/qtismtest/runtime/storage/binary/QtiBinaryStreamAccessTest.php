@@ -91,19 +91,19 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
 
         if (is_scalar($expectedValue) === true) {
-            $this->assertEquals($expectedValue, call_user_func([$variable, $getterToCall])->getValue());
+            $this->assertEquals($expectedValue, $variable->$getterToCall()->getValue());
         } elseif (is_null($expectedValue) === true) {
-            $this->assertSame($expectedValue, call_user_func([$variable, $getterToCall]));
+            $this->assertSame($expectedValue, $variable->$getterToCall());
         } elseif ($expectedValue instanceof RecordContainer) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
-            $this->assertTrue($expectedValue->equals(call_user_func([$variable, $getterToCall])));
+            $this->assertTrue($expectedValue->equals($variable->$getterToCall()));
         } elseif ($expectedValue instanceof Container) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
             $this->assertEquals($expectedValue->getBaseType(), $variable->getBaseType());
-            $this->assertTrue($expectedValue->equals(call_user_func([$variable, $getterToCall])));
+            $this->assertTrue($expectedValue->equals($variable->$getterToCall()));
         } elseif ($expectedValue instanceof Comparable) {
             // Duration, Point, Pair, ...
-            $this->assertTrue($expectedValue->equals(call_user_func([$variable, $getterToCall])));
+            $this->assertTrue($expectedValue->equals($variable->$getterToCall()));
         } else {
             // can't happen.
             $this->assertTrue(false);
@@ -535,13 +535,13 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $testVariable = clone $variable;
         // Reset the value of $testVariable.
-        call_user_func([$testVariable, $setterToCall], null);
+        $testVariable->$setterToCall(null);
 
         // Read what we just wrote.
         $access->readVariableValue($testVariable, $valueType);
 
-        $originalValue = call_user_func([$variable, $getterToCall]);
-        $readValue = call_user_func([$testVariable, $getterToCall]);
+        $originalValue = $variable->$getterToCall();
+        $readValue = $testVariable->$getterToCall();
 
         // Compare.
         if (is_null($originalValue) === true) {
