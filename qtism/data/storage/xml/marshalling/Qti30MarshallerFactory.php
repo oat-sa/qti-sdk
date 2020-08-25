@@ -25,7 +25,6 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * A QTI 3.0.0 (aQTI) MarshallerFactory
@@ -129,7 +128,6 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
      * @param ReflectionClass $class
      * @param array $args
      * @return Marshaller
-     * @throws ReflectionException
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

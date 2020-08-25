@@ -37,6 +37,7 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
      *
      * @param QtiComponent $component An AssessmentSectionRef object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

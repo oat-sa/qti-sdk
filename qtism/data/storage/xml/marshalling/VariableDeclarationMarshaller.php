@@ -40,6 +40,7 @@ class VariableDeclarationMarshaller extends Marshaller
      *
      * @param QtiComponent $component An OutcomeDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

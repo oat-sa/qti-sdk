@@ -35,6 +35,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\storage\xml\Utils;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * The OperatorMarshaller class focuses on Marshaller/Unmarshalling
@@ -136,7 +137,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {

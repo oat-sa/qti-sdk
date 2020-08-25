@@ -42,6 +42,7 @@ class AssessmentItemMarshaller extends Marshaller
      *
      * @param QtiComponent $component An AssessmentItem object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

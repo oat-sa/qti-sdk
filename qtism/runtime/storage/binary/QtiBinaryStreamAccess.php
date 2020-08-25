@@ -40,6 +40,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\IStream;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
@@ -75,7 +76,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param IStream $stream The IStream object to be accessed.
      * @param FileManager $fileManager The FileManager object to handle file variable.
-     * @throws BinaryStreamAccessException If $stream is not open yet.
+     * @throws StreamAccessException
      */
     public function __construct(IStream $stream, FileManager $fileManager)
     {

@@ -37,10 +37,12 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
 use ReflectionClass;
+use ReflectionException;
 use RuntimeException;
 
 /**
@@ -191,7 +193,6 @@ class XmlDocument extends QtiDocument
      *
      * @param QtiComponent $documentComponent The root component of the model that will be saved.
      * @param string $uri The URI where the saved file is supposed to be stored.
-     * @throws XmlStorageException If something wrong occurs.
      */
     protected function beforeSave(QtiComponent $documentComponent, $uri)
     {
@@ -208,6 +209,7 @@ class XmlDocument extends QtiDocument
      * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
      * @param bool $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
      * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+     * @throws MarshallingException
      */
     public function save($uri, $formatOutput = true)
     {
@@ -220,6 +222,7 @@ class XmlDocument extends QtiDocument
      * @param bool $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
      * @return string The XML string.
      * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+     * @throws MarshallingException
      */
     public function saveToString($formatOutput = true)
     {
@@ -233,6 +236,7 @@ class XmlDocument extends QtiDocument
      * @param bool $formatOutput
      * @return string
      * @throws XmlStorageException
+     * @throws MarshallingException
      */
     protected function saveImplementation($uri = '', $formatOutput = true)
     {
@@ -332,8 +336,8 @@ class XmlDocument extends QtiDocument
      * be included following the rules described by the XInclude specification.
      *
      * @param bool $validate Whether or not validate files being included. Default is false.
-     * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
+     * @throws ReflectionException
      */
     public function xInclude($validate = false)
     {

@@ -227,6 +227,7 @@ class Unmarshaller
      * @param array $unit
      * @return null|QtiDatatype
      * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     protected function unmarshallUnit(array $unit)
     {
@@ -395,6 +396,7 @@ class Unmarshaller
      *
      * @param array $unit
      * @return QtiFile
+     * @throws FileManagerException
      */
     protected function unmarshallFile(array $unit)
     {

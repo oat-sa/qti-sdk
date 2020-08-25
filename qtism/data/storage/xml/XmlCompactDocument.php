@@ -24,8 +24,6 @@
 
 namespace qtism\data\storage\xml;
 
-use DOMDocument;
-use DOMElement;
 use Exception;
 use qtism\common\Resolver;
 use qtism\data\AssessmentItemRef;
@@ -39,6 +37,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestPart;
@@ -134,6 +133,7 @@ class XmlCompactDocument extends XmlDocument
      * @param Resolver $sectionResolver (optional) A Resolver object aiming at resolving assessmentSectionRefs. If not provided, fallback will be a LocalFileResolver.
      * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
+     * @throws XmlStorageException
      */
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null, $version = '2.1')
     {
@@ -288,7 +288,7 @@ class XmlCompactDocument extends XmlDocument
      *
      * @param AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
      * @param Resolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
-     * @return XmlAssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
+     * @return QtiComponent The AssessmentSection referenced by $assessmentSectionRef.
      * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
      */
     protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, Resolver $resolver)
@@ -309,6 +309,7 @@ class XmlCompactDocument extends XmlDocument
      * @param QtiComponent $documentComponent
      * @param string $uri
      * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)
     {

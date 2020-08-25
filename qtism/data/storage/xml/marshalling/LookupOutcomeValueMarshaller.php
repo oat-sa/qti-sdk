@@ -37,6 +37,7 @@ class LookupOutcomeValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A LookupOutcomeValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

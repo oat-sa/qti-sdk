@@ -43,6 +43,7 @@ use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
@@ -74,7 +75,11 @@ class PhpDocument extends QtiDocument
      * Save the PhpDocument to a specific location.
      *
      * @param string $url A URL (Uniform Resource Locator) describing where to save the document.
+     * @throws BeanException
+     * @throws MemoryStreamException
      * @throws PhpStorageException If an error occurs while saving.
+     * @throws ReflectionException
+     * @throws PhpMarshallingException
      */
     public function save($url)
     {
@@ -91,7 +96,11 @@ class PhpDocument extends QtiDocument
      * Return components as string
      *
      * @return string
+     * @throws BeanException
+     * @throws MemoryStreamException
      * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws PhpMarshallingException
      */
     public function saveToString()
     {

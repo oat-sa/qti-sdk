@@ -37,6 +37,7 @@ class SetOutcomeValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SetOutcomeValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

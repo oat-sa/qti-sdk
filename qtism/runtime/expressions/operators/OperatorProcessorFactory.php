@@ -24,7 +24,6 @@
 namespace qtism\runtime\expressions\operators;
 
 use InvalidArgumentException;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\CustomOperator;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\QtiComponent;

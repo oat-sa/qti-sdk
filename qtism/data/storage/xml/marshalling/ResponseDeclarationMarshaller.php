@@ -38,6 +38,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A ResponseDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

@@ -110,6 +110,7 @@ class PendingResponseStore
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param int $occurence An occurence number.
+     * @return bool
      */
     public function hasPendingResponses(AssessmentItemRef $assessmentItemRef, $occurence = 0)
     {

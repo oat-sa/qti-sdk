@@ -24,7 +24,6 @@
 namespace qtism\common\utils;
 
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * A utility class focusing on Reflection.
@@ -39,7 +38,6 @@ class Reflection
      * @param ReflectionClass $class
      * @param array $args
      * @return mixed An instance of $class
-     * @throws ReflectionException
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
     public static function newInstance(ReflectionClass $class, $args = [])

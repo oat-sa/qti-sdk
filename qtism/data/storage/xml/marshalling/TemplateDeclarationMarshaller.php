@@ -38,6 +38,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A TemplateDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

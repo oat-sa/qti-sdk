@@ -38,7 +38,6 @@ class ParamMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Param object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

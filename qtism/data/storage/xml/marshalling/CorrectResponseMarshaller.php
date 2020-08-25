@@ -79,6 +79,7 @@ class CorrectResponseMarshaller extends Marshaller
      *
      * @param QtiComponent $component A CorrectResponse object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

@@ -92,6 +92,7 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param QtiComponent $component An InterpolationTable object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

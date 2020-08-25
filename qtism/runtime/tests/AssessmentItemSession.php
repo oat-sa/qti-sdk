@@ -969,7 +969,6 @@ class AssessmentItemSession extends State
      * If the item session has the NOT_SELECTED state, false is directly returned because it is certain that there is no correct response yet in the session.
      *
      * @return bool
-     * @throws AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
      */
     public function isCorrect()
     {

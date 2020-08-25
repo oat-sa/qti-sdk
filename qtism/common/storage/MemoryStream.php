@@ -206,7 +206,6 @@ class MemoryStream implements IStream
      *
      * @param string $data
      * @return int The amount of written bytes.
-     * @throws MemoryStreamException
      */
     public function write($data)
     {

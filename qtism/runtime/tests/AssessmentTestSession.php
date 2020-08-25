@@ -1447,7 +1447,6 @@ class AssessmentTestSession extends State
      * @param State $responses The responses for the curent item in the sequence.
      * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
      * @throws AssessmentTestSessionException
-     * @throws AssessmentItemSessionException
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
@@ -1508,6 +1507,7 @@ class AssessmentTestSession extends State
      *
      * @param int $position The position in the route the jump has to be made.
      * @param bool $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1593,7 +1593,6 @@ class AssessmentTestSession extends State
      *
      * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
      * @param int $occurence The occurence number of the item bound to $assessmentItemSession.
-     * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
      */
     protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
     {
@@ -1606,7 +1605,6 @@ class AssessmentTestSession extends State
      *
      * This method is triggered once at the end of the AssessmentTestSession.
      *
-     * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
      */
     protected function submitTestResults()
     {
@@ -1687,6 +1685,7 @@ class AssessmentTestSession extends State
      * that are not timed out in the Route sequence, the test session ends gracefully.
      *
      * @param bool $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1745,6 +1744,7 @@ class AssessmentTestSession extends State
      * AssessmentTestSessionException with the appropriate timing error code is thrown.
      *
      * @param bool $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...) or if $allowTimeout = false and there absolutely no possibility to move backward (even the first RouteItem is timed out).
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1815,6 +1815,7 @@ class AssessmentTestSession extends State
      * @param bool $ignoreBranchings Whether or not to ignore branching.
      * @param bool $ignorePreConditions Whether or not to ignore preConditions.
      * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
+     * @throws AssessmentItemSessionException
      */
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
     {
@@ -1900,6 +1901,7 @@ class AssessmentTestSession extends State
      * testPart is the last one of the test session, the test session ends gracefully. If the submission mode
      * is simultaneous, the pending responses are processed.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is currently not running.
      */
     public function moveNextTestPart()
@@ -1927,6 +1929,7 @@ class AssessmentTestSession extends State
      * * If there is no assessmentSection left in the flow, the test session ends gracefully.
      * * If there are still pending responses, they are processed.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is not running.
      */
     public function moveNextAssessmentSection()
@@ -1954,6 +1957,7 @@ class AssessmentTestSession extends State
      * * If there is no item left in the flow, the test session ends gracefully.
      * * If there are still pending responses, they are processed.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is not running.
      */
     public function moveNextAssessmentItem()
@@ -2228,6 +2232,7 @@ class AssessmentTestSession extends State
      * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
      *
      * @return bool
+     * @throws AssessmentTestSessionException
      */
     public function canMoveBackward()
     {

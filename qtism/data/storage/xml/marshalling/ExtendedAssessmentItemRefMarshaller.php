@@ -39,6 +39,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      *
      * @param QtiComponent $component
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -72,6 +73,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      *
      * @param DOMElement $element
      * @return ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {

@@ -38,7 +38,6 @@ class GapMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Gap object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

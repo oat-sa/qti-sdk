@@ -37,6 +37,7 @@ class BranchRuleMarshaller extends Marshaller
      *
      * @param QtiComponent $component A BranchRule object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

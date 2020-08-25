@@ -41,7 +41,6 @@ class HotspotMarshaller extends Marshaller
      *
      * @param QtiComponent $component A HotspotChoice/AssociableHotspot object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

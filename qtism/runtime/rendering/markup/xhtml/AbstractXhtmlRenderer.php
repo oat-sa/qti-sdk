@@ -28,7 +28,6 @@ use qtism\data\content\Stylesheet;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
-use qtism\runtime\rendering\RenderingException;
 
 /**
  * Base class of all XHTML renderers.
@@ -68,7 +67,6 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param QtiComponent $component
      * @param string $base
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
-     * @throws RenderingException If an error occurs while rendering $component.
      */
     public function render($component, $base = '')
     {

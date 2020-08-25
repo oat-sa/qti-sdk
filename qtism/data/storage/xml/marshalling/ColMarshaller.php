@@ -37,7 +37,6 @@ class ColMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Col object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {

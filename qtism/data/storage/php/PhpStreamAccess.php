@@ -144,6 +144,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * Write a PHP closing tag in the current string.
      *
      * @param bool $newline
+     * @throws StreamAccessException
      */
     public function writeClosingTag($newline = true)
     {
@@ -400,6 +401,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @param string $classname The name of the class to be instantiated. Fully qualified class names are supported.
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects.
+     * @throws StreamAccessException
      */
     public function writeInstantiation($classname, PhpArgumentCollection $arguments = null)
     {

@@ -38,6 +38,7 @@ use qtism\data\rules\TemplateElseIf;
 use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * Unmarshalling/Marshalling implementation focusing on the components composing
@@ -50,7 +51,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param QtiComponentCollection $children
      * @return mixed
      * @throws UnmarshallingException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {

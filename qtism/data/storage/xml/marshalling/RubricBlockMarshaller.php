@@ -44,6 +44,7 @@ class RubricBlockMarshaller extends Marshaller
      *
      * @param QtiComponent $component A RubricBlock object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
