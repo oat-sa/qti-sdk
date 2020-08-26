@@ -65,7 +65,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
      */
     public static function getTemplatesPath()
     {
-        return dirname(__FILE__) . '/../../../../../qtism/runtime/processing/templates/';
+        return __DIR__ . '/../../../../../qtism/runtime/processing/templates/';
     }
 
     /**

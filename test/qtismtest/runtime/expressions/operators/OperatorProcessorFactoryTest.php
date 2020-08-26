@@ -14,7 +14,7 @@ use org\qtism\test\Explode;
 use qtism\runtime\expressions\operators\SumProcessor;
 use RuntimeException;
 
-require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
+require_once(__DIR__ . '/custom/custom_operator_autoloader.php');
 
 /**
  * Class OperatorProcessorFactoryTest

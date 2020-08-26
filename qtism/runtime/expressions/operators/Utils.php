@@ -143,7 +143,7 @@ class Utils
         $sum = 0;
 
         foreach ($sample as $s) {
-            $sum += pow($s - $mean, 2);
+            $sum += ($s - $mean) ** 2;
         }
 
         $d = ($correction === true) ? $count - 1 : $count;

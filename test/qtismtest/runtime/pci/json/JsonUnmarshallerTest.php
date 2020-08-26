@@ -50,7 +50,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json)
     {
         $unmarshaller = self::createUnmarshaller();
-        if (is_null($expectedScalar) === false) {
+        if ($expectedScalar !== null) {
             $this->assertTrue($unmarshaller->unmarshall($json)->equals($expectedScalar));
         } else {
             $this->assertSame($expectedScalar, $unmarshaller->unmarshall($json));

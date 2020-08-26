@@ -31,7 +31,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testInstantiate()
     {
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
-        $this->assertTrue(is_null($outcome->getValue()));
+        $this->assertTrue($outcome->getValue() === null);
 
         $outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::INTEGER);
         $this->assertInstanceOf(MultipleContainer::class, $outcome->getValue());

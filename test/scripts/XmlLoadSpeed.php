@@ -3,7 +3,7 @@
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 /**
  * @param array $files
@@ -30,7 +30,7 @@ function testAssessmentItems(array $files, $validate = false)
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 
         outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
-        outputDescription('Memory usage is ' . (memory_get_usage() / pow(1024, 2)) . ' MB');
+        outputDescription('Memory usage is ' . (memory_get_usage() / (1024 ** 2)) . ' MB');
         output('');
 
         $loaded++;
@@ -65,7 +65,7 @@ function testAssessmentTests(array $files, $validate = false)
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 
         outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
-        outputDescription('Memory usage is ' . (memory_get_usage() / pow(1024, 2)) . ' MB');
+        outputDescription('Memory usage is ' . (memory_get_usage() / (1024 ** 2)) . ' MB');
 
         output('');
 
@@ -122,7 +122,7 @@ function spentTime($start, $end)
     return ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 }
 
-define('SAMPLES_DIR', dirname(__FILE__) . '/../samples/');
+define('SAMPLES_DIR', __DIR__ . '/../samples/');
 
 $items = [
     SAMPLES_DIR . 'ims/items/2_0/adaptive_template.xml',

@@ -144,7 +144,7 @@ class RoundToProcessor extends OperatorProcessor
             $d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
             $power = $figures - (int)$d;
 
-            $magnitude = pow(10, $power);
+            $magnitude = 10 ** $power;
             $shifted = round($operand->getValue() * $magnitude);
 
             return new QtiFloat((float)($shifted / $magnitude));

@@ -126,7 +126,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
         }
 
         if ($this->getShape() === QtiShape::CIRCLE) {
-            return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
+            return (($point->getX() - $this[0]) ** 2) + (($point->getY() - $this[1]) ** 2) < ($this[2] ** 2);
         }
 
         // we consider it is a polygon.

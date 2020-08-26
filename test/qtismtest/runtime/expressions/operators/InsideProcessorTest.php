@@ -158,8 +158,8 @@ class InsideProcessorTest extends QtiSmTestCase
      */
     public function createFakeExpression($point = null, QtiCoords $coords = null)
     {
-        $point = (is_null($point) || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;
-        $coords = (is_null($coords)) ? new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]) : $coords;
+        $point = ($point === null || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;
+        $coords = ($coords === null) ? new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]) : $coords;
 
         return $this->createComponentFromXml('
 			<inside shape="' . QtiShape::getNameByConstant($coords->getShape()) . '" coords="' . $coords . '">

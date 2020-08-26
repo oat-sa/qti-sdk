@@ -20,7 +20,7 @@ use qtism\runtime\tests\SessionManager;
 
 date_default_timezone_set('UTC');
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 /**
  * @param array|null $average
@@ -32,9 +32,9 @@ function loadTestDefinition(array &$average = null)
     $start = microtime();
 
     $phpDoc = new PhpDocument();
-    $phpDoc->load(dirname(__FILE__) . '/../../test/samples/custom/php/linear_40_items.php');
+    $phpDoc->load(__DIR__ . '/../../test/samples/custom/php/linear_40_items.php');
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 
@@ -71,7 +71,7 @@ function spentTime($start, $end, array &$registration = null)
     $endTime = explode(' ', $end);
     $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 
-    if (!is_null($registration)) {
+    if ($registration !== null) {
         $registration[] = $time;
     }
 
@@ -91,7 +91,7 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
     $session->beginAttempt();
     $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier))]));
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }
@@ -110,7 +110,7 @@ function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, ar
 
     $session = $storage->retrieve($test, $sessionId);
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 
@@ -129,7 +129,7 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
 
     $storage->persist($session);
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }
@@ -147,7 +147,7 @@ function moveNext(AssessmentTestSession $session, array &$average)
 
     $session->moveNext();
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }
@@ -161,7 +161,7 @@ function neighbourhood(AssessmentTestSession $session, array &$average = null)
     $start = microtime();
     $neighbourhood = $session->getPossibleJumps();
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }

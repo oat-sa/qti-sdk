@@ -69,7 +69,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         // The outcome variables composing the test-level global scope
         // must be set with their default value if any.
         foreach ($doc->getDocumentComponent()->getOutcomeDeclarations() as $outcomeDeclaration) {
-            $this->assertFalse(is_null($session[$outcomeDeclaration->getIdentifier()]));
+            $this->assertFalse($session[$outcomeDeclaration->getIdentifier()] === null);
             $this->assertEquals(0, $session[$outcomeDeclaration->getIdentifier()]->getValue());
         }
 

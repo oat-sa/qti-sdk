@@ -68,7 +68,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 
         $manager = new SessionManager();
 
-        if (is_null($acceptableLatency) === false) {
+        if ($acceptableLatency !== null) {
             $manager->setAcceptableLatency($acceptableLatency);
         }
 
@@ -135,7 +135,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 
         $manager = new SessionManager();
 
-        if (is_null($acceptableLatency) === false) {
+        if ($acceptableLatency !== null) {
             $manager->setAcceptableLatency($acceptableLatency);
         }
 
