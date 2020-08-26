@@ -84,7 +84,7 @@ class RecordContainer extends Container implements QtiDatatype
      */
     public function offsetSet($offset, $value)
     {
-        if (gettype($offset) === 'string') {
+        if (is_string($offset)) {
             $this->checkType($value);
             $placeholder = &$this->getDataPlaceHolder();
             $placeholder[$offset] = $value;

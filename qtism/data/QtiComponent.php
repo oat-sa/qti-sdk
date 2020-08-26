@@ -67,7 +67,7 @@ abstract class QtiComponent
      */
     public function getComponentByIdentifier($identifier, $recursive = true)
     {
-        if (gettype($identifier) !== 'string') {
+        if (!is_string($identifier)) {
             $msg = 'The QtiComponent::getComponentByIdentifier method only accepts a string as its ';
             $msg .= "argument. '" . gettype($identifier) . "' given.";
             throw new InvalidArgumentException($msg);
@@ -103,7 +103,7 @@ abstract class QtiComponent
      */
     public function getComponentsByClassName($classNames, $recursive = true)
     {
-        if (gettype($classNames) !== 'string' && !is_array($classNames)) {
+        if (!is_string($classNames) && !is_array($classNames)) {
             $msg = 'The QtiComponent::getComponentsByClassName method only accepts ';
             $msg .= "a string or an array as its main argument, '" . gettype($classNames) . "' given.";
             throw new InvalidArgumentException($classNames);

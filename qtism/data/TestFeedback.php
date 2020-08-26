@@ -252,7 +252,7 @@ class TestFeedback extends QtiComponent
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";
@@ -279,7 +279,7 @@ class TestFeedback extends QtiComponent
      */
     public function setContent($content)
     {
-        if (gettype($content) === 'string') {
+        if (is_string($content)) {
             $this->content = $content;
         } else {
             $msg = "Content must be a string, '" . gettype($content) . "' given.";

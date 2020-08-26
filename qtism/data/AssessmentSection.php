@@ -127,7 +127,7 @@ class AssessmentSection extends SectionPart
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";

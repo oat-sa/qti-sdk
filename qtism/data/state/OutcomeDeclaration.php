@@ -215,7 +215,7 @@ class OutcomeDeclaration extends VariableDeclaration
      */
     public function setInterpretation($interpretation)
     {
-        if (gettype($interpretation) === 'string') {
+        if (is_string($interpretation)) {
             $this->interpretation = $interpretation;
         } else {
             $msg = "Interpretation must be a string, '" . gettype($interpretation) . "' given.";
@@ -241,7 +241,7 @@ class OutcomeDeclaration extends VariableDeclaration
      */
     public function setLongInterpretation($longInterpretation)
     {
-        if (gettype($longInterpretation) === 'string') {
+        if (is_string($longInterpretation)) {
             $this->longInterpretation = $longInterpretation;
         } else {
             $msg = "LongInterpretation must be a string, '" . gettype($longInterpretation) . "' given.";

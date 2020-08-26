@@ -223,7 +223,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      */
     public function setAdaptive($adaptive)
     {
-        if (gettype($adaptive) === 'boolean') {
+        if (is_bool($adaptive)) {
             $this->adaptive = $adaptive;
         } else {
             $msg = "The adaptive argument must be a boolean value, '" . gettype($adaptive) . "' given.";
@@ -239,7 +239,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      */
     public function setTimeDependent($timeDependent)
     {
-        if (gettype($timeDependent) === 'boolean') {
+        if (is_bool($timeDependent)) {
             $this->timeDependent = $timeDependent;
         } else {
             $msg = "The timeDependent argument must be a boolean value, '" . gettype($timeDependent) . "' given.";

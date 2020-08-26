@@ -161,11 +161,9 @@ class Bean
         $hasGetter = false;
 
         foreach ($getterNames as $possibleGetterName) {
-            if ($this->getClass()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true) {
-                if ($this->getClass()->getMethod($possibleGetterName)->isPublic()) {
-                    $hasGetter = $possibleGetterName;
-                    break;
-                }
+            if ($this->getClass()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true && $this->getClass()->getMethod($possibleGetterName)->isPublic()) {
+                $hasGetter = $possibleGetterName;
+                break;
             }
         }
 
@@ -310,7 +308,7 @@ class Bean
      */
     public function getProperty($propertyName)
     {
-        $className = $className = $this->getClass()->getName();
+        $className = $this->getClass()->getName();
 
         if ($this->hasProperty($propertyName) === true) {
             try {

@@ -97,12 +97,12 @@ class ResponseProcessingEngine extends AbstractEngine
      */
     public function addTemplateMapping($uri, $url)
     {
-        if (gettype($uri) !== 'string') {
+        if (!is_string($uri)) {
             $msg = "The uri argument must be a string, '" . gettype($uri) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
-        if (gettype($url) !== 'string') {
+        if (!is_string($url)) {
             $msg = "The url argument must be a string, '" . gettype($uri) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -120,7 +120,7 @@ class ResponseProcessingEngine extends AbstractEngine
      */
     public function removeTemplateMapping($uri)
     {
-        if (gettype($uri) !== 'string') {
+        if (!is_string($uri)) {
             $msg = "The uri argument must be a string, '" . gettype($uri) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -190,12 +190,10 @@ class ResponseProcessingEngine extends AbstractEngine
                 }
             }
 
-            if (empty($finalTemplateFile) === true && empty($templateLocation) === false) {
-                // The template could not be resolved using the mapping.
-                // Try to use template location.
-                if (@is_readable($templateLocation) === true) {
-                    $finalTemplateFile = $templateLocation;
-                }
+            // The template could not be resolved using the mapping.
+            // Try to use template location.
+            if (empty($finalTemplateFile) === true && empty($templateLocation) === false && @is_readable($templateLocation) === true) {
+                $finalTemplateFile = $templateLocation;
             }
 
             if (empty($finalTemplateFile) === true) {

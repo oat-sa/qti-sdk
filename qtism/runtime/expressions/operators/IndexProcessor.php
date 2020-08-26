@@ -77,7 +77,7 @@ class IndexProcessor extends OperatorProcessor
         }
 
         $n = $this->getExpression()->getN();
-        if (gettype($n) === 'string') {
+        if (is_string($n)) {
             // The value of $n comes from the state.
             $state = $this->getState();
             if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {

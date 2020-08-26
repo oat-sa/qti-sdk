@@ -234,7 +234,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $this->checkType($object);
 
-        if (gettype($object) !== 'object') {
+        if (!is_object($object)) {
             $msg = "You can only attach 'objects' into an AbstractCollection, '" . gettype($object) . "' given";
             throw new InvalidArgumentException($msg);
         } elseif (!$this->contains($object)) {
@@ -253,7 +253,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $this->checkType($object);
 
-        if (gettype($object) !== 'object') {
+        if (!is_object($object)) {
             $msg = "You can only detach 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -283,12 +283,12 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
         $this->checkType($object);
         $this->checkType($replacement);
 
-        if (gettype($object) !== 'object') {
+        if (!is_object($object)) {
             $msg = "You can only replace 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
-        if (gettype($replacement) !== 'object') {
+        if (!is_object($replacement)) {
             $msg = "You can only replace 'objects' into an AbstractCollection, '" . gettype($replacement) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -408,7 +408,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     public function __clone()
     {
         foreach ($this->dataPlaceHolder as $key => $value) {
-            if (gettype($value) === 'object') {
+            if (is_object($value)) {
                 $this[$key] = clone $value;
             }
         }

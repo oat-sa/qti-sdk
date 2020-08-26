@@ -116,7 +116,7 @@ class PendingResponses
      */
     public function setOccurence($occurence)
     {
-        if (gettype($occurence) !== 'integer') {
+        if (!is_int($occurence)) {
             $msg = "The 'occurence' argument must be an integer value, '" . gettype($occurence) . "' given.";
             throw new InvalidArgumentException($msg);
         } else {

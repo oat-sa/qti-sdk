@@ -142,7 +142,7 @@ class ResponseProcessing extends QtiComponent
      */
     public function setTemplate($template)
     {
-        if (Format::isUri($template) === true || (gettype($template) === 'string' && empty($template) === true)) {
+        if (Format::isUri($template) === true || (is_string($template) && empty($template) === true)) {
             $this->template = $template;
         } else {
             $msg = "The given template '${template}' is not a valid URI.";
@@ -180,7 +180,7 @@ class ResponseProcessing extends QtiComponent
      */
     public function setTemplateLocation($templateLocation)
     {
-        if (Format::isUri($templateLocation) === true || (gettype($templateLocation) === 'string' && empty($templateLocation) === true)) {
+        if (Format::isUri($templateLocation) === true || (is_string($templateLocation) && empty($templateLocation) === true)) {
             $this->templateLocation = $templateLocation;
         } else {
             $msg = "The given templateLocation '${templateLocation}' is not a valid URI.";

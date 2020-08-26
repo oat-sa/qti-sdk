@@ -145,7 +145,7 @@ class VariableIdentifier
      */
     protected function setSequenceNumber($sequenceNumber)
     {
-        if (gettype($sequenceNumber) === 'integer') {
+        if (is_int($sequenceNumber)) {
             if ($sequenceNumber > 0) {
                 $this->sequenceNumber = $sequenceNumber;
             } else {
@@ -187,7 +187,7 @@ class VariableIdentifier
      */
     protected function setVariableName($variableName)
     {
-        if (gettype($variableName) === 'string' && empty($variableName) === false) {
+        if (is_string($variableName) && empty($variableName) === false) {
             $this->variableName = $variableName;
         } else {
             $msg = 'The variableName argument must be a non-empty string.';
@@ -213,7 +213,7 @@ class VariableIdentifier
      */
     protected function setPrefix($prefix)
     {
-        if (gettype($prefix) === 'string' && empty($prefix) === false) {
+        if (is_string($prefix) && empty($prefix) === false) {
             $this->prefix = $prefix;
         } else {
             $msg = 'The prefix argument must be a non-empty string.';

@@ -69,7 +69,7 @@ class Index extends Operator
      */
     public function setN($n)
     {
-        if (is_int($n) || (gettype($n) === 'string' && Format::isVariableRef($n))) {
+        if (is_int($n) || (is_string($n) && Format::isVariableRef($n))) {
             $this->n = $n;
         } else {
             $msg = "The n attribute must be an integer or a variable reference, '" . gettype($n) . "' given.";

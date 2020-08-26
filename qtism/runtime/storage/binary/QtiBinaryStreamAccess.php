@@ -509,10 +509,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public function writeIntOrIdentifier($intOrIdentifier)
     {
         try {
-            if (gettype($intOrIdentifier) === 'integer') {
+            if (is_int($intOrIdentifier)) {
                 $this->writeBoolean(true);
                 $this->writeInteger($intOrIdentifier);
-            } elseif (gettype($intOrIdentifier) === 'string') {
+            } elseif (is_string($intOrIdentifier)) {
                 $this->writeBoolean(false);
                 $this->writeString($intOrIdentifier);
             } else {

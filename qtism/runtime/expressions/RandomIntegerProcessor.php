@@ -69,11 +69,11 @@ class RandomIntegerProcessor extends ExpressionProcessor
         $step = $expr->getStep();
         $state = $this->getState();
 
-        $min = (gettype($min) === 'integer') ? $min : $state[Utils::sanitizeVariableRef($min)]->getValue();
-        $max = (gettype($max) === 'integer') ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
-        $step = (gettype($step) === 'integer') ? $step : $state[Utils::sanitizeVariableRef($step)]->getValue();
+        $min = (is_int($min)) ? $min : $state[Utils::sanitizeVariableRef($min)]->getValue();
+        $max = (is_int($max)) ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
+        $step = (is_int($step)) ? $step : $state[Utils::sanitizeVariableRef($step)]->getValue();
 
-        if (gettype($min) === 'integer' && gettype($max) === 'integer' && gettype($step) === 'integer') {
+        if (is_int($min) && is_int($max) && is_int($step)) {
             if ($min > $max) {
                 $msg = "'min':'${min}' is greater than 'max':'${max}'.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);

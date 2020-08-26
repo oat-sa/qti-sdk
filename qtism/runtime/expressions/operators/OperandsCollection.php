@@ -58,7 +58,7 @@ class OperandsCollection extends AbstractCollection implements Stack
         } elseif ($value instanceof MultipleContainer || $value instanceof OrderedContainer || $value instanceof RecordContainer) {
             return;
         } else {
-            $value = (gettype($value) === 'object') ? get_class($value) : $value;
+            $value = (is_object($value)) ? get_class($value) : $value;
             $msg = "The OperandsCollection only accepts QTI Runtime compliant values, '" . $value . "' given.";
             throw new InvalidArgumentException($msg);
         }

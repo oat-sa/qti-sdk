@@ -665,14 +665,12 @@ class AssessmentItemSession extends State
         if ($this->hasTimeLimits() === true) {
             // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
             // assessmentItems only when linear navigation mode is in effect.
-            if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
-                if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
-                    // An exception is thrown to prevent the numAttempts to be incremented.
-                    // Suspend and wait for a next attempt.
-                    $this->suspend();
-                    $msg = 'The minimal duration is not yet reached.';
-                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
-                }
+            if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true && $this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
+                // An exception is thrown to prevent the numAttempts to be incremented.
+                // Suspend and wait for a next attempt.
+                $this->suspend();
+                $msg = 'The minimal duration is not yet reached.';
+                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
             }
 
             // Check if the maxTime constraint is respected.
@@ -1099,10 +1097,8 @@ class AssessmentItemSession extends State
     {
         $reached = false;
 
-        if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
-            if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
-                $reached = true;
-            }
+        if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true && $this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
+            $reached = true;
         }
 
         return $reached;

@@ -88,7 +88,7 @@ class AnyN extends Operator
      */
     public function setMin($min)
     {
-        if (is_int($min) || (gettype($min) === 'string' && Format::isVariableRef($min))) {
+        if (is_int($min) || (is_string($min) && Format::isVariableRef($min))) {
             $this->min = $min;
         } else {
             $msg = "The min attribute must be an integer or a variable reference, '" . $min . "' given.";
@@ -114,7 +114,7 @@ class AnyN extends Operator
      */
     public function setMax($max)
     {
-        if (is_int($max) || (gettype($max) === 'string' && Format::isVariableRef($max))) {
+        if (is_int($max) || (is_string($max) && Format::isVariableRef($max))) {
             $this->max = $max;
         } else {
             $msg = "The max attribute must be an integer or a variable reference, '" . $max . "' given.";

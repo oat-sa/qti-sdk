@@ -243,7 +243,7 @@ class AssessmentTestSession extends State
      */
     public function setSessionId($sessionId)
     {
-        if (gettype($sessionId) === 'string') {
+        if (is_string($sessionId)) {
             if (empty($sessionId) === false) {
                 $this->sessionId = $sessionId;
             } else {
@@ -667,7 +667,7 @@ class AssessmentTestSession extends State
      */
     public function getWeight($identifier)
     {
-        if (gettype($identifier) === 'string') {
+        if (is_string($identifier)) {
             try {
                 $identifier = new VariableIdentifier($identifier);
                 if ($identifier->hasSequenceNumber() === true) {
@@ -874,7 +874,7 @@ class AssessmentTestSession extends State
      */
     public function offsetSet($offset, $value)
     {
-        if (gettype($offset) !== 'string') {
+        if (!is_string($offset)) {
             $msg = 'An AssessmentTestSession object must be addressed by string.';
             throw new OutOfRangeException($msg);
         }
@@ -2185,10 +2185,8 @@ class AssessmentTestSession extends State
      */
     public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
-        if (($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) {
-            if ($occurence === $lastUpdate) {
-                return true;
-            }
+        if ((($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) && $occurence === $lastUpdate) {
+            return true;
         }
 
         return false;
@@ -2214,7 +2212,7 @@ class AssessmentTestSession extends State
      */
     public function whichLastOccurenceUpdate($assessmentItemRef)
     {
-        if (gettype($assessmentItemRef) === 'string') {
+        if (is_string($assessmentItemRef)) {
             $assessmentItemRefs = $this->getAssessmentItemRefs();
             if (isset($assessmentItemRefs[$assessmentItemRef]) === true) {
                 $assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];

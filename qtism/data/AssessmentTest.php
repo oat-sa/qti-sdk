@@ -209,7 +209,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";
@@ -236,7 +236,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function setToolName($toolName)
     {
-        if (gettype($toolName) === 'string') {
+        if (is_string($toolName)) {
             $this->toolName = $toolName;
         } else {
             $msg = "Toolname must be a string, '" . gettype($toolName) . "' given.";
@@ -264,7 +264,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function setToolVersion($toolVersion)
     {
-        if (gettype($toolVersion) === 'string') {
+        if (is_string($toolVersion)) {
             $this->toolVersion = $toolVersion;
         } else {
             $msg = "ToolVersion must be a string, '" . gettype($toolVersion) . "' given.";
