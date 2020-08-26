@@ -767,28 +767,20 @@ class AssessmentItemSession extends State
         // Flag to indicate if time is exceed or not.
         $maxTimeExceeded = false;
 
-        if ($this->getState() === AssessmentItemSessionState::CLOSED) {
-            if ($this->isMaxTimeReached() === true && ($this->getTimeLimits()->doesAllowLateSubmission() === false && $forceLateSubmission === false)) {
-                $msg = 'The maximum time to be spent on the item session has been reached.';
-                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
-            }
-            // else...
-            // We let it go to give a chance to responses to be processed if late submission is allowed.
+        if (($this->getState() === AssessmentItemSessionState::CLOSED) && $this->isMaxTimeReached() === true && ($this->getTimeLimits()->doesAllowLateSubmission() === false && $forceLateSubmission === false)) {
+            $msg = 'The maximum time to be spent on the item session has been reached.';
+            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
         }
 
         // Do we have a minimum time limit to be respected?
-        if ($this->hasTimeLimits() === true) {
-            // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
-            // assessmentItems only when linear navigation mode is in effect.
-            if ($this->isNavigationLinear() === true && $this->getTimeLimits()->hasMinTime() === true) {
-                if ($this['duration']->getSeconds(true) <= $this->getTimeLimits()->getMinTime()->getSeconds(true)) {
-                    // An exception is thrown to prevent the numAttempts to be incremented.
-                    // Suspend and wait for a next attempt.
-                    $this->suspend();
-                    $msg = 'The minimal duration is not yet reached.';
-                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
-                }
-            }
+        // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
+        // assessmentItems only when linear navigation mode is in effect.
+        if (($this->hasTimeLimits() === true) && $this->isNavigationLinear() === true && $this->getTimeLimits()->hasMinTime() === true && $this['duration']->getSeconds(true) <= $this->getTimeLimits()->getMinTime()->getSeconds(true)) {
+            // An exception is thrown to prevent the numAttempts to be incremented.
+            // Suspend and wait for a next attempt.
+            $this->suspend();
+            $msg = 'The minimal duration is not yet reached.';
+            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
         }
 
         // Apply the responses (if provided) to the current state.
@@ -1165,10 +1157,8 @@ class AssessmentItemSession extends State
     {
         $reached = false;
 
-        if ($this->hasTimeLimits() && $this->getTimeLimits()->hasMaxTime() === true) {
-            if ($this['duration']->getSeconds(true) >= $this->getTimeLimits()->getMaxTime()->getSeconds(true)) {
-                $reached = true;
-            }
+        if ($this->hasTimeLimits() && $this->getTimeLimits()->hasMaxTime() === true && $this['duration']->getSeconds(true) >= $this->getTimeLimits()->getMaxTime()->getSeconds(true)) {
+            $reached = true;
         }
 
         return $reached;

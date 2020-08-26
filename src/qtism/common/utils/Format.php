@@ -235,7 +235,7 @@ class Format
     public static function isUri($string)
     {
         // @todo find the ultimate URI validation rule.
-        return gettype($string) === 'string';
+        return is_string($string);
 
         // Thanks to Wizard04.
         $pattern = "<^([a-z0-9+.-]+):(?://(?:((?:[a-z0-9-._~!$&'\(\)*+,;=:]|%[0-9A-F]{2})*)@)?((?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*)(?::(\d*))?(/(?:[a-z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?|(/?(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})+(?:[a-z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?)(?:\?((?:[a-z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*))?(?:#((?:[a-z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*))?$>i";
@@ -275,10 +275,8 @@ class Format
     {
         $pair = explode("\x20", $string);
 
-        if (count($pair) == 2) {
-            if (self::isIdentifier(self::toLowerTrim($pair[0])) && self::isIdentifier(self::toLowerTrim($pair[1]))) {
-                return true;
-            }
+        if ((count($pair) == 2) && self::isIdentifier(self::toLowerTrim($pair[0])) && self::isIdentifier(self::toLowerTrim($pair[1]))) {
+            return true;
         }
 
         return false;
@@ -320,7 +318,7 @@ class Format
      */
     public static function isBoolean($string)
     {
-        if (gettype($string) === 'string') {
+        if (is_string($string)) {
             $string = self::toLowerTrim($string);
             if ($string == 'true') {
                 return true;
@@ -342,12 +340,10 @@ class Format
      */
     public static function isPoint($string)
     {
-        if (gettype($string) === 'string') {
+        if (is_string($string)) {
             $parts = explode("\x20", $string);
-            if (count($parts) == 2) {
-                if (self::isInteger($parts[0]) && self::isInteger($parts[1])) {
-                    return true;
-                }
+            if ((count($parts) == 2) && self::isInteger($parts[0]) && self::isInteger($parts[1])) {
+                return true;
             }
         }
 
@@ -363,7 +359,7 @@ class Format
     public static function isFile($string)
     {
         // @todo implement File baseType as a complex type. See QTI-PCI spec for redemption.
-        return gettype($string) === 'string';
+        return is_string($string);
     }
 
     /**

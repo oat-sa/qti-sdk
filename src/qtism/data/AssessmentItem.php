@@ -281,7 +281,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function setLang($lang = '')
     {
-        if (gettype($lang) === 'string') {
+        if (is_string($lang)) {
             $this->lang = $lang;
         } else {
             $msg = "The lang argument must be a string, '" . gettype($lang) . "' given.";

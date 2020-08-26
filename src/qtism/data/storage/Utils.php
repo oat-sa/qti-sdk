@@ -213,7 +213,7 @@ class Utils
      */
     public static function sanitizeUri($uri)
     {
-        if (gettype($uri) === 'string') {
+        if (is_string($uri)) {
             return rtrim($uri, '/');
         }
 

@@ -44,7 +44,7 @@ class QtiDirectedPair extends QtiPair
      */
     public function equals($obj)
     {
-        if (gettype($obj) === 'object' && $obj instanceof self) {
+        if (is_object($obj) && $obj instanceof self) {
             return $obj->getFirst() === $this->getFirst() && $obj->getSecond() === $this->getSecond();
         }
 

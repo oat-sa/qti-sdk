@@ -82,7 +82,7 @@ class QtiDuration implements QtiDatatype
      */
     public function __construct($intervalSpec)
     {
-        if (gettype($intervalSpec) === 'string' && $intervalSpec !== '') {
+        if (is_string($intervalSpec) && $intervalSpec !== '') {
             try {
                 $tz = new DateTimeZone(self::TIMEZONE);
                 $d1 = new DateTime('now', $tz);

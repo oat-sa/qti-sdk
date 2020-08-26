@@ -117,7 +117,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
                                 $values[] = $val;
 
-                                if (gettype($val->getValue()) === 'integer') {
+                                if (is_int($val->getValue())) {
                                     $integerCount++;
                                 }
                             }

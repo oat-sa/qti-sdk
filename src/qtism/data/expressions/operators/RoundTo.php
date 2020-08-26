@@ -101,7 +101,7 @@ class RoundTo extends Operator implements Pure
      */
     public function setFigures($figures)
     {
-        if (is_int($figures) || (gettype($figures) === 'string' && Format::isVariableRef($figures))) {
+        if (is_int($figures) || (is_string($figures) && Format::isVariableRef($figures))) {
             $this->figures = $figures;
         } else {
             $msg = "The figures argument must be an integer or a QTI variable reference, '" . $figures . "' given.";

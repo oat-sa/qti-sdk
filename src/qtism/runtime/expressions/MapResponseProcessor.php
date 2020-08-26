@@ -126,7 +126,7 @@ class MapResponseProcessor extends ExpressionProcessor
                         $mappedCount = 0;
 
                         for ($i = 0; $i < count($mapEntries); $i++) {
-                            $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
+                            $mapKey = $mapEntries[$i]->getMapKey();
                             if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
                                 $val = new QtiString(mb_strtolower($val->getValue(), 'UTF-8'));
                                 $mapKey = mb_strtolower($mapKey, 'UTF-8');

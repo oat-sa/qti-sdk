@@ -68,7 +68,7 @@ class RepeatProcessor extends OperatorProcessor
         $expression = $this->getExpression();
         $numberRepeats = $expression->getNumberRepeats();
 
-        if (gettype($numberRepeats) === 'string') {
+        if (is_string($numberRepeats)) {
             // Variable reference found.
             $state = $this->getState();
             $varName = ExprUtils::sanitizeVariableRef($numberRepeats);

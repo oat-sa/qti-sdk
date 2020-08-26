@@ -103,7 +103,7 @@ class Utils
      */
     public static function throwTypingError($value)
     {
-        $givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value);
+        $givenValue = (is_object($value)) ? get_class($value) : gettype($value);
         $acceptedTypes = ['boolean', 'integer', 'float', 'double', 'string', 'Duration', 'Pair', 'DirectedPair', 'Point'];
         $acceptedTypes = implode(', ', $acceptedTypes);
         $msg = "A value is not compliant with the QTI runtime model datatypes: ${acceptedTypes} . '${givenValue}' given.";
@@ -120,7 +120,7 @@ class Utils
      */
     public static function throwBaseTypeTypingError($baseType, $value)
     {
-        $givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value) . ':' . $value;
+        $givenValue = (is_object($value)) ? get_class($value) : gettype($value) . ':' . $value;
         $acceptedTypes = BaseType::getNameByConstant($baseType);
         $msg = "The value '${givenValue}' is not compliant with the '${acceptedTypes}' baseType.";
         throw new InvalidArgumentException($msg);
@@ -182,7 +182,7 @@ class Utils
      */
     public static function isValidVariableIdentifier($string)
     {
-        if (gettype($string) !== 'string' || empty($string)) {
+        if (!is_string($string) || empty($string)) {
             return false;
         }
 

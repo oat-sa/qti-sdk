@@ -280,14 +280,14 @@ class Render extends Cli
                 $body = substr($body, 0, strlen('</div>') * -1);
                 $body = "<body ${body}</body>${nl}";
             } else {
-                $body = $xml->saveXml($xml->documentElement) . (string)${nl};
+                $body = $xml->saveXml($xml->documentElement) . ${nl};
             }
 
             if ($arguments['document'] === true) {
                 $footer = "</html>\n";
             }
         } else {
-            $body = $xml->saveXml($xml->documentElement) . (string)${nl};
+            $body = $xml->saveXml($xml->documentElement) . ${nl};
         }
 
         // Indent body...
@@ -358,7 +358,7 @@ class Render extends Cli
             $footer .= "</html>\n";
         }
 
-        $body = $xml->saveXml($xml->documentElement) . (string)${nl};
+        $body = $xml->saveXml($xml->documentElement) . ${nl};
 
         // Indent body...
         $indentBody = '';

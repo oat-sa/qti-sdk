@@ -56,7 +56,7 @@ class OperandsCollection extends AbstractCollection implements Stack
         if (RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {
             return;
         } else {
-            $value = (gettype($value) === 'object') ? get_class($value) : $value;
+            $value = (is_object($value)) ? get_class($value) : $value;
             $msg = "The OperandsCollection only accepts QTI Runtime compliant values, '" . $value . "' given.";
             throw new InvalidArgumentException($msg);
         }

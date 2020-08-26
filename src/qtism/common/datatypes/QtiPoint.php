@@ -127,7 +127,7 @@ class QtiPoint implements QtiDatatype
      */
     public function equals($obj)
     {
-        return (gettype($obj) === 'object' &&
+        return (is_object($obj) &&
             $obj instanceof self &&
             $obj->getX() === $this->getX() &&
             $obj->getY() === $this->getY());

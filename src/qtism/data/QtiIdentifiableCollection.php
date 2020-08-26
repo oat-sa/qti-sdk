@@ -70,7 +70,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      */
     public function offsetExists($offset)
     {
-        if (gettype($offset) !== 'string' && empty($offset) === false) {
+        if (!is_string($offset) && empty($offset) === false) {
             $msg = 'The requested offset must be a string.';
             throw new OutOfRangeException($msg);
         }
@@ -89,7 +89,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      */
     public function offsetGet($offset)
     {
-        if (gettype($offset) !== 'string') {
+        if (!is_string($offset)) {
             $msg = 'The requested offset must be a non-empty string.';
             throw new OutOfRangeException($msg);
         }
@@ -155,7 +155,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      */
     public function offsetUnset($offset)
     {
-        if (gettype($offset) === 'string') {
+        if (is_string($offset)) {
             $data = &$this->getDataPlaceHolder();
             if (isset($data[$offset])) {
                 $data[$offset]->detach($this);

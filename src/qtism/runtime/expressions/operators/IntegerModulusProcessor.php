@@ -72,7 +72,7 @@ class IntegerModulusProcessor extends OperatorProcessor
             return null;
         }
 
-        return new QtiInteger((int)($operand1->getValue() % $operand2->getValue()));
+        return new QtiInteger(($operand1->getValue() % $operand2->getValue()));
     }
 
     /**

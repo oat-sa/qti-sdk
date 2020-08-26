@@ -137,7 +137,7 @@ class QtiPair implements QtiDatatype
      */
     public function equals($obj)
     {
-        if (gettype($obj) === 'object' && $obj instanceof self) {
+        if (is_object($obj) && $obj instanceof self) {
             $a = [$this->getFirst(), $this->getSecond()];
             $b = [$obj->getFirst(), $obj->getSecond()];
 

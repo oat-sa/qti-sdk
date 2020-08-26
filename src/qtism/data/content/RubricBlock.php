@@ -136,7 +136,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      */
     public function setUse($use)
     {
-        if (gettype($use) === 'string') {
+        if (is_string($use)) {
             $this->use = $use;
         } else {
             $msg = "The use argument must be a string, '" . gettype($use) . "' given";

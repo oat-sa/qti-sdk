@@ -186,10 +186,8 @@ class AssessmentTestSeeker
         $position = false;
         $class = $component->getQtiClassName();
 
-        if (isset($this->componentsStore[$class]) === true) {
-            if (($search = array_search($component, $this->componentsStore[$class], true)) !== false) {
-                $position = $search;
-            }
+        if ((isset($this->componentsStore[$class]) === true) && ($search = array_search($component, $this->componentsStore[$class], true)) !== false) {
+            $position = $search;
         }
 
         return $position;

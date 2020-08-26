@@ -485,25 +485,23 @@ class XmlDocument extends QtiDocument
     public function resolveTemplateLocation($validate = false)
     {
         if (($root = $this->getDocumentComponent()) !== null) {
-            if ($root instanceof AssessmentItem && ($responseProcessing = $root->getResponseProcessing()) !== null && ($templateLocation = $responseProcessing->getTemplateLocation()) !== '') {
-                if (Url::isRelative($templateLocation) === true) {
-                    $baseUri = $this->getUrl();
-                    $pathinfo = pathinfo($baseUri);
-                    $basePath = $pathinfo['dirname'];
-                    $templateLocation = Url::rtrim($basePath) . '/' . Url::ltrim($templateLocation);
+            if ($root instanceof AssessmentItem && ($responseProcessing = $root->getResponseProcessing()) !== null && ($templateLocation = $responseProcessing->getTemplateLocation()) !== '' && Url::isRelative($templateLocation) === true) {
+                $baseUri = $this->getUrl();
+                $pathinfo = pathinfo($baseUri);
+                $basePath = $pathinfo['dirname'];
+                $templateLocation = Url::rtrim($basePath) . '/' . Url::ltrim($templateLocation);
 
-                    $doc = new self();
-                    $doc->setFilesystem($this->getFilesystem());
-                    $doc->load($templateLocation, $validate);
+                $doc = new self();
+                $doc->setFilesystem($this->getFilesystem());
+                $doc->load($templateLocation, $validate);
 
-                    $newResponseProcessing = $doc->getDocumentComponent();
+                $newResponseProcessing = $doc->getDocumentComponent();
 
-                    if ($newResponseProcessing instanceof ResponseProcessing) {
-                        $root->setResponseProcessing($newResponseProcessing);
-                    } else {
-                        $msg = "The template at location '${templateLocation}' is not a document containing a QTI responseProcessing element.";
-                        throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
-                    }
+                if ($newResponseProcessing instanceof ResponseProcessing) {
+                    $root->setResponseProcessing($newResponseProcessing);
+                } else {
+                    $msg = "The template at location '${templateLocation}' is not a document containing a QTI responseProcessing element.";
+                    throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
                 }
             }
         } else {

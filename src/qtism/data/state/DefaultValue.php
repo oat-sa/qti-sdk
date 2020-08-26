@@ -86,7 +86,7 @@ class DefaultValue extends QtiComponent
      */
     public function setInterpretation($interpretation)
     {
-        if (gettype($interpretation) === 'string') {
+        if (is_string($interpretation)) {
             $this->interpretation = $interpretation;
         } else {
             $msg = "Interpretation must be a string, '" . gettype($interpretation) . "' given.";

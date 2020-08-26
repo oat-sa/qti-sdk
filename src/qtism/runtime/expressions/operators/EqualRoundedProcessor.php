@@ -85,7 +85,7 @@ class EqualRoundedProcessor extends OperatorProcessor
         $roundingMode = $expression->getRoundingMode();
         $figures = $expression->getFigures();
 
-        if (gettype($figures) === 'string') {
+        if (is_string($figures)) {
             // Variable reference to deal with.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($figures);

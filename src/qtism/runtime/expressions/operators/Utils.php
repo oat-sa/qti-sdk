@@ -233,14 +233,12 @@ class Utils
 
         for ($i = 0; $i < $len; $i++) {
             $char = mb_substr($string, $i, 1); // get a multi-byte char.
-            if (in_array($char, $symbols) === true) {
-                // Check escaping.
-                // If the amount of preceding backslashes is odd, it is escaped.
-                // If the amount of preceding backslashes is even, it is not escaped.
-                if (static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
-                    // It is not escaped, so ecape it.
-                    $returnValue .= '\\';
-                }
+            // Check escaping.
+            // If the amount of preceding backslashes is odd, it is escaped.
+            // If the amount of preceding backslashes is even, it is not escaped.
+            if ((in_array($char, $symbols) === true) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
+                // It is not escaped, so ecape it.
+                $returnValue .= '\\';
             }
 
             $returnValue .= $char;

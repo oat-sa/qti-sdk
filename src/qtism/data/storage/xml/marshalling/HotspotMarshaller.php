@@ -78,10 +78,8 @@ class HotspotMarshaller extends Marshaller
                 }
             }
 
-            if (Version::compare($version, '2.1.0', '>=') === true) {
-                if ($component->getMatchMin() !== 0) {
-                    $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
-                }
+            if ((Version::compare($version, '2.1.0', '>=') === true) && $component->getMatchMin() !== 0) {
+                $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
             }
         }
 
@@ -154,16 +152,12 @@ class HotspotMarshaller extends Marshaller
                     }
 
                     if ($element->localName === 'associableHotspot') {
-                        if (Version::compare($version, '2.1.0', '<') === true) {
-                            if (($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
-                                $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
-                            }
+                        if ((Version::compare($version, '2.1.0', '<') === true) && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                            $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                         }
 
-                        if (Version::compare($version, '2.1.0', '>=') === true) {
-                            if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
-                                $component->setMatchMin($matchMin);
-                            }
+                        if ((Version::compare($version, '2.1.0', '>=') === true) && ($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                            $component->setMatchMin($matchMin);
                         }
                     }
 

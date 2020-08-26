@@ -55,16 +55,14 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
                     $component = new $fqClass($responseIdentifier, $object, $choices);
 
                     if (Version::compare($version, '2.1.0', '>=') === true) {
-                        if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                            // graphicOrderInteraction->minChoices = 0 is an endless debate:
-                            // The Information models says: If specfied, minChoices must be 1 or greater but ...
-                            // The XSD 2.1 says: xs:integer, [-inf, +inf], optional
-                            // The XSD 2.1.1 says: xs:nonNegativeInteger, [0, +inf]
-                            //
-                            // --> Let's say that if <= 0, we consider it not specfied!
-                            if ($minChoices > 0) {
-                                $component->setMinChoices($minChoices);
-                            }
+                        // graphicOrderInteraction->minChoices = 0 is an endless debate:
+                        // The Information models says: If specfied, minChoices must be 1 or greater but ...
+                        // The XSD 2.1 says: xs:integer, [-inf, +inf], optional
+                        // The XSD 2.1.1 says: xs:nonNegativeInteger, [0, +inf]
+                        //
+                        // --> Let's say that if <= 0, we consider it not specfied!
+                        if ((($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) && $minChoices > 0) {
+                            $component->setMinChoices($minChoices);
                         }
 
                         if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {

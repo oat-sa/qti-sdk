@@ -123,7 +123,7 @@ class AssessmentItemRef extends SectionPart
      */
     public function setHref($href)
     {
-        if (gettype($href) === 'string') {
+        if (is_string($href)) {
             $this->href = $href;
         } else {
             $msg = "href must be a string, '" . gettype($href) . "' given.";

@@ -912,10 +912,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $c = $this->getExploredComponent();
         $toPush = $substitution;
 
-        if ($c instanceof Flow) {
-            if (empty($substitution) === true) {
-                $toPush = $c->getXmlBase();
-            }
+        if (($c instanceof Flow) && empty($substitution) === true) {
+            $toPush = $c->getXmlBase();
         }
 
         $this->getXmlBaseStack()->push($toPush);

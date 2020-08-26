@@ -720,7 +720,7 @@ class Route implements Iterator
     public function getAssessmentItemRefsByCategory($category)
     {
         $categoryMap = $this->getAssessmentItemRefCategoryMap();
-        $categories = (gettype($category) === 'string') ? [$category] : $category->getArrayCopy();
+        $categories = (is_string($category)) ? [$category] : $category->getArrayCopy();
 
         $result = new AssessmentItemRefCollection();
 
@@ -984,7 +984,7 @@ class Route implements Iterator
      */
     public function getRouteItemsByTestPart($testPart)
     {
-        if (gettype($testPart) === 'string') {
+        if (is_string($testPart)) {
             $map = $this->getTestPartIdentifierMap();
 
             if (isset($map[$testPart]) === false) {
@@ -1018,7 +1018,7 @@ class Route implements Iterator
      */
     public function getRouteItemsByAssessmentSection($assessmentSection)
     {
-        if (gettype($assessmentSection) === 'string') {
+        if (is_string($assessmentSection)) {
             $map = $this->getAssessmentSectionIdentifierMap();
 
             if (isset($map[$assessmentSection]) === false) {
@@ -1053,7 +1053,7 @@ class Route implements Iterator
      */
     public function getRouteItemsByAssessmentItemRef($assessmentItemRef)
     {
-        if (gettype($assessmentItemRef) === 'string') {
+        if (is_string($assessmentItemRef)) {
             if (($ref = $this->assessmentItemRefs[$assessmentItemRef]) !== null) {
                 return $this->assessmentItemRefMap[$ref];
             } else {
@@ -1103,7 +1103,7 @@ class Route implements Iterator
             $identifier = new VariableIdentifier($identifier);
 
             $id = ($identifier->hasPrefix() === false) ? $identifier->getVariableName() : $identifier->getPrefix();
-            $occurence = ($identifier->hasPrefix() === false) ? 0 : (int)($identifier->getVariableName() - 1);
+            $occurence = ($identifier->hasPrefix() === false) ? 0 : ($identifier->getVariableName() - 1);
         } catch (InvalidArgumentException $e) {
             $msg = "The given identifier '${identifier}' is an invalid branching target.";
             throw new OutOfRangeException($msg);
