@@ -2,6 +2,7 @@
 
 namespace qtismtest\data;
 
+use InvalidArgumentException;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\TestFeedback;
 use qtismtest\QtiSmTestCase;
@@ -17,7 +18,7 @@ class TestFeedbackTest extends QtiSmTestCase
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'1' is not a value from the TestFeedbackAccess enumeration.");
 
         $testFeedback->setAccess(true);
@@ -25,7 +26,7 @@ class TestFeedbackTest extends QtiSmTestCase
 
     public function testSetOutcomeIdentifierWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
 
         $testFeedback = new TestFeedback('IDENTIFIER', 999, new FlowStaticCollection());
@@ -35,7 +36,7 @@ class TestFeedbackTest extends QtiSmTestCase
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'1' is not a value from the ShowHide enumeration.");
 
         $testFeedback->setShowHide(true);
@@ -43,7 +44,7 @@ class TestFeedbackTest extends QtiSmTestCase
 
     public function testSetIdentifierWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
 
         $testFeedback = new TestFeedback(999, 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
@@ -53,7 +54,7 @@ class TestFeedbackTest extends QtiSmTestCase
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Title must be a string, 'integer' given.");
 
         $testFeedback->setTitle(999);

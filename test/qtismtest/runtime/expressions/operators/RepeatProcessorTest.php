@@ -10,6 +10,8 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -174,8 +176,8 @@ class RepeatProcessorTest extends QtiSmTestCase
 
     /**
      * @param int $numberRepeats
-     * @return \qtism\data\QtiComponent
-     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($numberRepeats = 1)
     {

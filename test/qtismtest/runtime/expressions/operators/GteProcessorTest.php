@@ -6,6 +6,8 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\GteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -106,8 +108,8 @@ class GteProcessorTest extends QtiSmTestCase
     }
 
     /**
-     * @return \qtism\data\QtiComponent
-     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

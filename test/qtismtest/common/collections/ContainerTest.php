@@ -3,6 +3,7 @@
 namespace qtismtest\common\collections;
 
 use DateTime;
+use Exception;
 use InvalidArgumentException;
 use qtism\common\collections\Container;
 use qtism\common\collections\StringCollection;
@@ -158,7 +159,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function invalidValueProvider()
     {

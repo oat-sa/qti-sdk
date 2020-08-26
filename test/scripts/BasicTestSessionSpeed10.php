@@ -5,12 +5,14 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\AssessmentTest;
+use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\storage\binary\LocalQtiBinaryStorage;
 use qtism\runtime\storage\common\AbstractStorage;
+use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionException;
@@ -22,7 +24,7 @@ require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 /**
  * @param array|null $average
- * @return \qtism\data\QtiComponent
+ * @return QtiComponent
  * @throws PhpStorageException
  */
 function loadTestDefinition(array &$average = null)
@@ -99,7 +101,7 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
  * @param $sessionId
  * @param array|null $average
  * @return mixed
- * @throws \qtism\runtime\storage\common\StorageException
+ * @throws StorageException
  */
 function retrieve(AbstractStorage $storage, $sessionId, array &$average = null)
 {
@@ -118,7 +120,7 @@ function retrieve(AbstractStorage $storage, $sessionId, array &$average = null)
  * @param AbstractStorage $storage
  * @param AssessmentTestSession $session
  * @param null $average
- * @throws \qtism\runtime\storage\common\StorageException
+ * @throws StorageException
  */
 function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null)
 {

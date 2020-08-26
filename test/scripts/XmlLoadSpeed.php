@@ -1,13 +1,14 @@
 <?php
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 /**
  * @param array $files
  * @param bool $validate
- * @throws \qtism\data\storage\xml\XmlStorageException
+ * @throws XmlStorageException
  */
 function testAssessmentItems(array $files, $validate = false)
 {
@@ -41,7 +42,7 @@ function testAssessmentItems(array $files, $validate = false)
 /**
  * @param array $files
  * @param bool $validate
- * @throws \qtism\data\storage\xml\XmlStorageException
+ * @throws XmlStorageException
  */
 function testAssessmentTests(array $files, $validate = false)
 {

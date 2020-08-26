@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\Correct;
 use qtism\data\expressions\Variable;
@@ -50,7 +51,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
      * @dataProvider testLoadProvider
      *
      * @param string $url
-     * @throws \qtism\data\storage\xml\XmlStorageException
+     * @throws XmlStorageException
      */
     public function testLoad($url)
     {

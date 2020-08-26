@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\processing;
 
 use qtism\data\processing\TemplateProcessing;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\processing\Utils;
 use qtismtest\QtiSmTestCase;
 
@@ -29,7 +30,7 @@ class ProcessingUtilsTest extends QtiSmTestCase
 
     /**
      * @return array
-     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     * @throws MarshallerNotFoundException
      */
     public function impactedVariablesProvider()
     {

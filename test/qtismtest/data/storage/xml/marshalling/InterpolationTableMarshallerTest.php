@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use DOMElement;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\state\InterpolationTable;
 use qtism\data\state\InterpolationTableEntry;
@@ -134,7 +135,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The BaseType attribute must be a value from the BaseType enumeration.');
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [true]);

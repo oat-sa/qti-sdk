@@ -6,6 +6,8 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\DurationLTProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -81,8 +83,8 @@ class DurationLTProcessorTest extends QtiSmTestCase
     }
 
     /**
-     * @return \qtism\data\QtiComponent
-     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

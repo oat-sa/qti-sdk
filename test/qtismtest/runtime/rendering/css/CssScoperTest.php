@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\rendering\css;
 
+use qtism\common\storage\MemoryStreamException;
 use qtism\runtime\rendering\css\CssScoper;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rendering\RenderingException;
@@ -23,10 +24,9 @@ class CssScoperTest extends QtiSmTestCase
      * @param bool $pseudoClassMapping
      * @param bool $wcFriendly
      * @throws RenderingException
-     * @throws \qtism\common\storage\MemoryStreamException
+     * @throws MemoryStreamException
      */
-    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
-    {
+    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false) {
         $cssScoper = new CssScoper($cssMapping, $pseudoClassMapping);
         $cssScoper->setWebComponentFriendly($wcFriendly);
         $expected = file_get_contents($outputFile);

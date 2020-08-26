@@ -9,6 +9,8 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\ToleranceMode;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
@@ -259,8 +261,8 @@ class EqualProcessorTest extends QtiSmTestCase
      * @param array $tolerance
      * @param bool $includeLowerBound
      * @param bool $includeUpperBound
-     * @return \qtism\data\QtiComponent
-     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($toleranceMode, array $tolerance = [], $includeLowerBound = true, $includeUpperBound = true)
     {

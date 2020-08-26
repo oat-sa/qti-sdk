@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\pci\json;
 
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
@@ -46,7 +47,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @param QtiScalar $expectedScalar
      * @param string $json
      * @throws UnmarshallingException
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json)
     {
@@ -64,7 +65,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @param QtiDatatype $expectedComplex
      * @param string $json
      * @throws UnmarshallingException
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json)
     {
@@ -79,7 +80,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @param FileSystemFile $expectedFile
      * @param string $json
      * @throws UnmarshallingException
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function testUnmarshallFile(FileSystemFile $expectedFile, $json)
     {
@@ -98,7 +99,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @param MultipleContainer $expectedContainer
      * @param string $json
      * @throws UnmarshallingException
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function testUnmarshallList(MultipleContainer $expectedContainer, $json)
     {
@@ -112,7 +113,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @param RecordContainer $expectedRecord
      * @param string $json
      * @throws UnmarshallingException
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function testUnmarshallRecord(RecordContainer $expectedRecord, $json)
     {
@@ -125,7 +126,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      *
      * @param mixed $input
      * @throws UnmarshallingException
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function testUnmarshallInvalid($input)
     {
@@ -226,7 +227,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
     /**
      * @return array
-     * @throws \qtism\common\datatypes\files\FileManagerException
+     * @throws FileManagerException
      */
     public function unmarshallFileProvider()
     {

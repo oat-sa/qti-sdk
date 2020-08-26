@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\data\AssessmentSection;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\View;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItemRef;
@@ -19,7 +20,7 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
 {
     /**
      * @param AssessmentSection|null $assessmentSection
-     * @throws \qtism\data\storage\xml\XmlStorageException
+     * @throws XmlStorageException
      */
     public function testLoad(AssessmentSection $assessmentSection = null)
     {

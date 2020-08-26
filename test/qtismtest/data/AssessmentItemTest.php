@@ -2,6 +2,7 @@
 
 namespace qtismtest\data;
 
+use InvalidArgumentException;
 use qtism\data\AssessmentItem;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\ModalFeedbackCollection;
@@ -768,7 +769,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testCreateAssessmentItemWrongIdentifier()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The identifier argument must be a valid QTI Identifier, '999' given.");
 
         $assessmentItem = new AssessmentItem('999', 'Nine Nine Nine', false);
@@ -776,7 +777,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testCreateAssessmentItemWrongTitle()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The title argument must be a string, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 9, false);
@@ -784,7 +785,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testCreateAssessmentItemWrongLanguage()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The lang argument must be a string, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false, 1337);
@@ -792,7 +793,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetLabelWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The label argument must be a string with at most 256 characters.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
@@ -801,7 +802,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetAdaptiveWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The adaptive argument must be a boolean, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
@@ -810,7 +811,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetTimeDependentWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The timeDependent argument must be a boolean, 'integer' given.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
@@ -819,7 +820,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetToolNameWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The toolName argument must be a string with at most 256 characters.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
@@ -828,7 +829,7 @@ class AssessmentItemTest extends QtiSmTestCase
 
     public function testSetToolVersionWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The toolVersion argument must be a string with at most 256 characters.");
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);

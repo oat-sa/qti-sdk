@@ -3,6 +3,7 @@
 namespace qtismtest;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -28,7 +29,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 
     /**
      * @param $xmlString
-     * @return \qtism\data\ExtendedAssessmentItemRef
+     * @return ExtendedAssessmentItemRef
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */

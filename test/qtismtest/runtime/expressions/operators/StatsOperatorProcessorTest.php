@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Statistics;
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -259,7 +260,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
     /**
      * @param $name
-     * @return \qtism\data\QtiComponent
+     * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($name)

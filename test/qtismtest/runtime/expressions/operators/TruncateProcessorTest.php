@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -169,7 +170,7 @@ class TruncateProcessorTest extends QtiSmTestCase
     }
 
     /**
-     * @return \qtism\data\QtiComponent
+     * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()

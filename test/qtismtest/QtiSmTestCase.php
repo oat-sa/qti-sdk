@@ -11,6 +11,7 @@ use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
@@ -209,7 +210,7 @@ abstract class QtiSmTestCase extends TestCase
      * @param string $xmlString An XML String to transform in a QtiComponent object.
      * @param string $version A QTI version rule the creation of the component.
      * @return QtiComponent
-     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException
+     * @throws MarshallerNotFoundException
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {

@@ -4,6 +4,7 @@ namespace qtismtest\common\utils;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 use qtism\common\utils\Time as TimeUtils;
 use qtismtest\QtiSmTestCase;
 
@@ -35,7 +36,7 @@ class TimeTest extends QtiSmTestCase
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function timeDiffSecondsProvider()
     {

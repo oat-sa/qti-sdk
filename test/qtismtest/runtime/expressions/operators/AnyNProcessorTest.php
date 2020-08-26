@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -155,7 +156,7 @@ class AnyNProcessorTest extends QtiSmTestCase
     /**
      * @param $min
      * @param $max
-     * @return \qtism\data\QtiComponent
+     * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($min, $max)

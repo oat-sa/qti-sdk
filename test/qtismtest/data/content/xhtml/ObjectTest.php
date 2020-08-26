@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\xhtml;
 
+use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
@@ -14,7 +15,7 @@ class ObjectTest extends QtiSmTestCase
 {
     public function testCreateWrongData()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'data' argument must be a URI or an empty string, 'integer' given.");
 
         new ObjectElement(999, 'image/png');
@@ -22,7 +23,7 @@ class ObjectTest extends QtiSmTestCase
 
     public function testCreateWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'type' argument must be a non-empty string, 'integer' given.");
 
         new ObjectElement('./my-image.png', 999);
@@ -30,7 +31,7 @@ class ObjectTest extends QtiSmTestCase
 
     public function testSetWidthWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'width' argument must be an integer, 'double' given.");
 
         $object = new ObjectElement('./my-image.png', 'image/png');
@@ -39,7 +40,7 @@ class ObjectTest extends QtiSmTestCase
 
     public function testSetHeightWrongType()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'height' argument must be an integer, 'double' given.");
 
         $object = new ObjectElement('./my-image.png', 'image/png');
