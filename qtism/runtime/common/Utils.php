@@ -210,45 +210,27 @@ class Utils
 
             if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
                 $value = new $class($targetBaseType, self::floatArrayToInteger($value->getArrayCopy()));
-            } else {
-                if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                    $value = new $class($targetBaseType, self::integerArrayToFloat($value->getArrayCopy()));
-                } else {
-                    if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::STRING) {
-                        $value = new $class($targetBaseType, $value->getArrayCopy());
-                    } else {
-                        if ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::IDENTIFIER) {
-                            $value = new $class($targetBaseType, $value->getArrayCopy());
-                        } else {
-                            if ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::STRING) {
-                                $value = new $class($targetBaseType, $value->getArrayCopy());
-                            } else {
-                                if ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::URI) {
-                                    $value = new $class($targetBaseType, $value->getArrayCopy());
-                                } else {
-                                    if ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::IDENTIFIER) {
-                                        $value = new $class($targetBaseType, $value->getArrayCopy());
-                                    } else {
-                                        if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::URI) {
-                                            $value = new $class($targetBaseType, $value->getArrayCopy());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            } elseif ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
+                $value = new $class($targetBaseType, self::integerArrayToFloat($value->getArrayCopy()));
+            } elseif ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::STRING) {
+                $value = new $class($targetBaseType, $value->getArrayCopy());
+            } elseif ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::IDENTIFIER) {
+                $value = new $class($targetBaseType, $value->getArrayCopy());
+            } elseif ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::STRING) {
+                $value = new $class($targetBaseType, $value->getArrayCopy());
+            } elseif ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::URI) {
+                $value = new $class($targetBaseType, $value->getArrayCopy());
+            } elseif ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::IDENTIFIER) {
+                $value = new $class($targetBaseType, $value->getArrayCopy());
+            } elseif ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::URI) {
+                $value = new $class($targetBaseType, $value->getArrayCopy());
             }
-        } else {
-            if ($valueBaseType !== $targetBaseType) {
-                // Scalar value.
-                if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
-                    $value = (int)$value;
-                } else {
-                    if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                        $value = (float)$value;
-                    }
-                }
+        } elseif ($valueBaseType !== $targetBaseType) {
+            // Scalar value.
+            if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
+                $value = (int)$value;
+            } elseif ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
+                $value = (float)$value;
             }
         }
 
@@ -278,42 +260,24 @@ class Utils
     {
         if ($firstBaseType === $secondBaseType) {
             return true;
-        } else {
-            if ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::STRING) {
-                return true;
-            } else {
-                if ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::IDENTIFIER) {
-                    return true;
-                } else {
-                    if ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::STRING) {
-                        return true;
-                    } else {
-                        if ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::URI) {
-                            return true;
-                        } else {
-                            if ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::IDENTIFIER) {
-                                return true;
-                            } else {
-                                if ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::URI) {
-                                    return true;
-                                } else {
-                                    if ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-                                        return true;
-                                    } else {
-                                        if ($firstBaseType === BaseType::INTEGER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-                                            return true;
-                                        } else {
-                                            if ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::STRING) {
+            return true;
+        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::IDENTIFIER) {
+            return true;
+        } elseif ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::STRING) {
+            return true;
+        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::URI) {
+            return true;
+        } elseif ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::IDENTIFIER) {
+            return true;
+        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::URI) {
+            return true;
+        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
+            return true;
+        } elseif ($firstBaseType === BaseType::INTEGER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
+            return true;
+        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
+            return true;
         }
 
         return false;

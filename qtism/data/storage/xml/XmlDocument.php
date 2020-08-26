@@ -273,14 +273,12 @@ class XmlDocument extends QtiDocument
 
                         $this->setUrl($uri);
                     }
+                } elseif (($strXml = $this->getDomDocument()->saveXML()) !== false) {
+                    return $strXml;
                 } else {
-                    if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
-                        return $strXml;
-                    } else {
-                        // An error occurred while saving.
-                        $msg = 'An internal error occurred while exporting QTI-XML as string.';
-                        throw new XmlStorageException($msg);
-                    }
+                    // An error occurred while saving.
+                    $msg = 'An internal error occurred while exporting QTI-XML as string.';
+                    throw new XmlStorageException($msg);
                 }
             } catch (DOMException $e) {
                 $msg = 'An internal error occurred while saving QTI-XML data.';
