@@ -186,7 +186,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setBase($base)
     {
-        if (is_int($base) === true && $base >= 0) {
+        if (is_int($base) && $base >= 0) {
             $this->base = $base;
         } else {
             $msg = "The 'base' argument must be a positive (>= 0) integer value, '" . gettype($base) . "' given.";
@@ -215,7 +215,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setStringIdentifier($stringIdentifier)
     {
-        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
+        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier))) {
             $this->stringIdentifier = $stringIdentifier;
         } else {
             $msg = "The 'stringIdentifier' argument must be a valid QTI identifier or an empty string, '" . $stringIdentifier . "' given.";
@@ -292,7 +292,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setPatternMask($patternMask)
     {
-        if (is_string($patternMask) === true) {
+        if (is_string($patternMask)) {
             $this->patternMask = $patternMask;
         } else {
             $msg = "The 'patternMask' argument must be a string value, '" . gettype($patternMask) . "' given.";
@@ -331,7 +331,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setPlaceholderText($placeholderText)
     {
-        if (is_string($placeholderText) === true) {
+        if (is_string($placeholderText)) {
             $this->placeholderText = $placeholderText;
         } else {
             $msg = "The 'placeholderText' argument must be a string value, '" . gettype($placeholderText) . "' given.";
@@ -369,7 +369,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setMaxStrings($maxStrings)
     {
-        if (is_int($maxStrings) === true && ($maxStrings > 0 || $maxStrings === -1)) {
+        if (is_int($maxStrings) && ($maxStrings > 0 || $maxStrings === -1)) {
             $this->maxStrings = $maxStrings;
         } else {
             $msg = "The 'maxStrings' argument must be a strictly positive (> 0) integer or -1, '" . gettype($maxStrings) . "' given.";
@@ -470,7 +470,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setFormat($format)
     {
-        if (in_array($format, TextFormat::asArray()) === true) {
+        if (in_array($format, TextFormat::asArray())) {
             $this->format = $format;
         } else {
             $msg = "The 'format' argument must be a value from the TextFormat enumeration, '" . gettype($format) . "' given.";

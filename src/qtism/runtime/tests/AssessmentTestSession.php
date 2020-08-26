@@ -453,7 +453,7 @@ class AssessmentTestSession extends State
      */
     public function setState($state)
     {
-        if (in_array($state, AssessmentTestSessionState::asArray(), true) === true) {
+        if (in_array($state, AssessmentTestSessionState::asArray(), true)) {
             $this->state = $state;
         } else {
             $msg = 'The state argument must be a value from the AssessmentTestSessionState enumeration';
@@ -610,7 +610,7 @@ class AssessmentTestSession extends State
      */
     private function isAdaptive($testPartIdentifier = '')
     {
-        return (empty($testPartIdentifier) === true) ? in_array(true, $this->adaptivity, true) : $this->adaptivity[$testPartIdentifier];
+        return (empty($testPartIdentifier)) ? in_array(true, $this->adaptivity, true) : $this->adaptivity[$testPartIdentifier];
     }
 
     /**
@@ -1306,7 +1306,7 @@ class AssessmentTestSession extends State
     {
         if (gettype($assessmentItemRef) === 'string') {
             $assessmentItemRefs = $this->getAssessmentItemRefs();
-            if (isset($assessmentItemRefs[$assessmentItemRef]) === true) {
+            if (isset($assessmentItemRefs[$assessmentItemRef])) {
                 $assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];
             }
         } elseif (!$assessmentItemRef instanceof AssessmentItemRef) {
@@ -1315,7 +1315,7 @@ class AssessmentTestSession extends State
         }
 
         $lastOccurenceUpdate = $this->getLastOccurenceUpdate();
-        if (isset($lastOccurenceUpdate[$assessmentItemRef]) === true) {
+        if (isset($lastOccurenceUpdate[$assessmentItemRef])) {
             return $lastOccurenceUpdate[$assessmentItemRef];
         } else {
             return false;
@@ -1375,15 +1375,15 @@ class AssessmentTestSession extends State
                     break;
 
                 case AssessmentTestPlace::TEST_PART:
-                    $jumpables = $route->getRouteItemsByTestPart((empty($identifier) === true) ? $this->getCurrentTestPart() : $identifier);
+                    $jumpables = $route->getRouteItemsByTestPart((empty($identifier)) ? $this->getCurrentTestPart() : $identifier);
                     break;
 
                 case AssessmentTestPlace::ASSESSMENT_SECTION:
-                    $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier) === true) ? $this->getCurrentAssessmentSection() : $identifier);
+                    $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier)) ? $this->getCurrentAssessmentSection() : $identifier);
                     break;
 
                 case AssessmentTestPlace::ASSESSMENT_ITEM:
-                    $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier) === true) ? $this->getCurrentAssessmentItemRef() : $identifier);
+                    $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier)) ? $this->getCurrentAssessmentItemRef() : $identifier);
                     break;
             }
 
@@ -1847,7 +1847,7 @@ class AssessmentTestSession extends State
                 $store = $this->getAssessmentItemSessionStore();
                 $items = $this->getAssessmentItemRefs();
 
-                if (isset($items[$v->getPrefix()]) === true) {
+                if (isset($items[$v->getPrefix()])) {
                     $itemRef = $items[$v->getPrefix()];
 
                     // This item is known to be in the route.
@@ -1971,7 +1971,7 @@ class AssessmentTestSession extends State
                 throw new OutOfBoundsException($msg);
             }
 
-            if (isset($data[$offset]) === true) {
+            if (isset($data[$offset])) {
                 $data[$offset]->setValue(null);
             } else {
                 $msg = "The variable '${offset}' does not exist in the AssessmentTestSession's global scope.";

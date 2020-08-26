@@ -196,7 +196,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
 
         $testSession->beginAttempt();
 
-        if (empty($response) === true) {
+        if (empty($response)) {
             // Skip!
             $testSession->endAttempt(new State());
             $testSession->moveNext();

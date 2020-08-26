@@ -118,7 +118,7 @@ class ModalFeedback extends QtiComponent
     {
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setIdentifier($identifier);
-        $this->setContent((is_null($content) === true) ? new FlowStaticCollection() : $content);
+        $this->setContent((is_null($content)) ? new FlowStaticCollection() : $content);
         $this->setTitle($title);
     }
 
@@ -158,7 +158,7 @@ class ModalFeedback extends QtiComponent
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray(), true) === true) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration, '" . $showHide . "' given.";

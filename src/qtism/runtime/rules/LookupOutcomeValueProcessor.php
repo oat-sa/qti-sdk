@@ -65,7 +65,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
         $identifier = $rule->getIdentifier();
         $var = $state->getVariable($identifier);
 
-        if (is_null($var) === true) {
+        if (is_null($var)) {
             $msg = "The variable to set '${identifier}' does not exist in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof OutcomeVariable) {
@@ -81,7 +81,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
 
             // Let's lookup the associated table.
             $table = $var->getLookupTable();
-            if (is_null($table) === true) {
+            if (is_null($table)) {
                 $msg = "No lookupTable in declaration of variable '${identifier}'.";
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
             }

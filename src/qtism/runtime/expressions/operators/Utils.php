@@ -236,7 +236,7 @@ class Utils
             // Check escaping.
             // If the amount of preceding backslashes is odd, it is escaped.
             // If the amount of preceding backslashes is even, it is not escaped.
-            if ((in_array($char, $symbols) === true) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
+            if ((in_array($char, $symbols)) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
                 // It is not escaped, so ecape it.
                 $returnValue .= '\\';
             }

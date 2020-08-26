@@ -216,7 +216,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
 
-            if (is_null($value) === true) {
+            if (is_null($value)) {
                 $this->writeBoolean(true);
 
                 return;
@@ -809,7 +809,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeString($session['completionStatus']->getValue());
 
             $timeReference = $session->getTimeReference();
-            if (is_null($timeReference) === true) {
+            if (is_null($timeReference)) {
                 // Describe that we have no time reference for the session.
                 $this->writeBoolean(false);
             } else {
@@ -1039,7 +1039,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             foreach ($state as $responseVariable) {
                 $respId = $responseVariable->getIdentifier();
-                if (isset($responseDeclarations[$respId]) === true) {
+                if (isset($responseDeclarations[$respId])) {
                     $this->writeShort($seeker->seekPosition($responseDeclarations[$respId]));
                     $this->writeVariableValue($responseVariable);
                 } else {

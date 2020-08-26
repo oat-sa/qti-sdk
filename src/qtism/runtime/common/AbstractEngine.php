@@ -62,7 +62,7 @@ abstract class AbstractEngine implements Processable
     public function __construct(QtiComponent $component, State $context = null)
     {
         $this->setComponent($component);
-        $this->setContext((is_null($context) === true) ? new State() : $context);
+        $this->setContext((is_null($context)) ? new State() : $context);
         $this->setStackTrace(new StackTrace());
     }
 

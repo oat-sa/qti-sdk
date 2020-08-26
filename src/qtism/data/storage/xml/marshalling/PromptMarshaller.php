@@ -55,7 +55,7 @@ class PromptMarshaller extends ContentMarshaller
         }
 
         foreach ($children as $c) {
-            if (in_array($c->getQtiClassName(), $exclusion) === true) {
+            if (in_array($c->getQtiClassName(), $exclusion)) {
                 $error = true;
                 break;
             }

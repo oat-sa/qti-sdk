@@ -112,7 +112,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setData($data)
     {
-        if ((is_string($data) === true && $data === '') || Format::isUri($data) === true) {
+        if ((is_string($data) && $data === '') || Format::isUri($data) === true) {
             $this->data = $data;
         } else {
             $msg = "The 'data' argument must be a URI or an empty string, '" . gettype($data) . "' given.";
@@ -138,7 +138,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setType($type)
     {
-        if (is_string($type) === true && empty($type) === false) {
+        if (is_string($type) && empty($type) === false) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a non-empty string, '" . gettype($type) . "' given.";
@@ -166,7 +166,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setWidth($width)
     {
-        if (is_int($width) === true) {
+        if (is_int($width)) {
             $this->width = $width;
         } else {
             $msg = "The 'width' argument must be an integer, '" . gettype($width) . "' given.";
@@ -206,7 +206,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setHeight($height)
     {
-        if (is_int($height) === true) {
+        if (is_int($height)) {
             $this->height = $height;
         } else {
             $msg = "The 'height' argument must be an integer, '" . gettype($height) . "' given.";

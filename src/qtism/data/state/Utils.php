@@ -60,7 +60,7 @@ class Utils
 
         $returnValue = false;
 
-        if (in_array($className, $shufflableInteractions) === true && $interaction->mustShuffle() === true) {
+        if (in_array($className, $shufflableInteractions) && $interaction->mustShuffle() === true) {
             if ($className === 'choiceInteraction' || $className === 'orderInteraction') {
                 $choices = $interaction->getComponentsByClassName('simpleChoice');
                 $groups[] = ['identifiers' => [], 'fixed' => []];

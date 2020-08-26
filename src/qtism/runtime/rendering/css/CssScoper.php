@@ -412,7 +412,7 @@ class CssScoper implements Renderable
      */
     public function render($file, $id = '')
     {
-        if (empty($id) === true) {
+        if (empty($id)) {
             $id = uniqid();
         }
 

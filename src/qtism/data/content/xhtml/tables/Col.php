@@ -63,7 +63,7 @@ class Col extends BodyElement
      */
     public function setSpan($span)
     {
-        if (is_int($span) === true && $span > 0) {
+        if (is_int($span) && $span > 0) {
             $this->span = $span;
         } else {
             $msg = "The 'span' attribute must be a strictly positive (> 0) integer, '" . gettype($span) . "' given.";

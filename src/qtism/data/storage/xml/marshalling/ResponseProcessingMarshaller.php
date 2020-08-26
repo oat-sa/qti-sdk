@@ -79,7 +79,7 @@ class ResponseProcessingMarshaller extends Marshaller
             $responseRules[] = $marshaller->unmarshall($responseRuleElts[$i]);
         }
 
-        if (is_null($responseProcessing) === true) {
+        if (is_null($responseProcessing)) {
             $object = new ResponseProcessing($responseRules);
         } else {
             $object = $responseProcessing;

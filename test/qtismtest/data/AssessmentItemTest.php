@@ -61,7 +61,7 @@ class AssessmentItemTest extends QtiSmTestCase
             $this->assertEquals($expected[$i][2], $responseValidityConstraints[$i]->getMaxConstraint(), 'maxConstraint failed for ' . $expected[$i][0]);
             $this->assertEquals($expected[$i][3], $responseValidityConstraints[$i]->getPatternMask());
 
-            if (isset($expected[$i][4]) === true) {
+            if (isset($expected[$i][4])) {
                 // Let's check association constraints.
                 $expectedAssociationValidityConstraints = $expected[$i][4];
                 $associationValidityConstraints = $responseValidityConstraints[$i]->getAssociationValidityConstraints();

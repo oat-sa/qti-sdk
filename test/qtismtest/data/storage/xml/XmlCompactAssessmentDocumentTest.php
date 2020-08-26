@@ -393,7 +393,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      */
     public function testLoadRubricBlockRefs($file, $filesystem, XmlCompactDocument $doc = null)
     {
-        if (empty($doc) === true) {
+        if (empty($doc)) {
             $src = $file;
             $doc = new XmlCompactDocument();
 

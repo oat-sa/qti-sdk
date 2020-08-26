@@ -74,7 +74,7 @@ class RepeatProcessor extends OperatorProcessor
             $varName = ExprUtils::sanitizeVariableRef($numberRepeats);
             $varValue = $state[$varName];
 
-            if (is_null($varValue) === true) {
+            if (is_null($varValue)) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
             } elseif (!$varValue instanceof QtiInteger) {

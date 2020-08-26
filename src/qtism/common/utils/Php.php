@@ -49,9 +49,9 @@ class Php
      */
     public static function displayType($value)
     {
-        if (is_null($value) === true) {
+        if (is_null($value)) {
             return 'null';
-        } elseif (is_object($value) === true) {
+        } elseif (is_object($value)) {
             return get_class($value);
         } else {
             return 'php:' . gettype($value);

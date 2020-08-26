@@ -69,7 +69,7 @@ class PhpDocumentTest extends QtiSmTestCase
     public function testSimpleLoad($path = '')
     {
         $doc = new PhpDocument();
-        if (empty($path) === true) {
+        if (empty($path)) {
             $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.php');
         } else {
             $doc->load($path);

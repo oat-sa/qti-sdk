@@ -302,12 +302,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller
 
         if ($this->isWebComponentFriendly() === true) {
             $qtiFriendlyName = XmlUtils::qtiFriendlyName($localName);
-            if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses) === true) {
+            if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses)) {
                 $localName = $qtiFriendlyName;
             }
         }
 
-        if (in_array($localName, $simpleComposites) === true) {
+        if (in_array($localName, $simpleComposites)) {
             return self::getChildElements($element, true);
         } elseif ($localName === 'choiceInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleChoice');
@@ -391,12 +391,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
 
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
 
             $fqClass .= 'Element';
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
         }

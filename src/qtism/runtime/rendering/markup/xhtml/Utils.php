@@ -100,13 +100,13 @@ class Utils
 
                     $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
                     $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
-                } elseif (empty($statements1) === false && empty($statements2) === true) {
+                } elseif (empty($statements1) === false && empty($statements2)) {
                     $node->removeChild($statements1[0]);
                     $node->removeChild($statements1[1]);
 
                     $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
                     $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
-                } elseif (empty($statements2) === false && empty($statements1) === true) {
+                } elseif (empty($statements2) === false && empty($statements1)) {
                     $node->removeChild($statements2[0]);
                     $node->removeChild($statements2[1]);
 

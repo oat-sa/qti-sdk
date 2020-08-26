@@ -91,7 +91,7 @@ class EqualRoundedProcessor extends OperatorProcessor
             $varName = Utils::sanitizeVariableRef($figures);
             $varValue = $state[$varName];
 
-            if (is_null($varValue) === true) {
+            if (is_null($varValue)) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {

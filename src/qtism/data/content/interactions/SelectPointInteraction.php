@@ -105,7 +105,7 @@ class SelectPointInteraction extends GraphicInteraction
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -131,7 +131,7 @@ class SelectPointInteraction extends GraphicInteraction
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && $minChoices >= 0) {
+        if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
         } else {
             $msg = "The 'minChoices' argument must be a positive (>= 0) integer, '" . gettype($minChoices) . "' given.";

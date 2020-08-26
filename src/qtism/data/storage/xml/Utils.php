@@ -125,7 +125,7 @@ class Utils
                 for ($i = 0; $i < $node->childNodes->length; $i++) {
                     $stack->push($node->childNodes->item($i));
                 }
-            } elseif ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === true) {
+            } elseif ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true)) {
                 // Build hierarchical node copy from the current node. All the attributes
                 // of $node must be copied into $newNode.
                 $newNode = $node->ownerDocument->createElement($node->localName);

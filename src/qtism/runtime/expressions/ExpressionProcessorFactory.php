@@ -56,7 +56,7 @@ class ExpressionProcessorFactory implements ProcessorFactory
         $nsPackage = 'qtism\\runtime\\expressions\\';
         $className = $nsPackage . $qtiClassName . 'Processor';
 
-        if (class_exists($className) === true) {
+        if (class_exists($className)) {
             // This is a simple expression to be processed.
             return new $className($expression);
         }

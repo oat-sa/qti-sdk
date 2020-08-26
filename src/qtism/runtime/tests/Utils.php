@@ -59,7 +59,7 @@ class Utils
     {
         $min = $constraint->getMinConstraint();
         $max = $constraint->getMaxConstraint();
-        $cardinality = (is_null($response) === true) ? Cardinality::SINGLE : $response->getCardinality();
+        $cardinality = (is_null($response)) ? Cardinality::SINGLE : $response->getCardinality();
 
         if (($isNull = RuntimeUtils::isNull($response)) === true) {
             $count = 0;

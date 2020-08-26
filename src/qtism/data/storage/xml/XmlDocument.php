@@ -193,7 +193,7 @@ class XmlDocument extends QtiDocument
 
             $doc = $this->getDomDocument();
 
-            if ($loadMethod === 'loadXML' && empty($data) === true) {
+            if ($loadMethod === 'loadXML' && empty($data)) {
                 // Pre-check to throw an appropriate exception when load from an empty string.
                 $msg = 'Cannot load QTI from an empty string.';
                 throw new XmlStorageException($msg, XmlStorageException::READ);

@@ -75,7 +75,7 @@ class QtiIntOrIdentifier extends QtiScalar
     public function __toString()
     {
         $v = $this->getValue();
-        if (is_string($v) === true) {
+        if (is_string($v)) {
             return $v;
         } else {
             return '' . $v;

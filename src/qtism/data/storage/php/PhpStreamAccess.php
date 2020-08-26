@@ -66,19 +66,19 @@ class PhpStreamAccess extends AbstractStreamAccess
         }
 
         try {
-            if (is_int($scalar) === true) {
+            if (is_int($scalar)) {
                 $this->getStream()->write($scalar);
-            } elseif (is_double($scalar) === true) {
+            } elseif (is_double($scalar)) {
                 if (strpos('' . $scalar, '.') === false) {
                     $scalar .= '.0';
                 }
 
                 $this->getStream()->write($scalar);
-            } elseif (is_string($scalar) === true) {
+            } elseif (is_string($scalar)) {
                 $this->getStream()->write(PhpUtils::doubleQuotedPhpString($scalar));
-            } elseif (is_bool($scalar) === true) {
+            } elseif (is_bool($scalar)) {
                 $this->getStream()->write(($scalar === true) ? 'true' : 'false');
-            } elseif (is_null($scalar) === true) {
+            } elseif (is_null($scalar)) {
                 $this->getStream()->write('null');
             }
         } catch (StreamException $e) {

@@ -90,9 +90,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
                 break;
         }
 
-        if (is_scalar($expectedValue) === true) {
+        if (is_scalar($expectedValue)) {
             $this->assertEquals($expectedValue, $variable->$getterToCall()->getValue());
-        } elseif (is_null($expectedValue) === true) {
+        } elseif (is_null($expectedValue)) {
             $this->assertSame($expectedValue, $variable->$getterToCall());
         } elseif ($expectedValue instanceof RecordContainer) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
@@ -544,9 +544,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $readValue = $testVariable->$getterToCall();
 
         // Compare.
-        if (is_null($originalValue) === true) {
+        if (is_null($originalValue)) {
             $this->assertSame($originalValue, $readValue);
-        } elseif (is_scalar($originalValue) === true) {
+        } elseif (is_scalar($originalValue)) {
             $this->assertEquals($originalValue, $readValue);
         } elseif ($originalValue instanceof RecordContainer) {
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());

@@ -58,7 +58,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
     public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null)
     {
         if ($expression instanceof Operator) {
-            if (is_null($operands) === true) {
+            if (is_null($operands)) {
                 $operands = new OperandsCollection();
             }
 
@@ -68,7 +68,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
                 if ($expression->hasClass() === true) {
                     $className = Utils::customOperatorClassToPhpClass($expression->getClass());
 
-                    if (class_exists($className) === true) {
+                    if (class_exists($className)) {
                         return new $className($expression, $operands);
                     } else {
                         $msg = "No custom operator implementation found for class '" . $expression->getClass() . "'.";

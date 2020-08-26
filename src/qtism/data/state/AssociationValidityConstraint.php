@@ -84,7 +84,7 @@ class AssociationValidityConstraint extends QtiComponent
      */
     public function setIdentifier($identifier)
     {
-        if (is_string($identifier) === false || empty($identifier) === true) {
+        if (is_string($identifier) === false || empty($identifier)) {
             throw new InvalidArgumentException(
                 "The 'identifier' argument must be a non-empty string."
             );

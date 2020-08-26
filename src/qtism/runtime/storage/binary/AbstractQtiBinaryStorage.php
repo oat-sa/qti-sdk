@@ -112,7 +112,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     public function instantiate($config = 0, $sessionId = '')
     {
         // If not provided, generate a session ID.
-        if (empty($sessionId) === true) {
+        if (empty($sessionId)) {
             $sessionId = uniqid('qtism', true);
         }
 
@@ -152,7 +152,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // persist time reference.
             $timeReference = $assessmentTestSession->getTimeReference();
-            if (is_null($timeReference) === true) {
+            if (is_null($timeReference)) {
                 $access->writeBoolean(false);
             } else {
                 $access->writeBoolean(true);

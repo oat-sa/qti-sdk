@@ -99,7 +99,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
      */
     public function setMatchMax($matchMax)
     {
-        if (is_int($matchMax) === true && $matchMax >= 0) {
+        if (is_int($matchMax) && $matchMax >= 0) {
             $this->matchMax = $matchMax;
         } else {
             $msg = "The 'matchMax' argument must be a positive integer, '" . gettype($matchMax) . "' given.";
@@ -125,7 +125,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
      */
     public function setMatchMin($matchMin)
     {
-        if (is_int($matchMin) === true && $matchMin >= 0) {
+        if (is_int($matchMin) && $matchMin >= 0) {
             $this->matchMin = $matchMin;
         } else {
             $msg = "The 'matchMin' argument must be a positive integer, '" . gettype($matchMin) . "' given.";

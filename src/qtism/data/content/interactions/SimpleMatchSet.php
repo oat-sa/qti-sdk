@@ -48,7 +48,7 @@ class SimpleMatchSet extends QtiComponent
      */
     public function __construct(SimpleAssociableChoiceCollection $simpleAssociableChoices = null)
     {
-        $this->setSimpleAssociableChoices((is_null($simpleAssociableChoices) === true) ? new SimpleAssociableChoiceCollection() : $simpleAssociableChoices);
+        $this->setSimpleAssociableChoices((is_null($simpleAssociableChoices)) ? new SimpleAssociableChoiceCollection() : $simpleAssociableChoices);
     }
 
     /**

@@ -70,7 +70,7 @@ class UploadInteraction extends BlockInteraction
      */
     public function setType($type)
     {
-        if (is_string($type) === true) {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a string value, '" . gettype($type) . "' given.";

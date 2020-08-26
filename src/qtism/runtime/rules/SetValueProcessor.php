@@ -55,7 +55,7 @@ abstract class SetValueProcessor extends RuleProcessor
         $identifier = $rule->getIdentifier();
         $var = $state->getVariable($identifier);
 
-        if (is_null($var) === true) {
+        if (is_null($var)) {
             $msg = "No variable with identifier '${identifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (Reflection::isInstanceOf($var, $this->getVariableType()) === false) {

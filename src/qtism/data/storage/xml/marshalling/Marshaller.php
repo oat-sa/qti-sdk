@@ -370,7 +370,7 @@ abstract class Marshaller
         if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
             $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
 
-            if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses) === true) {
+            if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses)) {
                 return XmlUtils::webComponentFriendlyAttributeName($attribute);
             }
         }
@@ -475,7 +475,7 @@ abstract class Marshaller
 
         if ($this->isWebComponentFriendly() === true) {
             foreach ($tagName as $key => $name) {
-                if (in_array($name, self::$webComponentFriendlyClasses) === true) {
+                if (in_array($name, self::$webComponentFriendlyClasses)) {
                     $tagName[$key] = XmlUtils::webComponentFriendlyClassName($name);
                 }
             }
@@ -560,7 +560,7 @@ abstract class Marshaller
             $version = $this->getVersion();
             if (Version::compare($version, '2.2.0', '>=') === true) {
                 // dir attribute
-                if (($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
+                if (($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses)) {
                     $bodyElement->setDir(Direction::getConstantByName($dir));
                 }
 
@@ -665,7 +665,7 @@ abstract class Marshaller
         $version = $this->getVersion();
         if (Version::compare($version, '2.2.0', '>=') === true) {
             // dir attribute
-            if (($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
+            if (($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses)) {
                 $element->setAttribute('dir', Direction::getNameByConstant($dir));
             }
 
@@ -734,7 +734,7 @@ abstract class Marshaller
     {
         $localName = $component->getQtiClassName();
 
-        if ($this->isWebComponentFriendly() === true && in_array($localName, self::$webComponentFriendlyClasses) === true) {
+        if ($this->isWebComponentFriendly() === true && in_array($localName, self::$webComponentFriendlyClasses)) {
             $localName = XmlUtils::webComponentFriendlyClassName($localName);
         }
 

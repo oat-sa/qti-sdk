@@ -725,7 +725,7 @@ class Route implements Iterator
         $result = new AssessmentItemRefCollection();
 
         foreach ($categories as $cat) {
-            if (isset($categoryMap[$cat]) === true) {
+            if (isset($categoryMap[$cat])) {
                 foreach ($categoryMap[$cat] as $item) {
                     $result[] = $item;
                 }
@@ -760,7 +760,7 @@ class Route implements Iterator
      */
     public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
-        $bySection = (empty($sectionIdentifier) === true) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
+        $bySection = (empty($sectionIdentifier)) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
 
         if (is_null($includeCategories) === false) {
             // We will perform the search by category inclusion.
@@ -783,7 +783,7 @@ class Route implements Iterator
     public function getOccurenceCount(AssessmentItemRef $assessmentItemRef)
     {
         $occurenceMap = $this->getAssessmentItemRefOccurenceMap();
-        if (isset($occurenceMap[$assessmentItemRef]) === true) {
+        if (isset($occurenceMap[$assessmentItemRef])) {
             return $occurenceMap[$assessmentItemRef];
         } else {
             return 0;
@@ -813,7 +813,7 @@ class Route implements Iterator
     {
         $routeItems = &$this->getRouteItems();
 
-        if (isset($routeItems[$position]) === true) {
+        if (isset($routeItems[$position])) {
             return $routeItems[$position];
         } else {
             $msg = "No RouteItem object found at position '${position}'.";
@@ -1111,7 +1111,7 @@ class Route implements Iterator
 
         // Check for an assessmentItemRef.
         $assessmentItemRefs = $this->getAssessmentItemRefs();
-        if (isset($assessmentItemRefs[$id]) === true) {
+        if (isset($assessmentItemRefs[$id])) {
             $assessmentItemRefMap = $this->getAssessmentItemRefMap();
             $targetRouteItems = $assessmentItemRefMap[$assessmentItemRefs[$id]];
 
@@ -1130,7 +1130,7 @@ class Route implements Iterator
 
         // Check for an assessmentSection.
         $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
-        if (isset($assessmentSectionIdentifierMap[$id]) === true) {
+        if (isset($assessmentSectionIdentifierMap[$id])) {
             if ($assessmentSectionIdentifierMap[$id][0]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
@@ -1147,7 +1147,7 @@ class Route implements Iterator
 
         // Check for a testPart.
         $testPartIdentifierMap = $this->getTestPartIdentifierMap();
-        if (isset($testPartIdentifierMap[$id]) === true) {
+        if (isset($testPartIdentifierMap[$id])) {
             // We branch to the first RouteItem belonging to the testPart.
             if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
                 // From IMS QTI:

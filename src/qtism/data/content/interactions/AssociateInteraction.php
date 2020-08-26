@@ -114,7 +114,7 @@ class AssociateInteraction extends BlockInteraction
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -142,7 +142,7 @@ class AssociateInteraction extends BlockInteraction
      */
     public function setMaxAssociations($maxAssociations)
     {
-        if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
+        if (is_int($maxAssociations) && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
         } else {
             $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "' given.";
@@ -180,7 +180,7 @@ class AssociateInteraction extends BlockInteraction
      */
     public function setMinAssociations($minAssociations)
     {
-        if (is_int($minAssociations) === true && $minAssociations >= 0) {
+        if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($this->hasMaxAssociations() === true && $minAssociations > $this->getMaxAssociations()) {
                 $msg = "The 'minAssociation' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
                 throw new InvalidArgumentException($msg);

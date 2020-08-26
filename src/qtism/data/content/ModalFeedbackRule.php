@@ -147,7 +147,7 @@ class ModalFeedbackRule extends QtiComponent
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray(), true) === true) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration, '" . gettype($showHide) . "' given.";
@@ -175,7 +175,7 @@ class ModalFeedbackRule extends QtiComponent
      */
     public function setTitle($title)
     {
-        if (is_string($title) === true) {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "The 'title' argument must be a string, '" . gettype($title) . "' given.";

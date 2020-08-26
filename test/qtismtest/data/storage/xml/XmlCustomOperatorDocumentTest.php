@@ -24,7 +24,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
     public function testReadNoLax($url = '')
     {
         $doc = new XmlDocument();
-        $url = (empty($url) === true) ? (self::samplesDir() . 'custom/operators/custom_operator_1.xml') : $url;
+        $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_1.xml') : $url;
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
@@ -62,7 +62,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
     public function testReadQTIOnly($url = '')
     {
         $doc = new XmlDocument();
-        $url = (empty($url) === true) ? (self::samplesDir() . 'custom/operators/custom_operator_2.xml') : $url;
+        $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_2.xml') : $url;
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
@@ -94,7 +94,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
     public function testReadFullLax($url = '')
     {
         $doc = new XmlDocument();
-        $url = (empty($url) === true) ? (self::samplesDir() . 'custom/operators/custom_operator_3.xml') : $url;
+        $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_3.xml') : $url;
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 
@@ -150,7 +150,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
     public function testReadNestedLax($url = '')
     {
         $doc = new XmlDocument();
-        $url = (empty($url) === true) ? (self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml') : $url;
+        $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml') : $url;
         $doc->load($url, true);
         $customOperator = $doc->getDocumentComponent();
 

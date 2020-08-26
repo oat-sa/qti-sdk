@@ -141,7 +141,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      */
     public function testLoadTemplate($uri = '')
     {
-        $file = (empty($uri) === true) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
+        $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
 
         $doc = new XmlDocument();
         $doc->load($file, true);
@@ -199,7 +199,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function testLoadPCIItem($url = '')
     {
         $doc = new XmlDocument();
-        $doc->load((empty($url) === true) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
+        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
         $item = $doc->getDocumentComponent();
 
         $this->assertInstanceOf(AssessmentItem::class, $item);

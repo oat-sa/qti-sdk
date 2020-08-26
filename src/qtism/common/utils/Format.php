@@ -419,7 +419,7 @@ class Format
      */
     public static function isClass($string)
     {
-        if (is_string($string) === true) {
+        if (is_string($string)) {
             $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
 
             return preg_match($pattern, $string) === 1;
@@ -614,9 +614,9 @@ class Format
      */
     public static function isXhtmlLength($length)
     {
-        if (is_int($length) === true) {
+        if (is_int($length)) {
             return $length >= 0;
-        } elseif (is_string($length) === true) {
+        } elseif (is_string($length)) {
             return preg_match('/[0-9]+%/', $length) === 1;
         } else {
             return false;

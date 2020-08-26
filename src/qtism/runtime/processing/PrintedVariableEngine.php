@@ -128,7 +128,7 @@ class PrintedVariableEngine extends AbstractEngine
             $index = $printedVariable->getIndex();
 
             // $index might be a variable reference.
-            if (is_string($index) === true && $state[$index] !== null) {
+            if (is_string($index) && $state[$index] !== null) {
                 $refIndex = $state[$index];
 
                 if ($refIndex instanceof QtiInteger) {
@@ -223,7 +223,7 @@ class PrintedVariableEngine extends AbstractEngine
         }
 
         if ($baseType === BaseType::INT_OR_IDENTIFIER) {
-            $baseType = (is_int($value) === true) ? BaseType::INTEGER : BaseType::STRING;
+            $baseType = (is_int($value)) ? BaseType::INTEGER : BaseType::STRING;
         } elseif ($baseType === BaseType::IDENTIFIER || $baseType === BaseType::URI) {
             $baseType = BaseType::STRING;
         } elseif ($baseType === BaseType::FILE) {

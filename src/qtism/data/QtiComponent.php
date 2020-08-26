@@ -147,7 +147,7 @@ abstract class QtiComponent
                 $foundComponents[] = $component;
                 $identifier = $component->getIdentifier();
 
-                if (in_array($identifier, $identifiers) === true && $collision === false) {
+                if (in_array($identifier, $identifiers) && $collision === false) {
                     $collision = true;
                 }
 

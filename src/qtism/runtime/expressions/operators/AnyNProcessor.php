@@ -64,7 +64,7 @@ class AnyNProcessor extends OperatorProcessor
 
         // @todo write a generic method to retrieve variable references.
 
-        if (is_string($min) === true) {
+        if (is_string($min)) {
             // variable reference for 'min' to handle.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($min);
@@ -81,7 +81,7 @@ class AnyNProcessor extends OperatorProcessor
             }
         }
 
-        if (is_string($max) === true) {
+        if (is_string($max)) {
             // variable reference for 'max' to handle.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($max);

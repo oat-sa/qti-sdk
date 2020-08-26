@@ -189,7 +189,7 @@ class XmlCompactDocument extends XmlDocument
         $assessmentTest->setToolName($xmlAssessmentTestDocument->getDocumentComponent()->getToolName());
         $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 
-        if (is_null($resolver) === true) {
+        if (is_null($resolver)) {
             $resolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
         } else {
             $resolver->setBasePath($xmlAssessmentTestDocument->getUrl());

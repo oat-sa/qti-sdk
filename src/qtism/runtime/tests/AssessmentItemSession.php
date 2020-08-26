@@ -1344,7 +1344,7 @@ class AssessmentItemSession extends State
             $session = clone $this;
 
             foreach ($responses as $identifier => $value) {
-                if (isset($session[$identifier]) === true) {
+                if (isset($session[$identifier])) {
                     $session[$identifier] = $value->getValue();
                 }
             }
@@ -1379,7 +1379,7 @@ class AssessmentItemSession extends State
             $session = clone $this;
 
             foreach ($responses as $identifier => $value) {
-                if (isset($session[$identifier]) === true) {
+                if (isset($session[$identifier])) {
                     $session[$identifier] = $value->getValue();
                 }
             }

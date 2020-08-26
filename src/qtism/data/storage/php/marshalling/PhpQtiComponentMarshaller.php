@@ -127,11 +127,11 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
             }
 
             $componentVarName = $this->getVariableName();
-            $componentVarName = (empty($componentVarName) === true) ? $ctx->generateVariableName($component) : $componentVarName;
+            $componentVarName = (empty($componentVarName)) ? $ctx->generateVariableName($component) : $componentVarName;
 
             $access->writeVariable($componentVarName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $access->writeInstantiation((empty($asInstanceOf) === true) ? get_class($component) : $asInstanceOf, $phpArgs);
+            $access->writeInstantiation((empty($asInstanceOf)) ? get_class($component) : $asInstanceOf, $phpArgs);
             $access->writeSemicolon($ctx->mustFormatOutput());
 
             // -- Call to setters (that are not involved in the component construction).

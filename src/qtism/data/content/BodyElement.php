@@ -188,7 +188,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function setId($id = '')
     {
-        if (is_string($id) && (empty($id) === true || Format::isIdentifier($id, false) === true)) {
+        if (is_string($id) && (empty($id) || Format::isIdentifier($id, false) === true)) {
             $this->id = $id;
         } else {
             $msg = "The 'id' argument of a body element must be a valid identifier or an empty string";
@@ -224,7 +224,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function setClass($class = '')
     {
-        if (is_string($class) && (empty($class) === true || Format::isClass($class) === true)) {
+        if (is_string($class) && (empty($class) || Format::isClass($class) === true)) {
             $class = trim($class);
             $this->class = $class;
         } else {
@@ -317,7 +317,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function setDir($dir)
     {
-        if (in_array($dir, Direction::asArray(), true) === true) {
+        if (in_array($dir, Direction::asArray(), true)) {
             $this->dir = $dir;
         } else {
             $msg = "The 'dir' argument must be a value from the Direction enumeration.";

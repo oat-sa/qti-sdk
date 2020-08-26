@@ -86,7 +86,7 @@ class Marshaller
      */
     public function marshall($data, $output = Marshaller::MARSHALL_JSON)
     {
-        if (is_null($data) === true) {
+        if (is_null($data)) {
             $json = ['base' => $data];
         } elseif ($data instanceof State) {
             $json = [];
@@ -100,7 +100,7 @@ class Marshaller
             $className = get_class($this);
             $msg = "The '${className}::marshall' method only takes State, QtiDatatype and null values as arguments, '";
 
-            if (is_object($data) === true) {
+            if (is_object($data)) {
                 $msg .= get_class($data);
             } else {
                 $msg .= gettype($data);
@@ -123,7 +123,7 @@ class Marshaller
      */
     protected function marshallUnit($unit)
     {
-        if (is_null($unit) === true) {
+        if (is_null($unit)) {
             $json = ['base' => null];
         } elseif ($unit instanceof QtiScalar) {
             $json = $this->marshallScalar($unit);

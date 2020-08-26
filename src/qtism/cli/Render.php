@@ -346,7 +346,7 @@ class Render extends Cli
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
 
-            if (empty($title) !== false) {
+            if (empty($title)) {
                 $header .= "${indent}${indent}<title>" . $title . "</title>${nl}";
             }
 

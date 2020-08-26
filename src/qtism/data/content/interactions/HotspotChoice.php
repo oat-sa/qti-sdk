@@ -92,7 +92,7 @@ class HotspotChoice extends Choice implements Hotspot
      */
     public function setShape($shape)
     {
-        if (in_array($shape, QtiShape::asArray()) === true) {
+        if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
         } else {
             $msg = "The 'shape' argument must be a value from the Shape enumeration, '" . $shape . "' given.";

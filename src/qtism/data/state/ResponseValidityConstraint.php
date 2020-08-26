@@ -98,7 +98,7 @@ class ResponseValidityConstraint extends QtiComponent
      */
     public function setResponseIdentifier($responseIdentifier)
     {
-        if (is_string($responseIdentifier) === false || empty($responseIdentifier) === true) {
+        if (is_string($responseIdentifier) === false || empty($responseIdentifier)) {
             throw new InvalidArgumentException(
                 "The 'responseIdentifier' argument must be a non-empty string."
             );

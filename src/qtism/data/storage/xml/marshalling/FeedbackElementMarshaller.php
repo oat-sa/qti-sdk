@@ -68,7 +68,7 @@ class FeedbackElementMarshaller extends ContentMarshaller
                             $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
                             throw new UnmarshallingException($msg, $element);
                         }
-                        if ($inline === false && in_array($child->getQtiClassName(), $blockExclusion) === true) {
+                        if ($inline === false && in_array($child->getQtiClassName(), $blockExclusion)) {
                             $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
                             throw new UnmarshallingException($msg, $element);
                         }

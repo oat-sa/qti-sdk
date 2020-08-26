@@ -259,7 +259,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      */
     public function setPowerForm($powerForm)
     {
-        if (is_bool($powerForm) === true) {
+        if (is_bool($powerForm)) {
             $this->powerForm = $powerForm;
         } else {
             $msg = "The 'powerForm' argument must be a boolean value, '" . gettype($powerForm) . "' given.";
@@ -286,7 +286,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      */
     public function setBase($base)
     {
-        if (is_int($base) === true || Format::isVariableRef($base) === true) {
+        if (is_int($base) || Format::isVariableRef($base) === true) {
             $this->base = $base;
         } else {
             $msg = "The 'base' argument must be an integer or a variable reference, '" . $base . "' given.";
@@ -313,7 +313,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      */
     public function setIndex($index)
     {
-        if (is_int($index) === true || Format::isVariableRef($index) === true) {
+        if (is_int($index) || Format::isVariableRef($index) === true) {
             $this->index = $index;
         } else {
             $msg = "The 'index' argument must be an integer or a variable reference, '" . $index . "' given.";

@@ -134,7 +134,7 @@ class ResponseProcessingEngine extends AbstractEngine
 
         $templateMapping = &$this->getTemplateMapping();
 
-        if (isset($templateMapping[$uri]) === true) {
+        if (isset($templateMapping[$uri])) {
             unset($templateMapping[$uri]);
         }
     }
@@ -183,11 +183,11 @@ class ResponseProcessingEngine extends AbstractEngine
 
             // The template could not be resolved using the mapping.
             // Try to use template location.
-            if (empty($finalTemplateFile) === true && empty($templateLocation) === false && @is_readable($templateLocation) === true) {
+            if (empty($finalTemplateFile) && empty($templateLocation) === false && @is_readable($templateLocation)) {
                 $finalTemplateFile = $templateLocation;
             }
 
-            if (empty($finalTemplateFile) === true) {
+            if (empty($finalTemplateFile)) {
                 $msg = "The template file could not be found: template='${template}', templateLocation='${templateLocation}'.";
                 throw new ResponseProcessingException($msg, $this, ResponseProcessingException::TEMPLATE_NOT_FOUND);
             }
