@@ -78,6 +78,9 @@ class CustomInteractionMarshaller extends Marshaller
         return $component;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'customInteraction';

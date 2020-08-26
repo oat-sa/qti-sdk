@@ -218,11 +218,17 @@ class Value extends QtiComponent
         $this->value = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'value';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

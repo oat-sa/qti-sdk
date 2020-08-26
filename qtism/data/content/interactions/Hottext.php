@@ -105,6 +105,9 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
@@ -130,11 +133,17 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
         return $this->content;
     }
 
+    /**
+     * @return InlineStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'hottext';

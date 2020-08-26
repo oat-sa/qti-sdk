@@ -85,11 +85,17 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
         return $this->content;
     }
 
+    /**
+     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateBlock';
@@ -121,6 +127,9 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';

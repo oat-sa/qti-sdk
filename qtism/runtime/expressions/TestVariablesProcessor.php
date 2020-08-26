@@ -149,6 +149,9 @@ class TestVariablesProcessor extends ItemSubsetProcessor
         return $result;
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return TestVariables::class;

@@ -85,6 +85,9 @@ class StatsOperator extends Operator
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'statsOperator';

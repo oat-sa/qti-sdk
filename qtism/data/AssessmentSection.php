@@ -291,11 +291,17 @@ class AssessmentSection extends SectionPart
         $this->sectionParts = $sectionParts;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentSection';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

@@ -238,6 +238,9 @@ class AssociateInteraction extends BlockInteraction
         return $this->simpleAssociableChoices;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -245,6 +248,9 @@ class AssociateInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleAssociableChoices()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'associateInteraction';

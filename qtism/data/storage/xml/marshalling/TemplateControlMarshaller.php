@@ -162,6 +162,9 @@ class TemplateControlMarshaller extends RecursiveMarshaller
         return new TemplateRuleCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

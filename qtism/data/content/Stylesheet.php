@@ -214,11 +214,17 @@ class Stylesheet extends QtiComponent
         return $this->getTitle() !== '';
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'stylesheet';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

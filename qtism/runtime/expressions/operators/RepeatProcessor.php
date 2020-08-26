@@ -53,6 +53,9 @@ use qtism\runtime\expressions\Utils as ExprUtils;
  */
 class RepeatProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Repeat) {

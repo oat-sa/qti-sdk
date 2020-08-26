@@ -287,11 +287,17 @@ class TestFeedback extends QtiComponent
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'testFeedback';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

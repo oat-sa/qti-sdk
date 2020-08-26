@@ -170,11 +170,17 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
         $this->stylesheets = $stylesheets;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'rubricBlock';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $components = $this->getContent();

@@ -28,6 +28,9 @@ use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Operator;
 use qtism\runtime\expressions\ExpressionProcessor;
 
+/**
+ * Class OperatorProcessor
+ */
 abstract class OperatorProcessor extends ExpressionProcessor
 {
     /**
@@ -50,6 +53,9 @@ abstract class OperatorProcessor extends ExpressionProcessor
         $this->setOperands($operands);
     }
 
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Operator) {

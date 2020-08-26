@@ -42,6 +42,9 @@ use qtism\data\expressions\NumberResponded;
  */
 class NumberRespondedProcessor extends ItemSubsetProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof NumberResponded) {

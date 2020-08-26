@@ -50,6 +50,9 @@ class IntegerToFloat extends Operator
         parent::__construct($expressions, 1, 1, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'integerToFloat';

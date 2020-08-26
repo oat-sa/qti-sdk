@@ -71,6 +71,9 @@ class QtiIdentifier extends QtiString
         return Cardinality::SINGLE;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getValue();

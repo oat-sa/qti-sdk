@@ -171,6 +171,9 @@ class TextInteractionMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

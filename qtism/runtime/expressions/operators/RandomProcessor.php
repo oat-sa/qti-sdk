@@ -39,6 +39,9 @@ use qtism\data\expressions\operators\Random;
  */
 class RandomProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Random) {

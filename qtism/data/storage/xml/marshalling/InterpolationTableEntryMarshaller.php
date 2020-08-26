@@ -119,6 +119,9 @@ class InterpolationTableEntryMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'interpolationTableEntry';

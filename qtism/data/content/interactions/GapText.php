@@ -89,6 +89,9 @@ class GapText extends GapChoice
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'gapText';

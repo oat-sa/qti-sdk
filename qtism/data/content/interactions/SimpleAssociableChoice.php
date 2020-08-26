@@ -128,6 +128,9 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
         }
     }
 
+    /**
+     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
@@ -163,6 +166,9 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
         return $this->matchMin;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'simpleAssociableChoice';

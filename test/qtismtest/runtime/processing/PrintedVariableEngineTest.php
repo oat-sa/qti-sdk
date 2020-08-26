@@ -312,7 +312,6 @@ class PrintedVariableEngineTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider newProvider
      *
      * @param int $expected

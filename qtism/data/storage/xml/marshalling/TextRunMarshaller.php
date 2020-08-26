@@ -55,6 +55,9 @@ class TextRunMarshaller extends Marshaller
         return new TextRun($element->nodeValue);
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'textRun';

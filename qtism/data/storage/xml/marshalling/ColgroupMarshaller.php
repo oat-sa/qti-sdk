@@ -82,6 +82,9 @@ class ColgroupMarshaller extends Marshaller
         return $component;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'colgroup';

@@ -184,11 +184,17 @@ class HottextInteraction extends BlockInteraction
         return $this->content;
     }
 
+    /**
+     * @return BlockStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'hottextInteraction';

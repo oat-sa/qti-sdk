@@ -48,6 +48,9 @@ use qtism\runtime\common\MultipleContainer;
  */
 class MaxProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Max) {

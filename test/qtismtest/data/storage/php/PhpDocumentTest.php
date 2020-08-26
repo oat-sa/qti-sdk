@@ -2,13 +2,17 @@
 
 namespace qtismtest\data\storage\php;
 
+use qtism\common\beans\BeanException;
+use qtism\common\storage\MemoryStreamException;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\xhtml\text\Span;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItem;
 use qtism\data\expressions\operators\CustomOperator;
@@ -16,6 +20,7 @@ use qtism\data\content\RubricBlock;
 use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\ItemBody;
 use qtism\data\AssessmentTest;
+use ReflectionException;
 
 class PhpDocumentTest extends QtiSmTestCase
 {
@@ -112,10 +117,15 @@ class PhpDocumentTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider loadTestSamplesDataProvider
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.
+     * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
+     * @throws XmlStorageException
      */
     public function testLoadTestSamples($testUri, $rootType)
     {
@@ -140,10 +150,15 @@ class PhpDocumentTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider loadTestSamplesDataProvider
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
+     * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws XmlStorageException
      */
     public function testLoadTestSamplesFromString($testUri, $rootType)
     {
@@ -299,7 +314,11 @@ class PhpDocumentTest extends QtiSmTestCase
     }
 
     /**
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
      * @throws PhpStorageException
+     * @throws ReflectionException
      */
     public function testBodyElement()
     {

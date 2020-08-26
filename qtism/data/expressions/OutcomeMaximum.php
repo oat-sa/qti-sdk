@@ -123,6 +123,9 @@ class OutcomeMaximum extends ItemSubset
         return $this->weightIdentifier;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'outcomeMaximum';

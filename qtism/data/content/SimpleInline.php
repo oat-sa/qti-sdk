@@ -118,6 +118,9 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';

@@ -84,6 +84,9 @@ class MapResponsePoint extends Expression
         return $this->identifier;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'mapResponsePoint';

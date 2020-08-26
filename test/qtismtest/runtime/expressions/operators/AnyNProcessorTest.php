@@ -20,7 +20,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 class AnyNProcessorTest extends QtiSmTestCase
 {
     /**
-     *
      * @dataProvider anyNProvider
      *
      * @param int $min

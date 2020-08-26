@@ -39,6 +39,9 @@ use qtism\data\expressions\Expression;
  */
 class DefaultProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof DefaultVal) {

@@ -57,6 +57,9 @@ use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
  */
 class StatsOperatorProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof StatsOperator) {
@@ -98,7 +101,6 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processMean()
@@ -112,8 +114,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processSampleVariance()
     {
@@ -126,8 +127,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processSampleSD()
     {
@@ -140,8 +140,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processPopVariance()
     {
@@ -154,8 +153,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processPopSD()
     {

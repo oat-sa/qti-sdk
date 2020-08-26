@@ -90,6 +90,9 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'testVariables';

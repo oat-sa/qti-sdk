@@ -89,6 +89,9 @@ class Substring extends Operator
         return $this->caseSensitive;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'substring';

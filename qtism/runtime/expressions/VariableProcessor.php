@@ -142,6 +142,9 @@ class VariableProcessor extends ExpressionProcessor
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getExpressionType()
     {
         return Variable::class;

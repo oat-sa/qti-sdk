@@ -26,6 +26,9 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\FlowStaticCollection;
 
+/**
+ * Class SimpleChoice
+ */
 class SimpleChoice extends Choice
 {
     /**
@@ -82,6 +85,9 @@ class SimpleChoice extends Choice
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'simpleChoice';

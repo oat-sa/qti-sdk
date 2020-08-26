@@ -152,6 +152,9 @@ class MappingMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'mapping';

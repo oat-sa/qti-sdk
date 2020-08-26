@@ -281,6 +281,9 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         return $compactRef;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $components = array_merge(

@@ -110,7 +110,6 @@ abstract class AbstractSessionManager
      * @param AssessmentTest $test
      * @param Route|null $route
      * @return AssessmentTestSession An AssessmentTestSession object.
-     * @throws OrderingException
      */
     public function createAssessmentTestSession(AssessmentTest $test, Route $route = null)
     {
@@ -139,7 +138,6 @@ abstract class AbstractSessionManager
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
 
     /**
-     *
      * @param IAssessmentItem $assessmentItem
      * @param int $navigationMode A value from the NavigationMode enumeration.
      * @param int $submissionMode A value from the SubmissionMode enumeration.
@@ -160,7 +158,6 @@ abstract class AbstractSessionManager
      * @param AssessmentTest $test
      * @param Route $route
      * @return Route
-     * @throws OrderingException
      */
     protected function getRoute(AssessmentTest $test, Route $route = null)
     {
@@ -195,7 +192,6 @@ abstract class AbstractSessionManager
      *
      * @param AssessmentTest $test
      * @return Route A newly instantiated Route object.
-     * @throws OrderingException
      */
     protected function createRoute(AssessmentTest $test)
     {

@@ -44,6 +44,9 @@ use qtism\data\expressions\operators\AndOperator;
  */
 class AndProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof AndOperator) {

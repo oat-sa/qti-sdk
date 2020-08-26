@@ -81,11 +81,17 @@ class Col extends BodyElement
         return $this->span;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'col';

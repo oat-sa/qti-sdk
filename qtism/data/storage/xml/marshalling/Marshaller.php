@@ -33,6 +33,9 @@ use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use RuntimeException;
 
+/**
+ * Class Marshaller
+ */
 abstract class Marshaller
 {
     /**
@@ -161,6 +164,12 @@ abstract class Marshaller
         return $this->version;
     }
 
+    /**
+     * @param $method
+     * @param $args
+     * @return DOMElement|QtiComponent
+     * @throws MarshallingException
+     */
     public function __call($method, $args)
     {
         if ($method == 'marshall' || $method == 'unmarshall') {

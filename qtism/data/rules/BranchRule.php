@@ -129,11 +129,17 @@ class BranchRule extends QtiComponent implements Rule
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'branchRule';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = [$this->getExpression()];

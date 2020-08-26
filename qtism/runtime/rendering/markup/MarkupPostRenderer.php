@@ -26,6 +26,9 @@ namespace qtism\runtime\rendering\markup;
 use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\RenderingException;
 
+/**
+ * Class MarkupPostRenderer
+ */
 class MarkupPostRenderer implements Renderable
 {
     /**
@@ -127,6 +130,11 @@ class MarkupPostRenderer implements Renderable
         return $this->templateOriented;
     }
 
+    /**
+     * @param mixed $document
+     * @return mixed|string|string[]|null
+     * @throws RenderingException
+     */
     public function render($document)
     {
         if ($document->documentElement === null) {

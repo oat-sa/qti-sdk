@@ -70,11 +70,17 @@ class SimpleMatchSet extends QtiComponent
         return $this->simpleAssociableChoices;
     }
 
+    /**
+     * @return SimpleAssociableChoiceCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getSimpleAssociableChoices();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'simpleMatchSet';

@@ -134,6 +134,9 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
         return $element;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'graphicGapMatchInteraction';

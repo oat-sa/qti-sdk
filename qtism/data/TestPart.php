@@ -31,7 +31,6 @@ use SplObjectStorage;
 use SplObserver;
 
 /**
- *
  * The TestPart class.
  */
 class TestPart extends QtiComponent implements QtiIdentifiable
@@ -391,11 +390,17 @@ class TestPart extends QtiComponent implements QtiIdentifiable
         $this->testFeedbacks = $testFeedbacks;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'testPart';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

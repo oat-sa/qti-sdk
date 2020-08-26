@@ -35,6 +35,11 @@ use qtism\data\ExternalQtiComponent;
  */
 class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic
 {
+    /**
+     * Math constructor.
+     *
+     * @param $xmlString
+     */
     public function __construct($xmlString)
     {
         parent::__construct($xmlString);
@@ -74,11 +79,17 @@ class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, Inli
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'math';

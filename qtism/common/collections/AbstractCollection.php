@@ -185,6 +185,9 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
         }
     }
 
+    /**
+     * @param mixed $offset
+     */
     public function offsetUnset($offset)
     {
         unset($this->dataPlaceHolder[$offset]);

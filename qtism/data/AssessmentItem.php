@@ -664,6 +664,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $this->modalFeedbacks;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentItem';
@@ -719,6 +722,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         }
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

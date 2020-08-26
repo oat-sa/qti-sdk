@@ -52,6 +52,9 @@ class Multiple extends Operator
         parent::__construct($expressions, 0, -1, [Cardinality::SINGLE, Cardinality::MULTIPLE], [OperatorBaseType::SAME]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'multiple';

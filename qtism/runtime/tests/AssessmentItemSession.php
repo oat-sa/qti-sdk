@@ -37,6 +37,7 @@ use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\common\OutcomeVariable;
@@ -223,7 +224,6 @@ class AssessmentItemSession extends State
     private $onDurationUpdate = [];
 
     /**
-     *
      * @var AbstractSessionManager
      */
     private $sessionManager;
@@ -645,6 +645,7 @@ class AssessmentItemSession extends State
      * @param bool $responseProcessing (optional) Whether to execute the responseProcessing or not.
      * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
      * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false)
     {
@@ -907,6 +908,7 @@ class AssessmentItemSession extends State
      * will be set to their default value or NULL and submitted.
      *
      * @throws AssessmentItemSessionException If skipping is not allowed with respect with the current itemSessionControl.
+     * @throws PhpStorageException
      */
     public function skip()
     {
@@ -1157,6 +1159,9 @@ class AssessmentItemSession extends State
         return new ResponseProcessingEngine($responseProcessing, $this);
     }
 
+    /**
+     * @param array $callback
+     */
     public function onDurationUpdate(array $callback)
     {
         $this->onDurationUpdate[] = $callback;

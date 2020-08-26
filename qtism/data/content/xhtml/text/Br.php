@@ -30,6 +30,9 @@ use qtism\data\content\AtomicInline;
  */
 class Br extends AtomicInline
 {
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'br';

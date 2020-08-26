@@ -120,6 +120,9 @@ class Inside extends Operator
         return $this->coords;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'inside';

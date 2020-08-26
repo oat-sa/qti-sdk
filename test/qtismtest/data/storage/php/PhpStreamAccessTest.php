@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\php;
 
 use InvalidArgumentException;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\PhpStreamAccess;
@@ -68,6 +69,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
      * @dataProvider writeScalarDataProvider
      * @param string $toWrite
      * @param string $expected
+     * @throws StreamAccessException
      */
     public function testWriteScalar($toWrite, $expected)
     {
@@ -189,11 +191,11 @@ class PhpStreamAccessTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider writeFunctionCallDataProvider
      * @param string $expected
      * @param string $funcname
      * @param PhpArgumentCollection $arguments
+     * @throws StreamAccessException
      */
     public function testWriteFunctionCall($expected, $funcname, PhpArgumentCollection $arguments = null)
     {
@@ -214,11 +216,11 @@ class PhpStreamAccessTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider writeInstantiationDataProvider
      * @param string $expected
      * @param string $classname
      * @param PhpArgumentCollection $arguments
+     * @throws StreamAccessException
      */
     public function testWriteInstantiation($expected, $classname, PhpArgumentCollection $arguments = null)
     {

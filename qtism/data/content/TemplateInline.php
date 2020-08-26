@@ -112,16 +112,25 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
     }
 
+    /**
+     * @return InlineStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateInline';

@@ -26,6 +26,9 @@ namespace qtism\data\state;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * Class ExternalScored
+ */
 class ExternalScored implements Enumeration
 {
     const HUMAN = 1;

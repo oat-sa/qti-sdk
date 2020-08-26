@@ -48,6 +48,9 @@ class ContainerSize extends Operator
         parent::__construct($expressions, 1, 1, [Cardinality::MULTIPLE, Cardinality::ORDERED], [OperatorBaseType::ANY]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'containerSize';

@@ -111,11 +111,17 @@ class MatchTableEntry extends QtiComponent
         $this->targetValue = $targetValue;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'matchTableEntry';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

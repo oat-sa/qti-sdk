@@ -41,6 +41,9 @@ use qtism\runtime\common\ResponseVariable;
  */
 class CorrectProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Correct) {

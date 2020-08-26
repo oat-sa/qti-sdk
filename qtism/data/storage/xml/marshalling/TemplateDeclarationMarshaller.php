@@ -86,6 +86,9 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'templateDeclaration';

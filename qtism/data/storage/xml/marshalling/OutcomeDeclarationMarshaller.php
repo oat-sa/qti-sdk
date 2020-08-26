@@ -182,6 +182,9 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'outcomeDeclaration';

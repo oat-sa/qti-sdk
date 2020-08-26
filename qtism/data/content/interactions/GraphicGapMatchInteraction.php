@@ -145,6 +145,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         return $this->associableHotspots;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection(
@@ -156,6 +159,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         );
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'graphicGapMatchInteraction';

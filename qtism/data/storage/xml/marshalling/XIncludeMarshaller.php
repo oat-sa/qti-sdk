@@ -58,6 +58,9 @@ class XIncludeMarshaller extends Marshaller
         return new XInclude($element->ownerDocument->saveXML($node));
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'include';

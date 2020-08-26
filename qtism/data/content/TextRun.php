@@ -109,13 +109,15 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
     }
 
     /**
-     *
      * @return QtiComponentCollection
      */
     public function getComponents()
@@ -123,6 +125,9 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'textRun';

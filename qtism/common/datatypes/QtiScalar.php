@@ -79,6 +79,9 @@ abstract class QtiScalar implements QtiDatatype
         return $this->value;
     }
 
+    /**
+     * @return bool
+     */
     public function isNull()
     {
         return $this->getValue() === null;

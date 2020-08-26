@@ -46,6 +46,9 @@ use qtism\runtime\common\ResponseVariable;
  */
 class MapResponsePointProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof MapResponsePoint) {

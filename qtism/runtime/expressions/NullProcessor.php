@@ -36,6 +36,9 @@ use qtism\data\expressions\NullValue;
  */
 class NullProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof NullValue) {

@@ -130,11 +130,17 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
         return $this->expression;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'setOutcomeValue';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getExpression()]);

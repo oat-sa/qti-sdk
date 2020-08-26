@@ -71,6 +71,9 @@ class ColMarshaller extends Marshaller
         return $component;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'col';

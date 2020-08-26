@@ -100,6 +100,9 @@ class GapMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'gap';

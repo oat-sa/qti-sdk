@@ -56,7 +56,6 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     }
 
     /**
-     *
      * @return MemoryStream
      */
     protected function getStream()
@@ -65,7 +64,6 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     }
 
     /**
-     *
      * @return PhpStreamAccess
      */
     protected function getStreamAccess()

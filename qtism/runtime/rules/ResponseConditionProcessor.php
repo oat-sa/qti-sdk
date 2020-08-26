@@ -37,6 +37,9 @@ namespace qtism\runtime\rules;
  */
 class ResponseConditionProcessor extends AbstractConditionProcessor
 {
+    /**
+     * @return string
+     */
     public function getQtiNature()
     {
         return 'response';

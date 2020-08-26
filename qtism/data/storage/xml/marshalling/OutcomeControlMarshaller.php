@@ -154,6 +154,9 @@ class OutcomeControlMarshaller extends RecursiveMarshaller
         return new OutcomeRuleCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

@@ -27,6 +27,9 @@ use InvalidArgumentException;
 use qtism\data\storage\StorageException;
 use qtism\data\storage\xml\versions\QtiVersion;
 
+/**
+ * Class QtiDocument
+ */
 abstract class QtiDocument
 {
     /**
@@ -44,11 +47,16 @@ abstract class QtiDocument
     private $documentComponent;
 
     /**
-     *
      * @var string
      */
     private $url;
 
+    /**
+     * QtiDocument constructor.
+     *
+     * @param string $versionNumber
+     * @param QtiComponent|null $documentComponent
+     */
     public function __construct($versionNumber = '2.1.0', QtiComponent $documentComponent = null)
     {
         $this->setVersion($versionNumber);
@@ -96,25 +104,29 @@ abstract class QtiDocument
         return $this->documentComponent;
     }
 
+    /**
+     * @param $url
+     */
     protected function setUrl($url)
     {
         $this->url = $url;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
     /**
-     *
      * @param string $url
      * @throws StorageException
      */
     abstract public function load($url);
 
     /**
-     *
      * @param string $url
      * @throws StorageException
      */

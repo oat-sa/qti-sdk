@@ -37,6 +37,9 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  */
 class BaseValueProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof BaseValue) {

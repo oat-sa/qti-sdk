@@ -431,5 +431,10 @@ abstract class MarshallerFactory
         }
     }
 
+    /**
+     * @param ReflectionClass $class
+     * @param array $args
+     * @return mixed
+     */
     abstract protected function instantiateMarshaller(ReflectionClass $class, array $args);
 }

@@ -85,6 +85,9 @@ class Caption extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'caption';

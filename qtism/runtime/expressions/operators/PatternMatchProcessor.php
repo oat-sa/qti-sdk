@@ -49,6 +49,9 @@ use qtism\runtime\expressions\operators\Utils as OperatorUtils;
  */
 class PatternMatchProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof PatternMatch) {

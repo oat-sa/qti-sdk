@@ -43,6 +43,9 @@ use qtism\data\expressions\operators\DurationGTE;
  */
 class DurationGTEProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof DurationGTE) {

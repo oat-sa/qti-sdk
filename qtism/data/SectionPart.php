@@ -344,11 +344,17 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
         $this->timeLimits = $timeLimits;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'sectionPart';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

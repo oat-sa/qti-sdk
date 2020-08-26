@@ -58,6 +58,9 @@ use qtism\runtime\expressions\Utils;
  */
 class EqualRoundedProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof EqualRounded) {

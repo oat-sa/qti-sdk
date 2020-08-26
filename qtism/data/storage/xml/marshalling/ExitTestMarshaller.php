@@ -54,6 +54,9 @@ class ExitTestMarshaller extends Marshaller
         return new ExitTest();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'exitTest';

@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\php\marshalling;
 
 use InvalidArgumentException;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 use stdClass;
@@ -10,10 +11,10 @@ use stdClass;
 class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
-     *
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param mixed $scalar
+     * @throws PhpMarshallingException
      */
     public function testMarshall($expectedInStream, $scalar)
     {

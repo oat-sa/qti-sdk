@@ -25,6 +25,9 @@ namespace qtism\data;
 
 use InvalidArgumentException;
 
+/**
+ * Class ItemSessionControl
+ */
 class ItemSessionControl extends QtiComponent
 {
     /**
@@ -362,11 +365,17 @@ class ItemSessionControl extends QtiComponent
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'itemSessionControl';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

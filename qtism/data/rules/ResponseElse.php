@@ -77,11 +77,17 @@ class ResponseElse extends QtiComponent
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'responseElse';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = $this->getResponseRules()->getArrayCopy();

@@ -77,11 +77,17 @@ class PreCondition extends QtiComponent
         $this->expression = $expression;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'preCondition';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getExpression()]);

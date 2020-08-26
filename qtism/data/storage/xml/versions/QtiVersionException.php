@@ -30,6 +30,12 @@ use InvalidArgumentException;
  */
 class QtiVersionException extends InvalidArgumentException
 {
+    /**
+     * @param string $message
+     * @param string $versionNumber
+     * @param array $supportedVersions
+     * @return static
+     */
     public static function unsupportedVersion(string $message, string $versionNumber, array $supportedVersions): self
     {
         return new self(

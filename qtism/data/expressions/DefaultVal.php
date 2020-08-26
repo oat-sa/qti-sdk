@@ -80,6 +80,9 @@ class DefaultVal extends Expression
         return $this->identifier;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'default';

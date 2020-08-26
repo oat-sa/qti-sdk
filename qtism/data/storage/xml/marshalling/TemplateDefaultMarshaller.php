@@ -81,6 +81,9 @@ class TemplateDefaultMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'templateDefault';

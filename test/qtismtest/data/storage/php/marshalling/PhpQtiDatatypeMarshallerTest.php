@@ -10,6 +10,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 use stdClass;
@@ -17,10 +18,10 @@ use stdClass;
 class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
-     *
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param QtiDatatype $qtiDatatype
+     * @throws PhpMarshallingException
      */
     public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype)
     {

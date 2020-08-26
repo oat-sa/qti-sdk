@@ -244,11 +244,17 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
         return $this->getHotspotLabel() !== '';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'associableHotspot';

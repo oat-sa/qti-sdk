@@ -219,11 +219,17 @@ class GraphicOrderInteraction extends GraphicInteraction
         return $this->getMaxChoices() > -1;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getHotspotChoices()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'graphicOrderInteraction';

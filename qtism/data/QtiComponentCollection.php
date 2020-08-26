@@ -49,6 +49,10 @@ class QtiComponentCollection extends AbstractCollection
         }
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
     public function offsetSet($offset, $value)
     {
         if (empty($offset)) {
@@ -59,6 +63,9 @@ class QtiComponentCollection extends AbstractCollection
         }
     }
 
+    /**
+     * @param mixed $offset
+     */
     public function offsetUnset($offset)
     {
         if (empty($offset)) {

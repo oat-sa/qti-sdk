@@ -152,6 +152,9 @@ class ResponseControlMarshaller extends RecursiveMarshaller
         return new ResponseRuleCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

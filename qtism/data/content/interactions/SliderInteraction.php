@@ -319,11 +319,17 @@ class SliderInteraction extends BlockInteraction
         return $this->reverse;
     }
 
+    /**
+     * @return \qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return parent::getComponents();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'sliderInteraction';

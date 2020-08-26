@@ -71,6 +71,9 @@ class TemplateConstraintMarshaller extends Marshaller
         return new TemplateConstraint($expressions);
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'templateConstraint';

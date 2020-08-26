@@ -37,6 +37,9 @@ use qtism\data\expressions\RandomFloat;
  */
 class RandomFloatProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof RandomFloat) {

@@ -83,6 +83,9 @@ class EndAttemptInteractionMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'endAttemptInteraction';

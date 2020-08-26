@@ -60,7 +60,6 @@ class EndAttemptInteraction extends InlineInteraction
     private $title;
 
     /**
-     *
      * @param string $responseIdentifier The identifier of the associated response variable.
      * @param string $title The title to be displayed to the candidate as a prompt for ending the attempt.
      * @param string $id The id of the bodyElement.
@@ -103,11 +102,17 @@ class EndAttemptInteraction extends InlineInteraction
         return $this->title;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'endAttemptInteraction';

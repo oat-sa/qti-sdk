@@ -50,6 +50,9 @@ class OrOperator extends Operator
         parent::__construct($expressions, 1, -1, [OperatorCardinality::SINGLE], [OperatorBaseType::BOOLEAN]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'or';

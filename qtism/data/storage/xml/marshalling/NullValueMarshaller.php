@@ -54,6 +54,9 @@ class NullValueMarshaller extends Marshaller
         return new NullValue();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'null';

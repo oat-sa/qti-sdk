@@ -69,6 +69,9 @@ class PreConditionMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'preCondition';

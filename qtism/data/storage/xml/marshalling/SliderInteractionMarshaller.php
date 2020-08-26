@@ -139,6 +139,9 @@ class SliderInteractionMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'sliderInteraction';

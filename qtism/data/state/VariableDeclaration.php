@@ -244,11 +244,17 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'variableDeclaration';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = [];

@@ -41,6 +41,9 @@ use qtism\data\expressions\operators\Contains;
  */
 class ContainsProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Contains) {

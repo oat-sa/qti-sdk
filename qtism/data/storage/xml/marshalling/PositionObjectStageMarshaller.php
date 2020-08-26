@@ -85,6 +85,9 @@ class PositionObjectStageMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'positionObjectStage';

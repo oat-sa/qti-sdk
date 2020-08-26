@@ -12,7 +12,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase
 {
     /**
-     *
      * @dataProvider numberXMethodProvider
      * @param string $method
      */

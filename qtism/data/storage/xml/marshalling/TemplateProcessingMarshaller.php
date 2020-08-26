@@ -77,6 +77,9 @@ class TemplateProcessingMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'templateProcessing';

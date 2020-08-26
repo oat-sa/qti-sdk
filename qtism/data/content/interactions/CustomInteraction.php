@@ -58,7 +58,6 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     private $xmlString;
 
     /**
-     *
      * @var ExternalQtiComponent
      */
     private $externalComponent = null;
@@ -81,6 +80,9 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
         $this->setExternalComponent(new ExternalQtiComponent($xmlString));
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'customInteraction';
@@ -176,6 +178,9 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
         return $this->getXmlBase() !== '';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

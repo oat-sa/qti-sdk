@@ -69,6 +69,9 @@ class BaseValueMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'baseValue';

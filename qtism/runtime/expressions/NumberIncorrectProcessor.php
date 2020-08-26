@@ -42,6 +42,9 @@ use qtism\data\expressions\NumberIncorrect;
  */
 class NumberIncorrectProcessor extends ItemSubsetProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof NumberIncorrect) {

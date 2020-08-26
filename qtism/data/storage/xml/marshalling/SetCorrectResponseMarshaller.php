@@ -75,6 +75,9 @@ class SetCorrectResponseMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'setCorrectResponse';

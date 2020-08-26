@@ -144,6 +144,9 @@ class RoundTo extends Operator
         return $this->roundingMode;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'roundTo';

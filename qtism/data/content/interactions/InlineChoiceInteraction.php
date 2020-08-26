@@ -174,11 +174,17 @@ class InlineChoiceInteraction extends InlineInteraction
         return $this->content;
     }
 
+    /**
+     * @return InlineChoiceCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'inlineChoiceInteraction';

@@ -118,6 +118,9 @@ abstract class Expression extends QtiComponent
         return self::$expressionClassNames;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

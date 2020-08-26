@@ -173,6 +173,9 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

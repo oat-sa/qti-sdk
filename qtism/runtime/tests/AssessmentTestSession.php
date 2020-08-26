@@ -39,6 +39,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TestPart;
 use qtism\runtime\common\OutcomeVariable;
@@ -1617,6 +1618,7 @@ class AssessmentTestSession extends State
      *
      * @return PendingResponsesCollection The collection of PendingResponses objects that were processed.
      * @throws AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
+     * @throws PhpStorageException
      */
     protected function defferedResponseProcessing()
     {
@@ -1687,6 +1689,7 @@ class AssessmentTestSession extends State
      * @param bool $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
+     * @throws PhpStorageException
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
@@ -1816,6 +1819,7 @@ class AssessmentTestSession extends State
      * @param bool $ignorePreConditions Whether or not to ignore preConditions.
      * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
      * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
     {
@@ -1903,6 +1907,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is currently not running.
+     * @throws PhpStorageException
      */
     public function moveNextTestPart()
     {
@@ -1931,6 +1936,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is not running.
+     * @throws PhpStorageException
      */
     public function moveNextAssessmentSection()
     {
@@ -1959,6 +1965,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is not running.
+     * @throws PhpStorageException
      */
     public function moveNextAssessmentItem()
     {
@@ -2042,6 +2049,7 @@ class AssessmentTestSession extends State
      * End the test session.
      *
      * @throws AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
+     * @throws PhpStorageException
      * @qtism-test-interaction
      * @qtism-test-update-duration
      */

@@ -107,6 +107,9 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'responseDeclaration';

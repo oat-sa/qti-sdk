@@ -130,11 +130,17 @@ class GapImg extends GapChoice
         return $this->object;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'gapImg';

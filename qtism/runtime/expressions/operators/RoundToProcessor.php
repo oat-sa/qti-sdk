@@ -58,6 +58,9 @@ use qtism\runtime\expressions\Utils as ExprUtils;
  */
 class RoundToProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof RoundTo) {

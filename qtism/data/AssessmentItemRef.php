@@ -213,11 +213,17 @@ class AssessmentItemRef extends SectionPart
         $this->templateDefaults = $templateDefaults;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentItemRef';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(
@@ -230,6 +236,9 @@ class AssessmentItemRef extends SectionPart
         return new QtiComponentCollection($comp);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getIdentifier();

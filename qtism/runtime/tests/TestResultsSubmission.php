@@ -35,6 +35,9 @@ class TestResultsSubmission implements Enumeration
 
     const OUTCOME_PROCESSING = 1;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -43,6 +46,10 @@ class TestResultsSubmission implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -60,6 +67,10 @@ class TestResultsSubmission implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

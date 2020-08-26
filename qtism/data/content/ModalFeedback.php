@@ -28,6 +28,9 @@ use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\ShowHide;
 
+/**
+ * Class ModalFeedback
+ */
 class ModalFeedback extends QtiComponent
 {
     /**
@@ -248,11 +251,17 @@ class ModalFeedback extends QtiComponent
         return $this->content;
     }
 
+    /**
+     * @return FlowStaticCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'modalFeedback';

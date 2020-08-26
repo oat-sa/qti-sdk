@@ -291,6 +291,9 @@ class OrderInteraction extends BlockInteraction
         return $this->orientation;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();
@@ -298,6 +301,9 @@ class OrderInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleChoices()->getArrayCopy()));
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'orderInteraction';

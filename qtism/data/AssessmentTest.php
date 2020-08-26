@@ -146,6 +146,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     private $observers = null;
 
+    /**
+     * AssessmentTest constructor.
+     *
+     * @param $identifier
+     * @param $title
+     * @param TestPartCollection|null $testParts
+     */
     public function __construct($identifier, $title, TestPartCollection $testParts = null)
     {
         $this->setObservers(new SplObjectStorage());
@@ -376,11 +383,17 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         $this->testFeedbacks = $testFeedbacks;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentTest';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

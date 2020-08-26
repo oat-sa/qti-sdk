@@ -141,11 +141,17 @@ class QtiComponentIterator implements Iterator
         $this->rootComponent = $rootComponent;
     }
 
+    /**
+     * @param QtiComponent|null $currentContainer
+     */
     protected function setCurrentContainer(QtiComponent $currentContainer = null)
     {
         $this->currentContainer = $currentContainer;
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function getCurrentContainer()
     {
         return $this->currentContainer;

@@ -31,7 +31,6 @@ use qtism\common\storage\StreamException;
 use qtism\data\storage\php\Utils as PhpUtils;
 
 /**
- *
  * The PhpStreamAccess class provides methods to write some
  * PHP Code into a given IStream object.
  */

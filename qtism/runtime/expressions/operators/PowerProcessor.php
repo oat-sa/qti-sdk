@@ -43,6 +43,9 @@ use qtism\data\expressions\operators\Power;
  */
 class PowerProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Power) {

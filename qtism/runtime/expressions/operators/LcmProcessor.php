@@ -44,6 +44,9 @@ use qtism\data\expressions\operators\Lcm;
  */
 class LcmProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Lcm) {

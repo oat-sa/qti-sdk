@@ -249,11 +249,17 @@ class ChoiceInteraction extends BlockInteraction
         return $this->orientation;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'choiceInteraction';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $parentComponents = parent::getComponents();

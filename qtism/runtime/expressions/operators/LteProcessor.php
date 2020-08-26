@@ -41,6 +41,9 @@ use qtism\data\expressions\operators\Lte;
  */
 class LteProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Lte) {

@@ -75,6 +75,9 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'assessmentSectionRef';

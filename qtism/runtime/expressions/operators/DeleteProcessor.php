@@ -50,6 +50,9 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  */
 class DeleteProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Delete) {

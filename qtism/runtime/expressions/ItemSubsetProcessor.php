@@ -59,6 +59,9 @@ use qtism\data\expressions\ItemSubset;
  */
 abstract class ItemSubsetProcessor extends ExpressionProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof ItemSubset) {

@@ -291,6 +291,10 @@ class PhpDocument extends QtiDocument
         }
     }
 
+    /**
+     * @param $object
+     * @return string
+     */
     protected static function getBaseImplementation($object)
     {
         if ($object instanceof AssessmentTest) {

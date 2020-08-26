@@ -25,9 +25,17 @@ namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\storage\IStream;
+use qtism\common\storage\StreamAccessException;
 
+/**
+ * Class QtiBinaryStreamAccessFsFile
+ */
 class QtiBinaryStreamAccessFsFile extends QtiBinaryStreamAccess
 {
+    /**
+     * @param IStream $stream
+     * @throws StreamAccessException
+     */
     public function __construct(IStream $stream)
     {
         parent::__construct($stream, new FileSystemFileManager());

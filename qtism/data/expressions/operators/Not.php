@@ -35,11 +35,19 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class Not extends Operator
 {
+    /**
+     * Not constructor.
+     *
+     * @param ExpressionCollection $expressions
+     */
     public function __construct(ExpressionCollection $expressions)
     {
         parent::__construct($expressions, 1, 1, [OperatorCardinality::SINGLE], [OperatorBaseType::BOOLEAN]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'not';

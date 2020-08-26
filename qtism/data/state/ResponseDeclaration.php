@@ -180,11 +180,17 @@ class ResponseDeclaration extends VariableDeclaration
         return $this->areaMapping;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'responseDeclaration';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = parent::getComponents()->getArrayCopy();

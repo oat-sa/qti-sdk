@@ -42,6 +42,9 @@ class CorrectResponseMarshaller extends Marshaller
      */
     private $baseType = -1;
 
+    /**
+     * @param int $baseType
+     */
     public function setBaseType($baseType = -1)
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -129,6 +132,9 @@ class CorrectResponseMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'correctResponse';

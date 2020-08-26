@@ -71,6 +71,9 @@ class OutcomeProcessingMarshaller extends Marshaller
         return new OutcomeProcessing($outcomeRules);
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'outcomeProcessing';

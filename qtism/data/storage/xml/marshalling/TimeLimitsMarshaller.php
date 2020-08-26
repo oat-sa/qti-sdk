@@ -82,6 +82,9 @@ class TimeLimitsMarshaller extends Marshaller
         return $object;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'timeLimits';

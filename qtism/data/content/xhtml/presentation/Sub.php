@@ -45,6 +45,9 @@ class Sub extends SimpleInline
         parent::__construct($id, $class, $lang, $label);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'sub';

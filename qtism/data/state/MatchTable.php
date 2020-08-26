@@ -81,11 +81,17 @@ class MatchTable extends LookupTable
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'matchTable';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

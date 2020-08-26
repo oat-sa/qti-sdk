@@ -76,6 +76,9 @@ use qtism\data\expressions\operators\MathOperator;
  */
 class MathOperatorProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof MathOperator) {
@@ -122,7 +125,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processSin()
@@ -133,7 +135,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processCos()
@@ -144,7 +145,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processTan()
@@ -155,7 +155,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processSec()
@@ -166,7 +165,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processCsc()
@@ -177,7 +175,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat|null
      */
     protected function processCot()
@@ -194,7 +191,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAsin()
@@ -205,7 +201,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAcos()
@@ -216,7 +211,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAtan()
@@ -227,7 +221,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      * @throws OperatorProcessingException
      */
@@ -250,7 +243,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processAsec()
@@ -266,7 +258,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processAcsc()
@@ -282,7 +273,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAcot()
@@ -298,7 +288,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processSinh()
@@ -309,7 +298,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processCosh()
@@ -320,7 +308,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processTanh()
@@ -331,7 +318,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processSech()
@@ -347,7 +333,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processCsch()
@@ -363,7 +348,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processCoth()
@@ -381,7 +365,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processLog()
@@ -399,7 +382,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processLn()
@@ -417,7 +399,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processExp()
@@ -437,7 +418,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processAbs()
@@ -474,7 +454,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat|QtiInteger
      */
     protected function processFloor()
@@ -494,7 +473,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat|QtiInteger
      */
     protected function processCeil()
@@ -514,7 +492,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processToDegrees()
@@ -534,7 +511,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processToRadians()

@@ -361,6 +361,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         return $this->lastRendering;
     }
 
+    /**
+     * @param mixed $component
+     * @param string $base
+     * @return mixed
+     * @throws RenderingException
+     */
     public function render($component, $base = '')
     {
         // Reset the engine to its initial state.
@@ -459,7 +465,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     *
      * @param QtiComponent $component
      */
     protected function markAsExplored(QtiComponent $component)
@@ -597,11 +602,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $this->ignoreClasses = $ignoreClasses;
     }
 
+    /**
+     * @return array
+     */
     public function getIgnoreClasses()
     {
         return $this->ignoreClasses;
     }
 
+    /**
+     * @param $classes
+     */
     public function ignoreQtiClasses($classes)
     {
         if (is_string($classes) === true) {

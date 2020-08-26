@@ -47,6 +47,9 @@ class IntegerModulus extends Operator
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'integerModulus';

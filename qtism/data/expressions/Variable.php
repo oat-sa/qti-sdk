@@ -155,6 +155,9 @@ class Variable extends Expression
         return $this->weightIdentifier;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'variable';

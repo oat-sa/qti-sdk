@@ -132,6 +132,9 @@ class AnyN extends Operator
         return $this->max;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'anyN';

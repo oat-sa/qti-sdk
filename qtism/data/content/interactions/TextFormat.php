@@ -25,6 +25,9 @@ namespace qtism\data\content\interactions;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * Class TextFormat
+ */
 class TextFormat implements Enumeration
 {
     /**
@@ -67,6 +70,9 @@ class TextFormat implements Enumeration
      */
     const XHTML = 2;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -76,6 +82,10 @@ class TextFormat implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -97,6 +107,10 @@ class TextFormat implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

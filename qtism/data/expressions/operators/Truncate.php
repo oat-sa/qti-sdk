@@ -48,6 +48,9 @@ class Truncate extends Operator
         parent::__construct($expressions, 1, 1, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'truncate';

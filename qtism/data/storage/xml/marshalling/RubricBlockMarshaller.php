@@ -149,6 +149,9 @@ class RubricBlockMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'rubricBlock';

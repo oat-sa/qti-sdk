@@ -75,6 +75,9 @@ class FileSystemFile implements QtiFile
         $this->setPath($path);
     }
 
+    /**
+     * @param $path
+     */
     private function readInfo($path)
     {
         // Retrieve filename and mime type.

@@ -166,6 +166,9 @@ abstract class TemplateElement extends BodyElement
         }
     }
 
+    /**
+     * @return string
+     */
     public function getIdentifier()
     {
         return $this->identifier;

@@ -46,6 +46,9 @@ class Lte extends Operator
         parent::__construct($expressions, 2, 2, [OperatorCardinality::SINGLE], [OperatorBaseType::INTEGER, OperatorBaseType::FLOAT]);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'lte';

@@ -50,7 +50,6 @@ class QtiDuration implements QtiDatatype
     private $refDate;
 
     /**
-     *
      * @var DateInterval
      */
     private $interval;
@@ -304,6 +303,9 @@ class QtiDuration implements QtiDatatype
         ;
     }
 
+    /**
+     * @return $this
+     */
     public function round()
     {
         $seconds = round($this->getMicroseconds() / 1e6, 0, PHP_ROUND_HALF_UP);

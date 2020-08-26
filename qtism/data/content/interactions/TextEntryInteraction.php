@@ -308,11 +308,17 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
         return $this->getPlaceholderText() !== '';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'textEntryInteraction';

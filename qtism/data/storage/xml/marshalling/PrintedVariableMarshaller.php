@@ -122,6 +122,9 @@ class PrintedVariableMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'printedVariable';

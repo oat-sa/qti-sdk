@@ -49,6 +49,9 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
         }
     }
 
+    /**
+     * @param mixed $value
+     */
     protected function checkType($value)
     {
         if (!$value instanceof QtiIdentifiable) {

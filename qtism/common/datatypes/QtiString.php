@@ -89,6 +89,9 @@ class QtiString extends QtiScalar
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getValue();

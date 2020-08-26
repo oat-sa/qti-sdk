@@ -26,6 +26,9 @@ namespace qtism\data\results;
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
+/**
+ * Class TestResultCollection
+ */
 class TestResultCollection extends QtiComponentCollection
 {
     /**

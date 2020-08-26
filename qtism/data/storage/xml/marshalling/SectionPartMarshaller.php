@@ -131,6 +131,9 @@ class SectionPartMarshaller extends Marshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'sectionPart';

@@ -48,6 +48,9 @@ class MathEnumeration implements Enumeration
      */
     const E = 1;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -56,6 +59,10 @@ class MathEnumeration implements Enumeration
         ];
     }
 
+    /**
+     * @param false|string $constant
+     * @return string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
@@ -69,6 +76,10 @@ class MathEnumeration implements Enumeration
         }
     }
 
+    /**
+     * @param false|int $name
+     * @return float
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {

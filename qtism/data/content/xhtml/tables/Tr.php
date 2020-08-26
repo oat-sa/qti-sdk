@@ -55,6 +55,9 @@ class Tr extends BodyElement
         $this->setContent($content);
     }
 
+    /**
+     * @return TableCellCollection|\qtism\data\QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
@@ -80,6 +83,9 @@ class Tr extends BodyElement
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'tr';

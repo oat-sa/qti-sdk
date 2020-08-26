@@ -41,6 +41,9 @@ use qtism\data\expressions\operators\Substring;
  */
 class SubstringProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Substring) {

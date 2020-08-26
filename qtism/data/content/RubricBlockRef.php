@@ -148,11 +148,17 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
         $this->observers = $observers;
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'rubricBlockRef';

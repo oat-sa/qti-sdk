@@ -38,6 +38,9 @@ use qtism\data\expressions\operators\FieldValue;
  */
 class FieldValueProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof FieldValue) {

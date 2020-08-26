@@ -147,6 +147,9 @@ class TemplateCondition extends QtiComponent implements TemplateRule
         return $this->getTemplateElse() !== null;
     }
 
+    /**
+     * @return array|QtiComponentCollection
+     */
     public function getComponents()
     {
         $merge = array_merge([$this->getTemplateIf()], $this->getTemplateElseIfs()->getArrayCopy());
@@ -158,6 +161,9 @@ class TemplateCondition extends QtiComponent implements TemplateRule
         return $components;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateCondition';

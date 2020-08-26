@@ -24,7 +24,6 @@
 namespace qtism\data\content;
 
 /**
- *
  * The atomicBlock QTI class.
  */
 abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStatic
@@ -115,6 +114,9 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';

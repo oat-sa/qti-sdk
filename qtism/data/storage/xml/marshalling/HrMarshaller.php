@@ -71,6 +71,9 @@ class HrMarshaller extends Marshaller
         return $component;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'hr';

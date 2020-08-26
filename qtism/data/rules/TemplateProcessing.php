@@ -82,6 +82,9 @@ class TemplateProcessing extends QtiComponent
         return $this->templateRules;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateProcessing';

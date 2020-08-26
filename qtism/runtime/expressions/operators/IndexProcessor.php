@@ -44,6 +44,9 @@ use qtism\runtime\expressions\Utils as ProcessingUtils;
  */
 class IndexProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Index) {

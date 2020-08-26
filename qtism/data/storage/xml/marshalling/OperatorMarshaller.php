@@ -264,6 +264,9 @@ class OperatorMarshaller extends RecursiveMarshaller
         return new ExpressionCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return '';

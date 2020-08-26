@@ -40,6 +40,9 @@ use qtism\data\expressions\operators\IntegerToFloat;
  */
 class IntegerToFloatProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof IntegerToFloat) {

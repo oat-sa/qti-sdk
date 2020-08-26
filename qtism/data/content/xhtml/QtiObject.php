@@ -259,6 +259,9 @@ class QtiObject extends BodyElement implements FlowStatic, InlineStatic
         return $this->xmlBase;
     }
 
+    /**
+     * @return bool
+     */
     public function hasXmlBase()
     {
         return $this->getXmlBase() !== '';
@@ -294,6 +297,9 @@ class QtiObject extends BodyElement implements FlowStatic, InlineStatic
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'object';

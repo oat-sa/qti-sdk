@@ -49,6 +49,9 @@ use qtism\runtime\common\MultipleContainer;
  */
 class MinProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Min) {

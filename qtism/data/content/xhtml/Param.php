@@ -221,11 +221,17 @@ class Param extends QtiComponent implements ObjectFlow
         return $this->getType() !== '';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'param';

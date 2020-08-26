@@ -44,6 +44,9 @@ use qtism\runtime\common\Container;
  */
 class OrProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof OrOperator) {

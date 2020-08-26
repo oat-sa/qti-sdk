@@ -45,6 +45,9 @@ use qtism\data\expressions\operators\Divide;
  */
 class DivideProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Divide) {

@@ -62,6 +62,9 @@ class NumberCorrectMarshaller extends ItemSubsetMarshaller
         return $object;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'numberCorrect';

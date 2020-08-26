@@ -64,6 +64,9 @@ abstract class CustomOperatorProcessor extends OperatorProcessor
         parent::__construct($expression, $operands);
     }
 
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof CustomOperator) {

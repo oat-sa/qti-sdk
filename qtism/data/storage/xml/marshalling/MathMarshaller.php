@@ -56,6 +56,9 @@ class MathMarshaller extends Marshaller
         return new Math($element->ownerDocument->saveXML($node));
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'math';

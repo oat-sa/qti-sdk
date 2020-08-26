@@ -117,6 +117,9 @@ class MathOperator extends Operator
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'mathOperator';

@@ -69,6 +69,9 @@ class BrMarshaller extends Marshaller
         return $component;
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'br';

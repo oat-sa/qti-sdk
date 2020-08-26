@@ -46,6 +46,9 @@ use qtism\runtime\common\Utils as CommonUtils;
  */
 class MemberProcessor extends OperatorProcessor
 {
+    /**
+     * @param Expression $expression
+     */
     public function setExpression(Expression $expression)
     {
         if ($expression instanceof Member) {
