@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\InlineStaticCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -134,7 +135,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     }
 
     /**
-     * @return InlineStaticCollection|\qtism\data\QtiComponentCollection
+     * @return InlineStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

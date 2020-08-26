@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\BodyElement;
 use qtism\data\content\FlowCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -348,7 +349,7 @@ abstract class TableCell extends BodyElement
     }
 
     /**
-     * @return FlowCollection|\qtism\data\QtiComponentCollection
+     * @return FlowCollection|QtiComponentCollection
      */
     public function getComponents()
     {

@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -175,7 +176,7 @@ class InlineChoiceInteraction extends InlineInteraction
     }
 
     /**
-     * @return InlineChoiceCollection|\qtism\data\QtiComponentCollection
+     * @return InlineChoiceCollection|QtiComponentCollection
      */
     public function getComponents()
     {

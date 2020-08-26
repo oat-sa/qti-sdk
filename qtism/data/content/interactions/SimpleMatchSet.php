@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The simpleMatchSet QTI class.
@@ -71,7 +72,7 @@ class SimpleMatchSet extends QtiComponent
     }
 
     /**
-     * @return SimpleAssociableChoiceCollection|\qtism\data\QtiComponentCollection
+     * @return SimpleAssociableChoiceCollection|QtiComponentCollection
      */
     public function getComponents()
     {

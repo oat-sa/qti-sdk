@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -320,7 +321,7 @@ class SliderInteraction extends BlockInteraction
     }
 
     /**
-     * @return \qtism\data\QtiComponentCollection
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

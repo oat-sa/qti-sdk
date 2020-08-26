@@ -26,7 +26,7 @@ namespace qtism\runtime\storage\binary;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\storage\IStream;
 use qtism\common\storage\MemoryStream;
-use qtism\data\Document;
+use qtism\common\storage\StreamAccessException;
 use qtism\runtime\tests\AssessmentTestSession;
 use RuntimeException;
 
@@ -84,7 +84,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
     /**
      * @param IStream $stream
      * @return QtiBinaryStreamAccess
-     * @throws \qtism\common\storage\StreamAccessException
+     * @throws StreamAccessException
      */
     protected function createBinaryStreamAccess(IStream $stream)
     {

@@ -25,6 +25,7 @@ namespace qtism\data\content;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -121,7 +122,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
     }
 
     /**
-     * @return InlineStaticCollection|\qtism\data\QtiComponentCollection
+     * @return InlineStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {

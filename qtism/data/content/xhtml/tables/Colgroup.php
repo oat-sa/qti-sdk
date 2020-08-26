@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\tables;
 
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The XHTML colgroup class.
@@ -91,7 +92,7 @@ class Colgroup extends BodyElement
     }
 
     /**
-     * @return ColCollection|\qtism\data\QtiComponentCollection
+     * @return ColCollection|QtiComponentCollection
      */
     public function getComponents()
     {

@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\tables;
 
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Tfoot XHTML class.
@@ -82,7 +83,7 @@ class Tfoot extends BodyElement
     }
 
     /**
-     * @return TrCollection|\qtism\data\QtiComponentCollection
+     * @return TrCollection|QtiComponentCollection
      */
     public function getComponents()
     {

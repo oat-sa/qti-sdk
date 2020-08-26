@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\TextOrVariableCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -78,7 +79,7 @@ class InlineChoice extends Choice
     }
 
     /**
-     * @return TextOrVariableCollection|\qtism\data\QtiComponentCollection
+     * @return TextOrVariableCollection|QtiComponentCollection
      */
     public function getComponents()
     {
