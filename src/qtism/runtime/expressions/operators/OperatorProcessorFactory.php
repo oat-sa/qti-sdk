@@ -58,7 +58,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
     public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null)
     {
         if ($expression instanceof Operator) {
-            if (is_null($operands)) {
+            if ($operands === null) {
                 $operands = new OperandsCollection();
             }
 

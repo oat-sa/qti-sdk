@@ -105,7 +105,7 @@ class RoundToProcessor extends OperatorProcessor
             $figuresIdentifier = ExprUtils::sanitizeVariableRef($figures);
             $figures = $state[$figuresIdentifier];
 
-            if (is_null($figures)) {
+            if ($figures === null) {
                 $msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$figures instanceof QtiInteger) {
@@ -129,7 +129,7 @@ class RoundToProcessor extends OperatorProcessor
             $d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
             $power = $figures - (int)$d;
 
-            $magnitude = pow(10, $power);
+            $magnitude = 10 ** $power;
             $shifted = round($operand->getValue() * $magnitude);
 
             return new QtiFloat((float)($shifted / $magnitude));

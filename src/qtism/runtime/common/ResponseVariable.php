@@ -119,7 +119,7 @@ class ResponseVariable extends Variable
      */
     public function hasCorrectResponse()
     {
-        return is_null($this->getCorrectResponse()) === false;
+        return $this->getCorrectResponse() !== null;
     }
 
     /**

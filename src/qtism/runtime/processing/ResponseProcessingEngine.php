@@ -60,7 +60,7 @@ class ResponseProcessingEngine extends AbstractEngine
     {
         parent::__construct($responseProcessing, $context);
 
-        $templateDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+        $templateDir = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'map_response.php');

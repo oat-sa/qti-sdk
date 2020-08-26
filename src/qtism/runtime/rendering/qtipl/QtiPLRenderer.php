@@ -214,7 +214,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
             $childPL[] = $this->render($ce);
         }
 
-        return $this->getOpenChildElement() . join(', ', $childPL) . $this->getCloseChildElement();
+        return $this->getOpenChildElement() . implode(', ', $childPL) . $this->getCloseChildElement();
     }
 
     /**
@@ -230,7 +230,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
                 $attribPL[] = $key . '=' . $value;
             }
 
-            return $this->getOpenAttributes() . join(', ', $attribPL) . $this->getCloseAttributes();
+            return $this->getOpenAttributes() . implode(', ', $attribPL) . $this->getCloseAttributes();
         } else {
             return '';
         }

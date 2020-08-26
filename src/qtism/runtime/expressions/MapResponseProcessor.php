@@ -69,11 +69,11 @@ class MapResponseProcessor extends ExpressionProcessor
         $identifier = $expr->getIdentifier();
         $variable = $state->getVariable($identifier);
 
-        if (!is_null($variable)) {
+        if ($variable !== null) {
             if ($variable instanceof ResponseVariable) {
                 $mapping = $variable->getMapping();
 
-                if (is_null($mapping)) {
+                if ($mapping === null) {
                     return new QtiFloat(0.0);
                 }
 

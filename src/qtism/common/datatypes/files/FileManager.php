@@ -71,7 +71,7 @@ interface FileManager
     public function retrieve($identifier);
 
     /**
-     * Delete a given AbstractPersistentFile from its storage.
+     * Delete a given QtiFile from its storage.
      *
      * @param QtiFile $file A persistent file to be deleted gracefully.
      * @throws FileManagerException

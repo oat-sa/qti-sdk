@@ -73,7 +73,7 @@ class Utils
             return gettype($value) . '_' . $occurence;
         } elseif (is_array($value)) {
             return 'array_' . $occurence;
-        } elseif (is_null($value)) {
+        } elseif ($value === null) {
             // null value?
             // To avoid conflict with NullValue QTI expression object!!!
             return 'scalarnullvalue_' . $occurence;

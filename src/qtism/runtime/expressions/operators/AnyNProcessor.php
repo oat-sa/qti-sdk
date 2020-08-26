@@ -70,7 +70,7 @@ class AnyNProcessor extends OperatorProcessor
             $varName = Utils::sanitizeVariableRef($min);
             $varValue = $state[$varName];
 
-            if (is_null($varValue)) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved or is null.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -87,7 +87,7 @@ class AnyNProcessor extends OperatorProcessor
             $varName = Utils::sanitizeVariableRef($max);
             $varValue = $state[$varName];
 
-            if (is_null($varValue)) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved or is null.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -102,7 +102,7 @@ class AnyNProcessor extends OperatorProcessor
         $trueCount = 0;
 
         foreach ($operands as $operand) {
-            if (is_null($operand)) {
+            if ($operand === null) {
                 $nullCount++;
                 continue;
             } elseif ($operand instanceof QtiBoolean) {

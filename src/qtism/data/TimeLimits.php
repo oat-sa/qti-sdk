@@ -106,7 +106,7 @@ class TimeLimits extends QtiComponent
      */
     public function hasMinTime()
     {
-        return !is_null($this->getMinTime());
+        return $this->getMinTime() !== null;
     }
 
     /**
@@ -117,7 +117,7 @@ class TimeLimits extends QtiComponent
     public function setMinTime(QtiDuration $minTime = null)
     {
         // Prevent to get 0s durations stored.
-        if (is_null($minTime) === false && $minTime->getSeconds(true) === 0) {
+        if ($minTime !== null && $minTime->getSeconds(true) === 0) {
             $minTime = null;
         }
 
@@ -141,7 +141,7 @@ class TimeLimits extends QtiComponent
      */
     public function hasMaxTime()
     {
-        return !is_null($this->getMaxTime());
+        return $this->getMaxTime() !== null;
     }
 
     /**
@@ -152,7 +152,7 @@ class TimeLimits extends QtiComponent
     public function setMaxTime(QtiDuration $maxTime = null)
     {
         // Prevent to get 0s durations stored.
-        if (is_null($maxTime) === false && $maxTime->getSeconds(true) === 0) {
+        if ($maxTime !== null && $maxTime->getSeconds(true) === 0) {
             $maxTime = null;
         }
 

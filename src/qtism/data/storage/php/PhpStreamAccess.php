@@ -68,7 +68,7 @@ class PhpStreamAccess extends AbstractStreamAccess
         try {
             if (is_int($scalar)) {
                 $this->getStream()->write($scalar);
-            } elseif (is_double($scalar)) {
+            } elseif (is_float($scalar)) {
                 if (strpos('' . $scalar, '.') === false) {
                     $scalar .= '.0';
                 }
@@ -78,7 +78,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->getStream()->write(PhpUtils::doubleQuotedPhpString($scalar));
             } elseif (is_bool($scalar)) {
                 $this->getStream()->write(($scalar === true) ? 'true' : 'false');
-            } elseif (is_null($scalar)) {
+            } elseif ($scalar === null) {
                 $this->getStream()->write('null');
             }
         } catch (StreamException $e) {

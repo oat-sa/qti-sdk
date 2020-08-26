@@ -201,7 +201,7 @@ class Utils
     {
         $integerArray = [];
         foreach ($floatArray as $f) {
-            $integerArray[] = (is_null($f) === false) ? (int)$f : null;
+            $integerArray[] = ($f !== null) ? (int)$f : null;
         }
 
         return $integerArray;
@@ -217,7 +217,7 @@ class Utils
     {
         $floatArray = [];
         foreach ($integerArray as $i) {
-            $floatArray[] = (is_null($i) === false) ? (float)$i : null;
+            $floatArray[] = ($i !== null) ? (float)$i : null;
         }
 
         return $floatArray;
@@ -271,7 +271,7 @@ class Utils
      */
     public static function isNull(QtiDatatype $value = null)
     {
-        return is_null($value) || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
+        return $value === null || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
     }
 
     /**
@@ -288,6 +288,6 @@ class Utils
      */
     public static function equals(QtiDatatype $a = null, QtiDatatype $b = null)
     {
-        return (is_null($a) ? is_null($b) : $a->equals($b));
+        return ($a === null ? $b === null : $a->equals($b));
     }
 }

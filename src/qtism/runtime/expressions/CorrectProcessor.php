@@ -60,7 +60,7 @@ class CorrectProcessor extends ExpressionProcessor
 
         $var = $state->getVariable($identifier);
 
-        if (is_null($var)) {
+        if ($var === null) {
             return null;
         } elseif ($var instanceof ResponseVariable) {
             return $var->getCorrectResponse();

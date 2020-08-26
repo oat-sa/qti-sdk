@@ -152,7 +152,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // persist time reference.
             $timeReference = $assessmentTestSession->getTimeReference();
-            if (is_null($timeReference)) {
+            if ($timeReference === null) {
                 $access->writeBoolean(false);
             } else {
                 $access->writeBoolean(true);

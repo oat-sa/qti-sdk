@@ -50,7 +50,6 @@ class QtiDuration implements QtiDatatype
     private $refDate;
 
     /**
-     *
      * @var DateInterval
      */
     private $interval;
@@ -233,7 +232,11 @@ class QtiDuration implements QtiDatatype
             $string .= $this->interval->d . 'D';
         }
 
-        if ($this->interval->h > 0 || $this->interval->i > 0 || $this->interval->s > 0) {
+        if (
+            $this->interval->h > 0
+            || $this->interval->i > 0
+            || $this->interval->s > 0
+        ) {
             $string .= 'T';
 
             if ($this->interval->h > 0) {

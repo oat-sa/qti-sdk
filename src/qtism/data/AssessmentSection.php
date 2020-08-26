@@ -215,7 +215,7 @@ class AssessmentSection extends SectionPart
      */
     public function hasSelection()
     {
-        return is_null($this->getSelection()) === false;
+        return $this->getSelection() !== null;
     }
 
     /**
@@ -246,7 +246,7 @@ class AssessmentSection extends SectionPart
      */
     public function hasOrdering()
     {
-        return is_null($this->getOrdering()) === false;
+        return $this->getOrdering() !== null;
     }
 
     /**

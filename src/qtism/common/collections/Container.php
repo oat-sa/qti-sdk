@@ -231,7 +231,7 @@ class Container extends AbstractCollection implements Comparable
         foreach (array_keys($data) as $k) {
             $d = $data[$k];
 
-            if (is_null($d)) {
+            if ($d === null) {
                 $strings[] = 'NULL';
             } elseif ($d instanceof QtiString) {
                 $strings[] = "'${d}'";

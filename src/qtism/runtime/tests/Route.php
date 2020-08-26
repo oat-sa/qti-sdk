@@ -762,10 +762,10 @@ class Route implements Iterator
     {
         $bySection = (empty($sectionIdentifier)) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
 
-        if (is_null($includeCategories) === false) {
+        if ($includeCategories !== null) {
             // We will perform the search by category inclusion.
             return $bySection->intersect($this->getAssessmentItemRefsByCategory($includeCategories));
-        } elseif (is_null($excludeCategories) === false) {
+        } elseif ($excludeCategories !== null) {
             // Perform the category by exclusion.
             return $bySection->diff($this->getAssessmentItemRefsByCategory($excludeCategories));
         } else {
@@ -783,11 +783,7 @@ class Route implements Iterator
     public function getOccurenceCount(AssessmentItemRef $assessmentItemRef)
     {
         $occurenceMap = $this->getAssessmentItemRefOccurenceMap();
-        if (isset($occurenceMap[$assessmentItemRef])) {
-            return $occurenceMap[$assessmentItemRef];
-        } else {
-            return 0;
-        }
+        return $occurenceMap[$assessmentItemRef] ?? 0;
     }
 
     /**

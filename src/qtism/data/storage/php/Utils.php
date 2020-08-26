@@ -39,7 +39,7 @@ class Utils
      */
     public static function isScalar($value)
     {
-        return is_scalar($value) || is_null($value);
+        return is_scalar($value) || $value === null;
     }
 
     /**

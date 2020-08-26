@@ -78,7 +78,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if ($v instanceof Container && $v->isNull()) {
                 return true;
-            } elseif (($v instanceof QtiString && $v->getValue() === '') || is_null($v)) {
+            } elseif (($v instanceof QtiString && $v->getValue() === '') || $v === null) {
                 return true;
             }
         }
@@ -158,7 +158,7 @@ class OperandsCollection extends AbstractCollection implements Stack
 
         foreach (array_keys($this->getDataPlaceHolder()) as $key) {
             $v = $this[$key];
-            if (is_null($v) || $v instanceof Container) {
+            if ($v === null || $v instanceof Container) {
                 return false;
             }
         }

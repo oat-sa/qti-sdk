@@ -59,7 +59,7 @@ class Utils
     {
         $min = $constraint->getMinConstraint();
         $max = $constraint->getMaxConstraint();
-        $cardinality = (is_null($response)) ? Cardinality::SINGLE : $response->getCardinality();
+        $cardinality = ($response === null) ? Cardinality::SINGLE : $response->getCardinality();
 
         if (($isNull = RuntimeUtils::isNull($response)) === true) {
             $count = 0;
@@ -98,7 +98,7 @@ class Utils
         }
 
         // Associations check...
-        if (is_null($response) === false && $cardinality !== Cardinality::RECORD && ($response->getBaseType() === BaseType::PAIR || $response->getBaseType() === BaseType::DIRECTED_PAIR)) {
+        if ($response !== null && $cardinality !== Cardinality::RECORD && ($response->getBaseType() === BaseType::PAIR || $response->getBaseType() === BaseType::DIRECTED_PAIR)) {
             $toCheck = ($cardinality === Cardinality::SINGLE) ? [$response] : $response->getArrayCopy();
 
             foreach ($constraint->getAssociationValidityConstraints() as $associationConstraint) {

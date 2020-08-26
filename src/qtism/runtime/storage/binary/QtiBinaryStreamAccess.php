@@ -216,7 +216,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
 
-            if (is_null($value)) {
+            if ($value === null) {
                 $this->writeBoolean(true);
 
                 return;
@@ -234,7 +234,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 // content
                 foreach ($value as $k => $v) {
-                    $this->writeRecordField([$k, $v], is_null($v));
+                    $this->writeRecordField([$k, $v], $v === null);
                 }
             } else {
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
@@ -254,7 +254,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                     // MULTIPLE or ORDERED
                     foreach ($value as $v) {
-                        if (is_null($v) === false) {
+                        if ($v !== null) {
                             $this->writeBoolean(false);
                             $this->$toCall(($v instanceof QtiScalar) ? $v->getValue() : $v);
                         } else {
@@ -809,7 +809,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeString($session['completionStatus']->getValue());
 
             $timeReference = $session->getTimeReference();
-            if (is_null($timeReference)) {
+            if ($timeReference === null) {
                 // Describe that we have no time reference for the session.
                 $this->writeBoolean(false);
             } else {

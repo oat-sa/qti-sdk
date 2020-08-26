@@ -136,7 +136,7 @@ class AreaMapEntry extends QtiComponent
      */
     public function setMappedValue($mappedValue)
     {
-        if (is_float($mappedValue) || is_double($mappedValue)) {
+        if (is_float($mappedValue)) {
             $this->mappedValue = $mappedValue;
         } else {
             $msg = "The mappedValue argument must be a float, '" . gettype($mappedValue) . "' given.";

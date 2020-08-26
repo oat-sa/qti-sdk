@@ -45,7 +45,7 @@ class BasicSelection extends AbstractSelection
         // final result.
         $routesSelection = new SelectableRouteCollection();
 
-        if (is_null($selection) === false) {
+        if ($selection !== null) {
             $select = $selection->getSelect();
             $childCount = count($selectableRoutes);
             $withReplacement = $selection->isWithReplacement();

@@ -70,7 +70,7 @@ class OrderedProcessor extends OperatorProcessor
         $returnValue = null;
 
         foreach ($operands as $operand) {
-            if (is_null($operand) || ($operand instanceof OrderedContainer && $operand->isNull())) {
+            if ($operand === null || ($operand instanceof OrderedContainer && $operand->isNull())) {
                 // As per specs, ignore.
                 continue;
             } elseif ($refType !== null) {

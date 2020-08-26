@@ -86,7 +86,7 @@ class Marshaller
      */
     public function marshall($data, $output = Marshaller::MARSHALL_JSON)
     {
-        if (is_null($data)) {
+        if ($data === null) {
             $json = ['base' => $data];
         } elseif ($data instanceof State) {
             $json = [];
@@ -123,7 +123,7 @@ class Marshaller
      */
     protected function marshallUnit($unit)
     {
-        if (is_null($unit)) {
+        if ($unit === null) {
             $json = ['base' => null];
         } elseif ($unit instanceof QtiScalar) {
             $json = $this->marshallScalar($unit);

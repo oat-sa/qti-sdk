@@ -343,6 +343,7 @@ class FormatTest extends QtiSmTestCase
             ["a\tb"],
             [' '],
             [''],
+            [false],
         ];
     }
 

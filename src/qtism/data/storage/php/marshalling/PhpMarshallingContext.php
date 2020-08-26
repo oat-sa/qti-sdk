@@ -268,7 +268,7 @@ class PhpMarshallingContext
             $counter[$className]++;
             $this->setObjectCount($counter);
         } else {
-            if (is_null($value)) {
+            if ($value === null) {
                 $type = 'null';
             } else {
                 $type = gettype($value);

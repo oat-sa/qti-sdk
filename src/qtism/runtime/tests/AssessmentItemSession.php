@@ -1287,7 +1287,7 @@ class AssessmentItemSession extends State
                 $showHide = $rule->getShowHide();
 
                 $match = false;
-                if (is_null($outcomeValue) === false) {
+                if ($outcomeValue !== null) {
                     $match = ($outcomeValue instanceof QtiScalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
                 }
 

@@ -74,7 +74,7 @@ class RepeatProcessor extends OperatorProcessor
             $varName = ExprUtils::sanitizeVariableRef($numberRepeats);
             $varValue = $state[$varName];
 
-            if (is_null($varValue)) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -95,7 +95,7 @@ class RepeatProcessor extends OperatorProcessor
 
             foreach ($operands as $operand) {
                 // If null, ignore
-                if (is_null($operand) || ($operand instanceof Container && $operand->isNull())) {
+                if ($operand === null || ($operand instanceof Container && $operand->isNull())) {
                     continue;
                 }
 
@@ -111,7 +111,7 @@ class RepeatProcessor extends OperatorProcessor
                 if ($refType !== null && $currentType !== $refType) {
                     $msg = 'The Repeat operator only accepts operands with the same baseType.';
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-                } elseif (is_null($result)) {
+                } elseif ($result === null) {
                     $refType = $currentType;
                     $result = new OrderedContainer($refType);
                 }

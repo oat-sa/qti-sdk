@@ -58,7 +58,7 @@ class SetCorrectResponseProcessor extends RuleProcessor
 
         $var = $state->getVariable($variableIdentifier);
 
-        if (is_null($var)) {
+        if ($var === null) {
             $msg = "No variable with identifier '${variableIdentifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof ResponseVariable) {

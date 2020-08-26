@@ -67,7 +67,7 @@ class PowerProcessor extends OperatorProcessor
 
         $operand1 = $operands[0];
         $operand2 = $operands[1];
-        $raised = pow($operand1->getValue(), $operand2->getValue());
+        $raised = $operand1->getValue() ** $operand2->getValue();
 
         if (is_nan($raised)) {
             return null;

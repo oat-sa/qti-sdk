@@ -116,7 +116,7 @@ class ModalFeedback extends QtiComponent
     {
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setIdentifier($identifier);
-        $this->setContent((is_null($content)) ? new FlowStaticCollection() : $content);
+        $this->setContent(($content === null) ? new FlowStaticCollection() : $content);
         $this->setTitle($title);
     }
 

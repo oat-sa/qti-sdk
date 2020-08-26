@@ -47,7 +47,7 @@ class Php
      */
     public static function displayType($value)
     {
-        if (is_null($value)) {
+        if ($value === null) {
             return 'null';
         } elseif (is_object($value)) {
             return get_class($value);

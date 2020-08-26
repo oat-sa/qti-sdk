@@ -283,7 +283,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      */
     public function hasItemSessionControl()
     {
-        return is_null($this->getItemSessionControl()) === false;
+        return $this->getItemSessionControl() !== null;
     }
 
     /**
@@ -304,7 +304,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      */
     public function hasTimeLimits()
     {
-        return is_null($this->getTimeLimits()) === false;
+        return $this->getTimeLimits() !== null;
     }
 
     /**

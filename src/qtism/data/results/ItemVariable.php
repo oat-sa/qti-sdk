@@ -148,7 +148,7 @@ abstract class ItemVariable extends QtiComponent
      */
     public function setBaseType($baseType = null)
     {
-        if (!is_null($baseType) && !in_array($baseType, BaseType::asArray())) {
+        if ($baseType !== null && !in_array($baseType, BaseType::asArray())) {
             $msg = sprintf('Invalid baseType. Should be one of "%s"', implode('", "', BaseType::asArray()));
             throw new InvalidArgumentException($msg);
         }
@@ -163,6 +163,6 @@ abstract class ItemVariable extends QtiComponent
      */
     public function hasBaseType()
     {
-        return !is_null($this->baseType);
+        return $this->baseType !== null;
     }
 }

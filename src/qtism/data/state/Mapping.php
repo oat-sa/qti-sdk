@@ -108,7 +108,7 @@ class Mapping extends QtiComponent
      */
     public function setLowerBound($lowerBound)
     {
-        if (is_float($lowerBound) || is_double($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
+        if (is_float($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
             $this->lowerBound = $lowerBound;
         } else {
             $msg = "The 'lowerBound' attribute must be a float or false, '" . gettype($lowerBound) . "' given.";
@@ -144,7 +144,7 @@ class Mapping extends QtiComponent
      */
     public function setUpperBound($upperBound)
     {
-        if (is_float($upperBound) || is_double($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
+        if (is_float($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
             $this->upperBound = $upperBound;
         } else {
             $msg = "The 'upperBound' argument must be a float or false, '" . gettype($upperBound) . "' given.";

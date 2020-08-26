@@ -117,7 +117,7 @@ class OutcomeVariable extends Variable
      */
     public function setNormalMaximum($normalMaximum)
     {
-        if ((is_bool($normalMaximum) && $normalMaximum === false) || is_float($normalMaximum) || is_double($normalMaximum)) {
+        if ((is_bool($normalMaximum) && $normalMaximum === false) || is_float($normalMaximum)) {
             $this->normalMaximum = $normalMaximum;
         } else {
             $msg = "The normalMaximum argument must be a floating point value or false, '" . gettype($normalMaximum) . "' given.";
@@ -143,7 +143,7 @@ class OutcomeVariable extends Variable
      */
     public function setNormalMinimum($normalMinimum)
     {
-        if ((is_bool($normalMinimum) && $normalMinimum === false) || is_float($normalMinimum) || is_double($normalMinimum)) {
+        if ((is_bool($normalMinimum) && $normalMinimum === false) || is_float($normalMinimum)) {
             $this->normalMinimum = $normalMinimum;
         } else {
             $msg = "The normalMinimum argument must be a floating point value or false, '" . gettype($normalMinimum) . "' given.";
@@ -169,7 +169,7 @@ class OutcomeVariable extends Variable
      */
     public function setMasteryValue($masteryValue)
     {
-        if ((is_bool($masteryValue) && $masteryValue === false) || is_float($masteryValue) || is_double($masteryValue)) {
+        if ((is_bool($masteryValue) && $masteryValue === false) || is_float($masteryValue)) {
             $this->masteryValue = $masteryValue;
         } else {
             $msg = "The masteryValue argument must be a floating point value or false, '" . gettype($masteryValue) . "' given.";
@@ -242,7 +242,7 @@ class OutcomeVariable extends Variable
     {
         parent::applyDefaultValue();
 
-        if (is_null($this->getDefaultValue()) === true && $this->getCardinality() === Cardinality::SINGLE) {
+        if ($this->getDefaultValue() === null && $this->getCardinality() === Cardinality::SINGLE) {
             if ($this->getBaseType() === BaseType::INTEGER) {
                 $this->setValue(new QtiInteger(0));
             } elseif ($this->getBaseType() === BaseType::FLOAT) {
