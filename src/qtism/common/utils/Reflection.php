@@ -88,7 +88,7 @@ class Reflection
      *
      * @param mixed $object The object you want to know it is an instance of $className.
      * @param string $className A class name. It can be fully qualified.
-     * @return boolean
+     * @return bool
      */
     public static function isInstanceOf($object, $className)
     {

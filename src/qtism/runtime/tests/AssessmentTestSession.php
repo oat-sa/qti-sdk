@@ -825,10 +825,8 @@ class AssessmentTestSession extends State
                 // already begun.
                 if ($session['numAttempts']->getValue() === 1 && $session->getState() === AssessmentItemSessionState::SUSPENDED && $session->isAttempting() === true) {
                     $session->beginCandidateSession();
-                } else {
-                    if ($session->getState() !== AssessmentItemSessionState::INTERACTING) {
-                        $session->beginAttempt();
-                    }
+                } elseif ($session->getState() !== AssessmentItemSessionState::INTERACTING) {
+                    $session->beginAttempt();
                 }
             }
         } catch (Exception $e) {
