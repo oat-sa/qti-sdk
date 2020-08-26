@@ -141,7 +141,7 @@ class OutcomeVariableMarshaller extends Marshaller
             $component->setMasteryValue(new QtiFloat((float)$element->getAttribute('masteryValue')));
         }
 
-        $valuesElements = self::getChildElementsByTagName($element, 'value');
+        $valuesElements = $this->getChildElementsByTagName($element, 'value');
         if (!empty($valuesElements)) {
             $values = [];
             foreach ($valuesElements as $valuesElement) {

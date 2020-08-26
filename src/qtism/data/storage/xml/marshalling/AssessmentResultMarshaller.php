@@ -78,7 +78,7 @@ class AssessmentResultMarshaller extends Marshaller
     {
         try {
             /** @var Context $context */
-            $contextElements = self::getChildElementsByTagName($element, 'context');
+            $contextElements = $this->getChildElementsByTagName($element, 'context');
             $contextElement = array_shift($contextElements);
             $context = $this->getMarshallerFactory()->createMarshaller($contextElement)->unmarshall($contextElement);
         } catch (InvalidArgumentException $e) {

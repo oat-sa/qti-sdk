@@ -160,7 +160,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
                 $object->setMasteryValue($masteryValue);
             }
 
-            if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) !== null) {
+            if (($externalScored = $this->getDOMElementAttributeAs($element, 'externalScored')) !== null) {
                 $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
             }
 

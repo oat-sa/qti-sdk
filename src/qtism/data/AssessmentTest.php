@@ -812,7 +812,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     $succsItem[0][] = null;
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, null, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, null, $itemidToIndex, $component)
                     );
                 } elseif (!in_array(null, $succsItem[$prevItem->getIdentifier()])) {
                     $succsItem[$prevItem->getIdentifier()][] = null;
@@ -821,7 +821,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, null, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, null, $itemidToIndex, $component)
                     );
                 }
                 break;
@@ -854,14 +854,14 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     $succsItem[0][] = $targetItem;
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
                     );
                 } elseif (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
                     $succsItem[$prevItem->getIdentifier()][] = $targetItem;
 
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
                     );
                 }
                 break;
@@ -917,13 +917,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     $succsItem[0][] = $targetItem;
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
                     );
                 } elseif (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
                     $succsItem[$prevItem->getIdentifier()][] = $targetItem;
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
                     );
                 }
                 break;
@@ -956,7 +956,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     $succsItem[0][] = $targetItem;
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
                     );
                 } elseif (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
                     $succsItem[$prevItem->getIdentifier()][] = $targetItem;
@@ -965,7 +965,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                     $paths = array_merge(
                         $paths,
-                        self::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+                        $this->addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
                     );
                 }
                 break;

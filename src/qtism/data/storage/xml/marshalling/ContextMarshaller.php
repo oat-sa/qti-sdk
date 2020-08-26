@@ -77,7 +77,7 @@ class ContextMarshaller extends Marshaller
             ? new QtiIdentifier($element->getAttribute('sourcedId'))
             : null;
 
-        $sessionIdentifierElements = self::getChildElementsByTagName($element, 'sessionIdentifier');
+        $sessionIdentifierElements = $this->getChildElementsByTagName($element, 'sessionIdentifier');
         if (!empty($sessionIdentifierElements)) {
             $sessionIdentifiers = [];
             foreach ($sessionIdentifierElements as $sessionIdentifierElement) {

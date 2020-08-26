@@ -66,7 +66,7 @@ class CandidateResponseMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        $valuesElements = self::getChildElementsByTagName($element, 'value');
+        $valuesElements = $this->getChildElementsByTagName($element, 'value');
         if (!empty($valuesElements)) {
             $values = [];
             foreach ($valuesElements as $valuesElement) {

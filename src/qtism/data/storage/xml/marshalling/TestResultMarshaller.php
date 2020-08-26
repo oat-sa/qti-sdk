@@ -88,9 +88,9 @@ class TestResultMarshaller extends Marshaller
         $datestamp = new DateTime($element->getAttribute('datestamp'), new DateTimeZone('UTC'));
 
         $variableElements = array_merge(
-            self::getChildElementsByTagName($element, 'responseVariable'),
-            self::getChildElementsByTagName($element, 'outcomeVariable'),
-            self::getChildElementsByTagName($element, 'templateVariable')
+            $this->getChildElementsByTagName($element, 'responseVariable'),
+            $this->getChildElementsByTagName($element, 'outcomeVariable'),
+            $this->getChildElementsByTagName($element, 'templateVariable')
         );
 
         if (!empty($variableElements)) {

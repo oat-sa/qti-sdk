@@ -95,7 +95,7 @@ class TemplateVariableMarshaller extends Marshaller
             ? BaseType::getConstantByName($element->getAttribute('baseType'))
             : null;
 
-        $valuesElements = self::getChildElementsByTagName($element, 'value');
+        $valuesElements = $this->getChildElementsByTagName($element, 'value');
         if (!empty($valuesElements)) {
             $values = [];
             foreach ($valuesElements as $valuesElement) {

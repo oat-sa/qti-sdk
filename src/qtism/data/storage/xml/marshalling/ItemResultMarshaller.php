@@ -102,9 +102,9 @@ class ItemResultMarshaller extends Marshaller
         $sessionStatus = SessionStatus::getConstantByName($element->getAttribute('sessionStatus'));
 
         $variableElements = array_merge(
-            self::getChildElementsByTagName($element, 'responseVariable'),
-            self::getChildElementsByTagName($element, 'outcomeVariable'),
-            self::getChildElementsByTagName($element, 'templateVariable')
+            $this->getChildElementsByTagName($element, 'responseVariable'),
+            $this->getChildElementsByTagName($element, 'outcomeVariable'),
+            $this->getChildElementsByTagName($element, 'templateVariable')
         );
 
         if (!empty($variableElements)) {
@@ -119,7 +119,7 @@ class ItemResultMarshaller extends Marshaller
             $variableCollection = null;
         }
 
-        $candidateCommentElements = self::getChildElementsByTagName($element, 'candidateComment');
+        $candidateCommentElements = $this->getChildElementsByTagName($element, 'candidateComment');
         if (!empty($candidateCommentElements)) {
             $candidateCommentElement = array_shift($candidateCommentElements);
             $candidateComment = new QtiString($candidateCommentElement->textContent);
