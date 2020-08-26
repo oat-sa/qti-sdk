@@ -12,8 +12,6 @@ use qtism\runtime\tests\SessionManager;
 
 /**
  * Class QtiSmAssessmentItemTestCase
- *
- * @package qtismtest
  */
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {

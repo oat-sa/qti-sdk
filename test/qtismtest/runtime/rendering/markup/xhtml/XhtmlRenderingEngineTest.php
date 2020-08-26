@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class XhtmlRenderingEngineTest
- *
- * @package qtismtest\runtime\rendering\markup\xhtml
  */
 class XhtmlRenderingEngineTest extends QtiSmTestCase
 {

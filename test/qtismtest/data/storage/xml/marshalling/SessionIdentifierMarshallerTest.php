@@ -32,8 +32,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SessionIdentifierMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class SessionIdentifierMarshallerTest extends QtiSmTestCase
 {

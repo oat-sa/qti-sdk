@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class QtiComponentIteratorTest
- *
- * @package qtismtest\data
  */
 class QtiComponentIteratorTest extends QtiSmTestCase
 {

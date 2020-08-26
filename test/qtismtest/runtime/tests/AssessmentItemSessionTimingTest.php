@@ -19,8 +19,6 @@ use qtismtest\QtiSmAssessmentItemTestCase;
 
 /**
  * Class AssessmentItemSessionTimingTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 {

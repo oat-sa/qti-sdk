@@ -19,8 +19,6 @@ use RuntimeException;
 
 /**
  * Class ProductProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class ProductProcessorTest extends QtiSmTestCase
 {

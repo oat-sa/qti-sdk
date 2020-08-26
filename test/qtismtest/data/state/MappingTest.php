@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MappingTest
- *
- * @package qtismtest\data\state
  */
 class MappingTest extends QtiSmTestCase
 {

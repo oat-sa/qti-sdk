@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeMinimumMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class OutcomeMinimumMarshallerTest extends QtiSmTestCase
 {

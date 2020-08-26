@@ -31,8 +31,6 @@ use qtism\data\ShowHide;
 
 /**
  * Class ModalFeedback
- *
- * @package qtism\data\content
  */
 class ModalFeedback extends QtiComponent
 {

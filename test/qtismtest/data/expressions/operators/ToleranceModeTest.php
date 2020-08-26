@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class ToleranceModeTest
- *
- * @package qtismtest\data\expressions\operators
  */
 class ToleranceModeTest extends QtiSmEnumTestCase
 {

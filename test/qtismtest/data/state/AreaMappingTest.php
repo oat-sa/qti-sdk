@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AreaMappingTest
- *
- * @package qtismtest\data\state
  */
 class AreaMappingTest extends QtiSmTestCase
 {

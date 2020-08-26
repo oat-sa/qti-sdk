@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class RoundToMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class RoundToMarshallerTest extends QtiSmTestCase
 {

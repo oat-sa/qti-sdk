@@ -29,8 +29,6 @@ use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * Class QtiDocument
- *
- * @package qtism\data
  */
 abstract class QtiDocument
 {

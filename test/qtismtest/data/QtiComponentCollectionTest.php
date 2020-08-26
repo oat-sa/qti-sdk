@@ -13,8 +13,6 @@ use stdClass;
 
 /**
  * Class QtiComponentCollectionTest
- *
- * @package qtismtest\data
  */
 class QtiComponentCollectionTest extends QtiSmTestCase
 {

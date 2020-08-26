@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class AssessmentItemSessionStateTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
 {

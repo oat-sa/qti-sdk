@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class GteProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class GteProcessorTest extends QtiSmTestCase
 {

@@ -11,8 +11,6 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 /**
  * Class Explode
- *
- * @package org\qtism\test
  */
 class Explode extends CustomOperatorProcessor
 {

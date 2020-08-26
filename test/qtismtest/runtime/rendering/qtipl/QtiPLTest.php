@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class QtiPLTest
- *
- * @package qtismtest\data\state
  */
 class QtiPLTest extends QtiSmTestCase
 {

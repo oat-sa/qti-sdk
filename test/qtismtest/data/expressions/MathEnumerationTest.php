@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class MathEnumerationTest
- *
- * @package qtismtest\data\expressions
  */
 class MathEnumerationTest extends QtiSmEnumTestCase
 {

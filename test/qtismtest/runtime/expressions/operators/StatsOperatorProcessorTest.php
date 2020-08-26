@@ -21,8 +21,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class StatsOperatorProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class StatsOperatorProcessorTest extends QtiSmTestCase
 {

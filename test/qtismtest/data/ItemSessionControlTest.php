@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ItemSessionControlTest
- *
- * @package qtismtest\data
  */
 class ItemSessionControlTest extends QtiSmTestCase
 {

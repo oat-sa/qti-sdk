@@ -4,8 +4,6 @@ namespace qtismtest\common\beans\mocks;
 
 /**
  * Class StrictBean
- *
- * @package qtismtest\common\beans\mocks
  */
 class StrictBean
 {

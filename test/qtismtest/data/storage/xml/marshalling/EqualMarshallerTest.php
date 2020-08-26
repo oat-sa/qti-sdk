@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class EqualMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class EqualMarshallerTest extends QtiSmTestCase
 {

@@ -9,8 +9,6 @@ use ReflectionException;
 
 /**
  * Class XmlDocumentXIncludeTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlDocumentXIncludeTest extends QtiSmTestCase
 {

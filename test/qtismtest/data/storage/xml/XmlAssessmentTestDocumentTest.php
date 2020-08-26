@@ -14,8 +14,6 @@ use qtism\data\storage\xml\LibXmlErrorCollection;
 
 /**
  * Class XmlAssessmentTestDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {

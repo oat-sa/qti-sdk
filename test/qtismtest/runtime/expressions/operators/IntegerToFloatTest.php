@@ -17,8 +17,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class IntegerToFloatProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class IntegerToFloatProcessorTest extends QtiSmTestCase
 {

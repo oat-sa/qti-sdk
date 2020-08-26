@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExtendedAssessmentSectionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {

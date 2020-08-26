@@ -13,8 +13,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class AssociableHotspotMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {

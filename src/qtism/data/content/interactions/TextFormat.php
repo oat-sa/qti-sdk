@@ -27,8 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * Class TextFormat
- *
- * @package qtism\data\content\interactions
  */
 class TextFormat implements Enumeration
 {

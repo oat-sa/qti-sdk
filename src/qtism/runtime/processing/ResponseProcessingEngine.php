@@ -36,8 +36,6 @@ use qtism\runtime\rules\RuleProcessingException;
 
 /**
  * Class ResponseProcessingEngine
- *
- * @package qtism\runtime\processing
  */
 class ResponseProcessingEngine extends AbstractEngine
 {

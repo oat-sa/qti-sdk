@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class ShowHideTest
- *
- * @package qtismtest\data
  */
 class ShowHideTest extends QtiSmEnumTestCase
 {

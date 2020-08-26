@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssociableHotspotTest
- *
- * @package qtismtest\data\content\interactions
  */
 class AssociableHotspotTest extends QtiSmTestCase
 {

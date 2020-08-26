@@ -15,8 +15,6 @@ use qtism\common\datatypes\QtiFloat;
 
 /**
  * Class SetTemplateValueProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class SetTemplateValueProcessorTest extends QtiSmTestCase
 {

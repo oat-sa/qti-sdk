@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class LookupOutcomeValueMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
 {

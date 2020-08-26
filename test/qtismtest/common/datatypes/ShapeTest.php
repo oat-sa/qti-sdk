@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class ShapeTest
- *
- * @package qtismtest\common\datatypes
  */
 class ShapeTest extends QtiSmEnumTestCase
 {

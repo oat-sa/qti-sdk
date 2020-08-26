@@ -14,8 +14,6 @@ use qtism\data\content\interactions\Hotspot;
 
 /**
  * Class HotspotChoiceMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class HotspotChoiceMarshallerTest extends QtiSmTestCase
 {

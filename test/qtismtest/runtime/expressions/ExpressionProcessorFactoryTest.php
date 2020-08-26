@@ -9,8 +9,6 @@ use RuntimeException;
 
 /**
  * Class ExpressionProcessorFactoryTest
- *
- * @package qtismtest\runtime\expressions
  */
 class ExpressionProcessorFactoryTest extends QtiSmTestCase
 {

@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class NumberRespondedMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class NumberRespondedMarshallerTest extends QtiSmTestCase
 {

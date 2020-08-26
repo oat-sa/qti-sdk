@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssessmentSectionTest
- *
- * @package qtismtest\data
  */
 class AssessmentSectionTest extends QtiSmTestCase
 {

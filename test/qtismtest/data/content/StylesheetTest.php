@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class StylesheetTest
- *
- * @package qtismtest\data\content
  */
 class StylesheetTest extends QtiSmTestCase
 {

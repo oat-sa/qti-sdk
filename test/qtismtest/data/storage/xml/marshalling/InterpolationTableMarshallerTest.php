@@ -14,8 +14,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class InterpolationTableMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class InterpolationTableMarshallerTest extends QtiSmTestCase
 {

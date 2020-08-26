@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PointTest
- *
- * @package qtismtest\common\datatypes
  */
 class PointTest extends QtiSmTestCase
 {

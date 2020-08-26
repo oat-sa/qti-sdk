@@ -10,8 +10,6 @@ use stdClass;
 
 /**
  * Class PhpScalarMarshallerTest
- *
- * @package qtismtest\data\storage\php\marshalling
  */
 class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

@@ -24,8 +24,6 @@ use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 
 /**
  * Class OutcomeDeclarationMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 {

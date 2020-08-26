@@ -17,8 +17,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class HottextInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class HottextInteractionMarshallerTest extends QtiSmTestCase
 {

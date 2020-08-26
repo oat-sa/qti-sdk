@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExitTemplateMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ExitTemplateMarshallerTest extends QtiSmTestCase
 {

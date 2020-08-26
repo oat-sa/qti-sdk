@@ -53,8 +53,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class QtiBinaryStreamAccessTest
- *
- * @package qtismtest\runtime\storage\binary
  */
 class QtiBinaryStreamAccessTest extends QtiSmTestCase
 {

@@ -17,8 +17,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class DeleteProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class DeleteProcessorTest extends QtiSmTestCase
 {

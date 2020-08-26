@@ -13,8 +13,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionExitTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 {

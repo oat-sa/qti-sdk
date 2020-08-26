@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExtendedTextInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class ExtendedTextInteractionTest extends QtiSmTestCase
 {

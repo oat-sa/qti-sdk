@@ -29,8 +29,6 @@ use qtism\runtime\expressions\ExpressionProcessor;
 
 /**
  * Class OperatorProcessor
- *
- * @package qtism\runtime\expressions\operators
  */
 abstract class OperatorProcessor extends ExpressionProcessor
 {

@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class GapMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class GapMarshallerTest extends QtiSmTestCase
 {

@@ -28,8 +28,6 @@ use SplObserver;
 
 /**
  * Trait QtiIdentifiableTrait
- *
- * @package qtism\data
  */
 trait QtiIdentifiableTrait
 {

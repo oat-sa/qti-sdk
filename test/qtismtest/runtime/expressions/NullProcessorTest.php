@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class NullProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class NullProcessorTest extends QtiSmTestCase
 {

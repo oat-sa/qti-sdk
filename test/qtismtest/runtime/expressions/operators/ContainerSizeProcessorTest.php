@@ -18,8 +18,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class ContainerSizeProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class ContainerSizeProcessorTest extends QtiSmTestCase
 {

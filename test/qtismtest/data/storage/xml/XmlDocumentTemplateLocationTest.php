@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class XmlDocumentTemplateLocationTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtismtest\QtiSmItemSubsetTestCase;
 
 /**
  * Class OutcomeMaximumProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
 {

@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class TableCellScopeTest
- *
- * @package qtismtest\data\content\xhtml\tables
  */
 class TableCellScopeTest extends QtiSmEnumTestCase
 {

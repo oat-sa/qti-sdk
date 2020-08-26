@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class InterpolationTableTest
- *
- * @package qtismtest\data\state
  */
 class InterpolationTableTest extends QtiSmTestCase
 {

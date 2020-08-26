@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TestVariablesTest
- *
- * @package qtismtest\data\expressions
  */
 class TestVariablesTest extends QtiSmTestCase
 {

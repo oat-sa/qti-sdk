@@ -11,8 +11,6 @@ use stdClass;
 
 /**
  * Class ReflectionTest
- *
- * @package qtismtest\common\utils
  */
 class ReflectionTest extends QtiSmTestCase
 {

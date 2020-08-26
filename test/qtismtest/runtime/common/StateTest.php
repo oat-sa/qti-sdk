@@ -21,8 +21,6 @@ use qtism\runtime\common\VariableCollection;
 
 /**
  * Class StateTest
- *
- * @package qtismtest\runtime\common
  */
 class StateTest extends QtiSmTestCase
 {

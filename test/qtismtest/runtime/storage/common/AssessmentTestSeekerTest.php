@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssessmentTestSeekerTest
- *
- * @package qtismtest\runtime\storage\common
  */
 class AssessmentTestSeekerTest extends QtiSmTestCase
 {

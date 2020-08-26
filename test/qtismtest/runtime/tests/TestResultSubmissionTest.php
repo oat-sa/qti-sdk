@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class TestResultsSubmissionTest
- *
- * @package qtismtest\runtime\tests
  */
 class TestResultsSubmissionTest extends QtiSmEnumTestCase
 {

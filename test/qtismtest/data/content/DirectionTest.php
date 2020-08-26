@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class DirectionTest
- *
- * @package qtismtest\data\content
  */
 class DirectionTest extends QtiSmEnumTestCase
 {

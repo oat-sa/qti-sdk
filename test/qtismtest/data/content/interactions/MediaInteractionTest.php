@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MediaInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class MediaInteractionTest extends QtiSmTestCase
 {

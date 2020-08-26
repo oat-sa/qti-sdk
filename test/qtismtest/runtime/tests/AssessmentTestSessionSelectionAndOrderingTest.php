@@ -6,8 +6,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionSelectionAndOrderingTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmAssessmentTestSessionTestCase
 {

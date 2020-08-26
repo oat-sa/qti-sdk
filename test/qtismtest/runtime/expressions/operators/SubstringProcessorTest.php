@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class SubstringProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class SubstringProcessorTest extends QtiSmTestCase
 {

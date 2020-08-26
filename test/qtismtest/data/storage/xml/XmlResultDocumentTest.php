@@ -35,8 +35,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class XmlResultDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlResultDocumentTest extends QtiSmTestCase
 {

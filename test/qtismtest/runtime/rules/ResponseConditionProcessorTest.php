@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ResponseConditionProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class ResponseConditionProcessorTest extends QtiSmTestCase
 {

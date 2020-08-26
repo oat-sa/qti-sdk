@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class XmlUtilsTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlUtilsTest extends QtiSmTestCase
 {

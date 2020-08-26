@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class CoordsTest
- *
- * @package qtismtest\common\datatypes
  */
 class CoordsTest extends QtiSmTestCase
 {

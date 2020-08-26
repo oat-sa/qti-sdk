@@ -13,8 +13,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionPreConditionsTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
 {

@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class DurationLTProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class DurationLTProcessorTest extends QtiSmTestCase
 {

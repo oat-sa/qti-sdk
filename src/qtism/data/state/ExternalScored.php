@@ -28,8 +28,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * Class ExternalScored
- *
- * @package qtism\data\state
  */
 class ExternalScored implements Enumeration
 {

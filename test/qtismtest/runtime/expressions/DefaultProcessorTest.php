@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class DefaultProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class DefaultProcessorTest extends QtiSmTestCase
 {

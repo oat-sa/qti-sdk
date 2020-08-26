@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BinaryStreamTest
- *
- * @package qtismtest\runtime\storage\binary
  */
 class BinaryStreamTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MaxTest
- *
- * @package qtismtest\data\expressions\operators
  */
 class MaxTest extends QtiSmTestCase
 {

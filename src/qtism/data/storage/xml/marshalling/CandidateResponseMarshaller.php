@@ -31,8 +31,6 @@ use qtism\data\state\ValueCollection;
 
 /**
  * Class CandidateResponseMarshaller
- *
- * @package qtism\data\storage\xml\marshalling
  */
 class CandidateResponseMarshaller extends Marshaller
 {

@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BaseValueProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class BaseValueProcessorTest extends QtiSmTestCase
 {

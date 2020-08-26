@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MultipleContainerTest
- *
- * @package qtismtest\runtime\common
  */
 class MultipleContainerTest extends QtiSmTestCase
 {

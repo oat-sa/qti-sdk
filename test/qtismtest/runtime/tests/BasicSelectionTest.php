@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BasicSelectionTest
- *
- * @package qtismtest\runtime\tests
  */
 class BasicSelectionTest extends QtiSmTestCase
 {

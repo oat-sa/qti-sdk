@@ -24,8 +24,6 @@ use qtismtest\QtiSmRouteTestCase;
 
 /**
  * Class RouteTest
- *
- * @package qtismtest\runtime\tests
  */
 class RouteTest extends QtiSmRouteTestCase
 {

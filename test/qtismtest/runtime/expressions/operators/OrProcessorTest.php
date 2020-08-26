@@ -18,8 +18,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class OrProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class OrProcessorTest extends QtiSmTestCase
 {

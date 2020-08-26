@@ -12,8 +12,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class ShufflingGroupMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ShufflingGroupMarshallerTest extends QtiSmTestCase
 {

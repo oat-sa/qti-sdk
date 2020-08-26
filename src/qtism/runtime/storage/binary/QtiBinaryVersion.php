@@ -27,8 +27,6 @@ use qtism\common\storage\BinaryStreamAccessException;
 
 /**
  * Class QtiBinaryVersion
- *
- * @package qtism\runtime\storage\binary
  */
 class QtiBinaryVersion
 {

@@ -22,8 +22,6 @@ use qtismtest\QtiSmItemSubsetTestCase;
 
 /**
  * Class TestVariablesProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
 {

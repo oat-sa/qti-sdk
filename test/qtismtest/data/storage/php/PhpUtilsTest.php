@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PhpUtilsTest
- *
- * @package qtismtest\data\storage\php
  */
 class PhpUtilsTest extends QtiSmTestCase
 {

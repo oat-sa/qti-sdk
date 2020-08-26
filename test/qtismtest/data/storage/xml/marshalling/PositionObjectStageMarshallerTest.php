@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PositionObjectStageMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class PositionObjectStageMarshallerTest extends QtiSmTestCase
 {

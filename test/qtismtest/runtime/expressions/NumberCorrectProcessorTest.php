@@ -18,8 +18,6 @@ use qtismtest\QtiSmItemSubsetTestCase;
 
 /**
  * Class NumberCorrectProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase
 {

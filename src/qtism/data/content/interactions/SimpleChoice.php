@@ -28,8 +28,6 @@ use qtism\data\content\FlowStaticCollection;
 
 /**
  * Class SimpleChoice
- *
- * @package qtism\data\content\interactions
  */
 class SimpleChoice extends Choice
 {

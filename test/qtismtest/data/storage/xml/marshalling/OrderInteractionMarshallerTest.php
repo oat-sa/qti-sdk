@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OrderInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MatchInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class MatchInteractionTest extends QtiSmTestCase
 {

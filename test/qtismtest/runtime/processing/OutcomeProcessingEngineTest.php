@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeProcessingEngineTest
- *
- * @package qtismtest\runtime\processing
  */
 class OutcomeProcessingEngineTest extends QtiSmTestCase
 {

@@ -57,8 +57,6 @@ use ReflectionException;
 
 /**
  * Class PhpDocumentTest
- *
- * @package qtismtest\data\storage\php
  */
 class PhpDocumentTest extends QtiSmTestCase
 {

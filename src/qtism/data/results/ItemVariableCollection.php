@@ -28,8 +28,6 @@ use qtism\data\QtiComponentCollection;
 
 /**
  * Class ItemVariableCollection
- *
- * @package qtism\data\results
  */
 class ItemVariableCollection extends QtiComponentCollection
 {

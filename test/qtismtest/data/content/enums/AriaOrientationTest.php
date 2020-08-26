@@ -28,8 +28,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class AriaOrientationTest
- *
- * @package qtismtest\data\content\enums
  */
 class AriaOrientationTest extends QtiSmEnumTestCase
 {

@@ -4,8 +4,6 @@ namespace qtismtest\common\beans\mocks;
 
 /**
  * Class SimpleBean
- *
- * @package qtismtest\common\beans\mocks
  */
 class SimpleBean
 {

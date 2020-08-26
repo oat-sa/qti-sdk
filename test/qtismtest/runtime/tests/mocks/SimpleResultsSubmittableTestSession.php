@@ -7,8 +7,6 @@ use qtism\runtime\tests\AssessmentTestSession;
 
 /**
  * Class SimpleResultsSubmittableTestSession
- *
- * @package qtismtest\runtime\tests\mocks
  */
 class SimpleResultsSubmittableTestSession extends AssessmentTestSession
 {

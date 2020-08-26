@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ChoiceInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class ChoiceInteractionTest extends QtiSmTestCase
 {

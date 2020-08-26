@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class QtiBinaryVersionTest
- *
- * @package qtismtest\runtime\storage\binary
  */
 class QtiBinaryVersionTest extends QtiSmTestCase
 {

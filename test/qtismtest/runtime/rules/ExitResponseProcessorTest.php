@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExitResponseProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class ExitResponseProcessorTest extends QtiSmTestCase
 {

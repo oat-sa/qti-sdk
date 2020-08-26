@@ -18,8 +18,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BodyElementRendererTest
- *
- * @package qtismtest\runtime\rendering\markup\xhtml
  */
 class BodyElementRendererTest extends QtiSmTestCase
 {

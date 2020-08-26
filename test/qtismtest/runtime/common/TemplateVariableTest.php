@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TemplateVariableTest
- *
- * @package qtismtest\runtime\common
  */
 class TemplateVariableTest extends QtiSmTestCase
 {

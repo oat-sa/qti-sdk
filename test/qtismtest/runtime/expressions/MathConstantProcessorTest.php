@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MathConstantProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class MathConstantProcessorTest extends QtiSmTestCase
 {

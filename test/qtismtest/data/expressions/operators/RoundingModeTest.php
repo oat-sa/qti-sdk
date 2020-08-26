@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class RoundingModeTest
- *
- * @package qtismtest\data\expressions\operators
  */
 class RoundingModeTest extends QtiSmEnumTestCase
 {

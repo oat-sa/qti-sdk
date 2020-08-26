@@ -11,8 +11,6 @@ use qtism\runtime\tests\Route;
 
 /**
  * Class SimpleResultsSubmittableTestSessionFactory
- *
- * @package qtismtest\runtime\tests\mocks
  */
 class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionManager
 {

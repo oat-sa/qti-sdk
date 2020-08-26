@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TemplateConstraintMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TemplateConstraintMarshallerTest extends QtiSmTestCase
 {

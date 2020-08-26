@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TimeLimitsMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TimeLimitsMarshallerTest extends QtiSmTestCase
 {

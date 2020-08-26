@@ -15,8 +15,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class SimpleAssociableChoiceMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 {

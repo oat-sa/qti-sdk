@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class DirectedPairTest
- *
- * @package qtismtest\common\datatypes
  */
 class DirectedPairTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ShufflingMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ShufflingMarshallerTest extends QtiSmTestCase
 {

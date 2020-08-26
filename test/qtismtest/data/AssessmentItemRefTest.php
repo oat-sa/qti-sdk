@@ -16,8 +16,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssessmentItemRefTest
- *
- * @package qtismtest\data
  */
 class AssessmentItemRefTest extends QtiSmTestCase
 {

@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class RuleEngineTest
- *
- * @package qtismtest\runtime\rules
  */
 class RuleEngineTest extends QtiSmTestCase
 {

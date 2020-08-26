@@ -30,8 +30,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class ImgMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ImgMarshallerTest extends QtiSmTestCase
 {

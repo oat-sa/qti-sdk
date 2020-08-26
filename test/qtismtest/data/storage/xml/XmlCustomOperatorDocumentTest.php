@@ -12,8 +12,6 @@ use qtism\data\expressions\operators\CustomOperator;
 
 /**
  * Class XmlCustomOperatorDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 {

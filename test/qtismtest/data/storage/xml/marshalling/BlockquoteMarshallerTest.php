@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BlockquoteMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class BlockquoteMarshallerTest extends QtiSmTestCase
 {

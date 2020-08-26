@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TimeTest
- *
- * @package qtismtest\common\utils
  */
 class TimeTest extends QtiSmTestCase
 {

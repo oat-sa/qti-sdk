@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TextRunRendererTest
- *
- * @package qtismtest\runtime\rendering\markup\xhtml
  */
 class TextRunRendererTest extends QtiSmTestCase
 {

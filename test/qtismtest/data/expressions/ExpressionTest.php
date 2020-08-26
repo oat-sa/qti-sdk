@@ -16,8 +16,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExpressionTest
- *
- * @package qtismtest\data\expressions
  */
 class ExpressionTest extends QtiSmTestCase
 {

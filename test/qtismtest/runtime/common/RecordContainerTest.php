@@ -16,8 +16,6 @@ use RuntimeException;
 
 /**
  * Class RecordContainerTest
- *
- * @package qtismtest\runtime\common
  */
 class RecordContainerTest extends QtiSmTestCase
 {

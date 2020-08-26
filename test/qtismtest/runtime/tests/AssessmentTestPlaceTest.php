@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class AssessmentTestPlaceTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestPlaceTest extends QtiSmEnumTestCase
 {

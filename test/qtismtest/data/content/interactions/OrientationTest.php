@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class OrientationTest
- *
- * @package qtismtest\data\content\interactions
  */
 class OrientationTest extends QtiSmEnumTestCase
 {

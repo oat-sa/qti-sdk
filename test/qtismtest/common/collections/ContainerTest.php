@@ -25,8 +25,6 @@ use UnexpectedValueException;
 
 /**
  * Class ContainerTest
- *
- * @package qtismtest\common\collections
  */
 class ContainerTest extends QtiSmTestCase
 {

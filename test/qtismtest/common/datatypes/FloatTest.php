@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class FloatTest
- *
- * @package qtismtest\common\datatypes
  */
 class FloatTest extends QtiSmTestCase
 {

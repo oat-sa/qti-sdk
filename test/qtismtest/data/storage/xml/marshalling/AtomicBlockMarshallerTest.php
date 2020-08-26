@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AtomicBlockMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class AtomicBlockMarshallerTest extends QtiSmTestCase
 {

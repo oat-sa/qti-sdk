@@ -8,8 +8,6 @@ use qtism\common\datatypes\files\FileManagerException;
 
 /**
  * Class FileSystemFileManagerTest
- *
- * @package qtismtest\common\datatypes\files
  */
 class FileSystemFileManagerTest extends QtiSmTestCase
 {

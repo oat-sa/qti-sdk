@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class FieldValueProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class FieldValueProcessorTest extends QtiSmTestCase
 {

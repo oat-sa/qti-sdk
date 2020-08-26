@@ -21,8 +21,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class EqualProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class EqualProcessorTest extends QtiSmTestCase
 {

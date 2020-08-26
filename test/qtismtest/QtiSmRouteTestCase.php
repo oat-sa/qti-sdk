@@ -13,8 +13,6 @@ use qtism\runtime\tests\Route;
 
 /**
  * Class QtiSmRouteTestCase
- *
- * @package qtismtest
  */
 abstract class QtiSmRouteTestCase extends QtiSmTestCase
 {

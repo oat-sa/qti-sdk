@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ProcessingUtilsTest
- *
- * @package qtismtest\runtime\processing
  */
 class ProcessingUtilsTest extends QtiSmTestCase
 {

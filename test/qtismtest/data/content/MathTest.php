@@ -9,8 +9,6 @@ use RuntimeException;
 
 /**
  * Class MathTest
- *
- * @package qtismtest\data\content
  */
 class MathTest extends QtiSmTestCase
 {

@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class PowerProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class PowerProcessorTest extends QtiSmTestCase
 {

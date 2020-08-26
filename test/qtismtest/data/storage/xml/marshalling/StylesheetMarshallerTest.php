@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class StylesheetMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class StylesheetMarshallerTest extends QtiSmTestCase
 {

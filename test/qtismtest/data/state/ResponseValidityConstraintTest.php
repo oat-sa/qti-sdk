@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ResponseValidityConstraintTest
- *
- * @package qtismtest\data\state
  */
 class ResponseValidityConstraintTest extends QtiSmTestCase
 {

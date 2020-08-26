@@ -14,8 +14,6 @@ use qtism\common\datatypes\QtiDirectedPair;
 
 /**
  * Class CorrectResponseMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class CorrectResponseMarshallerTest extends QtiSmTestCase
 {

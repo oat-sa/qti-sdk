@@ -12,8 +12,6 @@ use qtism\runtime\rules\RuleProcessingException;
 
 /**
  * Class LookupOutcomeValueProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class LookupOutcomeValueProcessorTest extends QtiSmTestCase
 {

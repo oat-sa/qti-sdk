@@ -17,8 +17,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ImplodeProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators\custom
  */
 class ImplodeProcessorTest extends QtiSmTestCase
 {

@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ModalFeedbackRuleMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
 {

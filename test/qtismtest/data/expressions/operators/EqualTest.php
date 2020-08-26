@@ -13,8 +13,6 @@ use UnexpectedValueException;
 
 /**
  * Class EqualTest
- *
- * @package qtismtest\data\expressions\operators
  */
 class EqualTest extends QtiSmTestCase
 {

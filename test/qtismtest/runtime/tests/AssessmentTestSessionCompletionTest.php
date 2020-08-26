@@ -37,8 +37,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionCompletionTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTestCase
 {

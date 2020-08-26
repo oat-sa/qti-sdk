@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PrintedVariableRendererTest
- *
- * @package qtismtest\runtime\rendering\markup\xhtml
  */
 class PrintedVariableRendererTest extends QtiSmTestCase
 {

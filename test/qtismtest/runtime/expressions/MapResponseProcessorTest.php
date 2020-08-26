@@ -21,8 +21,6 @@ use qtism\common\datatypes\QtiFloat;
 
 /**
  * Class MapResponseProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class MapResponseProcessorTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class HottextInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class HottextInteractionTest extends QtiSmTestCase
 {

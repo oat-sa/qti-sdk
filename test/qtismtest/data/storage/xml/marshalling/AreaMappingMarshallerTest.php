@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AreaMappingMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class AreaMappingMarshallerTest extends QtiSmTestCase
 {

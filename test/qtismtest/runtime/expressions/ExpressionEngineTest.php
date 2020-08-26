@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExpressionEngineTest
- *
- * @package qtismtest\runtime\expressions
  */
 class ExpressionEngineTest extends QtiSmTestCase
 {

@@ -16,8 +16,6 @@ use qtism\common\beans\BeanProperty;
 
 /**
  * Class BeanTest
- *
- * @package qtismtest\common\beans
  */
 class BeanTest extends QtiSmTestCase
 {

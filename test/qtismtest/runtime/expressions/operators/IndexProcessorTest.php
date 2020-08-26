@@ -19,8 +19,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class IndexProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class IndexProcessorTest extends QtiSmTestCase
 {

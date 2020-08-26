@@ -22,8 +22,6 @@ use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 
 /**
  * Class QtiSmTestCase
- *
- * @package qtismtest
  */
 abstract class QtiSmTestCase extends TestCase
 {

@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class InterpolationTableEntryMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
 {

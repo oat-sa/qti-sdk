@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TemplateConstraintProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class TemplateConstraintProcessorTest extends QtiSmTestCase
 {

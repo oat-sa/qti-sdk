@@ -9,8 +9,6 @@ use qtism\runtime\tests\SessionManager;
 
 /**
  * Class QtiSmItemSubsetTestCase
- *
- * @package qtismtest
  */
 abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
 {

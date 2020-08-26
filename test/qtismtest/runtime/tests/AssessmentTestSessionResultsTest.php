@@ -16,8 +16,6 @@ use qtismtest\runtime\tests\mocks\SimpleResultsSubmittableTestSessionFactory;
 
 /**
  * Class AssessmentTestSessionResultsTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase
 {

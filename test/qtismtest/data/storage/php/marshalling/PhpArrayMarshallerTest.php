@@ -7,8 +7,6 @@ use qtismtest\QtiSmPhpMarshallerTestCase;
 
 /**
  * Class PhpArrayMarshallerTest
- *
- * @package qtismtest\data\storage\php\marshalling
  */
 class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

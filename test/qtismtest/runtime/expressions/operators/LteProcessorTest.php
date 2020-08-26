@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class LteProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class LteProcessorTest extends QtiSmTestCase
 {

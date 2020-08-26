@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class GoldilocksRenderingEngineTest
- *
- * @package qtismtest\runtime\rendering\markup\goldilocks
  */
 class GoldilocksRenderingEngineTest extends QtiSmTestCase
 {

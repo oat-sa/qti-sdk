@@ -22,8 +22,6 @@ use qtism\data\content\interactions\Prompt;
 
 /**
  * Class XmlDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlDocumentTest extends QtiSmTestCase
 {

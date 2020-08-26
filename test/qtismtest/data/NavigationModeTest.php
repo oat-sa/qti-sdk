@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class NavigationModeTest
- *
- * @package qtismtest\data
  */
 class NavigationModeTest extends QtiSmEnumTestCase
 {

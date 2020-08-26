@@ -32,8 +32,6 @@ use stdClass;
 
 /**
  * Class BodyElementTest
- *
- * @package qtismtest\data\content
  */
 class BodyElementTest extends QtiSmTestCase
 {

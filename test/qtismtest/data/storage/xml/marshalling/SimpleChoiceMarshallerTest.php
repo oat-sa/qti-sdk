@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SimpleChoiceMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class SimpleChoiceMarshallerTest extends QtiSmTestCase
 {

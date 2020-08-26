@@ -17,8 +17,6 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 /**
  * Class MathOperatorProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class MathOperatorProcessorTest extends QtiSmTestCase
 {

@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TemplateProcessingEngineTest
- *
- * @package qtismtest\runtime\processing
  */
 class TemplateProcessingEngineTest extends QtiSmTestCase
 {

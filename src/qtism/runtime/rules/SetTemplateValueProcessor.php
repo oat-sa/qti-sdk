@@ -28,8 +28,6 @@ use qtism\data\rules\SetTemplateValue;
 
 /**
  * Class SetTemplateValueProcessor
- *
- * @package qtism\runtime\rules
  */
 class SetTemplateValueProcessor extends SetValueProcessor
 {

@@ -13,8 +13,6 @@ use qtism\common\datatypes\QtiIdentifier;
 
 /**
  * Class SetCorrectValueProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class SetCorrectValueProcessorTest extends QtiSmTestCase
 {

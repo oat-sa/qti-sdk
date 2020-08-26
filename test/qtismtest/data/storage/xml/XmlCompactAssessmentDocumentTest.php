@@ -21,8 +21,6 @@ use ReflectionException;
 
 /**
  * Class XmlCompactAssessmentDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 {

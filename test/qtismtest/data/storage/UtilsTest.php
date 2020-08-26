@@ -18,8 +18,6 @@ use UnexpectedValueException;
 
 /**
  * Class UtilsTest
- *
- * @package qtismtest\data\storage
  */
 class UtilsTest extends QtiSmTestCase
 {

@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BinaryStreamAccessTest
- *
- * @package qtismtest\runtime\storage\binary
  */
 class BinaryStreamAccessTest extends QtiSmTestCase
 {

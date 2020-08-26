@@ -12,8 +12,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class TestFeedbackRefMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TestFeedbackRefMarshallerTest extends QtiSmTestCase
 {

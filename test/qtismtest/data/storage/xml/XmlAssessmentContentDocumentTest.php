@@ -8,8 +8,6 @@ use qtism\data\content\xhtml\text\Div;
 
 /**
  * Class XmlAssessmentContentDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlAssessmentContentDocumentTest extends QtiSmTestCase
 {

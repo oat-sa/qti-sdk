@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class DurationStoreTest
- *
- * @package qtismtest\runtime\tests
  */
 class DurationStoreTest extends QtiSmTestCase
 {

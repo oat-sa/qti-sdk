@@ -19,8 +19,6 @@ use RuntimeException;
 
 /**
  * Class TestUtilsTest
- *
- * @package qtismtest\runtime\tests
  */
 class TestUtilsTest extends QtiSmTestCase
 {

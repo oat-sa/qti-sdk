@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class StackTraceTest
- *
- * @package qtismtest\runtime\common
  */
 class StackTraceTest extends QtiSmTestCase
 {

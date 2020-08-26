@@ -9,8 +9,6 @@ use qtism\runtime\rendering\RenderingException;
 
 /**
  * Class MarkupPostRendererTest
- *
- * @package qtismtest\runtime\rendering\markup
  */
 class MarkupPostRendererTest extends QtiSmTestCase
 {

@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TimeConstraintTest
- *
- * @package qtismtest\runtime\tests
  */
 class TimeConstraintTest extends QtiSmTestCase
 {

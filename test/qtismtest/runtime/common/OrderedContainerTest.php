@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OrderedContainerTest
- *
- * @package qtismtest\runtime\common
  */
 class OrderedContainerTest extends QtiSmTestCase
 {

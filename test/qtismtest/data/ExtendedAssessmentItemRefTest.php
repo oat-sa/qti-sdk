@@ -23,8 +23,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExtendedAssessmentItemRefTest
- *
- * @package qtismtest\data
  */
 class ExtendedAssessmentItemRefTest extends QtiSmTestCase
 {

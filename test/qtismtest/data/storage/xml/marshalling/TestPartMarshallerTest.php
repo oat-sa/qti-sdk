@@ -16,8 +16,6 @@ use qtism\data\expressions\operators\Equal;
 
 /**
  * Class TestPartMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TestPartMarshallerTest extends QtiSmTestCase
 {

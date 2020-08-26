@@ -24,8 +24,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TemplateConditionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TemplateConditionMarshallerTest extends QtiSmTestCase
 {

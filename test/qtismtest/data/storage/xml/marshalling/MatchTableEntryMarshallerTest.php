@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MatchTableEntryMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class MatchTableEntryMarshallerTest extends QtiSmTestCase
 {

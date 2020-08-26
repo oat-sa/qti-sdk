@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class StringMatchMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class StringMatchMarshallerTest extends QtiSmTestCase
 {

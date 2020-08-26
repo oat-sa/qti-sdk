@@ -25,8 +25,6 @@ use UnexpectedValueException;
 
 /**
  * Class OutcomeVariableTest
- *
- * @package qtismtest\runtime\common
  */
 class OutcomeVariableTest extends QtiSmTestCase
 {

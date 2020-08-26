@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class DlMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class DlMarshallerTest extends QtiSmTestCase
 {

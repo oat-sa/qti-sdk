@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TestFeedbackRefTest
- *
- * @package qtismtest\data
  */
 class TestFeedbackRefTest extends QtiSmTestCase
 {

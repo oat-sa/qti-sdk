@@ -29,8 +29,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class UtilsTest
- *
- * @package qtismtest\data
  */
 class UtilsTest extends QtiSmTestCase
 {

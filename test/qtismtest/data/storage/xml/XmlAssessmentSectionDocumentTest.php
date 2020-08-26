@@ -13,8 +13,6 @@ use qtism\data\content\RubricBlockCollection;
 
 /**
  * Class XmlAssessmentSectionDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
 {

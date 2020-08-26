@@ -12,8 +12,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionNumberXTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase
 {

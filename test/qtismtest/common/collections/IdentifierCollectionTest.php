@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class IdentifierCollectionTest
- *
- * @package qtismtest\common\collections
  */
 class IdentifierCollectionTest extends QtiSmTestCase
 {

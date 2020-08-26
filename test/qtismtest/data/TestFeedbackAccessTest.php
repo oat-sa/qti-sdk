@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class TestFeedbackAccessTest
- *
- * @package qtismtest\data
  */
 class TestFeedbackAccessTest extends QtiSmEnumTestCase
 {

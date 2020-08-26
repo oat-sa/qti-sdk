@@ -9,8 +9,6 @@ use stdClass;
 
 /**
  * Class FileSystemFileTest
- *
- * @package qtismtest\common\datatypes\files
  */
 class FileSystemFileTest extends QtiSmTestCase
 {

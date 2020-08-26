@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExceptionTest
- *
- * @package qtismtest\common\utils
  */
 class ExceptionTest extends QtiSmTestCase
 {

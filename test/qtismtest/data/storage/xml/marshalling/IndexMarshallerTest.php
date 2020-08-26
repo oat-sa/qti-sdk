@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class IndexMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class IndexMarshallerTest extends QtiSmTestCase
 {

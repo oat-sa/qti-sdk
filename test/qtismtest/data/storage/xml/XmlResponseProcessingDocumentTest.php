@@ -13,8 +13,6 @@ use qtism\data\processing\ResponseProcessing;
 
 /**
  * Class XmlResponseProcessingDocumentTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlResponseProcessingDocumentTest extends QtiSmTestCase
 {

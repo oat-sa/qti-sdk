@@ -13,8 +13,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class InlineChoiceMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class InlineChoiceMarshallerTest extends QtiSmTestCase
 {

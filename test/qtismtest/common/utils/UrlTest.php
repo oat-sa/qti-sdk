@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class UrlTest
- *
- * @package qtismtest\common\utils
  */
 class UrlTest extends QtiSmTestCase
 {

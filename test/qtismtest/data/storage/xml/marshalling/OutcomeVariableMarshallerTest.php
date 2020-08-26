@@ -38,8 +38,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeVariableMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class OutcomeVariableMarshallerTest extends QtiSmTestCase
 {

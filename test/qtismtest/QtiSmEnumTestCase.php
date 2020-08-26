@@ -4,8 +4,6 @@ namespace qtismtest;
 
 /**
  * Class QtiSmEnumTestCase
- *
- * @package qtismtest
  */
 abstract class QtiSmEnumTestCase extends QtiSmTestCase
 {

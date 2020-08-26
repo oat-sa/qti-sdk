@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ModalFeedbackRuleTest
- *
- * @package qtismtest\data\content
  */
 class ModalFeedbackRuleTest extends QtiSmTestCase
 {

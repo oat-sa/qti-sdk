@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ShufflingTest
- *
- * @package qtismtest\data\state
  */
 class ShufflingTest extends QtiSmTestCase
 {

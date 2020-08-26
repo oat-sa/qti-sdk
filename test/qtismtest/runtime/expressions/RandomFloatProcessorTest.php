@@ -9,8 +9,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class RandomFloatProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class RandomFloatProcessorTest extends QtiSmTestCase
 {

@@ -14,8 +14,6 @@ use qtism\common\storage\StreamAccessException;
 
 /**
  * Class PhpStreamAccessTest
- *
- * @package qtismtest\data\storage\php
  */
 class PhpStreamAccessTest extends QtiSmTestCase
 {

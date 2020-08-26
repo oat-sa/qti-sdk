@@ -30,8 +30,6 @@ use stdClass;
 
 /**
  * Class JsonMarshallerTest
- *
- * @package qtismtest\runtime\pci\json
  */
 class JsonMarshallerTest extends QtiSmTestCase
 {

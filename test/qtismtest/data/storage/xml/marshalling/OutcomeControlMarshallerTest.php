@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeControlMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class OutcomeControlMarshallerTest extends QtiSmTestCase
 {

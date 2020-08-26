@@ -10,8 +10,6 @@ use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 
 /**
  * Class CompactMarshallerFactoryTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class CompactMarshallerFactoryTest extends QtiSmTestCase
 {

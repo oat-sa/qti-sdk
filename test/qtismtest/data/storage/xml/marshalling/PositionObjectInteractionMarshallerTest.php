@@ -14,8 +14,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class PositionObjectInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 {

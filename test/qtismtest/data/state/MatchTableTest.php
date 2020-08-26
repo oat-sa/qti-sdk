@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MatchTableTest
- *
- * @package qtismtest\data\state
  */
 class MatchTableTest extends QtiSmTestCase
 {

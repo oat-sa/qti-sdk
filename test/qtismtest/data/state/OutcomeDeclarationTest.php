@@ -34,8 +34,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeDeclarationTest
- *
- * @package qtismtest\data\state
  */
 class OutcomeDeclarationTest extends QtiSmTestCase
 {

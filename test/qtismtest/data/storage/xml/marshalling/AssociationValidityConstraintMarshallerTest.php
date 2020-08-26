@@ -10,8 +10,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class AssociationValidityConstraintMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
 {

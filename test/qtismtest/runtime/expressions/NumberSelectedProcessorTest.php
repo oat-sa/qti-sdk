@@ -9,8 +9,6 @@ use qtismtest\QtiSmItemSubsetTestCase;
 
 /**
  * Class NumberSelectedProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
 {

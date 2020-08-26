@@ -8,8 +8,6 @@ use stdClass;
 
 /**
  * Class OperatorsUtilsTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class OperatorsUtilsTest extends QtiSmTestCase
 {

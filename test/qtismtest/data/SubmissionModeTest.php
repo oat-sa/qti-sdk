@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class SubmissionModeTest
- *
- * @package qtismtest\data
  */
 class SubmissionModeTest extends QtiSmEnumTestCase
 {

@@ -24,8 +24,6 @@ use stdClass;
 
 /**
  * Class RuntimeUtilsTest
- *
- * @package qtismtest\runtime\common
  */
 class RuntimeUtilsTest extends QtiSmTestCase
 {

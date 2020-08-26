@@ -19,8 +19,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class MultipleProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class MultipleProcessorTest extends QtiSmTestCase
 {

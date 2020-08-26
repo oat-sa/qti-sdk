@@ -18,8 +18,6 @@ use qtism\data\state\Mapping;
 
 /**
  * Class ResponseVariableTest
- *
- * @package qtismtest\runtime\common
  */
 class ResponseVariableTest extends QtiSmTestCase
 {

@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SliderInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class SliderInteractionTest extends QtiSmTestCase
 {

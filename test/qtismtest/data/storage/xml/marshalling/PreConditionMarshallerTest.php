@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PreConditionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class PreConditionMarshallerTest extends QtiSmTestCase
 {

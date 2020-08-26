@@ -28,8 +28,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class AriaLiveTest
- *
- * @package qtismtest\data\content\enums
  */
 class AriaLiveTest extends QtiSmEnumTestCase
 {

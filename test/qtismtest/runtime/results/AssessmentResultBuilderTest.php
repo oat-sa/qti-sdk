@@ -35,8 +35,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentResultBuilderTest
- *
- * @package qtismtest\runtime\results
  */
 class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
 {

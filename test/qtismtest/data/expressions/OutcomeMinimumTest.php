@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeMinimumTest
- *
- * @package qtismtest\data\expressions
  */
 class OutcomeMinimumTest extends QtiSmTestCase
 {

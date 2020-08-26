@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SetTemplateValueMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class SetTemplateValueMarshallerTest extends QtiSmTestCase
 {

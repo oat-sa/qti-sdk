@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class RubricBlockRefTest
- *
- * @package qtismtest\data\content
  */
 class RubricBlockRefTest extends QtiSmTestCase
 {

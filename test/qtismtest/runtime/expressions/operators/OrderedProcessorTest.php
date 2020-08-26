@@ -19,8 +19,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class OrderedProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class OrderedProcessorTest extends QtiSmTestCase
 {

@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class IntegerDivideProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class IntegerDivideProcessorTest extends QtiSmTestCase
 {

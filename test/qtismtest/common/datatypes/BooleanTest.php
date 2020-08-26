@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class BooleanTest
- *
- * @package qtismtest\common\datatypes
  */
 class BooleanTest extends QtiSmTestCase
 {

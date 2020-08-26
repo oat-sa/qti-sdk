@@ -8,8 +8,6 @@ use stdClass;
 
 /**
  * Class FormatTest
- *
- * @package qtismtest\common\utils
  */
 class FormatTest extends QtiSmTestCase
 {

@@ -38,8 +38,6 @@ use qtismtest\QtiSmAssessmentItemTestCase;
 
 /**
  * Class ItemResultBuilderTest
- *
- * @package qtismtest\runtime\results
  */
 class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 {

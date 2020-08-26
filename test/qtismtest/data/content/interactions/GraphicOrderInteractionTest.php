@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class GraphicOrderInteractionTest
- *
- * @package qtismtest\data\content\interactions
  */
 class GraphicOrderInteractionTest extends QtiSmTestCase
 {

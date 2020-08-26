@@ -30,8 +30,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class VariableProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class VariableProcessorTest extends QtiSmTestCase
 {

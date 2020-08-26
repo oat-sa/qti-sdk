@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class IdentifierTest
- *
- * @package qtismtest\common\datatypes
  */
 class IdentifierTest extends QtiSmTestCase
 {

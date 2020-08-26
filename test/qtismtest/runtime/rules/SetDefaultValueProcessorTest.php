@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SetDefaultValueProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class SetDefaultValueProcessorTest extends QtiSmTestCase
 {

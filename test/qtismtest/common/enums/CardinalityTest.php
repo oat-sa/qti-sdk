@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class CardinalityTest
- *
- * @package qtismtest\common\enums
  */
 class CardinalityTest extends QtiSmEnumTestCase
 {

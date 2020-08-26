@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class IntegerTest
- *
- * @package qtismtest\common\datatypes
  */
 class IntegerTest extends QtiSmTestCase
 {

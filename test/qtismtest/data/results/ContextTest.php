@@ -30,8 +30,6 @@ use qtism\data\results\SessionIdentifier;
 
 /**
  * Class ContextTest
- *
- * @package qtismtest\data\results
  */
 class ContextTest extends TestCase
 {

@@ -4,8 +4,6 @@ namespace qtismtest\common\beans\mocks;
 
 /**
  * Class NotStrictConstructorBean
- *
- * @package qtismtest\common\beans\mocks
  */
 class NotStrictConstructorBean
 {

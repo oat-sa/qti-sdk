@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MapResponsePointMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class MapResponsePointMarshallerTest extends QtiSmTestCase
 {

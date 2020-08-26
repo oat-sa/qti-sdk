@@ -19,8 +19,6 @@ use stdClass;
 
 /**
  * Class PhpQtiDatatypeMarshallerTest
- *
- * @package qtismtest\data\storage\php\marshalling
  */
 class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

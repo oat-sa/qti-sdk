@@ -9,8 +9,6 @@ use RuntimeException;
 
 /**
  * Class MathMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class MathMarshallerTest extends QtiSmTestCase
 {

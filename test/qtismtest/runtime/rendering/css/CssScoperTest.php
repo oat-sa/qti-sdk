@@ -9,8 +9,6 @@ use qtism\runtime\rendering\RenderingException;
 
 /**
  * Class CssScoperTest
- *
- * @package qtismtest\runtime\rendering\css
  */
 class CssScoperTest extends QtiSmTestCase
 {

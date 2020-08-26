@@ -11,8 +11,6 @@ use qtismtest\QtiSmPhpMarshallerTestCase;
 
 /**
  * Class PhpQtiComponentMarshallerTest
- *
- * @package qtismtest\data\storage\php\marshalling
  */
 class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

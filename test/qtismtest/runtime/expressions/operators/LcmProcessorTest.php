@@ -17,8 +17,6 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 /**
  * Class LcmProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class LcmProcessorTest extends QtiSmTestCase
 {

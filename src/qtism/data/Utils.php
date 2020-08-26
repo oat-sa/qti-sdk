@@ -25,8 +25,6 @@ namespace qtism\data;
 
 /**
  * Class Utils
- *
- * @package qtism\data
  */
 class Utils
 {

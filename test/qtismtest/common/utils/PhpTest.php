@@ -8,8 +8,6 @@ use stdClass;
 
 /**
  * Class PhpTest
- *
- * @package qtismtest\common\utils
  */
 class PhpTest extends QtiSmTestCase
 {

@@ -18,8 +18,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class RubricBlockMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class RubricBlockMarshallerTest extends QtiSmTestCase
 {

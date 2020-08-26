@@ -13,8 +13,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class MediaInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {

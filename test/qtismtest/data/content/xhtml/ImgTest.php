@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ImgTest
- *
- * @package qtismtest\data\content\xhtml
  */
 class ImgTest extends QtiSmTestCase
 {

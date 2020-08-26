@@ -12,8 +12,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class AreaMapEntryMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class AreaMapEntryMarshallerTest extends QtiSmTestCase
 {

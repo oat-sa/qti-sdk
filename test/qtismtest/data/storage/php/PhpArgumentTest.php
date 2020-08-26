@@ -10,8 +10,6 @@ use stdClass;
 
 /**
  * Class PhpArgumentTest
- *
- * @package qtismtest\data\storage\php
  */
 class PhpArgumentTest extends QtiSmTestCase
 {

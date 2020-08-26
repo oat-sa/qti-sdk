@@ -9,8 +9,6 @@ use qtismtest\QtiSmAssessmentItemTestCase;
 
 /**
  * Class AssessmentItemSessionShufflingTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
 {

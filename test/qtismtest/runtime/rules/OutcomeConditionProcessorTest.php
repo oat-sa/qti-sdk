@@ -14,8 +14,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeConditionProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class OutcomeConditionProcessorTest extends QtiSmTestCase
 {

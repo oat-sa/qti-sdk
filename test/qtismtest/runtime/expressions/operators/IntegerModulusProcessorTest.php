@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class IntegerModulusProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class IntegerModulusProcessorTest extends QtiSmTestCase
 {

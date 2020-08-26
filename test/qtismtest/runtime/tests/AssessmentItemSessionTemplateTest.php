@@ -14,8 +14,6 @@ use qtismtest\QtiSmAssessmentItemTestCase;
 
 /**
  * Class AssessmentItemSessionTemplateTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
 {

@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class VersionTest
- *
- * @package qtismtest\common\dom
  */
 class VersionTest extends QtiSmTestCase
 {

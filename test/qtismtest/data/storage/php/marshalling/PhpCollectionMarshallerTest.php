@@ -9,8 +9,6 @@ use qtismtest\QtiSmPhpMarshallerTestCase;
 
 /**
  * Class PhpCollectionMarshallerTest
- *
- * @package qtismtest\data\storage\php\marshalling
  */
 class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
 {

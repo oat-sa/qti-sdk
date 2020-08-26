@@ -21,8 +21,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class AnyNProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class AnyNProcessorTest extends QtiSmTestCase
 {

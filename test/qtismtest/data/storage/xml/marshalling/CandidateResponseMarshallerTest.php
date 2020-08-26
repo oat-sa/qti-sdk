@@ -31,8 +31,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class CandidateResponseMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class CandidateResponseMarshallerTest extends QtiSmTestCase
 {

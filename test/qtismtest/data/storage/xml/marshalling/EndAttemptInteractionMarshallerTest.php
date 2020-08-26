@@ -9,8 +9,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class EndAttemptInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 {

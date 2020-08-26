@@ -8,8 +8,6 @@ use qtism\data\storage\php\PhpStreamAccess;
 
 /**
  * Class QtiSmPhpMarshallerTestCase
- *
- * @package qtismtest
  */
 abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
 {

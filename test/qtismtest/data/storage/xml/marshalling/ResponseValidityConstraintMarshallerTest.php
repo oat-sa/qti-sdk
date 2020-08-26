@@ -12,8 +12,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class ResponseValidityConstraintMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
 {

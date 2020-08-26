@@ -17,8 +17,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionResponseValidationTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSessionTestCase
 {

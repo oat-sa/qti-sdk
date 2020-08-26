@@ -27,8 +27,6 @@ use qtism\common\enums\Enumeration;
 
 /**
  * Class SessionStatus
- *
- * @package qtism\data\results
  */
 class SessionStatus implements Enumeration
 {

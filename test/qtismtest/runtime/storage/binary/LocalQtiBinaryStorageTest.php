@@ -30,8 +30,6 @@ use qtism\common\datatypes\QtiInteger;
 
 /**
  * Class LocalQtiBinaryStorageTest
- *
- * @package qtismtest\runtime\storage\binary
  */
 class LocalQtiBinaryStorageTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class GapImgMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class GapImgMarshallerTest extends QtiSmTestCase
 {

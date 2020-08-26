@@ -10,8 +10,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class RenderingMarkupXhtmlUtils
- *
- * @package qtismtest\runtime\rendering\markup\xhtml
  */
 class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 {

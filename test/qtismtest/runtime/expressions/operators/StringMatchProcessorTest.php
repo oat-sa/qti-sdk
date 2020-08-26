@@ -16,8 +16,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class StringMatchProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class StringMatchProcessorTest extends QtiSmTestCase
 {

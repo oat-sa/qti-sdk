@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssociationValidityConstraintTest
- *
- * @package qtismtest\data\state
  */
 class AssociationValidityConstraintTest extends QtiSmTestCase
 {

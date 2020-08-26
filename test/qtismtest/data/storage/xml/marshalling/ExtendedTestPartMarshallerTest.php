@@ -30,8 +30,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExtendedTestPartMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ExtendedTestPartMarshallerTest extends QtiSmTestCase
 {

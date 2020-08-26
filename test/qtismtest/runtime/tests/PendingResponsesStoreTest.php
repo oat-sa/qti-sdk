@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PendingResponseStoreTest
- *
- * @package qtismtest\runtime\tests
  */
 class PendingResponseStoreTest extends QtiSmTestCase
 {

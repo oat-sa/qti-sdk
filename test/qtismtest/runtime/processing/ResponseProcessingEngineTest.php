@@ -16,8 +16,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ResponseProcessingEngineTest
- *
- * @package qtismtest\runtime\processing
  */
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {

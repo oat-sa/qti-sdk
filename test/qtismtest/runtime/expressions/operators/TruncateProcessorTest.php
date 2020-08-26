@@ -17,8 +17,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class TruncateProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class TruncateProcessorTest extends QtiSmTestCase
 {

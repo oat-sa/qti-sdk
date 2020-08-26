@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TemplateConditionProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class TemplateConditionProcessorTest extends QtiSmTestCase
 {

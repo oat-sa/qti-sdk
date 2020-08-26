@@ -29,8 +29,6 @@ use qtism\runtime\rendering\markup\Utils;
 
 /**
  * Class MarkupPostRenderer
- *
- * @package qtism\runtime\rendering\markup
  */
 class MarkupPostRenderer implements Renderable
 {

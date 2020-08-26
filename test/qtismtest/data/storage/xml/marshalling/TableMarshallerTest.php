@@ -27,8 +27,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class TableMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TableMarshallerTest extends QtiSmTestCase
 {

@@ -30,8 +30,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PrintedVariableEngineTest
- *
- * @package qtismtest\runtime\processing
  */
 class PrintedVariableEngineTest extends QtiSmTestCase
 {

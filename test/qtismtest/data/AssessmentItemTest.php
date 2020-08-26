@@ -13,8 +13,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssessmentItemTest
- *
- * @package qtismtest\data
  */
 class AssessmentItemTest extends QtiSmTestCase
 {

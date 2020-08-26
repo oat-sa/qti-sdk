@@ -13,8 +13,6 @@ use qtismtest\QtiSmItemSubsetTestCase;
 
 /**
  * Class NumberPresentedProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
 {

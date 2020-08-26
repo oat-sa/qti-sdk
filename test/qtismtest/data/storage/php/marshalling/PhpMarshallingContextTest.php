@@ -14,8 +14,6 @@ use RuntimeException;
 
 /**
  * Class PhpMarshallingContextTest
- *
- * @package qtismtest\data\storage\php\marshalling
  */
 class PhpMarshallingContextTest extends QtiSmTestCase
 {

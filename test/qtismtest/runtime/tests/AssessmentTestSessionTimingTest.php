@@ -29,8 +29,6 @@ use qtism\common\datatypes\QtiFloat;
 
 /**
  * Class AssessmentTestSessionTimingTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {

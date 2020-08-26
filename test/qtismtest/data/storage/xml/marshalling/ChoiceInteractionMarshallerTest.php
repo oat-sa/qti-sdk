@@ -17,8 +17,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class ChoiceInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 {

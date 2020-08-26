@@ -27,8 +27,6 @@ use InvalidArgumentException;
 
 /**
  * Class ItemSessionControl
- *
- * @package qtism\data
  */
 class ItemSessionControl extends QtiComponent
 {

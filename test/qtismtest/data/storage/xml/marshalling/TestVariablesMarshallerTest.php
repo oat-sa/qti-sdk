@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TestVariablesMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class TestVariablesMarshallerTest extends QtiSmTestCase
 {

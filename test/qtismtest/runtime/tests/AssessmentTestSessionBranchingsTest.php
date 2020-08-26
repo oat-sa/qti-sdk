@@ -21,8 +21,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionBranchingsTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTestCase
 {

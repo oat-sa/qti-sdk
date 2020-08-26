@@ -20,8 +20,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class RandomProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class RandomProcessorTest extends QtiSmTestCase
 {

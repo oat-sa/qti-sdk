@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class ParamTypeTest
- *
- * @package qtismtest\data\content\xhtml
  */
 class ParamTypeTest extends QtiSmEnumTestCase
 {

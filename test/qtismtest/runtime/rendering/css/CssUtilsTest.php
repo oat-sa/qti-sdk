@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class CssUtilsTest
- *
- * @package qtismtest\runtime\rendering\css
  */
 class CssUtilsTest extends QtiSmTestCase
 {

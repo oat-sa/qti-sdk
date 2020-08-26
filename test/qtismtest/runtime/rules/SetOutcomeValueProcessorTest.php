@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SetOutcomeValueProcessorTest
- *
- * @package qtismtest\runtime\rules
  */
 class SetOutcomeValueProcessorTest extends QtiSmTestCase
 {

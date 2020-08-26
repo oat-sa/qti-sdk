@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class SelectableRouteCollectionTest
- *
- * @package qtismtest\runtime\tests
  */
 class SelectableRouteCollectionTest extends QtiSmTestCase
 {

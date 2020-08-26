@@ -10,8 +10,6 @@ use UnexpectedValueException;
 
 /**
  * Class QtiIdentifiableCollectionTest
- *
- * @package qtismtest\data
  */
 class QtiIdentifiableCollectionTest extends QtiSmTestCase
 {

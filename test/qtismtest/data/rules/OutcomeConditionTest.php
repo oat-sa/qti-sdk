@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class OutcomeConditionTest
- *
- * @package qtismtest\data\state
  */
 class OutcomeConditionTest extends QtiSmTestCase
 {

@@ -12,8 +12,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class TestPartTest
- *
- * @package qtismtest\data
  */
 class TestPartTest extends QtiSmTestCase
 {

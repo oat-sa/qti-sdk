@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ArraysTest
- *
- * @package qtismtest\common\utils
  */
 class ArraysTest extends QtiSmTestCase
 {

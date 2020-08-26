@@ -25,8 +25,6 @@ use qtism\data\AssessmentTest;
 
 /**
  * Class XmlAssessmentDocumentQTIGuideTest
- *
- * @package qtismtest\data\storage\xml
  */
 class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 {

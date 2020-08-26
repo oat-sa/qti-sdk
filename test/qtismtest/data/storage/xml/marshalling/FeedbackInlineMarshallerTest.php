@@ -11,8 +11,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class FeedbackInlineMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class FeedbackInlineMarshallerTest extends QtiSmTestCase
 {

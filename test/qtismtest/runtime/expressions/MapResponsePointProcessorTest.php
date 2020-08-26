@@ -15,8 +15,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class MapResponsePointProcessorTest
- *
- * @package qtismtest\runtime\expressions
  */
 class MapResponsePointProcessorTest extends QtiSmTestCase
 {

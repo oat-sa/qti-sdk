@@ -24,8 +24,6 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 /**
  * Class RepeatProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class RepeatProcessorTest extends QtiSmTestCase
 {

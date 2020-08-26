@@ -13,8 +13,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionEndAttemptInteractionTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTestSessionTestCase
 {

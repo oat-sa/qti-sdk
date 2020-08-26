@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class TextFormatTest
- *
- * @package qtismtest\data\content\interactions
  */
 class TextFormatTest extends QtiSmEnumTestCase
 {

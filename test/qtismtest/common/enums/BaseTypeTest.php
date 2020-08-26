@@ -7,8 +7,6 @@ use qtismtest\QtiSmEnumTestCase;
 
 /**
  * Class BaseTypeTest
- *
- * @package qtismtest\common\enums
  */
 class BaseTypeTest extends QtiSmEnumTestCase
 {

@@ -11,8 +11,6 @@ use qtism\data\QtiIdentifiableCollection;
 
 /**
  * Class QtiComponentTest
- *
- * @package qtismtest\data
  */
 class QtiComponentTest extends QtiSmTestCase
 {

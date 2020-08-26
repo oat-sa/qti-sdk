@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class VariableIdentifierTest
- *
- * @package qtismtest\runtime\common
  */
 class VariableIdentifierTest extends QtiSmTestCase
 {

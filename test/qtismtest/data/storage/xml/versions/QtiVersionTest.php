@@ -8,8 +8,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class QtiVersionTest
- *
- * @package qtismtest\data\storage\xml\versions
  */
 class QtiVersionTest extends QtiSmTestCase
 {

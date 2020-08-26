@@ -37,8 +37,6 @@ use RuntimeException;
 
 /**
  * Class Marshaller
- *
- * @package qtism\data\storage\xml\marshalling
  */
 abstract class Marshaller
 {

@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssessmentItemSessionStoreTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentItemSessionStoreTest extends QtiSmTestCase
 {

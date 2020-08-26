@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class ExtendedTextInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 {

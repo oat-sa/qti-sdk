@@ -17,8 +17,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class PatternMatchProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class PatternMatchProcessorTest extends QtiSmTestCase
 {

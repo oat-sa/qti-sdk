@@ -20,8 +20,6 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Class IsNullProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class IsNullProcessorTest extends QtiSmTestCase
 {

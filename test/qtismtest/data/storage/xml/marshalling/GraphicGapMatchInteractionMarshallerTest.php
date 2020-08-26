@@ -19,8 +19,6 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class GraphicGapMatchInteractionMarshallerTest
- *
- * @package qtismtest\data\storage\xml\marshalling
  */
 class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
 {

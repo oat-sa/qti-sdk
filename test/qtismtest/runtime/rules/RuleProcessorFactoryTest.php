@@ -9,8 +9,6 @@ use RuntimeException;
 
 /**
  * Class RuleProcessorFactoryTest
- *
- * @package qtismtest\runtime\rules
  */
 class RuleProcessorFactoryTest extends QtiSmTestCase
 {

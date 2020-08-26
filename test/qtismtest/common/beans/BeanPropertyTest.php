@@ -10,8 +10,6 @@ use stdClass;
 
 /**
  * Class BeanPropertyTest
- *
- * @package qtismtest\common\beans
  */
 class BeanPropertyTest extends QtiSmTestCase
 {

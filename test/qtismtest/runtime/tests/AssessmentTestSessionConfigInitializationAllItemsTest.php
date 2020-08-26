@@ -12,8 +12,6 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionConfigInitializationAllItemsTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessmentTestSessionTestCase
 {

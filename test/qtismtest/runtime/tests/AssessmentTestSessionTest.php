@@ -39,8 +39,6 @@ use qtism\data\state\Weight;
 
 /**
  * Class AssessmentTestSessionTest
- *
- * @package qtismtest\runtime\tests
  */
 class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 {

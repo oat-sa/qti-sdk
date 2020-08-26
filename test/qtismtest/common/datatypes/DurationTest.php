@@ -9,8 +9,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class DurationTest
- *
- * @package qtismtest\common\datatypes
  */
 class DurationTest extends QtiSmTestCase
 {

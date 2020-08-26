@@ -9,8 +9,6 @@ use stdClass;
 
 /**
  * Class ProcessorUtilsTest
- *
- * @package qtismtest\runtime\expressions
  */
 class ProcessorUtilsTest extends QtiSmTestCase
 {

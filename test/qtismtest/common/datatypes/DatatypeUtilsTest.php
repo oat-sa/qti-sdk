@@ -7,8 +7,6 @@ use qtismtest\QtiSmTestCase;
 
 /**
  * Class DatatypeUtilsTest
- *
- * @package qtismtest\common\datatypes
  */
 class DatatypeUtilsTest extends QtiSmTestCase
 {

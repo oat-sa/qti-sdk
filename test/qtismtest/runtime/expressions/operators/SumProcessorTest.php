@@ -18,8 +18,6 @@ use RuntimeException;
 
 /**
  * Class SumProcessorTest
- *
- * @package qtismtest\runtime\expressions\operators
  */
 class SumProcessorTest extends QtiSmTestCase
 {
