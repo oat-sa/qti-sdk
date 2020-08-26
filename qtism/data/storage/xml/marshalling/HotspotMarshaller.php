@@ -73,7 +73,7 @@ class HotspotMarshaller extends Marshaller
             }
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         return $element;
     }
 

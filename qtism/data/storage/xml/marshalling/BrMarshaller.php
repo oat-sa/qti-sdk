@@ -46,7 +46,7 @@ class BrMarshaller extends Marshaller
             self::setXmlBase($element, $component->setXmlBase());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         return $element;
     }
 

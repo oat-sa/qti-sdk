@@ -103,7 +103,7 @@ class TemplateElementMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));

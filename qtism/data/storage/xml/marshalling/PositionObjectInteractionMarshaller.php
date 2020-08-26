@@ -57,7 +57,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . ' ' . $centerPoint->getY());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

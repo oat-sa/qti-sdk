@@ -133,7 +133,7 @@ class TableCellMarshaller extends ContentMarshaller
             $element->appendChild($marshaller->marshall($c));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

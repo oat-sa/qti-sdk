@@ -48,7 +48,7 @@ class TablePartMarshaller extends Marshaller
             $element->appendChild($marshaller->marshall($tr));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

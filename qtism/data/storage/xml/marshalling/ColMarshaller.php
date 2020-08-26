@@ -46,7 +46,7 @@ class ColMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'span', $component->getSpan());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

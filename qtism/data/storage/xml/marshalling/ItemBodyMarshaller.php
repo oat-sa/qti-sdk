@@ -63,7 +63,7 @@ class ItemBodyMarshaller extends ContentMarshaller
             $element->appendChild($elt);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

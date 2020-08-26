@@ -90,7 +90,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         // responseIdentifier.
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());

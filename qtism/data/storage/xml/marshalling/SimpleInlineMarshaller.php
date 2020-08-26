@@ -88,7 +88,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());

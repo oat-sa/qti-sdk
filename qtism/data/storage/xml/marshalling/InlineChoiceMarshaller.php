@@ -89,7 +89,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {

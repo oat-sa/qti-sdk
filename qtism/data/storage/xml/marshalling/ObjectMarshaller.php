@@ -100,7 +100,7 @@ class ObjectMarshaller extends ContentMarshaller
             $element->appendChild($e);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

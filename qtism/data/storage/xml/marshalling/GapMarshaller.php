@@ -60,7 +60,7 @@ class GapMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'required', true);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         return $element;
     }
 

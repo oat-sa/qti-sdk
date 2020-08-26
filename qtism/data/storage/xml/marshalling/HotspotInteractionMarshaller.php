@@ -103,7 +103,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
@@ -117,7 +117,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
-        $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+        self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());

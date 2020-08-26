@@ -396,7 +396,7 @@ abstract class Marshaller
         }
 
         foreach ($scan as $s) {
-            if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, $s)) !== null) {
+            if (($ariaFlowTo = self::getDOMElementAttributeAs($element, $s)) !== null) {
                 $bodyElement->setAriaFlowTo($ariaFlowTo);
 
                 break;
@@ -430,11 +430,11 @@ abstract class Marshaller
                 // aria-* attributes
                 if ($element->localName !== 'printedVariable') {
                     // All QTI classes deal with aria-* except printedVariable.
-                    if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
+                    if (($ariaControls = self::getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
                         $bodyElement->setAriaControls($ariaControls);
                     }
 
-                    if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
+                    if (($ariaDescribedBy = self::getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
                         $bodyElement->setAriaDescribedBy($ariaDescribedBy);
                     }
 
@@ -451,31 +451,31 @@ abstract class Marshaller
                      */
                     $this->fillBodyElementFlowTo($bodyElement, $element);
 
-                    if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
+                    if (($ariaLabelledBy = self::getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
                         $bodyElement->setAriaLabelledBy($ariaLabelledBy);
                     }
 
-                    if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
+                    if (($ariaOwns = self::getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
                         $bodyElement->setAriaOwns($ariaOwns);
                     }
 
-                    if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
+                    if (($ariaLevel = self::getDOMElementAttributeAs($element, 'aria-level')) !== null) {
                         $bodyElement->setAriaLevel($ariaLevel);
                     }
 
-                    if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
+                    if (($ariaLive = self::getDOMElementAttributeAs($element, 'aria-live')) !== null) {
                         $bodyElement->setAriaLive(AriaLive::getConstantByName($ariaLive));
                     }
 
-                    if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
+                    if (($ariaOrientation = self::getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
                         $bodyElement->setAriaOrientation(AriaOrientation::getConstantByName($ariaOrientation));
                     }
 
-                    if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
+                    if (($ariaLabel = self::getDOMElementAttributeAs($element, 'aria-label')) !== null) {
                         $bodyElement->setAriaLabel($ariaLabel);
                     }
 
-                    if (($ariaHidden = $this->getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
+                    if (($ariaHidden = self::getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
                         $bodyElement->setAriaHidden($ariaHidden);
                     }
                 }
