@@ -14,6 +14,9 @@ use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateProcessingMarshallerTest
+ */
 class TemplateProcessingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,7 +39,7 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <templateProcessing>
 	            <templateConstraint>
 	                <baseValue baseType="boolean">true</baseValue>

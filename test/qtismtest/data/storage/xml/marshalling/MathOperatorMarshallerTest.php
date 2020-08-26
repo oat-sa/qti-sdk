@@ -11,6 +11,9 @@ use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MathOperatorMarshallerTest
+ */
 class MathOperatorMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

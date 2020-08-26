@@ -11,6 +11,9 @@ use qtism\data\TestPart;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\LibXmlErrorCollection;
 
+/**
+ * Class XmlAssessmentTestDocumentTest
+ */
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {
     public function testLoad()
@@ -145,6 +148,10 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
 
+    /**
+     * @param $uri
+     * @return string
+     */
     private static function decorateUri($uri)
     {
         return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;

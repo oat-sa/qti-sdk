@@ -3,13 +3,22 @@
 namespace qtismtest\data\storage\xml;
 
 use qtism\common\enums\BaseType;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\operators\CustomOperator;
 
+/**
+ * Class XmlCustomOperatorDocumentTest
+ */
 class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 {
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     */
     public function testReadNoLax($url = '')
     {
         $doc = new XmlDocument();
@@ -44,6 +53,10 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     */
     public function testReadQTIOnly($url = '')
     {
         $doc = new XmlDocument();
@@ -72,6 +85,10 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     */
     public function testReadFullLax($url = '')
     {
         $doc = new XmlDocument();
@@ -107,6 +124,11 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this->assertEquals('./repo', $repoNodes->item(0)->nodeValue);
     }
 
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     * @throws MarshallingException
+     */
     public function testWriteFullLax($url = '')
     {
         $doc = new XmlDocument();
@@ -119,6 +141,10 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     */
     public function testReadNestedLax($url = '')
     {
         $doc = new XmlDocument();

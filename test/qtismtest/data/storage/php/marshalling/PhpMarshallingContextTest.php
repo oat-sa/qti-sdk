@@ -12,6 +12,9 @@ use qtism\data\storage\php\PhpStreamAccess;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class PhpMarshallingContextTest
+ */
 class PhpMarshallingContextTest extends QtiSmTestCase
 {
     /**
@@ -21,11 +24,17 @@ class PhpMarshallingContextTest extends QtiSmTestCase
      */
     private $streamAccess;
 
+    /**
+     * @param PhpStreamAccess $streamAccess
+     */
     protected function setStreamAccess(PhpStreamAccess $streamAccess)
     {
         $this->streamAccess = $streamAccess;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getStreamAccess()
     {
         return $this->streamAccess;

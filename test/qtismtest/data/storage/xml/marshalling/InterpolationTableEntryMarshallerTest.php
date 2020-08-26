@@ -8,6 +8,9 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\InterpolationTableEntry;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InterpolationTableEntryMarshallerTest
+ */
 class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

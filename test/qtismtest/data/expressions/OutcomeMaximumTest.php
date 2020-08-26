@@ -5,6 +5,9 @@ namespace qtismtest\data\expressions;
 use qtism\data\expressions\OutcomeMaximum;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeMaximumTest
+ */
 class OutcomeMaximumTest extends QtiSmTestCase
 {
     public function testOutcomeMaximum()

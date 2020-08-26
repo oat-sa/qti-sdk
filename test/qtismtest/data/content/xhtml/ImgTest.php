@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ImgTest
+ */
 class ImgTest extends QtiSmTestCase
 {
     public function testCreateInvalidSrc()

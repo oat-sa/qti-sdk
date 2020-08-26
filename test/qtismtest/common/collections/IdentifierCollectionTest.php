@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class IdentifierCollectionTest
+ */
 class IdentifierCollectionTest extends QtiSmTestCase
 {
     /**

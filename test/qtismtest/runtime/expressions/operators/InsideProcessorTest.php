@@ -9,12 +9,16 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiShape;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\InsideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class InsideProcessorTest
+ */
 class InsideProcessorTest extends QtiSmTestCase
 {
     public function testRect()
@@ -147,6 +151,11 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
     }
 
+    /**
+     * @param null $point
+     * @param QtiCoords|null $coords
+     * @return QtiComponent
+     */
     public function createFakeExpression($point = null, QtiCoords $coords = null)
     {
         $point = (is_null($point) || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;

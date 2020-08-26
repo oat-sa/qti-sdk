@@ -8,6 +8,9 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\ItemSubset;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ItemSubsetMarshallerTest
+ */
 class ItemSubsetMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallNoCategories()

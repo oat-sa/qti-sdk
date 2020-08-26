@@ -12,6 +12,9 @@ use qtismtest\QtiSmTestCase;
 use stdClass;
 use qtism\data\storage\xml\marshalling\AreaMapEntryMarshaller;
 
+/**
+ * Class MarshallerFactyoryTest
+ */
 class MarshallerFactyoryTest extends QtiSmTestCase
 {
     public function testFromDomElement()

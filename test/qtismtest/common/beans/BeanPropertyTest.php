@@ -8,6 +8,9 @@ use qtismtest\common\beans\mocks\SimpleBean;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class BeanPropertyTest
+ */
 class BeanPropertyTest extends QtiSmTestCase
 {
     public function testNoProperty()

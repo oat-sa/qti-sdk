@@ -22,6 +22,9 @@ use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentItemTestCase;
 use qtism\runtime\common\OutcomeVariable;
 
+/**
+ * Class AssessmentItemSessionTest
+ */
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
     public function testExternalScored()

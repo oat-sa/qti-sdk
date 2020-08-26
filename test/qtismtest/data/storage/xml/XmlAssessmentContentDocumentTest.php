@@ -6,6 +6,9 @@ use qtism\data\storage\xml\XmlDocument;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\xhtml\text\Div;
 
+/**
+ * Class XmlAssessmentContentDocumentTest
+ */
 class XmlAssessmentContentDocumentTest extends QtiSmTestCase
 {
     public function testSimpleXmlBase()

@@ -13,6 +13,9 @@ use qtism\runtime\expressions\CorrectProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class CorrectProcessorTest
+ */
 class CorrectProcessorTest extends QtiSmTestCase
 {
     public function testMultipleCardinality()

@@ -23,6 +23,9 @@ use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TableMarshallerTest
+ */
 class TableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

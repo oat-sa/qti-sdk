@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\ToleranceMode;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
@@ -17,6 +18,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class EqualProcessorTest
+ */
 class EqualProcessorTest extends QtiSmTestCase
 {
     public function testExact()
@@ -249,6 +253,13 @@ class EqualProcessorTest extends QtiSmTestCase
         $processor = new EqualProcessor($expression, $operands);
     }
 
+    /**
+     * @param $toleranceMode
+     * @param array $tolerance
+     * @param bool $includeLowerBound
+     * @param bool $includeUpperBound
+     * @return QtiComponent
+     */
     public function createFakeExpression($toleranceMode, array $tolerance = [], $includeLowerBound = true, $includeUpperBound = true)
     {
         $tm = ($toleranceMode != ToleranceMode::EXACT) ? ('tolerance="' . implode(' ', $tolerance) . '"') : '';

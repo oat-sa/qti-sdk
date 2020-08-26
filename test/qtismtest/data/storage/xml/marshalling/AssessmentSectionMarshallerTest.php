@@ -17,6 +17,9 @@ use qtism\data\rules\PreConditionCollection;
 use qtism\data\SectionPartCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentSectionMarshallerTest
+ */
 class AssessmentSectionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

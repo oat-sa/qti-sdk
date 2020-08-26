@@ -9,6 +9,9 @@ use qtism\runtime\common\StackTrace;
 use qtism\runtime\common\StackTraceItem;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StackTraceTest
+ */
 class StackTraceTest extends QtiSmTestCase
 {
     public function testPop()

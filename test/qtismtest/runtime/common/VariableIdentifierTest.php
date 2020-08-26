@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\runtime\common\VariableIdentifier;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VariableIdentifierTest
+ */
 class VariableIdentifierTest extends QtiSmTestCase
 {
     /**
@@ -100,6 +103,9 @@ class VariableIdentifierTest extends QtiSmTestCase
         new VariableIdentifier(' .SCORE');
     }
 
+    /**
+     * @return array
+     */
     public function invalidIdentifierProvider()
     {
         return [
@@ -123,6 +129,9 @@ class VariableIdentifierTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function simpleIdentifiersProvider()
     {
         return [
@@ -132,6 +141,9 @@ class VariableIdentifierTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function prefixedIdentifiersProvider()
     {
         return [
@@ -141,6 +153,9 @@ class VariableIdentifierTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sequencedIdentifiersProvider()
     {
         return [

@@ -10,6 +10,9 @@ use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SimpleMatchSetMarshallerTest
+ */
 class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -32,7 +35,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>
 	    ');
 

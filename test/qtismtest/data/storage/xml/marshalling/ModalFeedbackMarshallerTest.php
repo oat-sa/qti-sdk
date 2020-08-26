@@ -9,6 +9,9 @@ use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ModalFeedbackMarshallerTest
+ */
 class ModalFeedbackMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -26,7 +29,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>
 	    ');
 

@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\rules\Ordering;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderingMarshallerTest
+ */
 class OrderingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

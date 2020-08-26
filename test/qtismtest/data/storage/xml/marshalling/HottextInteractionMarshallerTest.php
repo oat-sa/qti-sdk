@@ -14,6 +14,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class HottextInteractionMarshallerTest
+ */
 class HottextInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -39,7 +42,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <hottextInteraction responseIdentifier="RESPONSE">
                 <prompt>Prompt...</prompt>
                 <div>This is a <hottext identifier="hot1"/> text...</div>

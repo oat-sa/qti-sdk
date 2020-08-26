@@ -7,12 +7,16 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\DivideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DivideProcessorTest
+ */
 class DivideProcessorTest extends QtiSmTestCase
 {
     public function testDivide()
@@ -126,6 +130,9 @@ class DivideProcessorTest extends QtiSmTestCase
         $processor = new DivideProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

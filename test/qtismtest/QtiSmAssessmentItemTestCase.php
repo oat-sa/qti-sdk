@@ -3,10 +3,15 @@
 namespace qtismtest;
 
 use qtism\common\datatypes\QtiDuration;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
 
+/**
+ * Class QtiSmAssessmentItemTestCase
+ */
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
     public function setUp()
@@ -19,6 +24,11 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
         parent::tearDown();
     }
 
+    /**
+     * @param $xmlString
+     * @return ExtendedAssessmentItemRef
+     * @throws UnmarshallingException
+     */
     protected static function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
@@ -36,6 +46,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
+     * @throws UnmarshallingException
      */
     protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
     {
@@ -77,6 +88,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
+     * @throws UnmarshallingException
      */
     protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
     {

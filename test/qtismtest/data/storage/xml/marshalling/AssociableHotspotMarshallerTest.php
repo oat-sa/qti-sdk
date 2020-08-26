@@ -11,6 +11,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\interactions\Hotspot;
 
+/**
+ * Class AssociableHotspotMarshallerTest
+ */
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,7 +39,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>
 	    ');
 

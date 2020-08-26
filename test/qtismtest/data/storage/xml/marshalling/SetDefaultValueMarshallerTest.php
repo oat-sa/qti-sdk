@@ -11,6 +11,9 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetDefaultValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetDefaultValueMarshallerTest
+ */
 class SetDefaultValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -30,7 +33,7 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <setDefaultValue identifier="tpl1">
 	            <match>
 	                <variable identifier="var1"/>

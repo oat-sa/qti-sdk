@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VariableMarshallerTest
+ */
 class VariableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallWeight()

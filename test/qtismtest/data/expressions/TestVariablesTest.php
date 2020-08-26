@@ -6,6 +6,9 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestVariablesTest
+ */
 class TestVariablesTest extends QtiSmTestCase
 {
     public function testTestVariables()

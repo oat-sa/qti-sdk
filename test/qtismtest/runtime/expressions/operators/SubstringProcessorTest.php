@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SubstringProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class SubstringProcessorTest
+ */
 class SubstringProcessorTest extends QtiSmTestCase
 {
     public function testCaseSensitive()
@@ -136,6 +140,10 @@ class SubstringProcessorTest extends QtiSmTestCase
         $processor = new SubstringProcessor($expression, $operands);
     }
 
+    /**
+     * @param bool $caseSensitive
+     * @return QtiComponent
+     */
     public function createFakeExpression($caseSensitive = true)
     {
         $str = ($caseSensitive === true) ? 'true' : 'false';

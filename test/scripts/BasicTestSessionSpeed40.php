@@ -4,19 +4,29 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\AssessmentTest;
+use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 use qtism\runtime\storage\common\AbstractStorage;
+use qtism\runtime\storage\common\StorageException;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\SessionManager;
 
 date_default_timezone_set('UTC');
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
+/**
+ * @param array|null $average
+ * @return QtiComponent
+ * @throws PhpStorageException
+ */
 function loadTestDefinition(array &$average = null)
 {
     $start = microtime();
@@ -31,16 +41,30 @@ function loadTestDefinition(array &$average = null)
     return $phpDoc->getDocumentComponent();
 }
 
+/**
+ * @return SessionManager
+ */
 function createFactory()
 {
     return new SessionManager();
 }
 
+/**
+ * @param SessionManager $factory
+ * @param AssessmentTest $test
+ * @return TemporaryQtiBinaryStorage
+ */
 function createStorage(SessionManager $factory, AssessmentTest $test)
 {
     return new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($test));
 }
 
+/**
+ * @param $start
+ * @param $end
+ * @param array|null $registration
+ * @return mixed
+ */
 function spentTime($start, $end, array &$registration = null)
 {
     $startTime = explode(' ', $start);
@@ -54,6 +78,12 @@ function spentTime($start, $end, array &$registration = null)
     return $time;
 }
 
+/**
+ * @param AssessmentTestSession $session
+ * @param $identifier
+ * @param array|null $average
+ * @throws AssessmentTestSessionException
+ */
 function attempt(AssessmentTestSession $session, $identifier, array &$average = null)
 {
     $start = microtime();
@@ -66,6 +96,14 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
     }
 }
 
+/**
+ * @param AbstractStorage $storage
+ * @param AssessmentTest $test
+ * @param $sessionId
+ * @param array|null $average
+ * @return mixed
+ * @throws StorageException
+ */
 function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, array &$average = null)
 {
     $start = microtime();
@@ -79,6 +117,12 @@ function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, ar
     return $session;
 }
 
+/**
+ * @param AbstractStorage $storage
+ * @param AssessmentTestSession $session
+ * @param null $average
+ * @throws StorageException
+ */
 function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null)
 {
     $start = microtime();
@@ -90,6 +134,13 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
     }
 }
 
+/**
+ * @param AssessmentTestSession $session
+ * @param array $average
+ * @throws PhpStorageException
+ * @throws AssessmentItemSessionException
+ * @throws AssessmentTestSessionException
+ */
 function moveNext(AssessmentTestSession $session, array &$average)
 {
     $start = microtime();
@@ -101,6 +152,10 @@ function moveNext(AssessmentTestSession $session, array &$average)
     }
 }
 
+/**
+ * @param AssessmentTestSession $session
+ * @param array|null $average
+ */
 function neighbourhood(AssessmentTestSession $session, array &$average = null)
 {
     $start = microtime();

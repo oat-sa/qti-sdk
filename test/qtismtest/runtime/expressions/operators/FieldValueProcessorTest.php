@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\FieldValueProcessor;
@@ -12,6 +13,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class FieldValueProcessorTest
+ */
 class FieldValueProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
@@ -106,6 +110,10 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $result);
     }
 
+    /**
+     * @param string $identifier
+     * @return QtiComponent
+     */
     public function createFakeExpression($identifier = '')
     {
         // The following XML Component creation

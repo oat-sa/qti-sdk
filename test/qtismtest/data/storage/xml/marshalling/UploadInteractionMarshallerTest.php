@@ -9,6 +9,9 @@ use qtism\data\content\interactions\UploadInteraction;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class UploadInteractionMarshallerTest
+ */
 class UploadInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -27,7 +30,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <uploadInteraction id="my-upload" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt></uploadInteraction>    
         ');
 

@@ -7,6 +7,9 @@ use qtism\data\content\interactions\Gap;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GapMarshallerTest
+ */
 class GapMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -25,7 +28,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps" showHide="hide"/>
 	    ');
 

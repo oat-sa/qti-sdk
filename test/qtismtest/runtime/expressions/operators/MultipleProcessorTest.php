@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MultipleProcessor;
@@ -15,6 +16,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MultipleProcessorTest
+ */
 class MultipleProcessorTest extends QtiSmTestCase
 {
     public function testNull()
@@ -159,6 +163,9 @@ class MultipleProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

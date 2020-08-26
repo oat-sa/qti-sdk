@@ -15,6 +15,9 @@ use qtism\runtime\expressions\operators\RoundToProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RoundToProcessorTest
+ */
 class RoundToProcessorTest extends QtiSmTestCase
 {
     public function testSignificantFigures()
@@ -323,11 +326,11 @@ class RoundToProcessorTest extends QtiSmTestCase
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
         $this->assertTrue(is_infinite($result->getValue()));
-        $this->assertTrue(INF === $result->getValue());
+        $this->assertTrue($result->getValue() === INF);
 
         $processor->setOperands(new OperandsCollection([new QtiFloat(-INF)]));
         $result = $processor->process();
         $this->assertTrue(is_infinite($result->getValue()));
-        $this->assertTrue(-INF === $result->getValue());
+        $this->assertTrue($result->getValue() === -INF);
     }
 }

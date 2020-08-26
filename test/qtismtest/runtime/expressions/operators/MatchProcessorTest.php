@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -17,6 +18,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MatchProcessorTest
+ */
 class MatchProcessorTest extends QtiSmTestCase
 {
     public function testScalar()
@@ -200,6 +204,9 @@ class MatchProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return QtiComponent
+     */
     private function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -5,13 +5,22 @@ namespace qtismtest\data\expressions\operators;
 use qtism\data\expressions\operators\Statistics;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class StatisticsTest
+ */
 class StatisticsTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return Statistics::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -23,6 +32,9 @@ class StatisticsTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -34,6 +46,9 @@ class StatisticsTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

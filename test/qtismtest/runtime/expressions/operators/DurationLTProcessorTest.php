@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\DurationLTProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DurationLTProcessorTest
+ */
 class DurationLTProcessorTest extends QtiSmTestCase
 {
     public function testDurationLT()
@@ -75,6 +79,9 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $processor = new DurationLTProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

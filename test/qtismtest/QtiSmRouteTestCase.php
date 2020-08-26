@@ -11,6 +11,9 @@ use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtism\runtime\tests\Route;
 
+/**
+ * Class QtiSmRouteTestCase
+ */
 abstract class QtiSmRouteTestCase extends QtiSmTestCase
 {
     public function setUp()

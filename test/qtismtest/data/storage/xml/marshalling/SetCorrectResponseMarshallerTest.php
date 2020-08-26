@@ -11,6 +11,9 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetCorrectResponse;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetCorrectResponseMarshallerTest
+ */
 class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -30,7 +33,7 @@ class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <setCorrectResponse identifier="tpl1">
 	            <match>
 	                <variable identifier="var1"/>

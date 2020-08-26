@@ -8,6 +8,9 @@ use qtism\data\storage\xml\versions\ResultVersion21;
 use qtism\data\storage\xml\versions\ResultVersion22;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResultVersionTest
+ */
 class ResultVersionTest extends QtiSmTestCase
 {
     public function testVersionCompareSupported()
@@ -28,6 +31,9 @@ class ResultVersionTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, (string)$versionObject);
     }
 
+    /**
+     * @return array
+     */
     public function versionsToCreate(): array
     {
         return [

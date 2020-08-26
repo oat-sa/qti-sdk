@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
@@ -17,6 +18,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class AnyNProcessorTest
+ */
 class AnyNProcessorTest extends QtiSmTestCase
 {
     /**
@@ -146,6 +150,11 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @param $min
+     * @param $max
+     * @return QtiComponent
+     */
     public function createFakeExpression($min, $max)
     {
         return $this->createComponentFromXml('
@@ -157,6 +166,9 @@ class AnyNProcessorTest extends QtiSmTestCase
 		');
     }
 
+    /**
+     * @return array
+     */
     public function anyNProvider()
     {
         $returnValue = [];

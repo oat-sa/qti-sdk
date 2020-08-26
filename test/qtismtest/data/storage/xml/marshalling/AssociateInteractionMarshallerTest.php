@@ -11,6 +11,9 @@ use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssociateInteractionMarshallerTest
+ */
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -41,7 +44,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>
         ');
 

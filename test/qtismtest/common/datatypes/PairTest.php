@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiPair;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PairTest
+ */
 class PairTest extends QtiSmTestCase
 {
     public function testEquality()

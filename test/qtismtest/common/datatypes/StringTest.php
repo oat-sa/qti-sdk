@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiString;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StringTest
+ */
 class StringTest extends QtiSmTestCase
 {
     public function testWrongValue()
@@ -33,6 +36,9 @@ class StringTest extends QtiSmTestCase
         $this->assertTrue($qtiString->equals($val));
     }
 
+    /**
+     * @return array
+     */
     public function equalProvider()
     {
         return [
@@ -56,6 +62,9 @@ class StringTest extends QtiSmTestCase
         $this->assertFalse($qtiString->equals($val));
     }
 
+    /**
+     * @return array
+     */
     public function notEqualProvider()
     {
         return [

@@ -9,6 +9,9 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AreaMapEntryMarshallerTest
+ */
 class AreaMapEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

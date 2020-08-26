@@ -6,6 +6,9 @@ use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class OperatorsUtilsTest
+ */
 class OperatorsUtilsTest extends QtiSmTestCase
 {
     /**
@@ -135,6 +138,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         $this->assertFalse(OperatorsUtils::customOperatorClassToPhpClass($customClass));
     }
 
+    /**
+     * @return array
+     */
     public function pregAddDelimiterProvider()
     {
         return [
@@ -152,6 +158,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function escapeSymbolsProvider()
     {
         return [
@@ -161,6 +170,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getPrecedingBackslashesCountProvider()
     {
         return [
@@ -175,6 +187,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function gcdProvider()
     {
         return [
@@ -187,6 +202,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function lcmProvider()
     {
         return [
@@ -198,6 +216,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function meanProvider()
     {
         return [
@@ -215,6 +236,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function varianceProvider()
     {
         return [
@@ -231,6 +255,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function standardDeviationProvider()
     {
         // The equality test will be done with 2 significant figures.
@@ -246,6 +273,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validCustomOperatorClassToPhpClassProvider()
     {
         return [
@@ -255,6 +285,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidCustomOperatorClassToPhpClassProvider()
     {
         return [

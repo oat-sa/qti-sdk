@@ -10,6 +10,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SelectPointInteractionMarshallerTest
+ */
 class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -29,7 +32,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>
         ');
 

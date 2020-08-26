@@ -11,6 +11,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PositionObjectInteractionMarshallerTest
+ */
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,7 +39,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="150 74" id="my-pos">
                <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
             </positionObjectInteraction>

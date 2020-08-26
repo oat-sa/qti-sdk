@@ -30,6 +30,9 @@ use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class BodyElementTest
+ */
 class BodyElementTest extends QtiSmTestCase
 {
     public function testRawInstantiation()
@@ -95,6 +98,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaControls());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaControlsAttributesProvider()
     {
         return [
@@ -116,6 +122,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaDescribedBy());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaDescribedByAttributesProvider()
     {
         return [
@@ -137,6 +146,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaFlowTo());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaFlowToAttributesProvider()
     {
         return [
@@ -158,6 +170,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaLabelledBy());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLabelledByAttributesProvider()
     {
         return [
@@ -179,6 +194,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaOwns());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaOwnsAttributesProvider()
     {
         return [
@@ -200,6 +218,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals((string)$value, $span->getAriaLevel());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLevelAttributesProvider()
     {
         return [
@@ -223,6 +244,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaLive());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLiveAttributesProvider()
     {
         return [
@@ -244,6 +268,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaOrientation());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaOrientationAttributesProvider()
     {
         return [
@@ -264,6 +291,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaLabel());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLabelAttributesProvider()
     {
         return [
@@ -284,6 +314,9 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertSame($value, $span->getAriaHidden());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaHiddenAttributesProvider()
     {
         return [
@@ -308,6 +341,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaControls($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaControlsAttributesProvider()
     {
         return [
@@ -337,6 +373,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaDescribedBy($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaDescribedByAttributesProvider()
     {
         return [
@@ -366,6 +405,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaFlowTo($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaFlowToAttributesProvider()
     {
         return [
@@ -395,6 +437,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaLabelledBy($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLabelledByAttributesProvider()
     {
         return [
@@ -424,6 +469,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaOwns($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaOwnsAttributesProvider()
     {
         return [
@@ -453,6 +501,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaLevel($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLevelAttributesProvider()
     {
         return [
@@ -479,6 +530,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaLive($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLiveAttributesProvider()
     {
         return [
@@ -505,6 +559,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaOrientation($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaOrientationAttributesProvider()
     {
         return [
@@ -531,6 +588,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaLabel($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLabelAttributesProvider()
     {
         return [
@@ -559,6 +619,9 @@ class BodyElementTest extends QtiSmTestCase
         $span->setAriaHidden($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaHiddenAttributesProvider()
     {
         return [

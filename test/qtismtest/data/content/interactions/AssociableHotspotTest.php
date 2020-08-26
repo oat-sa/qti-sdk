@@ -8,6 +8,9 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssociableHotspotTest
+ */
 class AssociableHotspotTest extends QtiSmTestCase
 {
     public function testCreateInvalidMatchMax()

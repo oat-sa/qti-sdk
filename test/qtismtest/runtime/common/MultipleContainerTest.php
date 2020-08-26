@@ -13,6 +13,9 @@ use qtism\data\state\ValueCollection;
 use qtism\runtime\common\MultipleContainer;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MultipleContainerTest
+ */
 class MultipleContainerTest extends QtiSmTestCase
 {
     public function testCreationEmpty()
@@ -89,6 +92,9 @@ class MultipleContainerTest extends QtiSmTestCase
         $container = MultipleContainer::createFromDataModel($valueCollection, $baseType);
     }
 
+    /**
+     * @return array
+     */
     public function invalidCreateFromDataModelProvider()
     {
         $returnValue = [];
@@ -101,6 +107,9 @@ class MultipleContainerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function validCreateFromDataModelProvider()
     {
         $returnValue = [];
@@ -152,6 +161,9 @@ class MultipleContainerTest extends QtiSmTestCase
         $this->assertTrue($expectedContainer->equals($distinctContainer));
     }
 
+    /**
+     * @return array
+     */
     public function distinctProvider()
     {
         return [

@@ -2,6 +2,9 @@
 
 namespace qtismtest;
 
+/**
+ * Class QtiSmEnumTestCase
+ */
 abstract class QtiSmEnumTestCase extends QtiSmTestCase
 {
     public function setUp()
@@ -71,21 +74,39 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
         $this->assertFalse($enumerationName::getNameByConstant($this->getUnknownConstantValue()));
     }
 
+    /**
+     * @return string
+     */
     protected function getUnknownConstantName()
     {
         return 'xyz';
     }
 
+    /**
+     * @return int
+     */
     protected function getUnknownConstantValue()
     {
         return PHP_INT_MAX;
     }
 
+    /**
+     * @return mixed
+     */
     abstract protected function getNames();
 
+    /**
+     * @return mixed
+     */
     abstract protected function getKeys();
 
+    /**
+     * @return mixed
+     */
     abstract protected function getConstants();
 
+    /**
+     * @return mixed
+     */
     abstract protected function getEnumerationFqcn();
 }

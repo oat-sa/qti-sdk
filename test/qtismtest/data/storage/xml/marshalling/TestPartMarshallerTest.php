@@ -13,6 +13,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\operators\Not;
 use qtism\data\expressions\operators\Equal;
 
+/**
+ * Class TestPartMarshallerTest
+ */
 class TestPartMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

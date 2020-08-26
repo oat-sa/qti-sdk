@@ -9,6 +9,9 @@ use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeElseTest
+ */
 class OutcomeElseTest extends QtiSmTestCase
 {
     public function testGetComponents()

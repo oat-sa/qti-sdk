@@ -10,6 +10,9 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\OutcomeMinimumProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class OutcomeMinimumProcessorTest
+ */
 class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
@@ -35,6 +38,9 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function outcomeMinimumProvider()
     {
         return [
@@ -47,6 +53,14 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param $outcomeIdentifier
+     * @param string $weightIdentifier
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return OutcomeMinimum
+     */
     protected static function getOutcomeMinimum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $outcomeMinimum = new OutcomeMinimum($outcomeIdentifier);

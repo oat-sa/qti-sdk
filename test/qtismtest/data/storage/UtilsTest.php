@@ -16,6 +16,9 @@ use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
 
+/**
+ * Class UtilsTest
+ */
 class UtilsTest extends QtiSmTestCase
 {
     /**
@@ -277,6 +280,9 @@ class UtilsTest extends QtiSmTestCase
         Utils::stringToDatatype('test', 'test');
     }
 
+    /**
+     * @return array
+     */
     public function validCoordsProvider()
     {
         return [
@@ -290,6 +296,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidCoordsProvider()
     {
         return [
@@ -299,6 +308,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidShapeProvider()
     {
         return [
@@ -307,6 +319,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validIntegerProvider()
     {
         return [
@@ -321,6 +336,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidIntegerProvider()
     {
         return [
@@ -334,6 +352,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validFloatProvider()
     {
         return [
@@ -345,6 +366,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidFloatProvider()
     {
         return [
@@ -358,6 +382,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validBooleanProvider()
     {
         return [
@@ -368,6 +395,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidBooleanProvider()
     {
         return [
@@ -379,6 +409,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validPointProvider()
     {
         return [
@@ -388,6 +421,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidPointProvider()
     {
         return [
@@ -402,6 +438,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validDurationProvider()
     {
         return [
@@ -415,6 +454,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidDurationProvider()
     {
         return [
@@ -426,6 +468,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validPairProvider()
     {
         return [
@@ -434,6 +479,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidPairProvider()
     {
         return [
@@ -444,6 +492,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validUriToSanitizeProvider()
     {
         return [
@@ -458,6 +509,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidUriToSanitizeProvider()
     {
         return [
@@ -467,6 +521,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validIntOrIdentifierProvider()
     {
         return [
@@ -475,6 +532,9 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidIntOrIdentifierProvider()
     {
         return [

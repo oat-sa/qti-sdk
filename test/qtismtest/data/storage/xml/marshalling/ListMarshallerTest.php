@@ -15,6 +15,9 @@ use qtism\data\content\xhtml\text\P;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ListMarshallerTest
+ */
 class ListMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallUl()

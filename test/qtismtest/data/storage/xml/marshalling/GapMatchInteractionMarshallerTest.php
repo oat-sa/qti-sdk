@@ -16,6 +16,9 @@ use qtism\data\content\xhtml\QtiObject;
 use qtism\data\content\xhtml\text\P;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GapMatchInteractionMarshallerTest
+ */
 class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -47,7 +50,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
         ');
 

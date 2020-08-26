@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\Correct;
 use qtism\data\expressions\Variable;
@@ -10,6 +11,9 @@ use qtism\data\expressions\operators\Match;
 use qtism\data\rules\ResponseCondition;
 use qtism\data\processing\ResponseProcessing;
 
+/**
+ * Class XmlResponseProcessingDocumentTest
+ */
 class XmlResponseProcessingDocumentTest extends QtiSmTestCase
 {
     public function testLoadMatchCorrect()
@@ -45,6 +49,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
      * @dataProvider testLoadProvider
      *
      * @param string $url
+     * @throws XmlStorageException
      */
     public function testLoad($url)
     {
@@ -63,6 +68,9 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
         return dirname(__FILE__) . '/../../../../../qtism/runtime/processing/templates/';
     }
 
+    /**
+     * @return array
+     */
     public function testLoadProvider()
     {
         return [

@@ -22,6 +22,9 @@ use qtism\data\content\ItemBody;
 use qtism\data\AssessmentTest;
 use ReflectionException;
 
+/**
+ * Class PhpDocumentTest
+ */
 class PhpDocumentTest extends QtiSmTestCase
 {
     public function testSimpleLoad()
@@ -201,6 +204,9 @@ class PhpDocumentTest extends QtiSmTestCase
         $this->assertFalse(file_exists($file));
     }
 
+    /**
+     * @return array
+     */
     public function loadTestSamplesDataProvider()
     {
         return [

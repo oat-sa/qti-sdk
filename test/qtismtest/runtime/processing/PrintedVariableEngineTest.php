@@ -28,6 +28,9 @@ use qtism\runtime\processing\PrintedVariableEngine;
 use qtism\runtime\processing\PrintedVariableProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PrintedVariableEngineTest
+ */
 class PrintedVariableEngineTest extends QtiSmTestCase
 {
     /**
@@ -38,7 +41,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      * @param string $format
      * @param bool $powerForm
      * @param int|string $base
-     * @param integer|string $index
+     * @param int|string $index
      * @param string $delimiter
      * @param string $field
      * @param string $mappingIndicator
@@ -59,6 +62,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $this->assertEquals($expected, $engine->process());
     }
 
+    /**
+     * @return array
+     */
     public function printedVariableProvider()
     {
         $state = new State();
@@ -329,6 +335,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         $this->assertEquals($expected, $engine->process());
     }
 
+    /**
+     * @return array
+     */
     public function newProvider()
     {
         $state = new State();

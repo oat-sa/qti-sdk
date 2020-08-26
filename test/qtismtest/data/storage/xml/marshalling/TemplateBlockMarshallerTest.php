@@ -11,6 +11,9 @@ use qtism\data\content\xhtml\text\Div;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateBlockMarshallerTest
+ */
 class TemplateBlockMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -29,7 +32,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><div>Templatable...</div></templateBlock>
 	    ');
 

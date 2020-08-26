@@ -5,6 +5,9 @@ namespace qtismtest\data\storage\xml\marshalling;
 use qtism\data\content\RubricBlockRef;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RubricBlockRefMarshallerTest
+ */
 class RubricBlockRefMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

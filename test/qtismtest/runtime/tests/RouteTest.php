@@ -16,6 +16,9 @@ use qtism\data\TestPartCollection;
 use qtism\runtime\tests\Route;
 use qtismtest\QtiSmRouteTestCase;
 
+/**
+ * Class RouteTest
+ */
 class RouteTest extends QtiSmRouteTestCase
 {
     public function testRouteTest()

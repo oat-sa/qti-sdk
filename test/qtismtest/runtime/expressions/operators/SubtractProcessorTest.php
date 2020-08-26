@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SubtractProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class SubtractProcessorTest
+ */
 class SubtractProcessorTest extends QtiSmTestCase
 {
     public function testSubtract()
@@ -78,6 +82,9 @@ class SubtractProcessorTest extends QtiSmTestCase
         $processor = new SubtractProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

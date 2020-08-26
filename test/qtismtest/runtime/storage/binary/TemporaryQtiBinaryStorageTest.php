@@ -26,6 +26,9 @@ use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\tests\AssessmentTestSession;
 
+/**
+ * Class TemporaryQtiBinaryStorageTest
+ */
 class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 {
     public function testTemporaryQtiBinaryStorage()

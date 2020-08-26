@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\data\content\interactions\TextEntryInteraction;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TextInteractionTest
+ */
 class TextInteractionTest extends QtiSmTestCase
 {
     public function testSetBaseWrongType()

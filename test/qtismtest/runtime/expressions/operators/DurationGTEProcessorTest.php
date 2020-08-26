@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\DurationGTEProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DurationGTEProcessorTest
+ */
 class DurationGTEProcessorTest extends QtiSmTestCase
 {
     public function testDurationGTE()
@@ -81,6 +85,9 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $processor = new DurationGTEProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

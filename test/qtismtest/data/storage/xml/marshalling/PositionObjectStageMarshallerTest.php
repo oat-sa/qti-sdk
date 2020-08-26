@@ -10,6 +10,9 @@ use qtism\data\content\interactions\PositionObjectStage;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PositionObjectStageMarshallerTest
+ */
 class PositionObjectStageMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,7 +39,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <positionObjectStage>
                 <object data="country.jpg" type="image/jpeg"/>
                 <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="1" centerPoint="8 8">

@@ -14,6 +14,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GraphicAssociateInteractionMarshallerTest
+ */
 class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -45,7 +48,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2" matchMin="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>
         ');
 

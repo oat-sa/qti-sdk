@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -14,6 +15,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\Processable;
 use RuntimeException;
 
+/**
+ * Class SumProcessorTest
+ */
 class SumProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -98,6 +102,9 @@ class SumProcessorTest extends QtiSmTestCase
         $this->assertTrue($result === null);
     }
 
+    /**
+     * @return QtiComponent
+     */
     private function createFakeSumComponent()
     {
         return $this->createComponentFromXml('

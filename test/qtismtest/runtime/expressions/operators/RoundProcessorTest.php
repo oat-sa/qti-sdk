@@ -7,12 +7,16 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RoundProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RoundProcessorTest
+ */
 class RoundProcessorTest extends QtiSmTestCase
 {
     public function testRound()
@@ -139,6 +143,9 @@ class RoundProcessorTest extends QtiSmTestCase
         $processor = new RoundProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

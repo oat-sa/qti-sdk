@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\state\Weight;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class WeightMarshallerTest
+ */
 class WeightMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

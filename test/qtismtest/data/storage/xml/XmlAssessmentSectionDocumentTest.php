@@ -4,14 +4,22 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\data\AssessmentSection;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\View;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItemRef;
 use qtism\data\SectionPartCollection;
 use qtism\data\content\RubricBlockCollection;
 
+/**
+ * Class XmlAssessmentSectionDocumentTest
+ */
 class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
 {
+    /**
+     * @param AssessmentSection|null $assessmentSection
+     * @throws XmlStorageException
+     */
     public function testLoad(AssessmentSection $assessmentSection = null)
     {
         if (empty($assessmentSection)) {

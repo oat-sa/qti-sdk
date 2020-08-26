@@ -26,10 +26,17 @@ namespace qtismtest\runtime\tests;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\php\PhpStorageException;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionCompletionTest
+ */
 class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTestCase
 {
     /**
@@ -45,6 +52,10 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
      * @param string $testFile The Compact test definition to be run as a candidate session.
      * @param array $identifiers An array of response identifier to be given for each item.
      * @param int $finalNumberCompleted The expected number of completed items when the session closes.
+     * @throws PhpStorageException
+     * @throws XmlStorageException
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
      */
     public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
     {
@@ -86,6 +97,9 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
         $this->assertFalse($session->isRunning());
     }
 
+    /**
+     * @return array
+     */
     public function completionPureLinearProvider()
     {
         return [

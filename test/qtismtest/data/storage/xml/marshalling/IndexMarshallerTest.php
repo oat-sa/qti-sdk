@@ -9,6 +9,9 @@ use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class IndexMarshallerTest
+ */
 class IndexMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

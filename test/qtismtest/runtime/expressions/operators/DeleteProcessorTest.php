@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\DeleteProcessor;
@@ -13,6 +14,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DeleteProcessorTest
+ */
 class DeleteProcessorTest extends QtiSmTestCase
 {
     public function testMultiple()
@@ -161,6 +165,9 @@ class DeleteProcessorTest extends QtiSmTestCase
         $processor = new DeleteProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -10,6 +10,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MediaInteractionMarshallerTest
+ */
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -39,7 +42,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>        
         ');
 

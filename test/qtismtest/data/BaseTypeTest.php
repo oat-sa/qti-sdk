@@ -5,6 +5,9 @@ namespace qtismtest\data;
 use qtism\common\enums\BaseType;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BaseTypeTest
+ */
 class BaseTypeTest extends QtiSmTestCase
 {
     /**
@@ -44,6 +47,9 @@ class BaseTypeTest extends QtiSmTestCase
         $this->assertFalse(BaseType::getNameByConstant($constant));
     }
 
+    /**
+     * @return array
+     */
     public function validBaseTypeConstantProvider()
     {
         return [
@@ -62,6 +68,9 @@ class BaseTypeTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidBaseTypeConstantProvider()
     {
         return [
@@ -69,6 +78,9 @@ class BaseTypeTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validBaseTypeProvider()
     {
         return [
@@ -87,6 +99,9 @@ class BaseTypeTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidBaseTypeProvider()
     {
         return [

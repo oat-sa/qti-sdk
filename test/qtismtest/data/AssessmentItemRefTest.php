@@ -14,6 +14,9 @@ use qtism\data\rules\PreConditionCollection;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentItemRefTest
+ */
 class AssessmentItemRefTest extends QtiSmTestCase
 {
     public function testCreateAssessmentItemRefWrongIdentifier()

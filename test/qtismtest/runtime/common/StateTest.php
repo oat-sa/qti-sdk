@@ -17,6 +17,9 @@ use qtismtest\QtiSmTestCase;
 use stdClass;
 use qtism\runtime\common\VariableCollection;
 
+/**
+ * Class StateTest
+ */
 class StateTest extends QtiSmTestCase
 {
     public function testInstantiation()

@@ -14,6 +14,9 @@ use qtism\runtime\common\RecordContainer;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class RecordContainerTest
+ */
 class RecordContainerTest extends QtiSmTestCase
 {
     public function testValid()

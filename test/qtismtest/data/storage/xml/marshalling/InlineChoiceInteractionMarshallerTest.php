@@ -10,6 +10,9 @@ use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InlineChoiceInteractionMarshallerTest
+ */
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -45,7 +48,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
                 <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
                 <inlineChoice identifier="inlineChoice2">Option2</inlineChoice>

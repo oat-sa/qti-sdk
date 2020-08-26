@@ -11,6 +11,9 @@ use qtism\data\content\xhtml\A;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PromptMarshallerTest
+ */
 class PromptMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -28,7 +31,7 @@ class PromptMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>');
+        $element = self::createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>');
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
@@ -44,7 +47,7 @@ class PromptMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallPromptWithAnchorInQti21ThrowsException()
     {
-        $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');
+        $element = self::createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');
 
         $marshaller = $this->getMarshallerFactory('2.1')->createMarshaller($element);
         $this->expectException(UnmarshallingException::class);
@@ -54,7 +57,7 @@ class PromptMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallPromptWithAnchorInQti22Works()
     {
-        $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');
+        $element = self::createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');
 
         $marshaller = $this->getMarshallerFactory('2.2')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);

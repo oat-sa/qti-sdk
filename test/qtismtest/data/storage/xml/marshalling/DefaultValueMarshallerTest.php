@@ -12,6 +12,9 @@ use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiDirectedPair;
 
+/**
+ * Class DefaultValueMarshallerTest
+ */
 class DefaultValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\expressions\NullValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class NullValueMarshallerTest
+ */
 class NullValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

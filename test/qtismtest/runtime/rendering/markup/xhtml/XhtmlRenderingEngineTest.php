@@ -10,6 +10,9 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingContext;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XhtmlRenderingEngineTest
+ */
 class XhtmlRenderingEngineTest extends QtiSmTestCase
 {
     public function testVerySimple()

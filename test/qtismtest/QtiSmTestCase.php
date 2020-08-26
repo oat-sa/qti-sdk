@@ -7,6 +7,7 @@ use DOMElement;
 use PHPUnit_Framework_TestCase as TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
@@ -15,6 +16,9 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 
+/**
+ * Class QtiSmTestCase
+ */
 abstract class QtiSmTestCase extends TestCase
 {
     public function setUp()
@@ -27,6 +31,10 @@ abstract class QtiSmTestCase extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @param string $version
+     * @return MarshallerFactory
+     */
     public function getMarshallerFactory($version = '2.1')
     {
         if (Version::compare($version, '2.0.0', '==') === true) {

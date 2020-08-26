@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\data\content\interactions\SliderInteraction;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SliderInteractionTest
+ */
 class SliderInteractionTest extends QtiSmTestCase
 {
     public function testCreateSliderInteractionLowerBoundWrongType()

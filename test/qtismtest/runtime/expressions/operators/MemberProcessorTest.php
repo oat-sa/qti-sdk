@@ -10,6 +10,7 @@ use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -18,6 +19,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MemberProcessorTest
+ */
 class MemberProcessorTest extends QtiSmTestCase
 {
     public function testMultiple()
@@ -154,6 +158,9 @@ class MemberProcessorTest extends QtiSmTestCase
         $this->assertTrue($result->getValue());
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

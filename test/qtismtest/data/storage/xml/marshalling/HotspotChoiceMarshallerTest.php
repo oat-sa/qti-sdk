@@ -11,6 +11,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\interactions\Hotspot;
 
+/**
+ * Class HotspotChoiceMarshallerTest
+ */
 class HotspotChoiceMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -33,7 +36,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>
 	    ');
 
@@ -60,7 +63,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     public function testUnmarshallFloatCoords()
     {
         // Example taken from a TAO migration issue. Coordinates contain "string-float" values.
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128, 222  , 18.36"/>
 	    ');
 

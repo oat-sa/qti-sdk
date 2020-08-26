@@ -8,6 +8,9 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BaseValueMarshallerTest
+ */
 class BaseValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -42,7 +45,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallCDATA()
     {
-        $element = $this->createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
+        $element = self::createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(BaseValue::class, $component);

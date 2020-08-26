@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -15,6 +16,9 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\common\Processable;
 use RuntimeException;
 
+/**
+ * Class ProductProcessorTest
+ */
 class ProductProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -95,6 +99,9 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     private function createFakeProductComponent()
     {
         return $this->createComponentFromXml('

@@ -6,6 +6,9 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\XmlDocument;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestTest
+ */
 class AssessmentTestTest extends QtiSmTestCase
 {
     public function testTimeLimits()

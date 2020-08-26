@@ -13,6 +13,9 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\MapResponsePointProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MapResponsePointProcessorTest
+ */
 class MapResponsePointProcessorTest extends QtiSmTestCase
 {
     public function testSingleCardinality()

@@ -7,6 +7,9 @@ use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtism\data\content\interactions\TextFormat;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedTextInteractionMarshallerTest
+ */
 class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
@@ -40,7 +43,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE"/>');
+        $element = self::createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE"/>');
         $extendedTextInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(ExtendedTextInteraction::class, $extendedTextInteraction);
@@ -54,7 +57,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMaximal()
     {
-        $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>');
+        $element = self::createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>');
         $extendedTextInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(ExtendedTextInteraction::class, $extendedTextInteraction);

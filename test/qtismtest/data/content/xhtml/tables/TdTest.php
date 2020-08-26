@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\data\content\xhtml\tables\Td;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TdTest
+ */
 class TdTest extends QtiSmTestCase
 {
     public function testSetScopeWrongValue()

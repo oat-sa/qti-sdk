@@ -9,6 +9,9 @@ use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\xhtml\text\P;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AtomicBlockMarshallerTest
+ */
 class AtomicBlockMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallP()

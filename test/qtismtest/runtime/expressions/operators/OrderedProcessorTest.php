@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -15,6 +16,9 @@ use qtism\runtime\expressions\operators\OrderedProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class OrderedProcessorTest
+ */
 class OrderedProcessorTest extends QtiSmTestCase
 {
     public function testNull()
@@ -159,6 +163,9 @@ class OrderedProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -6,6 +6,9 @@ use DOMDocument;
 use qtism\data\content\interactions\EndAttemptInteraction;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class EndAttemptInteractionMarshallerTest
+ */
 class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -20,7 +23,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!"/>
         ');
 

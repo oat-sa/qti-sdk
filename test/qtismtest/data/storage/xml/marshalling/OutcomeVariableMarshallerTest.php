@@ -36,6 +36,9 @@ use qtism\data\state\ValueCollection;
 use qtism\data\View;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeVariableMarshallerTest
+ */
 class OutcomeVariableMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

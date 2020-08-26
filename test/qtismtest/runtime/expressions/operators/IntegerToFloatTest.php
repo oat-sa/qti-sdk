@@ -7,12 +7,16 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\IntegerToFloatProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IntegerToFloatProcessorTest
+ */
 class IntegerToFloatProcessorTest extends QtiSmTestCase
 {
     public function testIntegerToFloat()
@@ -118,6 +122,9 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

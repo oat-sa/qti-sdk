@@ -10,6 +10,9 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\PatternMatch;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PatternMatchMarshallerTest
+ */
 class PatternMatchMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

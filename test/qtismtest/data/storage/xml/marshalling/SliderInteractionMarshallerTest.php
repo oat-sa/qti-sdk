@@ -10,6 +10,9 @@ use qtism\data\content\interactions\SliderInteraction;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SliderInteractionMarshallerTest
+ */
 class SliderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,7 +39,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">
                 <prompt>Prompt...</prompt>
             </sliderInteraction>

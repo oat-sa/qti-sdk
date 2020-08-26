@@ -6,6 +6,9 @@ use DOMDocument;
 use qtism\data\storage\xml\Utils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlUtilsTest
+ */
 class XmlUtilsTest extends QtiSmTestCase
 {
     /**
@@ -15,12 +18,15 @@ class XmlUtilsTest extends QtiSmTestCase
      */
     public function testAnonimizeElement($originalXmlString, $expectedXmlString)
     {
-        $elt = $this->createDOMElement($originalXmlString);
+        $elt = self::createDOMElement($originalXmlString);
         $newElt = Utils::anonimizeElement($elt);
 
         $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
     }
 
+    /**
+     * @return array
+     */
     public function anonimizeElementProvider()
     {
         return [
@@ -57,6 +63,9 @@ class XmlUtilsTest extends QtiSmTestCase
         $this->assertSame($expectedLocation, $location);
     }
 
+    /**
+     * @return array
+     */
     public function getXsdLocationProvider()
     {
         return [

@@ -9,6 +9,9 @@ use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 
+/**
+ * Class PhpQtiComponentMarshallerTest
+ */
 class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     public function testEmptyComponent()

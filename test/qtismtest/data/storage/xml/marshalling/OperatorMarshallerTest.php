@@ -9,6 +9,9 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Sum;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OperatorMarshallerTest
+ */
 class OperatorMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

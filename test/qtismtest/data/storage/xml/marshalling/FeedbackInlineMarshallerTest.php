@@ -9,6 +9,9 @@ use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class FeedbackInlineMarshallerTest
+ */
 class FeedbackInlineMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -26,7 +29,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>
 	    ');
 

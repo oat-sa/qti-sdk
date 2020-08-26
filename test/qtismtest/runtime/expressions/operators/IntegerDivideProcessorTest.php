@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\IntegerDivideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IntegerDivideProcessorTest
+ */
 class IntegerDivideProcessorTest extends QtiSmTestCase
 {
     public function testIntegerDivide()
@@ -91,6 +95,9 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $processor = new IntegerDivideProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

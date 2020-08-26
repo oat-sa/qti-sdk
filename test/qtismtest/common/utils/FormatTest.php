@@ -6,6 +6,9 @@ use qtism\common\utils\Format;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class FormatTest
+ */
 class FormatTest extends QtiSmTestCase
 {
     /**
@@ -192,6 +195,9 @@ class FormatTest extends QtiSmTestCase
         $this->assertSame($expected, Format::isAriaLevel($input));
     }
 
+    /**
+     * @return array
+     */
     public function scale10Provider()
     {
         return [
@@ -217,6 +223,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validIdentifierFormatProvider()
     {
         return [
@@ -229,6 +238,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidIdentifierFormatProvider()
     {
         return [
@@ -240,6 +252,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validVariableRefFormatProvider()
     {
         return [
@@ -252,6 +267,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidVariableRefFormatProvider()
     {
         return [
@@ -263,6 +281,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validCoordinatesFormatProvider()
     {
         return [
@@ -272,6 +293,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidCoordinatesFormatProvider()
     {
         return [
@@ -281,6 +305,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validUriFormatProvider()
     {
         return [
@@ -289,6 +316,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validClassFormatProvider()
     {
         return [
@@ -304,15 +334,22 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidClassFormatProvider()
     {
         return [
             ["a\tb"],
             [' '],
             [''],
+            [false],
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validString256FormatProvider()
     {
         return [
@@ -323,6 +360,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidString256FormatProvider()
     {
         return [
@@ -330,6 +370,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validFileFormatProvider()
     {
         return [
@@ -337,6 +380,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isPrintfIsoFormatProvider()
     {
         return [
@@ -391,6 +437,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function printfFormatIsoToPhpProvider()
     {
         return [
@@ -407,6 +456,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isXhtmlLengthProvider()
     {
         return [
@@ -426,6 +478,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sanitizeProvider()
     {
         return [
@@ -444,6 +499,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sanitizeProvider2()
     {
         return [
@@ -460,6 +518,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isAriaLevelProvider()
     {
         // input, expected

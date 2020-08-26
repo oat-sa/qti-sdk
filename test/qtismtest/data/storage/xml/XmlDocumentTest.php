@@ -15,6 +15,9 @@ use qtism\data\content\TemplateBlock;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\interactions\Prompt;
 
+/**
+ * Class XmlDocumentTest
+ */
 class XmlDocumentTest extends QtiSmTestCase
 {
     public function testRubricBlockRuptureNoValidation()
@@ -212,6 +215,9 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $dom->getVersion());
     }
 
+    /**
+     * @return array
+     */
     public function validInferQTIVersionProvider()
     {
         return [

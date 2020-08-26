@@ -8,6 +8,9 @@ use qtism\data\rules\Selection;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class SelectionMarshallerTest
+ */
 class SelectionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

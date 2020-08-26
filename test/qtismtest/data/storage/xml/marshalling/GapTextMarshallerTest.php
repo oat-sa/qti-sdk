@@ -12,6 +12,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\content\xhtml\text\Strong;
 
+/**
+ * Class GapTextMarshallerTest
+ */
 class GapTextMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -29,7 +32,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>
 	    ');
 
@@ -47,7 +50,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallComplexContentForQti22()
     {
-        $element = $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
 	    ');
 
@@ -70,7 +73,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
     {
         // Only textRun and/or printedVariable.
         $this->expectException(UnmarshallingException::class);
-        $element = $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <div>invalid</div>!</gapText>
 	    ');
 

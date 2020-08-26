@@ -10,6 +10,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DrawingInteractionMarshallerTest
+ */
 class DrawingInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -29,7 +32,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE">
                 <prompt>Prompt...</prompt>
                 <object data="my-canvas.png" type="image/png"/>

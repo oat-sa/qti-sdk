@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\state\VariableMapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VariableMappingMarshallerTest
+ */
 class VariableMappingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

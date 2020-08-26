@@ -12,6 +12,9 @@ use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MatchTableMarshallerTest
+ */
 class MatchTableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

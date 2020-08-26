@@ -9,6 +9,9 @@ use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateInlineMarshallerTest
+ */
 class TemplateInlineMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -25,7 +28,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <templateInline templateIdentifier="tpl1" identifier="inline1" showHide="show">Inline ...</templateInline>
 	    ');
 

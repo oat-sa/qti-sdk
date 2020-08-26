@@ -5,6 +5,9 @@ namespace qtismtest\common\utils;
 use qtism\common\utils\Url;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class UrlTest
+ */
 class UrlTest extends QtiSmTestCase
 {
     /**
@@ -40,6 +43,9 @@ class UrlTest extends QtiSmTestCase
         $this->assertEquals('/hello', Url::rtrim("/hello/\n"));
     }
 
+    /**
+     * @return array
+     */
     public function validRelativeUrlProvider()
     {
         return [
@@ -53,6 +59,9 @@ class UrlTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidRelativeUrlProvider()
     {
         return [

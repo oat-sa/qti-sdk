@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Statistics;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -17,6 +18,9 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\StatsOperatorProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StatsOperatorProcessorTest
+ */
 class StatsOperatorProcessorTest extends QtiSmTestCase
 {
     /**
@@ -144,6 +148,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         $processor = new StatsOperatorProcessor($expression, $operands);
     }
 
+    /**
+     * @param $expected
+     * @param $value
+     */
     protected function check($expected, $value)
     {
         if (is_null($expected)) {
@@ -154,6 +162,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function meanProvider()
     {
         return [
@@ -164,6 +175,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sampleVarianceProvider()
     {
         return [
@@ -174,6 +188,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sampleSDProvider()
     {
         return [
@@ -184,6 +201,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function popVarianceProvider()
     {
         return [
@@ -193,6 +213,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function popSDProvider()
     {
         return [
@@ -202,6 +225,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function wrongCardinalityProvider()
     {
         return [
@@ -211,6 +237,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function wrongBaseTypeProvider()
     {
         return [
@@ -219,6 +248,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $name
+     * @return QtiComponent
+     */
     public function createFakeExpression($name)
     {
         $name = Statistics::getNameByConstant($name);

@@ -13,6 +13,9 @@ use qtism\data\storage\xml\versions\QtiVersion300;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiVersionTest
+ */
 class QtiVersionTest extends QtiSmTestCase
 {
     public function testVersionCompareSupported()
@@ -49,6 +52,9 @@ class QtiVersionTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, (string)$versionObject);
     }
 
+    /**
+     * @return array
+     */
     public function versionsToCreate(): array
     {
         return [

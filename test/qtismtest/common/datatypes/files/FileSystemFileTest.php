@@ -7,6 +7,9 @@ use qtismtest\QtiSmTestCase;
 use RuntimeException;
 use stdClass;
 
+/**
+ * Class FileSystemFileTest
+ */
 class FileSystemFileTest extends QtiSmTestCase
 {
     /**
@@ -143,6 +146,9 @@ class FileSystemFileTest extends QtiSmTestCase
         new FileSystemFile('/qtism/test');
     }
 
+    /**
+     * @return array
+     */
     public function retrieveProvider()
     {
         return [
@@ -152,6 +158,9 @@ class FileSystemFileTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getStreamProvider()
     {
         return [
@@ -161,6 +170,9 @@ class FileSystemFileTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function createFromExistingFileProvider()
     {
         return [

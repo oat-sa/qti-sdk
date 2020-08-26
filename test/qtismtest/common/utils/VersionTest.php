@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VersionTest
+ */
 class VersionTest extends QtiSmTestCase
 {
     /**
@@ -29,6 +32,9 @@ class VersionTest extends QtiSmTestCase
         Version::compare('2.1.1', '2.2.0', '!==');
     }
 
+    /**
+     * @return array
+     */
     public function versionCompareValidProvider(): array
     {
         return [
@@ -74,6 +80,9 @@ class VersionTest extends QtiSmTestCase
         $this->assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
     }
 
+    /**
+     * @return array
+     */
     public function appendPatchVersionProvider(): array
     {
         return [

@@ -9,6 +9,9 @@ use qtism\data\content\xhtml\ParamType;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ObjectMarshallerTest
+ */
 class ObjectMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallSimple()

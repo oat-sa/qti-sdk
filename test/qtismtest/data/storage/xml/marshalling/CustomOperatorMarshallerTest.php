@@ -11,6 +11,9 @@ use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CustomOperatorMarshallerTest
+ */
 class CustomOperatorMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallNoLaxContent()
@@ -28,7 +31,7 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
+        $element = self::createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(CustomOperator::class, $component);

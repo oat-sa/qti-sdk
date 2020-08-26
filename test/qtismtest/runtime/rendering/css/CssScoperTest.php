@@ -2,10 +2,14 @@
 
 namespace qtismtest\runtime\rendering\css;
 
+use qtism\common\storage\MemoryStreamException;
 use qtism\runtime\rendering\css\CssScoper;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rendering\RenderingException;
 
+/**
+ * Class CssScoperTest
+ */
 class CssScoperTest extends QtiSmTestCase
 {
     /**
@@ -16,6 +20,7 @@ class CssScoperTest extends QtiSmTestCase
      * @param string $id
      * @param bool $cssMapping
      * @throws RenderingException
+     * @throws MemoryStreamException
      */
     public function testOutput($inputFile, $outputFile, $id, $cssMapping = false)
     {
@@ -25,6 +30,9 @@ class CssScoperTest extends QtiSmTestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @return array
+     */
     public function testOutputProvider()
     {
         return [

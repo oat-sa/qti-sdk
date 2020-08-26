@@ -11,6 +11,9 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateDeclarationMarshallerTest
+ */
 class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -27,7 +30,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>
 	    ');
 

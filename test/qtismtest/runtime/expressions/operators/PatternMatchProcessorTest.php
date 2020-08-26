@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -13,6 +14,9 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\PatternMatchProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PatternMatchProcessorTest
+ */
 class PatternMatchProcessorTest extends QtiSmTestCase
 {
     /**
@@ -92,6 +96,9 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function patternMatchProvider()
     {
         return [
@@ -108,6 +115,9 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function nullProvider()
     {
         return [
@@ -117,6 +127,10 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $pattern
+     * @return QtiComponent
+     */
     public function createFakeExpression($pattern)
     {
         return $this->createComponentFromXml('

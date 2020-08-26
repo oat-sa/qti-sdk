@@ -6,6 +6,9 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestSessionSelectionAndOrderingTest
+ */
 class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 {
     public function testSelectionAndOrdering()

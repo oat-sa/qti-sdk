@@ -11,6 +11,8 @@ use qtism\common\enums\Cardinality;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentTest;
+use qtism\data\storage\php\PhpStorageException;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\TestPart;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
@@ -21,6 +23,9 @@ use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionTimingTest
+ */
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testTestPartAssessmentSectionsDurations()
@@ -128,8 +133,10 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * argument.
      *
      * @param bool $forceLateSubmission
-     * @throws AssessmentTestSessionException
      * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testForceLateSubmission($forceLateSubmission = true)
     {
@@ -164,7 +171,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * to a next target item which is timed out.
      *
      * @param bool $allowTimeout
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
+     * @throws XmlStorageException
      */
     public function testJumpToTargetTimeout($allowTimeout = false)
     {

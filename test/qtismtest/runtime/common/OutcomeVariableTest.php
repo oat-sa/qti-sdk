@@ -23,6 +23,9 @@ use qtism\runtime\common\RecordContainer;
 use qtismtest\QtiSmTestCase;
 use UnexpectedValueException;
 
+/**
+ * Class OutcomeVariableTest
+ */
 class OutcomeVariableTest extends QtiSmTestCase
 {
     public function testInstantiate()
@@ -47,12 +50,12 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this->assertEquals('outcome1', $variable->getIdentifier());
         $this->assertEquals(BaseType::INTEGER, $variable->getBaseType());
         $this->assertEquals(Cardinality::SINGLE, $variable->getCardinality());
-        $this->assertTrue(null === $variable->getValue());
+        $this->assertTrue($variable->getValue() === null);
         $this->assertNull($variable->getViews());
         $this->assertFalse($variable->getNormalMaximum());
         $this->assertFalse($variable->getNormalMinimum());
         $this->assertFalse($variable->getMasteryValue());
-        $this->assertTrue(null === $variable->getLookupTable());
+        $this->assertTrue($variable->getLookupTable() === null);
 
         $variable->setValue(new QtiInteger(16));
         $variable->setDefaultValue(new QtiInteger(-1));
@@ -111,7 +114,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationMinimal()
     {
         $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="integer" cardinality="single"/>');
+        $element = self::createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="integer" cardinality="single"/>');
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
@@ -124,7 +127,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationDefaultValueSingleCardinality()
     {
         $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="single">
                 <defaultValue>
                     <value>A B</value>
@@ -141,7 +144,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality()
     {
         $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="multiple">
                 <defaultValue>
                     <value>A B</value>
@@ -163,7 +166,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationDefaultValueRecordCardinality()
     {
         $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <outcomeDeclaration identifier="outcome1" cardinality="record">
                 <defaultValue>
                     <value fieldIdentifier="A" baseType="pair">A B</value>
@@ -185,7 +188,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationExtended()
     {
         $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
                 identifier="outcome1" 
                 baseType="pair" 
@@ -230,7 +233,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationInconsistentOne()
     {
         $factory = $this->getMarshallerFactory('2.1.0');
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
                                 identifier="outcome1" 
                                 baseType="integer" 
@@ -251,7 +254,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationInconsistentTwo()
     {
         $factory = $this->getMarshallerFactory('2.1.0');
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
                                 identifier="outcome1" 
                                 baseType="integer" 
@@ -445,7 +448,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testCreateFromResponseDeclaration()
     {
         $factory = $this->getMarshallerFactory('2.1.0');
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
                                 identifier="response1" 
                                 baseType="integer" 

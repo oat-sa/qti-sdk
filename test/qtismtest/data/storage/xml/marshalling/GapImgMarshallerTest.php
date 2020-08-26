@@ -7,6 +7,9 @@ use qtism\data\content\interactions\GapImg;
 use qtism\data\content\xhtml\QtiObject;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GapImgMarshallerTest
+ */
 class GapImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -24,7 +27,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>
 	    ');
 

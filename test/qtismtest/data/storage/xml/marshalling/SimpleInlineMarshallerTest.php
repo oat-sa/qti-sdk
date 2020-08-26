@@ -15,6 +15,9 @@ use qtism\data\content\xhtml\text\Strong;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SimpleInlineMarshallerTest
+ */
 class SimpleInlineMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

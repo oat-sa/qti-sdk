@@ -10,6 +10,9 @@ use qtism\data\state\InterpolationTableEntry;
 use qtism\data\state\InterpolationTableEntryCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InterpolationTableMarshallerTest
+ */
 class InterpolationTableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

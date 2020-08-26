@@ -22,6 +22,9 @@ use qtism\runtime\common\Utils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class RuntimeUtilsTest
+ */
 class RuntimeUtilsTest extends QtiSmTestCase
 {
     /**
@@ -99,6 +102,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         $this->assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
     }
 
+    /**
+     * @return array
+     */
     public function throwTypingErrorProvider()
     {
         return [
@@ -108,6 +114,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function floatArrayToIntegerProvider()
     {
         return [
@@ -115,6 +124,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function integerArrayToFloatProvider()
     {
         return [
@@ -122,6 +134,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function inferBaseTypeProvider()
     {
         $returnValue = [];
@@ -146,6 +161,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function inferCardinalityProvider()
     {
         $returnValue = [];
@@ -168,6 +186,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function isValidVariableIdentifierProvider()
     {
         return [
@@ -197,6 +218,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isNullDataProvider()
     {
         return [

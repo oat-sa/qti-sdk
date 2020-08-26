@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -17,6 +18,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class ContainsProcessorTest
+ */
 class ContainsProcessorTest extends QtiSmTestCase
 {
     public function testPrimitiveOrderedTrailing()
@@ -446,6 +450,9 @@ class ContainsProcessorTest extends QtiSmTestCase
         $processor = new ContainsProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

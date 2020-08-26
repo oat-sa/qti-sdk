@@ -13,6 +13,9 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentItemMarshallerTest
+ */
 class AssessmentItemMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

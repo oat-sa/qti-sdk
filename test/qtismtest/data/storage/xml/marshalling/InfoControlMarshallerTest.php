@@ -11,6 +11,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Em;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InfoControlMarshallerTest
+ */
 class InfoControlMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
@@ -41,7 +44,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = $this->createDOMElement('<infoControl/>');
+        $element = self::createDOMElement('<infoControl/>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
@@ -54,7 +57,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimalWithAttributes()
     {
-        $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
+        $element = self::createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
@@ -67,7 +70,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallComplex()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <infoControl id="controlMePlease">
 	            This is <em>gooood</em> !
 	        </infoControl>

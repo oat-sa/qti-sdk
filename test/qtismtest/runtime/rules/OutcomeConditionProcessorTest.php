@@ -11,6 +11,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\rules\OutcomeConditionProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeConditionProcessorTest
+ */
 class OutcomeConditionProcessorTest extends QtiSmTestCase
 {
     /**
@@ -96,6 +99,10 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
         $this->check($expectedZ, $state['z']);
     }
 
+    /**
+     * @param $expected
+     * @param $value
+     */
     protected function check($expected, $value)
     {
         if ($expected === null) {
@@ -125,6 +132,9 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
         $engine = new OutcomeConditionProcessor($rule);
     }
 
+    /**
+     * @return array
+     */
     public function testOutcomeConditionComplexProvider()
     {
         return [

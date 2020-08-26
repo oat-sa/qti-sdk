@@ -9,6 +9,9 @@ use qtism\data\TimeLimits;
 use qtism\runtime\tests\TimeConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TimeConstraintTest
+ */
 class TimeConstraintTest extends QtiSmTestCase
 {
     public function testInstantiation()

@@ -10,6 +10,9 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class PrintedVariableMarshallerTest
+ */
 class PrintedVariableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()

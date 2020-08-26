@@ -6,6 +6,9 @@ use DOMDocument;
 use qtism\data\rules\ExitTemplate;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExitTemplateMarshallerTest
+ */
 class ExitTemplateMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -20,7 +23,7 @@ class ExitTemplateMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('<exitTemplate/>');
+        $element = self::createDOMElement('<exitTemplate/>');
 
         $exitTemplate = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(ExitTemplate::class, $exitTemplate);

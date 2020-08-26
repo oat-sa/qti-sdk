@@ -11,6 +11,9 @@ use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class EqualMarshallerTest
+ */
 class EqualMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\AssessmentSectionRef;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentSectionRefMarshallerTest
+ */
 class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -6,6 +6,9 @@ use qtism\common\datatypes\files\FileSystemFileManager;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\files\FileManagerException;
 
+/**
+ * Class FileSystemFileManagerTest
+ */
 class FileSystemFileManagerTest extends QtiSmTestCase
 {
     public function testCreateFromFile()

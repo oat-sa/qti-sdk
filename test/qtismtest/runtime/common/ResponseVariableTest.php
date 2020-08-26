@@ -13,12 +13,15 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\Mapping;
 
+/**
+ * Class ResponseVariableTest
+ */
 class ResponseVariableTest extends QtiSmTestCase
 {
     public function testCreateFromVariableDeclarationExtended()
     {
         $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 			<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
 								identifier="outcome1" 
 								baseType="pair" 

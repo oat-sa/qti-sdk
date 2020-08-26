@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\ContainerSizeProcessor;
@@ -14,6 +15,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class ContainerSizeProcessorTest
+ */
 class ContainerSizeProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
@@ -84,6 +88,9 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $this->assertEquals(3, $result->getValue());
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

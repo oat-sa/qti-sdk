@@ -8,6 +8,9 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\MapEntry;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MapEntryMarshallerTest
+ */
 class MapEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

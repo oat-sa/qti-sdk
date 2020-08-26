@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\SectionPart;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SectionPartMarshallerTest
+ */
 class SectionPartMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

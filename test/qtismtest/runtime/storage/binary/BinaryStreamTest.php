@@ -6,17 +6,26 @@ use qtism\common\storage\MemoryStream;
 use qtism\common\storage\MemoryStreamException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BinaryStreamTest
+ */
 class BinaryStreamTest extends QtiSmTestCase
 {
     private $basicStream;
 
     private $emptyStream;
 
+    /**
+     * @return MemoryStream
+     */
     public function getBasicStream()
     {
         return $this->basicStream;
     }
 
+    /**
+     * @return MemoryStream
+     */
     public function getEmptyStream()
     {
         return $this->emptyStream;

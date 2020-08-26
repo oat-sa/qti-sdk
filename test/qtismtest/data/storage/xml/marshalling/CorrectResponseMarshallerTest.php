@@ -12,6 +12,9 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CorrectResponseMarshallerTest
+ */
 class CorrectResponseMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

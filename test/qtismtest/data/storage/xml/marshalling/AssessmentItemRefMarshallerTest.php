@@ -23,6 +23,9 @@ use qtism\data\state\WeightCollection;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentItemRefMarshallerTest
+ */
 class AssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

@@ -9,6 +9,9 @@ use qtism\data\expressions\RandomInteger;
 use qtism\data\rules\TemplateConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConstraintMarshallerTest
+ */
 class TemplateConstraintMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -29,7 +32,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <templateConstraint>
 	            <match>
 	                <randomInteger min="0" max="5"/>

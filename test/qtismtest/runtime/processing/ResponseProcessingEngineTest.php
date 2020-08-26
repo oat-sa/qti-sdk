@@ -16,6 +16,9 @@ use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\rules\RuleProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseProcessingEngineTest
+ */
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {
     public function testResponseProcessingMatchCorrect()

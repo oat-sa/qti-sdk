@@ -12,6 +12,9 @@ use qtism\data\storage\php\PhpVariable;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class PhpStreamAccessTest
+ */
 class PhpStreamAccessTest extends QtiSmTestCase
 {
     /**
@@ -229,6 +232,9 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
 
+    /**
+     * @return array
+     */
     public function writeScalarDataProvider()
     {
         return [
@@ -252,6 +258,9 @@ class PhpStreamAccessTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function writeFunctionCallDataProvider()
     {
         return [
@@ -261,6 +270,9 @@ class PhpStreamAccessTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function writeInstantiationDataProvider()
     {
         return [

@@ -15,6 +15,9 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionTimingTest
+ */
 class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 {
     public function testEvolutionBasicTimeLimitsUnderflowOverflow()

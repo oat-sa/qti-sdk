@@ -9,6 +9,9 @@ use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class HottextMarshallerTest
+ */
 class HottextMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -28,7 +31,7 @@ class HottextMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <hottext id="my-hottext1" class="so hot" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">Choice1</hottext>
 	    ');
 

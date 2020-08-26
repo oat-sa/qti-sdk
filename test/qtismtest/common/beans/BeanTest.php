@@ -14,6 +14,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\common\beans\BeanMethod;
 use qtism\common\beans\BeanProperty;
 
+/**
+ * Class BeanTest
+ */
 class BeanTest extends QtiSmTestCase
 {
     public function testSimpleBean()

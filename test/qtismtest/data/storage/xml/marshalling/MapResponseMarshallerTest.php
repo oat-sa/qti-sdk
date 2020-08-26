@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\expressions\MapResponse;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MapResponseMarshallerTest
+ */
 class MapResponseMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

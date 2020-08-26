@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\data\content\interactions\SimpleChoice;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ChoiceTest
+ */
 class ChoiceTest extends QtiSmTestCase
 {
     public function testCreateChoiceWrongIdentifier()

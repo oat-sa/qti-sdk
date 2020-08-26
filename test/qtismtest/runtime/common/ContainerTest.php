@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\common;
 
 use DateTime;
+use Exception;
 use InvalidArgumentException;
 use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiBoolean;
@@ -22,6 +23,9 @@ use qtism\runtime\common\Container;
 use qtismtest\QtiSmTestCase;
 use UnexpectedValueException;
 
+/**
+ * Class ContainerTest
+ */
 class ContainerTest extends QtiSmTestCase
 {
     /**
@@ -130,6 +134,9 @@ class ContainerTest extends QtiSmTestCase
         $this->assertEquals($expected, $container->occurences($lookup));
     }
 
+    /**
+     * @return array
+     */
     public function validValueProvider()
     {
         return [
@@ -148,6 +155,10 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function invalidValueProvider()
     {
         return [
@@ -156,6 +167,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validEqualsPrimitiveProvider()
     {
         return [
@@ -170,6 +184,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidEqualsPrimitiveProvider()
     {
         return [
@@ -181,6 +198,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function occurencesProvider()
     {
         return [
@@ -202,6 +222,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validValueCollectionProvider()
     {
         $returnValue = [];
@@ -269,6 +292,9 @@ class ContainerTest extends QtiSmTestCase
         $this->assertEquals($expected, $container->__toString());
     }
 
+    /**
+     * @return array
+     */
     public function toStringProvider()
     {
         $returnValue = [];

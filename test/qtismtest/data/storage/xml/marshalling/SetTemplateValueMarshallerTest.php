@@ -11,6 +11,9 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetTemplateValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetTemplateValueMarshallerTest
+ */
 class SetTemplateValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -30,7 +33,7 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <setTemplateValue identifier="tpl1">
 	            <match>
 	                <variable identifier="var1"/>

@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -13,6 +14,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class GcdProcessorTest
+ */
 class GcdProcessorTest extends QtiSmTestCase
 {
     /**
@@ -68,6 +72,9 @@ class GcdProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return array
+     */
     public function gcdProvider()
     {
         return [
@@ -86,6 +93,9 @@ class GcdProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function gcdWithNullValuesProvider()
     {
         return [
@@ -98,6 +108,9 @@ class GcdProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

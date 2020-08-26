@@ -10,6 +10,9 @@ use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\interactions\SimpleMatchSetCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MatchInteractionTest
+ */
 class MatchInteractionTest extends QtiSmTestCase
 {
     public function testSetShuffleWrongType()

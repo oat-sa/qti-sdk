@@ -5,13 +5,22 @@ namespace qtismtest\data;
 use qtism\data\NavigationMode;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class NavigationModeTest
+ */
 class NavigationModeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return NavigationMode::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -20,6 +29,9 @@ class NavigationModeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -28,6 +40,9 @@ class NavigationModeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

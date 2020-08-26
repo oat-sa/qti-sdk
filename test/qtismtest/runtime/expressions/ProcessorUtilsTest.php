@@ -7,6 +7,9 @@ use qtism\runtime\expressions\Utils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class ProcessorUtilsTest
+ */
 class ProcessorUtilsTest extends QtiSmTestCase
 {
     /**
@@ -29,6 +32,9 @@ class ProcessorUtilsTest extends QtiSmTestCase
         $ref = Utils::sanitizeVariableRef($value);
     }
 
+    /**
+     * @return array
+     */
     public function sanitizeVariableRefValidProvider()
     {
         return [
@@ -42,6 +48,9 @@ class ProcessorUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sanitizeVariableRefInvalidProvider()
     {
         return [

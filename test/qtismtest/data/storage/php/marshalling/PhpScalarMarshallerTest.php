@@ -8,6 +8,9 @@ use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 use stdClass;
 
+/**
+ * Class PhpScalarMarshallerTest
+ */
 class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
@@ -32,6 +35,9 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpScalarMarshaller($ctx, new stdClass());
     }
 
+    /**
+     * @return array
+     */
     public function marshallDataProvider()
     {
         return [

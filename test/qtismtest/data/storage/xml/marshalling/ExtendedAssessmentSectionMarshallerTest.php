@@ -10,11 +10,14 @@ use qtism\data\SectionPartCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentSectionMarshallerTest
+ */
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()
     {
-        $elt = $this->createDOMElement('
+        $elt = self::createDOMElement('
             <assessmentSection identifier="S01" title="Section 01" visible="true">
                 <assessmentSectionRef identifier="SR01" href="./SR01.xml"/>
                 <rubricBlockRef identifier="R01" href="./R01.xml"/>

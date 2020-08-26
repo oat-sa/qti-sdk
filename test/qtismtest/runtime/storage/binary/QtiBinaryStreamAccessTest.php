@@ -19,7 +19,10 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\SubmissionMode;
@@ -39,8 +42,12 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use ReflectionException;
 use ReflectionProperty;
 
+/**
+ * Class QtiBinaryStreamAccessTest
+ */
 class QtiBinaryStreamAccessTest extends QtiSmTestCase
 {
     /**
@@ -49,6 +56,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
      * @param Variable $variable
      * @param string $binary
      * @param mixed $expectedValue
+     * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testReadVariableValue(Variable $variable, $binary, $expectedValue)
     {
@@ -77,6 +87,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function readVariableValueProvider()
     {
         $returnValue = [];
@@ -254,6 +267,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
      * @dataProvider writeVariableValueProvider
      *
      * @param Variable $variable
+     * @throws QtiBinaryStreamAccessException
+     * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testWriteVariableValue(Variable $variable)
     {
@@ -297,6 +314,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function writeVariableValueProvider()
     {
         return [
@@ -665,6 +685,11 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
 
+    /**
+     * @param int $versionNumber
+     * @return QtiBinaryVersion
+     * @throws ReflectionException
+     */
     public function createVersionMock(int $versionNumber): QtiBinaryVersion
     {
         $version = new QtiBinaryVersion();

@@ -7,6 +7,9 @@ use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ParamTest
+ */
 class ParamTest extends QtiSmTestCase
 {
     public function testCreateWrongNameType()

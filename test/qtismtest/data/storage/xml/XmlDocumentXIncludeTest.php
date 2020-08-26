@@ -6,6 +6,9 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlDocumentXIncludeTest
+ */
 class XmlDocumentXIncludeTest extends QtiSmTestCase
 {
     public function testLoadAndSaveXIncludeNsInTag()

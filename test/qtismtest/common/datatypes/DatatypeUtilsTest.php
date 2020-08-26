@@ -5,6 +5,9 @@ namespace qtismtest\common\datatypes;
 use qtism\common\datatypes\Utils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DatatypeUtilsTest
+ */
 class DatatypeUtilsTest extends QtiSmTestCase
 {
     /**
@@ -25,6 +28,9 @@ class DatatypeUtilsTest extends QtiSmTestCase
         $this->assertFalse(Utils::isQtiInteger($value));
     }
 
+    /**
+     * @return array
+     */
     public function isQtiIntegerValidProvider()
     {
         return [
@@ -37,6 +43,9 @@ class DatatypeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isQtiIntegerInvalidProvider()
     {
         return [

@@ -12,6 +12,9 @@ use ReflectionClass;
 use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
 use ReflectionException;
 
+/**
+ * Class TestFeedbackMarshallerTest
+ */
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -77,6 +80,9 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $this->assertEquals($method->invokeArgs(null, [$element]), $expectedContent);
     }
 
+    /**
+     * @return array
+     */
     public function feedbackContent()
     {
         return [

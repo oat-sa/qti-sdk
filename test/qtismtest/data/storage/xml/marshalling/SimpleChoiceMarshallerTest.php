@@ -10,6 +10,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SimpleChoiceMarshallerTest
+ */
 class SimpleChoiceMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -30,7 +33,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>
 	    ');
 

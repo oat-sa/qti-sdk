@@ -6,6 +6,9 @@ use DOMDocument;
 use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ImgMarshallerTest
+ */
 class ImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -57,7 +60,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall21()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." id="my-img" class="beautiful" xml:lang="en-YO" aria-owns="IDREF" aria-hidden="true"/>
 	    ');
 
@@ -82,7 +85,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall22()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-hidden="true"/>
 	    ');
 
@@ -100,7 +103,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall22PreferFlowsTo()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-flowto="IDREF3"/>
 	    ');
 
@@ -115,7 +118,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall22FallbackFlowTo()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowto="IDREF3"/>
 	    ');
 

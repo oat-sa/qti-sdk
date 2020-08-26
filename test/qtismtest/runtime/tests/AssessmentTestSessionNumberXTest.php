@@ -5,15 +5,20 @@ namespace qtismtest\runtime\tests;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionNumberXTest
+ */
 class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase
 {
     /**
      * @dataProvider numberXMethodProvider
      * @param string $method
+     * @throws XmlStorageException
      */
     public function testNumberXNonRunning($method)
     {
@@ -30,6 +35,9 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         $this->assertEquals(0, $session->$method('S0X'));
     }
 
+    /**
+     * @return array
+     */
     public function numberXMethodProvider()
     {
         return [

@@ -8,6 +8,9 @@ use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MatchTableTest
+ */
 class MatchTableTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughMatchTableEntries()

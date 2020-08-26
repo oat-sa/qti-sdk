@@ -12,6 +12,9 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderInteractionMarshallerTest
+ */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -39,7 +42,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
             <orderInteraction responseIdentifier="RESPONSE" maxChoices="2"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>
         ');
 

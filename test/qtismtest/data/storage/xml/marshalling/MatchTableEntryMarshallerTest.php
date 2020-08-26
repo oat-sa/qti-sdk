@@ -8,6 +8,9 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\MatchTableEntry;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MatchTableEntryMarshallerTest
+ */
 class MatchTableEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

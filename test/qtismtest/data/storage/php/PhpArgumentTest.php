@@ -8,6 +8,9 @@ use qtism\data\storage\php\PhpVariable;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class PhpArgumentTest
+ */
 class PhpArgumentTest extends QtiSmTestCase
 {
     public function testPhpArgument()

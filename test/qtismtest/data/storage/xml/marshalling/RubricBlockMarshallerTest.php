@@ -15,6 +15,9 @@ use qtism\data\View;
 use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RubricBlockMarshallerTest
+ */
 class RubricBlockMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

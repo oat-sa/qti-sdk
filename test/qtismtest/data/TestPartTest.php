@@ -10,6 +10,9 @@ use qtism\data\SectionPartCollection;
 use qtism\data\TestPart;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestPartTest
+ */
 class TestPartTest extends QtiSmTestCase
 {
     public function testCreateInvalidIdentifier()

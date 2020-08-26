@@ -9,6 +9,9 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestSeekerTest
+ */
 class AssessmentTestSeekerTest extends QtiSmTestCase
 {
     public function testSeekComponent()

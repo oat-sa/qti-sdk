@@ -7,6 +7,9 @@ use DOMElement;
 use qtism\data\expressions\Correct;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CorrectMarshallerTest
+ */
 class CorrectMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

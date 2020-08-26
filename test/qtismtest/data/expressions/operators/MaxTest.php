@@ -9,6 +9,9 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Max;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MaxTest
+ */
 class MaxTest extends QtiSmTestCase
 {
     public function testInstantiation()

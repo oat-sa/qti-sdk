@@ -10,6 +10,9 @@ use qtismtest\QtiSmTestCase;
 use ReflectionClass;
 use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 
+/**
+ * Class MarshallerTest
+ */
 class MarshallerTest extends QtiSmTestCase
 {
     public function testCradle()

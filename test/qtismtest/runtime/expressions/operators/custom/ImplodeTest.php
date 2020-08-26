@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\operators\custom\Implode;
@@ -13,6 +14,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ImplodeProcessorTest
+ */
 class ImplodeProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperandsOne()
@@ -94,6 +98,9 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $this->assertEquals('Hello-World', $result->getValue());
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

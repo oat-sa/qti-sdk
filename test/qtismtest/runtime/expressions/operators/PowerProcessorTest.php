@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\PowerProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class PowerProcessorTest
+ */
 class PowerProcessorTest extends QtiSmTestCase
 {
     public function testPowerNormal()
@@ -142,6 +146,9 @@ class PowerProcessorTest extends QtiSmTestCase
         $processor = new PowerProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

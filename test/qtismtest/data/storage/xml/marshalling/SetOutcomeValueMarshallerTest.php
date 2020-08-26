@@ -9,6 +9,9 @@ use qtism\data\expressions\BaseValue;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetOutcomeValueMarshallerTest
+ */
 class SetOutcomeValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

@@ -10,6 +10,9 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionPreConditionsTest
+ */
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testInstantiationSample1()

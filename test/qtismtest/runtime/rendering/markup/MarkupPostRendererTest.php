@@ -7,6 +7,9 @@ use qtism\runtime\rendering\markup\MarkupPostRenderer;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rendering\RenderingException;
 
+/**
+ * Class MarkupPostRendererTest
+ */
 class MarkupPostRendererTest extends QtiSmTestCase
 {
     /**
@@ -31,6 +34,9 @@ class MarkupPostRendererTest extends QtiSmTestCase
         $this->assertTrue(mb_strpos($output, '<itemBody', 0, 'UTF-8') === 0);
     }
 
+    /**
+     * @return array
+     */
     public function xmlDeclarationCleanUpProvider()
     {
         return [

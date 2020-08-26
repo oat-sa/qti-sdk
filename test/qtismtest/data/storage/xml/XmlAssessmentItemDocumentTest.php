@@ -4,11 +4,15 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItem;
 
+/**
+ * Class XmlAssessmentItemDocumentTest
+ */
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {
     /**
@@ -48,6 +52,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $uri
      * @param string $expectedVersion
      * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testWrite($uri, $expectedVersion)
     {
@@ -74,6 +79,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $uri
      * @param string $expectedVersion
      * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testSaveToString($uri, $expectedVersion)
     {
@@ -123,6 +129,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals('2.0.0', $doc->getVersion());
     }
 
+    /**
+     * @param string $uri
+     * @throws XmlStorageException
+     */
     public function testLoadTemplate($uri = '')
     {
         $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
@@ -176,6 +186,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertFalse(file_exists($file));
     }
 
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     */
     public function testLoadPCIItem($url = '')
     {
         $doc = new XmlDocument();
@@ -272,6 +286,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertTrue(true);
     }
 
+    /**
+     * @return array
+     */
     public function validFileProvider()
     {
         return [
@@ -395,6 +412,11 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $uri
+     * @param string $version
+     * @return string
+     */
     private static function decorateUri($uri, $version = '2.1')
     {
         if ($version === '2.1' || $version === '2.1.0') {

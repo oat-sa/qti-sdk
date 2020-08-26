@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\AndProcessor;
@@ -14,6 +15,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class AndProcessorTest
+ */
 class AndProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
@@ -102,6 +106,9 @@ class AndProcessorTest extends QtiSmTestCase
         $this->assertSame(false, $result->getValue());
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

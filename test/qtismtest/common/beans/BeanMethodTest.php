@@ -8,6 +8,9 @@ use qtismtest\QtiSmTestCase;
 use ReflectionClass;
 use qtismtest\common\beans\mocks\SimpleBean;
 
+/**
+ * Class BeanMethodTest
+ */
 class BeanMethodTest extends QtiSmTestCase
 {
     public function testNoMethod()

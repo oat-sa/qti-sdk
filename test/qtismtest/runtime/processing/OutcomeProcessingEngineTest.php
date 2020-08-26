@@ -13,6 +13,9 @@ use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\runtime\rules\RuleProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeProcessingEngineTest
+ */
 class OutcomeProcessingEngineTest extends QtiSmTestCase
 {
     public function testResponseProcessingMatchCorrect()

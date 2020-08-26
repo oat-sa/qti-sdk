@@ -19,6 +19,9 @@ use qtism\runtime\expressions\MapResponseProcessor;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiFloat;
 
+/**
+ * Class MapResponseProcessorTest
+ */
 class MapResponseProcessorTest extends QtiSmTestCase
 {
     public function testSimple()

@@ -7,6 +7,9 @@ use qtism\common\beans\BeanParameter;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class BeanParameterTest
+ */
 class BeanParameterTest extends QtiSmTestCase
 {
     public function testNoParameter()

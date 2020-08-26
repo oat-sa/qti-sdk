@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\RoundingMode;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
@@ -16,6 +17,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class EqualRoundedProcessorTest
+ */
 class EqualRoundedProcessorTest extends QtiSmTestCase
 {
     public function testSignificantFigures()
@@ -118,6 +122,11 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $processor = new EqualRoundedProcessor($expression, $operands);
     }
 
+    /**
+     * @param $roundingMode
+     * @param $figures
+     * @return QtiComponent
+     */
     public function createFakeExpression($roundingMode, $figures)
     {
         $roundingMode = RoundingMode::getNameByConstant($roundingMode);

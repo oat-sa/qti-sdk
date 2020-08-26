@@ -10,6 +10,9 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\OutcomeMaximumProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class OutcomeMaximumProcessorTest
+ */
 class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
@@ -35,6 +38,9 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function outcomeMaximumProvider()
     {
         return [
@@ -50,6 +56,14 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param $outcomeIdentifier
+     * @param string $weightIdentifier
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return OutcomeMaximum
+     */
     protected static function getOutcomeMaximum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $outcomeMaximum = new OutcomeMaximum($outcomeIdentifier);

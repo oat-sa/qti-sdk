@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -15,6 +16,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IndexProcessorTest
+ */
 class IndexProcessorTest extends QtiSmTestCase
 {
     public function testIndexNumeric()
@@ -147,6 +151,10 @@ class IndexProcessorTest extends QtiSmTestCase
         $processor = new IndexProcessor($expression, $operands);
     }
 
+    /**
+     * @param int $n
+     * @return QtiComponent
+     */
     public function createFakeExpression($n = -1)
     {
         if ($n === -1) {

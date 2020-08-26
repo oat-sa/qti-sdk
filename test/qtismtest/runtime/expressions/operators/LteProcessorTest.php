@@ -6,12 +6,16 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class LteProcessorTest
+ */
 class LteProcessorTest extends QtiSmTestCase
 {
     public function testLte()
@@ -100,6 +104,9 @@ class LteProcessorTest extends QtiSmTestCase
         $processor = new LteProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

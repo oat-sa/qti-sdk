@@ -2,6 +2,9 @@
 
 namespace qtismtest\common\beans\mocks;
 
+/**
+ * Class NotStrictMissingSetterBean
+ */
 class NotStrictMissingSetterBean
 {
     /**
@@ -22,6 +25,13 @@ class NotStrictMissingSetterBean
      */
     private $hair;
 
+    /**
+     * NotStrictMissingSetterBean constructor.
+     *
+     * @param $firstName
+     * @param $lastName
+     * @param $hair
+     */
     public function __construct($firstName, $lastName, $hair)
     {
         $this->setFirstName($firstName);
@@ -29,21 +39,34 @@ class NotStrictMissingSetterBean
         $this->setHair($hair);
     }
 
+    /**
+     * @param $firstName
+     */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstName()
     {
         return $this->girstName;
     }
 
+    /**
+     * @param $lastName
+     * @return string
+     */
     public function setLastName($lastName)
     {
         return $this->lastName;
     }
 
+    /**
+     * @return string
+     */
     public function getLastName()
     {
         return $this->lastName;
@@ -59,6 +82,9 @@ class NotStrictMissingSetterBean
         $this->hair = $hair;
     }
 
+    /**
+     * @return string
+     */
     public function getHair()
     {
         return $this->hair;

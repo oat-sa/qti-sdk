@@ -10,6 +10,9 @@ use qtism\data\content\xhtml\text\Div;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class FeedbackBlockMarshallerTest
+ */
 class FeedbackBlockMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -30,7 +33,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
+        $element = self::createDOMElement('
 	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>
 	    ');
 

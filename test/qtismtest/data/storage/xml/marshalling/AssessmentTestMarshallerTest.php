@@ -20,6 +20,9 @@ use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestMarshallerTest
+ */
 class AssessmentTestMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()

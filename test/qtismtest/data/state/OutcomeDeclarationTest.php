@@ -26,6 +26,9 @@ use qtism\data\state\ExternalScored;
 use qtism\data\state\OutcomeDeclaration;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeDeclarationTest
+ */
 class OutcomeDeclarationTest extends QtiSmTestCase
 {
     /** @var OutcomeDeclaration */

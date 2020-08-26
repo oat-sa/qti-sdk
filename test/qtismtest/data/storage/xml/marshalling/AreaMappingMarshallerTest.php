@@ -11,6 +11,9 @@ use qtism\data\state\AreaMapEntryCollection;
 use qtism\data\state\AreaMapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AreaMappingMarshallerTest
+ */
 class AreaMappingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()

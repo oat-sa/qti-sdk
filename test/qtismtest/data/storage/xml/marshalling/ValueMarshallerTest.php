@@ -10,6 +10,9 @@ use qtism\data\state\Value;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class ValueMarshallerTest
+ */
 class ValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallBaseType()
@@ -41,7 +44,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertTrue('false' === $element->nodeValue);
+        $this->assertTrue($element->nodeValue === 'false');
     }
 
     public function testMarshallNoBaseType()

@@ -7,6 +7,9 @@ use qtism\data\XInclude;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class XIncludeMarshallerTest
+ */
 class XIncludeMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -21,7 +24,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
+        $element = self::createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(XInclude::class, $xinclude);
@@ -36,7 +39,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
 
     public function testGetXmlWrongNamespace()
     {
-        $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
+        $element = self::createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->expectException(RuntimeException::class);

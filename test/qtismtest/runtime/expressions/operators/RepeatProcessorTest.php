@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -17,6 +18,9 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class RepeatProcessorTest
+ */
 class RepeatProcessorTest extends QtiSmTestCase
 {
     public function testRepeatScalarOnly()
@@ -138,6 +142,10 @@ class RepeatProcessorTest extends QtiSmTestCase
         $processor = new RepeatProcessor($expression, $operands);
     }
 
+    /**
+     * @param int $numberRepeats
+     * @return QtiComponent
+     */
     public function createFakeExpression($numberRepeats = 1)
     {
         return $this->createComponentFromXml('

@@ -13,6 +13,9 @@ use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetOutcomeValueProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetOutcomeValueProcessorTest
+ */
 class SetOutcomeValueProcessorTest extends QtiSmTestCase
 {
     public function testSetOutcomeValueSimple()
