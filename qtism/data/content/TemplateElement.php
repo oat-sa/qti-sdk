@@ -112,7 +112,7 @@ abstract class TemplateElement extends BodyElement
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray(), true) === true) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration.";

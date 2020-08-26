@@ -165,7 +165,7 @@ class Img extends AtomicInline
      */
     public function setLongdesc($longdesc)
     {
-        if (Format::isUri($longdesc) === true || (is_string($longdesc) === true && empty($longdesc) === true)) {
+        if (Format::isUri($longdesc) === true || (is_string($longdesc) && empty($longdesc))) {
             $this->longdesc = $longdesc;
         } else {
             $msg = "The 'longdesc' argument must be a valid URI, '" . $longdesc . "' given.";

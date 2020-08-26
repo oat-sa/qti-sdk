@@ -161,7 +161,7 @@ class SliderInteraction extends BlockInteraction
      */
     public function setLowerBound($lowerBound)
     {
-        if (is_float($lowerBound) === true) {
+        if (is_float($lowerBound)) {
             $this->lowerBound = $lowerBound;
         } else {
             $msg = "The 'lowerBound' argument must be a float value, '" . gettype($lowerBound) . "' given.";
@@ -187,7 +187,7 @@ class SliderInteraction extends BlockInteraction
      */
     public function setUpperBound($upperBound)
     {
-        if (is_float($upperBound) === true) {
+        if (is_float($upperBound)) {
             $this->upperBound = $upperBound;
         } else {
             $msg = "The 'upperBound' argument must be a float value, '" . gettype($upperBound) . "' given.";
@@ -250,7 +250,7 @@ class SliderInteraction extends BlockInteraction
      */
     public function setStepLabel($stepLabel)
     {
-        if (is_bool($stepLabel) === true) {
+        if (is_bool($stepLabel)) {
             $this->stepLabel = $stepLabel;
         } else {
             $msg = "The 'stepLabel' argument must be a boolean value, '" . gettype($stepLabel) . "' given.";
@@ -276,7 +276,7 @@ class SliderInteraction extends BlockInteraction
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray(), true) === true) {
+        if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration.";
@@ -302,7 +302,7 @@ class SliderInteraction extends BlockInteraction
      */
     public function setReverse($reverse)
     {
-        if (is_bool($reverse) === true) {
+        if (is_bool($reverse)) {
             $this->reverse = $reverse;
         } else {
             $msg = "The 'reverse' argument must be a boolean value, '" . gettype($reverse) . "' given.";

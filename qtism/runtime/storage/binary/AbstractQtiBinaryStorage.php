@@ -113,7 +113,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     public function instantiate(AssessmentTest $test, $sessionId = '')
     {
         // If not provided, generate a session ID.
-        if (empty($sessionId) === true) {
+        if (empty($sessionId)) {
             $sessionId = uniqid('qtism', true);
         }
 

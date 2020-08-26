@@ -213,7 +213,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
                     $elseGetter = $statementGetter . 'Else';
                     $elseStatement = $rule->$elseGetter();
 
-                    if ($followElseIf === false && is_null($elseStatement) === false) {
+                    if ($followElseIf === false && $elseStatement !== null) {
                         // No else if followed, the last resort is the else.
                         $this->pushTrail($elseStatement->$ruleGetter());
                     }

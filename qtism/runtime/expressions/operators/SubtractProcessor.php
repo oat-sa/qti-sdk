@@ -84,6 +84,6 @@ class SubtractProcessor extends OperatorProcessor
 
         $subtract = $operand1->getValue() - $operand2->getValue();
 
-        return (is_int($subtract) === true) ? new QtiInteger($subtract) : new QtiFloat($subtract);
+        return (is_int($subtract)) ? new QtiInteger($subtract) : new QtiFloat($subtract);
     }
 }

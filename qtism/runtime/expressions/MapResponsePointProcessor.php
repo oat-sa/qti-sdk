@@ -79,11 +79,11 @@ class MapResponsePointProcessor extends ExpressionProcessor
         $state = $this->getState();
         $var = $state->getVariable($identifier);
 
-        if (!is_null($var)) {
+        if ($var !== null) {
             if ($var instanceof ResponseVariable) {
                 $areaMapping = $var->getAreaMapping();
 
-                if (is_null($areaMapping)) {
+                if ($areaMapping === null) {
                     return new QtiFloat(0.0);
                 }
 

@@ -238,7 +238,7 @@ class ItemResult extends QtiComponent
      */
     public function hasItemVariables()
     {
-        return !is_null($this->itemVariables);
+        return $this->itemVariables !== null;
     }
 
     /**
@@ -270,7 +270,7 @@ class ItemResult extends QtiComponent
      */
     public function hasSequenceIndex()
     {
-        return !is_null($this->sequenceIndex);
+        return $this->sequenceIndex !== null;
     }
 
     /**
@@ -331,6 +331,6 @@ class ItemResult extends QtiComponent
      */
     public function hasCandidateComment()
     {
-        return !is_null($this->candidateComment);
+        return $this->candidateComment !== null;
     }
 }

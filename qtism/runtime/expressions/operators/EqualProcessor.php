@@ -118,7 +118,7 @@ class EqualProcessor extends OperatorProcessor
                 $tolerance0Name = Utils::sanitizeVariableRef($strTolerance[0]);
                 $varValue = $state[$tolerance0Name];
 
-                if (is_null($varValue)) {
+                if ($varValue === null) {
                     $msg = "The variable with name '${tolerance0Name}' could not be resolved.";
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
                 } elseif (!$varValue instanceof QtiFloat) {

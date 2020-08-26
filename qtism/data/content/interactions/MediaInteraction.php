@@ -123,7 +123,7 @@ class MediaInteraction extends BlockInteraction
      */
     public function setAutostart($autostart)
     {
-        if (is_bool($autostart) === true) {
+        if (is_bool($autostart)) {
             $this->autostart = $autostart;
         } else {
             $msg = "The 'autostart' argument must be a boolean value, '" . gettype($autostart) . "' given.";
@@ -149,7 +149,7 @@ class MediaInteraction extends BlockInteraction
      */
     public function setMinPlays($minPlays)
     {
-        if (is_int($minPlays) === true && $minPlays >= 0) {
+        if (is_int($minPlays) && $minPlays >= 0) {
             $this->minPlays = $minPlays;
         } else {
             $msg = "The 'minPlays' argument must be a positive (>= 0) integer, '" . gettype($minPlays) . "' given.";
@@ -221,7 +221,7 @@ class MediaInteraction extends BlockInteraction
      */
     public function setLoop($loop)
     {
-        if (is_bool($loop) === true) {
+        if (is_bool($loop)) {
             $this->loop = $loop;
         } else {
             $msg = "The 'loop' argument must be a boolean value, '" . gettype($loop) . "' given.";

@@ -226,7 +226,7 @@ class Container extends AbstractCollection implements Comparable
         foreach (array_keys($data) as $k) {
             $d = $data[$k];
 
-            if (is_null($d) === true) {
+            if ($d === null) {
                 $strings[] = 'NULL';
             } elseif ($d instanceof QtiString) {
                 $strings[] = "'${d}'";
@@ -278,7 +278,7 @@ class Container extends AbstractCollection implements Comparable
             }
 
             if ($found === false) {
-                if (is_string($key) === true) {
+                if (is_string($key)) {
                     $newDataPlaceHolder[$key] = $value;
                 } else {
                     $newDataPlaceHolder[] = $value;

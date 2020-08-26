@@ -105,7 +105,7 @@ class InlineChoiceInteraction extends InlineInteraction
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -131,7 +131,7 @@ class InlineChoiceInteraction extends InlineInteraction
      */
     public function setRequired($required)
     {
-        if (is_bool($required) === true) {
+        if (is_bool($required)) {
             $this->required = $required;
         } else {
             $msg = "The 'required' argument must be a boolean value, '" . gettype($required) . "' given.";

@@ -203,7 +203,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
     public function testLoadRubricBlockRefs(XmlCompactDocument $doc = null)
     {
-        if (empty($doc) === true) {
+        if (empty($doc)) {
             $src = self::samplesDir() . 'custom/runtime/rubricblockref.xml';
             $doc = new XmlCompactDocument();
             $doc->load($src, true);

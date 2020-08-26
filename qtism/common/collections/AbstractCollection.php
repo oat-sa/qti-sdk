@@ -178,7 +178,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $this->checkType($value);
 
-        if (is_null($offset)) {
+        if ($offset === null) {
             array_push($this->dataPlaceHolder, $value);
         } else {
             $this->dataPlaceHolder[$offset] = $value;

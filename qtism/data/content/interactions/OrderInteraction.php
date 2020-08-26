@@ -165,7 +165,7 @@ class OrderInteraction extends BlockInteraction
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -191,7 +191,7 @@ class OrderInteraction extends BlockInteraction
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && ($minChoices > 0 || $minChoices === -1)) {
+        if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
             if ($minChoices > count($this->getSimpleChoices())) {
                 $msg = "The value of 'minChoices' cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
@@ -232,7 +232,7 @@ class OrderInteraction extends BlockInteraction
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices > 0 || $maxChoices === -1) {
+        if (is_int($maxChoices) && $maxChoices > 0 || $maxChoices === -1) {
             if ($this->hasMinChoices() === true && $maxChoices > count($this->getSimpleChoices())) {
                 $msg = "The 'maxChoices' argument cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
@@ -273,7 +273,7 @@ class OrderInteraction extends BlockInteraction
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray(), true) === true) {
+        if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration, '" . gettype($orientation) . "' given.";

@@ -113,7 +113,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setName($name)
     {
-        if (is_string($name) === true) {
+        if (is_string($name)) {
             $this->name = $name;
         } else {
             $msg = "The 'name' argument must be a string, '" . gettype($name) . "' given.";
@@ -139,7 +139,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setValue($value)
     {
-        if (is_string($value) === true) {
+        if (is_string($value)) {
             $this->value = $value;
         } else {
             $msg = "The 'value' argument must be a string, '" . gettype($value) . "' given.";
@@ -165,7 +165,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setValueType($valueType)
     {
-        if (in_array($valueType, ParamType::asArray(), true) === true) {
+        if (in_array($valueType, ParamType::asArray(), true)) {
             $this->valueType = $valueType;
         } else {
             $msg = "The 'valueType' argument must be a value from the ParamType enumeration, '" . gettype($valueType) . "' given.";
@@ -192,7 +192,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setType($type)
     {
-        if (is_string($type) === true) {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a string, '" . gettype($type) . "' given.";

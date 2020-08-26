@@ -129,7 +129,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      */
     public function setSummary($summary)
     {
-        if (is_string($summary) === true) {
+        if (is_string($summary)) {
             $this->summary = $summary;
         } else {
             $msg = "The 'summary' argument must be a string, '" . gettype($summary) . "' given.";

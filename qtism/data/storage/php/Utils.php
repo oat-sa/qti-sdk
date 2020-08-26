@@ -39,7 +39,7 @@ class Utils
      */
     public static function isScalar($value)
     {
-        return is_scalar($value) === true || is_null($value) === true;
+        return is_scalar($value) || $value === null;
     }
 
     /**
@@ -50,7 +50,7 @@ class Utils
      */
     public static function isVariableReference($string)
     {
-        return is_string($string) === true && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
+        return is_string($string) && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
     }
 
     /**

@@ -179,7 +179,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function setId($id = '')
     {
-        if (is_string($id) && (empty($id) === true || Format::isIdentifier($id, false) === true)) {
+        if (is_string($id) && (empty($id) || Format::isIdentifier($id, false) === true)) {
             $this->id = $id;
         } else {
             $msg = "The 'id' argument of a body element must be a valid identifier or an empty string";
@@ -216,7 +216,7 @@ abstract class BodyElement extends QtiComponent
     public function setClass($class = '')
     {
         $class = trim($class);
-        if (is_string($class) && (empty($class) === true || Format::isClass($class) === true)) {
+        if (is_string($class) && (empty($class) || Format::isClass($class) === true)) {
             $this->class = $class;
         } else {
             $msg = "The 'class' argument must be a valid class name, '" . $class . "' given";

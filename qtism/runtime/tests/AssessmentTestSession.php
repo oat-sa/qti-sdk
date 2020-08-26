@@ -333,7 +333,7 @@ class AssessmentTestSession extends State
      */
     public function setState($state)
     {
-        if (in_array($state, AssessmentTestSessionState::asArray(), true) === true) {
+        if (in_array($state, AssessmentTestSessionState::asArray(), true)) {
             $this->state = $state;
         } else {
             $msg = 'The state argument must be a value from the AssessmentTestSessionState enumeration';
@@ -1633,7 +1633,7 @@ class AssessmentTestSession extends State
             $responseProcessing = $item->getResponseProcessing();
 
             // If the item has a processable response processing...
-            if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
+            if ($responseProcessing !== null && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
                 try {
                     $engine = $this->createResponseProcessingEngine($responseProcessing, $itemSession);
                     $engine->process();
@@ -2281,15 +2281,15 @@ class AssessmentTestSession extends State
                     break;
 
                 case AssessmentTestPlace::TEST_PART:
-                    $jumpables = $route->getRouteItemsByTestPart((empty($identifier) === true) ? $this->getCurrentTestPart() : $identifier);
+                    $jumpables = $route->getRouteItemsByTestPart((empty($identifier)) ? $this->getCurrentTestPart() : $identifier);
                     break;
 
                 case AssessmentTestPlace::ASSESSMENT_SECTION:
-                    $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier) === true) ? $this->getCurrentAssessmentSection() : $identifier);
+                    $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier)) ? $this->getCurrentAssessmentSection() : $identifier);
                     break;
 
                 case AssessmentTestPlace::ASSESSMENT_ITEM:
-                    $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier) === true) ? $this->getCurrentAssessmentItemRef() : $identifier);
+                    $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier)) ? $this->getCurrentAssessmentItemRef() : $identifier);
                     break;
             }
 

@@ -81,7 +81,7 @@ class GapImg extends GapChoice
      */
     public function setObjectLabel($objectLabel)
     {
-        if (is_string($objectLabel) === true) {
+        if (is_string($objectLabel)) {
             $this->objectLabel = $objectLabel;
         } else {
             $msg = "The 'objectLabel' argument must be a string, '" . gettype($objectLabel) . "' given.";

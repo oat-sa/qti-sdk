@@ -527,7 +527,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function mustIgnoreComponent(QtiComponent $component)
     {
         // In the list of QTI class names to be ignored?
-        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
+        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses())) {
             return true;
         } elseif ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === self::CONTEXT_AWARE)) {
             // Context Aware + FeedbackElement OR Context Aware + Choice Templating.
@@ -615,7 +615,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     public function ignoreQtiClasses($classes)
     {
-        if (is_string($classes) === true) {
+        if (is_string($classes)) {
             $classes = [$classes];
         }
 

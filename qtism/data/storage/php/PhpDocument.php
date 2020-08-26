@@ -196,7 +196,7 @@ class PhpDocument extends QtiDocument
                 // Leaf node (QtiDatatype or PHP scalar (including the null value)).
                 $marshaller = new PhpScalarMarshaller($ctx, $component);
                 $marshaller->marshall();
-            } elseif (is_array($component) === true) {
+            } elseif (is_array($component)) {
                 // Leaf node array.
                 $marshaller = new PhpArrayMarshaller($ctx, $component);
                 $marshaller->marshall();

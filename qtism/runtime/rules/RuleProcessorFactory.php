@@ -55,7 +55,7 @@ class RuleProcessorFactory implements ProcessorFactory
         $nsPackage = 'qtism\\runtime\\rules\\';
         $className = $nsPackage . $qtiClassName . 'Processor';
 
-        if (class_exists($className) === true) {
+        if (class_exists($className)) {
             return new $className($rule);
         }
 

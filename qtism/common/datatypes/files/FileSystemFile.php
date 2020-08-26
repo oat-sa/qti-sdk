@@ -217,8 +217,8 @@ class FileSystemFile implements QtiFile
      */
     public static function createFromExistingFile($source, $destination, $mimeType, $withFilename = true)
     {
-        if (is_file($source) === true) {
-            if (is_readable($source) === true) {
+        if (is_file($source)) {
+            if (is_readable($source)) {
                 // Should we build the path to $destination?
                 $pathinfo = pathinfo($destination);
                 if (isset($pathinfo['dirname']) === false) {

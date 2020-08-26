@@ -100,7 +100,7 @@ class MaxProcessor extends OperatorProcessor
             }
 
             foreach ($value as $v) {
-                if (is_null($v)) {
+                if ($v === null) {
                     return null;
                 }
 

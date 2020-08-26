@@ -120,7 +120,7 @@ class RoundToProcessor extends OperatorProcessor
             $figuresIdentifier = ExprUtils::sanitizeVariableRef($figures);
             $figures = $state[$figuresIdentifier];
 
-            if (is_null($figures)) {
+            if ($figures === null) {
                 $msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$figures instanceof QtiInteger) {

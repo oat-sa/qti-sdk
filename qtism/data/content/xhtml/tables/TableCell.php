@@ -152,7 +152,7 @@ abstract class TableCell extends BodyElement
      */
     public function setScope($scope)
     {
-        if (in_array($scope, TableCellScope::asArray(), true) === true || $scope === -1) {
+        if (in_array($scope, TableCellScope::asArray(), true) || $scope === -1) {
             $this->scope = $scope;
         } else {
             $msg = "The 'scope' argument must be a value from the TableCellScope enumeration, '" . $scope . "' given.";
@@ -188,7 +188,7 @@ abstract class TableCell extends BodyElement
      */
     public function setAbbr($abbr)
     {
-        if (is_string($abbr) === true) {
+        if (is_string($abbr)) {
             $this->abbr = $abbr;
         } else {
             $msg = "The 'abbr' attribute must be a string, '" . gettype($abbr) . "' given.";
@@ -224,7 +224,7 @@ abstract class TableCell extends BodyElement
      */
     public function setAxis($axis)
     {
-        if (is_string($axis) === true) {
+        if (is_string($axis)) {
             $this->axis = $axis;
         } else {
             $msg = "The 'axis' argument must be a string, '" . gettype($axis) . "' given.";
@@ -261,7 +261,7 @@ abstract class TableCell extends BodyElement
      */
     public function setRowspan($rowspan)
     {
-        if (is_int($rowspan) === true) {
+        if (is_int($rowspan)) {
             $this->rowspan = $rowspan;
         } else {
             $msg = "The 'rowspan' argument must be an integer, '" . gettype($rowspan) . "' given.";
@@ -299,7 +299,7 @@ abstract class TableCell extends BodyElement
      */
     public function setColspan($colspan)
     {
-        if (is_int($colspan) === true) {
+        if (is_int($colspan)) {
             $this->colspan = $colspan;
         } else {
             $msg = "The 'colspan' argument must be an integer, '" . gettype($colspan) . "' given.";

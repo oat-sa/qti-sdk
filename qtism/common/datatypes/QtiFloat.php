@@ -40,7 +40,7 @@ class QtiFloat extends QtiScalar
      */
     protected function checkType($value)
     {
-        if (is_double($value) !== true) {
+        if (is_float($value) !== true) {
             $msg = 'The Float Datatype only accepts to store float values.';
             throw new InvalidArgumentException($msg);
         }

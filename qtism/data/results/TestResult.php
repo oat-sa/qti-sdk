@@ -180,6 +180,6 @@ class TestResult extends QtiComponent
      */
     public function hasItemVariables()
     {
-        return !is_null($this->itemVariables);
+        return $this->itemVariables !== null;
     }
 }

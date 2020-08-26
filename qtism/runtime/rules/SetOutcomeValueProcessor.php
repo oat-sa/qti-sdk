@@ -83,7 +83,7 @@ class SetOutcomeValueProcessor extends RuleProcessor
         $identifier = $rule->getIdentifier();
         $var = $state->getVariable($identifier);
 
-        if (is_null($var) === true) {
+        if ($var === null) {
             $msg = "No variable with identifier '${identifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof OutcomeVariable) {

@@ -127,7 +127,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray()) === true) {
+        if (in_array($showHide, ShowHide::asArray())) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration, '" . $showHide . "' given.";

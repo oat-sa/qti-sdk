@@ -393,10 +393,10 @@ abstract class Variable
         // Containers as per QTI Spec, are considered to be NULL if empty.
         if ($value instanceof Container && $value->isNull() === true) {
             return true;
-        } elseif (!$value instanceof Container && !is_null($value) && $this->getBaseType() === BaseType::STRING) {
+        } elseif (!$value instanceof Container && $value !== null && $this->getBaseType() === BaseType::STRING) {
             return $value->getValue() === '';
         } else {
-            return is_null($value);
+            return $value === null;
         }
     }
 

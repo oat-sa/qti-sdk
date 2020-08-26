@@ -64,19 +64,19 @@ class PhpStreamAccess extends AbstractStreamAccess
         }
 
         try {
-            if (is_int($scalar) === true) {
+            if (is_int($scalar)) {
                 $this->getStream()->write($scalar);
-            } elseif (is_double($scalar) === true) {
+            } elseif (is_float($scalar)) {
                 if (strpos('' . $scalar, '.') === false) {
                     $scalar .= '.0';
                 }
 
                 $this->getStream()->write($scalar);
-            } elseif (is_string($scalar) === true) {
+            } elseif (is_string($scalar)) {
                 $this->getStream()->write(PhpUtils::doubleQuotedPhpString($scalar));
-            } elseif (is_bool($scalar) === true) {
+            } elseif (is_bool($scalar)) {
                 $this->getStream()->write(($scalar === true) ? 'true' : 'false');
-            } elseif (is_null($scalar) === true) {
+            } elseif ($scalar === null) {
                 $this->getStream()->write('null');
             }
         } catch (StreamException $e) {
@@ -331,7 +331,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             $this->getStream()->write($funcname);
             $this->writeOpeningParenthesis();
 
-            if (is_null($arguments) === false) {
+            if ($arguments !== null) {
                 $this->writeArguments($arguments);
             }
 
@@ -365,7 +365,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             $this->getStream()->write($methodname);
             $this->writeOpeningParenthesis();
 
-            if (is_null($arguments) === false) {
+            if ($arguments !== null) {
                 $this->writeArguments($arguments);
             }
 
@@ -409,7 +409,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             $this->getStream()->write($classname);
             $this->writeOpeningParenthesis();
 
-            if (is_null($arguments) === false) {
+            if ($arguments !== null) {
                 $this->writeArguments($arguments);
             }
 

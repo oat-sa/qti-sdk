@@ -150,7 +150,7 @@ class ChoiceInteraction extends BlockInteraction
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -177,7 +177,7 @@ class ChoiceInteraction extends BlockInteraction
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -205,7 +205,7 @@ class ChoiceInteraction extends BlockInteraction
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && $minChoices >= 0) {
+        if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
         } else {
             $msg = "The 'minChoices' argument must be a positive (>= 0) integer, '" . gettype($minChoices) . "' given.";
@@ -231,7 +231,7 @@ class ChoiceInteraction extends BlockInteraction
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray(), true) === true) {
+        if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration, '" . gettype($orientation) . "' given.";

@@ -360,7 +360,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function hasOutcomeProcessing()
     {
-        return is_null($this->getOutcomeProcessing()) !== true;
+        return $this->getOutcomeProcessing() !== null;
     }
 
     /**

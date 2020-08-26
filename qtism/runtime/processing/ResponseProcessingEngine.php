@@ -59,7 +59,7 @@ class ResponseProcessingEngine extends AbstractEngine
     {
         parent::__construct($responseProcessing, $context);
 
-        $templateDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+        $templateDir = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
         // Response Processing Templates content are the same in QTI 2.1 and 2.2.
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'match_correct.php');
@@ -192,11 +192,11 @@ class ResponseProcessingEngine extends AbstractEngine
 
             // The template could not be resolved using the mapping.
             // Try to use template location.
-            if (empty($finalTemplateFile) === true && empty($templateLocation) === false && @is_readable($templateLocation) === true) {
+            if (empty($finalTemplateFile) && empty($templateLocation) === false && @is_readable($templateLocation)) {
                 $finalTemplateFile = $templateLocation;
             }
 
-            if (empty($finalTemplateFile) === true) {
+            if (empty($finalTemplateFile)) {
                 $msg = "The template file could not be found: template='${template}', templateLocation='${templateLocation}'.";
                 throw new ResponseProcessingException($msg, $this, ResponseProcessingException::TEMPLATE_NOT_FOUND);
             }

@@ -336,7 +336,7 @@ class QtiComponentIterator implements Iterator
             $this->markTraversed($this->getCurrentComponent());
             $this->pushOnTrail($this->getCurrentComponent(), $this->getCurrentComponent()->getComponents());
 
-            if (empty($classes) === true || in_array($this->getCurrentComponent()->getQtiClassName(), $classes) === true) {
+            if (empty($classes) || in_array($this->getCurrentComponent()->getQtiClassName(), $classes)) {
                 $foundClass = true;
                 break;
             }
@@ -406,7 +406,7 @@ class QtiComponentIterator implements Iterator
                     $this->pushOnTrail($component, $this->currentComponent->getComponents());
                     $this->markTraversed($this->currentComponent);
 
-                    if (empty($this->classes) === true || in_array($component->getQTIClassName(), $this->classes) === true) {
+                    if (empty($this->classes) || in_array($component->getQTIClassName(), $this->classes)) {
                         // If all classes are seeked or the current component has a class name
                         // that must be seeked, stop the iteration.
                         return;

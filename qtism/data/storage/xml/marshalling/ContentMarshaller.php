@@ -294,7 +294,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        if (in_array($element->localName, self::$simpleComposites) === true) {
+        if (in_array($element->localName, self::$simpleComposites)) {
             return self::getChildElements($element, true);
         } elseif ($element->localName === 'choiceInteraction') {
             return self::getChildElementsByTagName($element, 'simpleChoice');
@@ -386,13 +386,13 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
 
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
 
             $fqClass = $l . "\\Qti" . $class;
 
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
         }

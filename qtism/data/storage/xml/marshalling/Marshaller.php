@@ -221,12 +221,9 @@ abstract class Marshaller
                     return (int)$attr;
                     break;
 
+                case 'double':
                 case 'float':
                     return (float)$attr;
-                    break;
-
-                case 'double':
-                    return doubleval($attr);
                     break;
 
                 case 'boolean':

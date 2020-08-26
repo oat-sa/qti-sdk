@@ -172,7 +172,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      */
     public function setFixed($fixed)
     {
-        if (is_bool($fixed) === true) {
+        if (is_bool($fixed)) {
             $this->fixed = $fixed;
         } else {
             $msg = "The 'fixed' argument must be a boolean value, '" . gettype($fixed) . "' given.";
@@ -198,7 +198,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      */
     public function setTemplateIdentifier($templateIdentifier)
     {
-        if (is_string($templateIdentifier) === true && (empty($templateIdentifier) === true) || Format::isIdentifier($templateIdentifier, false) === true) {
+        if (is_string($templateIdentifier) && (empty($templateIdentifier)) || Format::isIdentifier($templateIdentifier, false) === true) {
             $this->templateIdentifier = $templateIdentifier;
         } else {
             $msg = "The 'templateIdentifier' must be an empty string or a valid QTI identifier, '" . gettype($templateIdentifier) . "' given.";
@@ -234,7 +234,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray()) === true) {
+        if (in_array($showHide, ShowHide::asArray())) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration.";

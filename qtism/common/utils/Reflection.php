@@ -42,7 +42,7 @@ class Reflection
      */
     public static function newInstance(ReflectionClass $class, $args = [])
     {
-        if (empty($args) === true) {
+        if (empty($args)) {
             $fqName = $class->getName();
 
             return new $fqName();
@@ -69,10 +69,10 @@ class Reflection
     {
         $shortClassName = false;
 
-        if (is_object($object) === true) {
+        if (is_object($object)) {
             $parts = explode("\\", get_class($object));
             $shortClassName = array_pop($parts);
-        } elseif (is_string($object) === true && empty($object) === false) {
+        } elseif (is_string($object) && empty($object) === false) {
             $parts = explode("\\", $object);
             $shortClassName = array_pop($parts);
         }

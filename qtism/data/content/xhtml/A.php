@@ -103,7 +103,7 @@ class A extends SimpleInline
      */
     public function setType($type)
     {
-        if (is_string($type) === true) {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a non-empty string representing a mime-type, '" . gettype($type) . "' given.";

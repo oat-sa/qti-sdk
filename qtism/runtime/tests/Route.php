@@ -765,12 +765,12 @@ class Route implements Iterator
      */
     public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
-        $bySection = (empty($sectionIdentifier) === true) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
+        $bySection = (empty($sectionIdentifier)) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
 
-        if (is_null($includeCategories) === false) {
+        if ($includeCategories !== null) {
             // We will perform the search by category inclusion.
             return $bySection->intersect($this->getAssessmentItemRefsByCategory($includeCategories));
-        } elseif (is_null($excludeCategories) === false) {
+        } elseif ($excludeCategories !== null) {
             // Perform the category by exclusion.
             return $bySection->diff($this->getAssessmentItemRefsByCategory($excludeCategories));
         } else {

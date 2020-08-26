@@ -151,13 +151,13 @@ class XmlCompactDocument extends XmlDocument
         $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 
         // File resolution.
-        if (is_null($itemResolver) === true) {
+        if ($itemResolver === null) {
             $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
         } elseif ($itemResolver instanceof FileResolver) {
             $itemResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
         }
 
-        if (is_null($sectionResolver) === true) {
+        if ($sectionResolver === null) {
             $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
         } elseif ($sectionResolver instanceof FileResolver) {
             $sectionResolver->setBasePath($xmlAssessmentTestDocument->getUrl());

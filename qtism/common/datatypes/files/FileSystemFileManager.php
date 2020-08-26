@@ -40,7 +40,7 @@ class FileSystemFileManager implements FileManager
      */
     public function __construct($storageDirectory = '')
     {
-        $this->setStorageDirectory((empty($storageDirectory) === true) ? sys_get_temp_dir() : $storageDirectory);
+        $this->setStorageDirectory((empty($storageDirectory)) ? sys_get_temp_dir() : $storageDirectory);
     }
 
     /**

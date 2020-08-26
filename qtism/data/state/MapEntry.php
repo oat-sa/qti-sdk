@@ -111,7 +111,7 @@ class MapEntry extends QtiComponent
      */
     public function setMappedValue($mappedValue)
     {
-        if (is_float($mappedValue) || is_double($mappedValue)) {
+        if (is_float($mappedValue)) {
             $this->mappedValue = $mappedValue;
         } else {
             $msg = "The attribute 'mappedValue' must be a float value, '" . gettype($mappedValue) . "' given.";

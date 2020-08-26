@@ -79,7 +79,7 @@ class MultipleProcessor extends OperatorProcessor
         $returnValue = null;
 
         foreach ($operands as $operand) {
-            if (is_null($operand) || ($operand instanceof MultipleContainer && $operand->isNull())) {
+            if ($operand === null || ($operand instanceof MultipleContainer && $operand->isNull())) {
                 // As per specs, ignore.
                 continue;
             } elseif ($refType !== null) {

@@ -81,7 +81,7 @@ class TemplateVariable extends Variable
      */
     public function setParamVariable($paramVariable)
     {
-        if (is_bool($paramVariable) === true) {
+        if (is_bool($paramVariable)) {
             $this->paramVariable = $paramVariable;
         } else {
             $msg = "The 'paramVariable' argument must be a boolean value, '" . gettype($paramVariable) . "'.";
@@ -109,7 +109,7 @@ class TemplateVariable extends Variable
      */
     public function setMathVariable($mathVariable)
     {
-        if (is_bool($mathVariable) === true) {
+        if (is_bool($mathVariable)) {
             $this->mathVariable = $mathVariable;
         } else {
             $msg = "The 'mathVariable' argument must be a boolean value, '" . gettype($mathVariable) . "'.";

@@ -70,7 +70,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
      */
     public function setRequired($required)
     {
-        if (is_bool($required) === true) {
+        if (is_bool($required)) {
             $this->required = $required;
         } else {
             $msg = "The 'required' argument must be a boolean value, '" . gettype($required) . "' given.";

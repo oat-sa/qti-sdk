@@ -59,8 +59,8 @@ class Bean
      */
     public function __construct($object, $strict = false, $asInstanceOf = '')
     {
-        if (is_object($object) === true) {
-            if (empty($asInstanceOf) === true) {
+        if (is_object($object)) {
+            if (empty($asInstanceOf)) {
                 $this->setClass(new ReflectionClass($object));
             } else {
                 $this->setClass(new ReflectionClass($asInstanceOf));
@@ -111,7 +111,7 @@ class Bean
      */
     public function getGetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -148,7 +148,7 @@ class Bean
      */
     public function hasGetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -204,7 +204,7 @@ class Bean
      */
     public function getSetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -240,7 +240,7 @@ class Bean
      */
     public function hasSetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();

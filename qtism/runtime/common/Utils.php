@@ -293,7 +293,7 @@ class Utils
     {
         $integerArray = [];
         foreach ($floatArray as $f) {
-            $integerArray[] = (is_null($f) === false) ? (int)$f : null;
+            $integerArray[] = ($f !== null) ? (int)$f : null;
         }
 
         return $integerArray;
@@ -309,7 +309,7 @@ class Utils
     {
         $floatArray = [];
         foreach ($integerArray as $i) {
-            $floatArray[] = (is_null($i) === false) ? (float)$i : null;
+            $floatArray[] = ($i !== null) ? (float)$i : null;
         }
 
         return $floatArray;
@@ -325,13 +325,13 @@ class Utils
     public static function valueToRuntime($v, $baseType)
     {
         if ($v !== null) {
-            if (is_int($v) === true) {
+            if (is_int($v)) {
                 if ($baseType === -1 || $baseType === BaseType::INTEGER) {
                     return new QtiInteger($v);
                 } elseif ($baseType === BaseType::INT_OR_IDENTIFIER) {
                     return new QtiIntOrIdentifier($v);
                 }
-            } elseif (is_string($v) === true) {
+            } elseif (is_string($v)) {
                 if ($baseType === BaseType::IDENTIFIER) {
                     return new QtiIdentifier($v);
                 }
@@ -342,9 +342,9 @@ class Utils
                 } elseif ($baseType === BaseType::INT_OR_IDENTIFIER) {
                     return new QtiIntOrIdentifier($v);
                 }
-            } elseif (is_float($v) === true) {
+            } elseif (is_float($v)) {
                 return new QtiFloat($v);
-            } elseif (is_bool($v) === true) {
+            } elseif (is_bool($v)) {
                 return new QtiBoolean($v);
             }
         }
@@ -363,6 +363,6 @@ class Utils
      */
     public static function isNull(QtiDatatype $value = null)
     {
-        return is_null($value) === true || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
+        return $value === null || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
     }
 }

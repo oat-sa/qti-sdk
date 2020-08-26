@@ -101,7 +101,7 @@ class CustomOperator extends Operator implements IExternal
      */
     public function setClass($class)
     {
-        if (is_string($class) === true) {
+        if (is_string($class)) {
             $this->class = $class;
         } else {
             $msg = "The 'class' argument must be a string, '" . gettype($class) . "' given.";
@@ -138,7 +138,7 @@ class CustomOperator extends Operator implements IExternal
      */
     public function setDefinition($definition)
     {
-        if (is_string($definition) === true) {
+        if (is_string($definition)) {
             $this->definition = $definition;
         } else {
             $msg = "The 'definition' argument must be a string, '" . gettype($definition) . "' given.";

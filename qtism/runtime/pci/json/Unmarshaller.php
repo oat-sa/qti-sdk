@@ -106,7 +106,7 @@ class Unmarshaller
      */
     public function unmarshall($json)
     {
-        if (is_string($json) === true) {
+        if (is_string($json)) {
             $tmpJson = @json_decode($json, true);
             if ($tmpJson === null) {
                 // An error occurred while decoding.
@@ -120,7 +120,7 @@ class Unmarshaller
 
         if (is_array($json) === false || count($json) === 0) {
             $msg = "The '" . get_class($this) . "::unmarshall' method only accepts a JSON string or a non-empty array as argument, '";
-            if (is_object($json) === true) {
+            if (is_object($json)) {
                 $msg .= get_class($json);
             } else {
                 $msg .= gettype($json);
@@ -141,10 +141,10 @@ class Unmarshaller
         // a base, a list or a record.
         $keys = array_keys($json);
 
-        if (in_array('base', $keys) === true) {
+        if (in_array('base', $keys)) {
             // This is a base.
             return $this->unmarshallUnit($json);
-        } elseif (in_array('list', $keys) === true) {
+        } elseif (in_array('list', $keys)) {
             $keys = array_keys($json['list']);
             if (isset($keys[0]) === false) {
                 $msg = 'No baseType provided for list.';
@@ -183,7 +183,7 @@ class Unmarshaller
             }
 
             return $returnValue;
-        } elseif (in_array('record', $keys) === true) {
+        } elseif (in_array('record', $keys)) {
             // This is a record.
             $returnValue = new RecordContainer();
 
@@ -400,7 +400,7 @@ class Unmarshaller
      */
     protected function unmarshallFile(array $unit)
     {
-        $filename = (empty($unit['base']['file']['name']) === true) ? '' : $unit['base']['file']['name'];
+        $filename = (empty($unit['base']['file']['name'])) ? '' : $unit['base']['file']['name'];
 
         return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime'], $filename);
     }

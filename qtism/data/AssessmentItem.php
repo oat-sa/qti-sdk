@@ -255,7 +255,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function setTitle($title)
     {
-        if (is_string($title) === true) {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "The title argument must be a string, '" . gettype($title) . "' given.";
