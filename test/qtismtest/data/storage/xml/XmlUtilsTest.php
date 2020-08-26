@@ -13,7 +13,6 @@ use qtismtest\QtiSmTestCase;
 class XmlUtilsTest extends QtiSmTestCase
 {
     /**
-     *
      * @param string $originalXmlString
      * @param string $expectedXmlString
      * @dataProvider anonimizeElementProvider

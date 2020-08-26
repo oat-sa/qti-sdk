@@ -23,7 +23,6 @@ use stdClass;
 class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
-     *
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param QtiDatatype $qtiDatatype

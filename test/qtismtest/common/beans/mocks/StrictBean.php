@@ -8,28 +8,24 @@ namespace qtismtest\common\beans\mocks;
 class StrictBean
 {
     /**
-     *
      * @var string
      * @qtism-bean-property
      */
     private $firstName;
 
     /**
-     *
      * @var string
      * @qtism-bean-property
      */
     private $lastName;
 
     /**
-     *
      * @var string
      * @qtism-bean-property
      */
     private $hair;
 
     /**
-     *
      * @var bool
      * @qtism-bean-property
      */

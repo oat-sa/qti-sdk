@@ -36,7 +36,6 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @return OperandsCollection
      */
     protected function getOperands()

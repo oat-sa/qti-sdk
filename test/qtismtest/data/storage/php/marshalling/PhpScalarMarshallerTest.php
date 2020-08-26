@@ -14,7 +14,6 @@ use stdClass;
 class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     /**
-     *
      * @dataProvider marshallDataProvider
      * @param string $expectedInStream
      * @param mixed $scalar

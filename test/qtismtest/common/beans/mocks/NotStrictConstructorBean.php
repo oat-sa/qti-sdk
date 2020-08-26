@@ -8,21 +8,18 @@ namespace qtismtest\common\beans\mocks;
 class NotStrictConstructorBean
 {
     /**
-     *
      * @var string
      * @qtism-bean-property
      */
     private $firstName;
 
     /**
-     *
      * @var string
      * @qtism-bean-property
      */
     private $lastName;
 
     /**
-     *
      * @var string
      * @qtism-bean-property
      */

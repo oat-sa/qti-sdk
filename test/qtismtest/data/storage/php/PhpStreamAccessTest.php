@@ -350,7 +350,6 @@ class PhpStreamAccessTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider writeFunctionCallDataProvider
      * @param string $expected
      * @param string $funcname
@@ -419,7 +418,6 @@ class PhpStreamAccessTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider writeInstantiationDataProvider
      * @param string $expected
      * @param string $classname

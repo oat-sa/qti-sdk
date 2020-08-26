@@ -232,7 +232,6 @@ class PhpDocumentTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @dataProvider loadTestSamplesDataProvider
      * @param string $testUri
      * @param string $rootType The expected fully qualified class name of the document component.

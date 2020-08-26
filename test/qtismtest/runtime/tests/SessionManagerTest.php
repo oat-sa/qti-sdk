@@ -32,7 +32,6 @@ class SessionManagerTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @param AssessmentTest $test
      */
     private function setTest(AssessmentTest $test)
@@ -41,7 +40,6 @@ class SessionManagerTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @return AssessmentTest
      */
     private function getTest()
