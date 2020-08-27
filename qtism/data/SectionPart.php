@@ -28,7 +28,6 @@ use qtism\common\utils\Format;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * From IMS QTI:
@@ -38,12 +37,7 @@ use SplObserver;
  */
 class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
 {
-    /**
-     * A collection of SplObservers.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers = null;
+    use QtiIdentifiableTrait;
 
     /**
      * From IMS QTI:
@@ -314,26 +308,6 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     }
 
     /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
      * Set the amount of time a candidate is allowed for this section.
      * Returns null value if not specified.
      *
@@ -371,36 +345,6 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
         }
 
         return new QtiComponentCollection($comp);
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
     }
 
     public function __clone()

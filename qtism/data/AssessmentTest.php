@@ -28,7 +28,6 @@ use qtism\common\utils\Format;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * From IMS QTI:
@@ -40,6 +39,8 @@ use SplObserver;
  */
 class AssessmentTest extends QtiComponent implements QtiIdentifiable
 {
+    use QtiIdentifiableTrait;
+
     /**
      * From IMS QTI:
      *
@@ -138,13 +139,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @qtism-bean-property
      */
     private $testFeedbacks;
-
-    /**
-     * The observers of this object.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers = null;
 
     /**
      * AssessmentTest constructor.
@@ -414,56 +408,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
-    }
-
-    /**
      * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
      * the result will be false.
      *
@@ -497,5 +441,10 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     public function hasTimeLimits()
     {
         return $this->getTimeLimits() !== null;
+    }
+
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
     }
 }

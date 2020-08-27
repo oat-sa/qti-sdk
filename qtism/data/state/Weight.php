@@ -28,8 +28,8 @@ use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiIdentifiable;
+use qtism\data\QtiIdentifiableTrait;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * From IMS QTI:
@@ -40,6 +40,8 @@ use SplObserver;
  */
 class Weight extends QtiComponent implements QtiIdentifiable
 {
+    use QtiIdentifiableTrait;
+
     /**
      * A QTI identifier.
      *
@@ -56,13 +58,6 @@ class Weight extends QtiComponent implements QtiIdentifiable
      * @qtism-bean-property
      */
     private $value;
-
-    /**
-     * The observers of this object.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers;
 
     /**
      * Create a new instance of Weight.
@@ -148,53 +143,8 @@ class Weight extends QtiComponent implements QtiIdentifiable
         return new QtiComponentCollection();
     }
 
-    /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
+    public function __clone()
     {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
+        $this->setObservers(new SplObjectStorage());
     }
 }
