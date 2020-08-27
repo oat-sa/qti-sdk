@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -70,7 +69,7 @@ use qtism\data\expressions\Pure;
  * * If the first argument is negative infinity and the second argument is positive infinity, then the result is the double value closest to -π/4.
  * * If both arguments are negative infinity, then the result is the double value closest to -3*π/4.
  */
-class MathOperator extends Operator implements Pure
+class MathOperator extends Operator
 {
     /**
      * The name of the mathematical function.
@@ -124,17 +123,5 @@ class MathOperator extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'mathOperator';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

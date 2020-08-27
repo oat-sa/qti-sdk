@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * Please note that this class represents the QTI 'or' class.
@@ -39,7 +38,7 @@ use qtism\data\expressions\Pure;
  * false. If one or more sub-expressions are NULL and all the others are
  * false then the operator also results in NULL.
  */
-class OrOperator extends Operator implements Pure
+class OrOperator extends Operator
 {
     /**
      * Create a new OrOperator object.
@@ -57,17 +56,5 @@ class OrOperator extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'or';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

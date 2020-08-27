@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 use qtism\data\ExternalQtiComponent;
 use qtism\data\IExternal;
 use RuntimeException;
@@ -44,7 +43,7 @@ use RuntimeException;
  * are encouraged to share information about their solutions to help determine
  * the best way to achieve this type of processing.
  */
-class CustomOperator extends Operator implements IExternal, Pure
+class CustomOperator extends Operator implements IExternal
 {
     /**
      * @var string
@@ -234,9 +233,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @see https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

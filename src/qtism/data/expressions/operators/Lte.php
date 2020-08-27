@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -35,7 +34,7 @@ use qtism\data\expressions\Pure;
  * false if it is greater than the second. If either sub-expression is NULL then
  * the operator results in NULL.
  */
-class Lte extends Operator implements Pure
+class Lte extends Operator
 {
     /**
      * Create a new Lte object.
@@ -53,17 +52,5 @@ class Lte extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'lte';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

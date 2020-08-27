@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -41,7 +40,7 @@ use qtism\data\expressions\Pure;
  * values are ignored. If no sub-expressions are given (or all are NULL)
  * then the result is NULL.
  */
-class Multiple extends Operator implements Pure
+class Multiple extends Operator
 {
     /**
      * Create a new Multiple object.
@@ -59,17 +58,5 @@ class Multiple extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'multiple';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

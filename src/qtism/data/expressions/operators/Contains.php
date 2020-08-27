@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -46,7 +45,7 @@ use qtism\data\expressions\Pure;
  * with a base-type of float and must not be used on sub-expressions with a base-type
  * of duration.
  */
-class Contains extends Operator implements Pure
+class Contains extends Operator
 {
     /**
      * Create a new Contains object.
@@ -64,17 +63,5 @@ class Contains extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'contains';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use InvalidArgumentException;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 use UnexpectedValueException;
 
 /**
@@ -36,7 +35,7 @@ use UnexpectedValueException;
  * if the two expressions are numerically equal and false if they are not. If either
  * sub-expression is NULL then the operator results in NULL.
  */
-class Equal extends Operator implements Pure
+class Equal extends Operator
 {
     /**
      * From IMS QTI:
@@ -235,17 +234,5 @@ class Equal extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'equal';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

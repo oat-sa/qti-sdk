@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use InvalidArgumentException;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -36,7 +35,7 @@ use qtism\data\expressions\Pure;
  * false if it isn't. If either sub-expression is NULL then the result of the operator
  * is NULL.
  */
-class Substring extends Operator implements Pure
+class Substring extends Operator
 {
     /**
      * From IMS QTI:
@@ -96,17 +95,5 @@ class Substring extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'substring';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

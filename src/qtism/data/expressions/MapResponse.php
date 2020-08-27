@@ -43,7 +43,7 @@ use qtism\common\utils\Format;
  * If a container contains multiple instances of the same value then that value is counted
  * once only. To continue the example above {B,B,C} would still map to 1.5 and not 2.5.
  */
-class MapResponse extends Expression implements Pure
+class MapResponse extends Expression
 {
     /**
      * The QTI identifier of the associated mapping.
@@ -101,9 +101,7 @@ class MapResponse extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

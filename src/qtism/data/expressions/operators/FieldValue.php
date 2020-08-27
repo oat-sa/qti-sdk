@@ -26,14 +26,13 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * The field-value operator takes a sub-expression with a record container value. The
  * result is the value of the field with the specified fieldIdentifier. If there is
  * no field with that identifier then the result of the operator is NULL.
  */
-class FieldValue extends Operator implements Pure
+class FieldValue extends Operator
 {
     /**
      * The identifier of the field to lookup.
@@ -87,17 +86,5 @@ class FieldValue extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'fieldValue';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

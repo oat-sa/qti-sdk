@@ -38,7 +38,7 @@ use InvalidArgumentException;
  *
  * @link http://www.php.net/manual/en/reserved.keywords.php
  */
-class DefaultVal extends Expression implements Pure
+class DefaultVal extends Expression
 {
     /**
      * The QTI Identifier of the variable you want the default value.
@@ -91,9 +91,7 @@ class DefaultVal extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

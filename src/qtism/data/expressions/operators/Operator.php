@@ -231,4 +231,14 @@ abstract class Operator extends Expression
 
         $this->acceptedBaseTypes = $acceptedBaseTypes;
     }
+
+    /**
+     * Checks whether this expression is pure.
+     *
+     * @return bool
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
+    }
 }

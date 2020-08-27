@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -36,7 +35,7 @@ use qtism\data\expressions\Pure;
  * the sub-expressions. If any of the sub-expressions are NULL then the
  * operator results in NULL.
  */
-class Sum extends Operator implements Pure
+class Sum extends Operator
 {
     /**
      * Create a new Sum object.
@@ -54,17 +53,5 @@ class Sum extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'sum';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

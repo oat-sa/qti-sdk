@@ -29,7 +29,7 @@ use qtism\data\QtiComponentCollection;
 /**
  * A collection of Expression objects.
  */
-class ExpressionCollection extends QtiComponentCollection implements Pure
+class ExpressionCollection extends QtiComponentCollection
 {
     /**
      * Check if a given $value is an instance of Expression.
@@ -48,9 +48,7 @@ class ExpressionCollection extends QtiComponentCollection implements Pure
     /**
      * Checks whether this collection of expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if this ExpressionCollection is pure, false otherwise.
+     * @return bool
      */
     public function isPure()
     {

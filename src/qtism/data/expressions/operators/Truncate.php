@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -37,7 +36,7 @@ use qtism\data\expressions\Pure;
  * is NaN, then the result is NULL. If the sub-expression is INF, then the result
  * is INF. If the sub-expression is -INF, then the result is -INF.
  */
-class Truncate extends Operator implements Pure
+class Truncate extends Operator
 {
     /**
      * Create a new Truncate object.
@@ -55,17 +54,5 @@ class Truncate extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'truncate';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

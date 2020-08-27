@@ -27,7 +27,6 @@ use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * The repeat operator takes 1 or more sub-expressions, all of which must have either
@@ -42,7 +41,7 @@ use qtism\data\expressions\Pure;
  * Any sub-expressions evaluating to NULL are ignored. If all sub-expressions
  * are NULL then the result is NULL.
  */
-class Repeat extends Operator implements Pure
+class Repeat extends Operator
 {
     /**
      * A number of repetitions or a variable reference.
@@ -96,17 +95,5 @@ class Repeat extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'repeat';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

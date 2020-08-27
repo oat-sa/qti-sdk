@@ -32,7 +32,7 @@ use qtism\common\utils\Format;
  * Selects a random integer from the specified range [min,max] satisfying min + step * n for
  * some integer n. For example, with min=2, max=11 and step=3 the values {2,5,8,11} are possible.
  */
-class RandomInteger extends Expression implements Pure
+class RandomInteger extends Expression
 {
     /**
      * The min attribute value.
@@ -162,9 +162,7 @@ class RandomInteger extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

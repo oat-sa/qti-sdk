@@ -27,7 +27,6 @@ use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -51,7 +50,7 @@ use qtism\data\expressions\Pure;
  * digit is increased by 1 and all digits to its right are discarded; if the deciding
  * digit is less than 5, all digits to the right of the nth digit are discarded.
  */
-class RoundTo extends Operator implements Pure
+class RoundTo extends Operator
 {
     /**
      * From IMS QTI:
@@ -151,17 +150,5 @@ class RoundTo extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'roundTo';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

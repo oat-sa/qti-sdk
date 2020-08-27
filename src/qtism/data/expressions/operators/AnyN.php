@@ -27,7 +27,6 @@ use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -45,7 +44,7 @@ use qtism\data\expressions\Pure;
  * results in true. The result NULL indicates that the correct value for the
  * operator cannot be determined.
  */
-class AnyN extends Operator implements Pure
+class AnyN extends Operator
 {
     /**
      * From IMS QTI:
@@ -139,17 +138,5 @@ class AnyN extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'anyN';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

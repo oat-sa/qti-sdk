@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -37,7 +36,7 @@ use qtism\data\expressions\Pure;
  * false if they are not. If either sub-expression is NULL then the operator results
  * in NULL.
  */
-class EqualRounded extends Operator implements Pure
+class EqualRounded extends Operator
 {
     /**
      * From IMS QTI:
@@ -134,17 +133,5 @@ class EqualRounded extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'equalRounded';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

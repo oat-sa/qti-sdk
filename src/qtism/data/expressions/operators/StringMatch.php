@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use InvalidArgumentException;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -36,7 +35,7 @@ use qtism\data\expressions\Pure;
  * below and false if they don't. If either sub-expression is NULL then the operator
  * results in NULL.
  */
-class StringMatch extends Operator implements Pure
+class StringMatch extends Operator
 {
     /**
      * From IMS QTI:
@@ -135,17 +134,5 @@ class StringMatch extends Operator implements Pure
     public function getQtiClassName()
     {
         return 'stringMatch';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return bool True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }
