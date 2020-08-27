@@ -30,7 +30,6 @@ use qtism\data\rules\PreConditionCollection;
 use SplObjectStorage;
 
 /**
- *
  * The TestPart class.
  */
 class TestPart extends QtiComponent implements QtiIdentifiable
@@ -296,7 +295,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
      */
     public function hasItemSessionControl()
     {
-        return is_null($this->getItemSessionControl()) === false;
+        return $this->getItemSessionControl() !== null;
     }
 
     /**
@@ -328,7 +327,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
      */
     public function hasTimeLimits()
     {
-        return is_null($this->getTimeLimits()) === false;
+        return $this->getTimeLimits() !== null;
     }
 
     /**

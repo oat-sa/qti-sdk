@@ -234,7 +234,9 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * @return ObjectFlowCollection|QtiComponentCollection
+     * Get the components composing the Object.
+     *
+     * @return ObjectFlowCollection|QtiComponentCollection A collection of ObjectFlow objects.
      */
     public function getComponents()
     {

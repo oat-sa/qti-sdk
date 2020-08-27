@@ -32,7 +32,6 @@ use qtism\common\storage\StreamException;
 use qtism\data\storage\php\Utils as PhpUtils;
 
 /**
- *
  * The PhpStreamAccess class provides methods to write some
  * PHP Code into a given IStream object.
  */
@@ -333,7 +332,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             $this->getStream()->write($funcname);
             $this->writeOpeningParenthesis();
 
-            if (is_null($arguments) === false) {
+            if ($arguments !== null) {
                 $this->writeArguments($arguments);
             }
 
@@ -367,7 +366,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             $this->getStream()->write($methodname);
             $this->writeOpeningParenthesis();
 
-            if (is_null($arguments) === false) {
+            if ($arguments !== null) {
                 $this->writeArguments($arguments);
             }
 
@@ -411,7 +410,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             $this->getStream()->write($classname);
             $this->writeOpeningParenthesis();
 
-            if (is_null($arguments) === false) {
+            if ($arguments !== null) {
                 $this->writeArguments($arguments);
             }
 

@@ -30,7 +30,6 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\runtime\common\VariableCollection;
 
 /**
  * Class ItemResult

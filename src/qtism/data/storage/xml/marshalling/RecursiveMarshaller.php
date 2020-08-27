@@ -354,7 +354,6 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function getChildrenElements(DOMElement $element);
 
     /**
-     *
      * Create a collection from DOMElement objects.
      *
      * @param DOMElement $currentNode

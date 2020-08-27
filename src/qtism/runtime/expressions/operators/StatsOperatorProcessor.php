@@ -99,7 +99,6 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null, \qtism\common\datatypes\Float
      */
     protected function processSampleVariance()
@@ -113,7 +112,6 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null, \qtism\common\datatypes\Float
      */
     protected function processSampleSD()
@@ -127,7 +125,6 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null, \qtism\common\datatypes\Float
      */
     protected function processPopVariance()
@@ -141,7 +138,6 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null, \qtism\common\datatypes\Float
      */
     protected function processPopSD()

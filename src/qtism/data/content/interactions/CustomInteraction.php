@@ -52,7 +52,6 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     private $xmlString;
 
     /**
-     *
      * @var ExternalQtiComponent
      */
     private $externalComponent = null;

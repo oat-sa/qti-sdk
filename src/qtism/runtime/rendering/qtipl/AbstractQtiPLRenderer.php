@@ -26,7 +26,6 @@ namespace qtism\runtime\rendering\qtipl;
 use qtism\runtime\rendering\Renderable;
 
 /**
- *
  * An abstract representation of the QtiPLRenderer.
  */
 abstract class AbstractQtiPLRenderer implements Renderable

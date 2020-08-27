@@ -540,7 +540,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     *
      * @param QtiComponent $component
      */
     protected function markAsExplored(QtiComponent $component)

@@ -182,7 +182,7 @@ class AssociateInteraction extends BlockInteraction
     {
         if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($this->hasMaxAssociations() === true && $minAssociations > $this->getMaxAssociations()) {
-                $msg = "The 'minAssociation' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
+                $msg = "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
                 throw new InvalidArgumentException($msg);
             }
 

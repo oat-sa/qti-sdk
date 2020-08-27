@@ -60,7 +60,6 @@ class EndAttemptInteraction extends InlineInteraction
     private $title;
 
     /**
-     *
      * @param string $responseIdentifier The identifier of the associated response variable.
      * @param string $title The title to be displayed to the candidate as a prompt for ending the attempt.
      * @param string $id The id of the bodyElement.

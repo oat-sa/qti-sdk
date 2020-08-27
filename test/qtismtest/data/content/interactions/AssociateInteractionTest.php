@@ -40,7 +40,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testSetMinAssociationsIllogicValue()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'minAssociation' argument must be less than or equal to the limit imposed by 'maxAssociations'.");
+        $this->expectExceptionMessage("The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.");
 
         $associateInteraction = new AssociateInteraction('RESPONSE', new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('identifier', 1)]));
         $associateInteraction->setMaxAssociations(1);

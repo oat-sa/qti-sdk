@@ -47,7 +47,6 @@ abstract class QtiDocument
     private $documentComponent;
 
     /**
-     *
      * @var string
      */
     private $url;
@@ -122,14 +121,12 @@ abstract class QtiDocument
     }
 
     /**
-     *
      * @param string $url
      * @throws StorageException
      */
     abstract public function load($url);
 
     /**
-     *
      * @param string $url
      * @throws StorageException
      */

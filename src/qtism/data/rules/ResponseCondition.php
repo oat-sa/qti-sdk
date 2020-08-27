@@ -75,7 +75,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     {
         $this->setResponseIf($responseIf);
         $this->setResponseElse($responseElse);
-        $this->setResponseElseIfs(($responseElseIfs === null) ? new ResponseElseIfCollection() : $responseElseIfs);
+        $this->setResponseElseIfs($responseElseIfs ?? new ResponseElseIfCollection());
     }
 
     /**

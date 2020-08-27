@@ -76,7 +76,6 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
     }
 
     /**
-     *
      * @return QtiComponentCollection
      */
     public function getComponents()

@@ -75,7 +75,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     {
         $this->setOutcomeIf($outcomeIf);
         $this->setOutcomeElse($outcomeElse);
-        $this->setOutcomeElseIfs(($outcomeElseIfs === null) ? new OutcomeElseIfCollection() : $outcomeElseIfs);
+        $this->setOutcomeElseIfs($outcomeElseIfs ?? new OutcomeElseIfCollection());
     }
 
     /**

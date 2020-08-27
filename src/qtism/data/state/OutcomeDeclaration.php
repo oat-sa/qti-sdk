@@ -355,7 +355,7 @@ class OutcomeDeclaration extends VariableDeclaration
         return 'outcomeDeclaration';
     }
 
-   /**
+    /**
      * @return QtiComponentCollection
      */
     public function getComponents()

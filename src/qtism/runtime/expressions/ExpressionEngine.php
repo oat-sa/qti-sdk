@@ -44,7 +44,6 @@ use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 class ExpressionEngine extends AbstractEngine
 {
     /**
-     *
      * The expression trail.
      *
      * @var array

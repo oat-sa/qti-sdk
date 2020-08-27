@@ -24,7 +24,6 @@
 namespace qtism\data\content;
 
 /**
- *
  * The atomicBlock QTI class.
  */
 abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStatic

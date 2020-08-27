@@ -40,7 +40,6 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     private $xml = null;
 
     /**
-     *
      * @var string
      * @qtism-bean-property
      */

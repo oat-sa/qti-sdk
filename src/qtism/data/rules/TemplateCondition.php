@@ -73,7 +73,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     public function __construct(TemplateIf $templateIf, TemplateElseIfCollection $templateElseIfs = null, TemplateElse $templateElse = null)
     {
         $this->setTemplateIf($templateIf);
-        $this->setTemplateElseIfs(($templateElseIfs === null) ? new TemplateElseIfCollection() : $templateElseIfs);
+        $this->setTemplateElseIfs($templateElseIfs ?? new TemplateElseIfCollection());
         $this->setTemplateElse($templateElse);
     }
 
