@@ -135,12 +135,12 @@ class HottextInteraction extends BlockInteraction
     public function setMinChoices($minChoices)
     {
         if (is_int($minChoices) && $minChoices > 0) {
-            if ($minChoices <= $this->getMaxChoices()) {
-                $this->minChoices = $minChoices;
-            } else {
-                $msg = "The 'minChoices' argument must respect the limits imposed by maxChoice.";
+            if ($minChoices > $this->getMaxChoices()) {
+                $msg = "The 'minChoices' argument must respect the limits imposed by 'maxChoices'.";
                 throw new InvalidArgumentException($msg);
             }
+
+            $this->minChoices = $minChoices;
         } elseif (is_int($minChoices) && $minChoices === 0) {
             $this->minChoices = $minChoices;
         } else {

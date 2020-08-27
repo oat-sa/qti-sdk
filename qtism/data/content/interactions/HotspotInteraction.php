@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -85,7 +85,7 @@ class HotspotInteraction extends GraphicInteraction
      * Create a new HotspotInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param QtiObject $object The associated image given as an Object object.
+     * @param ObjectElement $object The associated image given as an ObjectElement object.
      * @param int $maxChoices The maximum number of choices the candidate is allowed to select as a positive (>= 0) integer.
      * @param HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
      * @param string $id The id of the bodyElement.
@@ -94,7 +94,7 @@ class HotspotInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, QtiObject $object, $maxChoices, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $maxChoices, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setMaxChoices($maxChoices);

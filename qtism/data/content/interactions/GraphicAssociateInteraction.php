@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -84,7 +84,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Create a new GraphicAssociateInteraction.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param QtiObject $object The associated image as an Object object.
+     * @param ObjectElement $object The associated image as an ObjectElement object.
      * @param AssociableHotspotCollection $associableHotspots The hotspots that define the choices that are to be associated by the candidate.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -92,7 +92,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, QtiObject $object, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setAssociableHotspots($associableHotspots);

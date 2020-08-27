@@ -97,7 +97,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
         $returnValue = null;
         $data = &$this->getDataPlaceHolder();
 
-        if (isset($data[$offset]) === true) {
+        if (isset($data[$offset])) {
             $returnValue = $data[$offset];
         }
 

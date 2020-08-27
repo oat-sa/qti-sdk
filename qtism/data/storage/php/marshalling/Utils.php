@@ -70,7 +70,6 @@ class Utils
 
             return "${className}_${occurence}";
         } elseif (is_scalar($value)) {
-            // Is it a PHP scalar value?
             return gettype($value) . '_' . $occurence;
         } elseif (is_array($value)) {
             return 'array_' . $occurence;

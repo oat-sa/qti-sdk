@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -46,9 +46,9 @@ class GapImg extends GapChoice
     private $objectLabel = '';
 
     /**
-     * The image as an Object object.
+     * The image as an ObjectElement object.
      *
-     * @var QtiObject
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -58,14 +58,14 @@ class GapImg extends GapChoice
      *
      * @param string $identifier The identifier of the response associated to the GapImg object.
      * @param int $matchMax The maximum number of choice association.
-     * @param QtiObject $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $matchMax, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($identifier, $matchMax, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -111,19 +111,19 @@ class GapImg extends GapChoice
     }
 
     /**
-     * Set the Object representing the GapImg's image.
+     * Set the ObjectElement representing the GapImg's image.
      *
-     * @param QtiObject $object An Object object.
+     * @param ObjectElement $object An ObjectElement object.
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
 
     /**
-     * Get the Object representing the GapImg's image.
+     * Get the ObjectElement representing the GapImg's image.
      *
-     * @return QtiObject An Object object.
+     * @return ObjectElement An ObjectElement object.
      */
     public function getObject()
     {

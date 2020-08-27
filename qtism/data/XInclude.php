@@ -2,10 +2,9 @@
 
 namespace qtism\data;
 
-use InvalidArgumentException;
-use qtism\common\utils\Format;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
 use qtism\data\rules\OutcomeRule;
 use qtism\data\rules\ResponseRule;
@@ -28,13 +27,7 @@ use qtism\data\rules\ResponseRule;
  */
 class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic, OutcomeRule, ResponseRule
 {
-    /**
-     * A base URI.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * Create a new XInclude object.
@@ -57,35 +50,6 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
     {
         $xml = $this->getXml();
         return $xml->documentElement->getAttribute('href');
-    }
-
-    /**
-     * @param string $xmlBase
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 
     /**

@@ -91,7 +91,7 @@ class RandomInteger extends Expression
      */
     public function setMin($min)
     {
-        if (is_int($min) || Format::isVariableRef($max)) {
+        if (is_int($min) || Format::isVariableRef($min)) {
             $this->min = $min;
         } else {
             $msg = "'Min' must be an integer, '" . gettype($min) . "' given.";

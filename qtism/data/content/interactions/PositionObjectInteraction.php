@@ -25,7 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\common\datatypes\QtiPoint;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -90,7 +90,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * The image to be positioned on the stage by the candidate.
      *
-     * @var QtiObject
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -99,14 +99,14 @@ class PositionObjectInteraction extends Interaction
      * Create a new PositionObjectInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param QtiObject $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -216,9 +216,9 @@ class PositionObjectInteraction extends Interaction
     /**
      * Set the image to be positioned on the stage by the candidate.
      *
-     * @param QtiObject $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -226,7 +226,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Get the image to be positioned on the stage by the candidate.
      *
-     * @return QtiObject An image as an Object object.
+     * @return ObjectElement An image as an ObjectElement object.
      */
     public function getObject()
     {

@@ -11,7 +11,7 @@ use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\content\interactions\HotspotInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
 /**
@@ -28,7 +28,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         $choice2 = new HotspotChoice('hotspotchoice2', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [118, 184, 8]));
         $choice3 = new HotspotChoice('hotspotchoice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [150, 235, 8]));
 
-        $object = new QtiObject('./img/img.png', 'image/png');
+        $object = new ObjectElement('./img/img.png', 'image/png');
         $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection([$choice1, $choice2, $choice3]), 'my-hotspot');
         $hotspotInteraction->setPrompt($prompt);
 

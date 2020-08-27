@@ -48,7 +48,7 @@ class OutcomeElse extends QtiComponent
      */
     public function __construct(OutcomeRuleCollection $outcomeRules)
     {
-        $this->outcomeRules = $outcomeRules;
+        $this->setOutcomeRules($outcomeRules);
     }
 
     /**
@@ -69,12 +69,12 @@ class OutcomeElse extends QtiComponent
      */
     public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
     {
-        if (count($outcomeRules) > 0) {
-            $this->outcomeRules = $outcomeRules;
-        } else {
+        if (count($outcomeRules) <= 0) {
             $msg = 'An OutcomeElse object must be bound to at least one OutcomeRule object.';
             throw new InvalidArgumentException($msg);
         }
+
+        $this->outcomeRules = $outcomeRules;
     }
 
     /**

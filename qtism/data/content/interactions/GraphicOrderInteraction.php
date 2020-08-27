@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -93,7 +93,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Create a new GraphicOrderInteraction object.
      *
      * @param string $responseIdentifier The response identifier associated to the interaction.
-     * @param QtiObject $object The image associated with the interaction as an object.
+     * @param ObjectElement $object The image associated with the interaction as an object.
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects that define the choices that are to be ordered.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -101,7 +101,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, QtiObject $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setHotspotChoices($hotspotChoices);
@@ -111,7 +111,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Set the hotspots that define the choices that are to be ordered by the candidate.
      *
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
-     * @throws InvalidArgumentException If the given $hotspotChoices is empty.
+     * @throws InvalidArgumentException If the given $hotspotChoices collection is empty.
      */
     public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices)
     {

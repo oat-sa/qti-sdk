@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -91,7 +91,7 @@ class MediaInteraction extends BlockInteraction
      *
      * The media object itself.
      *
-     * @var QtiObject
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -101,14 +101,14 @@ class MediaInteraction extends BlockInteraction
      *
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
      * @param bool $autostart Whether the media has to be played immediately after the begining of the attempt.
-     * @param QtiObject $object The media object itself.
+     * @param ObjectElement $object The media object itself.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $autostart, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, $autostart, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setAutostart($autostart);
@@ -242,9 +242,9 @@ class MediaInteraction extends BlockInteraction
     /**
      * Set the media object itself.
      *
-     * @param QtiObject $object
+     * @param ObjectElement $object
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -252,7 +252,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * Get the media object itself.
      *
-     * @return QtiObject
+     * @return ObjectElement
      */
     public function getObject()
     {

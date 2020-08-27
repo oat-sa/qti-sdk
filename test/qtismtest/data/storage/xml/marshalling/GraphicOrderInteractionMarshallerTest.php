@@ -11,7 +11,7 @@ use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
 /**
@@ -29,7 +29,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $choice3 = new HotspotChoice('choice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [4, 4, 15]));
         $choices = new HotspotChoiceCollection([$choice1, $choice2, $choice3]);
 
-        $object = new QtiObject('my-img.png', 'image/png');
+        $object = new ObjectElement('my-img.png', 'image/png');
 
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', $object, $choices, 'my-graphicOrder');
         $graphicOrderInteraction->setPrompt($prompt);

@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\Block;
 use qtism\data\content\Flow;
+use qtism\data\content\FlowTrait;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -36,13 +37,7 @@ use qtism\data\QtiComponentCollection;
  */
 abstract class BlockInteraction extends Interaction implements Block, Flow
 {
-    /**
-     * The base URI of the BlockInteraction.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * From IMS QTI:
@@ -97,40 +92,6 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
     public function hasPrompt()
     {
         return $this->getPrompt() !== null;
-    }
-
-    /**
-     * Set the base URI of the BlockInteraction.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the BlockInteraction.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 
     /**

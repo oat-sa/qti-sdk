@@ -279,12 +279,12 @@ class TestFeedback extends QtiComponent
      */
     public function setContent($content)
     {
-        if (is_string($content)) {
-            $this->content = $content;
-        } else {
+        if (!is_string($content)) {
             $msg = "Content must be a string, '" . gettype($content) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+
+        $this->content = $content;
     }
 
     /**

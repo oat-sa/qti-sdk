@@ -83,7 +83,7 @@ class EndAttemptInteraction extends InlineInteraction
      */
     public function setTitle($title)
     {
-        if (is_string($title) && empty($title) === false) {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "The 'title' argument must be a string, '" . gettype($title) . "' given.";

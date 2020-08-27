@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 
 /**
  * The QTI graphicInteraction class.
@@ -37,7 +37,7 @@ abstract class GraphicInteraction extends BlockInteraction
      * Each graphical interaction has an associated image which is given as an
      * object that must be of an image type, as specified by the type attribute.
      *
-     * @var QtiObject
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -46,14 +46,14 @@ abstract class GraphicInteraction extends BlockInteraction
      * Create a GraphicInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param QtiObject $object The associated image as an Object object.
+     * @param ObjectElement $object The associated image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -62,9 +62,9 @@ abstract class GraphicInteraction extends BlockInteraction
     /**
      * Set the associated image given as an object.
      *
-     * @param QtiObject $object An Object object.
+     * @param ObjectElement $object An ObjectElement object.
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -72,7 +72,7 @@ abstract class GraphicInteraction extends BlockInteraction
     /**
      * Get the associated image given as an object.
      *
-     * @return QtiObject An Object object.
+     * @return ObjectElement An ObjectElement object.
      */
     public function getObject()
     {

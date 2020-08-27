@@ -95,19 +95,21 @@ class Format
      */
     public static function isIdentifier($string, $strict = true)
     {
-        if ($strict === true) {
-            if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
-                return false;
-            }
-            for ($i = strlen($string) - 1; $i > 0; $i--) {
-                if (!isset(CharacterMap::$identifier_other[$string[$i]])) {
-                    return false;
-                }
-            }
-            return true;
-        } else {
+        if ($strict !== true) {
             return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
         }
+
+        if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
+            return false;
+        }
+
+        for ($i = strlen($string) - 1; $i > 0; $i--) {
+            if (!isset(CharacterMap::$identifier_other[$string[$i]])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

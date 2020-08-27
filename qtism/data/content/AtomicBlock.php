@@ -28,13 +28,7 @@ namespace qtism\data\content;
  */
 abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStatic
 {
-    /**
-     * The base URI of the AtomicBlock.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The collection of Inline components contained by the AtomicBlock.
@@ -86,39 +80,5 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     public function getComponents()
     {
         return $this->getContent();
-    }
-
-    /**
-     * Set the base URI of the AtomicBlock.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the AtomicBlock.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 }

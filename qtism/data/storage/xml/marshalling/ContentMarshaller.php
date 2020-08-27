@@ -57,7 +57,7 @@ use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Li;
 use qtism\data\content\xhtml\lists\Ol;
 use qtism\data\content\xhtml\lists\Ul;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
 use qtism\data\content\xhtml\tables\Th;
@@ -231,7 +231,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof DlElement) {
             return $component->getContent()->getArrayCopy();
-        } elseif ($component instanceof QtiObject) {
+        } elseif ($component instanceof ObjectElement) {
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof Div) {
             return $component->getContent()->getArrayCopy();

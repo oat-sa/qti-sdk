@@ -128,7 +128,7 @@ abstract class Operator extends Expression
      * @param int $minOperands An integer which is >= 0.
      * @throws InvalidArgumentException If $minOperands is not an integer >= 0.
      */
-    protected function setMinOperands($minOperands)
+    public function setMinOperands($minOperands)
     {
         if (is_int($minOperands) && $minOperands >= 0) {
             $this->minOperands = $minOperands;

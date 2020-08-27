@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItem;
 use qtism\data\expressions\operators\CustomOperator;
 use qtism\data\content\RubricBlock;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\ItemBody;
 use qtism\data\AssessmentTest;
 use ReflectionException;
@@ -251,7 +251,7 @@ class PhpDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'rendering/textentryinteraction_1.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/uploadinteraction_1.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/itemfeedback_1.xml', AssessmentItem::class],
-            [self::samplesDir() . 'rendering/empty_object.xml', QtiObject::class],
+            [self::samplesDir() . 'rendering/empty_object.xml', ObjectElement::class],
             [self::samplesDir() . 'rendering/empty_rubricblock.xml', RubricBlock::class],
             [self::samplesDir() . 'rendering/rubricblock_1.xml', RubricBlock::class],
             [self::samplesDir() . 'rendering/rubricblock_2.xml', RubricBlock::class],
