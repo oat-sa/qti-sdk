@@ -37,14 +37,15 @@ class MediaInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A MediaInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('mediaInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'autostart', $component->mustAutostart());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'autostart', $component->mustAutostart());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -53,15 +54,15 @@ class MediaInteractionMarshaller extends Marshaller
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
         if ($component->getMinPlays() !== 0) {
-            self::setDOMElementAttribute($element, 'minPlays', $component->getMinPlays());
+            $this->setDOMElementAttribute($element, 'minPlays', $component->getMinPlays());
         }
 
         if ($component->getMaxPlays() !== 0) {
-            self::setDOMElementAttribute($element, 'maxPlays', $component->getMaxPlays());
+            $this->setDOMElementAttribute($element, 'maxPlays', $component->getMaxPlays());
         }
 
         if ($component->mustLoop() === true) {
-            self::setDOMElementAttribute($element, 'loop', true);
+            $this->setDOMElementAttribute($element, 'loop', true);
         }
 
         if ($component->hasXmlBase() === true) {
@@ -76,35 +77,36 @@ class MediaInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A MediaInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            if (($autostart = self::getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
-                $objectElts = self::getChildElementsByTagName($element, 'object');
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            if (($autostart = $this->getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
+                $objectElts = $this->getChildElementsByTagName($element, 'object');
                 if (count($objectElts) > 0) {
                     $objectElt = $objectElts[0];
                     $object = $this->getMarshallerFactory()->createMarshaller($objectElt)->unmarshall($objectElt);
 
                     $component = new MediaInteraction($responseIdentifier, $autostart, $object);
 
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                         $component->setPrompt($prompt);
                     }
 
-                    if (($minPlays = self::getDOMElementAttributeAs($element, 'minPlays', 'integer')) !== null) {
+                    if (($minPlays = $this->getDOMElementAttributeAs($element, 'minPlays', 'integer')) !== null) {
                         $component->setMinPlays($minPlays);
                     }
 
-                    if (($maxPlays = self::getDOMElementAttributeAs($element, 'maxPlays', 'integer')) !== null) {
+                    if (($maxPlays = $this->getDOMElementAttributeAs($element, 'maxPlays', 'integer')) !== null) {
                         $component->setMaxPlays($maxPlays);
                     }
 
-                    if (($loop = self::getDOMElementAttributeAs($element, 'loop', 'boolean')) !== null) {
+                    if (($loop = $this->getDOMElementAttributeAs($element, 'loop', 'boolean')) !== null) {
                         $component->setLoop($loop);
                     }
 

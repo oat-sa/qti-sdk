@@ -44,7 +44,7 @@ class FieldValueMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'fieldIdentifier', $component->getFieldIdentifier());
+        $this->setDOMElementAttribute($element, 'fieldIdentifier', $component->getFieldIdentifier());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -63,7 +63,7 @@ class FieldValueMarshaller extends OperatorMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($fieldIdentifier = static::getDOMElementAttributeAs($element, 'fieldIdentifier')) !== null) {
+        if (($fieldIdentifier = $this->getDOMElementAttributeAs($element, 'fieldIdentifier')) !== null) {
             return new FieldValue($children, $fieldIdentifier);
         } else {
             $msg = "The mandatory attribute 'fieldIdentifier' is missing from element '" . $element->localName . "'.";

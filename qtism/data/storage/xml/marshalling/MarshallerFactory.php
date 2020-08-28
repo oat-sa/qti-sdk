@@ -396,13 +396,16 @@ abstract class MarshallerFactory
      * @param array $args An optional array of arguments to be passed to the Marshaller constructor.
      * @return Marshaller The corresponding Marshaller object.
      * @throws RuntimeException If no Marshaller object can be created for the given $object.
+     * @throws MarshallerNotFoundException If no Marshaller mapping is set for a given $object.
      * @throws InvalidArgumentException If $object is not a QtiComponent nor a DOMElement object.
      */
     public function createMarshaller($object, array $args = [])
     {
         if ($object instanceof QtiComponent) {
+            // Asking for a Marshaller...
             $qtiClassName = $object->getQtiClassName();
         } elseif ($object instanceof DOMElement) {
+            // Asking for an Unmarshaller...
             $qtiClassName = $object->localName;
         }
 

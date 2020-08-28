@@ -41,15 +41,16 @@ class TestPartMarshaller extends Marshaller
     /**
      * @param QtiComponent $component
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'navigationMode', NavigationMode::getNameByConstant($component->getNavigationMode()));
-        self::setDOMElementAttribute($element, 'submissionMode', SubmissionMode::getNameByConstant($component->getSubmissionMode()));
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'navigationMode', NavigationMode::getNameByConstant($component->getNavigationMode()));
+        $this->setDOMElementAttribute($element, 'submissionMode', SubmissionMode::getNameByConstant($component->getSubmissionMode()));
 
         foreach ($component->getPreConditions() as $preCondition) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($preCondition);
@@ -89,17 +90,18 @@ class TestPartMarshaller extends Marshaller
     /**
      * @param DOMElement $element
      * @return TestPart
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            if (($navigationMode = static::getDOMElementAttributeAs($element, 'navigationMode')) !== null) {
-                if (($submissionMode = static::getDOMElementAttributeAs($element, 'submissionMode')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($navigationMode = $this->getDOMElementAttributeAs($element, 'navigationMode')) !== null) {
+                if (($submissionMode = $this->getDOMElementAttributeAs($element, 'submissionMode')) !== null) {
                     // We do not use the regular DOMElement::getElementsByTagName method
                     // because it is recursive. We only want the first level elements with
                     // tagname = 'assessmentSection'.
-                    $assessmentSectionElts = self::getChildElementsByTagName($element, ['assessmentSection', 'assessmentSectionRef']);
+                    $assessmentSectionElts = $this->getChildElementsByTagName($element, ['assessmentSection', 'assessmentSectionRef']);
                     $assessmentSections = new SectionPartCollection();
                     foreach ($assessmentSectionElts as $sectElt) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($sectElt);
@@ -113,7 +115,7 @@ class TestPartMarshaller extends Marshaller
                         $object = new TestPart($identifier, $assessmentSections, $navigationMode, $submissionMode);
 
                         // preConditions
-                        $preConditionElts = self::getChildElementsByTagName($element, 'preCondition');
+                        $preConditionElts = $this->getChildElementsByTagName($element, 'preCondition');
                         $preConditions = new PreConditionCollection();
                         foreach ($preConditionElts as $preConditionElt) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($preConditionElt);
@@ -122,7 +124,7 @@ class TestPartMarshaller extends Marshaller
                         $object->setPreConditions($preConditions);
 
                         // branchRules
-                        $branchRuleElts = self::getChildElementsByTagName($element, 'branchRule');
+                        $branchRuleElts = $this->getChildElementsByTagName($element, 'branchRule');
                         $branchRules = new BranchRuleCollection();
                         foreach ($branchRuleElts as $branchRuleElt) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($branchRuleElt);
@@ -131,7 +133,7 @@ class TestPartMarshaller extends Marshaller
                         $object->setBranchRules($branchRules);
 
                         // itemSessionControl
-                        $itemSessionControlElts = self::getChildElementsByTagName($element, 'itemSessionControl');
+                        $itemSessionControlElts = $this->getChildElementsByTagName($element, 'itemSessionControl');
                         if (count($itemSessionControlElts) === 1) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($itemSessionControlElts[0]);
                             $itemSessionControl = $marshaller->unmarshall($itemSessionControlElts[0]);
@@ -139,7 +141,7 @@ class TestPartMarshaller extends Marshaller
                         }
 
                         // timeLimits
-                        $timeLimitsElts = self::getChildElementsByTagName($element, 'timeLimits');
+                        $timeLimitsElts = $this->getChildElementsByTagName($element, 'timeLimits');
                         if (count($timeLimitsElts) === 1) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($timeLimitsElts[0]);
                             $timeLimits = $marshaller->unmarshall($timeLimitsElts[0]);
@@ -147,7 +149,7 @@ class TestPartMarshaller extends Marshaller
                         }
 
                         // testFeedbacks
-                        $testFeedbackElts = self::getChildElementsByTagName($element, 'testFeedback');
+                        $testFeedbackElts = $this->getChildElementsByTagName($element, 'testFeedback');
                         $testFeedbacks = new TestFeedbackCollection();
                         foreach ($testFeedbackElts as $testFeedbackElt) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($testFeedbackElt);

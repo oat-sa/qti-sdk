@@ -100,11 +100,11 @@ class ValueMarshaller extends Marshaller
         self::setDOMElementValue($element, $component->getValue());
 
         if (!empty($fieldIdentifer)) {
-            static::setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
+            $this->setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
         }
 
         if ($component->isPartOfRecord() && $baseType >= 0) {
-            static::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
         }
 
         return $element;
@@ -121,14 +121,14 @@ class ValueMarshaller extends Marshaller
     {
         $object = null;
 
-        if (($baseType = static::getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
+        if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
             // baseType attribute is set -> part of a record.
             $baseTypeCst = BaseType::getConstantByName($baseType);
             if ($baseTypeCst !== false) {
                 $object = new Value(Utils::stringToDatatype(trim($element->nodeValue), $baseTypeCst), $baseTypeCst);
                 $object->setPartOfRecord(true);
             } else {
-                $msg = "The 'baseType' attribute value ('${value}') is not a valid QTI baseType in element '" . $element->localName . "'.";
+                $msg = "The 'baseType' attribute value ('$baseType') is not a valid QTI baseType in element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             }
         } else {
@@ -136,10 +136,10 @@ class ValueMarshaller extends Marshaller
             $nodeValue = trim($element->nodeValue);
 
             // Try to use the marshaller as parametric to know how to unserialize the value.
-            if ($this->getBaseType() != -1) {
+            if ($this->getBaseType() !== -1) {
                 // Empty value only accepted if base type is string (consider empty string).
-                if ($this->getBaseType() !== BaseType::STRING && $nodeValue === '') {
-                    $msg = "The element '" . $element->localName . "' has no value.";
+                if ($nodeValue === '' && $this->getBaseType() !== BaseType::STRING) {
+                    $msg = sprintf('The element "%s" has no value.', $element->localName);
                     throw new UnmarshallingException($msg, $element);
                 }
 
@@ -150,7 +150,7 @@ class ValueMarshaller extends Marshaller
             }
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'fieldIdentifier', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'fieldIdentifier', 'string')) !== null) {
             $object->setFieldIdentifier($value);
         }
 

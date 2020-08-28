@@ -125,6 +125,7 @@ abstract class QtiSmTestCase extends TestCase
      * @param string $xmlString An XML String to transform in a QtiComponent object.
      * @param string $version A QTI version rule the creation of the component.
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {

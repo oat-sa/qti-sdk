@@ -71,6 +71,7 @@ class AtomicBlockMarshaller extends ContentMarshaller
         }
 
         $this->fillElement($element, $component);
+
         return $element;
     }
 

@@ -43,11 +43,11 @@ class RandomIntegerMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'min', $component->getMin());
-        self::setDOMElementAttribute($element, 'max', $component->getMax());
+        $this->setDOMElementAttribute($element, 'min', $component->getMin());
+        $this->setDOMElementAttribute($element, 'max', $component->getMax());
 
         if ($component->getStep() !== 1) { // default value of the step attribute is 1.
-            self::setDOMElementAttribute($element, 'step', $component->getStep());
+            $this->setDOMElementAttribute($element, 'step', $component->getStep());
         }
 
         return $element;
@@ -62,15 +62,15 @@ class RandomIntegerMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($max = static::getDOMElementAttributeAs($element, 'max', 'string')) !== null) {
+        if (($max = $this->getDOMElementAttributeAs($element, 'max', 'string')) !== null) {
             $max = (Format::isVariableRef($max)) ? $max : (int)$max;
             $object = new RandomInteger(0, $max);
 
-            if (($step = static::getDOMElementAttributeAs($element, 'step')) !== null) {
+            if (($step = $this->getDOMElementAttributeAs($element, 'step')) !== null) {
                 $object->setStep(abs((int)$step));
             }
 
-            if (($min = static::getDOMElementAttributeAs($element, 'min')) !== null) {
+            if (($min = $this->getDOMElementAttributeAs($element, 'min')) !== null) {
                 $min = (Format::isVariableRef($min)) ? $min : (int)$min;
                 $object->setMin($min);
             }

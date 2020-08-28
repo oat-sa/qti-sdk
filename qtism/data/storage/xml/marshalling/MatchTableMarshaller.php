@@ -90,6 +90,7 @@ class MatchTableMarshaller extends Marshaller
      *
      * @param QtiComponent $component A MatchTable object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -102,7 +103,7 @@ class MatchTableMarshaller extends Marshaller
         }
 
         if ($component->getDefaultValue() !== null) {
-            static::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+            $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
         }
 
         return $element;
@@ -113,6 +114,7 @@ class MatchTableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A MatchTable object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
      */
     protected function unmarshall(DOMElement $element)
@@ -128,7 +130,7 @@ class MatchTableMarshaller extends Marshaller
 
             $object = new MatchTable($matchTableEntries);
 
-            if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+            if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
                 try {
                     $defaultValue = Utils::stringToDatatype($defaultValue, $this->getBaseType());
                     $object->setDefaultValue($defaultValue);

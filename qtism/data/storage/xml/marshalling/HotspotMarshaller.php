@@ -45,35 +45,36 @@ class HotspotMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
-        self::setDOMElementAttribute($element, 'coords', $component->getCoords()->__toString());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
+        $this->setDOMElementAttribute($element, 'coords', $component->getCoords()->__toString());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() === ShowHide::HIDE) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
         }
 
         if ($component->hasHotspotLabel() === true) {
-            self::setDOMElementAttribute($element, 'hotspotLabel', $component->getHotspotLabel());
+            $this->setDOMElementAttribute($element, 'hotspotLabel', $component->getHotspotLabel());
         }
 
         if ($component instanceof AssociableHotspot) {
-            self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+            $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
             if ($component->getMatchMin() !== 0) {
-                self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+                $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
             }
         }
 
         $this->fillElement($element, $component);
+
         return $element;
     }
 
@@ -86,9 +87,9 @@ class HotspotMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            if (($shape = self::getDOMElementAttributeAs($element, 'shape')) !== null) {
-                if (($coords = self::getDOMElementAttributeAs($element, 'coords')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
+                if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {
                     $shape = QtiShape::getConstantByName($shape);
                     if ($shape === false) {
                         $msg = "The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration.";
@@ -107,10 +108,10 @@ class HotspotMarshaller extends Marshaller
 
                     if ($element->localName === 'hotspotChoice') {
                         $component = new HotspotChoice($identifier, $shape, $coords);
-                    } elseif (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+                    } elseif (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
                         $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
 
-                        if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                        if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                             $component->setMatchMin($matchMin);
                         }
                     } else {
@@ -118,19 +119,19 @@ class HotspotMarshaller extends Marshaller
                         throw new UnmarshallingException($msg, $element);
                     }
 
-                    if (($hotspotLabel = self::getDOMElementAttributeAs($element, 'hotspotLabel')) !== null) {
+                    if (($hotspotLabel = $this->getDOMElementAttributeAs($element, 'hotspotLabel')) !== null) {
                         $component->setHotspotLabel($hotspotLabel);
                     }
 
-                    if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+                    if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                         $component->setFixed($fixed);
                     }
 
-                    if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                    if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                         $component->setTemplateIdentifier($templateIdentifier);
                     }
 
-                    if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                    if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                         if (($showHide = ShowHide::getConstantByName($showHide)) !== false) {
                             $component->setShowHide($showHide);
                         } else {
@@ -140,6 +141,7 @@ class HotspotMarshaller extends Marshaller
                     }
 
                     $this->fillBodyElement($component, $element);
+
                     return $component;
                 } else {
                     $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";

@@ -40,17 +40,18 @@ class VariableDeclarationMarshaller extends Marshaller
      *
      * @param QtiComponent $component An OutcomeDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'cardinality', Cardinality::getNameByConstant($component->getCardinality()));
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'cardinality', Cardinality::getNameByConstant($component->getCardinality()));
 
         if ($component->getBaseType() != -1) {
-            self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
         }
 
         // deal with default value.
@@ -68,19 +69,20 @@ class VariableDeclarationMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A VariableDeclaration object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         try {
             // identifier is a mandatory value for the variableDeclaration element.
-            if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
                 // cardinality is a mandatory value too.
-                if (($cardinality = static::getDOMElementAttributeAs($element, 'cardinality')) !== null) {
+                if (($cardinality = $this->getDOMElementAttributeAs($element, 'cardinality')) !== null) {
                     $object = new VariableDeclaration($identifier, -1, Cardinality::getConstantByName($cardinality));
 
                     // deal with baseType.
-                    $baseType = static::getDOMElementAttributeAs($element, 'baseType');
+                    $baseType = $this->getDOMElementAttributeAs($element, 'baseType');
                     if (!empty($baseType)) {
                         $object->setBaseType(BaseType::getConstantByName($baseType));
                     }

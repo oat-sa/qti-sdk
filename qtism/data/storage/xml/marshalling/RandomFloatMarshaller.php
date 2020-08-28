@@ -43,8 +43,8 @@ class RandomFloatMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'min', $component->getMin());
-        self::setDOMElementAttribute($element, 'max', $component->getMax());
+        $this->setDOMElementAttribute($element, 'min', $component->getMin());
+        $this->setDOMElementAttribute($element, 'max', $component->getMax());
 
         return $element;
     }
@@ -59,12 +59,12 @@ class RandomFloatMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // max attribute is mandatory.
-        if (($max = static::getDOMElementAttributeAs($element, 'max')) !== null) {
+        if (($max = $this->getDOMElementAttributeAs($element, 'max')) !== null) {
             $max = (Format::isVariableRef($max)) ? $max : (float)$max;
 
             $object = new RandomFloat(0.0, $max);
 
-            if (($min = static::getDOMElementAttributeAs($element, 'min')) !== null) {
+            if (($min = $this->getDOMElementAttributeAs($element, 'min')) !== null) {
                 $min = (Format::isVariableRef($min)) ? $min : (float)$min;
                 $object->setMin($min);
             }

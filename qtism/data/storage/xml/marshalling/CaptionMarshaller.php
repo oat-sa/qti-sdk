@@ -56,6 +56,7 @@ class CaptionMarshaller extends ContentMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)

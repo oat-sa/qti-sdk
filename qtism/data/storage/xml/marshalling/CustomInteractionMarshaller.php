@@ -43,7 +43,7 @@ class CustomInteractionMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement('customInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
@@ -65,7 +65,7 @@ class CustomInteractionMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $frag = $element->ownerDocument->createDocumentFragment();
             $element = $element->cloneNode(true);
             $frag->appendChild($element);

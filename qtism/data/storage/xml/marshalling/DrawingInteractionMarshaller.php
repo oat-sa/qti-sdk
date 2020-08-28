@@ -37,13 +37,14 @@ class DrawingInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A DrawingInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('drawingInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
@@ -63,19 +64,20 @@ class DrawingInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A DrawingInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
                 $objectElt = $objectElts[0];
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElt)->unmarshall($objectElt);
 
                 $component = new DrawingInteraction($responseIdentifier, $object);
 
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
                     $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

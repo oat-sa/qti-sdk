@@ -42,13 +42,13 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $fqClass = $this->lookupClass($element);
 
             $choices = new InlineChoiceCollection($children->getArrayCopy());
             if (count($choices) === 0) {
                 $msg = "An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given.";
-                throw new UnmarshallingException($message, $element);
+                throw new UnmarshallingException($msg, $element);
             }
 
             try {
@@ -58,11 +58,11 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+            if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
             }
 
-            if (($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
+            if (($required = $this->getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $component->setRequired($required);
             }
 
@@ -88,14 +88,14 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->mustShuffle() !== false) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
+            $this->setDOMElementAttribute($element, 'shuffle', true);
         }
 
         if ($component->isRequired() !== false) {
-            self::setDOMElementAttribute($element, 'required', true);
+            $this->setDOMElementAttribute($element, 'required', true);
         }
 
         if ($component->hasXmlBase() === true) {

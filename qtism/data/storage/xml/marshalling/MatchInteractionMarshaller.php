@@ -38,11 +38,12 @@ class MatchInteractionMarshaller extends ContentMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $fqClass = $this->lookupClass($element);
 
             try {
@@ -53,17 +54,17 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // shuffle.
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+            if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
             }
 
             // maxAssociations.
-            if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+            if (($maxAssociations = $this->getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
                 $component->setMaxAssociations($maxAssociations);
             }
 
             // minAssociations.
-            if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+            if (($minAssociations = $this->getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
                 $component->setMinAssociations($minAssociations);
             }
 
@@ -73,7 +74,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // prompt.
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
@@ -81,6 +82,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             $this->fillBodyElement($component, $element);
+
             return $component;
         } else {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element.";
@@ -92,13 +94,16 @@ class MatchInteractionMarshaller extends ContentMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+
+        // responseIdentifier.
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         // prompt.
         if ($component->hasPrompt() === true) {
@@ -107,17 +112,17 @@ class MatchInteractionMarshaller extends ContentMarshaller
 
         // shuffle.
         if ($component->mustShuffle() !== false) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
+            $this->setDOMElementAttribute($element, 'shuffle', true);
         }
 
         // maxAssociations.
         if ($component->getMaxAssociations() !== 1) {
-            self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+            $this->setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
         // minAssociations.
         if ($component->getMinAssociations() !== 0) {
-            self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+            $this->setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
         // xml:base

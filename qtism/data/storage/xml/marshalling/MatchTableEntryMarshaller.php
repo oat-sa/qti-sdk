@@ -97,8 +97,8 @@ class MatchTableEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
-        self::setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
+        $this->setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
+        $this->setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
 
         return $element;
     }
@@ -112,8 +112,8 @@ class MatchTableEntryMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($sourceValue = static::getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
-            if (($targetValue = static::getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
+        if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
+            if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
                 return new MatchTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()), $this->getBaseType());
             } else {
                 $msg = "The mandatory attribute 'targetValue' is missing.";

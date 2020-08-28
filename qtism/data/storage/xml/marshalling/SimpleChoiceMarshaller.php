@@ -42,19 +42,19 @@ class SimpleChoiceMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass($identifier);
 
-            if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+            if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                 $component->setFixed($fixed);
             }
 
-            if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+            if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
 
-            if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+            if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
@@ -78,18 +78,18 @@ class SimpleChoiceMarshaller extends ContentMarshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         foreach ($elements as $e) {

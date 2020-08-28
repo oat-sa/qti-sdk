@@ -42,19 +42,19 @@ class ImgMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('img');
 
-        self::setDOMElementAttribute($element, 'src', $component->getSrc());
-        self::setDOMElementAttribute($element, 'alt', $component->getAlt());
+        $this->setDOMElementAttribute($element, 'src', $component->getSrc());
+        $this->setDOMElementAttribute($element, 'alt', $component->getAlt());
 
         if ($component->hasWidth() === true) {
-            self::setDOMElementAttribute($element, 'width', $component->getWidth());
+            $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
         if ($component->hasHeight() === true) {
-            self::setDOMElementAttribute($element, 'height', $component->getHeight());
+            $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
         if ($component->hasLongdesc() === true) {
-            self::setDOMElementAttribute($element, 'longdesc', $component->getLongdesc());
+            $this->setDOMElementAttribute($element, 'longdesc', $component->getLongdesc());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -75,8 +75,8 @@ class ImgMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($src = self::getDOMElementAttributeAs($element, 'src')) !== null) {
-            if (($alt = self::getDOMElementAttributeAs($element, 'alt')) === null) {
+        if (($src = $this->getDOMElementAttributeAs($element, 'src')) !== null) {
+            if (($alt = $this->getDOMElementAttributeAs($element, 'alt')) === null) {
                 // The XSD does not force the 'alt' attribute to be non-empty,
                 // thus we consider the 'alt' attribute value as an empty string ('').
                 $alt = '';
@@ -84,11 +84,11 @@ class ImgMarshaller extends Marshaller
 
             $component = new Img($src, $alt);
 
-            if (($longdesc = self::getDOMElementAttributeAs($element, 'longdesc')) !== null) {
+            if (($longdesc = $this->getDOMElementAttributeAs($element, 'longdesc')) !== null) {
                 $component->setLongdesc($longdesc);
             }
 
-            if (($height = self::getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
+            if (($height = $this->getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
                 if (stripos($height, '%') === false) {
                     $component->setHeight((int)$height);
                 } else {
@@ -96,7 +96,7 @@ class ImgMarshaller extends Marshaller
                 }
             }
 
-            if (($width = self::getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
+            if (($width = $this->getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
                 if (stripos($width, '%') === false) {
                     $component->setWidth((int)$width);
                 } else {
@@ -109,6 +109,7 @@ class ImgMarshaller extends Marshaller
             }
 
             $this->fillBodyElement($component, $element);
+
             return $component;
         } else {
             $msg = "The 'mandatory' attribute 'src' is missing from element 'img'.";

@@ -67,7 +67,7 @@ class InterpolationTableMarshaller extends Marshaller
      */
     public function setBaseType($baseType)
     {
-        if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
+        if (in_array($baseType, BaseType::asArray(), true) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
             $msg = 'The BaseType attribute must be a value from the BaseType enumeration.';
@@ -92,6 +92,7 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param QtiComponent $component An InterpolationTable object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -103,7 +104,7 @@ class InterpolationTableMarshaller extends Marshaller
         }
 
         if ($component->getDefaultValue() !== null) {
-            static::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+            $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
         }
 
         return $element;
@@ -114,6 +115,7 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An InterpolationTable object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If $element does not contain any interpolationTableEntry QTI elements.
      */
     protected function unmarshall(DOMElement $element)
@@ -129,7 +131,7 @@ class InterpolationTableMarshaller extends Marshaller
 
             $object = new InterpolationTable($interpolationTableEntryCollection);
 
-            if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+            if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
                 try {
                     $object->setDefaultValue(Utils::stringToDatatype($defaultValue, $this->getBaseType()));
                 } catch (InvalidArgumentException $e) {

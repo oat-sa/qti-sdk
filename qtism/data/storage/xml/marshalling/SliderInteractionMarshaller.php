@@ -39,30 +39,31 @@ class SliderInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SliderInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('sliderInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
-        self::setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
+        $this->setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
 
         if ($component->hasStep() === true) {
-            self::setDOMElementAttribute($element, 'step', $component->getStep());
+            $this->setDOMElementAttribute($element, 'step', $component->getStep());
         }
 
         if ($component->mustStepLabel() === true) {
-            self::setDOMElementAttribute($element, 'stepLabel', true);
+            $this->setDOMElementAttribute($element, 'stepLabel', true);
         }
 
         if ($component->getOrientation() === Orientation::VERTICAL) {
-            self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::VERTICAL));
+            $this->setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::VERTICAL));
         }
 
         if ($component->mustReverse() === true) {
-            self::setDOMElementAttribute($element, 'reverse', true);
+            $this->setDOMElementAttribute($element, 'reverse', true);
         }
 
         if ($component->hasXmlBase() === true) {
@@ -81,31 +82,32 @@ class SliderInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SliderInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            if (($lowerBound = self::getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
-                if (($upperBound = self::getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            if (($lowerBound = $this->getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
+                if (($upperBound = $this->getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
                     $component = new SliderInteraction($responseIdentifier, $lowerBound, $upperBound);
 
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                         $component->setPrompt($prompt);
                     }
 
-                    if (($step = self::getDOMElementAttributeAs($element, 'step', 'integer')) !== null) {
+                    if (($step = $this->getDOMElementAttributeAs($element, 'step', 'integer')) !== null) {
                         $component->setStep($step);
                     }
 
-                    if (($stepLabel = self::getDOMElementAttributeAs($element, 'stepLabel', 'boolean')) !== null) {
+                    if (($stepLabel = $this->getDOMElementAttributeAs($element, 'stepLabel', 'boolean')) !== null) {
                         $component->setStepLabel($stepLabel);
                     }
 
-                    if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
+                    if (($orientation = $this->getDOMElementAttributeAs($element, 'orientation')) !== null) {
                         try {
                             $component->setOrientation(Orientation::getConstantByName($orientation));
                         } catch (InvalidArgumentException $e) {
@@ -114,7 +116,7 @@ class SliderInteractionMarshaller extends Marshaller
                         }
                     }
 
-                    if (($reverse = self::getDOMElementAttributeAs($element, 'reverse', 'boolean')) !== null) {
+                    if (($reverse = $this->getDOMElementAttributeAs($element, 'reverse', 'boolean')) !== null) {
                         $component->setReverse($reverse);
                     }
 

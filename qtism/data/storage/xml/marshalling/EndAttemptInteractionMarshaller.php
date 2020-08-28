@@ -42,8 +42,8 @@ class EndAttemptInteractionMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('endAttemptInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
@@ -61,8 +61,8 @@ class EndAttemptInteractionMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            if (($title = self::getDOMElementAttributeAs($element, 'title')) === null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            if (($title = $this->getDOMElementAttributeAs($element, 'title')) === null) {
                 // The XSD does not restrict to an empty string, we then consider
                 // the title as an empty string ('').
                 $title = '';

@@ -38,6 +38,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A TemplateDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -45,11 +46,11 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
         $element = parent::marshall($component);
 
         if ($component->isParamVariable() === true) {
-            self::setDOMElementAttribute($element, 'paramVariable', true);
+            $this->setDOMElementAttribute($element, 'paramVariable', true);
         }
 
         if ($component->isMathVariable() === true) {
-            self::setDOMElementAttribute($element, 'mathVariable', true);
+            $this->setDOMElementAttribute($element, 'mathVariable', true);
         }
 
         return $element;
@@ -61,6 +62,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TemplateDeclaration object.
      * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -71,11 +73,11 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
-            if (($paramVariable = self::getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
+            if (($paramVariable = $this->getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
                 $object->setParamVariable($paramVariable);
             }
 
-            if (($mathVariable = self::getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
+            if (($mathVariable = $this->getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
                 $object->setMathVariable($mathVariable);
             }
 

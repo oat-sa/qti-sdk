@@ -40,21 +40,22 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         // responseIdentifier.
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass($responseIdentifier, new SimpleChoiceCollection($children->getArrayCopy()));
 
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+            if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
             }
 
             // maxChoices.
-            if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+            if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                 if ($element->localName === 'orderInteraction') {
                     if ($maxChoices !== 0) {
                         $component->setMaxChoices($maxChoices);
@@ -65,7 +66,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
             }
 
             // minChoices.
-            if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+            if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                 if ($element->localName === 'orderInteraction') {
                     /*
                      * Lots of QTI implementations output minChoices = 0 while
@@ -86,7 +87,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
             }
 
             // orientation.
-            if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
+            if (($orientation = $this->getDOMElementAttributeAs($element, 'orientation')) !== null) {
                 $component->setOrientation(Orientation::getConstantByName($orientation));
             }
 
@@ -94,7 +95,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 $component->setXmlBase($xmlBase);
             }
 
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
@@ -114,13 +115,14 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         // prompt.
         if ($component->hasPrompt() === true) {
@@ -129,22 +131,22 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
         // shuffle.
         if ($component->mustShuffle() !== false) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
+            $this->setDOMElementAttribute($element, 'shuffle', true);
         }
 
         // maxChoices.
         if (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 1) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
-            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+            $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         // minChoices.
         if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         // orientation.
         if ($component->getOrientation() !== Orientation::VERTICAL) {
-            self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
+            $this->setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
         }
 
         // xml:base.

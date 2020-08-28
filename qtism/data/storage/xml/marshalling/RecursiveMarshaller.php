@@ -201,6 +201,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @param QtiComponent $component The QtiComponent object to marshall.
      * @return DOMElement A DOMElement corresponding to the QtiComponent to marshall.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException If an error occurs during the marshalling process.
      */
     protected function marshall(QtiComponent $component)
@@ -255,6 +256,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param DOMElement $element The DOMElement object to unmarshall.
      * @param QtiComponent $rootComponent An optional already instantiated QtiComponent to use as the root component.
      * @return QtiComponent A QtiComponent object corresponding to the DOMElement to unmarshall.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element, QtiComponent $rootComponent = null)
     {

@@ -82,6 +82,7 @@ class CorrectResponseMarshaller extends Marshaller
      *
      * @param QtiComponent $component A CorrectResponse object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -90,7 +91,7 @@ class CorrectResponseMarshaller extends Marshaller
 
         $interpretation = $component->getInterpretation();
         if (!empty($interpretation)) {
-            self::setDOMElementAttribute($element, 'interpretation', $interpretation);
+            $this->setDOMElementAttribute($element, 'interpretation', $interpretation);
         }
 
         // A CorrectResponse contains 1..* Value objects
@@ -108,11 +109,12 @@ class CorrectResponseMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A CorrectResponse object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid CorrectResponse object.
      */
     protected function unmarshall(DOMElement $element)
     {
-        $interpretation = static::getDOMElementAttributeAs($element, 'interpretation', 'string');
+        $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
 
         // Retrieve the values ...

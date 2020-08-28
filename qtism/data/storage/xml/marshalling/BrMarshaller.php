@@ -47,6 +47,7 @@ class BrMarshaller extends Marshaller
         }
 
         $this->fillElement($element, $component);
+
         return $element;
     }
 
@@ -66,6 +67,7 @@ class BrMarshaller extends Marshaller
         }
 
         $this->fillBodyElement($component, $element);
+
         return $component;
     }
 

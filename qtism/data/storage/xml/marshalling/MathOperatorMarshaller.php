@@ -46,7 +46,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
+        $this->setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -65,7 +65,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
             return new MathOperator($children, MathFunctions::getConstantByName($name));
         } else {
             $msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";

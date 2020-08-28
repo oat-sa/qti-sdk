@@ -38,6 +38,7 @@ class TemplateConstraintMarshaller extends Marshaller
      *
      * @param QtiComponent $component A TemplateConstraint object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -55,6 +56,7 @@ class TemplateConstraintMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TemplateConstraint object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)

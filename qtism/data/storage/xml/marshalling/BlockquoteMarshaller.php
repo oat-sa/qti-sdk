@@ -57,7 +57,7 @@ class BlockquoteMarshaller extends ContentMarshaller
         $component->setContent($blockCollection);
 
         if ($component->hasCite() === true) {
-            self::setDOMElementAttribute($element, 'cite', $component->getCite());
+            $this->setDOMElementAttribute($element, 'cite', $component->getCite());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -78,7 +78,7 @@ class BlockquoteMarshaller extends ContentMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
+        if (($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
             $component->setCite($cite);
         }
 

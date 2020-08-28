@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml;
 
 use DOMDocument;
 use DOMElement;
+use InvalidArgumentException;
 use SplStack;
 
 /**
@@ -182,5 +183,116 @@ class Utils
                 }
             }
         }
+    }
+
+    /**
+     * Get the attribute value of a given DOMElement object, cast in a given datatype.
+     *
+     * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
+     * @param string $attribute The attribute name.
+     * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
+     * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
+     * @throws InvalidArgumentException If $datatype is not in the range of possible values.
+     */
+    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    {
+        $attr = $element->getAttribute($attribute);
+
+        if ($attr !== '') {
+            switch ($datatype) {
+                case 'string':
+                    return $attr;
+                    break;
+
+                case 'integer':
+                    return (int)$attr;
+                    break;
+
+                case 'double':
+                case 'float':
+                    return (float)$attr;
+                    break;
+
+                case 'boolean':
+                    return $attr === 'true';
+                    break;
+
+                default:
+                    throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
+                    break;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set the attribute value of a given DOMElement object. Boolean values will be transformed
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param string $attribute An XML attribute name.
+     * @param mixed $value A given value.
+     */
+    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    {
+        switch (gettype($value)) {
+            case 'boolean':
+                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
+                break;
+
+            default:
+                $element->setAttribute($attribute, '' . $value);
+                break;
+        }
+    }
+
+    /**
+     * Get the child elements of a given element by tag name. This method does
+     * not behave like DOMElement::getElementsByTagName. It only returns the direct
+     * child elements that matches $tagName but does not go recursive.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
+     * @param bool $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param bool $withText (optional) Whether text nodes must be returned or not.
+     * @return array An array of DOMElement objects.
+     */
+    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    {
+        if (!is_array($tagName)) {
+            $tagName = [$tagName];
+        }
+
+        $rawElts = self::getChildElements($element, $withText);
+        $returnValue = [];
+
+        foreach ($rawElts as $elt) {
+            if (in_array($elt->localName, $tagName) === !$exclude) {
+                $returnValue[] = $elt;
+            }
+        }
+
+        return $returnValue;
+    }
+
+    /**
+     * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param bool $withText Whether text nodes must be returned or not.
+     * @return array An array of DOMNode objects.
+     */
+    public static function getChildElements($element, $withText = false)
+    {
+        $children = $element->childNodes;
+        $returnValue = [];
+
+        for ($i = 0; $i < $children->length; $i++) {
+            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
+                $returnValue[] = $children->item($i);
+            }
+        }
+
+        return $returnValue;
     }
 }

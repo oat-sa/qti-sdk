@@ -87,9 +87,9 @@ class InterpolationTableEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
-        self::setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
-        self::setDOMElementAttribute($element, 'includeBoundary', $component->doesIncludeBoundary());
+        $this->setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
+        $this->setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
+        $this->setDOMElementAttribute($element, 'includeBoundary', $component->doesIncludeBoundary());
 
         return $element;
     }
@@ -103,11 +103,11 @@ class InterpolationTableEntryMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($sourceValue = static::getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
-            if (($targetValue = static::getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
+        if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
+            if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
                 $object = new InterpolationTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()));
 
-                if (($includeBoundary = static::getDOMElementAttributeAs($element, 'includeBoundary', 'boolean')) !== null) {
+                if (($includeBoundary = $this->getDOMElementAttributeAs($element, 'includeBoundary', 'boolean')) !== null) {
                     $object->setIncludeBoundary($includeBoundary);
                 }
 

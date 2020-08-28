@@ -42,7 +42,7 @@ class MapResponsePointMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         return $element;
     }
@@ -56,7 +56,7 @@ class MapResponsePointMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
             return new MapResponsePoint($identifier);
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";

@@ -46,14 +46,14 @@ class SimpleInlineMarshaller extends ContentMarshaller
         $fqClass = $this->lookupClass($element);
 
         if ($element->localName === 'a') {
-            if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
+            if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
 
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
                     $component->setXmlBase($xmlBase);
                 }
 
-                if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+                if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
                     $component->setType($type);
                 }
             } else {
@@ -68,7 +68,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
         $this->fillBodyElement($component, $element);
 
         // The q class has a specific cite (URI) attribute.
-        if ($component instanceof Q && ($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
+        if ($component instanceof Q && ($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
             try {
                 $component->setCite($cite);
             } catch (InvalidArgumentException $e) {

@@ -44,7 +44,7 @@ class SubstringMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
+        $this->setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -64,7 +64,7 @@ class SubstringMarshaller extends OperatorMarshaller
     {
         $object = new Substring($children);
 
-        if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+        if (($caseSensitive = $this->getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
             $object->setCaseSensitive($caseSensitive);
         }
 

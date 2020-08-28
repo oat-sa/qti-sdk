@@ -45,7 +45,7 @@ class RepeatMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'numberRepeats', $component->getNumberRepeats());
+        $this->setDOMElementAttribute($element, 'numberRepeats', $component->getNumberRepeats());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -64,7 +64,7 @@ class RepeatMarshaller extends OperatorMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($numberRepeats = static::getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
+        if (($numberRepeats = $this->getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
             if (Format::isInteger($numberRepeats)) {
                 $numberRepeats = (int)$numberRepeats;
             }

@@ -38,12 +38,13 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
 
@@ -58,11 +59,11 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
                     $fqClass = $this->lookupClass($element);
                     $component = new $fqClass($responseIdentifier, $object, $choices);
 
-                    if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+                    if (($minAssociations = $this->getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
                         $component->setMinAssociations($minAssociations);
                     }
 
-                    if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+                    if (($maxAssociations = $this->getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
                         $component->setMaxAssociations($maxAssociations);
                     }
 
@@ -70,7 +71,7 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
                         $component->setXmlBase($xmlBase);
                     }
 
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
@@ -98,13 +99,14 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -113,11 +115,11 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
         if ($component->getMinAssociations() !== 0) {
-            self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+            $this->setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
         if ($component->getMaxAssociations() !== 1) {
-            self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+            $this->setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
         if ($component->hasXmlBase() === true) {

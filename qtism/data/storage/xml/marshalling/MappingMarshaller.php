@@ -89,6 +89,7 @@ class MappingMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Mapping object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -96,14 +97,14 @@ class MappingMarshaller extends Marshaller
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
         if ($component->hasLowerBound() === true) {
-            self::setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
+            $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
         }
 
         if ($component->hasUpperBound() === true) {
-            self::setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
+            $this->setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
         }
 
-        self::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+        $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
 
         foreach ($component->getMapEntries() as $mapEntry) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($mapEntry, [$this->getBaseType()]);
@@ -118,11 +119,12 @@ class MappingMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Mapping object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        $mapEntriesElts = self::getChildElementsByTagName($element, 'mapEntry');
+        $mapEntriesElts = $this->getChildElementsByTagName($element, 'mapEntry');
         $mapEntries = new MapEntryCollection();
 
         foreach ($mapEntriesElts as $mapEntryElt) {
@@ -133,15 +135,15 @@ class MappingMarshaller extends Marshaller
         try {
             $object = new Mapping($mapEntries);
 
-            if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue', 'float')) !== null) {
+            if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue', 'float')) !== null) {
                 $object->setDefaultValue($defaultValue);
             }
 
-            if (($lowerBound = static::getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
+            if (($lowerBound = $this->getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
                 $object->setLowerBound($lowerBound);
             }
 
-            if (($upperBound = static::getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
+            if (($upperBound = $this->getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
                 $object->setUpperBound($upperBound);
             }
 

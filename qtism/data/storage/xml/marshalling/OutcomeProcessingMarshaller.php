@@ -38,6 +38,7 @@ class OutcomeProcessingMarshaller extends Marshaller
      *
      * @param QtiComponent $component An OutcomeProcessing object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -57,6 +58,7 @@ class OutcomeProcessingMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An OutcomeProcessing object.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {

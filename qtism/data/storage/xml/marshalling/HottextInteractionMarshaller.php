@@ -38,11 +38,12 @@ class HottextInteractionMarshaller extends ContentMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $fqClass = $this->lookupClass($element);
             try {
                 $content = new BlockStaticCollection($children->getArrayCopy());
@@ -58,11 +59,11 @@ class HottextInteractionMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
-            if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+            if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                 $component->setMaxChoices($maxChoices);
             }
 
-            if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+            if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                 $component->setMinChoices($minChoices);
             }
 
@@ -70,7 +71,7 @@ class HottextInteractionMarshaller extends ContentMarshaller
                 $component->setXmlBase($xmlBase);
             }
 
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
@@ -90,24 +91,25 @@ class HottextInteractionMarshaller extends ContentMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
 
         if ($component->getMaxChoices() !== 1) {
-            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+            $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         if ($component->getMinChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasXmlBase() !== false) {

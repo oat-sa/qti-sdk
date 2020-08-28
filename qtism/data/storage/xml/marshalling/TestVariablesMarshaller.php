@@ -43,16 +43,16 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'variableIdentifier', $component->getVariableIdentifier());
+        $this->setDOMElementAttribute($element, 'variableIdentifier', $component->getVariableIdentifier());
 
         $baseType = $component->getBaseType();
         if ($baseType != -1) {
-            self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
         }
 
         $weightIdentifier = $component->getWeightIdentifier();
         if (!empty($weightIdentifier)) {
-            self::setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
+            $this->setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
         }
 
         return $element;
@@ -69,17 +69,17 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($variableIdentifier = static::getDOMElementAttributeAs($element, 'variableIdentifier')) !== null) {
+        if (($variableIdentifier = $this->getDOMElementAttributeAs($element, 'variableIdentifier')) !== null) {
             $object = new TestVariables($variableIdentifier);
             $object->setSectionIdentifier($baseComponent->getSectionIdentifier());
             $object->setIncludeCategories($baseComponent->getIncludeCategories());
             $object->setExcludeCategories($baseComponent->getExcludeCategories());
 
-            if (($baseType = static::getDOMElementAttributeAs($element, 'baseType')) !== null) {
+            if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType')) !== null) {
                 $object->setBaseType(BaseType::getConstantByName($baseType));
             }
 
-            if (($weightIdentifier = static::getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
+            if (($weightIdentifier = $this->getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
                 $object->setWeightIdentifier($weightIdentifier);
             }
 

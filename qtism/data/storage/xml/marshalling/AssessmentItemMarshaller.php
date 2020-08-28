@@ -42,31 +42,32 @@ class AssessmentItemMarshaller extends Marshaller
      *
      * @param QtiComponent $component An AssessmentItem object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
-        self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
-        self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+        $this->setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
 
         if ($component->hasLang() === true) {
-            self::setDOMElementAttribute($element, 'lang', $component->getLang());
+            $this->setDOMElementAttribute($element, 'lang', $component->getLang());
         }
 
         if ($component->hasLabel() === true) {
-            self::setDOMElementAttribute($element, 'label', $component->getLabel());
+            $this->setDOMElementAttribute($element, 'label', $component->getLabel());
         }
 
         if ($component->hasToolName() === true) {
-            self::setDOMElementAttribute($element, 'toolName', $component->getToolName());
+            $this->setDOMElementAttribute($element, 'toolName', $component->getToolName());
         }
 
         if ($component->hasToolVersion() === true) {
-            self::setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
+            $this->setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
         }
 
         foreach ($component->getResponseDeclarations() as $responseDeclaration) {
@@ -122,13 +123,14 @@ class AssessmentItemMarshaller extends Marshaller
      * @param DOMElement $element A DOMElement object.
      * @param AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
      * @return QtiComponent An AssessmentItem object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
-                if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
+                if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
                     if (empty($assessmentItem)) {
                         $object = new AssessmentItem($identifier, $title, $timeDependent);
                     } else {
@@ -137,27 +139,27 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setTimeDependent($timeDependent);
                     }
 
-                    if (($lang = static::getDOMElementAttributeAs($element, 'lang')) !== null) {
+                    if (($lang = $this->getDOMElementAttributeAs($element, 'lang')) !== null) {
                         $object->setLang($lang);
                     }
 
-                    if (($label = static::getDOMElementAttributeAs($element, 'label')) !== null) {
+                    if (($label = $this->getDOMElementAttributeAs($element, 'label')) !== null) {
                         $object->setLabel($label);
                     }
 
-                    if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+                    if (($adaptive = $this->getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
                         $object->setAdaptive($adaptive);
                     }
 
-                    if (($toolName = static::getDOMElementAttributeAs($element, 'toolName')) !== null) {
+                    if (($toolName = $this->getDOMElementAttributeAs($element, 'toolName')) !== null) {
                         $object->setToolName($toolName);
                     }
 
-                    if (($toolVersion = static::getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
+                    if (($toolVersion = $this->getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
                         $object->setToolVersion($toolVersion);
                     }
 
-                    $responseDeclarationElts = static::getChildElementsByTagName($element, 'responseDeclaration');
+                    $responseDeclarationElts = $this->getChildElementsByTagName($element, 'responseDeclaration');
                     if (!empty($responseDeclarationElts)) {
                         $responseDeclarations = new ResponseDeclarationCollection();
 
@@ -169,7 +171,7 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setResponseDeclarations($responseDeclarations);
                     }
 
-                    $outcomeDeclarationElts = static::getChildElementsByTagName($element, 'outcomeDeclaration');
+                    $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
                     if (!empty($outcomeDeclarationElts)) {
                         $outcomeDeclarations = new OutcomeDeclarationCollection();
 
@@ -181,7 +183,7 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setOutcomeDeclarations($outcomeDeclarations);
                     }
 
-                    $templateDeclarationElts = static::getChildElementsByTagName($element, 'templateDeclaration');
+                    $templateDeclarationElts = $this->getChildElementsByTagName($element, 'templateDeclaration');
                     if (!empty($templateDeclarationElts)) {
                         $templateDeclarations = new TemplateDeclarationCollection();
 
@@ -193,13 +195,13 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setTemplateDeclarations($templateDeclarations);
                     }
 
-                    $templateProcessingElts = static::getChildElementsByTagName($element, 'templateProcessing');
+                    $templateProcessingElts = $this->getChildElementsByTagName($element, 'templateProcessing');
                     if (!empty($templateProcessingElts)) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($templateProcessingElts[0]);
                         $object->setTemplateProcessing($marshaller->unmarshall($templateProcessingElts[0]));
                     }
 
-                    $stylesheetElts = static::getChildElementsByTagName($element, 'stylesheet');
+                    $stylesheetElts = $this->getChildElementsByTagName($element, 'stylesheet');
                     if (!empty($stylesheetElts)) {
                         $stylesheets = new StylesheetCollection();
 
@@ -211,19 +213,19 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setStylesheets($stylesheets);
                     }
 
-                    $itemBodyElts = static::getChildElementsByTagName($element, 'itemBody');
+                    $itemBodyElts = $this->getChildElementsByTagName($element, 'itemBody');
                     if (count($itemBodyElts) > 0) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($itemBodyElts[0]);
                         $object->setItemBody($marshaller->unmarshall($itemBodyElts[0]));
                     }
 
-                    $responseProcessingElts = static::getChildElementsByTagName($element, 'responseProcessing');
+                    $responseProcessingElts = $this->getChildElementsByTagName($element, 'responseProcessing');
                     if (!empty($responseProcessingElts)) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
                         $object->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
                     }
 
-                    $modalFeedbackElts = static::getChildElementsByTagName($element, 'modalFeedback');
+                    $modalFeedbackElts = $this->getChildElementsByTagName($element, 'modalFeedback');
                     if (!empty($modalFeedbackElts)) {
                         $modalFeedbacks = new ModalFeedbackCollection();
 

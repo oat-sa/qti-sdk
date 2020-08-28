@@ -43,7 +43,7 @@ class MathConstantMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'name', MathEnumeration::getNameByConstant($component->getName()));
+        $this->setDOMElementAttribute($element, 'name', MathEnumeration::getNameByConstant($component->getName()));
 
         return $element;
     }
@@ -57,7 +57,7 @@ class MathConstantMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
             if (($cst = MathEnumeration::getConstantByName($name)) !== false) {
                 return new MathConstant($cst);
             } else {

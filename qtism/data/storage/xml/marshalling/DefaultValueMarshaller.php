@@ -75,6 +75,7 @@ class DefaultValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A DefaultValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -83,7 +84,7 @@ class DefaultValueMarshaller extends Marshaller
 
         $interpretation = $component->getInterpretation();
         if (!empty($interpretation)) {
-            self::setDOMElementAttribute($element, 'interpretation', $interpretation);
+            $this->setDOMElementAttribute($element, 'interpretation', $interpretation);
         }
 
         // A DefaultValue contains 1..* Value objects
@@ -101,11 +102,12 @@ class DefaultValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A DefaultValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
      */
     protected function unmarshall(DOMElement $element)
     {
-        $interpretation = static::getDOMElementAttributeAs($element, 'interpretation', 'string');
+        $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
 
         // Retrieve the values ...

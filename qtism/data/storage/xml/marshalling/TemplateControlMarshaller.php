@@ -50,12 +50,13 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @param QtiComponentCollection $children
      * @return mixed
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        $expressionElts = self::getChildElementsByTagName($element, Expression::getExpressionClassNames());
+        $expressionElts = $this->getChildElementsByTagName($element, Expression::getExpressionClassNames());
 
         if (count($expressionElts) > 0) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElts[0]);
@@ -82,6 +83,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
@@ -134,7 +136,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, [
+        return $this->getChildElementsByTagName($element, [
             'exitTemplate',
             'setDefaultValue',
             'setCorrectResponse',

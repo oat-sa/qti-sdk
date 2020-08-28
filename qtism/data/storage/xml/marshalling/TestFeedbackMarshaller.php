@@ -40,6 +40,8 @@ class TestFeedbackMarshaller extends Marshaller
      *
      * @param QtiComponent $component A TestFeedback object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -47,14 +49,14 @@ class TestFeedbackMarshaller extends Marshaller
         $access = ($component->getAccess() == TestFeedbackAccess::AT_END) ? 'atEnd' : 'during';
         $showHide = ($component->getShowHide() == ShowHide::SHOW) ? 'show' : 'hide';
 
-        self::setDOMElementAttribute($element, 'access', $access);
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'showHide', $showHide);
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'access', $access);
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'showHide', $showHide);
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         $title = $component->getTitle();
         if (!empty($title)) {
-            self::setDOMElementAttribute($element, 'title', $title);
+            $this->setDOMElementAttribute($element, 'title', $title);
         }
 
         $flowStatic = static::getDOMCradle()->createDocumentFragment();
@@ -69,14 +71,15 @@ class TestFeedbackMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TestFeedback object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
-            if (($outcomeIdentifier = static::getDOMElementAttributeAs($element, 'outcomeIdentifier', 'string')) !== null) {
-                if (($showHide = static::getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
-                    if (($access = static::getDOMElementAttributeAs($element, 'access', 'string')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+            if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier', 'string')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
+                    if (($access = $this->getDOMElementAttributeAs($element, 'access', 'string')) !== null) {
                         $content = self::extractContent($element);
 
                         if (!empty($content)) {
@@ -84,7 +87,7 @@ class TestFeedbackMarshaller extends Marshaller
                             $object->setAccess(($access == 'atEnd') ? TestFeedbackAccess::AT_END : TestFeedbackAccess::DURING);
                             $object->setShowHide(($showHide == 'show') ? ShowHide::SHOW : ShowHide::HIDE);
 
-                            if (($title = static::getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
+                            if (($title = $this->getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
                                 $object->setTitle($title);
                             }
 

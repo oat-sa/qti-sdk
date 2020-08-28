@@ -40,23 +40,24 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      *
      * @param QtiComponent $component An AssessmentTest object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
 
         $toolName = $component->getToolName();
         if (!empty($toolName)) {
-            self::setDOMElementAttribute($element, 'toolName', $component->getToolName());
+            $this->setDOMElementAttribute($element, 'toolName', $component->getToolName());
         }
 
         $toolVersion = $component->getToolVersion();
         if (!empty($toolVersion)) {
-            self::setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
+            $this->setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
         }
 
         foreach ($component->getOutcomeDeclarations() as $outcomeDeclaration) {
@@ -97,12 +98,13 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * @param DOMElement $element A DOMElement object.
      * @param AssessmentTest $assessmentTest An AssessmentTest object to decorate.
      * @return QtiComponent An OutcomeProcessing object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
                 if (empty($assessmentTest)) {
                     $object = new AssessmentTest($identifier, $title);
                 } else {
@@ -112,7 +114,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                 }
 
                 // Get the test parts.
-                $testPartsElts = self::getChildElementsByTagName($element, 'testPart');
+                $testPartsElts = $this->getChildElementsByTagName($element, 'testPart');
 
                 if (count($testPartsElts) > 0) {
                     $testParts = new TestPartCollection();
@@ -124,15 +126,15 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
 
                     $object->setTestParts($testParts);
 
-                    if (($toolName = static::getDOMElementAttributeAs($element, 'toolName')) !== null) {
+                    if (($toolName = $this->getDOMElementAttributeAs($element, 'toolName')) !== null) {
                         $object->setToolName($toolName);
                     }
 
-                    if (($toolVersion = static::getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
+                    if (($toolVersion = $this->getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
                         $object->setToolVersion($toolVersion);
                     }
 
-                    $testFeedbackElts = self::getChildElementsByTagName($element, 'testFeedback');
+                    $testFeedbackElts = $this->getChildElementsByTagName($element, 'testFeedback');
                     if (count($testFeedbackElts) > 0) {
                         $testFeedbacks = new TestFeedbackCollection();
 
@@ -144,7 +146,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                         $object->setTestFeedbacks($testFeedbacks);
                     }
 
-                    $outcomeDeclarationElts = self::getChildElementsByTagName($element, 'outcomeDeclaration');
+                    $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
                     if (count($outcomeDeclarationElts) > 0) {
                         $outcomeDeclarations = new OutcomeDeclarationCollection();
 
@@ -156,13 +158,13 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                         $object->setOutcomeDeclarations($outcomeDeclarations);
                     }
 
-                    $outcomeProcessingElts = self::getChildElementsByTagName($element, 'outcomeProcessing');
+                    $outcomeProcessingElts = $this->getChildElementsByTagName($element, 'outcomeProcessing');
                     if (isset($outcomeProcessingElts[0])) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeProcessingElts[0]);
                         $object->setOutcomeProcessing($marshaller->unmarshall($outcomeProcessingElts[0]));
                     }
 
-                    $timeLimitsElts = self::getChildElementsByTagName($element, 'timeLimits');
+                    $timeLimitsElts = $this->getChildElementsByTagName($element, 'timeLimits');
                     if (isset($timeLimitsElts[0])) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($timeLimitsElts[0]);
                         $object->setTimeLimits($marshaller->unmarshall($timeLimitsElts[0]));

@@ -38,6 +38,7 @@ class ResponseProcessingMarshaller extends Marshaller
      *
      * @param QtiComponent $component A ResponseProcessing object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -45,11 +46,11 @@ class ResponseProcessingMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
         if ($component->hasTemplate() === true) {
-            self::setDOMElementAttribute($element, 'template', $component->getTemplate());
+            $this->setDOMElementAttribute($element, 'template', $component->getTemplate());
         }
 
         if ($component->hasTemplateLocation() === true) {
-            self::setDOMElementAttribute($element, 'templateLocation', $component->getTemplateLocation());
+            $this->setDOMElementAttribute($element, 'templateLocation', $component->getTemplateLocation());
         }
 
         foreach ($component->getResponseRules() as $responseRule) {
@@ -66,6 +67,7 @@ class ResponseProcessingMarshaller extends Marshaller
      * @param DOMElement $element A DOMElement object.
      * @param ResponseProcessing|null $responseProcessing
      * @return QtiComponent A ResponseProcessing object.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element, ResponseProcessing $responseProcessing = null)
     {
@@ -84,11 +86,11 @@ class ResponseProcessingMarshaller extends Marshaller
             $object->setResponseRules($responseRules);
         }
 
-        if (($template = static::getDOMElementAttributeAs($element, 'template')) !== null) {
+        if (($template = $this->getDOMElementAttributeAs($element, 'template')) !== null) {
             $object->setTemplate($template);
         }
 
-        if (($templateLocation = static::getDOMElementAttributeAs($element, 'templateLocation')) !== null) {
+        if (($templateLocation = $this->getDOMElementAttributeAs($element, 'templateLocation')) !== null) {
             $object->setTemplateLocation($templateLocation);
         }
 

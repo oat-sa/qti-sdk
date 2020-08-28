@@ -42,25 +42,26 @@ class GapMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('gap');
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() === ShowHide::HIDE) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
         }
 
         if ($component->isRequired() === true) {
-            self::setDOMElementAttribute($element, 'required', true);
+            $this->setDOMElementAttribute($element, 'required', true);
         }
 
         $this->fillElement($element, $component);
+
         return $element;
     }
 
@@ -73,26 +74,27 @@ class GapMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $component = new Gap($identifier);
 
-            if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+            if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                 $component->setFixed($fixed);
             }
 
-            if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+            if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
 
-            if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+            if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
-            if (($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
+            if (($required = $this->getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $component->setRequired($required);
             }
 
             $this->fillBodyElement($component, $element);
+
             return $component;
         } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'gap' element.";

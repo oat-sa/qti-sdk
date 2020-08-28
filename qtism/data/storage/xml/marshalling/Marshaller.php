@@ -31,6 +31,7 @@ use qtism\data\content\BodyElement;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use RuntimeException;
 
 /**
@@ -199,6 +200,32 @@ abstract class Marshaller
     }
 
     /**
+     * Get Attribute Name to Use for Marshalling
+     *
+     * This method provides the attribute name to be used to retrieve an element attribute value
+     * by considering whether or not the Marshaller implementation is running in Web Component
+     * Friendly mode.
+     *
+     * Examples:
+     *
+     * In case of the Marshaller implementation IS NOT running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "responseIdentifier" value is returned.
+     *
+     * On the other hand, in case of the Marshaller implementation IS running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "response-identifier" value is returned.
+     *
+     * @param DOMElement $element
+     * @param $attribute
+     * @return string
+     */
+    protected function getAttributeName(DOMElement $element, $attribute)
+    {
+        return $attribute;
+    }
+
+    /**
      * Get the attribute value of a given DOMElement object, cast in a given datatype.
      *
      * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
@@ -207,36 +234,9 @@ abstract class Marshaller
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
-    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
-        $attr = $element->getAttribute($attribute);
-
-        if ($attr !== '') {
-            switch ($datatype) {
-                case 'string':
-                    return $attr;
-                    break;
-
-                case 'integer':
-                    return (int)$attr;
-                    break;
-
-                case 'double':
-                case 'float':
-                    return (float)$attr;
-                    break;
-
-                case 'boolean':
-                    return ($attr === 'true') ? true : false;
-                    break;
-
-                default:
-                    throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
-                    break;
-            }
-        } else {
-            return null;
-        }
+        return XmlUtils::getDOMElementAttributeAs($element, $this->getAttributeName($element, $attribute), $datatype);
     }
 
     /**
@@ -246,17 +246,9 @@ abstract class Marshaller
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    public function setDOMElementAttribute(DOMElement $element, $attribute, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
-                break;
-
-            default:
-                $element->setAttribute($attribute, '' . $value);
-                break;
-        }
+        XmlUtils::setDOMElementAttribute($element, $this->getAttributeName($element, $attribute), $value);
     }
 
     /**
@@ -308,16 +300,7 @@ abstract class Marshaller
      */
     public static function getChildElements($element, $withText = false)
     {
-        $children = $element->childNodes;
-        $returnValue = [];
-
-        for ($i = 0; $i < $children->length; $i++) {
-            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
-                $returnValue[] = $children->item($i);
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElements($element, $withText);
     }
 
     /**
@@ -331,22 +314,13 @@ abstract class Marshaller
      * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
-    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
         if (!is_array($tagName)) {
             $tagName = [$tagName];
         }
 
-        $rawElts = self::getChildElements($element, $withText);
-        $returnValue = [];
-
-        foreach ($rawElts as $elt) {
-            if (in_array($elt->localName, $tagName) === !$exclude) {
-                $returnValue[] = $elt;
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
     /**
@@ -393,7 +367,7 @@ abstract class Marshaller
         }
 
         foreach ($scan as $s) {
-            if (($ariaFlowTo = self::getDOMElementAttributeAs($element, $s)) !== null) {
+            if (($ariaFlowTo = $this->getDOMElementAttributeAs($element, $s)) !== null) {
                 $bodyElement->setAriaFlowTo($ariaFlowTo);
 
                 break;
@@ -426,11 +400,11 @@ abstract class Marshaller
             // aria-* attributes
             if ((Version::compare($version, '2.2.0', '>=') === true) && $element->localName !== 'printedVariable') {
                 // All QTI classes deal with aria-* except printedVariable.
-                if (($ariaControls = self::getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
+                if (($ariaControls = $this->getDOMElementAttributeAs($element, 'aria-controls')) !== null) {
                     $bodyElement->setAriaControls($ariaControls);
                 }
 
-                if (($ariaDescribedBy = self::getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
+                if (($ariaDescribedBy = $this->getDOMElementAttributeAs($element, 'aria-describedby')) !== null) {
                     $bodyElement->setAriaDescribedBy($ariaDescribedBy);
                 }
 
@@ -447,31 +421,31 @@ abstract class Marshaller
                  */
                 $this->fillBodyElementFlowTo($bodyElement, $element);
 
-                if (($ariaLabelledBy = self::getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
+                if (($ariaLabelledBy = $this->getDOMElementAttributeAs($element, 'aria-labelledby')) !== null) {
                     $bodyElement->setAriaLabelledBy($ariaLabelledBy);
                 }
 
-                if (($ariaOwns = self::getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
+                if (($ariaOwns = $this->getDOMElementAttributeAs($element, 'aria-owns')) !== null) {
                     $bodyElement->setAriaOwns($ariaOwns);
                 }
 
-                if (($ariaLevel = self::getDOMElementAttributeAs($element, 'aria-level')) !== null) {
+                if (($ariaLevel = $this->getDOMElementAttributeAs($element, 'aria-level')) !== null) {
                     $bodyElement->setAriaLevel($ariaLevel);
                 }
 
-                if (($ariaLive = self::getDOMElementAttributeAs($element, 'aria-live')) !== null) {
+                if (($ariaLive = $this->getDOMElementAttributeAs($element, 'aria-live')) !== null) {
                     $bodyElement->setAriaLive(AriaLive::getConstantByName($ariaLive));
                 }
 
-                if (($ariaOrientation = self::getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
+                if (($ariaOrientation = $this->getDOMElementAttributeAs($element, 'aria-orientation')) !== null) {
                     $bodyElement->setAriaOrientation(AriaOrientation::getConstantByName($ariaOrientation));
                 }
 
-                if (($ariaLabel = self::getDOMElementAttributeAs($element, 'aria-label')) !== null) {
+                if (($ariaLabel = $this->getDOMElementAttributeAs($element, 'aria-label')) !== null) {
                     $bodyElement->setAriaLabel($ariaLabel);
                 }
 
-                if (($ariaHidden = self::getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
+                if (($ariaHidden = $this->getDOMElementAttributeAs($element, 'aria-hidden', 'boolean')) !== null) {
                     $bodyElement->setAriaHidden($ariaHidden);
                 }
             }

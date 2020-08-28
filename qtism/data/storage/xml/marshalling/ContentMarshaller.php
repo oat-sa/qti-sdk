@@ -294,42 +294,45 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        if (in_array($element->localName, self::$simpleComposites)) {
+        $simpleComposites = self::$simpleComposites;
+        $localName = $element->localName;
+
+        if (in_array($localName, $simpleComposites)) {
             return self::getChildElements($element, true);
-        } elseif ($element->localName === 'choiceInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'orderInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'associateInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'matchInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleMatchSet');
-        } elseif ($element->localName === 'gapMatchInteraction') {
-            return self::getChildElementsByTagName($element, ['gapText', 'gapImg', 'prompt'], true);
-        } elseif ($element->localName === 'inlineChoiceInteraction') {
-            return self::getChildElementsByTagName($element, 'inlineChoice');
-        } elseif ($element->localName === 'hottextInteraction') {
-            return self::getChildElementsByTagName($element, 'prompt', true);
-        } elseif ($element->localName === 'hotspotInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'graphicAssociateInteraction') {
-            return self::getChildElementsByTagName($element, 'associableHotspot');
-        } elseif ($element->localName === 'graphicOrderInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'tr') {
-            return self::getChildElementsByTagName($element, ['td', 'th']);
-        } elseif ($element->localName === 'ul' || $element->localName === 'ol') {
-            return self::getChildElementsByTagName($element, 'li');
-        } elseif ($element->localName === 'dl') {
-            return self::getChildElementsByTagName($element, ['dd', 'dt']);
-        } elseif ($element->localName === 'itemBody') {
+        } elseif ($localName === 'choiceInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
+        } elseif ($localName === 'orderInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
+        } elseif ($localName === 'associateInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === 'matchInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleMatchSet');
+        } elseif ($localName === 'gapMatchInteraction') {
+            return $this->getChildElementsByTagName($element, ['gapText', 'gapImg', 'prompt'], true);
+        } elseif ($localName === 'inlineChoiceInteraction') {
+            return $this->getChildElementsByTagName($element, 'inlineChoice');
+        } elseif ($localName === 'hottextInteraction') {
+            return $this->getChildElementsByTagName($element, 'prompt', true);
+        } elseif ($localName === 'hotspotInteraction') {
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
+        } elseif ($localName === 'graphicAssociateInteraction') {
+            return $this->getChildElementsByTagName($element, 'associableHotspot');
+        } elseif ($localName === 'graphicOrderInteraction') {
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
+        } elseif ($localName === 'tr') {
+            return $this->getChildElementsByTagName($element, ['td', 'th']);
+        } elseif ($localName === 'ul' || $element->localName === 'ol') {
+            return $this->getChildElementsByTagName($element, 'li');
+        } elseif ($localName === 'dl') {
+            return $this->getChildElementsByTagName($element, ['dd', 'dt']);
+        } elseif ($localName === 'itemBody') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'blockquote') {
+        } elseif ($localName === 'blockquote') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'simpleMatchSet') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'gapImg') {
-            return self::getChildElementsByTagName($element, 'object');
+        } elseif ($localName === 'simpleMatchSet') {
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === 'gapImg') {
+            return $this->getChildElementsByTagName($element, 'object');
         } elseif ($element->localName === 'infoControl') {
             $elts = self::getChildElements($element, true);
             $finalElts = [];
@@ -380,8 +383,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function lookupClass(DOMElement $element)
     {
+        $localName = $element->localName;
         $lookup = $this->getLookupClasses();
-        $class = ucfirst($element->localName);
+        $class = ucfirst($localName);
 
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
@@ -397,7 +401,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             }
         }
 
-        $msg = "No class could be found for tag with name '" . $element->localName . "'.";
+        $msg = "No class could be found for tag with name '" . $localName . "'.";
         throw new UnmarshallingException($msg, $element);
     }
 }
