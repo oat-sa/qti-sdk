@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Min;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
@@ -49,19 +47,6 @@ use qtism\runtime\common\MultipleContainer;
  */
 class MinProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Min) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The MinProcessor class only accepts Min QTI Data Model Expression objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
@@ -115,5 +100,13 @@ class MinProcessor extends OperatorProcessor
         }
 
         return ($integerCount === $valueCount) ? new QtiInteger((int)$min) : new QtiFloat((float)$min);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Min::class;
     }
 }

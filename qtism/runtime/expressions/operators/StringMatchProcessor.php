@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\StringMatch;
 
 /**
@@ -44,19 +42,6 @@ use qtism\data\expressions\operators\StringMatch;
  */
 class StringMatchProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof StringMatch) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The StringMatchProcessor class only processes StringMatch QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the StringMatch operator.
      *
@@ -89,5 +74,13 @@ class StringMatchProcessor extends OperatorProcessor
         $func = ($expression->isCaseSensitive() === true) ? 'strcmp' : 'strcasecmp';
 
         return new QtiBoolean($func($operands[0]->getValue(), $operands[1]->getValue()) === 0);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return StringMatch::class;
     }
 }

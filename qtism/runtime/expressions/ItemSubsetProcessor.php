@@ -23,12 +23,9 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
-use qtism\data\expressions\Expression;
-use qtism\data\expressions\ItemSubset;
 
 /**
  * The ItemSubsetProcessor class is the base class of Outcome Processing only
@@ -59,19 +56,6 @@ use qtism\data\expressions\ItemSubset;
  */
 abstract class ItemSubsetProcessor extends ExpressionProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof ItemSubset) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The ItemSubsetProcessor class only accepts ItemSubset expressions to be processed.';
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
      * A convenience method enabling you to get the sectionIdentifier attribute value
      * of the ItemSubset expression to be processed.

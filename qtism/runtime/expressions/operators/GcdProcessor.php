@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiScalar;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Gcd;
 
 /**
@@ -46,19 +44,6 @@ use qtism\data\expressions\operators\Gcd;
  */
 class GcdProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Gcd) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The GcdProcessor class only processes Gcd QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Gcd operator.
      *
@@ -129,5 +114,13 @@ class GcdProcessor extends OperatorProcessor
 
             return $g;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Gcd::class;
     }
 }

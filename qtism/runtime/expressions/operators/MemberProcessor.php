@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Member;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\Utils as CommonUtils;
@@ -46,19 +44,6 @@ use qtism\runtime\common\Utils as CommonUtils;
  */
 class MemberProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Member) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The MemberProcessor class only processes Member QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Member operator.
      *
@@ -98,5 +83,13 @@ class MemberProcessor extends OperatorProcessor
         }
 
         return new QtiBoolean($operand2->contains($operand1));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Member::class;
     }
 }

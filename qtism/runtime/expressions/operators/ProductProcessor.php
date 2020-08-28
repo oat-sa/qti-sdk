@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiScalar;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Product;
 
 /**
@@ -43,22 +41,6 @@ use qtism\data\expressions\operators\Product;
  */
 class ProductProcessor extends OperatorProcessor
 {
-    /**
-     * Set the Product Expression object to be processed.
-     *
-     * @param Expression $expression A Product object.
-     * @throws InvalidArgumentException If $expression is not an instance of Product.
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Product) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The ProductProcessor class only accepts a Product Operator to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Product operator.
      *
@@ -92,5 +74,13 @@ class ProductProcessor extends OperatorProcessor
         }
 
         return (is_int($returnValue)) ? new QtiInteger($returnValue) : new QtiFloat($returnValue);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Product::class;
     }
 }

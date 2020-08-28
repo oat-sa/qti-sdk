@@ -21,24 +21,35 @@
  * @license GPLv2
  */
 
-namespace qtism\data\content\xhtml\text;
+namespace qtism\data\expressions\operators;
 
-use qtism\data\content\SimpleInline;
+use qtism\data\expressions\ExpressionCollection;
 
 /**
- * The XHTML acronym class.
- *
  * From IMS QTI:
  *
- * Note that the title attribute defined by XHTML is not supported.
+ * The not operator takes a single sub-expression with a base-type of boolean
+ * and single cardinality. The result is a single boolean with a value obtained
+ * by the logical negation of the sub-expression's value. If the sub-expression
+ * is NULL then the not operator also results in NULL.
  */
-class Acronym extends SimpleInline
+class NotOperator extends Operator
 {
+    /**
+     * Create a new NotOperator object.
+     *
+     * @param ExpressionCollection $expressions
+     */
+    public function __construct(ExpressionCollection $expressions)
+    {
+        parent::__construct($expressions, 1, 1, [OperatorCardinality::SINGLE], [OperatorBaseType::BOOLEAN]);
+    }
+
     /**
      * @return string
      */
     public function getQtiClassName()
     {
-        return 'acronym';
+        return 'not';
     }
 }

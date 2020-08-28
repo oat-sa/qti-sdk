@@ -198,7 +198,7 @@ class Unmarshaller
                     throw new UnmarshallingException($msg, $code);
                 }
 
-                if (isset($v['base']) === true || (array_key_exists('base', $v) && $v['base'] === null)) {
+                if (isset($v['base']) || (array_key_exists('base', $v) && $v['base'] === null)) {
                     $unit = ['base' => $v['base']];
                 } else {
                     // No value found, let's go for a null value.
@@ -225,77 +225,75 @@ class Unmarshaller
      * Unmarshall a unit of data into QTISM runtime model.
      *
      * @param array $unit
-     * @return null|QtiDatatype
-     * @throws UnmarshallingException
+     * @return QtiDatatype|null
      * @throws FileManagerException
+     * @throws UnmarshallingException
      */
     protected function unmarshallUnit(array $unit)
     {
-        if (isset($unit['base'])) {
-            if ($unit['base'] === null) {
-                return null;
+        if ($unit['base'] === null) {
+            return null;
+        }
+
+        // Primitive base type.
+        try {
+            $keys = array_keys($unit['base']);
+            switch ($keys[0]) {
+                case 'boolean':
+                    return $this->unmarshallBoolean($unit);
+                    break;
+
+                case 'integer':
+                    return $this->unmarshallInteger($unit);
+                    break;
+
+                case 'float':
+                    return $this->unmarshallFloat($unit);
+                    break;
+
+                case 'string':
+                    return $this->unmarshallString($unit);
+                    break;
+
+                case 'point':
+                    return $this->unmarshallPoint($unit);
+                    break;
+
+                case 'pair':
+                    return $this->unmarshallPair($unit);
+                    break;
+
+                case 'directedPair':
+                    return $this->unmarshallDirectedPair($unit);
+                    break;
+
+                case 'duration':
+                    return $this->unmarshallDuration($unit);
+                    break;
+
+                case 'file':
+                    return $this->unmarshallFile($unit);
+                    break;
+
+                case 'uri':
+                    return $this->unmarshallUri($unit);
+                    break;
+
+                case 'intOrIdentifier':
+                    return $this->unmarshallIntOrIdentifier($unit);
+                    break;
+
+                case 'identifier':
+                    return $this->unmarshallIdentifier($unit);
+                    break;
+
+                default:
+                    throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
+                    break;
             }
-
-            // Primitive base type.
-            try {
-                $keys = array_keys($unit['base']);
-                switch ($keys[0]) {
-                    case 'boolean':
-                        return $this->unmarshallBoolean($unit);
-                        break;
-
-                    case 'integer':
-                        return $this->unmarshallInteger($unit);
-                        break;
-
-                    case 'float':
-                        return $this->unmarshallFloat($unit);
-                        break;
-
-                    case 'string':
-                        return $this->unmarshallString($unit);
-                        break;
-
-                    case 'point':
-                        return $this->unmarshallPoint($unit);
-                        break;
-
-                    case 'pair':
-                        return $this->unmarshallPair($unit);
-                        break;
-
-                    case 'directedPair':
-                        return $this->unmarshallDirectedPair($unit);
-                        break;
-
-                    case 'duration':
-                        return $this->unmarshallDuration($unit);
-                        break;
-
-                    case 'file':
-                        return $this->unmarshallFile($unit);
-                        break;
-
-                    case 'uri':
-                        return $this->unmarshallUri($unit);
-                        break;
-
-                    case 'intOrIdentifier':
-                        return $this->unmarshallIntOrIdentifier($unit);
-                        break;
-
-                    case 'identifier':
-                        return $this->unmarshallIdentifier($unit);
-                        break;
-
-                    default:
-                        throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
-                        break;
-                }
-            } catch (InvalidArgumentException $e) {
-                $msg = 'A value does not satisfy its baseType.';
-                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
-            }
+        } catch (InvalidArgumentException $e) {
+            $msg = 'A value does not satisfy its baseType.';
+            throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
         }
     }
 
@@ -329,11 +327,13 @@ class Unmarshaller
      */
     protected function unmarshallFloat(array $unit)
     {
-        if (is_int($unit['base']['float']) === true) {
-            $unit['base']['float'] = (float)$unit['base']['float'];
+        $val = $unit['base']['float'];
+
+        if (is_int($val)) {
+            $val = (float)$val;
         }
 
-        return new QtiFloat($unit['base']['float']);
+        return new QtiFloat($val);
     }
 
     /**

@@ -79,4 +79,20 @@ class Reflection
 
         return empty($shortClassName) ? false : $shortClassName;
     }
+
+    /**
+     * Whether or not a given $object is an instance of $className. This method
+     * exists because is_sublcass_of() does not take into account interfaces
+     * in PHP 5.3.
+     *
+     * @param mixed $object The object you want to know it is an instance of $className.
+     * @param string $className A class name. It can be fully qualified.
+     * @return bool
+     */
+    public static function isInstanceOf($object, $className)
+    {
+        $givenType = get_class($object);
+
+        return $givenType === $className || is_subclass_of($givenType, $className) === true || in_array($className, class_implements($givenType));
+    }
 }

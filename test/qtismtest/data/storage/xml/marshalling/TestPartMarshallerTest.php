@@ -10,7 +10,7 @@ use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\TestPart;
 use qtismtest\QtiSmTestCase;
-use qtism\data\expressions\operators\Not;
+use qtism\data\expressions\operators\NotOperator;
 use qtism\data\expressions\operators\Equal;
 
 /**
@@ -133,7 +133,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
 
         $preConditions = $component->getPreConditions();
         $this->assertEquals(1, count($preConditions));
-        $this->assertInstanceOf(Not::class, $preConditions[0]->getExpression());
+        $this->assertInstanceOf(NotOperator::class, $preConditions[0]->getExpression());
 
         $this->assertTrue($component->hasItemSessionControl());
         $this->assertEquals(0, $component->getItemSessionControl()->getMaxAttempts());

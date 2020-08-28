@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\DurationLT;
 
 /**
@@ -51,19 +49,6 @@ use qtism\data\expressions\operators\DurationLT;
 class DurationLTProcessor extends OperatorProcessor
 {
     /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof DurationLT) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The DurationLTProcessor class only processes DurationLT QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
      * Process the DurationLT operator.
      *
      * @return QtiBoolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
@@ -88,5 +73,13 @@ class DurationLTProcessor extends OperatorProcessor
         }
 
         return new QtiBoolean($operands[0]->shorterThan($operands[1]));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return DurationLT::class;
     }
 }

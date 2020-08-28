@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomInteger;
 
 /**
@@ -38,19 +36,6 @@ use qtism\data\expressions\RandomInteger;
  */
 class RandomIntegerProcessor extends ExpressionProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof RandomInteger) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The RandomIntegerProcessor class only accepts to process RandomInteger Expression objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the RandomInteger expression.
      *
@@ -90,5 +75,13 @@ class RandomIntegerProcessor extends ExpressionProcessor
             $msg = "At least one of the following variables is not an integer: 'min', 'max', 'step' while processing RandomInteger.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return RandomInteger::class;
     }
 }

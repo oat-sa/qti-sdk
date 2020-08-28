@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiScalar;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Lcm;
 
 /**
@@ -44,19 +42,6 @@ use qtism\data\expressions\operators\Lcm;
  */
 class LcmProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Lcm) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The LcmProcessor class only processes Lcm QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Lcm operator.
      *
@@ -119,5 +104,13 @@ class LcmProcessor extends OperatorProcessor
         }
 
         return $g;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Lcm::class;
     }
 }

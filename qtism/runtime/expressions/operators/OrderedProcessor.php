@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiScalar;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Ordered;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as CommonUtils;
@@ -49,19 +47,6 @@ use qtism\runtime\common\Utils as CommonUtils;
  */
 class OrderedProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Ordered) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The OrderedProcessor class only accepts Ordered QTI Data Model Expression objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
@@ -125,5 +110,13 @@ class OrderedProcessor extends OperatorProcessor
             // primitive type.
             $container[] = $value;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Ordered::class;
     }
 }

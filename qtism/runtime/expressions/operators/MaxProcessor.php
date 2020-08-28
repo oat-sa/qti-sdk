@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Max;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
@@ -48,19 +46,6 @@ use qtism\runtime\common\MultipleContainer;
  */
 class MaxProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Max) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The MaxProcessor class only accepts Max QTI Data Model Expression objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
@@ -114,5 +99,13 @@ class MaxProcessor extends OperatorProcessor
         }
 
         return ($integerCount === $valueCount) ? new QtiInteger((int)$max) : new QtiFloat((float)$max);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Max::class;
     }
 }

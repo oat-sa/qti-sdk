@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\runtime\expressions\Utils;
@@ -63,19 +61,6 @@ use qtism\runtime\expressions\Utils;
  */
 class EqualProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Equal) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The EqualProcessor class only processes Equal QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Equal operator.
      *
@@ -158,5 +143,13 @@ class EqualProcessor extends OperatorProcessor
                 return new QtiBoolean($moreThanLower && $lessThanUpper);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Equal::class;
     }
 }

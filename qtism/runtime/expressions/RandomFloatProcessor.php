@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomFloat;
 
 /**
@@ -37,19 +35,6 @@ use qtism\data\expressions\RandomFloat;
  */
 class RandomFloatProcessor extends ExpressionProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof RandomFloat) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The RandomFloatProcessor class can only process RandomFloat Expression objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the RandomFloat expression.
      *
@@ -80,5 +65,13 @@ class RandomFloatProcessor extends ExpressionProcessor
             $msg = "At least one of the following values is not a float: 'min', 'max'.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return RandomFloat::class;
     }
 }

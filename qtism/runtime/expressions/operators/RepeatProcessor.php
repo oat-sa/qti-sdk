@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Repeat;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\OrderedContainer;
@@ -54,19 +52,6 @@ use qtism\runtime\expressions\Utils as ExprUtils;
 class RepeatProcessor extends OperatorProcessor
 {
     /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Repeat) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The RepeatProcessor class only processes Repeat QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
      * Process the Repeat operator.
      *
      * Note: NULL values are simply ignored. If all sub-expressions are NULL, NULL is
@@ -92,7 +77,7 @@ class RepeatProcessor extends OperatorProcessor
             if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
-            } elseif ($varValue instanceof QtiInteger) {
+            } elseif (!$varValue instanceof QtiInteger) {
                 $msg = "The variable with name '${varName}' is not an integer value.";
                 throw new OperatorProcessingException($msg, $this);
             }
@@ -148,5 +133,13 @@ class RepeatProcessor extends OperatorProcessor
         } else {
             return null;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Repeat::class;
     }
 }

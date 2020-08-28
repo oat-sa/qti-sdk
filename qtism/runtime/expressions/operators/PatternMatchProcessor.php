@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\PatternMatch;
 use qtism\runtime\expressions\operators\Utils as OperatorUtils;
 
@@ -49,19 +47,6 @@ use qtism\runtime\expressions\operators\Utils as OperatorUtils;
  */
 class PatternMatchProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof PatternMatch) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The PatternMatchProcessor class only processes PatternMatch QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the PatternMatch.
      *
@@ -131,5 +116,13 @@ class PatternMatchProcessor extends OperatorProcessor
             $msg = "An internal error occurred while processing the regular expression '${rawPattern}': ${errorType}.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return PatternMatch::class;
     }
 }

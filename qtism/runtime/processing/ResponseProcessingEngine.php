@@ -127,7 +127,7 @@ class ResponseProcessingEngine extends AbstractEngine
 
         $templateMapping = &$this->getTemplateMapping();
 
-        if (isset($templateMapping[$uri]) === true) {
+        if (isset($templateMapping[$uri])) {
             unset($templateMapping[$uri]);
         }
     }

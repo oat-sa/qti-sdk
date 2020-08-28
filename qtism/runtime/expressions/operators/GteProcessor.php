@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Gte;
 
 /**
@@ -41,19 +39,6 @@ use qtism\data\expressions\operators\Gte;
  */
 class GteProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Gte) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The GteProcessor class only processes Gte QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Gte operator.
      *
@@ -79,5 +64,13 @@ class GteProcessor extends OperatorProcessor
         }
 
         return new QtiBoolean($operands[0]->getValue() >= $operands[1]->getValue());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Gte::class;
     }
 }

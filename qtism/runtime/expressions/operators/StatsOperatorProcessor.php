@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Statistics;
 use qtism\data\expressions\operators\StatsOperator;
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
@@ -57,19 +55,6 @@ use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
  */
 class StatsOperatorProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof StatsOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The StatsOperatorProcessor class only processes StatsOperator QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the StatsOperator.
      *
@@ -184,5 +169,13 @@ class StatsOperatorProcessor extends OperatorProcessor
         }
 
         return $returnValue;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return StatsOperator::class;
     }
 }

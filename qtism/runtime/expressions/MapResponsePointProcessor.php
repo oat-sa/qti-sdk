@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\MapResponsePoint;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
@@ -46,19 +44,6 @@ use qtism\runtime\common\ResponseVariable;
  */
 class MapResponsePointProcessor extends ExpressionProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof MapResponsePoint) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The MapResponsePoint processor can only process MapResponsePoint Expression objects.';
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
      * Process the MapResponsePoint Expression.
      *
@@ -143,5 +128,13 @@ class MapResponsePointProcessor extends ExpressionProcessor
             $msg = "No variable with identifier '${identifier}' could be found in the current State object.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return MapResponsePoint::class;
     }
 }

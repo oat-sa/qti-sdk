@@ -23,8 +23,6 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Multiple;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\Utils as CommonUtils;
@@ -43,19 +41,6 @@ use qtism\runtime\common\Utils as CommonUtils;
  */
 class MultipleProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Multiple) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The MultipleProcessor class only accepts Multiple QTI Data Model Expression objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
@@ -119,5 +104,13 @@ class MultipleProcessor extends OperatorProcessor
             // primitive type.
             $container[] = $value;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Multiple::class;
     }
 }

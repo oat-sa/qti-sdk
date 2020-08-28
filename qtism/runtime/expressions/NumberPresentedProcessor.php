@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\NumberPresented;
 
 /**
@@ -42,19 +40,6 @@ use qtism\data\expressions\NumberPresented;
 class NumberPresentedProcessor extends ItemSubsetProcessor
 {
     /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberPresented) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The NumberPresentedProcessor class only accepts NumberPresented expressions to be processed.';
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
-    /**
      * Process the related NumberPresented expression.
      *
      * @return QtiInteger The number of items in the given item sub-set that have been attempted (at least once).
@@ -69,13 +54,23 @@ class NumberPresentedProcessor extends ItemSubsetProcessor
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isPresented() === true) {
-                    $numberPresented++;
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isPresented() === true) {
+                        $numberPresented++;
+                    }
                 }
             }
         }
 
         return new QtiInteger($numberPresented);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return NumberPresented::class;
     }
 }

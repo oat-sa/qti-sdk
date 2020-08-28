@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Sum;
 
 /**
@@ -42,22 +40,6 @@ use qtism\data\expressions\operators\Sum;
  */
 class SumProcessor extends OperatorProcessor
 {
-    /**
-     * Set the Sum Expression object to be processed.
-     *
-     * @param Expression $expression A Sum object.
-     * @throws InvalidArgumentException If $expressions is not an instance of Sum.
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Sum) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The SumProcessor class only accepts a Sum Expression to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Sum operator.
      *
@@ -101,5 +83,13 @@ class SumProcessor extends OperatorProcessor
         }
 
         return ($floatCount > 0) ? new QtiFloat((float)$returnValue) : new QtiInteger((int)$returnValue);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Sum::class;
     }
 }

@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\NumberIncorrect;
 
 /**
@@ -43,19 +41,6 @@ use qtism\data\expressions\NumberIncorrect;
 class NumberIncorrectProcessor extends ItemSubsetProcessor
 {
     /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberIncorrect) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The NumberIncorrectProcessor class only accepts NumberIncorrect expressions to be processed.';
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
-    /**
      * Process the related NumberIncorrect expression.
      *
      * @return QtiInteger The number of items in the given sub-set for which at least one of the defined response does not match its associated correct response.
@@ -70,13 +55,23 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isAttempted() === true && $itemSession->isCorrect() === false) {
-                    $numberIncorrect++;
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isAttempted() === true && $itemSession->isCorrect() === false) {
+                        $numberIncorrect++;
+                    }
                 }
             }
         }
 
         return new QtiInteger($numberIncorrect);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return NumberIncorrect::class;
     }
 }

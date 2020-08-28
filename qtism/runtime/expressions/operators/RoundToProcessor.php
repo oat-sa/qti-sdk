@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\expressions\operators\RoundTo;
 use qtism\runtime\expressions\Utils as ExprUtils;
@@ -58,19 +56,6 @@ use qtism\runtime\expressions\Utils as ExprUtils;
  */
 class RoundToProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof RoundTo) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The RoundToProcessor class only accepts RoundTo Operator objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the RoundTo operator.
      *
@@ -157,5 +142,13 @@ class RoundToProcessor extends OperatorProcessor
 
             return new QtiFloat(round($operand->getValue(), $figures));
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return RoundTo::class;
     }
 }

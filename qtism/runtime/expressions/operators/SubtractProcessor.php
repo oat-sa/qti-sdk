@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Subtract;
 
 /**
@@ -42,19 +40,6 @@ use qtism\data\expressions\operators\Subtract;
  */
 class SubtractProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Subtract) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The SubtractProcessor class only processes Subtract QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Subtract operator.
      *
@@ -85,5 +70,13 @@ class SubtractProcessor extends OperatorProcessor
         $subtract = $operand1->getValue() - $operand2->getValue();
 
         return (is_int($subtract)) ? new QtiInteger($subtract) : new QtiFloat($subtract);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Subtract::class;
     }
 }

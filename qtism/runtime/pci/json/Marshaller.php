@@ -145,7 +145,7 @@ class Marshaller
                 $jsonEntry = [];
                 $jsonEntry['name'] = $k;
 
-                if (isset($data['base']) === true || $data['base'] === null) {
+                if (array_key_exists('base', $data)) {
                     // Primitive base type.
                     $jsonEntry['base'] = $data['base'];
                 } else {
@@ -166,41 +166,43 @@ class Marshaller
      * Marshall a single scalar data into a PHP datatype (that can be transformed easilly in JSON
      * later on).
      *
-     * @param null|QtiDatatype $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
+     * @param QtiDatatype|null $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
      * @return array An array representing the JSON data to be encoded later on.
      * @throws MarshallingException
      */
     protected function marshallScalar($scalar)
     {
         if ($scalar === null) {
-            return $scalar;
-        } elseif ($scalar instanceof QtiDatatype) {
-            if ($scalar instanceof QtiBoolean) {
-                return $this->marshallBoolean($scalar);
-            } elseif ($scalar instanceof QtiInteger) {
-                return $this->marshallInteger($scalar);
-            } elseif ($scalar instanceof QtiFloat) {
-                return $this->marshallFloat($scalar);
-            } elseif ($scalar instanceof QtiIdentifier) {
-                return $this->marshallIdentifier($scalar);
-            } elseif ($scalar instanceof QtiUri) {
-                return $this->marshallUri($scalar);
-            } elseif ($scalar instanceof QtiString) {
-                return $this->marshallString($scalar);
-            } elseif ($scalar instanceof QtiIntOrIdentifier) {
-                return $this->marshallIntOrIdentifier($scalar);
-            }
-        } else {
-            $msg = "The '" . get_class($this) . "::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '";
-            if (is_object($scalar)) {
-                $msg .= get_class($scalar);
-            } else {
-                $msg .= gettype($scalar);
-            }
+            return null;
+        }
 
-            $msg .= "' given.";
-            $code = MarshallingException::NOT_SUPPORTED;
-            throw new MarshallingException($msg, $code);
+        if (!$scalar instanceof QtiDatatype) {
+            $msg = sprintf("The '%s::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '%s' given.",
+                get_class($this),
+                is_object($scalar)
+                    ? get_class($scalar)
+                    : gettype($scalar)
+            );
+
+            throw new MarshallingException($msg, MarshallingException::NOT_SUPPORTED);
+        }
+
+        if ($scalar instanceof QtiBoolean) {
+            return $this->marshallBoolean($scalar);
+        } elseif ($scalar instanceof QtiInteger) {
+            return $this->marshallInteger($scalar);
+        } elseif ($scalar instanceof QtiFloat) {
+            return $this->marshallFloat($scalar);
+        } elseif ($scalar instanceof QtiIdentifier) {
+            return $this->marshallIdentifier($scalar);
+        } elseif ($scalar instanceof QtiUri) {
+            return $this->marshallUri($scalar);
+        } elseif ($scalar instanceof QtiString) {
+            return $this->marshallString($scalar);
+        } elseif ($scalar instanceof QtiIntOrIdentifier) {
+            return $this->marshallIntOrIdentifier($scalar);
+        } else {
+            throw new MarshallingException('Unknown scalar type.', MarshallingException::NOT_SUPPORTED);
         }
     }
 
@@ -215,7 +217,9 @@ class Marshaller
     {
         if ($complex === null) {
             return $complex;
-        } elseif ($complex instanceof QtiPoint) {
+        }
+
+        if ($complex instanceof QtiPoint) {
             return $this->marshallPoint($complex);
         } elseif ($complex instanceof QtiDirectedPair) {
             return $this->marshallDirectedPair($complex);
@@ -226,16 +230,14 @@ class Marshaller
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         } else {
-            $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
-            if (is_object($scalar)) {
-                $msg .= get_class($complex);
-            } else {
-                $msg .= gettype($complex);
-            }
+            $msg = sprintf("The '%s::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '%s' given.",
+                get_class($this),
+                is_object($complex)
+                    ? get_class($complex)
+                    : gettype($complex)
+            );
 
-            $msg .= "' given.";
-            $code = MarshallingException::NOT_SUPPORTED;
-            throw new MarshallingException($msg, $code);
+            throw new MarshallingException($msg, MarshallingException::NOT_SUPPORTED);
         }
     }
 

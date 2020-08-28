@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\Comparable;
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Delete;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
@@ -50,19 +48,6 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  */
 class DeleteProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Delete) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The DeleteProcessor class only processes Delete QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Delete operator.
      *
@@ -108,5 +93,13 @@ class DeleteProcessor extends OperatorProcessor
         }
 
         return $returnValue;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Delete::class;
     }
 }

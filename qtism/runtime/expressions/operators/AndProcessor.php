@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\AndOperator;
 
 /**
@@ -44,19 +42,6 @@ use qtism\data\expressions\operators\AndOperator;
  */
 class AndProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof AndOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
@@ -88,5 +73,13 @@ class AndProcessor extends OperatorProcessor
         }
 
         return new QtiBoolean(true);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return AndOperator::class;
     }
 }

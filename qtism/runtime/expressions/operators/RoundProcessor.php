@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Round;
 
 /**
@@ -44,19 +42,6 @@ use qtism\data\expressions\operators\Round;
  */
 class RoundProcessor extends OperatorProcessor
 {
-    /**
-     * @param Expression $expression
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Round) {
-            parent::setExpression($expression);
-        } else {
-            $msg = 'The RoundProcessor class only processes Round QTI Data Model objects.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Round operator.
      *
@@ -85,5 +70,13 @@ class RoundProcessor extends OperatorProcessor
         $mode = ($operand->getValue() >= 0) ? PHP_ROUND_HALF_UP : PHP_ROUND_HALF_DOWN;
 
         return new QtiInteger((int)round($operand->getValue(), 0, $mode));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Round::class;
     }
 }
