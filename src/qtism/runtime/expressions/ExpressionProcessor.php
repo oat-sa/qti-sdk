@@ -70,12 +70,13 @@ abstract class ExpressionProcessor implements Processable
     {
         $expectedType = $this->getExpressionType();
 
-        if (ReflectionUtils::isInstanceOf($expression, $expectedType) === true) {
-            $this->expression = $expression;
-        } else {
-            $procClass = get_class($this);
-            $givenType = get_class($expression);
-            $msg = "The ${procClass} Expression Processor only processes ${expectedType} Expression objects, ${givenType} given.";
+        if (ReflectionUtils::isInstanceOf($expression, $expectedType) !== true) {
+            $msg = sprintf(
+                'The %s Expression Processor only processes %s Expression objects, %s given.',
+                get_class($this),
+                $expectedType,
+                get_class($expression)
+            );
             throw new InvalidArgumentException($msg);
         }
 

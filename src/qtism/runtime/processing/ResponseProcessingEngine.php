@@ -160,6 +160,29 @@ class ResponseProcessingEngine extends AbstractEngine
      */
     public function process()
     {
+        $rules = $this->getResponseProcessingRules();
+
+        try {
+            foreach ($rules as $rule) {
+                $engine = new RuleEngine($rule, $this->getContext());
+                $engine->process();
+                $this->trace($rule->getQtiClassName() . ' executed');
+            }
+        } catch (RuleProcessingException $e) {
+            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
+                throw $e;
+            } else {
+                $this->trace('Termination of response processing.');
+            }
+        }
+    }
+
+    /**
+     * @return mixed
+     * @throws PhpStorageException
+     */
+    public function getResponseProcessingRules()
+    {
         // @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.
         $responseProcessing = $this->getComponent();
         $template = $responseProcessing->getTemplate();
@@ -198,18 +221,6 @@ class ResponseProcessingEngine extends AbstractEngine
             $this->trace(count($rules) . ' responseRule(s) extracted from the response processing template');
         }
 
-        try {
-            foreach ($rules as $rule) {
-                $engine = new RuleEngine($rule, $this->getContext());
-                $engine->process();
-                $this->trace($rule->getQtiClassName() . ' executed');
-            }
-        } catch (RuleProcessingException $e) {
-            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
-                throw $e;
-            } else {
-                $this->trace('Termination of response processing.');
-            }
-        }
+        return $rules;
     }
 }

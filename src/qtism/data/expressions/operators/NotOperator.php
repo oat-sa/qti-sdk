@@ -36,7 +36,7 @@ use qtism\data\expressions\ExpressionCollection;
 class NotOperator extends Operator
 {
     /**
-     * Create a new Not object.
+     * Create a new NotOperator object.
      *
      * @param ExpressionCollection $expressions
      */

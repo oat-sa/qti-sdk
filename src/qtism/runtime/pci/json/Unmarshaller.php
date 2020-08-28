@@ -161,12 +161,24 @@ class Unmarshaller
 
             $returnValue = new MultipleContainer($baseType);
 
+            if (!is_array($json['list'][$keys[0]])) {
+                $msg = 'list is not an array';
+                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
+            }
+
             // This is a list.
             foreach ($json['list'][$keys[0]] as $v) {
-                if ($v === null) {
-                    $returnValue[] = $this->unmarshallUnit(['base' => $v]);
-                } else {
-                    $returnValue[] = $this->unmarshallUnit(['base' => [$keys[0] => $v]]);
+                try {
+                    if ($v === null) {
+                        $returnValue[] = $this->unmarshallUnit(['base' => $v]);
+                    } else {
+                        $returnValue[] = $this->unmarshallUnit(['base' => [$keys[0] => $v]]);
+                    }
+                } catch (InvalidArgumentException $e) {
+                    $strBaseType = BaseType::getNameByConstant($baseType);
+                    $msg = "A value is not compliant with the '${strBaseType}' baseType.";
+                    $code = UnmarshallingException::NOT_PCI;
+                    throw new UnmarshallingException($msg, $code);
                 }
             }
 
@@ -213,75 +225,75 @@ class Unmarshaller
      * Unmarshall a unit of data into QTISM runtime model.
      *
      * @param array $unit
-     * @return null|QtiDatatype
+     * @return QtiDatatype|null
      * @throws FileManagerException
      * @throws UnmarshallingException
      */
     protected function unmarshallUnit(array $unit)
     {
-        if (isset($unit['base'])) {
-            // Primitive base type.
-            try {
-                $keys = array_keys($unit['base']);
-                switch ($keys[0]) {
-                    case 'boolean':
-                        return $this->unmarshallBoolean($unit);
-                        break;
-
-                    case 'integer':
-                        return $this->unmarshallInteger($unit);
-                        break;
-
-                    case 'float':
-                        return $this->unmarshallFloat($unit);
-                        break;
-
-                    case 'string':
-                        return $this->unmarshallString($unit);
-                        break;
-
-                    case 'point':
-                        return $this->unmarshallPoint($unit);
-                        break;
-
-                    case 'pair':
-                        return $this->unmarshallPair($unit);
-                        break;
-
-                    case 'directedPair':
-                        return $this->unmarshallDirectedPair($unit);
-                        break;
-
-                    case 'duration':
-                        return $this->unmarshallDuration($unit);
-                        break;
-
-                    case 'file':
-                        return $this->unmarshallFile($unit);
-                        break;
-
-                    case 'uri':
-                        return $this->unmarshallUri($unit);
-                        break;
-
-                    case 'intOrIdentifier':
-                        return $this->unmarshallIntOrIdentifier($unit);
-                        break;
-
-                    case 'identifier':
-                        return $this->unmarshallIdentifier($unit);
-                        break;
-
-                    default:
-                        throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
-                        break;
-                }
-            } catch (InvalidArgumentException $e) {
-                $msg = 'A value does not satisfy its baseType.';
-                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
-            }
-        } elseif ($unit['base'] === null) {
+        if ($unit['base'] === null) {
             return null;
+        }
+
+        // Primitive base type.
+        try {
+            $keys = array_keys($unit['base']);
+            switch ($keys[0]) {
+                case 'boolean':
+                    return $this->unmarshallBoolean($unit);
+                    break;
+
+                case 'integer':
+                    return $this->unmarshallInteger($unit);
+                    break;
+
+                case 'float':
+                    return $this->unmarshallFloat($unit);
+                    break;
+
+                case 'string':
+                    return $this->unmarshallString($unit);
+                    break;
+
+                case 'point':
+                    return $this->unmarshallPoint($unit);
+                    break;
+
+                case 'pair':
+                    return $this->unmarshallPair($unit);
+                    break;
+
+                case 'directedPair':
+                    return $this->unmarshallDirectedPair($unit);
+                    break;
+
+                case 'duration':
+                    return $this->unmarshallDuration($unit);
+                    break;
+
+                case 'file':
+                    return $this->unmarshallFile($unit);
+                    break;
+
+                case 'uri':
+                    return $this->unmarshallUri($unit);
+                    break;
+
+                case 'intOrIdentifier':
+                    return $this->unmarshallIntOrIdentifier($unit);
+                    break;
+
+                case 'identifier':
+                    return $this->unmarshallIdentifier($unit);
+                    break;
+
+                default:
+                    throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
+                    break;
+            }
+        } catch (InvalidArgumentException $e) {
+            $msg = 'A value does not satisfy its baseType.';
+            throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
         }
     }
 

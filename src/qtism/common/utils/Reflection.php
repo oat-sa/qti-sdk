@@ -24,7 +24,6 @@
 namespace qtism\common\utils;
 
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * A utility class focusing on Reflection.
