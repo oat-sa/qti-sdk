@@ -292,7 +292,7 @@ class Utils
                     break;
 
                 case 'boolean':
-                    return ($attr === 'true') ? true : false;
+                    return $attr === 'true';
                     break;
 
                 default:

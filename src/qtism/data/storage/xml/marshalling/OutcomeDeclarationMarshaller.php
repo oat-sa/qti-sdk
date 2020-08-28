@@ -126,7 +126,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             }
 
             // deal with views.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($views = $this->getDOMElementAttributeAs($element, 'view')) != null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($views = $this->getDOMElementAttributeAs($element, 'view')) !== null) {
                 $viewCollection = new ViewCollection();
                 foreach (explode("\x20", $views) as $viewName) {
                     $viewCollection[] = View::getConstantByName($viewName);

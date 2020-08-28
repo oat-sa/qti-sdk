@@ -128,20 +128,19 @@ class ValueMarshaller extends Marshaller
                 $object = new Value(Utils::stringToDatatype(trim($element->nodeValue), $baseTypeCst), $baseTypeCst);
                 $object->setPartOfRecord(true);
             } else {
-                $msg = "The 'baseType' attribute value ('${baseType}') is not a valid QTI baseType in element '" . $element->localName . "'.";
+                $msg = "The 'baseType' attribute value ('$baseType') is not a valid QTI baseType in element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             }
         } else {
             // baseType attribute not set -> not part of a record.
             $nodeValue = trim($element->nodeValue);
 
+            // Try to use the marshaller as parametric to know how to unserialize the value.
             if ($this->getBaseType() !== -1) {
                 // Empty value only accepted if base type is string (consider empty string).
                 if ($nodeValue === '' && $this->getBaseType() !== BaseType::STRING) {
-                    throw new UnmarshallingException(
-                        sprintf('The element "%s" has no value', $element->localName),
-                        $element
-                    );
+                    $msg = sprintf('The element "%s" has no value.', $element->localName);
+                    throw new UnmarshallingException($msg, $element);
                 }
 
                 $object = new Value(Utils::stringToDatatype($nodeValue, $this->getBaseType()), $this->getBaseType());

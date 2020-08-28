@@ -103,7 +103,7 @@ abstract class QtiSmTestCase extends TestCase
 
     /**
      * @param string $version
-     * @return Qti20MarshallerFactory|Qti211MarshallerFactory|Qti21MarshallerFactory|Qti221MarshallerFactory|Qti222MarshallerFactory|Qti22MarshallerFactory|Qti30MarshallerFactory
+     * @return MarshallerFactory
      */
     public function getMarshallerFactory($version = '2.1')
     {
@@ -132,7 +132,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     public static function samplesDir()
     {
-        return dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
+        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -212,7 +212,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {
-        $element = QtiSmTestCase::createDOMElement($xmlString);
+        $element = self::createDOMElement($xmlString);
         $factory = $this->getMarshallerFactory($version);
         $marshaller = $factory->createMarshaller($element);
         return $marshaller->unmarshall($element);

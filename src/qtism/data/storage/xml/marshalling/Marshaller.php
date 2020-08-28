@@ -467,7 +467,7 @@ abstract class Marshaller
      */
     public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
-        if (is_array($tagName) === false) {
+        if (!is_array($tagName)) {
             $tagName = [$tagName];
         }
 
