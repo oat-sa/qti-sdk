@@ -27,11 +27,11 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
+use qtism\data\rules\LookupOutcomeValue;
 use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\ExpressionEngine;
-use qtism\data\rules\LookupOutcomeValue;
 
 /**
  * From IMS QTI:

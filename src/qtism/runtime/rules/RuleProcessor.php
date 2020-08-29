@@ -76,14 +76,18 @@ abstract class RuleProcessor implements Processable
     {
         $expectedType = $this->getRuleType();
 
-        if (Reflection::isInstanceOf($rule, $expectedType) === true) {
-            $this->rule = $rule;
-        } else {
-            $procClass = get_class($this);
-            $givenType = get_class($rule);
-            $msg = "The ${procClass} Rule Processor only processes ${expectedType} Rule objects, ${givenType} given.";
-            throw new InvalidArgumentException($msg);
+        if (!Reflection::isInstanceOf($rule, $expectedType)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The %s Rule Processor only processes %s Rule objects, %s given.',
+                    get_class($this),
+                    $expectedType,
+                    get_class($rule)
+                )
+            );
         }
+
+        $this->rule = $rule;
     }
 
     /**
