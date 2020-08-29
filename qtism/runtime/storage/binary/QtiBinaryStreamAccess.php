@@ -89,7 +89,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param FileManager $fileManager A FileManager object.
      */
-    public function setFileManager(FileManager $fileManager)
+    protected function setFileManager(FileManager $fileManager)
     {
         $this->fileManager = $fileManager;
     }
@@ -99,7 +99,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @return FileManager
      */
-    public function getFileManager()
+    protected function getFileManager()
     {
         return $this->fileManager;
     }
@@ -113,12 +113,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      */
     public function readVariableValue(Variable $variable)
     {
+                $setterToCall = 'setValue';
+
         try {
             $isNull = $this->readBoolean();
 
             if ($isNull === true) {
                 // Nothing more to be read.
-                $variable->setValue(null);
+                $variable->$setterToCall(null);
                 return;
             }
 
@@ -136,13 +138,13 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     $values[$val[0]] = $val[1];
                 }
 
-                $variable->setValue($values);
+                $variable->$setterToCall($values);
             } else {
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $variable->setValue(Utils::valueToRuntime($this->$toCall(), $baseType));
+                    $variable->$setterToCall(Utils::valueToRuntime($this->$toCall(), $baseType));
                 } else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
@@ -151,7 +153,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                         $values[] = ($isNull === true) ? null : Utils::valueToRuntime($this->$toCall(), $baseType);
                     }
 
-                    $variable->setValue($values);
+                    $variable->$setterToCall($values);
                 }
             }
         } catch (BinaryStreamAccessException $e) {
@@ -171,8 +173,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      */
     public function writeVariableValue(Variable $variable)
     {
+                $getterToCall = 'getValue';
+
         try {
-            $value = $variable->getValue();
+            $value = $variable->$getterToCall();
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
 
@@ -322,7 +326,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a Point from the current binary stream.
      *
-     * @return QtiPoint A Point object.
+     * @return QtiPoint A QtiPoint object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readPoint()
@@ -338,7 +342,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Point in the current binary stream.
      *
-     * @param QtiPoint $point A Point object.
+     * @param QtiPoint $point A QtiPoint object.
      * @throws QtiBinaryStreamAccessException
      */
     public function writePoint(QtiPoint $point)
@@ -355,7 +359,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a Pair from the current binary stream.
      *
-     * @return QtiPair A Pair object.
+     * @return QtiPair A QtiPair object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readPair()
@@ -421,7 +425,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a Duration from the current binary stream.
      *
-     * @return QtiDuration A Duration object.
+     * @return QtiDuration A QtiDuration object.
      * @throws QtiBinaryStreamAccessException
      */
     public function readDuration()
@@ -437,7 +441,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a Duration in the current binary stream.
      *
-     * @param QtiDuration $duration A Duration object.
+     * @param QtiDuration $duration A QtiDuration object.
      * @throws QtiBinaryStreamAccessException
      */
     public function writeDuration(QtiDuration $duration)
@@ -741,8 +745,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $this->writeTinyInt($routeItem->getOccurence());
             $this->writeShort($seeker->seekPosition($routeItem->getAssessmentItemRef()));
-
             $this->writeShort($seeker->seekPosition($routeItem->getTestPart()));
+
             $assessmentSections = $routeItem->getAssessmentSections();
             $this->writeTinyInt(count($assessmentSections));
 
@@ -830,7 +834,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             foreach ($state as $responseVariable) {
                 $respId = $responseVariable->getIdentifier();
-                if (isset($responseDeclarations[$respId]) === true) {
+                if (isset($responseDeclarations[$respId])) {
                     $this->writeShort($seeker->seekPosition($responseDeclarations[$respId]));
                     $this->writeVariableValue($responseVariable);
                 } else {
@@ -854,11 +858,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     }
 
     /**
-     * Write a File object in the current binary stream.
+     * Write a QtiFile object in the current binary stream.
      *
      * @param QtiFile $file
-     * @throws QtiBinaryStreamAccessException
      * @throws BinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeFile(QtiFile $file)
     {
@@ -871,7 +875,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     }
 
     /**
-     * Read a File object from the current binary stream.
+     * Read a QtiFile object from the current binary stream.
      *
      * @return QtiFile
      * @throws QtiBinaryStreamAccessException

@@ -23,8 +23,6 @@
 
 namespace qtism\runtime\storage\binary;
 
-use Exception;
-use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 
 /**
@@ -129,17 +127,4 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
      * @var int
      */
     const PATH = 23;
-
-    /**
-     * Create a new QtiBinaryStreamAccessException object.
-     *
-     * @param string $message A human-readable message.
-     * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
-     * @param int $code An exception code. See class constants.
-     * @param Exception $previous An optional previously thrown exception.
-     */
-    public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $source, $code, $previous);
-    }
 }

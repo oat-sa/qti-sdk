@@ -49,12 +49,20 @@ class StorageException extends Exception
     const INSTANTIATION = 1;
 
     /**
+     * @var int
+     * @deprecated since 0.23.0. Use qtism\runtime\storage\common\StorageException::PERSISTENCE instead. Will be dropped in 0.24.0.
+     * Know usage:
+     * https://github.com/oat-sa/extension-tao-testqti/blob/4260de91509d2bdb4a101faf6e31fdbcbed1f048/helpers/class.TestSessionStorage.php#L199
+     */
+    const PERSITANCE = 2;
+
+    /**
      * Error code to use when an error occurs while
      * persisting an AssessmentTestSession.
      *
      * @var int
      */
-    const PERSITANCE = 2;
+    const PERSISTENCE = 2;
 
     /**
      * Error code to use when an error occurs while
@@ -63,16 +71,4 @@ class StorageException extends Exception
      * @var int
      */
     const RETRIEVAL = 3;
-
-    /**
-     * Create a new StorageException instance.
-     *
-     * @param string $message A human-readable message describing the encountered error.
-     * @param int $code A code enabling client-code to identify the cause of the error.
-     * @param Exception $previous An optional previous Exception that was thrown and catched.
-     */
-    public function __construct($message, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
 }
