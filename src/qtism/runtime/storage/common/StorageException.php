@@ -70,16 +70,4 @@ class StorageException extends Exception
      * @var int
      */
     const DELETION = 4;
-
-    /**
-     * Create a new StorageException instance.
-     *
-     * @param string $message A human-readable message describing the encountered error.
-     * @param int $code A code enabling client-code to identify the cause of the error.
-     * @param Exception $previous An optional previous Exception that was thrown and catched.
-     */
-    public function __construct($message, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
 }

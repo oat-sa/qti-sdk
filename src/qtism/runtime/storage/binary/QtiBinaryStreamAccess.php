@@ -167,8 +167,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $runtimeValue = Utils::valueToRuntime($this->$toCall(), $baseType);
-                    $variable->$setterToCall($runtimeValue);
+                    $variable->$setterToCall(Utils::valueToRuntime($this->$toCall(), $baseType));
                 } else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
@@ -680,8 +679,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @return AssessmentItemSession
      * @throws QtiBinaryStreamAccessException
      */
-    public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker)
-    {
+    public function readAssessmentItemSession(
+        AbstractSessionManager $manager,
+        AssessmentTestSeeker $seeker
+    ) {
         try {
             $itemRefPosition = $this->readShort();
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);

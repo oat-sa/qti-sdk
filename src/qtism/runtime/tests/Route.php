@@ -437,8 +437,12 @@ class Route implements Iterator
     public function current()
     {
         $routeItems = &$this->getRouteItems();
+        $position = $this->getPosition();
+        if (!isset($routeItems[$position])) {
+            throw new OutOfBoundsException('No RouteItem object found at position ' . $position);
+        }
 
-        return $routeItems[$this->getPosition()];
+        return $routeItems[$position];
     }
 
     /**

@@ -134,7 +134,7 @@ abstract class AbstractSessionManager
      */
     protected function getRoute(AssessmentTest $test, Route $route = null)
     {
-        return ($route === null) ? $this->createRoute($test) : $route;
+        return $route ?? $this->createRoute($test);
     }
 
     /**

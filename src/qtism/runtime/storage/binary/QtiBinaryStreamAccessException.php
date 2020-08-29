@@ -23,8 +23,6 @@
 
 namespace qtism\runtime\storage\binary;
 
-use Exception;
-use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 
 /**
@@ -124,36 +122,23 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
     const PENDING_RESPONSES = 22;
 
     /**
+     * An error occurred while reading/writing path.
+     *
+     * @var int
+     */
+    const PATH = 23;
+
+    /**
      * An error occurred while reading/writing shuffling states.
      *
      * @var int
      */
-    const SHUFFLING_STATE = 23;
+    const SHUFFLING_STATE = 24;
 
     /**
      * An error occurred while reading/writing a shuffling group.
      *
      * @var int
      */
-    const SHUFFLING_GROUP = 24;
-
-    /**
-     * An error occurred while reading/writing path.
-     *
-     * @var int
-     */
-    const PATH = 25;
-
-    /**
-     * Create a new QtiBinaryStreamAccessException object.
-     *
-     * @param string $message A human-readable message.
-     * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
-     * @param int $code An exception code. See class constants.
-     * @param Exception $previous An optional previously thrown exception.
-     */
-    public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $source, $code, $previous);
-    }
+    const SHUFFLING_GROUP = 25;
 }
