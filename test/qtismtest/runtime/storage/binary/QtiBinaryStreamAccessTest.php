@@ -2,7 +2,6 @@
 
 namespace qtismtest\runtime\storage\binary;
 
-use qtism\common\collections\Container;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\Comparable;
 use qtism\common\datatypes\files\DefaultFileManager;
@@ -35,6 +34,7 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\SubmissionMode;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;

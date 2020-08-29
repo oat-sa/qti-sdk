@@ -21,9 +21,10 @@
  * @license GPLv2
  */
 
-namespace qtism\common\collections;
+namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\collections\AbstractCollection;
 use qtism\common\Comparable;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFile;
@@ -247,15 +248,6 @@ class Container extends AbstractCollection implements Comparable
         }
 
         return $bounds[0] . implode('; ', $strings) . $bounds[1];
-    }
-
-    public function __clone()
-    {
-        foreach ($this->dataPlaceHolder as $key => $value) {
-            if (is_object($value)) {
-                $this[$key] = clone $value;
-            }
-        }
     }
 
     /**

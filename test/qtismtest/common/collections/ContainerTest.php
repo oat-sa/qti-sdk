@@ -5,7 +5,6 @@ namespace qtismtest\common\collections;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
-use qtism\common\collections\Container;
 use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -20,6 +19,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
+use qtism\runtime\common\Container;
 use qtismtest\QtiSmTestCase;
 use UnexpectedValueException;
 
@@ -408,7 +408,7 @@ class ContainerTest extends QtiSmTestCase
     public function testMergeNotCompliantTypes()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Only collections with compliant types can be merged ('qtism\common\collections\Container' vs 'qtism\common\collections\StringCollection').");
+        $this->expectExceptionMessage('Only collections with compliant types can be merged ("qtism\runtime\common\Container" vs "qtism\common\collections\StringCollection").');
 
         $container1 = new Container();
         $container2 = new StringCollection();
@@ -418,7 +418,7 @@ class ContainerTest extends QtiSmTestCase
     public function testDiffNotCompliantTypes()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Difference may apply only on two collections of the same type.");
+        $this->expectExceptionMessage('Difference may apply only on two collections of the same type.');
 
         $container1 = new Container();
         $container2 = new StringCollection();

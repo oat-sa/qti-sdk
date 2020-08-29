@@ -352,8 +352,11 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             $newData = array_merge($this->dataPlaceHolder, $collection->getDataPlaceHolder());
             $this->dataPlaceHolder = $newData;
         } else {
-            $msg = 'Only collections with compliant types can be merged ';
-            $msg .= "('" . get_class($this) . "' vs '" . get_class($collection) . "').";
+            $msg = sprintf(
+                'Only collections with compliant types can be merged ("%s" vs "%s").',
+                get_class($this),
+                get_class($collection)
+            );
             throw new InvalidArgumentException($msg);
         }
     }
@@ -402,5 +405,14 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $newData = array_values($this->dataPlaceHolder);
         $this->setDataPlaceHolder($newData);
+    }
+
+    public function __clone()
+    {
+        foreach ($this->dataPlaceHolder as $key => $value) {
+            if (is_object($value)) {
+                $this[$key] = clone $value;
+            }
+        }
     }
 }

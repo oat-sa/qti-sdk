@@ -2,7 +2,6 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
@@ -11,6 +10,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Statistics;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;

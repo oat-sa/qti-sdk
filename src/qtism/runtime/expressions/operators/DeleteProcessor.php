@@ -23,10 +23,10 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\collections\Container;
 use qtism\common\Comparable;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\Delete;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;

@@ -26,7 +26,6 @@ namespace qtism\runtime\rendering\markup;
 use DOMDocument;
 use DOMDocumentFragment;
 use DOMXPath;
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiScalar;
 use qtism\common\utils\Url;
@@ -45,6 +44,7 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\data\ViewCollection;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\State;
 use qtism\runtime\rendering\markup\xhtml\PrintedVariableRenderer;
 use qtism\runtime\rendering\Renderable;
@@ -1010,11 +1010,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         ];
         $interaction = $this->getCurrentInteraction();
 
-        return self::isChoice($component) 
-            && !$component instanceof Gap 
-            && $component->isFixed() === false 
-            && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED 
-            && in_array($interaction->getQtiClassName(), $shufflables) 
+        return self::isChoice($component)
+            && !$component instanceof Gap
+            && $component->isFixed() === false
+            && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED
+            && in_array($interaction->getQtiClassName(), $shufflables)
             && $interaction->mustShuffle() === true;
     }
 

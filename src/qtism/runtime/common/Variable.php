@@ -24,7 +24,6 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
