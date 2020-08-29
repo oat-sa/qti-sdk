@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\rules;
 
-use InvalidArgumentException;
 use qtism\data\rules\ExitResponse;
-use qtism\data\rules\Rule;
 
 /**
  * From IMS QTI:
@@ -35,22 +33,6 @@ use qtism\data\rules\Rule;
  */
 class ExitResponseProcessor extends RuleProcessor
 {
-    /**
-     * Set the ExitResponse object to be processed.
-     *
-     * @param Rule $rule An ExitResponse object.
-     * @throws InvalidArgumentException If $rule is not an ExitResponse object.
-     */
-    public function setRule(Rule $rule)
-    {
-        if ($rule instanceof ExitResponse) {
-            parent::setRule($rule);
-        } else {
-            $msg = 'The ExitResponseProcessor only accepts ExitResponse objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the ExitResponse rule. It simply throws a RuleProcessingException with
      * the special code RuleProcessingException::EXIT_RESPONSE to simulate the
@@ -62,5 +44,13 @@ class ExitResponseProcessor extends RuleProcessor
     {
         $msg = 'Termination of Response Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_RESPONSE);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRuleType()
+    {
+        return ExitResponse::class;
     }
 }

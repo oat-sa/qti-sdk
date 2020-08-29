@@ -28,7 +28,6 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\rules\LookupOutcomeValue;
-use qtism\data\rules\Rule;
 use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -43,22 +42,6 @@ use qtism\runtime\expressions\ExpressionEngine;
  */
 class LookupOutcomeValueProcessor extends RuleProcessor
 {
-    /**
-     * Set the LookupOutcomeValue object to be processed.
-     *
-     * @param Rule $rule A LookupOutcomeValue object.
-     * @throws InvalidArgumentException If $rule is not a LookupOutcomeValue object.
-     */
-    public function setRule(Rule $rule)
-    {
-        if ($rule instanceof LookupOutcomeValue) {
-            parent::setRule($rule);
-        } else {
-            $msg = 'The LookupOutcomeValueProcessor only accepts LookupOutcomeValue objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the LookupOutcomeValue rule.
      *
@@ -157,5 +140,13 @@ class LookupOutcomeValueProcessor extends RuleProcessor
             $msg = 'An error occurred while processing the expression bound to the lookupOutcomeValue rule.';
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRuleType()
+    {
+        return LookupOutcomeValue::class;
     }
 }

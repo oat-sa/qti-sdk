@@ -49,22 +49,6 @@ use qtism\runtime\expressions\ExpressionEngine;
 class SetOutcomeValueProcessor extends RuleProcessor
 {
     /**
-     * Set the SetOutcomeValue object to be processed.
-     *
-     * @param Rule $rule A SetOutcomeValue object.
-     * @throws InvalidArgumentException If $rule is not a SetOutcomeValue object.
-     */
-    public function setRule(Rule $rule)
-    {
-        if ($rule instanceof SetOutcomeValue) {
-            parent::setRule($rule);
-        } else {
-            $msg = 'The SetOutcomeValueProcessor only accepts SetOutcomeValue objects to be processed.';
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
      * Process the setOutcomeValue rule.
      *
      * A RuleProcessingException will be thrown if:
@@ -127,5 +111,13 @@ class SetOutcomeValueProcessor extends RuleProcessor
             $msg = "Unable to set value ${val} to variable '${identifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRuleType()
+    {
+        return SetOutcomeValue::class;
     }
 }
