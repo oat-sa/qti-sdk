@@ -131,6 +131,10 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable
             return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
         }
 
+        if ($this->getShape() === QtiShape::ELLIPSE) {
+            return pow($point->getX() - $this[0], 2) / pow($this[2], 2) + pow($point->getY() - $this[1], 2) / pow($this[3], 2) <= 1;
+        }
+
         // we consider it is a polygon.
         // - Transform coordinates in vertices.
         // -- Use of the "point in polygon" algorithm.
