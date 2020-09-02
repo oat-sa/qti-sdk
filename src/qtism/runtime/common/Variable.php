@@ -26,6 +26,7 @@ namespace qtism\runtime\common;
 use InvalidArgumentException;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
@@ -543,6 +544,10 @@ abstract class Variable
 
     private function createValue(QtiDatatype $value): Value
     {
+        if (BaseType::FILE === $this->getBaseType() && $value instanceof QtiFile) {
+            return new Value($value);
+        }
+
         return new Value(StorageUtils::stringToDatatype(
             (string)$value,
             $this->getBaseType())
