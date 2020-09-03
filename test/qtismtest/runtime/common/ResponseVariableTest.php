@@ -2,7 +2,9 @@
 
 namespace qtismtest\runtime\common;
 
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
@@ -134,6 +136,24 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this->assertCount(1, $values);
         $this->assertTrue($qtiPoint->equals($values[0]->getValue()));
+
+        // QtiFile
+        $fileManager = new FileSystemFileManager();
+
+        $path = __FILE__;
+        $fileName = basename($path);
+        $mimeType = 'text/plain';
+        $qtiFile = $fileManager->createFromFile($path, $mimeType, $fileName);
+
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::FILE, $qtiFile);
+        $values = $responseVariable->getDataModelValues();
+
+        $this->assertCount(1, $values);
+        $actual = $values[0]->getValue();
+        $this->assertInstanceOf(QtiFile::class, $actual);
+        $this->assertEquals($fileName, $actual->getFilename());
+        $this->assertEquals($mimeType, $actual->getMimeType());
+        $this->assertStringEqualsFile($path, $actual->getData());
     }
 
     public function testGetScalarDataModelValuesMultipleCardinality()

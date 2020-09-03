@@ -26,6 +26,7 @@ namespace qtism\runtime\common;
 use InvalidArgumentException;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
@@ -432,6 +433,19 @@ abstract class Variable
     /**
      * Convenience method.
      *
+     * Whether the variable's value is file. If the variable's value is NULL, the method
+     * returns false.
+     *
+     * @return boolean
+     */
+    public function isFile()
+    {
+        return (!$this->isNull() && $this->getBaseType() === BaseType::FILE);
+    }
+
+    /**
+     * Convenience method.
+     *
      * Whether the variable's value is float. If the variable's value is NULL, the method
      * returns false.
      *
@@ -467,7 +481,11 @@ abstract class Variable
      */
     public function isPair()
     {
-        return (!$this->isNull() && ($this->getBaseType() === BaseType::PAIR) || $this->getBaseType() === BaseType::DIRECTED_PAIR);
+        return (!$this->isNull() 
+            && ($this->getBaseType() === BaseType::PAIR 
+                || $this->getBaseType() === BaseType::DIRECTED_PAIR
+            )
+        );
     }
 
     /**
@@ -543,6 +561,10 @@ abstract class Variable
 
     private function createValue(QtiDatatype $value): Value
     {
+        if ($value instanceof QtiFile && $this->isFile()) {
+            return new Value($value);
+        }
+
         return new Value(StorageUtils::stringToDatatype(
             (string)$value,
             $this->getBaseType())
