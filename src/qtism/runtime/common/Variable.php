@@ -433,6 +433,19 @@ abstract class Variable
     /**
      * Convenience method.
      *
+     * Whether the variable's value is file. If the variable's value is NULL, the method
+     * returns false.
+     *
+     * @return boolean
+     */
+    public function isFile()
+    {
+        return (!$this->isNull() && $this->getBaseType() === BaseType::FILE);
+    }
+
+    /**
+     * Convenience method.
+     *
      * Whether the variable's value is float. If the variable's value is NULL, the method
      * returns false.
      *
@@ -468,7 +481,11 @@ abstract class Variable
      */
     public function isPair()
     {
-        return (!$this->isNull() && ($this->getBaseType() === BaseType::PAIR) || $this->getBaseType() === BaseType::DIRECTED_PAIR);
+        return (!$this->isNull() 
+            && ($this->getBaseType() === BaseType::PAIR 
+                || $this->getBaseType() === BaseType::DIRECTED_PAIR
+            )
+        );
     }
 
     /**
@@ -544,7 +561,7 @@ abstract class Variable
 
     private function createValue(QtiDatatype $value): Value
     {
-        if (BaseType::FILE === $this->getBaseType() && $value instanceof QtiFile) {
+        if ($value instanceof QtiFile && $this->isFile()) {
             return new Value($value);
         }
 
