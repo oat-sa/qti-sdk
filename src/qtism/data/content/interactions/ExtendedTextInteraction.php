@@ -71,10 +71,10 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var integer
+     * @var integer|null
      * @qtism-bean-property
      */
-    private $expectedLength = -1;
+    private $expectedLength;
 
     /**
      * From IMS QTI:
@@ -245,20 +245,25 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
-     * is -1, it means that no value is defined for the expectedLength attribute.
+     * Set the hint to the candidate about the expected overall length of its
+     * response. A null value unsets expectedLength.
      *
-     * @param integer $expectedLength A strictly positive (> 0) integer or -1.
+     * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
      * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
      */
     public function setExpectedLength($expectedLength)
     {
-        if (is_int($expectedLength) && ($expectedLength > 0 || $expectedLength === -1)) {
-            $this->expectedLength = $expectedLength;
-        } else {
-            $msg = "The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, '" . gettype($expectedLength) . "' given.";
+        if ($expectedLength !== null && (!is_int($expectedLength) || $expectedLength < 0)) {
+            $given = is_int($expectedLength)
+                ? $expectedLength
+                : gettype($expectedLength);
+
+
+            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
+
+        $this->expectedLength = $expectedLength;
     }
 
     /**
@@ -279,7 +284,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function hasExpectedLength()
     {
-        return $this->getExpectedLength() !== -1;
+        return $this->getExpectedLength() !== null;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtismtest\QtiSmTestCase;
 
@@ -35,10 +36,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "boolean" given.');
 
         $extendedTextInteraction->setExpectedLength(true);
     }
