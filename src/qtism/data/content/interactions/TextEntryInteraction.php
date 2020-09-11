@@ -198,7 +198,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * response. A null value unsets expectedLength.
      *
      * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength)
     {
@@ -206,7 +206,6 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
             $given = is_int($expectedLength)
                 ? $expectedLength
                 : gettype($expectedLength);
-
 
             $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
@@ -219,7 +218,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return integer A strictly positive (> 0) integer or -1 if undefined.
+     * @return integer|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {
