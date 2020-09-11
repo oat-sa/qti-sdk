@@ -257,7 +257,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
             $given = is_int($expectedLength)
                 ? $expectedLength
                 : gettype($expectedLength);
-            
+
             $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
