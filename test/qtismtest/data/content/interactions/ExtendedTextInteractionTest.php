@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtismtest\QtiSmTestCase;
 
@@ -35,12 +36,54 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "boolean" given.');
 
         $extendedTextInteraction->setExpectedLength(true);
+    }
+
+    /**
+     * @dataProvider nonNegativeIntegersForExpectedLength
+     * @param integer $expectedLength
+     */
+    public function testSetExpectedLengthToNonNegativeInteger($expectedLength)
+    {
+        $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
+
+        $textEntryInteraction->setExpectedLength($expectedLength);
+
+        $this->assertTrue($textEntryInteraction->hasExpectedLength());
+        $this->assertEquals($expectedLength, $textEntryInteraction->getExpectedLength());
+    }
+
+    public function nonNegativeIntegersForExpectedLength(): array
+    {
+        return [
+            [0],
+            [1],
+            [1012],
+            [2 ** 31 - 1],
+        ];
+    }
+
+    public function testSetExpectedLengthToNegativeIntegerThrowsException()
+    {
+        $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "-1" given.');
+
+        $textEntryInteraction->setExpectedLength(-1);
+    }
+
+    public function testUnsetExpectedLengthWithNull()
+    {
+        $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
+
+        $textEntryInteraction->setExpectedLength(null);
+
+        $this->assertFalse($textEntryInteraction->hasExpectedLength());
+        $this->assertNull($textEntryInteraction->getExpectedLength());
     }
 
     public function testSetPatternMaskWrongType()
