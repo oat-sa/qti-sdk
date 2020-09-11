@@ -266,10 +266,10 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Get the hint to the candidate about the expected overall length of its response. If the returned
-     * value is -1, it means that no value is defined for the expectedLength attribute.
+     * Get the hint to the candidate about the expected overall length of its response. 
+     * A null return means that no value is defined for the expectedLength attribute.
      *
-     * @return integer A non-negative integer (>= 0) or null if undefined.
+     * @return integer|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {
@@ -428,11 +428,11 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Set the hint to the candidate as to the expected number of lines of input required. If
-     * $expectedLines is -1, it means that no value is defined for the expectedLines attribute.
+     * Set the hint to the candidate about the expected number of lines of its
+     * response. A null value unsets expectedLines.
      *
-     * @param integer $expectedLines A strictly positive (> 0) integer or -1.
-     * @throws InvalidArgumentException If $expectedLines is not a strictly positive integer nor -1.
+     * @param integer|null $expectedLines A non-negative integer (>= 0) or null.
+     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer (>= 0) nor null.
      */
     public function setExpectedLines($expectedLines)
     {
@@ -449,10 +449,10 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Get the hint to the candidate as to the expected number of lines of input required. If
-     * the returned value is -1, it means that no value is defined for the expectedLines attribute.
+     * Get the hint to the candidate as to the expected number of lines of input required.
+     * A null return means that no value is defined for the expectedLines attribute.
      *
-     * @return integer A strictly positive (> 0) integer or -1.
+     * @return integer|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLines()
     {
