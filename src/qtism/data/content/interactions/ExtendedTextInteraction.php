@@ -143,10 +143,10 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Engine should use the value of this attribute to set the size of the response box,
      * where applicable. This is not a validity constraint.
      *
-     * @var integer
+     * @var integer|null
      * @qtism-bean-property
      */
-    private $expectedLines = -1;
+    private $expectedLines;
 
     /**
      * From IMS QTI:
@@ -249,7 +249,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * response. A null value unsets expectedLength.
      *
      * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer (>= 0) nor null.
      */
     public function setExpectedLength($expectedLength)
     {
@@ -257,8 +257,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
             $given = is_int($expectedLength)
                 ? $expectedLength
                 : gettype($expectedLength);
-
-
+            
             $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
@@ -270,7 +269,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return integer A strictly positive (> 0) integer or -1 if undefined.
+     * @return integer A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {
@@ -437,12 +436,16 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setExpectedLines($expectedLines)
     {
-        if (is_int($expectedLines) && ($expectedLines > 0 || $expectedLines === -1)) {
-            $this->expectedLines = $expectedLines;
-        } else {
-            $msg = "The 'expectedLines' argument must be a strictly positive (> 0) intege or -1, '" . gettype($expectedLines) . "' given.";
+        if ($expectedLines !== null && (!is_int($expectedLines) || $expectedLines < 0)) {
+            $given = is_int($expectedLines)
+                ? $expectedLines
+                : gettype($expectedLines);
+
+            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
+
+        $this->expectedLines = $expectedLines;
     }
 
     /**
@@ -463,7 +466,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function hasExpectedLines()
     {
-        return $this->getExpectedLines() !== -1;
+        return $this->getExpectedLines() !== null;
     }
 
     /**
