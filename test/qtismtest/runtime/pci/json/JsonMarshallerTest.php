@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\pci\json;
 
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
@@ -153,6 +154,13 @@ class JsonMarshallerTest extends QtiSmTestCase
 
         $file = new FileSystemFile($samples . 'datatypes/file/image-png_noname_data.png');
         $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]])];
+
+        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+        $mimeType = 'text/plain';
+        $filename = 'http://some.cloud.storage/path/to/file.txt';
+        
+        $fileHash = new FileHash($sha256, $mimeType, $filename);
+        $returnValue[] = [$fileHash, json_encode(['base' => ['fileHash' => ['mime' => $mimeType, 'data' => base64_encode($sha256), 'name' => $filename]]])];
 
         return $returnValue;
     }

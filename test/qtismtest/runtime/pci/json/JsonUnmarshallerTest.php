@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\pci\json;
 
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
@@ -75,6 +76,28 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         // cleanup.
         $fileManager = new FileSystemFileManager();
         $fileManager->delete($value);
+    }
+
+    public function testUnmarshallFileHash()
+    {
+        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+        $mimeType = 'text/plain';
+        $filename = 'http://some.cloud.storage/path/to/file.txt';
+
+        $expectedFile = new FileHash(base64_encode($sha256), $mimeType, $filename);
+
+        $json = sprintf('{ "base" : { "fileHash" : { 
+            "mime" : "%s", 
+            "data" : "%s", 
+            "name" : "%s" } } }',
+            $mimeType,
+            base64_encode($sha256),
+            $filename            
+        );      
+
+        $unmarshaller = self::createUnmarshaller();
+        $value = $unmarshaller->unmarshall($json);
+        $this->assertTrue($expectedFile->equals($value));
     }
 
     /**

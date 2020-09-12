@@ -24,6 +24,7 @@
 namespace qtism\runtime\pci\json;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -345,10 +346,19 @@ class Marshaller
      */
     protected function marshallFile(QtiFile $file)
     {
-        $data = ['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]];
+        $fileKey = $file instanceof FileHash ? 'fileHash' : 'file';
+
+        $data = [
+            'base' => [
+                $fileKey => [
+                    'mime' => $file->getMimeType(), 
+                    'data' => base64_encode($file->getData())
+                ]
+            ]
+        ];
 
         if ($file->hasFilename() === true) {
-            $data['base']['file']['name'] = $file->getFilename();
+            $data['base'][$fileKey]['name'] = $file->getFilename();
         }
 
         return $data;

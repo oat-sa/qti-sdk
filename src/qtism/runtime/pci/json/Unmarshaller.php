@@ -24,6 +24,7 @@
 namespace qtism\runtime\pci\json;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\QtiBoolean;
@@ -260,6 +261,10 @@ class Unmarshaller
                         return $this->unmarshallFile($unit);
                         break;
 
+                    case 'fileHash':
+                        return $this->unmarshallFileHash($unit);
+                        break;
+
                     case 'uri':
                         return $this->unmarshallUri($unit);
                         break;
@@ -380,7 +385,7 @@ class Unmarshaller
     }
 
     /**
-     * Unmarshall a duration JSON PCI representation.
+     * Unmarshall an uploaded file payload JSON PCI representation.
      *
      * @param array $unit
      * @return QtiFile
@@ -388,13 +393,47 @@ class Unmarshaller
      */
     protected function unmarshallFile(array $unit)
     {
-        $filename = (empty($unit['base']['file']['name']) === true) ? '' : $unit['base']['file']['name'];
-
-        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime'], $filename);
+        $fileArray = $unit['base']['file'];
+        return $this->getFileManager()->createFromData(
+            base64_decode($fileArray['data']),
+            $fileArray['mime'],
+            $fileArray['name'] ?? ''
+        );
     }
 
     /**
-     * Unmarshall a duration JSON PCI representation.
+     * Unmarshall an uploaded file hash JSON PCI representation.
+     * 
+     * This is not a standard QTI feature but a convenience to store only
+     * a hash of the file, to avoid storing huge files in the test session.
+     * This suppose the following:
+     * * Payload of the file has been previously persisted before.
+     * * "name" key contains the persisted file path with proper wrapper. 
+     * * "data" key contains the hash, not base64_encode'd.
+     * 
+     * @see https://www.php.net/manual/de/function.stream-get-wrappers.php
+     * to find which wrappers are supported by the current installation.
+     *
+     * @param array $unit
+     * @return QtiFile
+     * @throws FileManagerException
+     */
+    protected function unmarshallFileHash(array $unit)
+    {
+        $fileHashArray = $unit['base']['fileHash'];
+        if (empty($fileHashArray['name'])) {
+            throw new FileManagerException('To store an uploaded file hash, the file has to be persisted before and the final file name provided in the "name" key.');
+        }
+
+        return new FileHash(
+            $fileHashArray['data'],
+            $fileHashArray['mime'],
+            $fileHashArray['name']
+        );
+    }
+
+    /**
+     * Unmarshall a URI JSON PCI representation.
      *
      * @param array $unit
      * @return QtiUri
