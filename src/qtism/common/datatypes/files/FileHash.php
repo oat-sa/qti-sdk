@@ -36,6 +36,12 @@ use RuntimeException;
 class FileHash implements QtiFile
 {
     /**
+     * Key to use in json payload to trigger the storage of a file hash instead
+     * of a hash.
+     */
+    const FILE_HASh_KEY = 'fileHash';
+
+    /**
      * The hash of the file contents.
      *
      * @var string

@@ -86,10 +86,11 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
         $expectedFile = new FileHash(base64_encode($sha256), $mimeType, $filename);
 
-        $json = sprintf('{ "base" : { "fileHash" : { 
+        $json = sprintf('{ "base" : { "%s" : {
             "mime" : "%s", 
             "data" : "%s", 
             "name" : "%s" } } }',
+            FileHash::FILE_HASh_KEY,
             $mimeType,
             base64_encode($sha256),
             $filename            

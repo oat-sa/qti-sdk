@@ -346,7 +346,7 @@ class Marshaller
      */
     protected function marshallFile(QtiFile $file)
     {
-        $fileKey = $file instanceof FileHash ? 'fileHash' : 'file';
+        $fileKey = $file instanceof FileHash ? FileHash::FILE_HASh_KEY : 'file';
 
         $data = [
             'base' => [
