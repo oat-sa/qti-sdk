@@ -71,10 +71,10 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var int
+     * @var integer|null
      * @qtism-bean-property
      */
-    private $expectedLength = -1;
+    private $expectedLength;
 
     /**
      * From IMS QTI:
@@ -121,7 +121,6 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setBase(10);
         $this->setStringIdentifier('');
-        $this->setExpectedLength(-1);
         $this->setPatternMask('');
         $this->setPlaceholderText('');
     }
@@ -195,27 +194,31 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     }
 
     /**
-     * Set the hint to the candidate about the expected overall length of its response. If $expectedLength
-     * is -1, it means that no value is defined for the expectedLength attribute.
+     * Set the hint to the candidate about the expected overall length of its
+     * response. A null value unsets expectedLength.
      *
-     * @param int $expectedLength A strictly positive (> 0) integer or -1.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
+     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength)
     {
-        if (is_int($expectedLength) && ($expectedLength > 0 || $expectedLength === -1)) {
-            $this->expectedLength = $expectedLength;
-        } else {
-            $msg = "The 'expectedLength' argument must be a strictly positive (> 0) integer or -1, '" . gettype($expectedLength) . "' given.";
+        if ($expectedLength !== null && (!is_int($expectedLength) || $expectedLength < 0)) {
+            $given = is_int($expectedLength)
+                ? $expectedLength
+                : gettype($expectedLength);
+
+            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
+
+        $this->expectedLength = $expectedLength;
     }
 
     /**
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return int A strictly positive (> 0) integer or -1 if undefined.
+     * @return integer|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {
@@ -229,7 +232,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      */
     public function hasExpectedLength()
     {
-        return $this->getExpectedLength() !== -1;
+        return $this->getExpectedLength() !== null;
     }
 
     /**
