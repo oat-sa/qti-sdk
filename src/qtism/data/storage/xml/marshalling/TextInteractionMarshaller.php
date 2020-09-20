@@ -117,7 +117,7 @@ class TextInteractionMarshaller extends Marshaller
             try {
                 $localName = $element->localName;
                 $name = ($this->isWebComponentFriendly()) ? ucfirst(XmlUtils::qtiFriendlyName($localName)) : ucfirst($localName);
-                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($name);
+                $class = 'qtism\\data\\content\\interactions\\' . $name;
                 $component = new $class($responseIdentifier);
             } catch (InvalidArgumentException $e) {
                 $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";

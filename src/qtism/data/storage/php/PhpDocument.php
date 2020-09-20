@@ -43,6 +43,7 @@ use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
@@ -65,9 +66,36 @@ class PhpDocument extends QtiDocument
      * @throws BeanException
      * @throws MemoryStreamException
      * @throws StreamAccessException
-     * @throws marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
      */
     public function save($url)
+    {
+        $stream = $this->transformToPhp();
+
+        $exists = file_exists($url);
+        $written = @file_put_contents($url, $stream->getBinary());
+
+        if ($written === false) {
+            throw new PhpStorageException("File located at '${url}' could not be written.");
+        }
+
+        if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
+            opcache_invalidate($url, true);
+        }
+    }
+
+    /**
+     * Convert components to php source
+     *
+     * @return MemoryStream
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
+     * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws StreamAccessException
+     */
+    protected function transformToPhp()
     {
         $stack = new SplStack();
         $stack->push($this->getDocumentComponent());
@@ -149,16 +177,7 @@ class PhpDocument extends QtiDocument
             }
         }
 
-        $exists = file_exists($url);
-        $written = @file_put_contents($url, $stream->getBinary());
-
-        if ($written === false) {
-            throw new PhpStorageException("File located at '${url}' could not be written.");
-        }
-
-        if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
-            opcache_invalidate($url, true);
-        }
+        return $stream;
     }
 
     /**

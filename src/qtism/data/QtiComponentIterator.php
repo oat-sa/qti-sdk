@@ -142,6 +142,14 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
+     * @param QtiComponent|null $currentContainer
+     */
+    protected function setCurrentContainer(QtiComponent $currentContainer = null)
+    {
+        $this->currentContainer = $currentContainer;
+    }
+
+    /**
      * @return QtiComponent
      */
     public function getCurrentContainer()
@@ -158,6 +166,26 @@ class QtiComponentIterator implements Iterator
     public function getRootComponent()
     {
         return $this->rootComponent;
+    }
+
+    /**
+     * Set the currently traversed QtiComponent object.
+     *
+     * @param QtiComponent $currentComponent
+     */
+    protected function setCurrentComponent(QtiComponent $currentComponent = null)
+    {
+        $this->currentComponent = $currentComponent;
+    }
+
+    /**
+     * Get the currently traversed QtiComponent object.
+     *
+     * @return QtiComponent A QtiComponent object.
+     */
+    protected function getCurrentComponent()
+    {
+        return $this->currentComponent;
     }
 
     /**
@@ -292,21 +320,21 @@ class QtiComponentIterator implements Iterator
             $trailEntry = $this->popFromTrail();
 
             $this->setValid(true);
-            $this->currentComponent = $trailEntry[1];
-            $this->currentContainer = $trailEntry[0];
-            $this->markTraversed($this->currentComponent);
-            $this->pushOnTrail($this->currentComponent, $this->currentComponent->getComponents());
+            $this->setCurrentComponent($trailEntry[1]);
+            $this->setCurrentContainer($trailEntry[0]);
+            $this->markTraversed($this->getCurrentComponent());
+            $this->pushOnTrail($this->getCurrentComponent(), $this->getCurrentComponent()->getComponents());
 
-            if (empty($classes) || in_array($this->currentComponent->getQtiClassName(), $classes)) {
+            if (empty($classes) || in_array($this->getCurrentComponent()->getQtiClassName(), $classes)) {
                 $foundClass = true;
                 break;
             }
         }
 
-        if (count($this->trail) === 0 && (($hasTrail && !$foundClass) || (!$hasTrail))) {
-            $this->isValid = false;
-            $this->currentComponent = null;
-            $this->currentContainer = null;
+        if (count($this->getTrail()) === 0 && (($hasTrail && !$foundClass) || (!$hasTrail))) {
+            $this->setValid(false);
+            $this->setCurrentComponent(null);
+            $this->setCurrentContainer(null);
         }
     }
 
@@ -318,7 +346,7 @@ class QtiComponentIterator implements Iterator
      */
     public function current()
     {
-        return $this->currentComponent;
+        return $this->getCurrentComponent();
     }
 
     /**
@@ -335,7 +363,7 @@ class QtiComponentIterator implements Iterator
      */
     public function parent()
     {
-        return $this->currentContainer;
+        return $this->getCurrentContainer();
     }
 
     /**
@@ -346,7 +374,7 @@ class QtiComponentIterator implements Iterator
      */
     public function key()
     {
-        return $this->currentComponent->getQtiClassName();
+        return $this->getCurrentComponent()->getQtiClassName();
     }
 
     /**

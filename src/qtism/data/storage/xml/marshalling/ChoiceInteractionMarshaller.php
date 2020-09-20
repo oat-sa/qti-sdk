@@ -64,7 +64,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             // maxChoices.
             if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                if ($isOrderInteraction === true) {
+                if ($isOrderInteraction) {
                     if ($maxChoices !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
                         $component->setMaxChoices($maxChoices);
                     }
@@ -78,7 +78,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             // minChoices.
             if (Version::compare($version, '2.1.0', '>=') && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                if ($isOrderInteraction === true) {
+                if ($isOrderInteraction) {
                     /*
                      * Lots of QTI implementations output minChoices = 0 while
                      * dealing with orderInteraction unmarshalling. However, regarding
