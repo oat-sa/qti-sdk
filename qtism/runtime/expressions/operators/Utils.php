@@ -264,11 +264,6 @@ class Utils
 
         $class = (string)$class;
         $tokens = explode('.', $class);
-
-        if ($tokens === false) {
-            return $tokens;
-        }
-
         $tokenCount = count($tokens);
 
         if ($tokenCount <= 1) {
@@ -281,5 +276,67 @@ class Utils
         $tokens[$lastPosition] = $lastToken;
 
         return implode("\\", $tokens);
+    }
+
+    /**
+     * Get a meaningful message for the last PREG error that occurred.
+     *
+     * The following PREG error codes are considered by this method:
+     *
+     * * PREG_BACKTRACK_LIMIT_ERROR
+     * * PREG_RECURSION_LIMIT_ERROR
+     * * PREG_BAD_UTF8_ERROR
+     * * PREG_BAD_UTF8_OFFSET_ERROR
+     *
+     * @return string
+     */
+    public static function lastPregErrorMessage()
+    {
+        $error = preg_last_error();
+        $errorType = 'PCRE Engine error';
+
+        switch ($error) {
+            case PREG_INTERNAL_ERROR:
+                $errorType = 'PCRE Engine internal error';
+                break;
+
+            case PREG_BACKTRACK_LIMIT_ERROR:
+                $errorType = 'PCRE Engine backtrack limit exceeded';
+                break;
+
+            case PREG_RECURSION_LIMIT_ERROR:
+                $errorType = 'PCRE Engine recursion limit exceeded';
+                break;
+
+            case PREG_BAD_UTF8_ERROR:
+                $errorType = 'PCRE Engine malformed UTF-8 error';
+                break;
+
+            case PREG_BAD_UTF8_OFFSET_ERROR:
+                $errorType = 'PCRE Engine UTF-8 offset error';
+                break;
+        }
+
+        return $errorType;
+    }
+
+    /**
+     * Prepare an XSD Regular Expression pattern into a PCRE compliant one.
+     *
+     * @param string $pattern
+     * @return string
+     */
+    public static function prepareXsdPatternForPcre($pattern)
+    {
+        // XML schema always implicitly anchors the entire regular expression
+        // because there is no carret (^) nor dollar ($) signs.
+        // see http://www.regular-expressions.info/xml.html
+        $pattern = self::escapeSymbols($pattern, ['$', '^']);
+        $pattern = self::pregAddDelimiter('^' . $pattern . '$');
+
+        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
+        $pattern .= 's';
+
+        return $pattern;
     }
 }

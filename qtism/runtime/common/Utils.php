@@ -30,10 +30,10 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiScalar;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\Utils as RuntimeUtils;
 
 /**
  * Utility class gathering utility methods for the \qtism\runtime\common namespace.
@@ -49,13 +49,7 @@ class Utils
      */
     public static function isRuntimeCompliant($value)
     {
-        if ($value === null) {
-            return true;
-        } elseif ($value instanceof QtiDatatype) {
-            return true;
-        } else {
-            return false;
-        }
+        return $value === null || $value instanceof QtiDatatype;
     }
 
     /**
@@ -67,13 +61,11 @@ class Utils
      */
     public static function isBaseTypeCompliant($baseType, $value)
     {
-        if ($value === null) {
-            return true; // A value can always be null.
-        } elseif ($value instanceof QtiDatatype && $baseType === $value->getBaseType()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $value === null
+            || (
+                $value instanceof QtiDatatype
+                && $value->getBaseType() === $baseType
+            );
     }
 
     /**
@@ -85,13 +77,11 @@ class Utils
      */
     public static function isCardinalityCompliant($cardinality, $value)
     {
-        if ($value === null) {
-            return true;
-        } elseif ($value instanceof QtiDatatype && $cardinality === $value->getCardinality()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $value === null
+            || (
+                $value instanceof QtiDatatype
+                && $value->getCardinality() === $cardinality
+            );
     }
 
     /**
@@ -102,10 +92,27 @@ class Utils
      */
     public static function throwTypingError($value)
     {
-        $givenValue = (is_object($value)) ? get_class($value) : gettype($value);
-        $acceptedTypes = ['boolean', 'integer', 'float', 'double', 'string', 'Duration', 'Pair', 'DirectedPair', 'Point'];
-        $acceptedTypes = implode(', ', $acceptedTypes);
-        $msg = "A value is not compliant with the QTI runtime model datatypes: ${acceptedTypes} . '${givenValue}' given.";
+        $acceptedTypes = [
+            'Null',
+            'Boolean',
+            'Coords',
+            'DirectedPair',
+            'Duration',
+            'File',
+            'Float',
+            'Identifier',
+            'Integer',
+            'IntOrIdentifier',
+            'Pair',
+            'Point',
+            'String',
+            'Uri',
+        ];
+        $msg = sprintf(
+            'A value is not compliant with the QTI runtime model datatypes: %s. "%s" given.',
+            implode(', QTI ', $acceptedTypes),
+            is_object($value) ? get_class($value) : gettype($value)
+        );
         throw new InvalidArgumentException($msg);
     }
 
@@ -133,15 +140,9 @@ class Utils
      */
     public static function inferBaseType($value)
     {
-        if ($value === null) {
-            return false;
-        } elseif ($value instanceof RecordContainer) {
-            return false;
-        } elseif ($value instanceof QtiDatatype) {
-            return $value->getBaseType();
-        } else {
-            return false;
-        }
+        return $value instanceof QtiDatatype && !$value instanceof RecordContainer
+            ? $value->getBaseType()
+            : false;
     }
 
     /**
@@ -157,13 +158,9 @@ class Utils
      */
     public static function inferCardinality($value)
     {
-        if ($value === null) {
-            return false;
-        } elseif ($value instanceof QtiDatatype) {
-            return $value->getCardinality();
-        } else {
-            return false;
-        }
+        return $value instanceof QtiDatatype
+            ? $value->getCardinality()
+            : false;
     }
 
     /**
@@ -188,99 +185,6 @@ class Utils
         $pattern = '/^[a-z][a-z0-9_\-]*(?:(?:\.[1-9][0-9]*){0,1}(?:\.[a-z][a-z0-9_\-]*){0,1}){0,1}$/iu';
 
         return preg_match($pattern, $string) === 1;
-    }
-
-    /**
-     * Makes $value compliant with baseType $targetBaseType, if $value is compliant. Otherwise,
-     * the original $value is returned.
-     *
-     * @param mixed $value A QTI Runtime compliant value.
-     * @param int $targetBaseType The target baseType.
-     * @return mixed The juggled value if needed, otherwise the original value of $value.
-     */
-    public static function juggle($value, $targetBaseType)
-    {
-        // A lot of people designing QTI items want to put float values
-        // in integer baseType'd variables... So let's go for type juggling!
-
-        $valueBaseType = RuntimeUtils::inferBaseType($value);
-
-        if ($valueBaseType !== $targetBaseType && ($value instanceof MultipleContainer || $value instanceof OrderedContainer)) {
-            $class = get_class($value);
-
-            if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
-                $value = new $class($targetBaseType, self::floatArrayToInteger($value->getArrayCopy()));
-            } elseif ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                $value = new $class($targetBaseType, self::integerArrayToFloat($value->getArrayCopy()));
-            } elseif ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::STRING) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::IDENTIFIER) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::STRING) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::URI) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::IDENTIFIER) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::URI) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            }
-        } elseif ($valueBaseType !== $targetBaseType) {
-            // Scalar value.
-            if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
-                $value = (int)$value;
-            } elseif ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                $value = (float)$value;
-            }
-        }
-
-        return $value;
-    }
-
-    /**
-     * Check whether or not $firstBaseType is compliant with $secondBaseType.
-     *
-     * The following associations of baseTypes are considered to be compliant:
-     *
-     * * identifier - string
-     * * string - identifier
-     * * uri - string
-     * * string - uri
-     * * uri - identifier
-     * * identifier - uri
-     * * string - intOrIdentifier
-     * * integer - intOrIdentifier
-     * * identifier - intOrIdentifier
-     *
-     * @param int $firstBaseType A value from the baseType enumeration.
-     * @param int $secondBaseType A value from the baseType enumeration.
-     * @return bool
-     */
-    public static function areBaseTypesCompliant($firstBaseType, $secondBaseType)
-    {
-        if ($firstBaseType === $secondBaseType) {
-            return true;
-        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::STRING) {
-            return true;
-        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::STRING) {
-            return true;
-        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::URI) {
-            return true;
-        } elseif ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::URI) {
-            return true;
-        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::INTEGER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -363,6 +267,25 @@ class Utils
      */
     public static function isNull(QtiDatatype $value = null)
     {
-        return $value === null || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
+        return $value === null
+            || ($value instanceof QtiString && $value->getValue() === '')
+            || ($value instanceof Container && count($value) === 0);
+    }
+
+    /**
+     * Whether or not two QtiDatatype instances are equals.
+     *
+     * Because the runtime model
+     * also deals with null values, this utility method helps to determine equality
+     * easily, without testing specifically if one or both values are null prior
+     * to perform QtiDatatype::equals().
+     *
+     * @param QtiDatatype $a
+     * @param QtiDatatype $b
+     * @return bool
+     */
+    public static function equals(QtiDatatype $a = null, QtiDatatype $b = null)
+    {
+        return ($a === null ? $b === null : $a->equals($b));
     }
 }

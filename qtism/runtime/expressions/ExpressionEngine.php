@@ -25,6 +25,7 @@ namespace qtism\runtime\expressions;
 
 use InvalidArgumentException;
 use qtism\data\expressions\Expression;
+use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\AbstractEngine;
@@ -120,16 +121,6 @@ class ExpressionEngine extends AbstractEngine
     }
 
     /**
-     * Get the ExpressionProcessorFactory currently in use.
-     *
-     * @return ExpressionProcessorFactory An ExpressionProcessorFactory object.
-     */
-    public function getExpressionProcessorFactory()
-    {
-        return $this->expressionProcessorFactory;
-    }
-
-    /**
      * Set the OperatorProcessorFactory object to be used by the engine.
      *
      * @param OperatorProcessorFactory $operatorProcessorFactory An OperatorProcessorFactory object.
@@ -137,26 +128,6 @@ class ExpressionEngine extends AbstractEngine
     public function setOperatorProcessorFactory(OperatorProcessorFactory $operatorProcessorFactory)
     {
         $this->operatorProcessorFactory = $operatorProcessorFactory;
-    }
-
-    /**
-     * Get the OperatorProcessorFactory object currently in use.
-     *
-     * @return OperatorProcessorFactory
-     */
-    public function getOperatorProcessorFactory()
-    {
-        return $this->operatorProcessorFactory;
-    }
-
-    /**
-     * Get the Operands stack.
-     *
-     * @return OperandsCollection An OperandsCollection object.
-     */
-    protected function getOperands()
-    {
-        return $this->operands;
     }
 
     /**
@@ -206,36 +177,6 @@ class ExpressionEngine extends AbstractEngine
     protected function &getTrail()
     {
         return $this->trail;
-    }
-
-    /**
-     * Set a reference on the trail stack.
-     *
-     * @param array $trail A reference on an array that will be used as the trail stack.
-     */
-    protected function setTrail(array &$trail)
-    {
-        $this->trail = $trail;
-    }
-
-    /**
-     * Get a reference on the marker array.
-     *
-     * @return array A reference on the marker array.
-     */
-    protected function &getMarker()
-    {
-        return $this->marker;
-    }
-
-    /**
-     * Set a reference on the marker array.
-     *
-     * @param array $marker
-     */
-    protected function setMarker(array &$marker)
-    {
-        $this->marker = $marker;
     }
 
     /**

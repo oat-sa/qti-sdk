@@ -139,6 +139,30 @@ class OperatorsUtilsTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider lastPregErrorMessageProvider
+     *
+     * @param string $pcre
+     * @param string $subject
+     * @param string $message
+     * @param int $recursionLimit
+     */
+    public function testLastPregErrorMessage($pcre, $subject, $message, $recursionLimit = 0)
+    {
+        if ($recursionLimit > 0) {
+            $prevRecursionLimit = ini_get('pcre.recursion_limit');
+            ini_set('pcre.recursion_limit', $recursionLimit);
+        }
+
+        @preg_match($pcre, $subject);
+
+        if ($recursionLimit > 0) {
+            ini_set('pcre.recursion_limit', $prevRecursionLimit);
+        }
+
+        $this->assertEquals($message, OperatorsUtils::lastPregErrorMessage());
+    }
+
+    /**
      * @return array
      */
     public function pregAddDelimiterProvider()
@@ -296,6 +320,19 @@ class OperatorsUtilsTest extends QtiSmTestCase
             [''],
             ['com|taotesting.custom'],
             [false],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function lastPregErrorMessageProvider()
+    {
+        return [
+            ['', 'foobar', 'PCRE Engine internal error'],
+            ['/***', 'foobar', 'PCRE Engine internal error'],
+            ['/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar', 'PCRE Engine backtrack limit exceeded'],
+            ['/abc/u', "\xa0\xa1", 'PCRE Engine malformed UTF-8 error'],
         ];
     }
 }

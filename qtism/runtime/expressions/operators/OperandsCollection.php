@@ -53,11 +53,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      */
     protected function checkType($value)
     {
-        if (RuntimeUtils::isRuntimeCompliant($value)) {
-            return;
-        } elseif ($value instanceof MultipleContainer || $value instanceof OrderedContainer || $value instanceof RecordContainer) {
-            return;
-        } else {
+        if (!RuntimeUtils::isRuntimeCompliant($value)) {
             $value = (is_object($value)) ? get_class($value) : $value;
             $msg = "The OperandsCollection only accepts QTI Runtime compliant values, '" . $value . "' given.";
             throw new InvalidArgumentException($msg);

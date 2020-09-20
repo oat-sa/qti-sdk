@@ -307,6 +307,36 @@ class ContainerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @dataProvider invalidDatatypeProvider
+     *
+     * @param mixed $value
+     * @param string $expectedMsg
+     */
+    public function testInvalidDatatype($value, $expectedMsg)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMsg);
+        $container = new Container([$value]);
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidDatatypeProvider()
+    {
+        $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
+
+        return [
+            [10, sprintf($message, 'integer')],
+            [12.2, sprintf($message, 'double')],
+            ['str', sprintf($message, 'string')],
+            [true, sprintf($message, 'boolean')],
+            [[], sprintf($message, 'array')],
+            [new Container(), sprintf($message, Container::class)],
+        ];
+    }
+
     public function testAlwaysMultipleCardinality()
     {
         $container = new Container();
@@ -371,6 +401,16 @@ class ContainerTest extends QtiSmTestCase
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
         $container->replace(new QtiBoolean(false), null);
+    }
+
+    public function testMergeNotCompliantTypes()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Only collections with compliant types can be merged ("qtism\runtime\common\Container" vs "qtism\common\collections\StringCollection").');
+
+        $container1 = new Container();
+        $container2 = new StringCollection();
+        $container1->merge($container2);
     }
 
     public function testDiffNotCompliantTypes()

@@ -70,6 +70,18 @@ class RuntimeUtilsTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider equalsProvider
+     *
+     * @param QtiDatatype $a
+     * @param QtiDatatype $b
+     * @param bool $expected
+     */
+    public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected)
+    {
+        $this->assertSame($expected, Utils::equals($a, $b));
+    }
+
+    /**
      * @dataProvider throwTypingErrorProvider
      * @param mixed $value
      * @param string $expectedMsg
@@ -107,10 +119,11 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function throwTypingErrorProvider()
     {
+        $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
         return [
-            [99.9, "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'double' given."],
-            ['blah', "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'string' given."],
-            [new stdClass(), "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'stdClass' given."],
+            [99.9, sprintf($message, 'double')],
+            ['blah', sprintf($message, 'string')],
+            [new stdClass(), sprintf($message, 'stdClass')],
         ];
     }
 
@@ -232,6 +245,19 @@ class RuntimeUtilsTest extends QtiSmTestCase
             [new MultipleContainer(BaseType::INTEGER), true],
             [new OrderedContainer(BaseType::INTEGER), true],
             [new RecordContainer(), true],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function equalsProvider()
+    {
+        return [
+            [new QtiBoolean(true), null, false],
+            [null, null, true],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]), true],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(100)]), false],
         ];
     }
 }

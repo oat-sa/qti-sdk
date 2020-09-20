@@ -173,8 +173,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
 
             $seeker = $this->getSeeker();
-
-            foreach ($route as $routeItem) {
+            $routeItems = $route->getAllRouteItems();
+            foreach ($routeItems as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
 

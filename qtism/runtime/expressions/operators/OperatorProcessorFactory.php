@@ -56,43 +56,41 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
      */
     public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null)
     {
-        if ($expression instanceof Operator) {
-            if ($expression instanceof CustomOperator) {
-                // QTI custom operator. Try to load an autoloaded class by using
-                // its class attribute value.
-                if ($expression->hasClass() === true) {
-                    $className = Utils::customOperatorClassToPhpClass($expression->getClass());
-
-                    if (class_exists($className)) {
-                        return new $className($expression, $operands);
-                    } else {
-                        $msg = "No custom operator implementation found for class '" . $expression->getClass() . "'.";
-                        throw new RuntimeException($msg);
-                    }
-                } else {
-                    $msg = "Only custom operators with a 'class' attribute value can be processed.";
-                    throw new RuntimeException($msg);
-                }
-            } else {
-                // QTI built-in operator.
-                $qtiClassName = ucfirst($expression->getQtiClassName());
-                $nsPackage = 'qtism\\runtime\\expressions\\operators\\';
-                $className = $nsPackage . $qtiClassName . 'Processor';
-
-                if (class_exists($className)) {
-                    if ($operands === null) {
-                        $operands = new OperandsCollection();
-                    }
-
-                    return new $className($expression, $operands);
-                } else {
-                    $msg = "No dedicated OperatorProcessor class found for QTI operator '${qtiClassName}'.";
-                    throw new RuntimeException($msg);
-                }
-            }
-        } else {
+        if (!($expression instanceof Operator)) {
             $msg = 'The OperatorProcessorFactory only accepts to create processors for Operator objects.';
             throw new InvalidArgumentException($msg);
         }
+
+        if ($expression instanceof CustomOperator) {
+            // QTI custom operator. Try to load an autoloaded class by using
+            // its class attribute value.
+            if ($expression->hasClass() !== true) {
+                $msg = "Only custom operators with a 'class' attribute value can be processed.";
+                throw new RuntimeException($msg);
+            }
+
+            $className = Utils::customOperatorClassToPhpClass($expression->getClass());
+
+            if (!class_exists($className)) {
+                $msg = "No custom operator implementation found for class '" . $expression->getClass() . "'.";
+                throw new RuntimeException($msg);
+            }
+        } else {
+            // QTI built-in operator.
+            $qtiClassName = ucfirst($expression->getQtiClassName());
+            $nsPackage = 'qtism\\runtime\\expressions\\operators\\';
+            $className = $nsPackage . $qtiClassName . 'Processor';
+
+            if (!class_exists($className)) {
+                $msg = "No dedicated OperatorProcessor class found for QTI operator '${qtiClassName}'.";
+                throw new RuntimeException($msg);
+            }
+        }
+
+        if ($operands === null) {
+            $operands = new OperandsCollection();
+        }
+
+        return new $className($expression, $operands);
     }
 }
