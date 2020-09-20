@@ -52,6 +52,21 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     private $content;
 
     /**
+     * Create a new Div object.
+     *
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws InvalidArgumentException If one of the arguments is invalid.
+     */
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
+        parent::__construct($id, $class, $lang, $label);
+        $this->setContent(new FlowCollection());
+    }
+
+    /**
      * Get the collection of Flow objects composing the Div.
      *
      * @return FlowCollection A collection of Flow objects.

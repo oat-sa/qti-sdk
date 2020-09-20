@@ -56,12 +56,12 @@ class BlockquoteMarshaller extends ContentMarshaller
         }
         $component->setContent($blockCollection);
 
-        if ($component->hasCite() === true) {
-            $this->setDOMElementAttribute($element, 'cite', $component->getCite());
+        if (($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
+            $component->setCite($cite);
         }
 
-        if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->getXmlBase());
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
         }
 
         $this->fillBodyElement($component, $element);
@@ -78,12 +78,12 @@ class BlockquoteMarshaller extends ContentMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        if (($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
-            $component->setCite($cite);
+        if ($component->hasCite() === true) {
+            $element->setAttribute('cite', $component->getCite());
         }
 
-        if (($xmlBase = self::getXmlBase($element)) !== false) {
-            $component->setXmlBase($xmlBase);
+        if ($component->hasXmlBase() === true) {
+            $element->setAttribute('xml:base', $component->getXmlBase());
         }
 
         foreach ($elements as $e) {

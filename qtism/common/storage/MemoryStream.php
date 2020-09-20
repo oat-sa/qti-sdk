@@ -289,7 +289,7 @@ class MemoryStream implements IStream
             $this->rewind();
         } else {
             $msg = 'Cannot flush a closed MemoryStream.';
-            throw new MemoryStreamAccessException($msg, $this, MemoryStreamAccessException::NOT_OPEN);
+            throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
     }
 }

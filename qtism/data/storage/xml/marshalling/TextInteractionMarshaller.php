@@ -110,7 +110,9 @@ class TextInteractionMarshaller extends Marshaller
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             try {
-                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->localName);
+                $localName = $element->localName;
+                $name = ucfirst($localName);
+                $class = 'qtism\\data\\content\\interactions\\' . $name;
                 $component = new $class($responseIdentifier);
             } catch (InvalidArgumentException $e) {
                 $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";

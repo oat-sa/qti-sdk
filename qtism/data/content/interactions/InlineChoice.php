@@ -56,6 +56,7 @@ class InlineChoice extends Choice
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $id, $class, $lang, $label);
+        $this->setContent(new TextOrVariableCollection());
     }
 
     /**

@@ -121,7 +121,6 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'endAttemptInteraction',
         'customInteraction',
         'printedVariable',
-        'math',
         'include',
     ];
 

@@ -43,56 +43,57 @@ class HotspotInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = $this->getChildElementsByTagName($element, 'object');
-            if (count($objectElts) > 0) {
-                $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-
-                if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                    try {
-                        $choices = new HotspotChoiceCollection($children->getArrayCopy());
-                    } catch (InvalidArgumentException $e) {
-                        $msg = "An 'hotspotInteraction' element can only contain 'hotspotChoice' choices.";
-                        throw new UnmarshallingException($msg, $element, $e);
-                    }
-
-                    if (count($choices) > 0) {
-                        $fqClass = $this->lookupClass($element);
-                        $component = new $fqClass($responseIdentifier, $object, $maxChoices, $choices);
-
-                        if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                            $component->setMinChoices($minChoices);
-                        }
-
-                        if (($xmlBase = self::getXmlBase($element)) !== false) {
-                            $component->setXmlBase($xmlBase);
-                        }
-
-                        $promptElts = $this->getChildElementsByTagName($element, 'prompt');
-                        if (count($promptElts) > 0) {
-                            $promptElt = $promptElts[0];
-                            $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                            $component->setPrompt($prompt);
-                        }
-
-                        $this->fillBodyElement($component, $element);
-                        return $component;
-                    } else {
-                        $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
-                        throw new UnmarshallingException($msg, $element);
-                    }
-                } else {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the 'hotspotInteraction' element.";
-                    throw new UnmarshallingException($msg, $element);
-                }
-            } else {
-                $msg = "A 'hotspotInteraction' element must contain exactly one 'object' element, none given.";
-                throw new UnmarshallingException($msg, $element);
-            }
-        } else {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) === null) {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->localName . "' element.";
             throw new UnmarshallingException($msg, $element);
         }
+
+        $objectElts = $this->getChildElementsByTagName($element, 'object');
+        if (count($objectElts) <= 0) {
+            $msg = "A 'hotspotInteraction' element must contain exactly one 'object' element, none given.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        try {
+        $choices = new HotspotChoiceCollection($children->getArrayCopy());
+        } catch (InvalidArgumentException $e) {
+            $msg = "An 'hotspotInteraction' element can only contain 'hotspotChoice' choices.";
+            throw new UnmarshallingException($msg, $element, $e);
+        }
+        if (count($choices) <= 0) {
+            $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer');
+        // This has to be fixed since maxChoices is mandatory only in QTI 2.1 and before.
+        if ($maxChoices === null) {
+            $msg = "The mandatory 'maxChoices' attribute is missing from the '" . $element->localName . "' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
+        $fqClass = $this->lookupClass($element);
+        $component = new $fqClass($responseIdentifier, $object, $maxChoices, $choices);
+
+        $minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer');
+        if ($minChoices !== null) {
+            $component->setMinChoices($minChoices);
+        }
+
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+
+        $promptElts = $this->getChildElementsByTagName($element, 'prompt');
+        if (count($promptElts) > 0) {
+            $promptElt = $promptElts[0];
+            $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+            $component->setPrompt($prompt);
+        }
+
+        $this->fillBodyElement($component, $element);
+        return $component;
     }
 
     /**

@@ -188,7 +188,11 @@ class HotspotInteraction extends GraphicInteraction
      */
     public function getComponents()
     {
-        return new QtiComponentCollection(array_merge([$this->getObject()], $this->getHotspotChoices()->getArrayCopy()));
+        $array = [];
+
+        $array[] = $this->getObject();
+
+        return new QtiComponentCollection(array_merge($array, $this->getHotspotChoices()->getArrayCopy()));
     }
 
     /**

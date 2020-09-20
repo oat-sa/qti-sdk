@@ -266,17 +266,6 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-     * Get a reference on the array of QtiComponents which contains the already
-     * traversed components.
-     *
-     * @return array An array of QtiComponent objects.
-     */
-    protected function &getTraversed()
-    {
-        return $this->traversed;
-    }
-
-    /**
      * Mark a QTIComponent object as traversed.
      *
      * @param QtiComponent $component A QTIComponent object.
@@ -406,7 +395,7 @@ class QtiComponentIterator implements Iterator
                     $this->pushOnTrail($component, $this->currentComponent->getComponents());
                     $this->markTraversed($this->currentComponent);
 
-                    if (empty($this->classes) || in_array($component->getQTIClassName(), $this->classes)) {
+                    if (empty($this->classes) || in_array($this->currentComponent->getQTIClassName(), $this->classes)) {
                         // If all classes are seeked or the current component has a class name
                         // that must be seeked, stop the iteration.
                         return;

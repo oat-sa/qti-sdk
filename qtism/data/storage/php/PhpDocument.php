@@ -75,10 +75,10 @@ class PhpDocument extends QtiDocument
      * Save the PhpDocument to a specific location.
      *
      * @param string $url A URL (Uniform Resource Locator) describing where to save the document.
-     * @throws BeanException
-     * @throws MemoryStreamException
      * @throws PhpStorageException If an error occurs while saving.
      * @throws ReflectionException
+     * @throws BeanException
+     * @throws MemoryStreamException
      * @throws PhpMarshallingException
      */
     public function save($url)
@@ -117,12 +117,12 @@ class PhpDocument extends QtiDocument
      * Convert components to php source
      *
      * @return MemoryStream
-     * @throws PhpStorageException
-     * @throws StreamAccessException
-     * @throws ReflectionException
      * @throws BeanException
      * @throws MemoryStreamException
-     * @throws marshalling\PhpMarshallingException
+     * @throws PhpMarshallingException
+     * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws StreamAccessException
      */
     protected function transformToPhp()
     {

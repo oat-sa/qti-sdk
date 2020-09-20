@@ -45,6 +45,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
+        $expectedOrderInteractionClassName = 'orderInteraction';
+        $isOrderInteraction = $element->localName === $expectedOrderInteractionClassName;
+
         // responseIdentifier.
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $fqClass = $this->lookupClass($element);
@@ -56,7 +59,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             // maxChoices.
             if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                if ($element->localName === 'orderInteraction') {
+                if ($isOrderInteraction) {
                     if ($maxChoices !== 0) {
                         $component->setMaxChoices($maxChoices);
                     }
@@ -67,7 +70,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             // minChoices.
             if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                if ($element->localName === 'orderInteraction') {
+                if ($isOrderInteraction) {
                     /*
                      * Lots of QTI implementations output minChoices = 0 while
                      * dealing with orderInteraction unmarshalling. However, regarding
@@ -87,7 +90,8 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
             }
 
             // orientation.
-            if (($orientation = $this->getDOMElementAttributeAs($element, 'orientation')) !== null) {
+            $orientation = $this->getDOMElementAttributeAs($element, 'orientation');
+            if ($orientation !== null) {
                 $component->setOrientation(Orientation::getConstantByName($orientation));
             }
 
@@ -120,6 +124,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $isOrderInteraction = $component instanceof OrderInteraction;
+        $isChoiceInteraction = $component instanceof ChoiceInteraction;
+        
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
@@ -135,12 +142,12 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         }
 
         // maxChoices.
-        if (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 1) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
+        if (($isChoiceInteraction && $component->getMaxChoices() !== 1) || ($isOrderInteraction && $component->getMaxChoices() !== -1)) {
             $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         // minChoices.
-        if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
+        if (($isChoiceInteraction && $component->getMinChoices() !== 0) || ($isOrderInteraction && $component->getMinChoices() !== -1)) {
             $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 

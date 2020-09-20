@@ -48,7 +48,7 @@ class ColgroupMarshaller extends Marshaller
 
         foreach ($component->getContent() as $col) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($col);
-            $element->appendChild($marshaller->marshall());
+            $element->appendChild($marshaller->marshall($col));
         }
 
         $this->fillElement($element, $component);
@@ -68,7 +68,7 @@ class ColgroupMarshaller extends Marshaller
     {
         $component = new Colgroup();
 
-        if (($this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = $this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 
