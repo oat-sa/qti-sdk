@@ -119,10 +119,11 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function throwTypingErrorProvider()
     {
+        $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
         return [
-            [99.9, "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'double' given."],
-            ['blah', "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'string' given."],
-            [new stdClass(), "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'stdClass' given."],
+            [99.9, sprintf($message, 'double')],
+            ['blah', sprintf($message, 'string')],
+            [new stdClass(), sprintf($message, 'stdClass')],
         ];
     }
 

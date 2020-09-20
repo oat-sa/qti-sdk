@@ -1,6 +1,6 @@
 <?php
 
-namespace qtismtest\common\collections;
+namespace qtismtest\runtime\common;
 
 use DateTime;
 use Exception;
@@ -105,31 +105,31 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validEqualsPrimitiveProvider
-     * @param $a
-     * @param $b
+     * @param Container $a
+     * @param Container $b
      */
-    public function testEqualsPrimitiveValid($a, $b)
+    public function testEqualsPrimitiveValid(Container $a, Container $b)
     {
         $this->assertTrue($a->equals($b));
     }
 
     /**
      * @dataProvider invalidEqualsPrimitiveProvider
-     * @param $a
-     * @param $b
+     * @param Container $a
+     * @param mixed $b
      */
-    public function testEqualsPrimitiveInvalid($a, $b)
+    public function testEqualsPrimitiveInvalid(Container $a, $b)
     {
         $this->assertFalse($a->equals($b));
     }
 
     /**
      * @dataProvider occurencesProvider
-     * @param $container
-     * @param $lookup
-     * @param $expected
+     * @param Container $container
+     * @param mixed $lookup
+     * @param mixed $expected
      */
-    public function testOccurences($container, $lookup, $expected)
+    public function testOccurences(Container $container, $lookup, $expected)
     {
         $this->assertEquals($expected, $container->occurences($lookup));
     }
@@ -325,17 +325,15 @@ class ContainerTest extends QtiSmTestCase
      */
     public function invalidDatatypeProvider()
     {
-        $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";
-        $msg .= "null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ";
-        $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. ";
+        $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
 
         return [
-            [10, $msg . "'php:integer' given."],
-            [12.2, $msg . "'php:double' given."],
-            ['str', $msg . "'php:string' given."],
-            [true, $msg . "'php:boolean' given."],
-            [[], $msg . "'php:array' given."],
-            [new Container(), $msg . "'" . Container::class . "' given."],
+            [10, sprintf($message, 'integer')],
+            [12.2, sprintf($message, 'double')],
+            ['str', sprintf($message, 'string')],
+            [true, sprintf($message, 'boolean')],
+            [[], sprintf($message, 'array')],
+            [new Container(), sprintf($message, Container::class)],
         ];
     }
 
@@ -360,7 +358,7 @@ class ContainerTest extends QtiSmTestCase
     public function testDetachNotFound()
     {
         $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage("The object you want to detach could not be found in the collection.");
+        $this->expectExceptionMessage('The object you want to detach could not be found in the collection.');
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -378,7 +376,7 @@ class ContainerTest extends QtiSmTestCase
     public function testReplaceNotFound()
     {
         $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage("The object you want to replace could not be found.");
+        $this->expectExceptionMessage('The object you want to replace could not be found.');
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -428,7 +426,7 @@ class ContainerTest extends QtiSmTestCase
     public function testIntersectNotCompliantTypes()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Intersection may apply only on two collections of the same type.");
+        $this->expectExceptionMessage('Intersection may apply only on two collections of the same type.');
 
         $container1 = new Container();
         $container2 = new StringCollection();

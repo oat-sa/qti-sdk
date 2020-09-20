@@ -14,7 +14,7 @@ use qtism\common\datatypes\QtiIdentifier;
 /**
  * Class SetCorrectValueProcessorTest
  */
-class SetCorrectValueProcessorTest extends QtiSmTestCase
+class SetCorrectResponseProcessorTest extends QtiSmTestCase
 {
     public function testSetCorrectResponseSimple()
     {
@@ -70,6 +70,25 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $this->expectException(RuleProcessingException::class);
+
+        $processor->process();
+    }
+
+    public function testSetCorrectResponseWrongCardinality()
+    {
+        $rule = $this->createComponentFromXml('
+			<setCorrectResponse identifier="RESPONSE">
+				<baseValue baseType="identifier" >true</baseValue>
+			</setCorrectResponse>
+		');
+
+        $processor = new SetCorrectResponseProcessor($rule);
+        $response = new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER);
+        $state = new State([$response]);
+        $processor->setState($state);
+
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unable to set value true to variable \'RESPONSE\' (cardinality = multiple, baseType = identifier).');
 
         $processor->process();
     }

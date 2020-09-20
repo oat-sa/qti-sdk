@@ -30,7 +30,7 @@ function testAssessmentItems(array $files, $validate = false)
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 
         outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription("Memory usage is " . (memory_get_usage() / 1024 ** 2) . " MB");
         output('');
 
         $loaded++;
@@ -65,7 +65,7 @@ function testAssessmentTests(array $files, $validate = false)
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 
         outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription("Memory usage is " . (memory_get_usage() / 1024 ** 2) . " MB");
 
         output('');
 

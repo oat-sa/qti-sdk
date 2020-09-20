@@ -182,8 +182,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $oldRoutePosition = $route->getPosition();
 
             $seeker = $this->getSeeker();
-
-            foreach ($route as $routeItem) {
+            $routeItems = $route->getAllRouteItems();
+            foreach ($routeItems as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
 

@@ -204,10 +204,10 @@ abstract class Variable
      */
     public function setValue(QtiDatatype $value = null)
     {
-        if (Utils::isBaseTypeCompliant($this->getBaseType(), $value) && Utils::isCardinalityCompliant($this->getCardinality(), $value)) {
-            $this->value = $value;
-        } else {
+        if (!Utils::isBaseTypeCompliant($this->getBaseType(), $value) || !Utils::isCardinalityCompliant($this->getCardinality(), $value)) {
             Utils::throwBaseTypeTypingError($this->baseType, $value);
+        } else {
+            $this->value = $value;
         }
     }
 
@@ -225,16 +225,15 @@ abstract class Variable
      * Set the default value of the Variable.
      *
      * @param QtiDatatype|null $defaultValue A QtiDatatype object or null.
-     * @throws InvalidArgumentException If $defaultValue's type is not compliant with the qti:baseType of the Variable.
+     * @throws InvalidArgumentException If $defaultValue's type is not
+     * compliant with the qti:baseType of the Variable.
      */
     public function setDefaultValue(QtiDatatype $defaultValue = null)
     {
-        if (Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue) && Utils::isCardinalityCompliant($this->getCardinality(), $defaultValue)) {
-            $this->defaultValue = $defaultValue;
-
-            return;
-        } else {
+        if (!Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue) || !Utils::isCardinalityCompliant($this->getCardinality(), $defaultValue)) {
             Utils::throwBaseTypeTypingError($this->getBaseType(), $defaultValue);
+        } else {
+            $this->defaultValue = $defaultValue;
         }
     }
 

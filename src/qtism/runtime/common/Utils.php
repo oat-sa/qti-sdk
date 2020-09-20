@@ -47,15 +47,9 @@ class Utils
      * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
      * @return bool
      */
-    public static function isQtiScalarDatatypeCompliant($value)
+    public static function isRuntimeCompliant($value)
     {
-        if ($value === null) {
-            return true;
-        } elseif ($value instanceof QtiDatatype) {
-            return true;
-        } else {
-            return false;
-        }
+        return $value === null || $value instanceof QtiDatatype;
     }
 
     /**
@@ -67,13 +61,11 @@ class Utils
      */
     public static function isBaseTypeCompliant($baseType, $value)
     {
-        if ($value === null) {
-            return true; // A value can always be null.
-        } elseif ($value instanceof QtiDatatype && $baseType === $value->getBaseType()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $value === null
+            || (
+                $value instanceof QtiDatatype
+                && $value->getBaseType() === $baseType
+            );
     }
 
     /**
@@ -85,13 +77,11 @@ class Utils
      */
     public static function isCardinalityCompliant($cardinality, $value)
     {
-        if ($value === null) {
-            return true;
-        } elseif ($value instanceof QtiDatatype && $cardinality === $value->getCardinality()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $value === null
+            || (
+                $value instanceof QtiDatatype
+                && $value->getCardinality() === $cardinality
+            );
     }
 
     /**
@@ -102,10 +92,27 @@ class Utils
      */
     public static function throwTypingError($value)
     {
-        $givenValue = (is_object($value)) ? get_class($value) : gettype($value);
-        $acceptedTypes = ['boolean', 'integer', 'float', 'double', 'string', 'Duration', 'Pair', 'DirectedPair', 'Point'];
-        $acceptedTypes = implode(', ', $acceptedTypes);
-        $msg = "A value is not compliant with the QTI runtime model datatypes: ${acceptedTypes} . '${givenValue}' given.";
+        $acceptedTypes = [
+            'Null',
+            'Boolean',
+            'Coords',
+            'DirectedPair',
+            'Duration',
+            'File',
+            'Float',
+            'Identifier',
+            'Integer',
+            'IntOrIdentifier',
+            'Pair',
+            'Point',
+            'String',
+            'Uri',
+        ];
+        $msg = sprintf(
+            'A value is not compliant with the QTI runtime model datatypes: %s. "%s" given.',
+            implode(', QTI ', $acceptedTypes),
+            is_object($value) ? get_class($value) : gettype($value)
+        );
         throw new InvalidArgumentException($msg);
     }
 
@@ -133,15 +140,9 @@ class Utils
      */
     public static function inferBaseType($value)
     {
-        if ($value === null) {
-            return false;
-        } elseif ($value instanceof RecordContainer) {
-            return false;
-        } elseif ($value instanceof QtiDatatype) {
-            return $value->getBaseType();
-        } else {
-            return false;
-        }
+        return $value instanceof QtiDatatype && !$value instanceof RecordContainer
+            ? $value->getBaseType()
+            : false;
     }
 
     /**
@@ -157,13 +158,9 @@ class Utils
      */
     public static function inferCardinality($value)
     {
-        if ($value === null) {
-            return false;
-        } elseif ($value instanceof QtiDatatype) {
-            return $value->getCardinality();
-        } else {
-            return false;
-        }
+        return $value instanceof QtiDatatype
+            ? $value->getCardinality()
+            : false;
     }
 
     /**
@@ -270,7 +267,9 @@ class Utils
      */
     public static function isNull(QtiDatatype $value = null)
     {
-        return $value === null || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
+        return $value === null
+            || ($value instanceof QtiString && $value->getValue() === '')
+            || ($value instanceof Container && count($value) === 0);
     }
 
     /**

@@ -30,7 +30,6 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFile;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\Cardinality;
-use qtism\common\utils\Php as PhpUtils;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Utils as RuntimeUtils;
 
@@ -84,13 +83,8 @@ class Container extends AbstractCollection implements Comparable
      */
     protected function checkType($value)
     {
-        if (!RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {
-            $displayType = PhpUtils::displayType($value);
-            $msg = 'Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ';
-            $msg .= 'null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ';
-            $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. '${displayType}' given.";
-
-            throw new InvalidArgumentException($msg);
+        if (!RuntimeUtils::isRuntimeCompliant($value)) {
+            RuntimeUtils::throwTypingError($value);
         }
     }
 

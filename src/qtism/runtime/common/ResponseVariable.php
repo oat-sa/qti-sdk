@@ -92,14 +92,16 @@ class ResponseVariable extends Variable
      */
     public function setCorrectResponse(QtiDatatype $correctResponse = null)
     {
-        if ($correctResponse === null) {
-            $this->correctResponse = null;
-        } elseif (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true && Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse) === true) {
-            $this->correctResponse = $correctResponse;
-        } else {
+        if ($correctResponse !== null 
+            && (!Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse)
+                || !Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse)
+            )
+        ) {
             $msg = 'The given correct response is not compliant with the associated response variable.';
             throw new InvalidArgumentException($msg);
         }
+
+        $this->correctResponse = $correctResponse;
     }
 
     /**
@@ -210,7 +212,7 @@ class ResponseVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "ResponseVariable::createFromDataModel only accept '". ResponseDeclaration::class. "' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "ResponseVariable::createFromDataModel only accepts '" . ResponseDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

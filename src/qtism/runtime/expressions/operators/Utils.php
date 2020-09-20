@@ -296,6 +296,10 @@ class Utils
         $errorType = 'PCRE Engine error';
 
         switch ($error) {
+            case PREG_INTERNAL_ERROR:
+                $errorType = 'PCRE Engine internal error';
+                break;
+
             case PREG_BACKTRACK_LIMIT_ERROR:
                 $errorType = 'PCRE Engine backtrack limit exceeded';
                 break;
@@ -305,8 +309,11 @@ class Utils
                 break;
 
             case PREG_BAD_UTF8_ERROR:
-            case PREG_BAD_UTF8_OFFSET_ERROR:
                 $errorType = 'PCRE Engine malformed UTF-8 error';
+                break;
+
+            case PREG_BAD_UTF8_OFFSET_ERROR:
+                $errorType = 'PCRE Engine UTF-8 offset error';
                 break;
         }
 

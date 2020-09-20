@@ -329,8 +329,8 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function lastPregErrorMessageProvider()
     {
         return [
-            ['', 'foobar', 'PCRE Engine error'],
-            ['/***', 'foobar', 'PCRE Engine error'],
+            ['', 'foobar', 'PCRE Engine internal error'],
+            ['/***', 'foobar', 'PCRE Engine internal error'],
             ['/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar', 'PCRE Engine backtrack limit exceeded'],
             ['/abc/u', "\xa0\xa1", 'PCRE Engine malformed UTF-8 error'],
         ];
