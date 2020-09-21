@@ -476,8 +476,8 @@ abstract class Variable
      */
     public function isPair()
     {
-        return (!$this->isNull() 
-            && ($this->getBaseType() === BaseType::PAIR 
+        return (!$this->isNull()
+            && ($this->getBaseType() === BaseType::PAIR
                 || $this->getBaseType() === BaseType::DIRECTED_PAIR
             )
         );
@@ -560,14 +560,14 @@ abstract class Variable
      */
     private function createValue(QtiDatatype $value): Value
     {
-        if ($value instanceof QtiFile && $this->isFile()) {
-            return new Value($value);
+        if (!$value instanceof QtiFile || !$this->isFile()) {
+            $value = StorageUtils::stringToDatatype(
+                (string)$value,
+                $this->getBaseType()
+            );
         }
 
-        return new Value(StorageUtils::stringToDatatype(
-            (string)$value,
-            $this->getBaseType())
-        );
+        return new Value($value);
     }
 
     /**

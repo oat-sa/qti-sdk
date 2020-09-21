@@ -130,7 +130,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
         }
 
         if ($this->getShape() === QtiShape::ELLIPSE) {
-            return pow($point->getX() - $this[0], 2) / pow($this[2], 2) + pow($point->getY() - $this[1], 2) / pow($this[3], 2) <= 1;
+            return (($point->getX() - $this[0]) ** 2) / ($this[2] ** 2) + (($point->getY() - $this[1]) ** 2) / ($this[3] ** 2) <= 1;
         }
 
         // we consider it is a polygon.
@@ -199,7 +199,9 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      */
     public function equals($obj)
     {
-        return $obj instanceof self && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+        return $obj instanceof self
+            && $this->getShape() === $obj->getShape()
+            && $this->getArrayCopy() == $obj->getArrayCopy();
     }
 
     /**

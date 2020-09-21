@@ -36,7 +36,7 @@ class TextInteractionTest extends QtiSmTestCase
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "boolean" given.');
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0) or null, "boolean" given.');
 
         $textEntryInteraction->setExpectedLength(true);
     }
@@ -70,7 +70,7 @@ class TextInteractionTest extends QtiSmTestCase
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "-1" given.');
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0) or null, "-1" given.');
 
         $textEntryInteraction->setExpectedLength(-1);
     }

@@ -71,7 +71,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var integer|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLength;
@@ -197,7 +197,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Set the hint to the candidate about the expected overall length of its
      * response. A null value unsets expectedLength.
      *
-     * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
+     * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
      * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength)
@@ -207,7 +207,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
                 ? $expectedLength
                 : gettype($expectedLength);
 
-            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -218,7 +218,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * Get the hint to the candidate about the expected overall length of its response. If the returned
      * value is -1, it means that no value is defined for the expectedLength attribute.
      *
-     * @return integer|null A non-negative integer (>= 0) or null if undefined.
+     * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {

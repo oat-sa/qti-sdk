@@ -41,8 +41,8 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
-use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
@@ -54,6 +54,11 @@ use ReflectionException;
  */
 class XmlDocument extends QtiDocument
 {
+    /**
+     * Lib Xml configuration flags for Xml loading.
+     */
+    const LIB_XML_FLAGS = LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE;
+
     /**
      * The produced domDocument after a successful call to
      * XmlDocument::load or XmlDocument::save.
@@ -205,10 +210,7 @@ class XmlDocument extends QtiDocument
                 }
             }
 
-            if (@call_user_func_array(
-                [$doc, $loadMethod],
-                [$data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE])
-            ) {
+            if (@$doc->$loadMethod($data, self::LIB_XML_FLAGS)) {
                 // Infer the QTI version.
                 try {
                     // Prefers the version contained in the XML payload if valid.

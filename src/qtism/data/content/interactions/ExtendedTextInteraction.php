@@ -72,7 +72,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var integer|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLength;
@@ -144,7 +144,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Engine should use the value of this attribute to set the size of the response box,
      * where applicable. This is not a validity constraint.
      *
-     * @var integer|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLines;
@@ -249,8 +249,8 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected overall length of its
      * response. A null value unsets expectedLength.
      *
-     * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
-     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer (>= 0) nor null.
+     * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
+     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength)
     {
@@ -259,7 +259,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
                 ? $expectedLength
                 : gettype($expectedLength);
 
-            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -267,10 +267,10 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Get the hint to the candidate about the expected overall length of its response. 
+     * Get the hint to the candidate about the expected overall length of its response.
      * A null return means that no value is defined for the expectedLength attribute.
      *
-     * @return integer|null A non-negative integer (>= 0) or null if undefined.
+     * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {
@@ -432,8 +432,8 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected number of lines of its
      * response. A null value unsets expectedLines.
      *
-     * @param integer|null $expectedLines A non-negative integer (>= 0) or null.
-     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer (>= 0) nor null.
+     * @param int|null $expectedLines A non-negative integer (>= 0) or null.
+     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer nor null.
      */
     public function setExpectedLines($expectedLines)
     {
@@ -442,7 +442,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
                 ? $expectedLines
                 : gettype($expectedLines);
 
-            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -453,7 +453,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Get the hint to the candidate as to the expected number of lines of input required.
      * A null return means that no value is defined for the expectedLines attribute.
      *
-     * @return integer|null A non-negative integer (>= 0) or null if undefined.
+     * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLines()
     {

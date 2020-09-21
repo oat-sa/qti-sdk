@@ -36,7 +36,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "boolean" given.');
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0) or null, "boolean" given.');
 
         $extendedTextInteraction->setExpectedLength(true);
     }
@@ -60,7 +60,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "-1" given.');
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0) or null, "-1" given.');
 
         $textEntryInteraction->setExpectedLength(-1);
     }
@@ -120,7 +120,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0), "boolean" given.');
+        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0) or null, "boolean" given.');
 
         $extendedTextInteraction->setExpectedLines(true);
     }
@@ -144,7 +144,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0), "-1" given.');
+        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0) or null, "-1" given.');
 
         $textEntryInteraction->setExpectedLines(-1);
     }
