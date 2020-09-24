@@ -143,7 +143,7 @@ class XmlDocument extends QtiDocument
 
             $doc = $this->getDomDocument();
 
-            if ($doc->$loadMethod($data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_PARSEHUGE)) {
+            if ($doc->$loadMethod($data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE)) {
                 // Infer the QTI version.
                 try {
                     // Prefers the version contained in the XML payload if valid.

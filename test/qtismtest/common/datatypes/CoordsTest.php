@@ -38,6 +38,23 @@ class CoordsTest extends QtiSmTestCase
         $this->assertFalse($coords->inside($point));
     }
 
+    public function testInsideEllipse()
+    {
+        $coords = new QtiCoords(QtiShape::ELLIPSE, [10, 10, 3, 2]);
+
+        $point = new QtiPoint(1, 1); // 1,1 is outside
+        $this->assertFalse($coords->inside($point));
+
+        $point = new QtiPoint(3, 3); // 3,3 is outside
+        $this->assertFalse($coords->inside($point));
+
+        $point = new QtiPoint(8, 9); // 8,9 is inside
+        $this->assertTrue($coords->inside($point));
+
+        $point = new QtiPoint(10, 10); // 10,10 is inside
+        $this->assertTrue($coords->inside($point));
+    }
+
     public function testInsideRectangle()
     {
         // Do not forget (x1, y1) -> left top corner, (x2, y2) -> right bottom corner.
