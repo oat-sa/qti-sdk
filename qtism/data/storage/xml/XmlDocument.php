@@ -51,6 +51,11 @@ use RuntimeException;
 class XmlDocument extends QtiDocument
 {
     /**
+     * Lib Xml configuration flags for Xml loading.
+     */
+    const LIB_XML_FLAGS = LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE;
+
+    /**
      * The produced domDocument after a successful call to
      * XmlDocument::load or XmlDocument::save.
      *
@@ -143,7 +148,7 @@ class XmlDocument extends QtiDocument
 
             $doc = $this->getDomDocument();
 
-            if ($doc->$loadMethod($data, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE)) {
+            if (@$doc->$loadMethod($data, self::LIB_XML_FLAGS)) {
                 // Infer the QTI version.
                 try {
                     // Prefers the version contained in the XML payload if valid.

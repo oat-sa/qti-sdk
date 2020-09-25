@@ -248,8 +248,8 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected overall length of its
      * response. A null value unsets expectedLength.
      *
-     * @param int|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
-     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer (>= 0) nor null.
+     * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
+     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength)
     {
@@ -258,7 +258,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
                 ? $expectedLength
                 : gettype($expectedLength);
 
-            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -266,7 +266,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Get the hint to the candidate about the expected overall length of its response. 
+     * Get the hint to the candidate about the expected overall length of its response.
      * A null return means that no value is defined for the expectedLength attribute.
      *
      * @return int|null A non-negative integer (>= 0) or null if undefined.
@@ -432,7 +432,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * response. A null value unsets expectedLines.
      *
      * @param int|null $expectedLines A non-negative integer (>= 0) or null.
-     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer (>= 0) nor null.
+     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer nor null.
      */
     public function setExpectedLines($expectedLines)
     {
@@ -441,7 +441,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
                 ? $expectedLines
                 : gettype($expectedLines);
 
-            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
