@@ -8,6 +8,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
@@ -112,7 +113,7 @@ abstract class QtiSmTestCase extends TestCase
      * @param string $xmlString A string containing XML markup
      * @return DOMElement The according DOMElement;
      */
-    public static function createDOMElement($xmlString)
+    public function createDOMElement($xmlString)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML($xmlString);
@@ -129,7 +130,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {
-        $element = self::createDOMElement($xmlString);
+        $element = $this->createDOMElement($xmlString);
         $factory = $this->getMarshallerFactory($version);
         $marshaller = $factory->createMarshaller($element);
         return $marshaller->unmarshall($element);

@@ -60,7 +60,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall21()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." id="my-img" class="beautiful" xml:lang="en-YO" aria-owns="IDREF" aria-hidden="true"/>
 	    ');
 
@@ -85,7 +85,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall22()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-hidden="true"/>
 	    ');
 
@@ -103,7 +103,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall22PreferFlowsTo()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-flowto="IDREF3"/>
 	    ');
 
@@ -118,7 +118,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall22FallbackFlowTo()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowto="IDREF3"/>
 	    ');
 

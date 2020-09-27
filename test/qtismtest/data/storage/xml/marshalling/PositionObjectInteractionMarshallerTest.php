@@ -39,7 +39,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="150 74" id="my-pos">
                <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
             </positionObjectInteraction>

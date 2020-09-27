@@ -31,7 +31,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
+        $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InlineChoice::class, $component);

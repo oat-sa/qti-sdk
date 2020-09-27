@@ -44,7 +44,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>
         ');
 

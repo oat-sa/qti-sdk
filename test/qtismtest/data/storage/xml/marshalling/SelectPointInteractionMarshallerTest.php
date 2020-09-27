@@ -32,7 +32,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>
         ');
 

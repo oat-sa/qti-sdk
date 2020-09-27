@@ -30,7 +30,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <uploadInteraction id="my-upload" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt></uploadInteraction>    
         ');
 

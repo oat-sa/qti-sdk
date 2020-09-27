@@ -31,7 +31,7 @@ class HottextMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <hottext id="my-hottext1" class="so hot" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">Choice1</hottext>
 	    ');
 

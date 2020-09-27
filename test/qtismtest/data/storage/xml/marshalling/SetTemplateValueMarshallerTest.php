@@ -33,7 +33,7 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <setTemplateValue identifier="tpl1">
 	            <match>
 	                <variable identifier="var1"/>

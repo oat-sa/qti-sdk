@@ -24,7 +24,7 @@ class MathMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <m:math xmlns:m="http://www.w3.org/1998/Math/MathML">
                 <m:mrow>
                     <m:mi>E</m:mi>
@@ -49,7 +49,7 @@ class MathMarshallerTest extends QtiSmTestCase
 
     public function testGetXmlWrongNamespace()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <m:math xmlns:m="http://www.fruits.org/1998/Math/MathYoghourt">
                 <m:mrow>
                     <m:mi>J</m:mi>

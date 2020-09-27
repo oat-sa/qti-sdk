@@ -24,7 +24,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
+        $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(XInclude::class, $xinclude);
@@ -39,7 +39,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
 
     public function testGetXmlWrongNamespace()
     {
-        $element = self::createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
+        $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->expectException(RuntimeException::class);

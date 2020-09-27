@@ -17,7 +17,7 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()
     {
-        $elt = self::createDOMElement('
+        $elt = $this->createDOMElement('
             <assessmentSection identifier="S01" title="Section 01" visible="true">
                 <assessmentSectionRef identifier="SR01" href="./SR01.xml"/>
                 <rubricBlockRef identifier="R01" href="./R01.xml"/>

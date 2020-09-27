@@ -31,7 +31,7 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
+        $element = $this->createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(CustomOperator::class, $component);

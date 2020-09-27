@@ -33,7 +33,7 @@ class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <setCorrectResponse identifier="tpl1">
 	            <match>
 	                <variable identifier="var1"/>

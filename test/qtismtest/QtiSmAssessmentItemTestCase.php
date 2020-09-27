@@ -29,10 +29,10 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @return ExtendedAssessmentItemRef
      * @throws UnmarshallingException
      */
-    protected static function createExtendedAssessmentItemRefFromXml($xmlString)
+    protected function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
-        $element = self::createDOMElement($xmlString);
+        $element = $this->createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }
 
@@ -48,9 +48,9 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @return AssessmentItemSession
      * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
+    protected function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -90,9 +90,9 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @return AssessmentItemSession
      * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
+    protected function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>

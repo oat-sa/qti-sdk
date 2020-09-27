@@ -35,7 +35,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>
 	    ');
 

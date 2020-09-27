@@ -39,7 +39,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <positionObjectStage>
                 <object data="country.jpg" type="image/jpeg"/>
                 <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="1" centerPoint="8 8">

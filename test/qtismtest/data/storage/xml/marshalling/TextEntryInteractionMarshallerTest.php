@@ -38,7 +38,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = self::createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE"/>');
+        $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE"/>');
         $textEntryInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(TextEntryInteraction::class, $textEntryInteraction);
@@ -52,7 +52,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMaximal()
     {
-        $element = self::createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>');
+        $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>');
         $textEntryInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(TextEntryInteraction::class, $textEntryInteraction);

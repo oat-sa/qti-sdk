@@ -28,7 +28,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateInline templateIdentifier="tpl1" identifier="inline1" showHide="show">Inline ...</templateInline>
 	    ');
 

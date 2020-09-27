@@ -21,7 +21,7 @@ class ResponseVariableTest extends QtiSmTestCase
     public function testCreateFromVariableDeclarationExtended()
     {
         $factory = $this->getMarshallerFactory();
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 			<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
 								identifier="outcome1" 
 								baseType="pair" 

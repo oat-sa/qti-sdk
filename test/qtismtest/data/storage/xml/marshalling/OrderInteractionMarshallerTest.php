@@ -42,7 +42,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <orderInteraction responseIdentifier="RESPONSE" maxChoices="2"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>
         ');
 

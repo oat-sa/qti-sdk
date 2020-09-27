@@ -32,7 +32,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateConstraint>
 	            <match>
 	                <randomInteger min="0" max="5"/>

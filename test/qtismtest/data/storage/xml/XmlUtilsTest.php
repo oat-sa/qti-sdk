@@ -18,7 +18,7 @@ class XmlUtilsTest extends QtiSmTestCase
      */
     public function testAnonimizeElement($originalXmlString, $expectedXmlString)
     {
-        $elt = self::createDOMElement($originalXmlString);
+        $elt = $this->createDOMElement($originalXmlString);
         $newElt = Utils::anonimizeElement($elt);
 
         $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));

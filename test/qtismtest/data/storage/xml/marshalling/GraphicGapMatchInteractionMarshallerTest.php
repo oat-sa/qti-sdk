@@ -57,7 +57,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <graphicGapMatchInteraction id="my-gaps" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><gapImg identifier="gapImg1" matchMax="1"><object data="img1.png" type="image/png"/></gapImg><gapImg identifier="gapImg2" matchMax="1"><object data="img2.png" type="image/png"/></gapImg><gapImg identifier="gapImg3" matchMax="1"><object data="img3.png" type="image/png"/></gapImg><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicGapMatchInteraction>
         ');
 

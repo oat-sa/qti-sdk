@@ -33,7 +33,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMin="1" matchMax="2">This is ... <strong>strong</strong>!</simpleAssociableChoice>
 	    ');
 

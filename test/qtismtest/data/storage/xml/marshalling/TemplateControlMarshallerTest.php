@@ -32,7 +32,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallTemplateIfSimple()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateIf>
 	            <baseValue baseType="boolean">true</baseValue>
 	            <setTemplateValue identifier="tpl1">
@@ -69,7 +69,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallTemplateIfMultipleRules()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateIf>
 	            <baseValue baseType="boolean">true</baseValue>
 	            <setTemplateValue identifier="tpl1">
@@ -114,7 +114,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallTemplateElseIfSimple()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateElseIf>
 	            <baseValue baseType="boolean">true</baseValue>
 	            <setTemplateValue identifier="tpl1">
@@ -146,7 +146,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallTemplateElseSimple()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateElse>
 	            <setTemplateValue identifier="tpl1">
 	                <baseValue baseType="integer">1337</baseValue>

@@ -29,7 +29,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>
 	    ');
 

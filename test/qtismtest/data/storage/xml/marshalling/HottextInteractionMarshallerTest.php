@@ -42,7 +42,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <hottextInteraction responseIdentifier="RESPONSE">
                 <prompt>Prompt...</prompt>
                 <div>This is a <hottext identifier="hot1"/> text...</div>

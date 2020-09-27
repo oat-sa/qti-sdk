@@ -43,7 +43,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateCondition>
                 <templateIf>
                     <baseValue baseType="boolean">true</baseValue>
@@ -100,7 +100,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
     public function testUnMarshallElseIfMinimal()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateCondition>
                 <templateIf>
                     <baseValue baseType="boolean">true</baseValue>
@@ -175,7 +175,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallIfElseMinimal()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateCondition>
                 <templateIf>
                     <baseValue baseType="boolean">true</baseValue>
@@ -227,7 +227,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallUnleashTheBeast()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateCondition>
 	            <templateIf>
                     <lte>

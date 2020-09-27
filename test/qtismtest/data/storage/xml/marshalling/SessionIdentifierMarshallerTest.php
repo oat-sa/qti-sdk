@@ -83,7 +83,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->expectException(UnmarshallingException::class);
 
         $xml = '<sessionIdentifier identifier="fixture-id"/>';
-        $element = QtiSmTestCase::createDOMElement($xml);
+        $element = $this->createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 
@@ -92,7 +92,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->expectException(UnmarshallingException::class);
 
         $xml = '<sessionIdentifier sourceID="fixture-sourceID"/>';
-        $element = QtiSmTestCase::createDOMElement($xml);
+        $element = $this->createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 
@@ -101,7 +101,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->expectException(UnmarshallingException::class);
 
         $xml = '<sessionIdentifier/>';
-        $element = QtiSmTestCase::createDOMElement($xml);
+        $element = $this->createDOMElement($xml);
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 }

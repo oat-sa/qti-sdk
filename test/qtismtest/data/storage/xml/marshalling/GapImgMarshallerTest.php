@@ -27,7 +27,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>
 	    ');
 

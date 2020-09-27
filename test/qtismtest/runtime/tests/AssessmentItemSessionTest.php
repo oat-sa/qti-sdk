@@ -54,7 +54,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testInstantiation()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         // isPresented? isCorrect? isResponded? isSelected?
         $this->assertFalse($itemSession->isPresented());
@@ -109,7 +109,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testEvolutionBasic()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $this->assertTrue($itemSession->isSelected());
 
@@ -157,7 +157,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testGetResponseVariables()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         // Get response variables with built-in ones.
@@ -175,7 +175,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testGetOutcomeVariables()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         // Get outcome variables with the built-in ones included.
@@ -192,7 +192,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testEvolutionAdaptiveItem()
     {
-        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
 
         // reminder, the value of maxAttempts is ignored when dealing with
@@ -235,7 +235,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testSkippingForbidden()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
         $itemSession->setItemSessionControl($itemSessionControl);
@@ -252,7 +252,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testSkippingAllowed()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         $itemSession->beginAttempt();
@@ -265,7 +265,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testValidResponsesInForceValid()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setValidateResponses(false);
         $itemSession->setItemSessionControl($itemSessionControl);
@@ -279,7 +279,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testIsCorrect()
     {
-        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $itemSession->getState());
 
         // The item session is in NOT_SELECTED mode, then false is returned directly.
@@ -342,7 +342,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
     {
         // We want to test that if the current submission mode is SIMULTANEOUS,
         // only one attempt is allowed.
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->setSubmissionMode(SubmissionMode::SIMULTANEOUS);
 
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
@@ -366,7 +366,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testRunCallback()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         $itemSession->registerCallback(

@@ -23,7 +23,7 @@ class ExitTemplateMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('<exitTemplate/>');
+        $element = $this->createDOMElement('<exitTemplate/>');
 
         $exitTemplate = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(ExitTemplate::class, $exitTemplate);

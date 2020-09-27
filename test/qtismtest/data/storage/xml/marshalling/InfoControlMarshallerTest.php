@@ -44,7 +44,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = self::createDOMElement('<infoControl/>');
+        $element = $this->createDOMElement('<infoControl/>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
@@ -57,7 +57,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimalWithAttributes()
     {
-        $element = self::createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
+        $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
@@ -70,7 +70,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallComplex()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <infoControl id="controlMePlease">
 	            This is <em>gooood</em> !
 	        </infoControl>

@@ -28,7 +28,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps" showHide="hide"/>
 	    ');
 

@@ -45,7 +45,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
         ');
 

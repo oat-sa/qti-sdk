@@ -43,7 +43,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = self::createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE"/>');
+        $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE"/>');
         $extendedTextInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(ExtendedTextInteraction::class, $extendedTextInteraction);
@@ -57,7 +57,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMaximal()
     {
-        $element = self::createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>');
+        $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>');
         $extendedTextInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(ExtendedTextInteraction::class, $extendedTextInteraction);

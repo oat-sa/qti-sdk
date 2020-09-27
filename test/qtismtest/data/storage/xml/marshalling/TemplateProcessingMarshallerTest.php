@@ -39,7 +39,7 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
 	        <templateProcessing>
 	            <templateConstraint>
 	                <baseValue baseType="boolean">true</baseValue>

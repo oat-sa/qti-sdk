@@ -32,7 +32,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE">
                 <prompt>Prompt...</prompt>
                 <object data="my-canvas.png" type="image/png"/>

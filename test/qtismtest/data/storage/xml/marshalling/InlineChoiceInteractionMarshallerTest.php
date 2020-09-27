@@ -48,7 +48,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = self::createDOMElement('
+        $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
                 <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
                 <inlineChoice identifier="inlineChoice2">Option2</inlineChoice>

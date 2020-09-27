@@ -45,7 +45,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallCDATA()
     {
-        $element = self::createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
+        $element = $this->createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(BaseValue::class, $component);
