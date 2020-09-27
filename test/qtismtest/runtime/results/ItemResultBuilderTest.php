@@ -43,7 +43,7 @@ class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 {
     public function testBasic()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginAttempt();
         $itemSession->endAttempt(
             new State([

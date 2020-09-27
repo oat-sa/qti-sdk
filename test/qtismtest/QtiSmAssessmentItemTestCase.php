@@ -31,10 +31,10 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected static function createExtendedAssessmentItemRefFromXml($xmlString)
+    protected function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
-        $element = self::createDOMElement($xmlString);
+        $element = $this->createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }
 
@@ -50,9 +50,9 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAssessmentItemSession()
+    protected function instantiateBasicAssessmentItemSession()
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -86,9 +86,9 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAdaptiveAssessmentItem()
+    protected function instantiateBasicAdaptiveAssessmentItem()
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
