@@ -60,7 +60,7 @@ interface FeedbackElement
     /**
      * Set how the visibility of the feedbackElement is controlled.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide);
@@ -68,7 +68,7 @@ interface FeedbackElement
     /**
      * Get how the visibility of the feedbackElement is controlled.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide();
 

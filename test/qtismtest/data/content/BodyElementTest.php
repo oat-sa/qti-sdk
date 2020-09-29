@@ -1,5 +1,26 @@
 <?php
 
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @license GPLv2
+ */
+
 namespace qtismtest\data\content;
 
 use InvalidArgumentException;
@@ -9,6 +30,9 @@ use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class BodyElementTest
+ */
 class BodyElementTest extends QtiSmTestCase
 {
     public function testRawInstantiation()
@@ -47,10 +71,8 @@ class BodyElementTest extends QtiSmTestCase
     {
         $span = new Span();
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'id' argument of a body element must be a valid identifier or an empty string"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'id' argument of a body element must be a valid identifier or an empty string");
 
         $span->setId(999);
     }
@@ -59,10 +81,8 @@ class BodyElementTest extends QtiSmTestCase
     {
         $span = new Span();
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'class' argument must be a valid class name, '999' given"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'class' argument must be a valid class name, '999' given");
 
         $span->setClass(999);
     }
@@ -71,10 +91,8 @@ class BodyElementTest extends QtiSmTestCase
     {
         $span = new Span();
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'label' argument must be a string that does not exceed 256 characters."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'label' argument must be a string that does not exceed 256 characters.");
 
         $span->setLabel(999);
     }
@@ -83,10 +101,8 @@ class BodyElementTest extends QtiSmTestCase
     {
         $span = new Span();
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'dir' argument must be a value from the Direction enumeration."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'dir' argument must be a value from the Direction enumeration.");
 
         $span->setDir(true);
     }
@@ -103,12 +119,15 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaControls());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaControlsAttributesProvider()
     {
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -124,12 +143,15 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaDescribedBy());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaDescribedByAttributesProvider()
     {
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -145,12 +167,15 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaFlowTo());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaFlowToAttributesProvider()
     {
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -166,12 +191,15 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaLabelledBy());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLabelledByAttributesProvider()
     {
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -187,12 +215,15 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaOwns());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaOwnsAttributesProvider()
     {
         return [
             [''],
             ['_IDREF'],
-            ['IDREF1 IDREF2']
+            ['IDREF1 IDREF2'],
         ];
     }
 
@@ -205,9 +236,12 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLevel($value);
 
-        $this->assertEquals(strval($value), $span->getAriaLevel());
+        $this->assertEquals((string)$value, $span->getAriaLevel());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLevelAttributesProvider()
     {
         return [
@@ -215,7 +249,7 @@ class BodyElementTest extends QtiSmTestCase
             ['1'],
             [1],
             ['20'],
-            [20]
+            [20],
         ];
     }
 
@@ -231,12 +265,15 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaLive());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLiveAttributesProvider()
     {
         return [
             [AriaLive::OFF],
             [AriaLive::POLITE],
-            [AriaLive::ASSERTIVE]
+            [AriaLive::ASSERTIVE],
         ];
     }
 
@@ -252,11 +289,14 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaOrientation());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaOrientationAttributesProvider()
     {
         return [
             [AriaOrientation::HORIZONTAL],
-            [AriaOrientation::VERTICAL]
+            [AriaOrientation::VERTICAL],
         ];
     }
 
@@ -272,16 +312,19 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertEquals($value, $span->getAriaLabel());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaLabelAttributesProvider()
     {
         return [
             [''],
-            ['A normalized string!']
+            ['A normalized string!'],
         ];
     }
 
     /**
-     * @param $value
+     * @param bool $value
      * @dataProvider validAriaHiddenAttributesProvider
      */
     public function testValidAriaHiddenAttributes($value)
@@ -292,11 +335,14 @@ class BodyElementTest extends QtiSmTestCase
         $this->assertSame($value, $span->getAriaHidden());
     }
 
+    /**
+     * @return array
+     */
     public function validAriaHiddenAttributesProvider()
     {
         return [
             [false],
-            [true]
+            [true],
         ];
     }
 
@@ -309,15 +355,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-controls'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaControls($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaControlsAttributesProvider()
     {
         return [
@@ -327,7 +374,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-controls'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-controls'."],
         ];
     }
 
@@ -340,15 +387,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-describedby'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaDescribedBy($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaDescribedByAttributesProvider()
     {
         return [
@@ -358,7 +406,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-describedby'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-describedby'."],
         ];
     }
 
@@ -371,15 +419,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-flowto'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaFlowTo($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaFlowToAttributesProvider()
     {
         return [
@@ -389,7 +438,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-flowto'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-flowto'."],
         ];
     }
 
@@ -402,15 +451,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-labelledby'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaLabelledBy($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLabelledByAttributesProvider()
     {
         return [
@@ -420,7 +470,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-labelledby'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-labelledby'."],
         ];
     }
 
@@ -433,15 +483,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-owns'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaOwns($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaOwnsAttributesProvider()
     {
         return [
@@ -451,7 +502,7 @@ class BodyElementTest extends QtiSmTestCase
             [10],
             [25.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-owns'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-owns'."],
         ];
     }
 
@@ -464,22 +515,23 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-level'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaLevel($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLevelAttributesProvider()
     {
         return [
             ['ABCD 999999'],
             [false],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-level'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-level'."],
         ];
     }
 
@@ -492,22 +544,23 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-live'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaLive($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLiveAttributesProvider()
     {
         return [
             ['ABCD 999999'],
             [''],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-live'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-live'."],
         ];
     }
 
@@ -520,22 +573,23 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-orientation'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaOrientation($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaOrientationAttributesProvider()
     {
         return [
             ['ABCD 999999'],
             [''],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-orientation'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-orientation'."],
         ];
     }
 
@@ -548,15 +602,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-label'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaLabel($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaLabelAttributesProvider()
     {
         return [
@@ -565,7 +620,7 @@ class BodyElementTest extends QtiSmTestCase
             [-5],
             [55.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-label'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-label'."],
         ];
     }
 
@@ -578,15 +633,16 @@ class BodyElementTest extends QtiSmTestCase
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-hidden'.";
 
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            $msg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
 
         $span = new Span();
         $span->setAriaHidden($value);
     }
 
+    /**
+     * @return array
+     */
     public function invalidAriaHiddenAttributesProvider()
     {
         return [
@@ -595,7 +651,7 @@ class BodyElementTest extends QtiSmTestCase
             [-5],
             [55.55],
             [null],
-            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-hidden'."]
+            [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-hidden'."],
         ];
     }
 }

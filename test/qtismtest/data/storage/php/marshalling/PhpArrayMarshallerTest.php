@@ -5,6 +5,9 @@ namespace qtismtest\data\storage\php\marshalling;
 use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 
+/**
+ * Class PhpArrayMarshallerTest
+ */
 class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     public function testEmptyArray()

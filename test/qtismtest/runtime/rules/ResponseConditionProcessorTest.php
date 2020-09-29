@@ -4,12 +4,16 @@ namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\ResponseConditionProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseConditionProcessorTest
+ */
 class ResponseConditionProcessorTest extends QtiSmTestCase
 {
     /**
@@ -17,6 +21,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
      *
      * @param string $response A QTI Identifier
      * @param float $expectedScore The expected score for a given $response
+     * @throws MarshallerNotFoundException
      */
     public function testResponseConditionMatchCorrect($response, $expectedScore)
     {
@@ -71,6 +76,9 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
         $this->assertTrue($expectedScore->equals($state['SCORE']));
     }
 
+    /**
+     * @return array
+     */
     public function responseConditionMatchCorrectProvider()
     {
         return [

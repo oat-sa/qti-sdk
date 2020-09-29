@@ -6,6 +6,9 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\MathConstantProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MathConstantProcessorTest
+ */
 class MathConstantProcessorTest extends QtiSmTestCase
 {
     public function testSimple()

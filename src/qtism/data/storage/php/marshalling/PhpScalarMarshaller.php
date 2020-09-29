@@ -48,7 +48,8 @@ class PhpScalarMarshaller extends PhpMarshaller
     /**
      * Checks whether or not the given value is marshallable by this implementation.
      *
-     * @return boolean
+     * @param mixed $toMarshall
+     * @return bool
      */
     protected function isMarshallable($toMarshall)
     {
@@ -76,7 +77,7 @@ class PhpScalarMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while marshalling the scalar value '${scalar}'.";
+            $msg = "An error occurred while marshalling the scalar value '${scalar}'.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }

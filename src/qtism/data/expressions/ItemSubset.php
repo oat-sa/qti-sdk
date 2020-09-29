@@ -35,7 +35,7 @@ use qtism\common\utils\Format;
  * It is used to control a number of expressions in outcomeProcessing for returning
  * information about the test as a whole, or arbitrary subsets of it.
  */
-class ItemSubset extends Expression implements Pure
+class ItemSubset extends Expression
 {
     /**
      * From IMS QTI:
@@ -144,7 +144,7 @@ class ItemSubset extends Expression implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -154,9 +154,7 @@ class ItemSubset extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

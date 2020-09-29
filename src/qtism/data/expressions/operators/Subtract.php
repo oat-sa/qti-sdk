@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -35,7 +34,7 @@ use qtism\data\expressions\Pure;
  * the second. If either of the sub-expressions is NULL then the operator results
  * in NULL.
  */
-class Subtract extends Operator implements Pure
+class Subtract extends Operator
 {
     /**
      * Create a new Subtract object.
@@ -48,22 +47,10 @@ class Subtract extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'subtract';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

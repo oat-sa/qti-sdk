@@ -195,7 +195,7 @@ class TestFeedback extends QtiComponent
     /**
      * Set how the feedback should be displayed.
      *
-     * @param boolean $showHide A value from the ShowHide enumeration.
+     * @param bool $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
@@ -252,7 +252,7 @@ class TestFeedback extends QtiComponent
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";
@@ -281,11 +281,17 @@ class TestFeedback extends QtiComponent
         $this->content = $content;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'testFeedback';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

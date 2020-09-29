@@ -32,6 +32,11 @@ use ReflectionClass;
  */
 class Qti211MarshallerFactory extends MarshallerFactory
 {
+    /**
+     * @param ReflectionClass $class
+     * @param array $args
+     * @return mixed
+     */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
         array_unshift($args, '2.1.1');

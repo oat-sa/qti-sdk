@@ -60,12 +60,12 @@ class RandomFloatMarshaller extends Marshaller
     {
         // max attribute is mandatory.
         if (($max = $this->getDOMElementAttributeAs($element, 'max')) !== null) {
-            $max = (Format::isVariableRef($max)) ? $max : floatval($max);
+            $max = (Format::isVariableRef($max)) ? $max : (float)$max;
 
             $object = new RandomFloat(0.0, $max);
 
             if (($min = $this->getDOMElementAttributeAs($element, 'min')) !== null) {
-                $min = (Format::isVariableRef($min)) ? $min : floatval($min);
+                $min = (Format::isVariableRef($min)) ? $min : (float)$min;
                 $object->setMin($min);
             }
 
@@ -77,7 +77,7 @@ class RandomFloatMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

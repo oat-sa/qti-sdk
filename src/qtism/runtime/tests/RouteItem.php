@@ -85,7 +85,7 @@ class RouteItem
     /**
      * The occurence number.
      *
-     * @var integer
+     * @var int
      */
     private $occurence = 0;
 
@@ -93,7 +93,7 @@ class RouteItem
      * Create a new RouteItem object.
      *
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef object bound to the RouteItem.
-     * @param AssessmentSection|AssessmentSectionCollection $assessmentSection The AssessmentSection object bound to the RouteItem.
+     * @param AssessmentSection|AssessmentSectionCollection $assessmentSections The AssessmentSection object bound to the RouteItem.
      * @param TestPart $testPart The TestPart object bound to the RouteItem.
      * @param AssessmentTest $assessmentTest The AssessmentTest object bound to the RouteItem.
      */
@@ -199,7 +199,7 @@ class RouteItem
     /**
      * Set the occurence number.
      *
-     * @param integer $occurence An occurence number.
+     * @param int $occurence An occurence number.
      */
     public function setOccurence($occurence)
     {
@@ -209,7 +209,7 @@ class RouteItem
     /**
      * Get the occurence number.
      *
-     * @return integer An occurence number.
+     * @return int An occurence number.
      */
     public function getOccurence()
     {
@@ -302,7 +302,6 @@ class RouteItem
 
     /**
      * Increment the occurence number by 1.
-     *
      */
     public function incrementOccurenceNumber()
     {
@@ -400,7 +399,8 @@ class RouteItem
     /**
      * Get the TimeLimits in force for the RouteItem.
      *
-     * @param RouteTimeLimitsCollection $excludeItem Whether or not include the TimeLimits in force for the assessment item of the RouteItem.
+     * @param bool $excludeItem Whether or not include the TimeLimits in force for the assessment item of the RouteItem.
+     * @return RouteTimeLimitsCollection
      */
     public function getTimeLimits($excludeItem = false)
     {

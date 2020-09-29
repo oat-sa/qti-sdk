@@ -34,13 +34,13 @@ class RouteTimeLimitsCollection extends AbstractCollection
     /**
      * Check if a given $value is an instance of RouteTimeLimits.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteTimeLimit.
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {
         if (!$value instanceof RouteTimeLimits) {
-            $msg = "A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.";
+            $msg = 'A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }

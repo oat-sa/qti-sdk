@@ -1,9 +1,10 @@
 <?php
 
-namespace qtismtest\common\collections;
+namespace qtismtest\runtime\common;
 
 use DateTime;
-use qtism\common\collections\Container;
+use Exception;
+use InvalidArgumentException;
 use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -18,8 +19,13 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
+use qtism\runtime\common\Container;
 use qtismtest\QtiSmTestCase;
+use UnexpectedValueException;
 
+/**
+ * Class ContainerTest
+ */
 class ContainerTest extends QtiSmTestCase
 {
     /**
@@ -53,6 +59,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validValueProvider
+     * @param mixed $value
      */
     public function testAddValid($value)
     {
@@ -66,12 +73,13 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidValueProvider
+     * @param mixed $value
      */
     public function testAddInvalid($value)
     {
         $container = $this->getContainer();
 
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $container[] = $value;
     }
 
@@ -87,6 +95,7 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validValueCollectionProvider
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelValid(ValueCollection $valueCollection)
     {
@@ -96,28 +105,38 @@ class ContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validEqualsPrimitiveProvider
+     * @param Container $a
+     * @param Container $b
      */
-    public function testEqualsPrimitiveValid($a, $b)
+    public function testEqualsPrimitiveValid(Container $a, Container $b)
     {
         $this->assertTrue($a->equals($b));
     }
 
     /**
      * @dataProvider invalidEqualsPrimitiveProvider
+     * @param Container $a
+     * @param mixed $b
      */
-    public function testEqualsPrimitiveInvalid($a, $b)
+    public function testEqualsPrimitiveInvalid(Container $a, $b)
     {
         $this->assertFalse($a->equals($b));
     }
 
     /**
      * @dataProvider occurencesProvider
+     * @param Container $container
+     * @param mixed $lookup
+     * @param mixed $expected
      */
-    public function testOccurences($container, $lookup, $expected)
+    public function testOccurences(Container $container, $lookup, $expected)
     {
         $this->assertEquals($expected, $container->occurences($lookup));
     }
 
+    /**
+     * @return array
+     */
     public function validValueProvider()
     {
         return [
@@ -136,6 +155,10 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function invalidValueProvider()
     {
         return [
@@ -144,6 +167,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validEqualsPrimitiveProvider()
     {
         return [
@@ -158,6 +184,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidEqualsPrimitiveProvider()
     {
         return [
@@ -169,6 +198,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function occurencesProvider()
     {
         return [
@@ -190,6 +222,9 @@ class ContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validValueCollectionProvider()
     {
         $returnValue = [];
@@ -257,6 +292,9 @@ class ContainerTest extends QtiSmTestCase
         $this->assertEquals($expected, $container->__toString());
     }
 
+    /**
+     * @return array
+     */
     public function toStringProvider()
     {
         $returnValue = [];
@@ -277,23 +315,25 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testInvalidDatatype($value, $expectedMsg)
     {
-        $this->setExpectedException('\\InvalidArgumentException', $expectedMsg);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $container = new Container([$value]);
     }
 
+    /**
+     * @return array
+     */
     public function invalidDatatypeProvider()
     {
-        $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";
-        $msg .= "null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ";
-        $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. ";
+        $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
 
         return [
-            [10, $msg . "'php:integer' given."],
-            [12.2, $msg . "'php:double' given."],
-            ['str', $msg . "'php:string' given."],
-            [true, $msg . "'php:boolean' given."],
-            [[], $msg . "'php:array' given."],
-            [new Container(), $msg . "'qtism\\common\\collections\\Container' given."],
+            [10, sprintf($message, 'integer')],
+            [12.2, sprintf($message, 'double')],
+            ['str', sprintf($message, 'string')],
+            [true, sprintf($message, 'boolean')],
+            [[], sprintf($message, 'array')],
+            [new Container(), sprintf($message, Container::class)],
         ];
     }
 
@@ -317,10 +357,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDetachNotFound()
     {
-        $this->setExpectedException(
-            '\\UnexpectedValueException',
-            "The object you want to detach could not be found in the collection."
-        );
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('The object you want to detach could not be found in the collection.');
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -329,20 +367,16 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDetachNotObject()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "You can only detach 'objects' into an AbstractCollection, 'NULL' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only detach 'objects' into an AbstractCollection, 'NULL' given.");
         $container = new Container();
         $container->detach(null);
     }
 
     public function testReplaceNotFound()
     {
-        $this->setExpectedException(
-            '\\UnexpectedValueException',
-            "The object you want to replace could not be found."
-        );
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('The object you want to replace could not be found.');
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -351,10 +385,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testReplaceToReplaceNotObject()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only replace 'objects' into an AbstractCollection, 'NULL' given.");
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -363,10 +395,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testReplaceReplacementNotObject()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only replace 'objects' into an AbstractCollection, 'NULL' given.");
 
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
@@ -375,10 +405,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testMergeNotCompliantTypes()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "Only collections with compliant types can be merged ('qtism\common\collections\Container' vs 'qtism\common\collections\StringCollection')."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Only collections with compliant types can be merged ("qtism\runtime\common\Container" vs "qtism\common\collections\StringCollection").');
 
         $container1 = new Container();
         $container2 = new StringCollection();
@@ -387,10 +415,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testDiffNotCompliantTypes()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "Difference may apply only on two collections of the same type."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Difference may apply only on two collections of the same type.');
 
         $container1 = new Container();
         $container2 = new StringCollection();
@@ -399,10 +425,8 @@ class ContainerTest extends QtiSmTestCase
 
     public function testIntersectNotCompliantTypes()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "Intersection may apply only on two collections of the same type."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Intersection may apply only on two collections of the same type.');
 
         $container1 = new Container();
         $container2 = new StringCollection();

@@ -17,11 +17,14 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionTimingTest
+ */
 class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 {
     public function testBeginItemSession()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
 
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
@@ -40,7 +43,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
      */
     public function testBeginFirstAttempt()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
 
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
@@ -61,7 +64,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
      */
     public function testEndAttempt()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
 
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
@@ -88,7 +91,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
      */
     public function testBeginAttemptTimeOverflow()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
         $session->setTimeLimits($timeLimits);
         $session->getItemSessionControl()->setMaxAttempts(0);
@@ -104,10 +107,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         // The candidate spends 31 seconds for the attempt and begins brutally a new one...
         $session->setTime(self::createDate('2014-07-14 13:00:33'));
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
-            "A new attempt for item 'Q01' is not allowed. The maximum time limit in force is reached."
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("A new attempt for item 'Q01' is not allowed. The maximum time limit in force is reached.");
 
         $session->beginAttempt();
     }
@@ -117,7 +118,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
      */
     public function testEndItemSession()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
 
         // Give infinite attempts.
@@ -151,7 +152,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
     public function testEndItemSessionBrutal()
     {
         // -- We will close the session during an attempt.
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
 
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
@@ -175,7 +176,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
     {
         // -- We test if after a setTime that overflows maxTime,
         //    the session is indeed closed.
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
         $session->setTimeLimits($timeLimits);
 
@@ -197,7 +198,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
      */
     public function testEndAttemptTimeOverflowNoLateSubmission()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
         $session->setTimeLimits($timeLimits);
 
@@ -214,11 +215,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         // Extra check: make sure that duration cannot be longer than maxTime.
         $this->assertTrue($session['duration']->equals(new QtiDuration('PT30S')));
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
-            "The maximum time to be spent on the item session has been reached.",
-            AssessmentItemSessionException::DURATION_OVERFLOW
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("The maximum time to be spent on the item session has been reached.");
 
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
     }
@@ -228,7 +226,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
      */
     public function testEndAttemptTimeOverflowWithLateSubmission()
     {
-        $session = self::instantiateBasicAssessmentItemSession();
+        $session = $this->instantiateBasicAssessmentItemSession();
 
         $timeLimits = new TimeLimits(null, new QtiDuration('PT30S'));
         $timeLimits->setAllowLateSubmission(true);
@@ -255,7 +253,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
     public function testEvolutionBasicTimeLimitsUnderflowOverflow()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         // Give more than one attempt.
         $itemSessionControl = new ItemSessionControl();
@@ -312,7 +310,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         $attempts = [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'), new QtiIdentifier('ChoiceD'), new QtiIdentifier('ChoiceE')];
         $expected = [new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(0.0), new QtiFloat(0.0), new QtiFloat(0.0)];
 
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts($count);
         $itemSession->setItemSessionControl($itemSessionControl);
@@ -331,7 +329,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();
-            $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $itemSession['SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
             $this->assertTrue($expected[$i]->equals($itemSession['SCORE']));
             $this->assertEquals($t, $itemSession['numAttempts']->getValue());
         }
@@ -351,7 +349,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
     public function testAllowLateSubmissionNonAdaptive()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         $timeLimits = new TimeLimits(null, new QtiDuration('PT1S'), true);
         $itemSession->setTimeLimits($timeLimits);
@@ -371,7 +369,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
     public function testDurationBrutalSessionClosing()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
@@ -389,7 +387,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
     public function testRemainingTimeOne()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $this->assertFalse($itemSession->getRemainingTime());
         $timeLimits = new TimeLimits();
         $timeLimits->setMaxTime(new QtiDuration('PT3S'));
@@ -420,7 +418,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
     public function testRemainingTimeTwo()
     {
         // by default, there is no max time limit.
-        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $this->assertFalse($itemSession->getRemainingTime());
 
         $itemSession->setTime(self::createDate('2014-07-14 13:00:02'));

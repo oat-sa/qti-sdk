@@ -38,7 +38,11 @@ use qtism\data\QtiComponentCollection;
 class ChoiceInteractionMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -53,32 +57,28 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
-            } else {
-                if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                    $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . " element.";
-                    throw new UnmarshallingException($msg, $element);
-                }
+            } elseif (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
+                $msg = "The mandatory 'shuffle' attribute is missing from the " . $element->localName . ' element.';
+                throw new UnmarshallingException($msg, $element);
             }
 
             // maxChoices.
             if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                if ($isOrderInteraction === true) {
+                if ($isOrderInteraction) {
                     if ($maxChoices !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
                         $component->setMaxChoices($maxChoices);
                     }
                 } else {
                     $component->setMaxChoices($maxChoices);
                 }
-            } else {
-                if (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . " element.";
-                    throw new UnmarshallingException($msg, $element);
-                }
+            } elseif (Version::compare($version, '2.0.0', '==') === true && $element->localName === 'choiceInteraction') {
+                $msg = "The mandatory 'maxChoices' attribute is missing from the " . $element->localName . ' element.';
+                throw new UnmarshallingException($msg, $element);
             }
 
             // minChoices.
             if (Version::compare($version, '2.1.0', '>=') && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                if ($isOrderInteraction === true) {
+                if ($isOrderInteraction) {
                     /*
                      * Lots of QTI implementations output minChoices = 0 while
                      * dealing with orderInteraction unmarshalling. However, regarding
@@ -121,13 +121,17 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
             return $component;
         } else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . " element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . ' element.';
             throw new UnmarshallingException($msg, $element);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -184,9 +188,6 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

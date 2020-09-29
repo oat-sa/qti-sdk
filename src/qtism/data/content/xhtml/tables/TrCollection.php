@@ -41,7 +41,7 @@ class TrCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof Tr) {
-            $msg = "TrCollection objects only accept to store Tr objects.";
+            $msg = 'TrCollection objects only accept to store Tr objects.';
             throw new InvalidArgumentException($msg);
         }
     }

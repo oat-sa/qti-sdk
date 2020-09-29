@@ -39,6 +39,8 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A TemplateDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -66,6 +68,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TemplateDeclaration object.
      * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -94,13 +97,13 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the templateDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the templateDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

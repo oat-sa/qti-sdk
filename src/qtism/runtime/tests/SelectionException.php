@@ -35,7 +35,7 @@ class SelectionException extends Exception
      * Error code to use when the nature
      * of the error is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -43,7 +43,7 @@ class SelectionException extends Exception
      * Error code to use when the error comes
      * from a lack of logic.
      *
-     * @var integer
+     * @var int
      */
     const LOGIC_ERROR = 1;
 
@@ -51,7 +51,7 @@ class SelectionException extends Exception
      * Create a new SelectionException exception object.
      *
      * @param string $message A human-readable message describing the error.
-     * @param integer $code The code that enables client-code to quickly identify the nature of the error.
+     * @param int $code The code that enables client-code to quickly identify the nature of the error.
      * @param Exception $previous An optional previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

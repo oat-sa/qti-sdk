@@ -67,17 +67,15 @@ class AnyNMarshaller extends OperatorMarshaller
     {
         if (($min = $this->getDOMElementAttributeAs($element, 'min')) !== null) {
             if (Format::isInteger($min)) {
-                $min = intval($min);
+                $min = (int)$min;
             }
 
             if (($max = $this->getDOMElementAttributeAs($element, 'max')) !== null) {
                 if (Format::isInteger($max)) {
-                    $max = intval($max);
+                    $max = (int)$max;
                 }
 
-                $object = new AnyN($children, $min, $max);
-
-                return $object;
+                return new AnyN($children, $min, $max);
             } else {
                 $msg = "The mandatory attribute 'max' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

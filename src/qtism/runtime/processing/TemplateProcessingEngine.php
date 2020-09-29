@@ -71,7 +71,7 @@ class TemplateProcessingEngine extends AbstractEngine
         if ($templateProcessing instanceof TemplateProcessing) {
             parent::setComponent($templateProcessing);
         } else {
-            $msg = "The TemplateProcessing class only accepts TemplateProcessing objects to be executed.";
+            $msg = 'The TemplateProcessing class only accepts TemplateProcessing objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -131,24 +131,22 @@ class TemplateProcessingEngine extends AbstractEngine
             } catch (RuleProcessingException $e) {
                 if ($e->getCode() === RuleProcessingException::EXIT_TEMPLATE) {
                     $this->trace('Termination of template processing.');
-                } else {
-                    if ($e->getCode() === RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED) {
-                        $this->trace('Unsatisfied template constraint.');
+                } elseif ($e->getCode() === RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED) {
+                    $this->trace('Unsatisfied template constraint.');
 
-                        // Reset variables with their originals.
-                        foreach ($tplVarCopies as $copy) {
-                            $context->getVariable($copy->getIdentifier())->setValue($copy->getDefaultValue());
-                            $context->getVariable($copy->getIdentifier())->setDefaultValue($copy->getDefaultValue());
+                    // Reset variables with their originals.
+                    foreach ($tplVarCopies as $copy) {
+                        $context->getVariable($copy->getIdentifier())->setValue($copy->getDefaultValue());
+                        $context->getVariable($copy->getIdentifier())->setDefaultValue($copy->getDefaultValue());
 
-                            if ($copy instanceof ResponseVariable) {
-                                $context->getVariable($copy->getIdentifier())->setCorrectResponse($copy->getCorrectResponse());
-                            }
+                        if ($copy instanceof ResponseVariable) {
+                            $context->getVariable($copy->getIdentifier())->setCorrectResponse($copy->getCorrectResponse());
                         }
-
-                        $validConstraints = false;
-                    } else {
-                        throw $e;
                     }
+
+                    $validConstraints = false;
+                } else {
+                    throw $e;
                 }
             }
         } while ($validConstraints === false && $trialCount < 100);

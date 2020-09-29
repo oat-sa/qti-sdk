@@ -39,6 +39,8 @@ class SectionPartMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SectionPart object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -76,6 +78,7 @@ class SectionPartMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SectionPart object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -131,7 +134,7 @@ class SectionPartMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

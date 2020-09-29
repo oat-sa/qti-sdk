@@ -23,7 +23,7 @@
 
 namespace qtism\common\collections;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * A collection that aims at storing string values.
@@ -33,11 +33,12 @@ class StringCollection extends AbstractCollection
     /**
      * Check if $value is a valid string.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)
     {
-        if (gettype($value) !== 'string') {
+        if (!is_string($value)) {
             $msg = "StringCollection class only accept string values, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -47,7 +48,7 @@ class StringCollection extends AbstractCollection
      * Whether the collection contains a given $string.
      *
      * @param mixed $value A string.
-     * @return boolean Whether the collection contains $value.
+     * @return bool Whether the collection contains $value.
      */
     public function contains($value)
     {

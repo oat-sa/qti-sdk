@@ -44,7 +44,7 @@ class PatternMatchQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['patternMatch'] = "\"" . $something->getPattern() . "\"";
+        $attributes['patternMatch'] = '"' . $something->getPattern() . '"';
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)
             . $renderer->writeChildElements($something->getExpressions());

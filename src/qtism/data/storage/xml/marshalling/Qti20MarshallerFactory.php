@@ -86,6 +86,11 @@ class Qti20MarshallerFactory extends MarshallerFactory
         $this->removeMappingEntry('templateConstraint');
     }
 
+    /**
+     * @param ReflectionClass $class
+     * @param array $args
+     * @return mixed
+     */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
         array_unshift($args, '2.0.0');

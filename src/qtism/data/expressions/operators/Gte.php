@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -35,7 +34,7 @@ use qtism\data\expressions\Pure;
  * and false if it is less than the second. If either sub-expression is NULL then
  * the operator results in NULL.
  */
-class Gte extends Operator implements Pure
+class Gte extends Operator
 {
     /**
      * Create a new Gte object.
@@ -48,22 +47,10 @@ class Gte extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'gte';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

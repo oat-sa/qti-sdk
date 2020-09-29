@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\ExitResponse;
+
 /**
  * From IMS QTI:
  *
@@ -40,15 +42,15 @@ class ExitResponseProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Response Processing.";
+        $msg = 'Termination of Response Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_RESPONSE);
     }
 
     /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     * @return string
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\ExitResponse';
+        return ExitResponse::class;
     }
 }

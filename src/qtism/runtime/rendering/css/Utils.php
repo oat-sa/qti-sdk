@@ -57,6 +57,11 @@ class Utils
         return $selector;
     }
 
+    /**
+     * @param $selector
+     * @param array $map
+     * @return string|string[]
+     */
     public static function mapPseudoClasses($selector, array $map)
     {
         foreach ($map as $k => $v) {

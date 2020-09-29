@@ -45,7 +45,7 @@ class Th extends TableCell
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

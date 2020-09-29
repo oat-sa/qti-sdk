@@ -50,7 +50,7 @@ class PendingResponses
     /**
      * The occurence number of the AssessmentItemRef object related to the State.
      *
-     * @var integer
+     * @var int
      */
     private $occurence;
 
@@ -59,7 +59,7 @@ class PendingResponses
      *
      * @param State $state The ResponseState object that represent the pending responses.
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef the pending responses are related to.
-     * @param integer $occurence The occurence number of the item the pending responses are related to.
+     * @param int $occurence The occurence number of the item the pending responses are related to.
      */
     public function __construct(State $state, AssessmentItemRef $assessmentItemRef, $occurence = 0)
     {
@@ -111,12 +111,12 @@ class PendingResponses
     /**
      * Set the occurence number of the AssessmentItemRef object related to the State.
      *
-     * @param integer $occurence An occurence number as a positive integer.
+     * @param int $occurence An occurence number as a positive integer.
      * @throws InvalidArgumentException If $occurence is not a postive integer.
      */
     public function setOccurence($occurence)
     {
-        if (gettype($occurence) !== 'integer') {
+        if (!is_int($occurence)) {
             $msg = "The 'occurence' argument must be an integer value, '" . gettype($occurence) . "' given.";
             throw new InvalidArgumentException($msg);
         } else {
@@ -127,7 +127,7 @@ class PendingResponses
     /**
      * Get the occurence number of the AssessmentItemRef object related to the State.
      *
-     * @return integer A postivie integer value.
+     * @return int A postivie integer value.
      */
     public function getOccurence()
     {

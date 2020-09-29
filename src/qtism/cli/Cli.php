@@ -57,7 +57,7 @@ abstract class Cli
     /**
      * POSIX success exit status (0).
      *
-     * @var integer
+     * @var int
      */
     const EXIT_SUCCESS = 0;
 
@@ -67,7 +67,7 @@ abstract class Cli
      * Implementations are free to use more appropriate
      * non zero exit status codes if appropriate.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_FAILURE = 1;
 
@@ -139,7 +139,7 @@ abstract class Cli
     /**
      * Set the parsed arguments to the CLI Module.
      *
-     * @param cli\Arguments $arguments An Arguments object from php-cli-tools.
+     * @param Arguments $arguments An Arguments object from php-cli-tools.
      */
     private function setArguments(Arguments $arguments)
     {
@@ -198,21 +198,24 @@ abstract class Cli
         exit(self::EXIT_FAILURE);
     }
 
+    /**
+     * @param $longName
+     */
     protected function missingArgument($longName)
     {
         $arguments = $this->getArguments();
         $options = $arguments->getOptions();
 
-        $msg = "Missing argument";
+        $msg = 'Missing argument';
 
         if (array_key_exists($longName, $options)) {
             $msg .= " '${longName}'";
         }
 
-        $msg .= ".";
+        $msg .= '.';
 
         $this->error($msg);
-        $this->fail("Use the --help option to see the help screen.");
+        $this->fail('Use the --help option to see the help screen.');
     }
 
     /**
@@ -233,7 +236,7 @@ abstract class Cli
      * Show raw data in console even if verbose mode is not in force.
      *
      * @param string $data The data to go in output.
-     * @param boolean $newLine Whether to display a new line after $data.
+     * @param bool $newLine Whether to display a new line after $data.
      */
     protected function out($data, $newLine = true)
     {
@@ -245,12 +248,12 @@ abstract class Cli
     }
 
     /**
-     * Check wheter the verbose mode is in force.
+     * Check whether the verbose mode is in force.
      *
      * The verbose mode is in force if the CLI arguments contain
      * the -h/--help flag.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isVerbose()
     {

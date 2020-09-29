@@ -40,7 +40,7 @@ class ObjectFlowCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof ObjectFlow) {
-            $msg = "ObjectFlowCollection objects only accepts ObjectFlow objects to be stored.";
+            $msg = 'ObjectFlowCollection objects only accepts ObjectFlow objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }

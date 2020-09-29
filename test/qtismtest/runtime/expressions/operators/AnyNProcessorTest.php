@@ -9,23 +9,28 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\AnyNProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class AnyNProcessorTest
+ */
 class AnyNProcessorTest extends QtiSmTestCase
 {
     /**
-     *
      * @dataProvider anyNProvider
-     *
-     * @param integer $min
-     * @param integer $max
+     * @param int $min
+     * @param int $max
      * @param array $booleans
-     * @param boolean $expected
+     * @param bool $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAnyN($min, $max, array $booleans, $expected)
     {
@@ -46,7 +51,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER)]);
         $processor = new AnyNProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -55,7 +60,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection([new QtiString('String')]);
         $processor = new AnyNProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -64,7 +69,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection([new QtiPoint(1, 2)]);
         $processor = new AnyNProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -72,7 +77,7 @@ class AnyNProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new AnyNProcessor($expression, $operands);
     }
 
@@ -107,7 +112,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression('min', 4);
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true), null]);
         $processor = new AnyNProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -116,7 +121,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression(3, 'max');
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true), null]);
         $processor = new AnyNProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -129,7 +134,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $state->setVariable($min);
         $processor = new AnyNProcessor($expression, $operands);
         $processor->setState($state);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -142,10 +147,16 @@ class AnyNProcessorTest extends QtiSmTestCase
         $state->setVariable($max);
         $processor = new AnyNProcessor($expression, $operands);
         $processor->setState($state);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
+    /**
+     * @param $min
+     * @param $max
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression($min, $max)
     {
         return $this->createComponentFromXml('
@@ -157,6 +168,9 @@ class AnyNProcessorTest extends QtiSmTestCase
 		');
     }
 
+    /**
+     * @return array
+     */
     public function anyNProvider()
     {
         $returnValue = [];

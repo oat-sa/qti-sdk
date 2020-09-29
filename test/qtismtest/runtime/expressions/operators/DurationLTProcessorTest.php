@@ -6,11 +6,17 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\DurationLTProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class DurationLTProcessorTest
+ */
 class DurationLTProcessorTest extends QtiSmTestCase
 {
     public function testDurationLT()
@@ -45,7 +51,7 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiInteger(256)]);
         $processor = new DurationLTProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -54,7 +60,7 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), new MultipleContainer(BaseType::DURATION, [new QtiDuration('P2D')])]);
         $processor = new DurationLTProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -62,7 +68,7 @@ class DurationLTProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new DurationLTProcessor($expression, $operands);
     }
 
@@ -70,10 +76,14 @@ class DurationLTProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiDuration('P2D'), new QtiDuration('P3D')]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new DurationLTProcessor($expression, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

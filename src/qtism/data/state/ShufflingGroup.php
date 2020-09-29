@@ -110,7 +110,7 @@ class ShufflingGroup extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -118,7 +118,7 @@ class ShufflingGroup extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

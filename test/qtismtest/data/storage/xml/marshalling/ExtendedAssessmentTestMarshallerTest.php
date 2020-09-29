@@ -36,6 +36,9 @@ use qtism\data\TestPartCollection;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentTestMarshallerTest
+ */
 class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMaximal()
@@ -155,7 +158,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentTest', $component);
+        $this->assertInstanceOf(ExtendedAssessmentTest::class, $component);
         $this->assertEquals('test1', $component->getIdentifier());
         $this->assertEquals('A Test', $component->getTitle());
         $this->assertEquals('qtisdk', $component->getToolName());
@@ -169,7 +172,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
         $testParts = $component->getTestParts();
         $testPart = $testParts['part1'];
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedTestPart', $testPart);
+        $this->assertInstanceOf(ExtendedTestPart::class, $testPart);
         $this->assertEquals(1, count($testPart->getPreConditions()));
         $this->assertEquals(1, count($testPart->getBranchRules()));
         $this->assertTrue($testPart->getItemSessionControl()->mustShowSolution());
@@ -180,11 +183,11 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
 
         // Check that we got ExtendedAssessmentSections.
         $assessmentSections = $testPart->getAssessmentSections();
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSections['section1']);
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSections['section2']);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section1']);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section2']);
 
         // Check that we got TestFeedbackRef instances.
         $testFeedbackRefs = $testPart->getTestFeedbackRefs();
-        $this->assertInstanceOf('qtism\\data\\TestFeedbackRef', $testFeedbackRefs[0]);
+        $this->assertInstanceOf(TestFeedbackRef::class, $testFeedbackRefs[0]);
     }
 }

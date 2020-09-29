@@ -43,6 +43,9 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentResultMarshallerTest
+ */
 class AssessmentResultMarshallerTest extends QtiSmTestCase
 {
     public function testValidMinimalXml()

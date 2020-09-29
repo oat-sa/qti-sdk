@@ -16,6 +16,9 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\RenderingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BodyElementRendererTest
+ */
 class BodyElementRendererTest extends QtiSmTestCase
 {
     public function testRenderNoChildren()
@@ -36,9 +39,6 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertEquals('', $element->getAttribute('label'));
     }
 
-    /**
-     * @throws RenderingException
-     */
     public function testRenderChildren()
     {
         $ctx = new XhtmlRenderingEngine();
@@ -77,9 +77,6 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertSame('', $element->getAttribute('aria-hidden'));
     }
 
-    /**
-     * @throws RenderingException
-     */
     public function testRenderFullAria()
     {
         $ctx = new XhtmlRenderingEngine();

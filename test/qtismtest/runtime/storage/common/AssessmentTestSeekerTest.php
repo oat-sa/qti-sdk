@@ -9,6 +9,9 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestSeekerTest
+ */
 class AssessmentTestSeekerTest extends QtiSmTestCase
 {
     public function testSeekComponent()
@@ -65,7 +68,7 @@ class AssessmentTestSeekerTest extends QtiSmTestCase
 
         try {
             $pos = $seeker->seekPosition(new AssessmentItemRef('Q05', 'Q05.xml'));
-            $this->assertFalse(true, "Nothing should be found for Q05.");
+            $this->assertFalse(true, 'Nothing should be found for Q05.');
         } catch (OutOfBoundsException $e) {
             $this->assertTrue(true);
         }

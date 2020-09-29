@@ -34,6 +34,7 @@ class ShufflingGroupCollection extends QtiComponentCollection
     /**
      * Check if a given $value is an instance of ShufflingGroup.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ShufflingGroup.
      */
     protected function checkType($value)

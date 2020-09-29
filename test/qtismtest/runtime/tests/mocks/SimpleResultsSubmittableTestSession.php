@@ -5,6 +5,9 @@ namespace qtismtest\runtime\tests\mocks;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentTestSession;
 
+/**
+ * Class SimpleResultsSubmittableTestSession
+ */
 class SimpleResultsSubmittableTestSession extends AssessmentTestSession
 {
     private $submittedTestResults = [];
@@ -18,6 +21,10 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
         }
     }
 
+    /**
+     * @param AssessmentItemSession $assessmentItemSession
+     * @param int $occurence
+     */
     protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
     {
         foreach ($assessmentItemSession as $id => $var) {
@@ -25,6 +32,10 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
         }
     }
 
+    /**
+     * @param $identifier
+     * @param $value
+     */
     protected function addTestResult($identifier, $value)
     {
         if (isset($this->submittedTestResults[$identifier]) === false) {
@@ -34,6 +45,10 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
         $this->submittedTestResults[$identifier][] = $value;
     }
 
+    /**
+     * @param $identifier
+     * @param $value
+     */
     protected function addItemResultResult($identifier, $value)
     {
         if (isset($this->submittedItemResults[$identifier]) === false) {
@@ -43,11 +58,17 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
         $this->submittedItemResults[$identifier][] = $value;
     }
 
+    /**
+     * @return array
+     */
     public function getSubmittedTestResults()
     {
         return $this->submittedTestResults;
     }
 
+    /**
+     * @return array
+     */
     public function getSubmittedItemResults()
     {
         return $this->submittedItemResults;

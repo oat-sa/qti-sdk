@@ -36,7 +36,7 @@ class RuleProcessingException extends ProcessingException
      * The error code to use when the exitResponse rule is invoked
      * during rule processing.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_RESPONSE = 10;
 
@@ -44,7 +44,7 @@ class RuleProcessingException extends ProcessingException
      * The error code to use when the exitTest rule is invoked
      * during rule processing.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_TEST = 11;
 
@@ -52,7 +52,7 @@ class RuleProcessingException extends ProcessingException
      * The error code to use when the exitTemplate rule is invoked
      * during rule processing.
      *
-     * @var integer
+     * @var int
      */
     const EXIT_TEMPLATE = 12;
 
@@ -60,7 +60,7 @@ class RuleProcessingException extends ProcessingException
      * The error code to use when a templateConstraint rule returned
      * false or null.
      *
-     * @var integer
+     * @var int
      */
     const TEMPLATE_CONSTRAINT_UNSATISFIED = 13;
 
@@ -75,7 +75,7 @@ class RuleProcessingException extends ProcessingException
         if ($source instanceof RuleProcessor) {
             parent::setSource($source);
         } else {
-            $msg = "RuleProcessingException::setSource only accept RuleProcessor objects.";
+            $msg = 'RuleProcessingException::setSource only accept RuleProcessor objects.';
             throw new InvalidArgumentException($msg);
         }
     }

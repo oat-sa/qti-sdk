@@ -13,6 +13,9 @@ use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeConditionTest
+ */
 class OutcomeConditionTest extends QtiSmTestCase
 {
     public function testHasOutcomeElseGetComponents()

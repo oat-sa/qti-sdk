@@ -8,7 +8,13 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtism\data\content\interactions\Choice;
+use qtism\data\content\interactions\Hotspot;
 
+/**
+ * Class HotspotChoiceMarshallerTest
+ */
 class HotspotChoiceMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,9 +42,9 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Hotspot', $component);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Choice', $component);
+        $this->assertInstanceOf(HotspotChoice::class, $component);
+        $this->assertInstanceOf(Hotspot::class, $component);
+        $this->assertInstanceOf(Choice::class, $component);
 
         $this->assertEquals('hotspotchoice1', $component->getIdentifier());
         $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
@@ -63,7 +69,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
+        $this->assertInstanceOf(HotspotChoice::class, $component);
         $this->assertEquals('r_50', $component->getIdentifier());
         $this->assertFalse($component->isFixed());
         $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
@@ -79,10 +85,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	        <hotspotChoice identifier="r_50" fixed="false" shape="unknown" coords="128,222,343"/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration"
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -96,10 +100,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343,20,50"/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The coordinates 'coords' of element 'hotspotChoice' could not be converted."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The coordinates 'coords' of element 'hotspotChoice' could not be converted.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -113,10 +115,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343" showHide="bla"/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The value of the 'showHide' attribute of element 'hotspotChoice' is not a value from the 'showHide' enumeration."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the 'showHide' attribute of element 'hotspotChoice' is not a value from the 'showHide' enumeration.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -130,10 +130,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle"/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory attribute 'coords' is missing from element 'hotspotChoice'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'coords' is missing from element 'hotspotChoice'.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -147,10 +145,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	        <hotspotChoice identifier="r_50" fixed="false"/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory attribute 'shape' is missing from element 'hotspotChoice'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'shape' is missing from element 'hotspotChoice'.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -164,10 +160,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	        <hotspotChoice/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory attribute 'identifier' is missing from element 'hotspotChoice'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'hotspotChoice'.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

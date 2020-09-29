@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\tables;
 
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The XHTML tr class.
@@ -42,6 +43,7 @@ class Tr extends BodyElement
     /**
      * Create a new Tr object.
      *
+     * @param TableCellCollection $content
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -55,7 +57,7 @@ class Tr extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return TableCellCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -83,7 +85,7 @@ class Tr extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

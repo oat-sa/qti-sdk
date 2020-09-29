@@ -3,13 +3,18 @@
 namespace qtismtest\common\datatypes;
 
 use DateInterval;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DurationTest
+ */
 class DurationTest extends QtiSmTestCase
 {
     /**
      * @dataProvider validDurationProvider
+     * @param string $intervalSpec
      */
     public function testValidDurationCreation($intervalSpec)
     {
@@ -19,10 +24,11 @@ class DurationTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidDurationProvider
+     * @param string $intervalSpec
      */
     public function testInvalidDurationCreation($intervalSpec)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $duration = new QtiDuration($intervalSpec);
     }
 
@@ -67,7 +73,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @dataProvider toStringProvider
      *
-     * @param Duration $duration
+     * @param QtiDuration $duration
      * @param string $expected
      */
     public function testToString(QtiDuration $duration, $expected)
@@ -131,9 +137,9 @@ class DurationTest extends QtiSmTestCase
     /**
      * @dataProvider shorterThanProvider
      *
-     * @param Duration $duration1
-     * @param Duration $duration2
-     * @param boolean $expected
+     * @param QtiDuration $duration1
+     * @param QtiDuration $duration2
+     * @param bool $expected
      */
     public function testShorterThan(QtiDuration $duration1, QtiDuration $duration2, $expected)
     {
@@ -143,15 +149,18 @@ class DurationTest extends QtiSmTestCase
     /**
      * @dataProvider longerThanOrEqualsProvider
      *
-     * @param Duration $duration1
-     * @param Duration $duration2
-     * @param boolean $expected
+     * @param QtiDuration $duration1
+     * @param QtiDuration $duration2
+     * @param bool $expected
      */
     public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected)
     {
         $this->assertSame($expected, $duration1->longerThanOrEquals($duration2));
     }
 
+    /**
+     * @return array
+     */
     public function shorterThanProvider()
     {
         $returnValue = [];
@@ -166,6 +175,9 @@ class DurationTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function longerThanOrEqualsProvider()
     {
         $returnValue = [];
@@ -183,6 +195,9 @@ class DurationTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function validDurationProvider()
     {
         return [
@@ -192,6 +207,9 @@ class DurationTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidDurationProvider()
     {
         return [
@@ -202,6 +220,9 @@ class DurationTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function toStringProvider()
     {
         return [

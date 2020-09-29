@@ -32,7 +32,7 @@ use qtism\common\collections\AbstractCollection;
 class PhpArgumentCollection extends AbstractCollection
 {
     /**
-     * Checks wether $value is an instance of PhpArgumentCollection.
+     * Checks whether $value is an instance of PhpArgumentCollection.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of PhpArgumentCollection.
@@ -40,7 +40,7 @@ class PhpArgumentCollection extends AbstractCollection
     protected function checkType($value)
     {
         if (!$value instanceof PhpArgument) {
-            $msg = "A PhpArgumentCollection only accepts PhpArgument objects to be stored.";
+            $msg = 'A PhpArgumentCollection only accepts PhpArgument objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }

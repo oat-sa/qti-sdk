@@ -6,7 +6,12 @@ use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\SectionPartCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\QtiComponentCollection;
+use qtism\data\QtiIdentifiableCollection;
 
+/**
+ * Class QtiComponentTest
+ */
 class QtiComponentTest extends QtiSmTestCase
 {
     public function testGetComponentByIdOrClassNameSimple()
@@ -136,7 +141,7 @@ class QtiComponentTest extends QtiSmTestCase
         $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentItemRef1a, $assessmentItemRef1b]));
 
         $search = $assessmentSection->getIdentifiableComponents();
-        $this->assertInstanceOf('qtism\\data\\QtiIdentifiableCollection', $search);
+        $this->assertInstanceOf(QtiIdentifiableCollection::class, $search);
 
         $this->assertEquals(['Q01', 'Q02'], $search->getKeys());
     }
@@ -155,7 +160,7 @@ class QtiComponentTest extends QtiSmTestCase
         $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentSection1a, $assessmentSection1b]));
 
         $search = $assessmentSection->getIdentifiableComponents();
-        $this->assertInstanceOf('qtism\\data\\QtiComponentCollection', $search);
+        $this->assertInstanceOf(QtiComponentCollection::class, $search);
         $this->assertEquals(4, count($search));
         $this->assertTrue($assessmentSection1a === $search[0]);
         $this->assertTrue($assessmentItemRef1a === $search[1]);

@@ -46,10 +46,10 @@ class ResponseConditionQtiPLRenderer extends AbstractQtiPLRenderer
         $qtipl = $renderer->render($something->getResponseIf());
 
         foreach ($something->getResponseElseIfs() as $elseif) {
-            $qtipl .= " " . $renderer->render($elseif);
+            $qtipl .= ' ' . $renderer->render($elseif);
         }
 
-        $qtipl .= ($something->getResponseElse() == null) ? "" : $renderer->render($something->getResponseElse());
+        $qtipl .= ($something->getResponseElse() == null) ? '' : $renderer->render($something->getResponseElse());
         return $qtipl;
     }
 }

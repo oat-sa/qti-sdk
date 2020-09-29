@@ -37,7 +37,7 @@ class SessionManager extends AbstractSessionManager
      *
      * @param AssessmentTest $test
      * @param Route $route An optional route to be set. If not provided, the default instantiation process occurs.
-     * @param integer $config (optional) The configuration of the AssessmentTestSession object.
+     * @param int $config (optional) The configuration of the AssessmentTestSession object.
      * @return AssessmentTestSession
      */
     protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0)
@@ -49,8 +49,8 @@ class SessionManager extends AbstractSessionManager
      * Instantiates an AssessmentItemSession with the default implementation.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @return AssessmentItemSession
      */
     protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)

@@ -35,7 +35,11 @@ use qtism\data\QtiComponentCollection;
 class FieldValueMarshaller extends OperatorMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
+     * Unmarshall an FieldValue object into a QTI fieldValue element.
+     *
+     * @param QtiComponent $component The FieldValue object to marshall.
+     * @param array An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI fieldValue element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -50,14 +54,17 @@ class FieldValueMarshaller extends OperatorMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
+     * Unmarshall a QTI fieldValue operator element into an FieldValue object.
+     *
+     * @param DOMElement $element The fieldValue element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent An FieldValue object.
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($fieldIdentifier = $this->getDOMElementAttributeAs($element, 'fieldIdentifier')) !== null) {
-            $object = new FieldValue($children, $fieldIdentifier);
-
-            return $object;
+            return new FieldValue($children, $fieldIdentifier);
         } else {
             $msg = "The mandatory attribute 'fieldIdentifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

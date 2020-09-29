@@ -43,7 +43,7 @@ class PrintedVariableProcessingException extends ProcessingException
         if ($source instanceof PrintedVariableEngine) {
             parent::setSource($source);
         } else {
-            $msg = "PrintedVariableProcessingException::setSource only accepts PrintedVariableEngine objects.";
+            $msg = 'PrintedVariableProcessingException::setSource only accepts PrintedVariableEngine objects.';
             throw new InvalidArgumentException($msg);
         }
     }

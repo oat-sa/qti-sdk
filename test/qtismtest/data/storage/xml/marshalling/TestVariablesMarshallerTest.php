@@ -3,11 +3,15 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestVariablesMarshallerTest
+ */
 class TestVariablesMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -26,7 +30,7 @@ class TestVariablesMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('testVariables', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($variableIdentifier, $element->getAttribute('variableIdentifier'));
@@ -45,7 +49,7 @@ class TestVariablesMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\TestVariables', $component);
+        $this->assertInstanceOf(TestVariables::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals($component->getVariableIdentifier(), 'myVariable1');
         $this->assertEquals($component->getWeightIdentifier(), 'myWeight1');

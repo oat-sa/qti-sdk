@@ -36,7 +36,7 @@ class Jump
      * The position in the route the jump
      * leads to.
      *
-     * @var integer
+     * @var int
      */
     private $position;
 
@@ -58,7 +58,7 @@ class Jump
     /**
      * Create a new Jump object.
      *
-     * @param integer $position The position in the assessment test session's route the jump leads to.
+     * @param int $position The position in the assessment test session's route the jump leads to.
      * @param RouteItem $target The RouteItem to go when following the jump.
      * @param AssessmentItemSession $itemSession The AssessmentItemSession related to the RouteItem.
      * @throws InvalidArgumentException If $occurence is not an integer value or $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
@@ -74,7 +74,7 @@ class Jump
      * Set the position in the assessment test session's route the
      * jump leads to.
      *
-     * @param integer $position
+     * @param int $position
      */
     protected function setPosition($position)
     {
@@ -85,7 +85,7 @@ class Jump
      * Get the position in the assessment test session's route the
      * jump leads to.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -95,7 +95,7 @@ class Jump
     /**
      * Set the RouteItem the candidate can jump to.
      *
-     * @param RouteItem $routeItem A RouteItem object.
+     * @param RouteItem $target A RouteItem object.
      */
     protected function setTarget(RouteItem $target)
     {

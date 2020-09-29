@@ -70,23 +70,22 @@ class StatsOperatorProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The StatsOperator operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The StatsOperator operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The StatsOperator operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The StatsOperator operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $qtiFuncName = Statistics::getNameByConstant($this->getExpression()->getName());
         $methodName = 'process' . ucfirst($qtiFuncName);
 
-        return call_user_func_array([$this, $methodName], []);
+        return $this->$methodName();
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processMean()
@@ -96,12 +95,11 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::mean(self::filterValues($operand->getArrayCopy()));
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processSampleVariance()
     {
@@ -110,12 +108,11 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), true);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processSampleSD()
     {
@@ -124,12 +121,11 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), true);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processPopVariance()
     {
@@ -138,12 +134,11 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), false);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
-     *
-     * @return null, \qtism\common\datatypes\Float
+     * @return QtiFloat|null
      */
     protected function processPopSD()
     {
@@ -152,7 +147,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), false);
 
-        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat((float)$result) : null;
     }
 
     /**
@@ -177,7 +172,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

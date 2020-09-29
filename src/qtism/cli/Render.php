@@ -23,7 +23,7 @@
 
 namespace qtism\cli;
 
-use cli\Arguments as Arguments;
+use cli\Arguments;
 use DOMXPath;
 use qtism\common\utils\Exception as ExceptionUtils;
 use qtism\data\storage\xml\Utils as XmlUtils;
@@ -32,6 +32,7 @@ use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
+use qtism\runtime\rendering\RenderingException;
 
 /**
  * Render CLI Module.
@@ -42,7 +43,7 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 class Render extends Cli
 {
     /**
-     * @see \qtism\cli\Cli::setupArguments()
+     * @return Arguments
      */
     protected function setupArguments()
     {
@@ -103,9 +104,6 @@ class Render extends Cli
         return $arguments;
     }
 
-    /**
-     * @see \qtism\cli\Cli::checkArguments()
-     */
     protected function checkArguments()
     {
         $arguments = $this->getArguments();
@@ -113,16 +111,14 @@ class Render extends Cli
         // Check 'source' argument.
         if (($source = $arguments['source']) === null) {
             $this->missingArgument('source');
-        } else {
-            if (is_readable($source) === false) {
-                if (file_exists($source) === false) {
-                    $msg = "The QTI file '${source}' does not exist.";
-                } else {
-                    $msg = "The QTI file '${source}' cannot be read. Check permissions.";
-                }
-
-                $this->fail($msg);
+        } elseif (is_readable($source) === false) {
+            if (file_exists($source) === false) {
+                $msg = "The QTI file '${source}' does not exist.";
+            } else {
+                $msg = "The QTI file '${source}' cannot be read. Check permissions.";
             }
+
+            $this->fail($msg);
         }
 
         // Check 'flavour' argument.
@@ -136,7 +132,7 @@ class Render extends Cli
         ];
 
         if (in_array(strtolower($arguments['flavour']), $knownFlavours) === false) {
-            $msg = "Unknown --flavour value'" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . ".";
+            $msg = "Unknown --flavour value'" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . '.';
             $this->fail($msg);
         }
 
@@ -152,7 +148,7 @@ class Render extends Cli
         ];
 
         if (in_array(strtolower($arguments['xmlbase']), $knownXmlBase) === false) {
-            $msg = "Unknown --xmlbase value '" . $arguments['xmlbase'] . "'. Available values are " . implode(', ', $knownXmlBase) . ".";
+            $msg = "Unknown --xmlbase value '" . $arguments['xmlbase'] . "'. Available values are " . implode(', ', $knownXmlBase) . '.';
             $this->fail($msg);
         }
     }
@@ -162,9 +158,6 @@ class Render extends Cli
      *
      * This implementations considers that all necessary checks about
      * arguments and their values were performed in \qtism\cli\Render::checkArguments().
-     *
-     * @see \qtism\cli\Cli::run()
-     * @see \qtism\cli\Render::checkArguments()
      */
     protected function run()
     {
@@ -198,11 +191,11 @@ class Render extends Cli
             }
 
             $this->out($renderingData, $nl);
-            $this->success("QTI XML file successfully rendered.");
+            $this->success('QTI XML file successfully rendered.');
         } catch (XmlStorageException $e) {
             switch ($e->getCode()) {
                 case XmlStorageException::READ:
-                    $msg = "An error occured while reading QTI file '${source}'.\nThe system returned the following error:\n";
+                    $msg = "An error occurred while reading QTI file '${source}'.\nThe system returned the following error:\n";
                     $msg .= ExceptionUtils::formatMessage($e);
                     $this->fail($msg);
                     break;
@@ -219,7 +212,7 @@ class Render extends Cli
                     break;
 
                 default:
-                    $msg = "An fatal error occured while reading QTI file '${source}'.";
+                    $msg = "An fatal error occurred while reading QTI file '${source}'.";
                     $this->fail($msg);
                     break;
             }
@@ -232,6 +225,7 @@ class Render extends Cli
      * @param XmlDocument $doc the QTI XML document to be rendered.
      * @param GoldilocksRenderingEngine $renderer An instance of GoldilocksRenderingEngine
      * @return string The rendered data as a string.
+     * @throws RenderingException
      */
     private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer)
     {
@@ -272,7 +266,7 @@ class Render extends Cli
                 $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
             }
 
-            $header .= "<html " . implode(' ', $htmlAttributes) . ">${nl}";
+            $header .= '<html ' . implode(' ', $htmlAttributes) . ">${nl}";
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
             $header .= "${indent}${indent}<title>" . XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle()) . "</title>${nl}";
@@ -286,14 +280,14 @@ class Render extends Cli
                 $body = substr($body, 0, strlen('</div>') * -1);
                 $body = "<body ${body}</body>${nl}";
             } else {
-                $body = $xml->saveXml($xml->documentElement) . "${nl}";
+                $body = $xml->saveXml($xml->documentElement) . ${nl};
             }
 
             if ($arguments['document'] === true) {
                 $footer = "</html>\n";
             }
         } else {
-            $body = $xml->saveXml($xml->documentElement) . "${nl}";
+            $body = $xml->saveXml($xml->documentElement) . ${nl};
         }
 
         // Indent body...
@@ -319,6 +313,7 @@ class Render extends Cli
      * @param XmlDocument $doc The QTI XML document to be rendered.
      * @param XhtmlRenderingEngine $renderer
      * @return string The raw rendering data.
+     * @throws RenderingException
      */
     private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer)
     {
@@ -351,7 +346,7 @@ class Render extends Cli
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
 
-            if (empty($title) !== false) {
+            if (!empty($title)) {
                 $header .= "${indent}${indent}<title>" . $title . "</title>${nl}";
             }
 
@@ -363,7 +358,7 @@ class Render extends Cli
             $footer .= "</html>\n";
         }
 
-        $body = $xml->saveXml($xml->documentElement) . "${nl}";
+        $body = $xml->saveXml($xml->documentElement) . ${nl};
 
         // Indent body...
         $indentBody = '';

@@ -45,7 +45,7 @@ class ChoiceInteraction extends BlockInteraction
      * If the shuffle attribute is true then the delivery engine must randomize the order in which
      * the choices are initially presented, subject to the value of the fixed attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -57,7 +57,7 @@ class ChoiceInteraction extends BlockInteraction
      * then there is no restriction. If maxChoices is greater than 1 (or 0) then the interaction
      * must be bound to a response with multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 0;
@@ -69,7 +69,7 @@ class ChoiceInteraction extends BlockInteraction
      * If minChoices is 0 then the candidate is not required to select any choices. minChoices must be
      * less than or equal to the limit imposed by maxChoices.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = 0;
@@ -80,7 +80,7 @@ class ChoiceInteraction extends BlockInteraction
      * The orientation attribute provides a hint to rendering systems that the choices have an
      * inherent vertical or horizontal interpretation.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $orientation = Orientation::VERTICAL;
@@ -127,7 +127,7 @@ class ChoiceInteraction extends BlockInteraction
         if (count($simpleChoices) > 0) {
             $this->simpleChoices = $simpleChoices;
         } else {
-            $msg = "A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.";
+            $msg = 'A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -146,13 +146,12 @@ class ChoiceInteraction extends BlockInteraction
      * Set whether the delivery engine must randomize the order in which the choices
      * are initialiiy presented.
      *
-     * @param boolean $shuffle
+     * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
-     *
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -164,7 +163,7 @@ class ChoiceInteraction extends BlockInteraction
      * Know whether the delivery engine must randomize the order in which the choices
      * are initially presented.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -174,12 +173,12 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * Set the maximum number of choices that the candidate is allowed to select.
      *
-     * @param integer $maxChoices A positive (>= 0) integer.
+     * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -190,7 +189,7 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * Get the maximum number of choices that the candidate is allowed to select.
      *
-     * @return integer A strictly positive (> 0) integer.
+     * @return int A strictly positive (> 0) integer.
      */
     public function getMaxChoices()
     {
@@ -202,12 +201,12 @@ class ChoiceInteraction extends BlockInteraction
      *
      * A value of 0 means the candidate is not required to select any choices.
      *
-     * @param integer $minChoices A positive (>= 0) integer.
+     * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive (>= 0) integer.
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && $minChoices >= 0) {
+        if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
         } else {
             $msg = "The 'minChoices' argument must be a positive (>= 0) integer, '" . gettype($minChoices) . "' given.";
@@ -218,7 +217,7 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * Get the minimum number of choices that the candidate is required to select.
      *
-     * @return integer A positive (> 0) integer.
+     * @return int A positive (> 0) integer.
      */
     public function getMinChoices()
     {
@@ -228,12 +227,12 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * Set the orientation of the choices.
      *
-     * @param integer $orientation A value from the Orientation enumeration.
+     * @param int $orientation A value from the Orientation enumeration.
      * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray(), true) === true) {
+        if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration, '" . gettype($orientation) . "' given.";
@@ -244,7 +243,7 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * Get the orientation of the choices.
      *
-     * @return integer A value from the Orientation enumeration.
+     * @return int A value from the Orientation enumeration.
      */
     public function getOrientation()
     {
@@ -252,7 +251,7 @@ class ChoiceInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
     {
@@ -264,7 +263,7 @@ class ChoiceInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -272,7 +271,7 @@ class ChoiceInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

@@ -23,7 +23,11 @@ use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TableMarshallerTest
+ */
 class TableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -142,14 +146,14 @@ class TableMarshallerTest extends QtiSmTestCase
 	        </table>
 	    ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\tables\\Table', $table);
+        $this->assertInstanceOf(Table::class, $table);
         $this->assertEquals('my-table', $table->getId());
         $this->assertEquals('qti table', $table->getClass());
         $this->assertEquals('Some people...', $table->getSummary());
         $this->assertEquals('/home/jerome', $table->getXmlBase());
 
         $thead = $table->getThead();
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\tables\\Thead', $thead);
+        $this->assertInstanceOf(Thead::class, $thead);
         $trs = $thead->getContent();
         $this->assertEquals(1, count($trs));
         $ths = $trs[0]->getContent();
@@ -193,10 +197,10 @@ class TableMarshallerTest extends QtiSmTestCase
         $this->assertEquals(2, count($tr2->getContent()));
 
         $caption = $table->getCaption();
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\tables\\Caption', $caption);
+        $this->assertInstanceOf(Caption::class, $caption);
         $captionContent = $caption->getContent();
         $this->assertEquals($captionContent[0]->getContent(), 'Some ');
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Strong', $captionContent[1]);
+        $this->assertInstanceOf(Strong::class, $captionContent[1]);
         $strongContent = $captionContent[1]->getContent();
         $this->assertEquals('people', $strongContent[0]->getContent());
         $this->assertEquals(' ...', $captionContent[2]->getContent());
@@ -212,10 +216,8 @@ class TableMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallNoTbody()
     {
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "A 'table' element must contain at lease one 'tbody' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'table' element must contain at lease one 'tbody' element.");
 
         $table = $this->createComponentFromXml('
 	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">

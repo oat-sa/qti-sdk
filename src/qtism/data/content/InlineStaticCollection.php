@@ -42,7 +42,7 @@ class InlineStaticCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof InlineStatic) {
-            $msg = "InlineStaticCollection objects only accept to store InlineStatic objects.";
+            $msg = 'InlineStaticCollection objects only accept to store InlineStatic objects.';
             throw new InvalidArgumentException($msg);
         }
     }

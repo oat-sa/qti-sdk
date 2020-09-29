@@ -62,12 +62,12 @@ class PatternMatchProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The PatternMatch operator only accepts operands with a single cardinality.";
+            $msg = 'The PatternMatch operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The PatternMatch operator only accepts operands with a string baseType.";
+            $msg = 'The PatternMatch operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -84,13 +84,13 @@ class PatternMatchProcessor extends OperatorProcessor
             return new QtiBoolean(false);
         } else {
             $errorType = OperatorUtils::lastPregErrorMessage();
-            $msg = "An internal error occured while processing the regular expression '${rawPattern}': ${errorType}.";
+            $msg = "An internal error occurred while processing the regular expression '${rawPattern}': ${errorType}.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

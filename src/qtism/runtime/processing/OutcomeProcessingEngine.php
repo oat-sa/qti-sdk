@@ -88,7 +88,7 @@ class OutcomeProcessingEngine extends AbstractEngine
         if ($outcomeProcessing instanceof OutcomeProcessing) {
             parent::setComponent($outcomeProcessing);
         } else {
-            $msg = "The OutcomeProcessingEngine class only accepts OutcomeProcessing objects to be executed.";
+            $msg = 'The OutcomeProcessingEngine class only accepts OutcomeProcessing objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }

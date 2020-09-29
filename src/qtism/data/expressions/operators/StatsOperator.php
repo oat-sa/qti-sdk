@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -37,12 +36,12 @@ use qtism\data\expressions\Pure;
  * If any value contained in the sub-expression is not a numerical value, then the
  * result is NULL.
  */
-class StatsOperator extends Operator implements Pure
+class StatsOperator extends Operator
 {
     /**
      * The name of the statistics operator to use.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $name;
@@ -51,7 +50,7 @@ class StatsOperator extends Operator implements Pure
      * Create a new instance of StatsOperator.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $name A value from the Statistics enumeration.
+     * @param int $name A value from the Statistics enumeration.
      * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration or if the count of $expressions is greather than 1.
      */
     public function __construct(ExpressionCollection $expressions, $name)
@@ -63,7 +62,7 @@ class StatsOperator extends Operator implements Pure
     /**
      * Set the statistics operator to use.
      *
-     * @param integer $name A value from the Statistics enumeration.
+     * @param int $name A value from the Statistics enumeration.
      * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration.
      */
     public function setName($name)
@@ -79,7 +78,7 @@ class StatsOperator extends Operator implements Pure
     /**
      * Get the name of the statistics operator to use.
      *
-     * @return integer A value from the Statistics enumeration.
+     * @return int A value from the Statistics enumeration.
      */
     public function getName()
     {
@@ -87,22 +86,10 @@ class StatsOperator extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'statsOperator';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

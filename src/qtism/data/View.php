@@ -62,8 +62,8 @@ class View implements Enumeration
     /**
      * Get a constant name by its value.
      *
-     * @param integer $constant The constant value from the View enumeration.
-     * @return string|boolean The name of the constant or false it if could not be resolved.
+     * @param int $constant The constant value from the View enumeration.
+     * @return string|bool The name of the constant or false it if could not be resolved.
      */
     public static function getNameByConstant($constant)
     {
@@ -102,7 +102,7 @@ class View implements Enumeration
      * Get the constant value from its name.
      *
      * @param string $name The name of the constant you want to retrieve the value.
-     * @return integer|boolean The value of the related constant or false if the name could not be resolved.
+     * @return int|bool The value of the related constant or false if the name could not be resolved.
      */
     public static function getConstantByName($name)
     {

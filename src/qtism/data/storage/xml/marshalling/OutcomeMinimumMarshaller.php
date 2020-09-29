@@ -35,7 +35,7 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall an OutcomeMinimum object in its DOMElement equivalent.
      *
-     * @param QtiComponent A OutcomeMinimum object.
+     * @param QtiComponent $component A OutcomeMinimum object.
      * @return DOMElement The corresponding outcomeMinimum QTI element.
      */
     protected function marshall(QtiComponent $component)
@@ -54,8 +54,9 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall a outcomeMinimum QTI element in its OutcomeMinimum object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding OutcomeMinimum object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -78,6 +79,9 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'outcomeMinimum';

@@ -53,22 +53,22 @@ class IntegerToFloatProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerToFloat operator only accepts operands with a single cardinality.";
+            $msg = 'The IntegerToFloat operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerToFloat operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerToFloat operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand = $operands[0];
 
-        return new QtiFloat(floatval($operand->getValue()));
+        return new QtiFloat((float)$operand->getValue());
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

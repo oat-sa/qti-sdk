@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\BlockStaticCollection;
+use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
 
 /**
@@ -50,7 +51,7 @@ class HottextInteraction extends BlockInteraction
      * 1 (or 0) then the interaction must be bound to a response with multiple
      * cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 0;
@@ -63,7 +64,7 @@ class HottextInteraction extends BlockInteraction
      * required to select any choices. minChoices must be less than or equal
      * to the limit imposed by maxChoices.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = 0;
@@ -102,12 +103,12 @@ class HottextInteraction extends BlockInteraction
      * Set the maximum number of choices that can be selected by the candidate. If the returned value
      * is 0, it means that the candidate is not requitred to select any choice.
      *
-     * @param integer $maxChoices A positive  integer.
+     * @param int $maxChoices A positive  integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -119,7 +120,7 @@ class HottextInteraction extends BlockInteraction
      * Get the maximum number of choices that can be selected by the candidate. If the returned
      * value is 0, it means that the candidate is not required to select any choice.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxChoices()
     {
@@ -129,7 +130,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * Set the minimum number of choices that the candidate is required to select to form a valid response.
      *
-     * @param integer $minChoices A positive (>= 0) integer.
+     * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
      */
     public function setMinChoices($minChoices)
@@ -138,9 +139,9 @@ class HottextInteraction extends BlockInteraction
             if ($minChoices > $this->getMaxChoices() && $this->getMaxChoices() > 0) {
                 $msg = "The 'minChoices' argument must respect the limits imposed by 'maxChoices'.";
                 throw new InvalidArgumentException($msg);
-            } else {
-                $this->minChoices = $minChoices;
             }
+
+            $this->minChoices = $minChoices;
         } elseif (is_int($minChoices) && $minChoices === 0) {
             $this->minChoices = $minChoices;
         } else {
@@ -152,7 +153,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * Get the minimum number of choices that the candidate is required to select to form a valid response.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinChoices()
     {
@@ -170,7 +171,7 @@ class HottextInteraction extends BlockInteraction
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "A HottextInteraction object must be composed of at least one BlockStatic object, none given.";
+            $msg = 'A HottextInteraction object must be composed of at least one BlockStatic object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -186,7 +187,7 @@ class HottextInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint|null
      */
     public function getResponseValidityConstraint()
     {
@@ -198,7 +199,7 @@ class HottextInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return BlockStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -206,7 +207,7 @@ class HottextInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

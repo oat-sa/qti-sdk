@@ -78,7 +78,7 @@ class MatchTableEntry extends QtiComponent
     /**
      * Set the source integer that must be matched exactly.
      *
-     * @param integer $sourceValue An integer value.
+     * @param int $sourceValue An integer value.
      * @throws InvalidArgumentException If $sourceValue is not an integer.
      */
     public function setSourceValue($sourceValue)
@@ -112,7 +112,7 @@ class MatchTableEntry extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -120,7 +120,7 @@ class MatchTableEntry extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

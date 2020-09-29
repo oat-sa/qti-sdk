@@ -34,12 +34,13 @@ class TestFeedbackRefCollection extends QtiComponentCollection
     /**
      * Checks whether $value is an instance of TestFeedbackRef.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TestFeedbackRef.
      */
     protected function checkType($value)
     {
         if (!$value instanceof TestFeedbackRef) {
-            $msg = "A TestFeedbackRefCollection object only accepts to store TestFeedbackRef objects.";
+            $msg = 'A TestFeedbackRefCollection object only accepts to store TestFeedbackRef objects.';
             throw new InvalidArgumentException($msg);
         }
     }

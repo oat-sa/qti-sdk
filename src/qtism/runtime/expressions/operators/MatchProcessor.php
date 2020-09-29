@@ -59,12 +59,12 @@ class MatchProcessor extends OperatorProcessor
         }
 
         if ($operands->sameCardinality() === false) {
-            $msg = "The Match Expression only accepts operands with the same cardinality.";
+            $msg = 'The Match Expression only accepts operands with the same cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Match Expression only accepts operands with the same baseType.";
+            $msg = 'The Match Expression only accepts operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -80,7 +80,7 @@ class MatchProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

@@ -62,7 +62,7 @@ class OrderedProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingleOrOrdered() === false) {
-            $msg = "The Ordered operator only accepts operands with single or ordered cardinality.";
+            $msg = 'The Ordered operator only accepts operands with single or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -70,26 +70,24 @@ class OrderedProcessor extends OperatorProcessor
         $returnValue = null;
 
         foreach ($operands as $operand) {
-            if (is_null($operand) || ($operand instanceof OrderedContainer && $operand->isNull())) {
+            if ($operand === null || ($operand instanceof OrderedContainer && $operand->isNull())) {
                 // As per specs, ignore.
                 continue;
-            } else {
-                if ($refType !== null) {
-                    // A reference type as already been identifier.
-                    if (CommonUtils::inferBaseType($operand) === $refType) {
-                        // $operand can be added to $returnValue.
-                        static::appendValue($returnValue, $operand);
-                    } else {
-                        // baseType mismatch.
-                        $msg = "The Ordered operator only accepts values with a similar baseType.";
-                        throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-                    }
-                } elseif (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {
-                    // First value being identified as non-null.
-                    $refType = $discoveryType;
-                    $returnValue = new OrderedContainer($refType);
+            } elseif ($refType !== null) {
+                // A reference type as already been identifier.
+                if (CommonUtils::inferBaseType($operand) === $refType) {
+                    // $operand can be added to $returnValue.
                     static::appendValue($returnValue, $operand);
+                } else {
+                    // baseType mismatch.
+                    $msg = 'The Ordered operator only accepts values with a similar baseType.';
+                    throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
                 }
+            } elseif (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {
+                // First value being identified as non-null.
+                $refType = $discoveryType;
+                $returnValue = new OrderedContainer($refType);
+                static::appendValue($returnValue, $operand);
             }
         }
 
@@ -115,7 +113,7 @@ class OrderedProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

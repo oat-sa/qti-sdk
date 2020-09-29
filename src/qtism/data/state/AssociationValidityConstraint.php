@@ -45,7 +45,7 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * The minimum number of times $identifier may be found in a Response Variable.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minConstraint;
@@ -53,7 +53,7 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * The maximum number of times $identifier may be found in a Response Variable.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxConstraint;
@@ -65,8 +65,8 @@ class AssociationValidityConstraint extends QtiComponent
      * values contained by the variable described in the $responseÏdentifier variable.
      *
      * @param string $identifier The identifier on which the validity constraint applies to.
-     * @param integer $minConstraint The minimum number of times $identifier may be found in a Response Variable.
-     * @param integer $maxConstraint The maximum number of times $identifier may be found in a Response Variable.
+     * @param int $minConstraint The minimum number of times $identifier may be found in a Response Variable.
+     * @param int $maxConstraint The maximum number of times $identifier may be found in a Response Variable.
      * @throws InvalidArgumentException If one or more of the arguments above are invalid.
      */
     public function __construct($identifier, $minConstraint, $maxConstraint)
@@ -79,12 +79,12 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * Set the identifier on which the validity constraint applies to.
      *
-     * @param integer $identifier
+     * @param int $identifier
      * @throws InvalidArgumentException If $identifier is an empty string.
      */
     public function setIdentifier($identifier)
     {
-        if (is_string($identifier) === false || empty($identifier) === true) {
+        if (is_string($identifier) === false || empty($identifier)) {
             throw new InvalidArgumentException(
                 "The 'identifier' argument must be a non-empty string."
             );
@@ -106,7 +106,7 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * Set the minimum number of times $identifier may be found in a Response Variable.
      *
-     * @param integer $minConstraint A non negative integer (>= 0) integer value.
+     * @param int $minConstraint A non negative integer (>= 0) integer value.
      * @throws InvalidArgumentException If $minConstraint is not a non negative (>= 0) integer value.
      */
     public function setMinConstraint($minConstraint)
@@ -123,7 +123,7 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * Get the minimum number of times $identifier may be found in a Response Variable.
      *
-     * @return integer A non negative (>= 0) integer value.
+     * @return int A non negative (>= 0) integer value.
      */
     public function getMinConstraint()
     {
@@ -135,7 +135,7 @@ class AssociationValidityConstraint extends QtiComponent
      *
      * Please note that 0 indicates no constraint.
      *
-     * @param integer $maxConstraint An integer value which is greater than the 'minConstraint' in place.
+     * @param int $maxConstraint An integer value which is greater than the 'minConstraint' in place.
      * @throws InvalidArgumentException If $maxConstraint is not an integer greater or equal to the 'minConstraint' in place.
      */
     public function setMaxConstraint($maxConstraint)
@@ -144,16 +144,14 @@ class AssociationValidityConstraint extends QtiComponent
             throw new InvalidArgumentException(
                 "The 'maxConstraint' argument must be an integer."
             );
-        } else {
-            if ($maxConstraint < 0) {
-                throw new InvalidArgumentException(
-                    "The 'maxConstraint' argument must be a non negative (>= 0) integer."
-                );
-            } elseif ($maxConstraint !== 0 && $maxConstraint < ($minConstraint = $this->getMinConstraint())) {
-                throw new InvalidArgumentException(
-                    "The 'maxConstraint' argument must be greather or equal to than the 'minConstraint' in place."
-                );
-            }
+        } elseif ($maxConstraint < 0) {
+            throw new InvalidArgumentException(
+                "The 'maxConstraint' argument must be a non negative (>= 0) integer."
+            );
+        } elseif ($maxConstraint !== 0 && $maxConstraint < ($minConstraint = $this->getMinConstraint())) {
+            throw new InvalidArgumentException(
+                "The 'maxConstraint' argument must be greather or equal to than the 'minConstraint' in place."
+            );
         }
 
         $this->maxConstraint = $maxConstraint;
@@ -164,7 +162,7 @@ class AssociationValidityConstraint extends QtiComponent
      *
      * Please note that 0 indicates no constraint.
      *
-     * @return integer
+     * @return int
      */
     public function getMaxConstraint()
     {
@@ -172,7 +170,7 @@ class AssociationValidityConstraint extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -180,7 +178,7 @@ class AssociationValidityConstraint extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

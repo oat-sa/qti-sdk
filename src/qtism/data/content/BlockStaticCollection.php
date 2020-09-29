@@ -40,7 +40,7 @@ class BlockStaticCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof BlockStatic) {
-            $msg = "BlockStaticCollection objects only accept BlockStatic objects to be stored.";
+            $msg = 'BlockStaticCollection objects only accept BlockStatic objects to be stored.';
             throw new InvalidArgumentException($msg);
         }
     }

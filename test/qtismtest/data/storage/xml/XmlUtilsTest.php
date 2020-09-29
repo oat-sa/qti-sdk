@@ -7,10 +7,12 @@ use DOMElement;
 use qtism\data\storage\xml\Utils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlUtilsTest
+ */
 class XmlUtilsTest extends QtiSmTestCase
 {
     /**
-     *
      * @param string $originalXmlString
      * @param string $expectedXmlString
      * @dataProvider anonimizeElementProvider
@@ -23,6 +25,9 @@ class XmlUtilsTest extends QtiSmTestCase
         $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
     }
 
+    /**
+     * @return array
+     */
     public function anonimizeElementProvider()
     {
         return [
@@ -48,7 +53,7 @@ class XmlUtilsTest extends QtiSmTestCase
      *
      * @param string $file
      * @param string $namespaceUri
-     * @param boolean|string $expectedLocation
+     * @param bool|string $expectedLocation
      */
     public function testGetXsdLocation($file, $namespaceUri, $expectedLocation)
     {
@@ -59,6 +64,9 @@ class XmlUtilsTest extends QtiSmTestCase
         $this->assertSame($expectedLocation, $location);
     }
 
+    /**
+     * @return array
+     */
     public function getXsdLocationProvider()
     {
         return [
@@ -133,31 +141,42 @@ class XmlUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider escapeXmlSpecialCharsProvider
+     * @param string $str
+     * @param bool $isAttribute
+     * @param string $expected
      */
     public function testEscapeXmlSpecialChars($str, $isAttribute, $expected)
     {
         $this->assertEquals($expected, Utils::escapeXmlSpecialChars($str, $isAttribute));
     }
 
+    /**
+     * @return array
+     */
     public function escapeXmlSpecialCharsProvider()
     {
         return [
-            ["'\"&<>", false, "&apos;&quot;&amp;&lt;&gt;"],
-            ["<blah>", false, "&lt;blah&gt;"],
-            ["blah", false, "blah"],
-            ['&"', true, "&amp;&quot;"],
-            ['blah & "cool" & \'cool\'', true, "blah &amp; &quot;cool&quot; &amp; 'cool'"],
+            ['\'"&<>', false, '&apos;&quot;&amp;&lt;&gt;'],
+            ['<blah>', false, '&lt;blah&gt;'],
+            ['blah', false, 'blah'],
+            ['&"', true, '&amp;&quot;'],
+            ['blah & "cool" & \'cool\'', true, 'blah &amp; &quot;cool&quot; &amp; \'cool\''],
         ];
     }
 
     /**
      * @dataProvider webComponentFriendlyAttributeNameProvider
+     * @param string $qtiName
+     * @param string $expected
      */
     public function testWebComponentFriendlyAttributeName($qtiName, $expected)
     {
         $this->assertEquals($expected, Utils::webComponentFriendlyAttributeName($qtiName));
     }
 
+    /**
+     * @return array
+     */
     public function webComponentFriendlyAttributeNameProvider()
     {
         return [
@@ -168,12 +187,17 @@ class XmlUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider webComponentFriendlyClassNameProvider
+     * @param string $qtiName
+     * @param string $expected
      */
     public function testWebComponentFriendlyClassName($qtiName, $expected)
     {
         $this->assertEquals($expected, Utils::webComponentFriendlyClassName($qtiName));
     }
 
+    /**
+     * @return array
+     */
     public function webComponentFriendlyClassNameProvider()
     {
         return [
@@ -185,12 +209,17 @@ class XmlUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider qtiFriendlyNameProvider
+     * @param string $wcName
+     * @param string $expected
      */
     public function testQtiFriendlyName($wcName, $expected)
     {
         $this->assertEquals($expected, Utils::qtiFriendlyName($wcName));
     }
 
+    /**
+     * @return array
+     */
     public function qtiFriendlyNameProvider()
     {
         return [
@@ -202,6 +231,10 @@ class XmlUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider getDOMElementAttributeAsProvider
+     * @param DOMElement $element
+     * @param string $attribute
+     * @param string $datatype
+     * @param mixed $expected
      */
     public function testGetDOMElementAttributeAs(DOMElement $element, $attribute, $datatype, $expected)
     {
@@ -209,6 +242,9 @@ class XmlUtilsTest extends QtiSmTestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @return array
+     */
     public function getDOMElementAttributeAsProvider()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');

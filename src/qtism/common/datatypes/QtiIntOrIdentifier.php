@@ -42,7 +42,7 @@ class QtiIntOrIdentifier extends QtiScalar
     protected function checkType($value)
     {
         if (is_int($value) !== true && is_string($value) !== true) {
-            $msg = "The IntOrIdentifier Datatype only accepts to store identifier and integer values.";
+            $msg = 'The IntOrIdentifier Datatype only accepts to store identifier and integer values.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -51,7 +51,7 @@ class QtiIntOrIdentifier extends QtiScalar
      * Get the baseType of the value. This method systematically returns
      * the BaseType::INT_OR_IDENTIFIER value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -62,17 +62,20 @@ class QtiIntOrIdentifier extends QtiScalar
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function __toString()
     {
         $v = $this->getValue();
-        if (is_string($v) === true) {
+        if (is_string($v)) {
             return $v;
         } else {
             return '' . $v;

@@ -27,7 +27,6 @@ use qtism\data\processing\TemplateProcessing;
 
 /**
  * A collection of utility methods focusing on runtime processing.
- *
  */
 class Utils
 {

@@ -37,16 +37,22 @@ class DefaultValueMarshaller extends Marshaller
 {
     private $baseType = -1;
 
+    /**
+     * @param int $baseType
+     */
     public function setBaseType($baseType = -1)
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType argument must be a value from the BaseType enumeration.";
+            $msg = 'The baseType argument must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
 
+    /**
+     * @return int
+     */
     public function getBaseType()
     {
         return $this->baseType;
@@ -56,7 +62,7 @@ class DefaultValueMarshaller extends Marshaller
      * Create a new DefaultValueMarshaller object.
      *
      * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
-     * @param integer $baseType The baseType of the Variable holding this DefaultValue.
+     * @param int $baseType The baseType of the Variable holding this DefaultValue.
      */
     public function __construct($version, $baseType = -1)
     {
@@ -69,6 +75,8 @@ class DefaultValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A DefaultValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -94,6 +102,7 @@ class DefaultValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A DefaultValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
      */
     protected function unmarshall(DOMElement $element)
@@ -111,9 +120,7 @@ class DefaultValueMarshaller extends Marshaller
                 $values[] = $valueMarshaller->unmarshall($valueElements->item($i));
             }
 
-            $object = new DefaultValue($values, $interpretation);
-
-            return $object;
+            return new DefaultValue($values, $interpretation);
         } else {
             $msg = "A 'defaultValue' QTI element must contain at least one 'value' QTI element.";
             throw new UnmarshallingException($msg, $element);
@@ -121,7 +128,7 @@ class DefaultValueMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

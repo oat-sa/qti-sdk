@@ -26,6 +26,9 @@ namespace qtism\data;
 use SplObjectStorage;
 use SplObserver;
 
+/**
+ * Trait QtiIdentifiableTrait
+ */
 trait QtiIdentifiableTrait
 {
     /**
@@ -58,7 +61,7 @@ trait QtiIdentifiableTrait
     /**
      * SplSubject::attach implementation.
      *
-     * @param SplObserver An SplObserver object.
+     * @param SplObserver $observer An SplObserver object.
      */
     public function attach(SplObserver $observer)
     {

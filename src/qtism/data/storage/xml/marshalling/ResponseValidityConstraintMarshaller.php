@@ -38,6 +38,8 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      *
      * @param QtiComponent $component
      * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     public function marshall(QtiComponent $component)
     {
@@ -63,6 +65,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      *
      * @param DOMElement $element
      * @return QtiComponent A ResponseValidityConstraint object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     public function unmarshall(DOMElement $element)
@@ -87,7 +90,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
                         return $component;
                     } catch (InvalidArgumentException $e) {
                         throw new UnmarshallingException(
-                            "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.",
+                            "An error occurred while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.",
                             $element,
                             $e
                         );
@@ -113,7 +116,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

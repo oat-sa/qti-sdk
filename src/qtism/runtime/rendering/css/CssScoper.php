@@ -53,17 +53,17 @@ class CssScoper implements Renderable
 
     const IN_ATRULEBODY = 8;
 
-    const CHAR_AT = "@";
+    const CHAR_AT = '@';
 
     const CHAR_DOUBLEQUOTE = '"';
 
-    const CHAR_TERMINATOR = ";";
+    const CHAR_TERMINATOR = ';';
 
     const CHAR_ESCAPE = "\\";
 
     const CHAR_TAB = "\t";
 
-    const CHAR_SPACE = " ";
+    const CHAR_SPACE = ' ';
 
     const CHAR_NEWLINE = "\n";
 
@@ -71,18 +71,18 @@ class CssScoper implements Renderable
 
     const CHAR_VERTICALTAB = "\v";
 
-    const CHAR_OPENINGBRACE = "{";
+    const CHAR_OPENINGBRACE = '{';
 
-    const CHAR_CLOSINGBRACE = "}";
+    const CHAR_CLOSINGBRACE = '}';
 
-    const CHAR_STAR = "*";
+    const CHAR_STAR = '*';
 
-    const CHAR_SLASH = "/";
+    const CHAR_SLASH = '/';
 
     /**
      * The current state.
      *
-     * @var integer
+     * @var int
      */
     private $state = self::RUNNING;
 
@@ -138,14 +138,14 @@ class CssScoper implements Renderable
     /**
      * The previous state.
      *
-     * @var integer
+     * @var int
      */
     private $previousState = false;
 
     /**
      * Whether or not map QTI classes to their qti-X CSS classes.
      *
-     * @var boolean
+     * @var bool
      */
     private $mapQtiClasses = false;
 
@@ -155,7 +155,7 @@ class CssScoper implements Renderable
     private $mapQtiPseudoClasses = false;
 
     /**
-     * @var boolean Whether or not using the Web Component Friendly mode.
+     * @var bool Whether or not using the Web Component Friendly mode.
      */
     private $webComponentFriendly = false;
 
@@ -336,8 +336,8 @@ class CssScoper implements Renderable
     /**
      * Create a new CssScoper object.
      *
-     * @param boolean $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
-     * @param boolean $mapQtiPseudoClasses Whether or not to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiPseudoClasses Whether or not to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
      */
     public function __construct($mapQtiClasses = false, $mapQtiPseudoClasses = false)
     {
@@ -348,7 +348,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not QTI classes are mapped to their qti-X CSS class equivalent.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesMapQtiClasses()
     {
@@ -358,7 +358,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not map QTI classes to their qti-X CSS class equivalent.
      *
-     * @param boolean $mapQtiClasses
+     * @param bool $mapQtiClasses
      */
     public function mapQtiClasses($mapQtiClasses)
     {
@@ -368,7 +368,7 @@ class CssScoper implements Renderable
     /**
      * Whether or not QTI pseudo classes are mapped to their QTI-X CSS class equivalent.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesMapQtiPseudoClasses()
     {
@@ -378,18 +378,24 @@ class CssScoper implements Renderable
     /**
      * Whether or not map QTI pseudo classes to their QTI-X CSS class equivalent.
      *
-     * @param boolean $mapQtiPseudoClasses
+     * @param bool $mapQtiPseudoClasses
      */
     public function mapQtiPseudoClasses($mapQtiPseudoClasses)
     {
         $this->mapQtiPseudoClasses = $mapQtiPseudoClasses;
     }
 
+    /**
+     * @param $webComponentFriendly
+     */
     public function setWebComponentFriendly($webComponentFriendly)
     {
         $this->webComponentFriendly = $webComponentFriendly;
     }
 
+    /**
+     * @return bool
+     */
     public function isWebComponentFriendly()
     {
         return $this->webComponentFriendly;
@@ -401,11 +407,12 @@ class CssScoper implements Renderable
      * @param string $file The path to the file that has to be rescoped.
      * @param string $id The scope identifier. If not given, will be randomly generated.
      * @return string The rescoped content of $file.
+     * @throws MemoryStreamException
      * @throws RenderingException If something goes wrong while rescoping the content.
      */
     public function render($file, $id = '')
     {
-        if (empty($id) === true) {
+        if (empty($id)) {
             $id = uniqid();
         }
 
@@ -459,7 +466,7 @@ class CssScoper implements Renderable
                 $this->afterCharReading($char);
             } catch (MemoryStreamException $e) {
                 $stream->close();
-                $msg = "An unexpected error occured while reading the CSS file '${file}'.";
+                $msg = "An unexpected error occurred while reading the CSS file '${file}'.";
                 throw new RenderingException($msg, RenderingException::RUNTIME, $e);
             }
         }
@@ -474,6 +481,7 @@ class CssScoper implements Renderable
      *
      * @param string $id The identifier to be used for scoping.
      * @param string $file The path to the CSS file to be scoped.
+     * @throws MemoryStreamException
      * @throws RenderingException
      */
     protected function init($id, $file)
@@ -497,7 +505,7 @@ class CssScoper implements Renderable
     /**
      * Set the current state.
      *
-     * @param integer $state
+     * @param int $state
      */
     protected function setState($state)
     {
@@ -507,7 +515,7 @@ class CssScoper implements Renderable
     /**
      * Get the current state.
      *
-     * @return integer
+     * @return int
      */
     protected function getState()
     {
@@ -835,7 +843,7 @@ class CssScoper implements Renderable
      * Whether a given $char is considered to be white space.
      *
      * @param string $char
-     * @return boolean
+     * @return bool
      */
     private static function isWhiteSpace($char)
     {
@@ -915,9 +923,9 @@ class CssScoper implements Renderable
     }
 
     /**
-     * Wheter the current char is escaping something.
+     * Whether the current char is escaping something.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isEscaping()
     {

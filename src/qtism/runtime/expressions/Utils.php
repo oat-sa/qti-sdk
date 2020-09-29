@@ -35,11 +35,12 @@ class Utils
     /**
      * Removes trailing and ending braces ('{' and '}') from a variableRef.
      *
+     * @param string $variableRef
      * @return string A sanitized variableRef.
      */
     public static function sanitizeVariableRef($variableRef)
     {
-        if (gettype($variableRef) === 'string') {
+        if (is_string($variableRef)) {
             return trim($variableRef, '{}');
         } else {
             $msg = "The Utils::sanitizeVariableRef method only accepts a string argument, '" . gettype($variableRef) . "' given.";

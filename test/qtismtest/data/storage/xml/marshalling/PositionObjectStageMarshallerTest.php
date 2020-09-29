@@ -10,6 +10,9 @@ use qtism\data\content\interactions\PositionObjectStage;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PositionObjectStageMarshallerTest
+ */
 class PositionObjectStageMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -46,7 +49,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\PositionObjectStage', $component);
+        $this->assertInstanceOf(PositionObjectStage::class, $component);
 
         $object = $component->getObject();
         $this->assertEquals('country.jpg', $object->getData());

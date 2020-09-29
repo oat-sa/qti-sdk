@@ -10,6 +10,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionTemplatesTest
+ */
 class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testSimpleTemplatingLinear()

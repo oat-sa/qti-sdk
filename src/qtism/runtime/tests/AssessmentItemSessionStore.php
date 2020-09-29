@@ -77,7 +77,7 @@ class AssessmentItemSessionStore
      * Add an AssessmentItemSession to the store, for a given $occurence number.
      *
      * @param AssessmentItemSession $assessmentItemSession
-     * @param integer $occurence The occurence number of the session.
+     * @param int $occurence The occurence number of the session.
      */
     public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0)
     {
@@ -94,7 +94,7 @@ class AssessmentItemSessionStore
      * Get an AssessmentItemSession by $assessmentItemRef and $occurence number.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @param integer $occurence An occurence number.
+     * @param int $occurence An occurence number.
      * @return AssessmentItemSession An AssessmentItemSession object.
      * @throws OutOfBoundsException If there is no AssessmentItemSession for the given $assessmentItemRef and $occurence.
      */
@@ -113,11 +113,13 @@ class AssessmentItemSessionStore
      * Whether the store contains an item session for $assessmentItemRef, $occurence.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @param integer $occurence An occurence number.
+     * @param int $occurence An occurence number.
+     * @return bool
      */
     public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
     {
         try {
+            // Circumvent SplObjectStorage bug (prior PHP 7.0.8)
             return isset($this->shelves[$assessmentItemRef][$occurence]);
         } catch (UnexpectedValueException $e) {
             return false;
@@ -149,7 +151,7 @@ class AssessmentItemSessionStore
      * * If $assessmentItemRef is known by the store and there are more than a single session for this $assessmentItemRef, false is returned.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @return boolean
+     * @return bool
      */
     public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef)
     {

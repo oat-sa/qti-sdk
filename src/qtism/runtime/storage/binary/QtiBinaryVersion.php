@@ -25,6 +25,9 @@ namespace qtism\runtime\storage\binary;
 
 use qtism\common\storage\BinaryStreamAccessException;
 
+/**
+ * Class QtiBinaryVersion
+ */
 class QtiBinaryVersion
 {
     /**
@@ -100,61 +103,97 @@ class QtiBinaryVersion
             : 'L';
     }
 
+    /**
+     * @return bool
+     */
     public function isMaster(): bool
     {
         return $this->branch === 'M';
     }
 
+    /**
+     * @return bool
+     */
     public function isLegacy(): bool
     {
         return $this->branch === 'L';
     }
 
+    /**
+     * @return bool
+     */
     public function isCurrentVersion(): bool
     {
         return $this->version = self::CURRENT_VERSION;
     }
 
+    /**
+     * @return bool
+     */
     public function isInBothBranches(): bool
     {
         return $this->version >= self::VERSION_FIRST_MASTER;
     }
 
+    /**
+     * @return bool
+     */
     public function storesPositionAndRouteCountAsInteger(): bool
     {
         return $this->version >= self::VERSION_POSITION_INTEGER;
     }
 
+    /**
+     * @return bool
+     */
     public function storesTrackPath(): bool
     {
         return $this->version >= self::VERSION_TRACK_PATH;
     }
 
+    /**
+     * @return bool
+     */
     public function storesAlwaysAllowJumps(): bool
     {
         return $this->version >= self::VERSION_ALWAYS_ALLOW_JUMPS;
     }
 
+    /**
+     * @return bool
+     */
     public function storesForceBranchingAndPreconditions(): bool
     {
         return $this->version >= self::VERSION_FORCE_BRANCHING_PRECONDITIONS;
     }
 
+    /**
+     * @return bool
+     */
     public function storesLastAction(): bool
     {
         return $this->version >= self::VERSION_LAST_ACTION;
     }
 
+    /**
+     * @return bool
+     */
     public function storesDurations(): bool
     {
         return $this->version >= self::VERSION_DURATIONS;
     }
 
+    /**
+     * @return bool
+     */
     public function storesMultipleSections(): bool
     {
         return $this->version >= self::VERSION_MULTIPLE_SECTIONS;
     }
 
+    /**
+     * @return bool
+     */
     public function storesAttempting(): bool
     {
         return $this->version >= self::VERSION_ATTEMPTING;

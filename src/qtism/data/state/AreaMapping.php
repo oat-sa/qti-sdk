@@ -41,7 +41,7 @@ class AreaMapping extends QtiComponent
     /**
      * The lower bound.
      *
-     * @var boolean|float
+     * @var bool|float
      * @qtism-bean-property
      */
     private $lowerBound = false;
@@ -49,7 +49,7 @@ class AreaMapping extends QtiComponent
     /**
      * The upper bound.
      *
-     * @var boolean|float
+     * @var bool|float
      * @qtism-bean-property
      */
     private $upperBound = false;
@@ -75,8 +75,8 @@ class AreaMapping extends QtiComponent
      *
      * @param AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
      * @param float $defaultValue A default value. Default is 0.
-     * @param boolean|float $lowerBound A lower bound. Give false if no lower bound.
-     * @param boolean|float $upperBound An upper bound. Give false if no upper bound.
+     * @param bool|float $lowerBound A lower bound. Give false if no lower bound.
+     * @param bool|float $upperBound An upper bound. Give false if no upper bound.
      * @throws InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
      */
     public function __construct(AreaMapEntryCollection $areaMapEntries, $defaultValue = 0.0, $lowerBound = false, $upperBound = false)
@@ -90,7 +90,7 @@ class AreaMapping extends QtiComponent
     /**
      * Set the lower bound.
      *
-     * @param boolean|float $lowerBound A lower bound.
+     * @param bool|float $lowerBound A lower bound.
      * @throws InvalidArgumentException If $lowerBound is not a float value nor false.
      */
     public function setLowerBound($lowerBound)
@@ -116,7 +116,7 @@ class AreaMapping extends QtiComponent
     /**
      * Set the upper bound.
      *
-     * @param boolean|float $upperBound An upper bound.
+     * @param bool|float $upperBound An upper bound.
      * @throws InvalidArgumentException If $upperBound is not a float value nor false.
      */
     public function setUpperBound($upperBound)
@@ -175,7 +175,7 @@ class AreaMapping extends QtiComponent
         if (count($areaMapEntries) >= 1) {
             $this->areaMapEntries = $areaMapEntries;
         } else {
-            $msg = "An AreaMapping object must contain at least one AreaMapEntry object. none given.";
+            $msg = 'An AreaMapping object must contain at least one AreaMapEntry object. none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -193,7 +193,7 @@ class AreaMapping extends QtiComponent
     /**
      * Whether the AreaMapping has a lower bound.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLowerBound()
     {
@@ -203,7 +203,7 @@ class AreaMapping extends QtiComponent
     /**
      * Whether the AreaMapping has an upper bound.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasUpperBound()
     {
@@ -211,7 +211,7 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -219,7 +219,7 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

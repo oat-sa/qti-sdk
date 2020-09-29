@@ -37,7 +37,11 @@ use qtism\data\QtiComponentCollection;
 class EqualRoundedMarshaller extends OperatorMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
+     * Marshall an EqualRounded object into a QTI equalRounded element.
+     *
+     * @param QtiComponent $component The EqualRounded object to marshall.
+     * @param array An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI equalRounded element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -53,13 +57,18 @@ class EqualRoundedMarshaller extends OperatorMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
+     * Unmarshall a QTI equalRounded operator element into an EqualRounded object.
+     *
+     * @param DOMElement $element The EqualRounded element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent An EqualRounded object.
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($figures = $this->getDOMElementAttributeAs($element, 'figures')) !== null) {
             if (Format::isInteger($figures)) {
-                $figures = intval($figures);
+                $figures = (int)$figures;
             }
 
             $object = new EqualRounded($children, $figures);

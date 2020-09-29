@@ -44,6 +44,7 @@ class TemplateVariableMarshaller extends Marshaller
      *
      * @param QtiComponent|ResultTemplateVariable $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -74,6 +75,7 @@ class TemplateVariableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -93,7 +95,7 @@ class TemplateVariableMarshaller extends Marshaller
             ? BaseType::getConstantByName($element->getAttribute('baseType'))
             : null;
 
-        $valuesElements = self::getChildElementsByTagName($element, 'value');
+        $valuesElements = $this->getChildElementsByTagName($element, 'value');
         if (!empty($valuesElements)) {
             $values = [];
             foreach ($valuesElements as $valuesElement) {

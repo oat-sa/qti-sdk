@@ -37,8 +37,8 @@ class ExtendedTestPart extends TestPart
      *
      * @param string $identifier An identifier.
      * @param SectionPartCollection $assessmentSections A collection of AssessmentSection and/or AssessmentSectionRef objects.
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($identifier, SectionPartCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
@@ -121,7 +121,7 @@ class ExtendedTestPart extends TestPart
     }
 
     /**
-     * @see \qtism\data\TestPart::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

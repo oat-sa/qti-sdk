@@ -29,7 +29,7 @@ namespace qtism\data\content\xhtml\tables;
 class Td extends TableCell
 {
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

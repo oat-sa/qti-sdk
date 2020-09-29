@@ -9,7 +9,11 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class DrawingInteractionMarshallerTest
+ */
 class DrawingInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -38,7 +42,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\DrawingInteraction', $component);
+        $this->assertInstanceOf(DrawingInteraction::class, $component);
         $this->assertEquals('my-drawings', $component->getId());
         $this->assertEquals('draw-it', $component->getClass());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
@@ -63,10 +67,8 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
             </drawingInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "A 'drawingInteraction' element must contain exactly one 'object' element, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'drawingInteraction' element must contain exactly one 'object' element, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -80,10 +82,8 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
             </drawingInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'responseIdentifier' attribute is missing from the 'drawingInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'drawingInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

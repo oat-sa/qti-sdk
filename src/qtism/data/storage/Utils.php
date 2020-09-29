@@ -44,7 +44,7 @@ class Utils
      * the correct datatype.
      *
      * @param string $string The QTI valueType value as a string.
-     * @param integer $baseType The QTI baseType that defines the datatype of $string.
+     * @param int $baseType The QTI baseType that defines the datatype of $string.
      * @return mixed A converted object/primitive type.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      * @throws UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.
@@ -68,7 +68,7 @@ class Utils
 
                 case BaseType::INTEGER:
                     if (Format::isInteger($string)) {
-                        $value = intval($string);
+                        $value = (int)$string;
 
                         return $value;
                     } else {
@@ -79,7 +79,7 @@ class Utils
 
                 case BaseType::FLOAT:
                     if (Format::isFloat($string)) {
-                        $value = floatval($string);
+                        $value = (float)$string;
 
                         return $value;
                     } else {
@@ -110,7 +110,7 @@ class Utils
                     if (Format::isIdentifier($string)) {
                         return $string;
                     } elseif (Format::isInteger($string)) {
-                        return intval($string);
+                        return (int)$string;
                     } else {
                         $msg = "'${string}' is not a valid QTI Identifier nor a valid integer.";
                         throw new UnexpectedValueException($msg);
@@ -149,7 +149,7 @@ class Utils
                     break;
 
                 case BaseType::FILE:
-                    throw new RuntimeException("Unsupported baseType: file.");
+                    throw new RuntimeException('Unsupported baseType: file.');
                     break;
 
                 case BaseType::STRING:
@@ -160,7 +160,7 @@ class Utils
                     if (Format::isPoint($string)) {
                         $parts = explode("\x20", $string);
 
-                        return new QtiPoint(intval($parts[0]), intval($parts[1]));
+                        return new QtiPoint((int)$parts[0], (int)$parts[1]);
                     } else {
                         $msg = "'${string}' is not valid point.";
                         throw new UnexpectedValueException($msg);
@@ -168,7 +168,7 @@ class Utils
                     break;
             }
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -185,11 +185,11 @@ class Utils
     public static function stringToCoords($string, $shape)
     {
         if (Format::isCoords($string)) {
-            $stringCoords = explode(",", $string);
+            $stringCoords = explode(',', $string);
             $intCoords = [];
 
             foreach ($stringCoords as $sC) {
-                $intCoords[] = intval($sC);
+                $intCoords[] = (int)$sC;
             }
 
             // Maybe it was accepted has coords, but is it buildable with
@@ -213,7 +213,7 @@ class Utils
      */
     public static function sanitizeUri($uri)
     {
-        if (gettype($uri) === 'string') {
+        if (is_string($uri)) {
             return rtrim($uri, '/');
         }
 

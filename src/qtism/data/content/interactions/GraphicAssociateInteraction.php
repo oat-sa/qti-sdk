@@ -50,7 +50,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * greater than 1 (or 0) then the interaction must be bound to a response
      * with multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxAssociations = 1;
@@ -63,7 +63,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * not required to make any associations. minAssociations must be less than
      * or equal to the limit imposed by maxAssociations.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minAssociations = 0;
@@ -111,7 +111,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
         } else {
-            $msg = "A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.";
+            $msg = 'A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -130,12 +130,12 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Set the maximum number of associations that the candidate is allowed
      * to make.
      *
-     * @param integer $maxAssociations A positive (>= 0) integer.
+     * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
     {
-        if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
+        if (is_int($maxAssociations) && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
         } else {
             $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "' given.";
@@ -147,7 +147,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Get the maximum number of associations that the candidate is allowed
      * to make.
      *
-     * @return integer $maxAssociations A positive (>= 0) integer.
+     * @return int $maxAssociations A positive (>= 0) integer.
      */
     public function getMaxAssociations()
     {
@@ -158,12 +158,12 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Set the minimum number of associations that the candidate is required to
      * make.
      *
-     * @param integer $minAssociations A positive (>= 0) integer.
+     * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations)
     {
-        if (is_int($minAssociations) === true && $minAssociations >= 0) {
+        if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($minAssociations > $this->getMaxAssociations()) {
                 $msg = "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
                 throw new InvalidArgumentException($msg);
@@ -180,7 +180,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * Get the minimum number of associations that the candidate is required
      * to make.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinAssociations()
     {
@@ -188,7 +188,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint|null
      */
     public function getResponseValidityConstraint()
     {
@@ -212,7 +212,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -220,7 +220,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

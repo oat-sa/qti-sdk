@@ -73,8 +73,9 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      *
+     * @param QtiComponent $component
+     * @param string $base
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
-     * @throws RenderingException If an error occurs while rendering $component.
      */
     public function render($component, $base = '')
     {
@@ -116,23 +117,21 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
             if ($this->hasAdditionalClasses() === true) {
                 $classes = implode("\x20", $this->getAdditionalClasses());
                 $currentClasses = $fragment->firstChild->getAttribute('class');
-                $glue = ($currentClasses !== '') ? "\x20" : "";
+                $glue = ($currentClasses !== '') ? "\x20" : '';
                 $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
             }
-        } else {
+        } elseif ($this->hasAdditionalClasses() === true) {
             // Only the last added qti- CSS class must be rendered.
-            if ($this->hasAdditionalClasses() === true) {
-                $classes = $this->getAdditionalClasses();
-                $class = array_pop($classes);
-                $fragment->firstChild->setAttribute('class', $class);
-            }
+            $classes = $this->getAdditionalClasses();
+            $class = array_pop($classes);
+            $fragment->firstChild->setAttribute('class', $class);
         }
 
         // Add user specific CSS classes e.g. 'my-class' to rendering.
         if ($this->hasAdditionalUserClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalUserClasses());
             $currentClasses = $fragment->firstChild->getAttribute('class');
-            $glue = ($currentClasses !== '') ? "\x20" : "";
+            $glue = ($currentClasses !== '') ? "\x20" : '';
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
 
@@ -146,6 +145,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -158,6 +158,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -171,6 +172,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -200,7 +202,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether a replacement tag name is defined.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasReplacementTagName()
     {
@@ -244,7 +246,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether additional CSS classes are defined for rendering.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasAdditionalClasses()
     {
@@ -291,7 +293,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether additional user CSS classes are defined for rendering.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAdditionalUserClasses()
     {

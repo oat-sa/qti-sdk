@@ -63,12 +63,12 @@ class DurationLTProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The DurationLT operator only accepts operands with a single cardinality.";
+            $msg = 'The DurationLT operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyDuration() === false) {
-            $msg = "The DurationLT operator only accepts operands with a duration baseType.";
+            $msg = 'The DurationLT operator only accepts operands with a duration baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -76,7 +76,7 @@ class DurationLTProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

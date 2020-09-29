@@ -108,13 +108,13 @@ class OutcomeElseIf extends QtiComponent
         if (count($outcomeRules) > 0) {
             $this->outcomeRules = $outcomeRules;
         } else {
-            $msg = "An OutcomeElseIf object must be bound to at lease one OutcomeRule object.";
+            $msg = 'An OutcomeElseIf object must be bound to at lease one OutcomeRule object.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -122,7 +122,7 @@ class OutcomeElseIf extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

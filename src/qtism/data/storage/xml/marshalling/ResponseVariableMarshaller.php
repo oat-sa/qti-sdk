@@ -42,6 +42,7 @@ class ResponseVariableMarshaller extends Marshaller
      *
      * @param QtiComponent|ResultResponseVariable $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -76,6 +77,7 @@ class ResponseVariableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -88,7 +90,7 @@ class ResponseVariableMarshaller extends Marshaller
             throw new UnmarshallingException('ResponseVariable element must have cardinality attribute', $element);
         }
 
-        $candidateResponseElements = self::getChildElementsByTagName($element, 'candidateResponse');
+        $candidateResponseElements = $this->getChildElementsByTagName($element, 'candidateResponse');
         if (empty($candidateResponseElements)) {
             throw new UnmarshallingException('ResponseVariable element must have candidateResponse element', $element);
         }
@@ -109,7 +111,7 @@ class ResponseVariableMarshaller extends Marshaller
             ? new QtiIdentifier($element->getAttribute('choiceSequence'))
             : null;
 
-        $correctResponseElements = self::getChildElementsByTagName($element, 'correctResponse');
+        $correctResponseElements = $this->getChildElementsByTagName($element, 'correctResponse');
         if (!empty($correctResponseElements)) {
             $correctResponseElement = array_shift($correctResponseElements);
             $correctResponse = $this->getMarshallerFactory()

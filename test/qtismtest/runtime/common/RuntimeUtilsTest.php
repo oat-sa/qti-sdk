@@ -2,7 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
-use qtism\common\collections\Container;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -14,6 +14,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -21,10 +22,15 @@ use qtism\runtime\common\Utils;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class RuntimeUtilsTest
+ */
 class RuntimeUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider inferBaseTypeProvider
+     * @param mixed $value
+     * @param int|bool $expectedBaseType
      */
     public function testInferBaseType($value, $expectedBaseType)
     {
@@ -33,6 +39,8 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider inferCardinalityProvider
+     * @param mixed $value
+     * @param int|bool $expectedCardinality
      */
     public function testInferCardinality($value, $expectedCardinality)
     {
@@ -43,7 +51,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @dataProvider isValidVariableIdentifierProvider
      *
      * @param string $string
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testIsValidVariableIdentifier($string, $expected)
     {
@@ -54,7 +62,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @dataProvider isNullDataProvider
      *
      * @param QtiDatatype $value
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testIsNull(QtiDatatype $value = null, $expected)
     {
@@ -66,7 +74,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      *
      * @param QtiDatatype $a
      * @param QtiDatatype $b
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected)
     {
@@ -75,19 +83,21 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider throwTypingErrorProvider
+     * @param mixed $value
+     * @param string $expectedMsg
      */
     public function testThrowTypingError($value, $expectedMsg)
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            $expectedMsg
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMsg);
 
         Utils::throwTypingError($value);
     }
 
     /**
      * @dataProvider floatArrayToIntegerProvider
+     * @param array $floatArray
+     * @param array $integerArray
      */
     public function testFloatArrayToInteger($floatArray, $integerArray)
     {
@@ -96,21 +106,30 @@ class RuntimeUtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider integerArrayToFloatProvider
+     * @param array $integerArray
+     * @param array $floatArray
      */
     public function testIntegerArrayToFloat($integerArray, $floatArray)
     {
         $this->assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
     }
 
+    /**
+     * @return array
+     */
     public function throwTypingErrorProvider()
     {
+        $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
         return [
-            [99.9, "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'double' given."],
-            ['blah', "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'string' given."],
-            [new stdClass(), "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'stdClass' given."],
+            [99.9, sprintf($message, 'double')],
+            ['blah', sprintf($message, 'string')],
+            [new stdClass(), sprintf($message, 'stdClass')],
         ];
     }
 
+    /**
+     * @return array
+     */
     public function floatArrayToIntegerProvider()
     {
         return [
@@ -118,6 +137,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function integerArrayToFloatProvider()
     {
         return [
@@ -125,6 +147,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function inferBaseTypeProvider()
     {
         $returnValue = [];
@@ -149,6 +174,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function inferCardinalityProvider()
     {
         $returnValue = [];
@@ -171,6 +199,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function isValidVariableIdentifierProvider()
     {
         return [
@@ -200,6 +231,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isNullDataProvider()
     {
         return [
@@ -214,6 +248,9 @@ class RuntimeUtilsTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function equalsProvider()
     {
         return [

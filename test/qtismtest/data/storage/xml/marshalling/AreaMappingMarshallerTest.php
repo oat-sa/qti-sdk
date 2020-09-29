@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
@@ -10,6 +11,9 @@ use qtism\data\state\AreaMapEntryCollection;
 use qtism\data\state\AreaMapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AreaMappingMarshallerTest
+ */
 class AreaMappingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
@@ -27,7 +31,7 @@ class AreaMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('areaMapping', $element->nodeName);
     }
 
@@ -46,6 +50,6 @@ class AreaMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $component);
+        $this->assertInstanceOf(AreaMapping::class, $component);
     }
 }

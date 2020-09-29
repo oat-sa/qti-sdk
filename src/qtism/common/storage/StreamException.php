@@ -34,35 +34,35 @@ abstract class StreamException extends Exception
     /**
      * Unknown error.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
     /**
      * Error while opening a data stream.
      *
-     * @var integer
+     * @var int
      */
     const OPEN = 1;
 
     /**
      * Error while writing a data stream.
      *
-     * @var integer
+     * @var int
      */
     const WRITE = 2;
 
     /**
      * Error while closing a data stream.
      *
-     * @var integer
+     * @var int
      */
     const CLOSE = 3;
 
     /**
      * Error while reading a data stream.
      *
-     * @var integer
+     * @var int
      */
     const READ = 4;
 
@@ -75,19 +75,19 @@ abstract class StreamException extends Exception
     /**
      * Error while opening the stream but it is already opened.
      *
-     * @var integer
+     * @var int
      */
     const ALREADY_OPEN = 6;
 
     /**
      * Error during a rewind call.
      *
-     * @var integer
+     * @var int
      */
     const REWIND = 7;
 
     /**
-     * The IStream object where in the error occured.
+     * The IStream object where in the error occurred.
      *
      * @var IStream
      */
@@ -97,8 +97,8 @@ abstract class StreamException extends Exception
      * Create a new StreamException.
      *
      * @param string $message The human-readable message describing the error.
-     * @param IStream $source The IStream object where in the error occured.
-     * @param integer $code A code describing the error.
+     * @param IStream $source The IStream object where in the error occurred.
+     * @param int $code A code describing the error.
      * @param Exception $previous An optional previous exception.
      */
     public function __construct($message, IStream $source, $code = 0, Exception $previous = null)
@@ -108,7 +108,7 @@ abstract class StreamException extends Exception
     }
 
     /**
-     * Get the IStream object where the error occured.
+     * Get the IStream object where the error occurred.
      *
      * @return IStream An IStream object.
      */
@@ -118,7 +118,7 @@ abstract class StreamException extends Exception
     }
 
     /**
-     * Set the IStream object where the error occured.
+     * Set the IStream object where the error occurred.
      *
      * @param IStream $source An IStream object.
      */

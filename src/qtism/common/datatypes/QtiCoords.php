@@ -36,14 +36,14 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * A value from the Shape enumeration.
      *
-     * @var integer
+     * @var int
      */
     private $shape;
 
     /**
      * Create a new Coords object.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      * @param array $coords An array of number values.
      * @throws InvalidArgumentException If an error occurs while creating the Coords object.
      */
@@ -55,28 +55,28 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
         switch ($this->getShape()) {
             case QtiShape::DEF:
                 if (count($this->getDataPlaceHolder()) > 0) {
-                    $msg = "No coordinates should be given when the default shape is used.";
+                    $msg = 'No coordinates should be given when the default shape is used.';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
 
             case QtiShape::RECT:
                 if (count($this->getDataPlaceHolder()) != 4) {
-                    $msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
+                    $msg = 'The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
 
             case QtiShape::CIRCLE:
                 if (count($this->getDataPlaceHolder()) != 3) {
-                    $msg = "The circle coordinates must be composed by 3 values (x, y, r).";
+                    $msg = 'The circle coordinates must be composed by 3 values (x, y, r).';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
 
             case QtiShape::POLY:
                 if (count($this->getDataPlaceHolder()) % 2 > 0) {
-                    $msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
+                    $msg = 'The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).';
                     throw new InvalidArgumentException($msg);
                 }
                 break;
@@ -86,7 +86,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * Set the $shape on which the coordinates apply.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      * @throws InvalidArgumentException
      */
     protected function setShape($shape)
@@ -102,8 +102,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     /**
      * Get the shape on which the coordinates apply.
      *
-     * @return integer A value from the Shape enumeration.
-     *
+     * @return int A value from the Shape enumeration.
      */
     public function getShape()
     {
@@ -114,7 +113,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Whether the given $point is inside the coordinates.
      *
      * @param QtiPoint $point A QtiPoint object.
-     * @return boolean
+     * @return bool
      */
     public function inside(QtiPoint $point)
     {
@@ -127,11 +126,11 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
         }
 
         if ($this->getShape() === QtiShape::CIRCLE) {
-            return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
+            return (($point->getX() - $this[0]) ** 2) + (($point->getY() - $this[1]) ** 2) < ($this[2] ** 2);
         }
 
         if ($this->getShape() === QtiShape::ELLIPSE) {
-            return pow($point->getX() - $this[0], 2) / pow($this[2], 2) + pow($point->getY() - $this[1], 2) / pow($this[3], 2) <= 1;
+            return (($point->getX() - $this[0]) ** 2) / ($this[2] ** 2) + (($point->getY() - $this[1]) ** 2) / ($this[3] ** 2) <= 1;
         }
 
         // we consider it is a polygon.
@@ -188,7 +187,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      */
     public function __toString()
     {
-        return implode(",", $this->getDataPlaceHolder());
+        return implode(',', $this->getDataPlaceHolder());
     }
 
     /**
@@ -196,18 +195,20 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * considered to be equal if they have the same coordinates and shape.
      *
      * @param mixed $obj
-     * @return boolean
+     * @return bool
      */
     public function equals($obj)
     {
-        return $obj instanceof QtiCoords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+        return $obj instanceof self
+            && $this->getShape() === $obj->getShape()
+            && $this->getArrayCopy() === $obj->getArrayCopy();
     }
 
     /**
      * Get the baseType of the value. This method systematically returns
      * BaseType::COORDS.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -218,7 +219,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * Get the cardinality of the value. This method systematically returns
      * Cardinality::SINGLE.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

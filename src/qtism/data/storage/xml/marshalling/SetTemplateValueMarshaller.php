@@ -37,6 +37,8 @@ class SetTemplateValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SetTemplateValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -54,6 +56,7 @@ class SetTemplateValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SetTemplateValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -63,9 +66,7 @@ class SetTemplateValueMarshaller extends Marshaller
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                $object = new SetTemplateValue($identifier, $marshaller->unmarshall($expressionElt));
-
-                return $object;
+                return new SetTemplateValue($identifier, $marshaller->unmarshall($expressionElt));
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element 'setTemplateValue'.";
                 throw new UnmarshallingException($msg, $element);
@@ -77,7 +78,7 @@ class SetTemplateValueMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

@@ -2,17 +2,19 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\data\state\AssociationValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssociationValidityConstraintTest
+ */
 class AssociationValidityConstraintTest extends QtiSmTestCase
 {
     /**
      * @dataProvider successfulInstantiationProvider
-     *
-     * @param integer $identifier
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
      */
     public function testSuccessfulInstantiation($minConstraint, $maxConstraint)
     {
@@ -22,6 +24,9 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
         $this->assertEquals($maxConstraint, $associationValidityConstraint->getMaxConstraint());
     }
 
+    /**
+     * @return array
+     */
     public function successfulInstantiationProvider()
     {
         return [
@@ -37,16 +42,20 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
      * @dataProvider unsuccessfulInstantiationProvider
      *
      * @param string $identifier
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
      * @param string $msg
      */
     public function testUnsuccessfulInstantiation($identifier, $minConstraint, $maxConstraint, $msg)
     {
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
         $associationValidityConstraint = new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);
     }
 
+    /**
+     * @return array
+     */
     public function unsuccessfulInstantiationProvider()
     {
         return [

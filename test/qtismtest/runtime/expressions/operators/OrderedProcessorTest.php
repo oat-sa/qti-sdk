@@ -8,12 +8,18 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OrderedProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class OrderedProcessorTest
+ */
 class OrderedProcessorTest extends QtiSmTestCase
 {
     public function testNull()
@@ -34,7 +40,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(1, count($result));
         $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
         $this->assertEquals(25, $result[0]->getValue());
@@ -42,7 +48,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
         $this->assertEquals(25, $result[0]->getValue());
@@ -51,7 +57,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER), new QtiInteger(25), new OrderedContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
         $this->assertEquals(25, $result[0]->getValue());
@@ -73,7 +79,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $processor = new OrderedProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(3, count($result));
         $this->assertEquals('String1', $result[0]->getValue());
         $this->assertEquals('String2', $result[1]->getValue());
@@ -82,7 +88,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString('String!')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(1, count($result));
     }
 
@@ -95,7 +101,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new OrderedProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(3, count($result));
         $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
         $this->assertTrue($result[1]->equals(new QtiPoint(2, 3)));
@@ -111,7 +117,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new OrderedProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+        $this->assertInstanceOf(OrderedContainer::class, $result);
         $this->assertEquals(2, count($result));
         $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
         $this->assertTrue($result[1]->equals(new QtiPoint(3, 4)));
@@ -126,7 +132,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('string1'), new QtiString('string2')]);
         $operands[] = null;
         $processor = new OrderedProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -139,7 +145,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $operands[] = new QtiInteger(10);
         $processor = new OrderedProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -154,10 +160,14 @@ class OrderedProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $operands[] = new RecordContainer();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -26,7 +26,6 @@ namespace qtism\runtime\rendering\markup;
 use DOMDocument;
 use DOMDocumentFragment;
 use DOMXPath;
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiScalar;
 use qtism\common\utils\Url;
@@ -45,6 +44,7 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\data\ViewCollection;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\State;
 use qtism\runtime\rendering\markup\xhtml\PrintedVariableRenderer;
 use qtism\runtime\rendering\Renderable;
@@ -59,28 +59,28 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * Static rendering mode.
      *
-     * @var integer
+     * @var int
      */
     const CONTEXT_STATIC = 0;
 
     /**
      * Context-aware rendering.
      *
-     * @var integer
+     * @var int
      */
     const CONTEXT_AWARE = 1;
 
     /**
      * Template oriented rendering.
      *
-     * @var integer
+     * @var int
      */
     const TEMPLATE_ORIENTED = 2;
 
     /**
      * Ignore xml:base constraints.
      *
-     * @var integer
+     * @var int
      */
     const XMLBASE_IGNORE = 3;
 
@@ -88,7 +88,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Keep xml:base in final rendering,
      * but do not process them.
      *
-     * @var integer
+     * @var int
      */
     const XMLBASE_KEEP = 4;
 
@@ -97,7 +97,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * xml:base into account. xml:base values
      * will not be kept into the final rendering.
      *
-     * @var integer
+     * @var int
      */
     const XMLBASE_PROCESS = 5;
 
@@ -105,7 +105,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Stylesheet components are rendered at the same place
      * they appear in the content model to be rendered.
      *
-     * @var integer
+     * @var int
      */
     const STYLESHEET_INLINE = 6;
 
@@ -113,7 +113,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Stylesheet components are rendered separately and pushed into
      * a specific place.
      *
-     * @var integer
+     * @var int
      */
     const STYLESHEET_SEPARATE = 7;
 
@@ -121,7 +121,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * QTI specific CSS classes will be ones related to
      * concrete QTI classes from the information model only.
      *
-     * @var integer
+     * @var int
      */
     const CSSCLASS_CONCRETE = 8;
 
@@ -129,7 +129,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * QTI specific CSS classes will be corresponding to the
      * whole QTI information model class hierarchy.
      *
-     * @var integer
+     * @var int
      */
     const CSSCLASS_ABSTRACT = 9;
 
@@ -196,56 +196,56 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * The Choice rendering policy.
      *
-     * @var integer
+     * @var int
      */
     private $choiceShowHidePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The Feedback rendering policy.
      *
-     * @var integer
+     * @var int
      */
     private $feedbackShowHidePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The View rendering policy.
      *
-     * @var integer
+     * @var int
      */
     private $viewPolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The policy to adopt while dealing with printed variables.
      *
-     * @var integer
+     * @var int
      */
     private $printedVariablePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The policy to adopt while dealing with shuffling.
      *
-     * @var integer
+     * @var int
      */
     private $shufflingPolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The policy to adopt to deal with xml:base values.
      *
-     * @var integer
+     * @var int
      */
     private $xmlBasePolicy = AbstractMarkupRenderingEngine::XMLBASE_IGNORE;
 
     /**
      * The policy to adopt while dealing with QTI stylesheet components.
      *
-     * @var integer
+     * @var int
      */
     private $stylesheetPolicy = AbstractMarkupRenderingEngine::STYLESHEET_INLINE;
 
     /**
      * The policy to adopt while dealing with QTI related CSS classes.
      *
-     * @var integer
+     * @var int
      */
     private $cssClassPolicy = AbstractMarkupRenderingEngine::CSSCLASS_CONCRETE;
 
@@ -315,7 +315,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
     /**
      * Create a new AbstractRenderingObject.
-     *
      */
     public function __construct()
     {
@@ -424,6 +423,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         return $this->currentInteraction;
     }
 
+    /**
+     * @param mixed $component
+     * @param string $base
+     * @return mixed
+     * @throws RenderingException
+     */
     public function render($component, $base = '')
     {
         // Reset the engine to its initial state.
@@ -499,16 +504,14 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
             }
         }
 
-        $finalRendering = $this->createFinalRendering($component);
-
-        return $finalRendering;
+        return $this->createFinalRendering($component);
     }
 
     /**
      * Whether or not the currently explored Component object
      * is a final leaf of the tree structured explored hierarchy.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isFinal()
     {
@@ -527,9 +530,9 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Wether or not the currently explored component has been already explored.
+     * Whether or not the currently explored component has been already explored.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isExplored()
     {
@@ -537,7 +540,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     *
      * @param QtiComponent $component
      */
     protected function markAsExplored(QtiComponent $component)
@@ -551,6 +553,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Create the final rendering of the rendered $component as it must be rendered by the final
      * implementation.
      *
+     * @param QtiComponent $component
      * @return mixed
      */
     protected function createFinalRendering(QtiComponent $component)
@@ -587,15 +590,13 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                                         $newMathElement->appendChild($node);
                                         $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
                                     }
+                                } elseif ($this->getPrintedVariablePolicy() === self::CONTEXT_AWARE) {
+                                    $newMathElement->appendChild($newMathElement->ownerDocument->createTextNode($printedVariableFragment->firstChild->nodeValue));
+                                    $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
                                 } else {
-                                    if ($this->getPrintedVariablePolicy() === self::CONTEXT_AWARE) {
-                                        $newMathElement->appendChild($newMathElement->ownerDocument->createTextNode($printedVariableFragment->firstChild->nodeValue));
+                                    foreach ($printedVariableFragment->firstChild->childNodes as $node) {
+                                        $newMathElement->appendChild($node);
                                         $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
-                                    } else {
-                                        foreach ($printedVariableFragment->firstChild->childNodes as $node) {
-                                            $newMathElement->appendChild($node);
-                                            $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
-                                        }
                                     }
                                 }
                             }
@@ -648,20 +649,20 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * The class of the Component is in the list of QTI classes to be ignored.
      *
      * @param QtiComponent $component A Component you want to know if it has to be ignored or not.
-     * @return boolean
+     * @return bool
      */
     protected function mustIgnoreComponent(QtiComponent $component)
     {
         // In the list of QTI class names to be ignored?
-        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
+        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses())) {
             return true;
-        } elseif ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE)) {
+        } elseif ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === self::CONTEXT_AWARE)) {
             // Context Aware + FeedbackElement OR Context Aware + Choice Templating.
             $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
 
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
-        } elseif ($this->getViewPolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE && $component instanceof RubricBlock) {
+        } elseif ($this->getViewPolicy() === self::CONTEXT_AWARE && $component instanceof RubricBlock) {
             // Context Aware + RubricBlock
             $renderingViews = $this->getViews();
             $rubricViews = $component->getViews();
@@ -685,7 +686,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * matches its 'identifier' attribute.
      *
      * @param QtiComponent $component A TemplateElement or FeedbackElement or Choice element.
-     * @return boolean
+     * @return bool
      */
     protected function identifierMatches(QtiComponent $component)
     {
@@ -738,14 +739,20 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $this->ignoreClasses = $ignoreClasses;
     }
 
+    /**
+     * @return array
+     */
     public function getIgnoreClasses()
     {
         return $this->ignoreClasses;
     }
 
+    /**
+     * @param $classes
+     */
     public function ignoreQtiClasses($classes)
     {
-        if (is_string($classes) === true) {
+        if (is_string($classes)) {
             $classes = [$classes];
         }
 
@@ -785,7 +792,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
         if ($component instanceof ExternalQtiComponent && isset($renderers[$component->getTargetNamespace()][$className])) {
             return $renderers[$component->getTargetNamespace()][$className];
-        } elseif (isset($renderers['qtism'][$className]) === true) {
+        } elseif (isset($renderers['qtism'][$className])) {
             return $renderers['qtism'][$className];
         } else {
             $msg = "No AbstractRenderer implementation registered for QTI class name '${className}'.";
@@ -904,10 +911,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $c = $this->getExploredComponent();
         $toPush = $substitution;
 
-        if ($c instanceof Flow) {
-            if (empty($substitution) === true) {
-                $toPush = $c->getXmlBase();
-            }
+        if (($c instanceof Flow) && empty($substitution)) {
+            $toPush = $c->getXmlBase();
         }
 
         $this->getXmlBaseStack()->push($toPush);
@@ -952,11 +957,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * the current policy for feedback elements is TEMPLATE_ORIENTED
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function mustTemplateFeedbackComponent(QtiComponent $component)
     {
-        return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
+        return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::TEMPLATE_ORIENTED);
     }
 
     /**
@@ -967,11 +972,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * the current policy for views is TEMPLATE_ORIENTED
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function mustTemplateRubricBlockComponent(QtiComponent $component)
     {
-        return (self::isRubricBlock($component) && $this->getViewPolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
+        return (self::isRubricBlock($component) && $this->getViewPolicy() === self::TEMPLATE_ORIENTED);
     }
 
     /**
@@ -982,13 +987,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * the current policy for choice show/hide is TEMPLATE_ORIENTED
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function mustTemplateChoiceComponent(QtiComponent $component)
     {
         return self::isChoice($component) && $this->getChoiceShowHidePolicy() === self::TEMPLATE_ORIENTED && $component->hasTemplateIdentifier();
     }
 
+    /**
+     * @param QtiComponent $component
+     * @return bool
+     */
     protected function mustIncludeChoiceComponent(QtiComponent $component)
     {
         $shufflables = [
@@ -1001,7 +1010,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         ];
         $interaction = $this->getCurrentInteraction();
 
-        return self::isChoice($component) && !$component instanceof Gap && $component->isFixed() === false && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED && in_array($interaction->getQtiClassName(), $shufflables) === true && $interaction->mustShuffle() === true;
+        return self::isChoice($component)
+            && !$component instanceof Gap
+            && $component->isFixed() === false
+            && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED
+            && in_array($interaction->getQtiClassName(), $shufflables)
+            && $interaction->mustShuffle() === true;
     }
 
     /**
@@ -1009,7 +1023,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * FeedbackElement or ModalFeedback.
      *
      * @param QtiComponent $component A QtiComponent object.
-     * @return boolean
+     * @return bool
      */
     protected static function isFeedback(QtiComponent $component)
     {
@@ -1020,7 +1034,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Whether or not a given component is an instance of Choice.
      *
      * @param QtiComponent $component A QtiComponent object.
-     * @return boolean
+     * @return bool
      */
     protected static function isChoice(QtiComponent $component)
     {
@@ -1032,7 +1046,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * RubricBlock.
      *
      * @param QtiComponent $component A QtiComponent object.
-     * @return boolean
+     * @return bool
      */
     protected static function isRubricBlock(QtiComponent $component)
     {
@@ -1049,22 +1063,22 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function templateFeedbackComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         if (self::isFeedback($component) === false) {
-            $msg = "Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.";
+            $msg = 'Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
         $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
         $val = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']";
         $identifier = $component->getIdentifier();
-        $identifierType = 'qtism\\common\\datatypes\\QtiIdentifier';
-        $scalarType = 'qtism\\common\\datatypes\\QtiScalar';
-        $containerType = 'qtism\\common\\collections\\Container';
+        $identifierType = QtiIdentifier::class;
+        $scalarType = QtiScalar::class;
+        $containerType = Container::class;
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
         $valCheck = "(${scalarCheck} || ${containerCheck})";
 
         $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
-        $endifStmt = " qtism-endif ";
+        $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
@@ -1083,7 +1097,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function templateRubricBlockComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         if (self::isRubricBlock($component) === false) {
-            $msg = "Cannot template a component which is not an instance of RubricBlock.";
+            $msg = 'Cannot template a component which is not an instance of RubricBlock.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
@@ -1097,7 +1111,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
         $conds = (count($views) > 1) ? implode(' || ', $conds) : $conds[0];
         $ifStmt = " qtism-if (${conds}): ";
-        $endifStmt = " qtism-endif ";
+        $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
@@ -1116,22 +1130,22 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function templateChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         if (self::isChoice($component) === false) {
-            $msg = "Cannot template a component which is not an instance of Choice.";
+            $msg = 'Cannot template a component which is not an instance of Choice.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
         $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
         $val = '$' . $this->getStateName() . "['" . $component->getTemplateIdentifier() . "']";
         $identifier = $component->getIdentifier();
-        $identifierType = 'qtism\\common\\datatypes\\QtiIdentifier';
-        $scalarType = 'qtism\\common\\datatypes\\QtiScalar';
-        $containerType = 'qtism\\common\\collections\\Container';
+        $identifierType = QtiIdentifier::class;
+        $scalarType = QtiScalar::class;
+        $containerType = Container::class;
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
         $valCheck = "(${scalarCheck} || ${containerCheck})";
 
         $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
-        $endifStmt = " qtism-endif ";
+        $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
@@ -1140,6 +1154,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $rendering->appendChild($endifStmtCmt);
     }
 
+    /**
+     * @param QtiComponent $component
+     * @param DOMDocumentFragment $rendering
+     */
     protected function includeChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
         $choiceIndex = $this->choiceCounter;
@@ -1160,7 +1178,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from rendering depending on the value of the variable referenced by the choice:templateIdentifier attribute and the value of the choice:showHide attribute.
      * * IN TEMPLATE_ORIENTED mode, the component will be rendered with template oriented conditional statements.
      *
-     * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
      */
     public function setChoiceShowHidePolicy($policy)
@@ -1175,7 +1193,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from rendering depending on the value of the variable referenced by the choice:templateIdentifier attribute and the value of the choice:showHide attribute.
      * * IN TEMPLATE_ORIENTED mode, the component will be rendered with template oriented conditional statements.
      *
-     * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
      */
     public function getChoiceShowHidePolicy()
@@ -1190,7 +1208,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE or AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED.
+     * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE or AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED.
      */
     public function setFeedbackShowHidePolicy($policy)
     {
@@ -1203,7 +1221,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
      *
-     * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function getFeedbackShowHidePolicy()
     {
@@ -1217,7 +1235,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function setViewPolicy($policy)
     {
@@ -1231,7 +1249,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
+     * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function getViewPolicy()
     {
@@ -1245,7 +1263,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the printed variable will be generated as in CONTEXT_STATIC mode, but the value to be displayed will be generated.
      * * In TEMPLATE_ORIENTED mode, the code to be processed to render the variable value will be enclosed into template tags, that can be processed later on.
      *
-     * @param integer $printedVariablePolicy AbstractMarkup
+     * @param int $printedVariablePolicy AbstractMarkup
      */
     public function setPrintedVariablePolicy($printedVariablePolicy)
     {
@@ -1259,18 +1277,24 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_AWARE mode, the printed variable will be generated as in CONTEXT_STATIC mode, but the value to be displayed will be generated.
      * * In TEMPLATE_ORIENTED mode, the code to be processed to render the variable value will be enclosed into template tags, that can be processed later on.
      *
-     * @return integer
+     * @return int
      */
     public function getPrintedVariablePolicy()
     {
         return $this->printedVariablePolicy;
     }
 
+    /**
+     * @param $shufflingPolicy
+     */
     public function setShufflingPolicy($shufflingPolicy)
     {
         $this->shufflingPolicy = $shufflingPolicy;
     }
 
+    /**
+     * @return int
+     */
     public function getShufflingPolicy()
     {
         return $this->shufflingPolicy;
@@ -1283,7 +1307,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
      * * AbstractMarkupRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
      *
-     * @param integer $xmlBasePolicy AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
+     * @param int $xmlBasePolicy AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
     public function setXmlBasePolicy($xmlBasePolicy)
@@ -1298,7 +1322,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
      * * AbstractMarkupRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
      *
-     * @return integer AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
+     * @return int AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
     public function getXmlBasePolicy()
@@ -1312,7 +1336,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::STYLESHEET_INLINE: Stylesheet components are rendered at the same place they appear in the content model to be rendered.
      * * AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE: Stylesheet components are rendered separately from the rest of the model, and pushed into a specific place.
      *
-     * @param integer $stylesheetPolicy AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
+     * @param int $stylesheetPolicy AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
      */
     public function setStylesheetPolicy($stylesheetPolicy)
     {
@@ -1325,7 +1349,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::STYLESHEET_INLINE: Stylesheet components are rendered at the same place they appear in the content model to be rendered.
      * * AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE: Stylesheet components are rendered separately from the rest of the model, and pushed into a specific place.
      *
-     * @return integer AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
+     * @return int AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
      */
     public function getStylesheetPolicy()
     {
@@ -1338,7 +1362,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::CSSCLASS_CONCRETE: Only the concrete QTI specific classes will be rendered.
      * * AbstractMarkupRenderingEngine::CSSCLASS_ABSTRACT: The whole hierarachy of QTI specific classes will be rendered.
      *
-     * @param integer $cssClassPolicy
+     * @param int $cssClassPolicy
      */
     public function setCssClassPolicy($cssClassPolicy)
     {
@@ -1351,7 +1375,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * AbstractMarkupRenderingEngine::CSSCLASS_CONCRETE: Only the concrete QTI specific classes will be rendered.
      * * AbstractMarkupRenderingEngine::CSSCLASS_ABSTRACT: The whole hierarachy of QTI specific classes will be rendered.
      *
-     * @return integer
+     * @return int
      */
     public function getCssClassPolicy()
     {
@@ -1428,7 +1452,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Whether or not a URL is defined in place of the value of the root
      * component's xml:base value.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasRootBase()
     {

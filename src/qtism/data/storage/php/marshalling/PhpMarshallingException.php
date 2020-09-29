@@ -33,7 +33,7 @@ class PhpMarshallingException extends Exception
     /**
      * Error code to use when the error is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -41,7 +41,7 @@ class PhpMarshallingException extends Exception
      * Error code to use when a runtime error occurs
      * at marshalling time.
      *
-     * @var integer
+     * @var int
      */
     const RUNTIME = 1;
 
@@ -49,7 +49,7 @@ class PhpMarshallingException extends Exception
      * Error code to use while dealing with the stream where
      * the code has to be put into.
      *
-     * @var integer
+     * @var int
      */
     const STREAM = 2;
 
@@ -57,7 +57,7 @@ class PhpMarshallingException extends Exception
      * Create a new PhpMarshallingException object.
      *
      * @param string $message A human-readable message.
-     * @param integer $code An error code.
+     * @param int $code An error code.
      * @param Exception $previous A previously thrown exception.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

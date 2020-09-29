@@ -3,31 +3,37 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\ItemSessionControl;
+use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
+use RuntimeException;
 use stdClass;
 
+/**
+ * Class MarshallerTest
+ */
 class MarshallerTest extends QtiSmTestCase
 {
     public function testCradle()
     {
         // Set cradle method accessible
-        $class = new ReflectionClass('qtism\\data\\storage\\xml\\marshalling\\Marshaller');
+        $class = new ReflectionClass(Marshaller::class);
         $method = $class->getMethod('getDOMCradle');
         $method->setAccessible(true);
 
-        $this->assertInstanceOf('\\DOMDocument', $method->invoke(null));
+        $this->assertInstanceOf(DOMDocument::class, $method->invoke(null));
     }
 
     public function testGetMarshaller()
     {
         $component = new ItemSessionControl();
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ItemSessionControlMarshaller', $marshaller);
+        $this->assertInstanceOf(ItemSessionControlMarshaller::class, $marshaller);
     }
 
     public function testGetUnmarshaller()
@@ -35,7 +41,7 @@ class MarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<itemSessionControl xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" maxAttempts="1" validateResponses="true"/>');
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($dom->documentElement);
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ItemSessionControlMarshaller', $marshaller);
+        $this->assertInstanceOf(ItemSessionControlMarshaller::class, $marshaller);
     }
 
     public function testGetFirstChildElement()
@@ -45,7 +51,7 @@ class MarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $child = Marshaller::getFirstChildElement($element);
-        $this->assertInstanceOf('\\DOMElement', $child);
+        $this->assertInstanceOf(DOMElement::class, $child);
         $this->assertEquals('child', $child->nodeName);
     }
 
@@ -118,10 +124,8 @@ class MarshallerTest extends QtiSmTestCase
         $dom2->loadXML('<baseValue baseType="boolean">true</baseValue>');
         $marshaller = $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($dom2->documentElement);
 
-        $this->setExpectedException(
-            '\\RuntimeException',
-            "No Marshaller implementation found while unmarshalling element 'foo'."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("No Marshaller implementation found while unmarshalling element 'foo'.");
 
         $marshaller->unmarshall($dom->documentElement);
     }
@@ -132,10 +136,8 @@ class MarshallerTest extends QtiSmTestCase
         $component2 = new stdClass();
         $marshaller = $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component1);
 
-        $this->setExpectedException(
-            '\\RuntimeException',
-            "No marshaller implementation found while marshalling component 'stdClass'."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("No marshaller implementation found while marshalling component 'stdClass'.");
 
         $marshaller->marshall($component2);
     }
@@ -145,10 +147,8 @@ class MarshallerTest extends QtiSmTestCase
         $component1 = new BaseValue(BaseType::BOOLEAN, true);
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component1);
 
-        $this->setExpectedException(
-            '\\RuntimeException',
-            "Unknown method Marshaller::'hello'."
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("Unknown method Marshaller::'hello'.");
 
         $marshaller->hello();
     }

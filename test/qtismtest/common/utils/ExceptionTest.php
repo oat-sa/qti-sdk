@@ -6,6 +6,9 @@ use Exception;
 use qtism\common\utils\Exception as ExceptionUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExceptionTest
+ */
 class ExceptionTest extends QtiSmTestCase
 {
     public function testNoChaining()

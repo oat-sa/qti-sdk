@@ -5,6 +5,9 @@ namespace qtismtest\runtime\rendering\css;
 use qtism\runtime\rendering\css\Utils as CssUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CssUtilsTest
+ */
 class CssUtilsTest extends QtiSmTestCase
 {
     /**
@@ -19,6 +22,9 @@ class CssUtilsTest extends QtiSmTestCase
         $this->assertEquals($expected, CssUtils::mapSelector($selector, $map));
     }
 
+    /**
+     * @return array
+     */
     public function mapSelectorProvider()
     {
         $map = [
@@ -62,6 +68,9 @@ class CssUtilsTest extends QtiSmTestCase
         $this->assertEquals($expected, CssUtils::mapPseudoClasses($selector, $map));
     }
 
+    /**
+     * @return array
+     */
     public function mapPseudoClassesProvider()
     {
         $map = [

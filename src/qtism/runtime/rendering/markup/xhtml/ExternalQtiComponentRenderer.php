@@ -34,7 +34,9 @@ use RuntimeException;
 class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
 {
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendElement()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -42,7 +44,10 @@ class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
+     * @throws RenderingException
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -51,7 +56,7 @@ class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the '" . $component->getQtiClassName() . "' external component.";
+            $msg = "An error occurred while rendering the XML content of the '" . $component->getQtiClassName() . "' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

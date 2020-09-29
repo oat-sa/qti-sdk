@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -10,6 +11,9 @@ use qtism\data\expressions\operators\EqualRounded;
 use qtism\data\expressions\operators\RoundingMode;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class EqualRoundedMarshallerTest
+ */
 class EqualRoundedMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -25,7 +29,7 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('equalRounded', $element->nodeName);
         $this->assertEquals('significantFigures', $element->getAttribute('roundingMode'));
         $this->assertEquals($figures . '', $element->getAttribute('figures'));
@@ -48,7 +52,7 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\EqualRounded', $component);
+        $this->assertInstanceOf(EqualRounded::class, $component);
         $this->assertInternalType('integer', $component->getFigures());
         $this->assertEquals(3, $component->getFigures());
         $this->assertEquals(RoundingMode::SIGNIFICANT_FIGURES, $component->getRoundingMode());

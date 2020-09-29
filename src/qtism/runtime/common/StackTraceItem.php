@@ -99,7 +99,7 @@ class StackTraceItem
      */
     public function setTraceMessage($traceMessage)
     {
-        if (gettype($traceMessage) === 'string') {
+        if (is_string($traceMessage)) {
             $this->traceMessage = $traceMessage;
         } else {
             $msg = "The traceMessage argument must be a string, '" . gettype($traceMessage) . "' given.";

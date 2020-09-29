@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
 use ReflectionClass;
+use qtism\data\storage\xml\marshalling\SimpleInlineMarshaller;
 
 /**
  * A MarshallerFactory focusing on instantiating and configuring
@@ -38,11 +39,13 @@ class Qti22MarshallerFactory extends MarshallerFactory
     public function __construct()
     {
         parent::__construct();
-        $this->addMappingEntry('bdo', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+        $this->addMappingEntry('bdo', SimpleInlineMarshaller::class);
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
+     * @param ReflectionClass $class
+     * @param array $args
+     * @return mixed
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

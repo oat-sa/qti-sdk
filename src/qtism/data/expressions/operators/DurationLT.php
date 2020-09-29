@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -44,7 +43,7 @@ use qtism\data\expressions\Pure;
  * resolution of epsilon seconds (epsilon<1) then a value equal to 10
  * would cover all durations in the range [10,10+epsilon).
  */
-class DurationLT extends Operator implements Pure
+class DurationLT extends Operator
 {
     /**
      * Create a new DurationLT object.
@@ -57,22 +56,10 @@ class DurationLT extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'durationLT';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

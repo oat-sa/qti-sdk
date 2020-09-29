@@ -24,6 +24,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
+use qtism\data\expressions\operators\NotOperator;
 
 /**
  * The NotProcessor class aims at processing Not QTI DataModel expressions.
@@ -52,12 +53,12 @@ class NotProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Not Expression only accept operands with single cardinality.";
+            $msg = 'The Not Expression only accept operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyBoolean() === false) {
-            $msg = "The Not Expression only accept operands with boolean baseType.";
+            $msg = 'The Not Expression only accept operands with boolean baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -67,10 +68,10 @@ class NotProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {
-        return 'qtism\\data\\expressions\\operators\\NotOperator';
+        return NotOperator::class;
     }
 }

@@ -47,6 +47,7 @@ class OutcomeVariableMarshaller extends Marshaller
      *
      * @param QtiComponent|ResultOutcomeVariable $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -95,6 +96,7 @@ class OutcomeVariableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -128,7 +130,7 @@ class OutcomeVariableMarshaller extends Marshaller
         }
 
         if ($element->hasAttribute('normalMinimum')) {
-            $component->setNormalMinimum(new QtiFloat(floatval($element->getAttribute('normalMinimum'))));
+            $component->setNormalMinimum(new QtiFloat((float)$element->getAttribute('normalMinimum')));
         }
 
         if ($element->hasAttribute('normalMaximum')) {
@@ -139,7 +141,7 @@ class OutcomeVariableMarshaller extends Marshaller
             $component->setMasteryValue(new QtiFloat((float)$element->getAttribute('masteryValue')));
         }
 
-        $valuesElements = self::getChildElementsByTagName($element, 'value');
+        $valuesElements = $this->getChildElementsByTagName($element, 'value');
         if (!empty($valuesElements)) {
             $values = [];
             foreach ($valuesElements as $valuesElement) {

@@ -54,12 +54,12 @@ class LteProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Lte operator only accepts operands with a single cardinality.";
+            $msg = 'The Lte operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Lte operator only accepts operands with a float or integer baseType.";
+            $msg = 'The Lte operator only accepts operands with a float or integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -67,7 +67,7 @@ class LteProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

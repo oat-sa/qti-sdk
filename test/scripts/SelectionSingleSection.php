@@ -7,7 +7,7 @@ use qtism\runtime\tests\SessionManager;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
-$iterations = intval($argv[1]);
+$iterations = (int)$argv[1];
 
 $doc = new XmlCompactDocument();
 $doc->load(dirname(__FILE__) . '/../samples/custom/runtime/selection_single_section.xml');

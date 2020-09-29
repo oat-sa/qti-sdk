@@ -24,7 +24,6 @@
 namespace qtism\runtime\processing;
 
 use InvalidArgumentException;
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -32,7 +31,7 @@ use qtism\common\utils\Format;
 use qtism\data\content\PrintedVariable;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\AbstractEngine;
-use qtism\runtime\common\RecordContainer;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
 
@@ -90,7 +89,7 @@ class PrintedVariableEngine extends AbstractEngine
         if ($printedVariable instanceof PrintedVariable) {
             parent::setComponent($printedVariable);
         } else {
-            $msg = "The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.";
+            $msg = 'The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -129,7 +128,7 @@ class PrintedVariableEngine extends AbstractEngine
             $index = $printedVariable->getIndex();
 
             // $index might be a variable reference.
-            if (is_string($index) === true && $state[$index] !== null) {
+            if (is_string($index) && $state[$index] !== null) {
                 $refIndex = $state[$index];
 
                 if ($refIndex instanceof QtiInteger) {
@@ -190,7 +189,7 @@ class PrintedVariableEngine extends AbstractEngine
      * Processes all values of a record container and merge them into
      * a single string.
      *
-     * @param RecordContainer $variable The record to process.
+     * @param Variable $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
     private function processRecord(Variable $variable)
@@ -209,7 +208,7 @@ class PrintedVariableEngine extends AbstractEngine
     /**
      * Process a $value depending on its $baseType.
      *
-     * @param integer $baseType The baseType of the value to process.
+     * @param int $baseType The baseType of the value to process.
      * @param mixed $value A QTI Runtime compliant value.
      * @return string
      * @throws PrintedVariableProcessingException If the baseType is unknown.
@@ -224,7 +223,7 @@ class PrintedVariableEngine extends AbstractEngine
         }
 
         if ($baseType === BaseType::INT_OR_IDENTIFIER) {
-            $baseType = (is_int($value) === true) ? BaseType::INTEGER : BaseType::STRING;
+            $baseType = (is_int($value)) ? BaseType::INTEGER : BaseType::STRING;
         } elseif ($baseType === BaseType::IDENTIFIER || $baseType === BaseType::URI) {
             $baseType = BaseType::STRING;
         } elseif ($baseType === BaseType::FILE) {
@@ -257,7 +256,7 @@ class PrintedVariableEngine extends AbstractEngine
         } elseif ($baseType === BaseType::POINT || $baseType === BaseType::PAIR || $baseType === BaseType::DIRECTED_PAIR) {
             return $value->__toString();
         } else {
-            $msg = "Unknown value type.";
+            $msg = 'Unknown value type.';
             throw new PrintedVariableProcessingException($msg, $this, PrintedVariableProcessingException::RUNTIME_ERROR);
         }
     }

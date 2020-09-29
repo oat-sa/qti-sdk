@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
@@ -15,6 +16,9 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OperandsCollectionProcessorTest
+ */
 class OperandsCollectionProcessorTest extends QtiSmTestCase
 {
     private $operands = null;
@@ -32,7 +36,6 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase
     }
 
     /**
-     *
      * @return OperandsCollection
      */
     protected function getOperands()
@@ -525,10 +528,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase
     {
         $operands = $this->getOperands();
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The OperandsCollection only accepts QTI Runtime compliant values, '999' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The OperandsCollection only accepts QTI Runtime compliant values, '999' given.");
 
         $operands[] = 999;
     }

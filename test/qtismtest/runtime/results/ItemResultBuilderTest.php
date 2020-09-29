@@ -36,11 +36,14 @@ use qtism\runtime\common\State;
 use qtism\runtime\results\ItemResultBuilder;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class ItemResultBuilderTest
+ */
 class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 {
     public function testBasic()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginAttempt();
         $itemSession->endAttempt(
             new State([

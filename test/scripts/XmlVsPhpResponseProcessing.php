@@ -5,12 +5,16 @@ use qtism\data\storage\xml\XmlDocument;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
+/**
+ * @param $start
+ * @param $end
+ * @return mixed
+ */
 function spentTime($start, $end)
 {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
-    $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
-    return $time;
+    return ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 }
 
 $basePath = '/../../src/qtism/runtime/processing/templates/2_1/';

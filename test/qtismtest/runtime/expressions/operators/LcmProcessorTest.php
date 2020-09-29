@@ -5,20 +5,26 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LcmProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class LcmProcessorTest
+ */
 class LcmProcessorTest extends QtiSmTestCase
 {
     /**
      * @dataProvider lcmProvider
-     *
      * @param array $operands
-     * @param integer $expected
+     * @param int $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLcm(array $operands, $expected)
     {
@@ -32,7 +38,7 @@ class LcmProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $processor = new LcmProcessor($expression, $operands);
     }
 
@@ -41,7 +47,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiInteger(10)]);
         $processor = new LcmProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $result = $processor->process();
     }
 
@@ -50,14 +56,14 @@ class LcmProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(20), new RecordContainer(['A' => new QtiInteger(10)]), new QtiInteger(30)]);
         $processor = new LcmProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $result = $processor->process();
     }
 
     /**
      * @dataProvider lcmWithNullValuesProvider
-     *
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testGcdWithNullValues(array $operands)
     {
@@ -67,6 +73,9 @@ class LcmProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return array
+     */
     public function lcmProvider()
     {
         return [
@@ -85,6 +94,9 @@ class LcmProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function lcmWithNullValuesProvider()
     {
         return [
@@ -97,6 +109,10 @@ class LcmProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

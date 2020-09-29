@@ -58,12 +58,12 @@ class TruncateProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Truncate operator only accepts operands with a single cardinality.";
+            $msg = 'The Truncate operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Truncate operator only accepts operands with an integer or float baseType.";
+            $msg = 'The Truncate operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -74,12 +74,12 @@ class TruncateProcessor extends OperatorProcessor
         } elseif (is_infinite($operand->getValue())) {
             return new QtiFloat(INF);
         } else {
-            return new QtiInteger(intval($operand->getValue()));
+            return new QtiInteger((int)$operand->getValue());
         }
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

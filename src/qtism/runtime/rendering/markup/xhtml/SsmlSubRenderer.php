@@ -46,7 +46,10 @@ class SsmlSubRenderer extends ExternalQtiComponentRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
+     * @throws RenderingException
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -59,7 +62,7 @@ class SsmlSubRenderer extends ExternalQtiComponentRenderer
                 $fragment->appendChild($childNode);
             }
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the 'SSML Sub' external component.";
+            $msg = "An error occurred while rendering the XML content of the 'SSML Sub' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

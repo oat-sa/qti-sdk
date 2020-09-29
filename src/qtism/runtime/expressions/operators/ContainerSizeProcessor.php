@@ -41,7 +41,7 @@ class ContainerSizeProcessor extends OperatorProcessor
     /**
      * Process the current expression.
      *
-     * @return QtiInteger|null The size of the container or null if it contains NULL.
+     * @return QtiInteger The size of the container or null if it contains NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -53,7 +53,7 @@ class ContainerSizeProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The ContainerSize operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The ContainerSize operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -61,7 +61,7 @@ class ContainerSizeProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

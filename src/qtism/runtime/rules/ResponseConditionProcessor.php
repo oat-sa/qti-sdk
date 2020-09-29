@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\ResponseCondition;
+
 /**
  * From IMS QTI:
  *
@@ -38,7 +40,7 @@ namespace qtism\runtime\rules;
 class ResponseConditionProcessor extends AbstractConditionProcessor
 {
     /**
-     * @see \qtism\runtime\rules\AbstractConditionProcessor::getQtiNature()
+     * @return string
      */
     public function getQtiNature()
     {
@@ -46,10 +48,10 @@ class ResponseConditionProcessor extends AbstractConditionProcessor
     }
 
     /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     * @return string
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\ResponseCondition';
+        return ResponseCondition::class;
     }
 }

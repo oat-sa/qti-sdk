@@ -124,7 +124,7 @@ class OutcomeMinimum extends ItemSubset
     }
 
     /**
-     * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

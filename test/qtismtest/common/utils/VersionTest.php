@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VersionTest
+ */
 class VersionTest extends QtiSmTestCase
 {
     /**
@@ -16,7 +19,7 @@ class VersionTest extends QtiSmTestCase
      * @param string|null $operator
      * @param mixed $expected
      */
-    public function testVersionCompare($version1, $version2, $operator, $expected)
+    public function testVersionCompareValid($version1, $version2, $operator, $expected)
     {
         $this->assertSame($expected, Version::compare($version1, $version2, $operator));
     }
@@ -24,11 +27,15 @@ class VersionTest extends QtiSmTestCase
     public function testUnknownOperator()
     {
         $msg = "Unknown operator '!=='. Known operators are '<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'.";
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
         Version::compare('2.1.1', '2.2.0', '!==');
     }
 
-    public function versionCompareValidProvider()
+    /**
+     * @return array
+     */
+    public function versionCompareValidProvider(): array
     {
         return [
             ['2', '2', null, 0],
@@ -73,6 +80,9 @@ class VersionTest extends QtiSmTestCase
         $this->assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
     }
 
+    /**
+     * @return array
+     */
     public function appendPatchVersionProvider(): array
     {
         return [
@@ -96,7 +106,7 @@ class VersionTest extends QtiSmTestCase
     {
         $versionNumber = 'whatever';
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Provided version number '".$versionNumber."' is not compliant to semantic versioning.");
+        $this->expectExceptionMessage("Provided version number '" . $versionNumber . "' is not compliant to semantic versioning.");
         Version::appendPatchVersion($versionNumber);
     }
 }

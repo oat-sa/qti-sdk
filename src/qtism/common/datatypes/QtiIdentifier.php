@@ -41,10 +41,10 @@ class QtiIdentifier extends QtiString
     protected function checkType($value)
     {
         if (is_string($value) !== true) {
-            $msg = "The Identifier Datatype only accepts to store identifier values.";
+            $msg = 'The Identifier Datatype only accepts to store identifier values.';
             throw new InvalidArgumentException($msg);
         } elseif ($value === '') {
-            $msg = "The Identifier Datatype do not accept empty strings as valid identifiers.";
+            $msg = 'The Identifier Datatype do not accept empty strings as valid identifiers.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -53,7 +53,7 @@ class QtiIdentifier extends QtiString
      * Get the baseType of the value. This method systematically returns
      * the BaseType::IDENTIFIER value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -64,13 +64,16 @@ class QtiIdentifier extends QtiString
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getValue();

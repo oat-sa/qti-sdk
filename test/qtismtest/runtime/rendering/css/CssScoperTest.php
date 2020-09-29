@@ -2,9 +2,14 @@
 
 namespace qtismtest\runtime\rendering\css;
 
+use qtism\common\storage\MemoryStreamException;
 use qtism\runtime\rendering\css\CssScoper;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rendering\RenderingException;
 
+/**
+ * Class CssScoperTest
+ */
 class CssScoperTest extends QtiSmTestCase
 {
     /**
@@ -13,12 +18,13 @@ class CssScoperTest extends QtiSmTestCase
      * @param string $inputFile
      * @param string $outputFile
      * @param string $id
-     * @param boolean $cssMapping
-     * @param boolean $pseudoClassMapping
-     * @param boolean $wcFriendly
+     * @param bool $cssMapping
+     * @param bool $pseudoClassMapping
+     * @param bool $wcFriendly
+     * @throws RenderingException
+     * @throws MemoryStreamException
      */
-    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
-    {
+    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false) {
         $cssScoper = new CssScoper($cssMapping, $pseudoClassMapping);
         $cssScoper->setWebComponentFriendly($wcFriendly);
         $expected = file_get_contents($outputFile);
@@ -26,6 +32,9 @@ class CssScoperTest extends QtiSmTestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @return array
+     */
     public function testOutputProvider()
     {
         return [
@@ -65,10 +74,8 @@ class CssScoperTest extends QtiSmTestCase
     {
         $cssScoper = new CssScoper();
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rendering\\RenderingException',
-            "The CSS file '/root/css_input1.css' could not be open."
-        );
+        $this->expectException(RenderingException::class);
+        $this->expectExceptionMessage("The CSS file '/root/css_input1.css' could not be open.");
 
         $cssScoper->render('/root/css_input1.css');
     }

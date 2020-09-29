@@ -34,28 +34,28 @@ class StorageException extends Exception
     /**
      * The error is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
     /**
-     * The error occured while reading.
+     * The error occurred while reading.
      *
-     * @var integer
+     * @var int
      */
     const READ = 1;
 
     /**
-     * The error occured while writing.
+     * The error occurred while writing.
      *
-     * @var integer
+     * @var int
      */
     const WRITE = 2;
 
     /**
      * The error is related to a version issue.
      *
-     * @var integer
+     * @var int
      */
     const VERSION = 3;
 
@@ -63,7 +63,7 @@ class StorageException extends Exception
      * Create a new StorageException object.
      *
      * @param string $message A human-readable message.
-     * @param integer $code A exception code (see class constants).
+     * @param int $code A exception code (see class constants).
      * @param Exception $previous An eventual previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

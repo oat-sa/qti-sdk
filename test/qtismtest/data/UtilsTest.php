@@ -27,6 +27,9 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\data\Utils as DataUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class UtilsTest
+ */
 class UtilsTest extends QtiSmTestCase
 {
     public function testGetFirstItem()

@@ -38,7 +38,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a MathOperator object into a QTI mathOperator element.
      *
-     * @param QtiComponent The MathOperator object to marshall.
+     * @param QtiComponent $component The MathOperator object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI mathOperator element.
      */
@@ -61,14 +61,12 @@ class MathOperatorMarshaller extends OperatorMarshaller
      * @param DOMElement $element The mathOperator element to unmarshall.
      * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A MathOperator object.
-     * @throws \UnmarshallingException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
-            $object = new MathOperator($children, MathFunctions::getConstantByName($name));
-
-            return $object;
+            return new MathOperator($children, MathFunctions::getConstantByName($name));
         } else {
             $msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

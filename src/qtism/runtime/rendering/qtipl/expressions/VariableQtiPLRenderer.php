@@ -44,10 +44,10 @@ class VariableQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['identifier'] = "\"" . $something->getIdentifier() . "\"";
+        $attributes['identifier'] = '"' . $something->getIdentifier() . '"';
 
-        if ($something->getWeightIdentifier() != "") {
-            $attributes['weightIdentifier'] = "\"" . $something->getWeightIdentifier() . "\"";
+        if ($something->getWeightIdentifier() != '') {
+            $attributes['weightIdentifier'] = '"' . $something->getWeightIdentifier() . '"';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

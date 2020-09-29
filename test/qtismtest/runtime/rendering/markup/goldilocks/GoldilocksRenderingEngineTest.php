@@ -3,13 +3,26 @@
 namespace qtismtest\runtime\rendering\markup\goldilocks;
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
+use qtism\runtime\rendering\RenderingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GoldilocksRenderingEngineTest
+ */
 class GoldilocksRenderingEngineTest extends QtiSmTestCase
 {
     /**
      * @dataProvider testRenderingProvider
+     * @param $file
+     * @param $expectedFile
+     * @param $renderingMode
+     * @param $xmlBasePolicy
+     * @param $stylesheetPolicy
+     * @param $cssClassPolicy
+     * @throws XmlStorageException
+     * @throws RenderingException
      */
     public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy)
     {
@@ -31,6 +44,9 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
         $this->assertEquals($strExpected, $strRendered);
     }
 
+    /**
+     * @return array
+     */
     public function testRenderingProvider()
     {
         return [

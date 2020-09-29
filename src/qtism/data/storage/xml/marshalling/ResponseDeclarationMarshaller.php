@@ -38,6 +38,8 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A ResponseDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -67,6 +69,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A ResponseDeclaration object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -101,13 +104,13 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the responseDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the responseDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

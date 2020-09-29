@@ -7,6 +7,9 @@ use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiPLTest
+ */
 class QtiPLTest extends QtiSmTestCase
 {
     public function testPreCondition()

@@ -46,15 +46,15 @@ class ItemSubsetQtiPLRenderer extends AbstractQtiPLRenderer
         $attributes = [];
 
         if ($something->getSectionIdentifier() != null) {
-            $attributes['sectionIdentifier'] = "\"" . $something->getSectionIdentifier() . "\"";
+            $attributes['sectionIdentifier'] = '"' . $something->getSectionIdentifier() . '"';
         }
 
-        if ($something->getIncludeCategories() != "") {
-            $attributes['includeCategory'] = "\"" . $something->getIncludeCategories() . "\"";
+        if ($something->getIncludeCategories() != '') {
+            $attributes['includeCategory'] = '"' . $something->getIncludeCategories() . '"';
         }
 
-        if ($something->getExcludeCategories() != "") {
-            $attributes['excludeCategory'] = "\"" . $something->getExcludeCategories() . "\"";
+        if ($something->getExcludeCategories() != '') {
+            $attributes['excludeCategory'] = '"' . $something->getExcludeCategories() . '"';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

@@ -3,6 +3,7 @@
 namespace qtismtest\runtime\tests;
 
 use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
@@ -21,6 +22,9 @@ use qtism\runtime\tests\Route;
 use qtism\runtime\tests\RouteItem;
 use qtismtest\QtiSmRouteTestCase;
 
+/**
+ * Class RouteTest
+ */
 class RouteTest extends QtiSmRouteTestCase
 {
     public function testRouteTest()
@@ -297,7 +301,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->next();
 
         // Q3 - Thrid position, there is no next route item.
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $nextItem = $route->getNext();
     }
 
@@ -320,7 +324,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->previous();
 
         $this->assertEquals('Q1', $route->current()->getAssessmentItemRef()->getIdentifier());
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $route->getPrevious();
     }
 
@@ -401,10 +405,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = self::buildSimpleRoute();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No RouteItem object found at position '1337'."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No RouteItem object found at position '1337'.");
 
         $routeItem = $route->getRouteItemAt(1337);
     }
@@ -413,10 +415,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Cannot get the last RouteItem of the Route while it is empty."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Cannot get the last RouteItem of the Route while it is empty.");
 
         $lastRouteItem = $route->getLastRouteItem();
     }
@@ -425,10 +425,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Cannot get the first RouteItem of the Route while it is empty."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Cannot get the first RouteItem of the Route while it is empty.");
 
         $lastRouteItem = $route->getFirstRouteItem();
     }
@@ -437,10 +435,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.");
 
         $lastRouteItem = $route->isLastOfTestPart();
     }
@@ -449,10 +445,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.");
 
         $firstRouteItem = $route->isFirstOfTestPart();
     }
@@ -461,10 +455,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "The position '25' is out of the bounds of the route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The position '25' is out of the bounds of the route.");
 
         $isInTestPart = $route->isInTestPart(
             25,
@@ -483,10 +475,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "The testPart 'TP0X' is not referenced in the Route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The testPart 'TP0X' is not referenced in the Route.");
 
         $routeItems = $route->getRouteItemsByTestPart(
             new TestPart(
@@ -504,10 +494,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The 'testPart' argument must be a string or a TestPart object."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The 'testPart' argument must be a string or a TestPart object.");
 
         $routeItems = $route->getRouteItemsByTestPart(false);
     }
@@ -516,10 +504,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No assessmentSection with identifier 'S0X' found in the Route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No assessmentSection with identifier 'S0X' found in the Route.");
 
         $routeItems = $route->getRouteItemsByAssessmentSection('S0X');
     }
@@ -528,10 +514,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "The assessmentSection 'S0X' is not referenced in the Route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The assessmentSection 'S0X' is not referenced in the Route.");
 
         $routeItems = $route->getRouteItemsByAssessmentSection(
             new AssessmentSection('S0X', 'Section X', true)
@@ -542,10 +526,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The 'assessmentSection' argument must be a string or an AssessmentSection object."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The 'assessmentSection' argument must be a string or an AssessmentSection object.");
 
         $routeItems = $route->getRouteItemsByAssessmentSection(false);
     }
@@ -561,10 +543,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No AssessmentItemRef with identifier 'Q0X' found in the Route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No AssessmentItemRef with identifier 'Q0X' found in the Route.");
 
         $routeItems = $route->getRouteItemsByAssessmentItemRef('Q0X');
     }
@@ -573,10 +553,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No AssessmentItemRef with 'identifier' Q0X' found in the Route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No AssessmentItemRef with 'identifier' Q0X' found in the Route.");
 
         $routeItems = $route->getRouteItemsByAssessmentItemRef(
             new AssessmentItemRef('Q0X', 'Question X')
@@ -587,10 +565,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\OutOfRangeException',
-            "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.");
 
         $routeItems = $route->getRouteItemsByAssessmentItemRef(false);
     }
@@ -599,10 +575,8 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The given identifier '|||' is an invalid branching target."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The given identifier '|||' is an invalid branching target.");
 
         $route->branch('|||');
     }
@@ -611,37 +585,31 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = new Route();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No such identifier 'Q1' found in the route for branching."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No such identifier 'Q1' found in the route for branching.");
 
         $route->branch('Q1');
     }
 
     public function testBranchToAssessmentItemRefOutsideOfTestPart()
     {
-        $route = self::buildSimpleRoute('qtism\\runtime\\tests\\Route', 2, 1);
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification."
-        );
+        $route = self::buildSimpleRoute(Route::class, 2, 1);
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.");
         $route->branch('Q2');
     }
 
     public function testBranchToSameTestPart()
     {
-        $route = self::buildSimpleRoute('qtism\\runtime\\tests\\Route', 2, 1);
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Cannot branch to the same testPart."
-        );
+        $route = self::buildSimpleRoute(Route::class, 2, 1);
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Cannot branch to the same testPart.");
         $route->branch('T1');
     }
 
     public function testBranchToAnotherTestPart()
     {
-        $route = self::buildSimpleRoute('qtism\\runtime\\tests\\Route', 2, 1);
+        $route = self::buildSimpleRoute(Route::class, 2, 1);
         $route->branch('T2');
         $this->assertTrue(true);
     }
@@ -693,10 +661,8 @@ class RouteTest extends QtiSmRouteTestCase
         $route->addRouteItem($assessmentItemRef1, $assessmentSection1, $testPart1, $assessmentTest);
         $route->addRouteItem($assessmentItemRef2, $assessmentSection2, $testPart2, $assessmentTest);
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.");
 
         $route->branch('S2');
     }
@@ -709,10 +675,8 @@ class RouteTest extends QtiSmRouteTestCase
         $testPart = new TestPart('T1', new AssessmentSectionCollection([$assessmentSection]));
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart, new AssessmentTest('Test', 'Test'));
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No such RouteItem object referenced in the Route."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No such RouteItem object referenced in the Route.");
 
         $route->getRouteItemPosition($routeItem);
     }

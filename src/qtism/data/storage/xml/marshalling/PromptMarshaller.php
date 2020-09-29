@@ -36,7 +36,10 @@ use qtism\data\QtiComponentCollection;
 class PromptMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -50,9 +53,9 @@ class PromptMarshaller extends ContentMarshaller
         if (Version::compare($this->getVersion(), '2.2.0', '<')) {
             $exclusion[] = 'a';
         }
-        
+
         foreach ($children as $c) {
-            if (in_array($c->getQtiClassName(), $exclusion) === true) {
+            if (in_array($c->getQtiClassName(), $exclusion)) {
                 $error = true;
                 break;
             }
@@ -79,7 +82,9 @@ class PromptMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -93,9 +98,6 @@ class PromptMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

@@ -52,7 +52,9 @@ class PositionObjectInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -66,7 +68,7 @@ class PositionObjectInteractionRenderer extends InteractionRenderer
         }
 
         if ($component->hasCenterPoint() === true) {
-            $fragment->firstChild->setAttribute('data-center-point', $component->getCenterPoint()->getX() . " " . $component->getCenterPoint()->getY());
+            $fragment->firstChild->setAttribute('data-center-point', $component->getCenterPoint()->getX() . ' ' . $component->getCenterPoint()->getY());
         }
     }
 }

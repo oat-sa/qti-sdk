@@ -80,13 +80,13 @@ class RoundToProcessor extends OperatorProcessor
         }
 
         if (!$operands->exclusivelySingle()) {
-            $msg = "The RoundTo operator accepts 1 operand with single cardinality.";
+            $msg = 'The RoundTo operator accepts 1 operand with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         // Accept only numerical operands.
         if (!$operands->exclusivelyNumeric()) {
-            $msg = "The RoundTo operand accepts 1 operand with numerical baseType.";
+            $msg = 'The RoundTo operand accepts 1 operand with numerical baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -100,12 +100,12 @@ class RoundToProcessor extends OperatorProcessor
         $roundingMode = $this->getExpression()->getRoundingMode();
         $figures = $this->getExpression()->getFigures();
 
-        if (gettype($figures) === 'string') {
+        if (is_string($figures)) {
             // try to recover the value from the state.
             $figuresIdentifier = ExprUtils::sanitizeVariableRef($figures);
             $figures = $state[$figuresIdentifier];
 
-            if (is_null($figures)) {
+            if ($figures === null) {
                 $msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$figures instanceof QtiInteger) {
@@ -127,12 +127,12 @@ class RoundToProcessor extends OperatorProcessor
             }
 
             $d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
-            $power = $figures - intval($d);
+            $power = $figures - (int)$d;
 
-            $magnitude = pow(10, $power);
+            $magnitude = 10 ** $power;
             $shifted = round($operand->getValue() * $magnitude);
 
-            return new QtiFloat(floatval($shifted / $magnitude));
+            return new QtiFloat((float)($shifted / $magnitude));
         } else {
             // As per QTI 2.1 spec.
             if ($figures < 0) {
@@ -145,7 +145,7 @@ class RoundToProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

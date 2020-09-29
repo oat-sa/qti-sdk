@@ -73,7 +73,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Whether the iterator state is valid.
      *
-     * @var boolean
+     * @var bool
      */
     private $isValid = true;
 
@@ -113,7 +113,7 @@ class QtiComponentIterator implements Iterator
     /**
      * The number of occurences in the trail.
      *
-     * @var integer
+     * @var int
      */
     private $trailCount = 0;
 
@@ -141,6 +141,17 @@ class QtiComponentIterator implements Iterator
         $this->rootComponent = $rootComponent;
     }
 
+    /**
+     * @param QtiComponent|null $currentContainer
+     */
+    protected function setCurrentContainer(QtiComponent $currentContainer = null)
+    {
+        $this->currentContainer = $currentContainer;
+    }
+
+    /**
+     * @return QtiComponent
+     */
     public function getCurrentContainer()
     {
         return $this->currentContainer;
@@ -155,6 +166,26 @@ class QtiComponentIterator implements Iterator
     public function getRootComponent()
     {
         return $this->rootComponent;
+    }
+
+    /**
+     * Set the currently traversed QtiComponent object.
+     *
+     * @param QtiComponent $currentComponent
+     */
+    protected function setCurrentComponent(QtiComponent $currentComponent = null)
+    {
+        $this->currentComponent = $currentComponent;
+    }
+
+    /**
+     * Get the currently traversed QtiComponent object.
+     *
+     * @return QtiComponent A QtiComponent object.
+     */
+    protected function getCurrentComponent()
+    {
+        return $this->currentComponent;
     }
 
     /**
@@ -249,7 +280,7 @@ class QtiComponentIterator implements Iterator
      * the iterator.
      *
      * @param QtiComponent $component
-     * @return boolean
+     * @return bool
      */
     protected function isTraversed(QtiComponent $component)
     {
@@ -259,7 +290,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Indicate Whether the iterator is still valid.
      *
-     * @param boolean $isValid
+     * @param bool $isValid
      */
     protected function setValid($isValid)
     {
@@ -289,21 +320,21 @@ class QtiComponentIterator implements Iterator
             $trailEntry = $this->popFromTrail();
 
             $this->setValid(true);
-            $this->currentComponent = $trailEntry[1];
-            $this->currentContainer = $trailEntry[0];
-            $this->markTraversed($this->currentComponent);
-            $this->pushOnTrail($this->currentComponent, $this->currentComponent->getComponents());
+            $this->setCurrentComponent($trailEntry[1]);
+            $this->setCurrentContainer($trailEntry[0]);
+            $this->markTraversed($this->getCurrentComponent());
+            $this->pushOnTrail($this->getCurrentComponent(), $this->getCurrentComponent()->getComponents());
 
-            if (empty($classes) === true || in_array($this->currentComponent->getQtiClassName(), $classes) === true) {
+            if (empty($classes) || in_array($this->getCurrentComponent()->getQtiClassName(), $classes)) {
                 $foundClass = true;
                 break;
             }
         }
 
-        if (count($this->trail) === 0 && (($hasTrail && !$foundClass) || (!$hasTrail))) {
-            $this->isValid = false;
-            $this->currentComponent = null;
-            $this->currentContainer = null;
+        if (count($this->getTrail()) === 0 && (($hasTrail && !$foundClass) || (!$hasTrail))) {
+            $this->setValid(false);
+            $this->setCurrentComponent(null);
+            $this->setCurrentContainer(null);
         }
     }
 
@@ -315,7 +346,7 @@ class QtiComponentIterator implements Iterator
      */
     public function current()
     {
-        return $this->currentComponent;
+        return $this->getCurrentComponent();
     }
 
     /**
@@ -332,7 +363,7 @@ class QtiComponentIterator implements Iterator
      */
     public function parent()
     {
-        return $this->currentContainer;
+        return $this->getCurrentContainer();
     }
 
     /**
@@ -343,7 +374,7 @@ class QtiComponentIterator implements Iterator
      */
     public function key()
     {
-        return $this->currentComponent->getQtiClassName();
+        return $this->getCurrentComponent()->getQtiClassName();
     }
 
     /**
@@ -364,7 +395,7 @@ class QtiComponentIterator implements Iterator
                     $this->pushOnTrail($component, $this->currentComponent->getComponents());
                     $this->markTraversed($this->currentComponent);
 
-                    if (empty($this->classes) === true || in_array($this->currentComponent->getQTIClassName(), $this->classes) === true) {
+                    if (empty($this->classes) || in_array($this->currentComponent->getQTIClassName(), $this->classes)) {
                         // If all classes are seeked or the current component has a class name
                         // that must be seeked, stop the iteration.
                         return;
@@ -383,7 +414,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Checks if current position is valid.
      *
-     * @return boolean Whether the current position is valid.
+     * @return bool Whether the current position is valid.
      */
     public function valid()
     {

@@ -2,21 +2,24 @@
 
 namespace qtismtest\data\expressions\operators;
 
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmTestCase;
+use UnexpectedValueException;
 
+/**
+ * Class EqualTest
+ */
 class EqualTest extends QtiSmTestCase
 {
     public function testInstantiationNoToleranceButRequired()
     {
-        $this->setExpectedException(
-            '\\UnexpectedValueException',
-            "The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT."
-        );
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.');
 
         $equal = new Equal(
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)]),
@@ -30,10 +33,8 @@ class EqualTest extends QtiSmTestCase
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The toleranceMode argument must be a value from the ToleranceMode enumeration, '1' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The toleranceMode argument must be a value from the ToleranceMode enumeration, '1' given.");
 
         $equal->setToleranceMode(true);
     }
@@ -46,10 +47,8 @@ class EqualTest extends QtiSmTestCase
 
         $equal->setToleranceMode(ToleranceMode::ABSOLUTE);
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The tolerance array must contain at least t0."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The tolerance array must contain at least t0.');
 
         $equal->setTolerance([]);
     }
@@ -62,10 +61,8 @@ class EqualTest extends QtiSmTestCase
 
         $equal->setToleranceMode(ToleranceMode::ABSOLUTE);
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The tolerance array must contain at most t0 and t1"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The tolerance array must contain at most t0 and t1');
 
         $equal->setTolerance([1, 2, 3]);
     }
@@ -76,10 +73,8 @@ class EqualTest extends QtiSmTestCase
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The includeLowerBound argument must be a boolean, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The includeLowerBound argument must be a boolean, 'string' given.");
 
         $equal->setIncludeLowerBound('str');
     }
@@ -90,10 +85,8 @@ class EqualTest extends QtiSmTestCase
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The includeUpperBound argument must be a boolean, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The includeUpperBound argument must be a boolean, 'string' given.");
 
         $equal->setIncludeUpperBound('str');
     }

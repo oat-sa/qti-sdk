@@ -84,11 +84,12 @@ abstract class QtiScalar implements QtiDatatype
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
      *
-     * @return boolean
+     * @param mixed $obj
+     * @return bool
      */
     public function equals($obj)
     {
-        if ($obj instanceof QtiScalar) {
+        if ($obj instanceof self) {
             return $obj->getValue() === $this->getValue();
         } else {
             return $this->getValue() === $obj;

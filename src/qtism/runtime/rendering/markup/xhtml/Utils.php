@@ -100,22 +100,18 @@ class Utils
 
                     $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
                     $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
-                } else {
-                    if (empty($statements1) === false && empty($statements2) === true) {
-                        $node->removeChild($statements1[0]);
-                        $node->removeChild($statements1[1]);
+                } elseif (empty($statements1) === false && empty($statements2)) {
+                    $node->removeChild($statements1[0]);
+                    $node->removeChild($statements1[1]);
 
-                        $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
-                        $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
-                    } else {
-                        if (empty($statements2) === false && empty($statements1) === true) {
-                            $node->removeChild($statements2[0]);
-                            $node->removeChild($statements2[1]);
+                    $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
+                    $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
+                } elseif (empty($statements2) === false && empty($statements1)) {
+                    $node->removeChild($statements2[0]);
+                    $node->removeChild($statements2[1]);
 
-                            $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
-                            $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
-                        }
-                    }
+                    $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
+                    $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
                 }
 
                 unset($placeholder1);
@@ -129,7 +125,7 @@ class Utils
      *
      * @param DOMElement $node
      * @param string|array $class A class or an array of CSS classes.
-     * @return boolean
+     * @return bool
      */
     public static function hasClass(DOMElement $node, $class)
     {
@@ -152,6 +148,7 @@ class Utils
      * Extract qtism-if/qtism-endif statements around a given $node.
      *
      * @param DOMElement $node
+     * @param int $type
      * @return array An array of DOMComment objects.
      */
     public static function extractStatements(DOMElement $node, $type = self::EXTRACT_IF)

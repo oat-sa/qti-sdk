@@ -3,9 +3,14 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\state\Weight;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class WeightMarshallerTest
+ */
 class WeightMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -17,7 +22,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('weight', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($value . '', $element->getAttribute('value'));
@@ -32,7 +37,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Weight', $component);
+        $this->assertInstanceOf(Weight::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myWeight1');
         $this->assertEquals($component->getValue(), 3.45);
     }
@@ -45,10 +50,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
-            "The value of 'identifier' from element 'weight' is not a valid QTI Identifier."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of 'identifier' from element 'weight' is not a valid QTI Identifier.");
 
         $marshaller->unmarshall($element);
     }
@@ -61,10 +64,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
-            "The value of attribute 'value' from element 'weight' cannot be converted into a float."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of attribute 'value' from element 'weight' cannot be converted into a float.");
 
         $marshaller->unmarshall($element);
     }
@@ -77,10 +78,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
-            "The mandatory attribute 'value' is missing from element 'weight'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'value' is missing from element 'weight'.");
 
         $marshaller->unmarshall($element);
     }
@@ -93,10 +92,8 @@ class WeightMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
-            "The mandatory attribute 'identifier' is missing from element 'weight'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'weight'.");
 
         $marshaller->unmarshall($element);
     }

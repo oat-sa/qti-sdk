@@ -38,8 +38,8 @@ class RepeatMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a Repeat object into a QTI repeat element.
      *
-     * @param QtiComponent The Repeat object to marshall.
-     * @param array An array of child DOMEelement objects.
+     * @param QtiComponent $component The Repeat object to marshall.
+     * @param array $elements An array of child DOMElement objects.
      * @return DOMElement The marshalled QTI repeat element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
@@ -66,12 +66,10 @@ class RepeatMarshaller extends OperatorMarshaller
     {
         if (($numberRepeats = $this->getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
             if (Format::isInteger($numberRepeats)) {
-                $numberRepeats = intval($numberRepeats);
+                $numberRepeats = (int)$numberRepeats;
             }
 
-            $object = new Repeat($children, $numberRepeats);
-
-            return $object;
+            return new Repeat($children, $numberRepeats);
         } else {
             $msg = "The mandatory attribute 'numberRepeats' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

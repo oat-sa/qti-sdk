@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -34,7 +33,7 @@ use qtism\data\expressions\Pure;
  * NULL and false otherwise. Note that empty containers and empty strings are
  * both treated as NULL.
  */
-class IsNull extends Operator implements Pure
+class IsNull extends Operator
 {
     /**
      * Create a new IsNull object.
@@ -47,22 +46,10 @@ class IsNull extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'isNull';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

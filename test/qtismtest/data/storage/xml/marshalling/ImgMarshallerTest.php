@@ -26,7 +26,11 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class ImgMarshallerTest
+ */
 class ImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -87,7 +91,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         /** @var Img $img */
         $img = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Img', $img);
+        $this->assertInstanceOf(Img::class, $img);
         $this->assertEquals('my/image.png', $img->getSrc());
         $this->assertEquals('An Image...', $img->getAlt());
         $this->assertSame(30, $img->getWidth());
@@ -136,6 +140,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         // For img components, we prefer aria-flowsto.
         $this->assertEquals('IDREF2', $img->getAriaFlowTo());
     }
+
     public function testUnmarshall22FallbackFlowTo()
     {
         $element = $this->createDOMElement('
@@ -151,7 +156,6 @@ class ImgMarshallerTest extends QtiSmTestCase
         // to aria-flowto in cas it exists.
         $this->assertEquals('IDREF3', $img->getAriaFlowTo());
     }
-
 
     /**
      * @depends testUnmarshall21
@@ -180,10 +184,8 @@ class ImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The 'mandatory' attribute 'src' is missing from element 'img'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'mandatory' attribute 'src' is missing from element 'img'.");
 
         $marshaller->unmarshall($element);
     }

@@ -44,7 +44,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * Create a MathRenderer object.
      *
      * @param AbstractMarkupRenderingEngine $renderingEngine
-     * @param boolean $namespaceOutput Whether to embed the resulting output into the MathML namespace.
+     * @param bool $namespaceOutput Whether to embed the resulting output into the MathML namespace.
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
     {
@@ -55,7 +55,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
     /**
      * Set whether the resulting output must be embedded in the MathML namespace.
      *
-     * @param boolean $namespaceOutput
+     * @param bool $namespaceOutput
      */
     public function setNamespaceOutput($namespaceOutput)
     {
@@ -63,9 +63,9 @@ class MathRenderer extends ExternalQtiComponentRenderer
     }
 
     /**
-     * Wheter the resulting output must be embedded in the MathML namespace.
+     * Whether the resulting output must be embedded in the MathML namespace.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustNamespaceOutput()
     {
@@ -73,7 +73,10 @@ class MathRenderer extends ExternalQtiComponentRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
+     * @throws RenderingException
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -89,7 +92,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
 
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the 'MathML' external component.";
+            $msg = "An error occurred while rendering the XML content of the 'MathML' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

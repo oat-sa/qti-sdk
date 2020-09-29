@@ -71,12 +71,12 @@ class EqualRoundedProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The EqualRounded operator only accepts operands with a single cardinality.";
+            $msg = 'The EqualRounded operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The EqualRounded operator only accepts operands with an integer or float baseType.";
+            $msg = 'The EqualRounded operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -85,13 +85,13 @@ class EqualRoundedProcessor extends OperatorProcessor
         $roundingMode = $expression->getRoundingMode();
         $figures = $expression->getFigures();
 
-        if (gettype($figures) === 'string') {
+        if (is_string($figures)) {
             // Variable reference to deal with.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($figures);
             $varValue = $state[$varName];
 
-            if (is_null($varValue) === true) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -113,7 +113,7 @@ class EqualRoundedProcessor extends OperatorProcessor
             try {
                 $rounded[] = $roundToProcessor->process();
             } catch (OperatorProcessingException $e) {
-                $msg = "An error occured while rounding '${operand}'.";
+                $msg = "An error occurred while rounding '${operand}'.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR, $e);
             }
         }
@@ -122,7 +122,7 @@ class EqualRoundedProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {
