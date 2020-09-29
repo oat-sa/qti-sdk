@@ -8,7 +8,11 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\LookupOutcomeValueProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rules\RuleProcessingException;
 
+/**
+ * Class LookupOutcomeValueProcessorTest
+ */
 class LookupOutcomeValueProcessorTest extends QtiSmTestCase
 {
     public function testLookupOutcomeValueSimpleMatchTable()
@@ -105,10 +109,8 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State();
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "The variable to set 'outcome1' does not exist in the current state."
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("The variable to set 'outcome1' does not exist in the current state.");
 
         $processor->process();
     }
@@ -130,10 +132,8 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor = new LookupOutcomeValueProcessor($rule);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "No lookupTable in declaration of variable 'outcome1'."
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("No lookupTable in declaration of variable 'outcome1'.");
 
         $processor->process();
     }
@@ -161,10 +161,8 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor = new LookupOutcomeValueProcessor($rule);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "The value of variable 'outcome1' must be integer, float or duration when used with an interpolationTable"
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("The value of variable 'outcome1' must be integer, float or duration when used with an interpolationTable");
 
         $processor->process();
     }
@@ -192,10 +190,8 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor = new LookupOutcomeValueProcessor($rule);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "The value of the variable 'outcome1' must be integer when used with a matchTable."
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("The value of the variable 'outcome1' must be integer when used with a matchTable.");
 
         $processor->process();
     }

@@ -37,6 +37,8 @@ class SetDefaultValueMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SetDefaultValue object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -44,7 +46,7 @@ class SetDefaultValueMarshaller extends Marshaller
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
         $element->appendChild($marshaller->marshall($component->getExpression()));
 
-        static::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         return $element;
     }
@@ -54,18 +56,17 @@ class SetDefaultValueMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SetDefaultValue object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                $object = new SetDefaultValue($identifier, $marshaller->unmarshall($expressionElt));
-
-                return $object;
+                return new SetDefaultValue($identifier, $marshaller->unmarshall($expressionElt));
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element 'setDefaultValue'.";
                 throw new UnmarshallingException($msg, $element);
@@ -77,7 +78,7 @@ class SetDefaultValueMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

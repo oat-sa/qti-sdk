@@ -12,6 +12,9 @@ use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateControlMarshallerTest
+ */
 class TemplateControlMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallTemplateIfSimple()
@@ -39,12 +42,12 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateIf = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateIf', $templateIf);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateIf->getExpression());
+        $this->assertInstanceOf(TemplateIf::class, $templateIf);
+        $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $templateRules = $templateIf->getTemplateRules();
         $this->assertEquals(1, count($templateRules));
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $templateRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateRules[0]->getExpression());
+        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
     public function testMarshallTemplateIfMultipleRules()
@@ -79,20 +82,20 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateIf = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateIf', $templateIf);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateIf->getExpression());
+        $this->assertInstanceOf(TemplateIf::class, $templateIf);
+        $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
 
         $templateRules = $templateIf->getTemplateRules();
         $this->assertEquals(2, count($templateRules));
 
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $templateRules[0]);
+        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this->assertEquals('tpl1', $templateRules[0]->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateRules[0]->getExpression());
+        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
         $this->assertEquals(1337, $templateRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $templateRules[1]);
+        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[1]);
         $this->assertEquals('tpl2', $templateRules[1]->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateRules[1]->getExpression());
+        $this->assertInstanceOf(BaseValue::class, $templateRules[1]->getExpression());
         $this->assertEquals(1338, $templateRules[1]->getExpression()->getValue());
     }
 
@@ -121,12 +124,12 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateElseIf = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateElseIf', $templateElseIf);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateElseIf->getExpression());
+        $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
+        $this->assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
         $templateRules = $templateElseIf->getTemplateRules();
         $this->assertEquals(1, count($templateRules));
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $templateRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateRules[0]->getExpression());
+        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
     public function testMarshallTemplateElseSimple()
@@ -152,11 +155,11 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateElse = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateElse', $templateElse);
+        $this->assertInstanceOf(TemplateElse::class, $templateElse);
         $templateRules = $templateElse->getTemplateRules();
         $this->assertEquals(1, count($templateRules));
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $templateRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateRules[0]->getExpression());
+        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
     public function testMarshallTemplateElseMultipleRules()

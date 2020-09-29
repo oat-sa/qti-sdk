@@ -5,13 +5,20 @@ namespace qtismtest\runtime\tests;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestSessionBranchingsTest
+ */
 class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 {
     public function testInstantiationSample1()
@@ -164,6 +171,13 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
     /**
      * @dataProvider branchingMultipleOccurencesProvider
+     * @param QtiIdentifier|null $response
+     * @param string $expectedTarget
+     * @param int $occurence
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws XmlStorageException
+     * @throws PhpStorageException
      */
     public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence)
     {
@@ -178,7 +192,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
         $testSession->beginAttempt();
 
-        if (empty($response) === true) {
+        if (empty($response)) {
             $testSession->skip();
             $testSession->moveNext();
         } else {
@@ -190,6 +204,9 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
         $this->assertEquals($occurence, $testSession->getCurrentAssessmentItemRefOccurence());
     }
 
+    /**
+     * @return array
+     */
     public function branchingMultipleOccurencesProvider()
     {
         return [

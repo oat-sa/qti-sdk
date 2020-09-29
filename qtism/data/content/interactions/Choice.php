@@ -27,10 +27,10 @@ use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
 use qtism\data\QtiIdentifiable;
+use qtism\data\QtiIdentifiableTrait;
 use qtism\data\ShowHide;
 use qtism\data\Shufflable;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * From IMS QTI:
@@ -39,12 +39,7 @@ use SplObserver;
  */
 abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 {
-    /**
-     * A collection of SplObservers.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers = null;
+    use QtiIdentifiableTrait;
 
     /**
      * From IMS QTI:
@@ -65,7 +60,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * immediately enclosing interaction supports the shuffling of choices. If
      * no value is specified then the choice is free to be shuffled.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $fixed = false;
@@ -93,7 +88,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * by default and hidden if the associated template variable matches, or contains, the choice's
      * identifier.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide;
@@ -116,26 +111,6 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
         $this->setTemplateIdentifier('');
         $this->setShowHide(ShowHide::SHOW);
         $this->setObservers(new SplObjectStorage());
-    }
-
-    /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
     }
 
     /**
@@ -167,12 +142,12 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Set whether the choice is fixed.
      *
-     * @param boolean $fixed
+     * @param bool $fixed
      * @throws InvalidArgumentException If $fixed is not a boolean value.
      */
     public function setFixed($fixed)
     {
-        if (is_bool($fixed) === true) {
+        if (is_bool($fixed)) {
             $this->fixed = $fixed;
         } else {
             $msg = "The 'fixed' argument must be a boolean value, '" . gettype($fixed) . "' given.";
@@ -183,7 +158,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Whether the choice is fixed.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFixed()
     {
@@ -198,7 +173,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      */
     public function setTemplateIdentifier($templateIdentifier)
     {
-        if (is_string($templateIdentifier) === true && (empty($templateIdentifier) === true) || Format::isIdentifier($templateIdentifier, false) === true) {
+        if (is_string($templateIdentifier) && (empty($templateIdentifier)) || Format::isIdentifier($templateIdentifier, false) === true) {
             $this->templateIdentifier = $templateIdentifier;
         } else {
             $msg = "The 'templateIdentifier' must be an empty string or a valid QTI identifier, '" . gettype($templateIdentifier) . "' given.";
@@ -219,7 +194,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Whether a value is defined for the templateIdentifier attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateIdentifier()
     {
@@ -229,12 +204,12 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Set the visibility of the choice.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray()) === true) {
+        if (in_array($showHide, ShowHide::asArray())) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration.";
@@ -245,40 +220,15 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     /**
      * Get the visibility of the choice.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {
         return $this->showHide;
     }
 
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
+    public function __clone()
     {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
+        $this->setObservers(new SplObjectStorage());
     }
 }

@@ -3,10 +3,14 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberIncorrect;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class NumberIncorrectMarshallerTest
+ */
 class NumberIncorrectMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -22,7 +26,7 @@ class NumberIncorrectMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('numberIncorrect', $element->nodeName);
         $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
         $this->assertEquals($includeCategory, $element->getAttribute('includeCategory'));
@@ -38,7 +42,7 @@ class NumberIncorrectMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\NumberIncorrect', $component);
+        $this->assertInstanceOf(NumberIncorrect::class, $component);
         $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
         $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
         $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));

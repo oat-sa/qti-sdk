@@ -33,12 +33,12 @@ use qtism\common\collections\AbstractCollection;
 class AssessmentItemSessionCollection extends AbstractCollection
 {
     /**
-     * @see \qtism\common\collections\AbstractCollection::checkType()
+     * @param mixed $value
      */
     protected function checkType($value)
     {
         if (!$value instanceof AssessmentItemSession) {
-            $msg = "The AssessmentItemSessionCollection class only accepts to store AssessmentItemSession objects.";
+            $msg = 'The AssessmentItemSessionCollection class only accepts to store AssessmentItemSession objects.';
             throw new InvalidArgumentException($msg);
         }
     }

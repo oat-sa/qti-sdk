@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Truncate;
 
 /**
@@ -45,20 +43,10 @@ use qtism\data\expressions\operators\Truncate;
  */
 class TruncateProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Truncate) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The TruncateProcessor class only processes Truncate QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Truncate operator.
      *
-     * @return integer|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
+     * @return QtiInteger|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -70,12 +58,12 @@ class TruncateProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Truncate operator only accepts operands with a single cardinality.";
+            $msg = 'The Truncate operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Truncate operator only accepts operands with an integer or float baseType.";
+            $msg = 'The Truncate operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -86,7 +74,15 @@ class TruncateProcessor extends OperatorProcessor
         } elseif (is_infinite($operand->getValue())) {
             return new QtiFloat(INF);
         } else {
-            return new QtiInteger(intval($operand->getValue()));
+            return new QtiInteger((int)$operand->getValue());
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Truncate::class;
     }
 }

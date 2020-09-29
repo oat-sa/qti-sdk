@@ -7,13 +7,16 @@ use qtism\data\expressions\NumberSelected;
 use qtism\runtime\expressions\NumberSelectedProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class NumberSelectedProcessorTest
+ */
 class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
      * @dataProvider numberSelectedProvider
      *
      * @param NumberSelected $expression
-     * @param integer $expectedResult
+     * @param int $expectedResult
      */
     public function testNumberSelected(NumberSelected $expression, $expectedResult)
     {
@@ -27,6 +30,9 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
         $this->assertEquals($expectedResult, $result->getValue());
     }
 
+    /**
+     * @return array
+     */
     public function numberSelectedProvider()
     {
         return [
@@ -37,6 +43,12 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return NumberSelected
+     */
     protected static function getNumberSelected($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $numberSelected = new NumberSelected();

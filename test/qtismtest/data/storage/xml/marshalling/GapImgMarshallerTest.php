@@ -4,14 +4,17 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\content\interactions\GapImg;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GapImgMarshallerTest
+ */
 class GapImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $object = new QtiObject('http://imagine.us/myimg.png', "image/png");
+        $object = new ObjectElement('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($gapImg);
@@ -31,7 +34,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapImg', $gapImg);
+        $this->assertInstanceOf(GapImg::class, $gapImg);
         $this->assertEquals('my-gap', $gapImg->getId());
         $this->assertEquals('gaps', $gapImg->getClass());
         $this->assertEquals('gapImg1', $gapImg->getIdentifier());

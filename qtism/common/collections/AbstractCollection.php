@@ -103,7 +103,6 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      */
     public function current()
     {
-        // @todo find why sometimes, the current value is the placeholder itself!
         return current($this->dataPlaceHolder);
     }
 
@@ -128,7 +127,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Check if the current position of the iterator is valid.
      *
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      */
     public function valid()
     {
@@ -144,10 +143,10 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     }
 
     /**
-     * Wether a offset exists.
+     * Whether a offset exists.
      *
      * @param mixed $offset An offset to check for.
-     * @return boolean Wether the offset exist.
+     * @return bool Whether the offset exist.
      */
     public function offsetExists($offset)
     {
@@ -163,7 +162,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return isset($this->dataPlaceHolder[$offset]) ? $this->dataPlaceHolder[$offset] : null;
+        return $this->dataPlaceHolder[$offset] ?? null;
     }
 
     /**
@@ -178,13 +177,16 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $this->checkType($value);
 
-        if (is_null($offset)) {
+        if ($offset === null) {
             array_push($this->dataPlaceHolder, $value);
         } else {
             $this->dataPlaceHolder[$offset] = $value;
         }
     }
 
+    /**
+     * @param mixed $offset
+     */
     public function offsetUnset($offset)
     {
         unset($this->dataPlaceHolder[$offset]);
@@ -194,6 +196,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * Get a copy of the collection as an array. This method is implemented in order
      * to implement ArrayObject in a near future.
      *
+     * @param bool $preserveKeys
      * @return array The collection as an array of data.
      */
     public function getArrayCopy($preserveKeys = false)
@@ -206,7 +209,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * is strict, using the === operator.
      *
      * @param mixed $value A value.
-     * @return boolean Whether the collection contains $value.
+     * @return bool Whether the collection contains $value.
      */
     public function contains($value)
     {
@@ -230,7 +233,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $this->checkType($object);
 
-        if (gettype($object) !== 'object') {
+        if (!is_object($object)) {
             $msg = "You can only attach 'objects' into an AbstractCollection, '" . gettype($object) . "' given";
             throw new InvalidArgumentException($msg);
         } elseif (!$this->contains($object)) {
@@ -249,7 +252,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     {
         $this->checkType($object);
 
-        if (gettype($object) !== 'object') {
+        if (!is_object($object)) {
             $msg = "You can only detach 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -262,7 +265,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             }
         }
 
-        $msg = "The object you want to detach could not be found in the collection.";
+        $msg = 'The object you want to detach could not be found in the collection.';
         throw new UnexpectedValueException($msg);
     }
 
@@ -279,12 +282,12 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
         $this->checkType($object);
         $this->checkType($replacement);
 
-        if (gettype($object) !== 'object') {
+        if (!is_object($object)) {
             $msg = "You can only replace 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
-        if (gettype($replacement) !== 'object') {
+        if (!is_object($replacement)) {
             $msg = "You can only replace 'objects' into an AbstractCollection, '" . gettype($replacement) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -297,7 +300,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             }
         }
 
-        $msg = "The object you want to replace could not be found.";
+        $msg = 'The object you want to replace could not be found.';
         throw new UnexpectedValueException($msg);
     }
 
@@ -349,8 +352,11 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
             $newData = array_merge($this->dataPlaceHolder, $collection->getDataPlaceHolder());
             $this->dataPlaceHolder = $newData;
         } else {
-            $msg = "Only collections with compliant types can be merged ";
-            $msg .= "('" . get_class($this) . "' vs '" . get_class($collection) . "').";
+            $msg = sprintf(
+                'Only collections with compliant types can be merged ("%s" vs "%s").',
+                get_class($this),
+                get_class($collection)
+            );
             throw new InvalidArgumentException($msg);
         }
     }
@@ -368,7 +374,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 
             return new static($newData);
         } else {
-            $msg = "Difference may apply only on two collections of the same type.";
+            $msg = 'Difference may apply only on two collections of the same type.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -386,7 +392,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
 
             return new static($newData);
         } else {
-            $msg = "Intersection may apply only on two collections of the same type.";
+            $msg = 'Intersection may apply only on two collections of the same type.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -394,7 +400,6 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Reset the keys of the collection. This method is similar
      * in behaviour with PHP's array_values.
-     *
      */
     public function resetKeys()
     {
@@ -405,7 +410,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     public function __clone()
     {
         foreach ($this->dataPlaceHolder as $key => $value) {
-            if (gettype($value) === 'object') {
+            if (is_object($value)) {
                 $this[$key] = clone $value;
             }
         }

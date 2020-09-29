@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\NavigationMode;
 use qtism\data\QtiComponent;
@@ -45,7 +46,7 @@ class TimeConstraint
      * The Duration spent by the candidate on the source of
      * the TimeConstraint.
      *
-     * @var Duration
+     * @var QtiDuration
      */
     private $duration;
 
@@ -54,7 +55,7 @@ class TimeConstraint
      * Indeed, minimum times are applicable to assessmentSections and assessmentItems
      * only if linear navigation mode is in effect.
      *
-     * @var integer
+     * @var int
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 QTI timeLimits
      */
     private $navigationMode;
@@ -62,7 +63,7 @@ class TimeConstraint
     /**
      * Whether or not to consider minimum time constraints.
      *
-     * @var boolean
+     * @var bool
      */
     private $considerMinTime;
 
@@ -70,9 +71,9 @@ class TimeConstraint
      * Create a new TimeConstraint object.
      *
      * @param QtiComponent $source The TestPart or SectionPart the constraint applies on.
-     * @param Duration $duration The already spent duration by the candidate on $source.
-     * @param NavigationMode $navigationMode The current navigation mode.
-     * @param boolean $considerMinTime Whether or not to consider minimum time limits.
+     * @param QtiDuration $duration The already spent duration by the candidate on $source.
+     * @param int $navigationMode The current navigation mode.
+     * @param bool $considerMinTime Whether or not to consider minimum time limits.
      */
     public function __construct(QtiComponent $source, QtiDuration $duration, $navigationMode = NavigationMode::LINEAR, $considerMinTime = true)
     {
@@ -105,7 +106,7 @@ class TimeConstraint
      * Set the Duration object representing the time already spent by the candidate
      * on the source of the time constraint.
      *
-     * @param Duration $duration A Duration object.
+     * @param QtiDuration $duration A Duration object.
      */
     protected function setDuration(QtiDuration $duration)
     {
@@ -116,7 +117,7 @@ class TimeConstraint
      * Get the Duration object representing the time already spent by the candidate
      * on the source of the time constraint.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      */
     public function getDuration()
     {
@@ -126,7 +127,7 @@ class TimeConstraint
     /**
      * Set the current navigation mode.
      *
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
      */
     protected function setNavigationMode($navigationMode)
     {
@@ -136,7 +137,7 @@ class TimeConstraint
     /**
      * Get the current navigation mode.
      *
-     * @return integer A value from the NavigationMode enumeration.
+     * @return int A value from the NavigationMode enumeration.
      */
     public function getNavigationMode()
     {
@@ -146,7 +147,7 @@ class TimeConstraint
     /**
      * Set whether or not minimum time limits must be taken into account.
      *
-     * @param boolean $considerMinTime
+     * @param bool $considerMinTime
      */
     public function setConsiderMinTime($considerMinTime)
     {
@@ -156,7 +157,7 @@ class TimeConstraint
     /**
      * Whether or not minimum time limits are taken into account.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesConsiderMinTime()
     {
@@ -167,7 +168,7 @@ class TimeConstraint
      * Get the time remaining to be spent by the candidate on the source of the time
      * constraint. Please note that this method will never return negative durations.
      *
-     * @return Duration|boolean A Duration object or false if there is no maxTime constraint running for the source of the time constraint.
+     * @return Duration|bool A Duration object or false if there is no maxTime constraint running for the source of the time constraint.
      */
     public function getMaximumRemainingTime()
     {
@@ -186,7 +187,7 @@ class TimeConstraint
      * from/for the source of the minimum time constraint. Please note that this method
      * will never return negative durations.
      *
-     * @return Duration|boolean A duration object or false if there is no minTime constraint running for the source of the time constraint.
+     * @return Duration|bool A duration object or false if there is no minTime constraint running for the source of the time constraint.
      */
     public function getMinimumRemainingTime()
     {
@@ -204,7 +205,7 @@ class TimeConstraint
      * Whether or not a maxTime constraint is in force for the timeLimits (if existing) bound to the source
      * of the time constraint.
      *
-     * @return boolean
+     * @return bool
      */
     public function maxTimeInForce()
     {
@@ -220,18 +221,16 @@ class TimeConstraint
      * a nonlinear navigation mode, the minTime attribute is not considered to be in force.
      *
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 QTI timeLimits
-     * @return boolean
+     * @return bool
      */
     public function minTimeInForce()
     {
         if ($this->doesConsiderMinTime() === false) {
             return false;
+        } elseif (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
+            return false;
         } else {
-            if (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
-                return false;
-            } else {
-                return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMinTime() === true;
-            }
+            return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMinTime() === true;
         }
     }
 
@@ -240,7 +239,7 @@ class TimeConstraint
      * of the time constraint. If no maxTime constraint is set to the bound timeLimits, this method
      * always return true;
      *
-     * @return boolean
+     * @return bool
      */
     public function allowLateSubmission()
     {

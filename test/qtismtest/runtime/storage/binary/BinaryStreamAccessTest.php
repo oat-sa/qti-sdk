@@ -9,6 +9,9 @@ use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BinaryStreamAccessTest
+ */
 class BinaryStreamAccessTest extends QtiSmTestCase
 {
     private $emptyStream;
@@ -389,7 +392,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
     public function testWriteStringMaxLengthExceeded()
     {
         $string = '';
-        for ($i = 0; $i < pow(2, 17); $i++) {
+        for ($i = 0; $i < 2 ** 17; $i++) {
             $string .= 'a';
         }
 
@@ -399,7 +402,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         // The written string should be 2^16 - 1 long anyway (force by implementation to not break).
-        $this->assertEquals(pow(2, 16) - 1, strlen($access->readString()));
+        $this->assertEquals(2 ** 16 - 1, strlen($access->readString()));
     }
 
     public function testReadBinary()

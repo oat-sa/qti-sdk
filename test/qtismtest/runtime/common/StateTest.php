@@ -2,25 +2,30 @@
 
 namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ResponseDeclaration;
-use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtismtest\QtiSmTestCase;
 use stdClass;
+use qtism\runtime\common\VariableCollection;
 
+/**
+ * Class StateTest
+ */
 class StateTest extends QtiSmTestCase
 {
     public function testInstantiation()
     {
         $state = new State();
-        $this->assertInstanceOf('qtism\\runtime\\common\\State', $state);
+        $this->assertInstanceOf(State::class, $state);
         $this->assertEquals(0, count($state));
 
         $varsArray = [];
@@ -29,7 +34,7 @@ class StateTest extends QtiSmTestCase
 
         $state = new State($varsArray);
         $this->assertEquals(2, count($state));
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $state->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this->assertEquals($state->getVariable('RESPONSE')->getBaseType(), BaseType::INTEGER);
 
         // replace a variable.
@@ -46,7 +51,7 @@ class StateTest extends QtiSmTestCase
 
     public function testInstantiationInvalid()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $state = new State([15, 'string', new stdClass()]);
     }
 
@@ -68,14 +73,14 @@ class StateTest extends QtiSmTestCase
 
     public function testAddressingInvalidOne()
     {
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $state = new State();
         $state['var'] = new ResponseDeclaration('var', BaseType::POINT, Cardinality::ORDERED);
     }
 
     public function testAdressingInvalidTwo()
     {
-        $this->setExpectedException('\\OutOfRangeException');
+        $this->expectException(OutOfRangeException::class);
         $state = new State();
         $var = $state[3];
     }
@@ -94,7 +99,7 @@ class StateTest extends QtiSmTestCase
         unset($state['RESPONSE1']);
         $this->assertEquals(1, count($state->getAllVariables()));
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\VariableCollection', $state->getAllVariables());
+        $this->assertInstanceOf(VariableCollection::class, $state->getAllVariables());
     }
 
     public function testUnsetVariableByString()
@@ -124,10 +129,8 @@ class StateTest extends QtiSmTestCase
     {
         $state = new State();
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "No Variable object with identifier 'X' found in the current State object."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No Variable object with identifier 'X' found in the current State object.");
 
         $state->unsetVariable('X');
     }
@@ -136,10 +139,8 @@ class StateTest extends QtiSmTestCase
     {
         $state = new State();
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The variable argument must be a Variable object or a string, '1' given"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The variable argument must be a Variable object or a string, '1' given");
 
         $state->unsetVariable(true);
     }
@@ -148,10 +149,8 @@ class StateTest extends QtiSmTestCase
     {
         $state = new State();
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "A State object can only be adressed by a valid string."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage('A State object can only be addressed by a valid string.');
 
         $state[true] = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
     }

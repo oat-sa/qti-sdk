@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
-use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Format;
@@ -37,7 +36,7 @@ use qtism\common\utils\Format;
  * A pair value represents a pair of identifiers corresponding to an association between two
  * objects. The association is undirected so (A,B) and (B,A) are equivalent.
  */
-class QtiPair implements Comparable, QtiDatatype
+class QtiPair implements QtiDatatype
 {
     /**
      * The first identifier of the Pair.
@@ -134,11 +133,11 @@ class QtiPair implements Comparable, QtiDatatype
      * of $obj are the same as the ones of $obj.
      *
      * @param mixed $obj A value to compare.
-     * @return boolean Whether or not the equality could be established.
+     * @return bool Whether or not the equality could be established.
      */
     public function equals($obj)
     {
-        if (gettype($obj) === 'object' && $obj instanceof self) {
+        if (is_object($obj) && $obj instanceof self) {
             $a = [$this->getFirst(), $this->getSecond()];
             $b = [$obj->getFirst(), $obj->getSecond()];
 
@@ -152,7 +151,7 @@ class QtiPair implements Comparable, QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * The BaseType::PAIR value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -163,7 +162,7 @@ class QtiPair implements Comparable, QtiDatatype
      * Get the Cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

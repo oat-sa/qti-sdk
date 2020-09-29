@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;
 use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -34,13 +35,7 @@ use qtism\data\QtiComponentCollection;
  */
 class Table extends BodyElement implements BlockStatic, FlowStatic
 {
-    /**
-     * The base URI of the Table.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The summary attribute.
@@ -129,7 +124,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      */
     public function setSummary($summary)
     {
-        if (is_string($summary) === true) {
+        if (is_string($summary)) {
             $this->summary = $summary;
         } else {
             $msg = "The 'summary' argument must be a string, '" . gettype($summary) . "' given.";
@@ -149,9 +144,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Wheter a value for the summary attribute is defined.
+     * Whether a value for the summary attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSummary()
     {
@@ -181,9 +176,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Wheter the Table contains a Caption object.
+     * Whether the Table contains a Caption object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCaption()
     {
@@ -254,7 +249,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether the Table contains a Thead object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasThead()
     {
@@ -285,7 +280,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether the Table contains a Tfoot object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTfoot()
     {
@@ -313,38 +308,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Set the base URI of the Table.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the Table.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
-    }
-
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -370,7 +334,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

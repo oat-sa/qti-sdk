@@ -44,7 +44,7 @@ class SubstringMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
+        $this->setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -56,16 +56,15 @@ class SubstringMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI substring operator element into a Substring object.
      *
-     * @param DOMElement The substring element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The substring element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A Substring object.
-     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $object = new Substring($children);
 
-        if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+        if (($caseSensitive = $this->getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
             $object->setCaseSensitive($caseSensitive);
         }
 

@@ -57,20 +57,19 @@ class Marshaller
     /**
      * Output of marshalling as an array.
      *
-     * @var integer
+     * @var int
      */
     const MARSHALL_ARRAY = 0;
 
     /**
      * Output of marshalling as JSON string.
      *
-     * @var integer
+     * @var int
      */
     const MARSHALL_JSON = 1;
 
     /**
      * Create a new JSON Marshaller object.
-     *
      */
     public function __construct()
     {
@@ -80,14 +79,14 @@ class Marshaller
      * Marshall some QTI data into JSON.
      *
      * @param State|QtiDatatype|null $data The data to be marshalled into JSON.
-     * @param integer How the output will be returned (see class constants). Default is plain JSON string.
+     * @param int How the output will be returned (see class constants). Default is plain JSON string.
      * @return string|array The JSONified data.
      * @throws InvalidArgumentException If $data has not a compliant type.
      * @throws MarshallingException If an error occurs while marshalling $data into JSON.
      */
     public function marshall($data, $output = Marshaller::MARSHALL_JSON)
     {
-        if (is_null($data) === true) {
+        if ($data === null) {
             $json = ['base' => $data];
         } elseif ($data instanceof State) {
             $json = [];
@@ -101,7 +100,7 @@ class Marshaller
             $className = get_class($this);
             $msg = "The '${className}::marshall' method only takes State, QtiDatatype and null values as arguments, '";
 
-            if (is_object($data) === true) {
+            if (is_object($data)) {
                 $msg .= get_class($data);
             } else {
                 $msg .= gettype($data);
@@ -124,7 +123,7 @@ class Marshaller
      */
     protected function marshallUnit($unit)
     {
-        if (is_null($unit) === true) {
+        if ($unit === null) {
             $json = ['base' => null];
         } elseif ($unit instanceof QtiScalar) {
             $json = $this->marshallScalar($unit);
@@ -146,7 +145,7 @@ class Marshaller
                 $jsonEntry = [];
                 $jsonEntry['name'] = $k;
 
-                if (isset($data['base']) === true || $data['base'] === null) {
+                if (array_key_exists('base', $data)) {
                     // Primitive base type.
                     $jsonEntry['base'] = $data['base'];
                 } else {
@@ -167,41 +166,43 @@ class Marshaller
      * Marshall a single scalar data into a PHP datatype (that can be transformed easilly in JSON
      * later on).
      *
-     * @param null|QtiDatatype $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
+     * @param QtiDatatype|null $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
      * @return array An array representing the JSON data to be encoded later on.
      * @throws MarshallingException
      */
     protected function marshallScalar($scalar)
     {
-        if (is_null($scalar) === true) {
-            return $scalar;
-        } elseif ($scalar instanceof QtiDatatype) {
-            if ($scalar instanceof QtiBoolean) {
-                return $this->marshallBoolean($scalar);
-            } elseif ($scalar instanceof QtiInteger) {
-                return $this->marshallInteger($scalar);
-            } elseif ($scalar instanceof QtiFloat) {
-                return $this->marshallFloat($scalar);
-            } elseif ($scalar instanceof QtiIdentifier) {
-                return $this->marshallIdentifier($scalar);
-            } elseif ($scalar instanceof QtiUri) {
-                return $this->marshallUri($scalar);
-            } elseif ($scalar instanceof QtiString) {
-                return $this->marshallString($scalar);
-            } elseif ($scalar instanceof QtiIntOrIdentifier) {
-                return $this->marshallIntOrIdentifier($scalar);
-            }
-        } else {
-            $msg = "The '" . get_class($this) . "::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '";
-            if (is_object($scalar) === true) {
-                $msg .= get_class($scalar);
-            } else {
-                $msg .= gettype($scalar);
-            }
+        if ($scalar === null) {
+            return null;
+        }
 
-            $msg .= "' given.";
-            $code = MarshallingException::NOT_SUPPORTED;
-            throw new MarshallingException($msg, $code);
+        if (!$scalar instanceof QtiDatatype) {
+            $msg = sprintf("The '%s::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '%s' given.",
+                get_class($this),
+                is_object($scalar)
+                    ? get_class($scalar)
+                    : gettype($scalar)
+            );
+
+            throw new MarshallingException($msg, MarshallingException::NOT_SUPPORTED);
+        }
+
+        if ($scalar instanceof QtiBoolean) {
+            return $this->marshallBoolean($scalar);
+        } elseif ($scalar instanceof QtiInteger) {
+            return $this->marshallInteger($scalar);
+        } elseif ($scalar instanceof QtiFloat) {
+            return $this->marshallFloat($scalar);
+        } elseif ($scalar instanceof QtiIdentifier) {
+            return $this->marshallIdentifier($scalar);
+        } elseif ($scalar instanceof QtiUri) {
+            return $this->marshallUri($scalar);
+        } elseif ($scalar instanceof QtiString) {
+            return $this->marshallString($scalar);
+        } elseif ($scalar instanceof QtiIntOrIdentifier) {
+            return $this->marshallIntOrIdentifier($scalar);
+        } else {
+            throw new MarshallingException('Unknown scalar type.', MarshallingException::NOT_SUPPORTED);
         }
     }
 
@@ -214,9 +215,11 @@ class Marshaller
      */
     protected function marshallComplex(QtiDatatype $complex)
     {
-        if (is_null($complex) === true) {
+        if ($complex === null) {
             return $complex;
-        } elseif ($complex instanceof QtiPoint) {
+        }
+
+        if ($complex instanceof QtiPoint) {
             return $this->marshallPoint($complex);
         } elseif ($complex instanceof QtiDirectedPair) {
             return $this->marshallDirectedPair($complex);
@@ -227,23 +230,21 @@ class Marshaller
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         } else {
-            $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
-            if (is_object($scalar) === true) {
-                $msg .= get_class($complex);
-            } else {
-                $msg .= gettype($complex);
-            }
+            $msg = sprintf("The '%s::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '%s' given.",
+                get_class($this),
+                is_object($complex)
+                    ? get_class($complex)
+                    : gettype($complex)
+            );
 
-            $msg .= "' given.";
-            $code = MarshallingException::NOT_SUPPORTED;
-            throw new MarshallingException($msg, $code);
+            throw new MarshallingException($msg, MarshallingException::NOT_SUPPORTED);
         }
     }
 
     /**
      * Marshall a QTI boolean datatype into its PCI JSON Representation.
      *
-     * @param Boolean $boolean
+     * @param QtiBoolean $boolean
      * @return array
      */
     protected function marshallBoolean(QtiBoolean $boolean)
@@ -254,7 +255,7 @@ class Marshaller
     /**
      * Marshall a QTI integer datatype into its PCI JSON Representation.
      *
-     * @param Integer $integer
+     * @param QtiInteger $integer
      * @return array
      */
     protected function marshallInteger(QtiInteger $integer)
@@ -265,7 +266,7 @@ class Marshaller
     /**
      * Marshall a QTI float datatype into its PCI JSON Representation.
      *
-     * @param Float $float
+     * @param QtiFloat $float
      * @return array
      */
     protected function marshallFloat(QtiFloat $float)
@@ -276,7 +277,7 @@ class Marshaller
     /**
      * Marshall a QTI identifier datatype into its PCI JSON Representation.
      *
-     * @param Identifier $identifier
+     * @param QtiIdentifier $identifier
      * @return array
      */
     protected function marshallIdentifier(QtiIdentifier $identifier)
@@ -287,7 +288,7 @@ class Marshaller
     /**
      * Marshall a QTI uri datatype into its PCI JSON Representation.
      *
-     * @param Uri $uri
+     * @param QtiUri $uri
      * @return array
      */
     protected function marshallUri(QtiUri $uri)
@@ -298,7 +299,7 @@ class Marshaller
     /**
      * Marshall a QTI string datatype into its PCI JSON Representation.
      *
-     * @param String $string
+     * @param QtiString $string
      * @return array
      */
     protected function marshallString(QtiString $string)
@@ -309,7 +310,7 @@ class Marshaller
     /**
      * Marshall a QTI intOrIdentifier datatype into its PCI JSON Representation.
      *
-     * @param IntOrIdentifier $intOrIdentifier
+     * @param QtiIntOrIdentifier $intOrIdentifier
      * @return array
      */
     protected function marshallIntOrIdentifier(QtiIntOrIdentifier $intOrIdentifier)
@@ -320,7 +321,7 @@ class Marshaller
     /**
      * Marshall a QTI point datatype into its PCI JSON Representation.
      *
-     * @param Point $point
+     * @param QtiPoint $point
      * @return array
      */
     protected function marshallPoint(QtiPoint $point)
@@ -331,7 +332,7 @@ class Marshaller
     /**
      * Marshall a QTI directedPair datatype into its PCI JSON Representation.
      *
-     * @param DirectedPair $directedPair
+     * @param QtiDirectedPair $directedPair
      * @return array
      */
     protected function marshallDirectedPair(QtiDirectedPair $directedPair)
@@ -342,7 +343,7 @@ class Marshaller
     /**
      * Marshall a QTI pair datatype into its PCI JSON Representation.
      *
-     * @param Pair $pair
+     * @param QtiPair $pair
      * @return array
      */
     protected function marshallPair(QtiPair $pair)
@@ -353,7 +354,7 @@ class Marshaller
     /**
      * Marshall a QTI duration datatype into its PCI JSON Representation.
      *
-     * @param Duration $duration
+     * @param QtiDuration $duration
      * @return array
      */
     protected function marshallDuration(QtiDuration $duration)
@@ -364,7 +365,7 @@ class Marshaller
     /**
      * Marshall a QTI file datatype into its PCI JSON Representation.
      *
-     * @param File $file
+     * @param QtiFile $file
      * @return array
      */
     protected function marshallFile(QtiFile $file)

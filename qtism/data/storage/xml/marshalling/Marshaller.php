@@ -31,8 +31,12 @@ use qtism\data\content\BodyElement;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use RuntimeException;
 
+/**
+ * Class Marshaller
+ */
 abstract class Marshaller
 {
     /**
@@ -87,7 +91,7 @@ abstract class Marshaller
         'hotspotChoice',
         'hr',
         'img',
-        'textEntryInteraction'
+        'textEntryInteraction',
     ];
 
     /**
@@ -161,6 +165,12 @@ abstract class Marshaller
         return $this->version;
     }
 
+    /**
+     * @param $method
+     * @param $args
+     * @return DOMElement|QtiComponent
+     * @throws MarshallingException
+     */
     public function __call($method, $args)
     {
         if ($method == 'marshall' || $method == 'unmarshall') {
@@ -175,7 +185,7 @@ abstract class Marshaller
                 } else {
                     $element = $args[0];
                     if ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName())) {
-                        return call_user_func_array([$this, 'unmarshall'], $args);
+                        return $this->unmarshall(...$args);
                     } else {
                         $nodeName = (($prefix = $element->prefix) === null) ? $element->localName : "${prefix}:" . $element->localName;
                         throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
@@ -190,6 +200,32 @@ abstract class Marshaller
     }
 
     /**
+     * Get Attribute Name to Use for Marshalling
+     *
+     * This method provides the attribute name to be used to retrieve an element attribute value
+     * by considering whether or not the Marshaller implementation is running in Web Component
+     * Friendly mode.
+     *
+     * Examples:
+     *
+     * In case of the Marshaller implementation IS NOT running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "responseIdentifier" value is returned.
+     *
+     * On the other hand, in case of the Marshaller implementation IS running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "response-identifier" value is returned.
+     *
+     * @param DOMElement $element
+     * @param $attribute
+     * @return string
+     */
+    protected function getAttributeName(DOMElement $element, $attribute)
+    {
+        return $attribute;
+    }
+
+    /**
      * Get the attribute value of a given DOMElement object, cast in a given datatype.
      *
      * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
@@ -198,39 +234,9 @@ abstract class Marshaller
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
-    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
-        $attr = $element->getAttribute($attribute);
-
-        if ($attr !== '') {
-            switch ($datatype) {
-                case 'string':
-                    return $attr;
-                    break;
-
-                case 'integer':
-                    return intval($attr);
-                    break;
-
-                case 'float':
-                    return floatval($attr);
-                    break;
-
-                case 'double':
-                    return doubleval($attr);
-                    break;
-
-                case 'boolean':
-                    return ($attr === 'true') ? true : false;
-                    break;
-
-                default:
-                    throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
-                    break;
-            }
-        } else {
-            return null;
-        }
+        return XmlUtils::getDOMElementAttributeAs($element, $this->getAttributeName($element, $attribute), $datatype);
     }
 
     /**
@@ -240,17 +246,9 @@ abstract class Marshaller
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    public function setDOMElementAttribute(DOMElement $element, $attribute, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
-                break;
-
-            default:
-                $element->setAttribute($attribute, '' . $value);
-                break;
-        }
+        XmlUtils::setDOMElementAttribute($element, $this->getAttributeName($element, $attribute), $value);
     }
 
     /**
@@ -278,7 +276,7 @@ abstract class Marshaller
      * ... manually.
      *
      * @param DOMElement $element A DOMElement object
-     * @return DOMElement|boolean A DOMElement If a child node with nodeType = XML_ELEMENT_NODE or false if nothing found.
+     * @return DOMElement|bool A DOMElement If a child node with nodeType = XML_ELEMENT_NODE or false if nothing found.
      */
     public static function getFirstChildElement($element)
     {
@@ -297,21 +295,12 @@ abstract class Marshaller
      * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param boolean $withText Wether text nodes must be returned or not.
+     * @param bool $withText Whether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
     public static function getChildElements($element, $withText = false)
     {
-        $children = $element->childNodes;
-        $returnValue = [];
-
-        for ($i = 0; $i < $children->length; $i++) {
-            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
-                $returnValue[] = $children->item($i);
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElements($element, $withText);
     }
 
     /**
@@ -321,26 +310,17 @@ abstract class Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-     * @param boolean $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
-     * @param boolean $withText (optional) Whether text nodes must be returned or not.
+     * @param bool $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
-    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
         if (!is_array($tagName)) {
             $tagName = [$tagName];
         }
 
-        $rawElts = self::getChildElements($element, $withText);
-        $returnValue = [];
-
-        foreach ($rawElts as $elt) {
-            if (in_array($elt->localName, $tagName) === !$exclude) {
-                $returnValue[] = $elt;
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
     /**
@@ -416,7 +396,6 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
 
             $version = $this->getVersion();
-
             if (Version::compare($version, '2.2.0', '>=') === true) {
                 // aria-* attributes
                 if ($element->localName !== 'printedVariable') {
@@ -471,9 +450,8 @@ abstract class Marshaller
                     }
                 }
             }
-
         } catch (InvalidArgumentException $e) {
-            $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label).";
+            $msg = 'An error occurred while filling the bodyElement attributes (id, class, lang, label).';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
@@ -486,9 +464,9 @@ abstract class Marshaller
     {
         if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
             if (in_array($element->localName, self::$flowsToClasses, true)) {
-                $element->setAttribute('aria-flowsto', $bodyElement->getAriaFlowTo());
+                $element->setAttribute('aria-flowsto', $ariaFlowTo);
             } else {
-                $element->setAttribute('aria-flowto', $bodyElement->getAriaFlowTo());
+                $element->setAttribute('aria-flowto', $ariaFlowTo);
             }
         }
     }

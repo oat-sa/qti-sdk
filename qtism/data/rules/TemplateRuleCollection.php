@@ -41,7 +41,7 @@ class TemplateRuleCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof TemplateRule) {
-            $msg = "A TemplateRuleCollection only accepts to store TemplateRule objects.";
+            $msg = 'A TemplateRuleCollection only accepts to store TemplateRule objects.';
             throw new InvalidArgumentException($msg);
         }
     }

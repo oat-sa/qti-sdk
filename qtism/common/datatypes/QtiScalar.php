@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
-use qtism\common\Comparable;
 
 /**
  * The base class for all Scalar QTI datatypes. The following QTI datatypes
@@ -38,7 +37,7 @@ use qtism\common\Comparable;
  * * String
  * * Uri
  */
-abstract class QtiScalar implements Comparable
+abstract class QtiScalar implements QtiDatatype
 {
     /**
      * The value of the Scalar object.
@@ -80,6 +79,9 @@ abstract class QtiScalar implements Comparable
         return $this->value;
     }
 
+    /**
+     * @return bool
+     */
     public function isNull()
     {
         return $this->getValue() === null;
@@ -90,11 +92,12 @@ abstract class QtiScalar implements Comparable
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
      *
-     * @return boolean
+     * @param mixed $obj
+     * @return bool
      */
     public function equals($obj)
     {
-        if ($obj instanceof QtiScalar) {
+        if ($obj instanceof self) {
             return $obj->getValue() === $this->getValue();
         } else {
             return $this->getValue() === $obj;

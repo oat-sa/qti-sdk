@@ -23,8 +23,6 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\FieldValue;
 
 /**
@@ -38,16 +36,6 @@ use qtism\data\expressions\operators\FieldValue;
  */
 class FieldValueProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof FieldValue) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The FieldValueProcessor class only processes FieldValue QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the FieldValue object.
      *
@@ -59,12 +47,20 @@ class FieldValueProcessor extends OperatorProcessor
         $operands = $this->getOperands();
 
         if ($operands->exclusivelyRecord() === false) {
-            $msg = "The FieldValue operator only accepts operands with a cardinality of record.";
+            $msg = 'The FieldValue operator only accepts operands with a cardinality of record.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         $fieldIdentifier = $this->getExpression()->getFieldIdentifier();
 
         return $operands[0][$fieldIdentifier];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return FieldValue::class;
     }
 }

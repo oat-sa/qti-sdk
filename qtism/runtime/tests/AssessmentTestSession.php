@@ -39,6 +39,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TestPart;
 use qtism\runtime\common\OutcomeVariable;
@@ -87,7 +88,7 @@ class AssessmentTestSession extends State
     /**
      * The state of the AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     private $state;
 
@@ -118,14 +119,14 @@ class AssessmentTestSession extends State
      * Whether the Assessment Test Session must move automatically
      * to the next RouteItem after ending an attempt.
      *
-     * @var boolean
+     * @var bool
      */
     private $autoForward = true;
 
     /**
      * How/When test results must be submitted.
      *
-     * @var integer
+     * @var int
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
     private $testResultsSubmission = TestResultsSubmission::OUTCOME_PROCESSING;
@@ -152,11 +153,11 @@ class AssessmentTestSession extends State
     private $preservedOutcomeVariables;
 
     /**
-     * Wheter or not to force branch rules to be executed.
+     * Whether or not to force branch rules to be executed.
      *
      * If enabled, branch rules will be executed even if the current navigation mode is non-linear.
      *
-     * @var boolean
+     * @var bool
      */
     private $forceBranching = false;
 
@@ -165,14 +166,14 @@ class AssessmentTestSession extends State
      *
      * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
      *
-     * @var boolean
+     * @var bool
      */
     private $forcePreconditions = false;
 
     /**
      * Whether or not to store the positions taken in the flow while navigating the test.
      *
-     * @var boolean
+     * @var bool
      */
     private $pathTracking = false;
 
@@ -190,7 +191,7 @@ class AssessmentTestSession extends State
      *
      * If enabled, jumps will be allowed even if the current navigation mode is linear.
      *
-     * @var boolean
+     * @var bool
      */
     private $alwaysAllowJumps = false;
 
@@ -198,7 +199,6 @@ class AssessmentTestSession extends State
      * Whether or not enable outcome processing.
      *
      * If disabled, outcome processing will not occur at the end of an attempt (individual submission) or end of test part (simultaneous submission).
-     *
      */
     private $outcomeProcessingEnabled = true;
 
@@ -243,7 +243,7 @@ class AssessmentTestSession extends State
      */
     public function setSessionId($sessionId)
     {
-        if (gettype($sessionId) === 'string') {
+        if (is_string($sessionId)) {
             if (empty($sessionId) === false) {
                 $this->sessionId = $sessionId;
             } else {
@@ -319,7 +319,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current status of the AssessmentTestSession.
      *
-     * @return integer A value from the AssessmentTestSessionState enumeration.
+     * @return int A value from the AssessmentTestSessionState enumeration.
      */
     public function getState()
     {
@@ -329,14 +329,14 @@ class AssessmentTestSession extends State
     /**
      * Set the current status of the AssessmentTestSession.
      *
-     * @param integer $state A value from the AssessmentTestSessionState enumeration.
+     * @param int $state A value from the AssessmentTestSessionState enumeration.
      */
     public function setState($state)
     {
-        if (in_array($state, AssessmentTestSessionState::asArray(), true) === true) {
+        if (in_array($state, AssessmentTestSessionState::asArray(), true)) {
             $this->state = $state;
         } else {
-            $msg = "The state argument must be a value from the AssessmentTestSessionState enumeration";
+            $msg = 'The state argument must be a value from the AssessmentTestSessionState enumeration';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -409,7 +409,7 @@ class AssessmentTestSession extends State
         if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
             $this->getPendingResponseStore()->addPendingResponses($pendingResponses);
         } else {
-            $msg = "Cannot add pending responses while the current submission mode is not SIMULTANEOUS";
+            $msg = 'Cannot add pending responses while the current submission mode is not SIMULTANEOUS';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
     }
@@ -417,7 +417,7 @@ class AssessmentTestSession extends State
     /**
      * Get the Test Results Submission configuration value.
      *
-     * @param integer $testResultsSubmission
+     * @param int $testResultsSubmission
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
     public function setTestResultsSubmission($testResultsSubmission)
@@ -428,7 +428,7 @@ class AssessmentTestSession extends State
     /**
      * Get the Test Results Submission configuration value.
      *
-     * @return integer
+     * @return int
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
     public function getTestResultsSubmission()
@@ -459,7 +459,7 @@ class AssessmentTestSession extends State
     /**
      * Whether or not minimum time limits must be taken into account.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustConsiderMinTime()
     {
@@ -511,7 +511,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
      *
-     * @param boolean $forceBranching
+     * @param bool $forceBranching
      */
     public function setForceBranching($forceBranching)
     {
@@ -523,7 +523,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustForceBranching()
     {
@@ -535,7 +535,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
      *
-     * @param boolean $forcePreconditions
+     * @param bool $forcePreconditions
      */
     public function setForcePreconditions($forcePreconditions)
     {
@@ -547,7 +547,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustForcePreconditions()
     {
@@ -559,7 +559,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, jumps will be allowed even if the current navigation mode is linear.
      *
-     * @param boolean $alwaysAllowJumps
+     * @param bool $alwaysAllowJumps
      */
     public function setAlwaysAllowJumps($alwaysAllowJumps)
     {
@@ -571,7 +571,7 @@ class AssessmentTestSession extends State
      *
      * When turned on, jumps will be allowed even if the current navigation mode is linear.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustAlwaysAllowJumps()
     {
@@ -589,7 +589,7 @@ class AssessmentTestSession extends State
      * has begun using the AssessmentTestSession::beginTestSession() method, path tracking should not
      * be disable. Otherwise, you may experience issues with route item flow.
      *
-     * @param boolean $pathTracking
+     * @param bool $pathTracking
      */
     public function setPathTracking($pathTracking)
     {
@@ -599,7 +599,7 @@ class AssessmentTestSession extends State
     /**
      * Whether or not path tracking is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustTrackPath()
     {
@@ -637,7 +637,7 @@ class AssessmentTestSession extends State
      *
      * Whether or not outcome processing is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOutcomeProcessingEnabled()
     {
@@ -649,7 +649,7 @@ class AssessmentTestSession extends State
      *
      * Set whether or not outcome processing is enabled.
      *
-     * @param boolean $outcomeProcessingEnabled
+     * @param bool $outcomeProcessingEnabled
      */
     public function setOutcomeProcessingEnabled($outcomeProcessingEnabled)
     {
@@ -667,7 +667,7 @@ class AssessmentTestSession extends State
      */
     public function getWeight($identifier)
     {
-        if (gettype($identifier) === 'string') {
+        if (is_string($identifier)) {
             try {
                 $identifier = new VariableIdentifier($identifier);
                 if ($identifier->hasSequenceNumber() === true) {
@@ -679,7 +679,7 @@ class AssessmentTestSession extends State
                 throw new InvalidArgumentException($msg, 0, $e);
             }
         } elseif (!$identifier instanceof VariableIdentifier) {
-            $msg = "The given identifier argument is not a string, nor a VariableIdentifier object.";
+            $msg = 'The given identifier argument is not a string, nor a VariableIdentifier object.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -725,7 +725,7 @@ class AssessmentTestSession extends State
             $v = new VariableIdentifier($variable->getIdentifier());
 
             if ($v->hasPrefix() === true) {
-                $msg = "The variables set to the AssessmentTestSession global scope must have simple variable identifiers. ";
+                $msg = 'The variables set to the AssessmentTestSession global scope must have simple variable identifiers. ';
                 $msg .= "'" . $v->__toString() . "' given.";
                 throw new OutOfRangeException($msg);
             }
@@ -742,6 +742,7 @@ class AssessmentTestSession extends State
     /**
      * Get a variable from any scope of the AssessmentTestSession.
      *
+     * @param string $variableIdentifier
      * @return Variable A Variable object or null if no Variable object could be found for $variableIdentifier.
      */
     public function getVariable($variableIdentifier)
@@ -779,6 +780,7 @@ class AssessmentTestSession extends State
      * Please note that if the requested variable is a duration, the durationUpdate() method
      * will be called to return an accurate result.
      *
+     * @param string $offset
      * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
      * @throws OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
      * @qtism-test-duration-update
@@ -865,13 +867,15 @@ class AssessmentTestSession extends State
     /**
      * Set the value of a variable with identifier $offset.
      *
+     * @param string $offset
+     * @param mixed $value
      * @throws OutOfRangeException If $offset is not a string or an invalid variable identifier.
      * @throws OutOfBoundsException If the variable with identifier $offset cannot be found.
      */
     public function offsetSet($offset, $value)
     {
-        if (gettype($offset) !== 'string') {
-            $msg = "An AssessmentTestSession object must be addressed by string.";
+        if (!is_string($offset)) {
+            $msg = 'An AssessmentTestSession object must be addressed by string.';
             throw new OutOfRangeException($msg);
         }
 
@@ -924,7 +928,6 @@ class AssessmentTestSession extends State
      * Please not that unsetting a variable's value keep the variable still instantiated
      * in the context with its value replaced by NULL.
      *
-     *
      * @param string $offset A simple variable identifier (no prefix, no sequence number).
      * @throws OutOfRangeException If $offset is not a simple variable identifier.
      * @throws OutOfBoundsException If $offset does not refer to an existing variable in the global scope.
@@ -958,7 +961,8 @@ class AssessmentTestSession extends State
      * Check if a given variable identified by $offset exists in the global scope
      * of the AssessmentTestSession.
      *
-     * @return boolean Whether the variable identified by $offset exists in the current context.
+     * @param string $offset
+     * @return bool Whether the variable identified by $offset exists in the current context.
      * @throws OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
      */
     public function offsetExists($offset)
@@ -967,7 +971,7 @@ class AssessmentTestSession extends State
             $v = new VariableIdentifier($offset);
 
             if ($v->hasPrefix() === true) {
-                $msg = "Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable ";
+                $msg = 'Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable ';
                 $msg .= "identifiers (no prefix, no sequence number). '" . $v->__toString() . "' given.";
                 throw new OutOfRangeException($msg, 0);
             }
@@ -983,7 +987,6 @@ class AssessmentTestSession extends State
 
     /**
      * Initialize the AssessmentItemSession for the whole route.
-     *
      */
     protected function initializeItemSessions()
     {
@@ -1024,8 +1027,8 @@ class AssessmentTestSession extends State
      * submission mode, and will set up templateDefaults if any.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode
-     * @param integer $submissionMode
+     * @param int $navigationMode
+     * @param int $submissionMode
      * @return AssessmentItemSession
      */
     protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
@@ -1037,7 +1040,7 @@ class AssessmentTestSession extends State
      * Callback to invoked when an item session duration is updated.
      *
      * @param AssessmentItemSession $assessmentItemSession
-     * @param Duration $diff
+     * @param QtiDuration $diff
      */
     public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, QtiDuration $diff)
     {
@@ -1108,7 +1111,6 @@ class AssessmentTestSession extends State
      *
      * AssessmentItemSession objects related to the eligible items
      * will be instantiated.
-     *
      */
     protected function selectEligibleItems()
     {
@@ -1142,6 +1144,7 @@ class AssessmentTestSession extends State
      * Add an item session to the current assessment test session.
      *
      * @param AssessmentItemSession $session
+     * @param int $occurence
      * @throws LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
      */
     protected function addItemSession(AssessmentItemSession $session, $occurence = 0)
@@ -1152,7 +1155,7 @@ class AssessmentTestSession extends State
         if ($this->getAssessmentItemRefs()->contains($session->getAssessmentItem()) === false) {
             // The session that is requested to be set is bound to an item
             // which is not referenced in the test. This is a pure logic error.
-            $msg = "The item session to set is bound to an unknown AssessmentItemRef.";
+            $msg = 'The item session to set is bound to an unknown AssessmentItemRef.';
             throw new LogicException($msg);
         }
 
@@ -1165,7 +1168,7 @@ class AssessmentTestSession extends State
      * Get an AssessmentItemSession object based on $assessmentItemRef and $occurrence.
      *
      * @param AssessmentItemRef $assessmentItemRef
-     * @param integer $occurrence
+     * @param int $occurrence
      * @return AssessmentItemSession|false
      */
     protected function getItemSession(AssessmentItemRef $assessmentItemRef, $occurrence = 0)
@@ -1213,7 +1216,7 @@ class AssessmentTestSession extends State
      *  * if the current item of the selection is Q23, the return value is 0.
      *  * if the current item of the selection is Q01.3, the return value is 2.
      *
-     * @return integer| the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
+     * @return int| the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
      */
     public function getCurrentAssessmentItemRefOccurence()
     {
@@ -1255,7 +1258,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current navigation mode.
      *
-     * @return integer|false A value from the NavigationMode enumeration or false if the test session is not running.
+     * @return int|false A value from the NavigationMode enumeration or false if the test session is not running.
      */
     public function getCurrentNavigationMode()
     {
@@ -1269,7 +1272,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current submission mode.
      *
-     * @return integer|false A value from the SubmissionMode enumeration or false if the test session is not running.
+     * @return int|false A value from the SubmissionMode enumeration or false if the test session is not running.
      */
     public function getCurrentSubmissionMode()
     {
@@ -1283,7 +1286,7 @@ class AssessmentTestSession extends State
     /**
      * Get the number of remaining items for the current item in the route.
      *
-     * @return integer|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
+     * @return int|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
      */
     public function getCurrentRemainingAttempts()
     {
@@ -1299,13 +1302,13 @@ class AssessmentTestSession extends State
     /**
      * Whether the current item is adaptive.
      *
-     * @return boolean
+     * @return bool
      * @throws AssessmentTestSessionException If the test session is not running.
      */
     public function isCurrentAssessmentItemAdaptive()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1320,7 +1323,7 @@ class AssessmentTestSession extends State
     public function isCurrentAssessmentItemInteracting()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED.";
+            $msg = 'Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1340,14 +1343,14 @@ class AssessmentTestSession extends State
     public function getPreviousRouteItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED";
+            $msg = 'Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
         try {
             return $this->getRoute()->getPrevious();
         } catch (OutOfBoundsException $e) {
-            $msg = "There is no previous route item because the current position in the route sequence is 0";
+            $msg = 'There is no previous route item because the current position in the route sequence is 0';
             throw new OutOfBoundsException($msg, 0, $e);
         }
     }
@@ -1362,14 +1365,14 @@ class AssessmentTestSession extends State
     public function getNextRouteItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot know what is the next route item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot know what is the next route item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
         try {
             return $this->getRoute()->getNext();
         } catch (OutOfBoundsException $e) {
-            $msg = "There is not next route item because the current position in the route sequence is the last one.";
+            $msg = 'There is not next route item because the current position in the route sequence is the last one.';
             throw new OutOfBoundsException($msg, 0, $e);
         }
     }
@@ -1384,7 +1387,7 @@ class AssessmentTestSession extends State
     public function skip()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot skip the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1419,7 +1422,7 @@ class AssessmentTestSession extends State
     public function beginAttempt()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1443,16 +1446,15 @@ class AssessmentTestSession extends State
      * the end of the session if the responded item is the last one.
      *
      * @param State $responses The responses for the curent item in the sequence.
-     * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
+     * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
      * @throws AssessmentTestSessionException
-     * @throws AssessmentItemSessionException
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
     public function endAttempt(State $responses, $allowLateSubmission = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1491,7 +1493,7 @@ class AssessmentTestSession extends State
             try {
                 $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
             } catch (AssessmentTestSessionException $e) {
-                $msg = "An error occurred while transmitting item results to the appropriate data source at deferred responses processing time.";
+                $msg = 'An error occurred while transmitting item results to the appropriate data source at deferred responses processing time.';
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
             }
 
@@ -1504,8 +1506,9 @@ class AssessmentTestSession extends State
      * Perform a 'jump' to a given position in the Route sequence. The current navigation
      * mode must be LINEAR to be able to jump.
      *
-     * @param integer $position The position in the route the jump has to be made.
-     * @param boolean $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
+     * @param int $position The position in the route the jump has to be made.
+     * @param bool $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1515,7 +1518,7 @@ class AssessmentTestSession extends State
         // Can we jump?
         $navigationMode = $this->getCurrentNavigationMode();
         if ($navigationMode === NavigationMode::LINEAR && $this->mustAlwaysAllowJumps() !== true) {
-            $msg = "Jumps are not allowed in LINEAR navigation mode.";
+            $msg = 'Jumps are not allowed in LINEAR navigation mode.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
 
@@ -1590,8 +1593,7 @@ class AssessmentTestSession extends State
      * This method is triggered each time response processing takes place.
      *
      * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
-     * @param integer $occurence The occurence number of the item bound to $assessmentItemSession.
-     * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
+     * @param int $occurence The occurence number of the item bound to $assessmentItemSession.
      */
     protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
     {
@@ -1604,7 +1606,6 @@ class AssessmentTestSession extends State
      *
      * This method is triggered once at the end of the AssessmentTestSession.
      *
-     * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
      */
     protected function submitTestResults()
     {
@@ -1617,6 +1618,7 @@ class AssessmentTestSession extends State
      *
      * @return PendingResponsesCollection The collection of PendingResponses objects that were processed.
      * @throws AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
+     * @throws PhpStorageException
      */
     protected function defferedResponseProcessing()
     {
@@ -1631,18 +1633,18 @@ class AssessmentTestSession extends State
             $responseProcessing = $item->getResponseProcessing();
 
             // If the item has a processable response processing...
-            if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
+            if ($responseProcessing !== null && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
                 try {
                     $engine = $this->createResponseProcessingEngine($responseProcessing, $itemSession);
                     $engine->process();
                     $pendingResponsesProcessed++;
                     $this->submitItemResults($itemSession, $occurence);
                 } catch (ProcessingException $e) {
-                    $msg = "An error occured during postponed response processing.";
+                    $msg = 'An error occurred during postponed response processing.';
                     throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
                 } catch (AssessmentTestSessionException $e) {
-                    // An error occured while transmitting the results.
-                    $msg = "An error occured while transmitting item results to the appropriate data source.";
+                    // An error occurred while transmitting the results.
+                    $msg = 'An error occurred while transmitting item results to the appropriate data source.';
                     throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
                 }
             }
@@ -1684,15 +1686,17 @@ class AssessmentTestSession extends State
      * which is not timed out will be set as the current RouteItem. If there is no more following RouteItems
      * that are not timed out in the Route sequence, the test session ends gracefully.
      *
-     * @param boolean $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
+     * @param bool $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
+     * @throws PhpStorageException
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
     public function moveNext($allowTimeout = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next item while the test session state is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1742,7 +1746,8 @@ class AssessmentTestSession extends State
      * that are not timed out in the Route sequence, the current RouteItem remains the same and an
      * AssessmentTestSessionException with the appropriate timing error code is thrown.
      *
-     * @param boolean $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
+     * @param bool $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...) or if $allowTimeout = false and there absolutely no possibility to move backward (even the first RouteItem is timed out).
      * @qtism-test-interaction
      * @qtism-test-duration-update
@@ -1750,7 +1755,7 @@ class AssessmentTestSession extends State
     public function moveBack($allowTimeout = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the previous item while the test session state is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1797,7 +1802,7 @@ class AssessmentTestSession extends State
                     $this->interactWithItemSession();
                 } catch (AssessmentTestSessionException $e) {
                     $route->setPosition($oldPosition);
-                    $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
+                    $msg = 'Cannot move backward. All the previous items in the route sequence are timed out.';
                     throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
                 }
             }
@@ -1810,14 +1815,16 @@ class AssessmentTestSession extends State
      * * If there is no more item in the route to be explored the session ends gracefully.
      * * If there the end of a test part is reached, pending responses are submitted.
      *
-     * @param boolean $ignoreBranchings Whether or not to ignore branching.
-     * @param boolean $ignorePreConditions Whether or not to ignore preConditions.
+     * @param bool $ignoreBranchings Whether or not to ignore branching.
+     * @param bool $ignorePreConditions Whether or not to ignore preConditions.
      * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
+     * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next position while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next position while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1898,12 +1905,14 @@ class AssessmentTestSession extends State
      * testPart is the last one of the test session, the test session ends gracefully. If the submission mode
      * is simultaneous, the pending responses are processed.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is currently not running.
+     * @throws PhpStorageException
      */
     public function moveNextTestPart()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1925,12 +1934,14 @@ class AssessmentTestSession extends State
      * * If there is no assessmentSection left in the flow, the test session ends gracefully.
      * * If there are still pending responses, they are processed.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is not running.
+     * @throws PhpStorageException
      */
     public function moveNextAssessmentSection()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1952,12 +1963,14 @@ class AssessmentTestSession extends State
      * * If there is no item left in the flow, the test session ends gracefully.
      * * If there are still pending responses, they are processed.
      *
+     * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException If the test is not running.
+     * @throws PhpStorageException
      */
     public function moveNextAssessmentItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -1976,13 +1989,13 @@ class AssessmentTestSession extends State
     protected function previousRouteItem()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot move backward in the route item sequence while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot move backward in the route item sequence while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         } elseif ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
-            $msg = "Cannot move backward in the route item sequence while the LINEAR navigation mode is in force.";
+            $msg = 'Cannot move backward in the route item sequence while the LINEAR navigation mode is in force.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
         } elseif ($this->getRoute()->getPosition() === 0) {
-            $msg = "Cannot move backward in the route item sequence while the current position is the very first one of the AssessmentTestSession.";
+            $msg = 'Cannot move backward in the route item sequence while the current position is the very first one of the AssessmentTestSession.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);
         }
 
@@ -2015,7 +2028,7 @@ class AssessmentTestSession extends State
                     $this->submitTestResults();
                 }
             } catch (ProcessingException $e) {
-                $msg = "An error occured while processing OutcomeProcessing.";
+                $msg = 'An error occurred while processing OutcomeProcessing.';
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::OUTCOME_PROCESSING_ERROR, $e);
             }
         }
@@ -2025,7 +2038,7 @@ class AssessmentTestSession extends State
      * Whether the test session is running. In other words, if the test session is not in
      * state INITIAL nor CLOSED.
      *
-     * @return boolean Whether the test session is running.
+     * @return bool Whether the test session is running.
      */
     public function isRunning()
     {
@@ -2036,13 +2049,14 @@ class AssessmentTestSession extends State
      * End the test session.
      *
      * @throws AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
+     * @throws PhpStorageException
      * @qtism-test-interaction
      * @qtism-test-update-duration
      */
     public function endTestSession()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot end the test session while the state of the test session is INITIAL or CLOSED.";
+            $msg = 'Cannot end the test session while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
@@ -2112,8 +2126,8 @@ class AssessmentTestSession extends State
      * * AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE: consider only item occurences containing at least one response declaration.
      * * AssessmentTestSession::ROUTECOUNT_FLOW: ignore item occurences in non linear mode having no response declaration.
      *
-     * @param integer $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE | AssessmentTestSession::ROUTECOUNT_FLOW
-     * @return integer
+     * @param int $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE | AssessmentTestSession::ROUTECOUNT_FLOW
+     * @return int
      */
     public function getRouteCount($mode = self::ROUTECOUNT_ALL)
     {
@@ -2166,15 +2180,13 @@ class AssessmentTestSession extends State
      * Whether a given item occurence is the last updated.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @param integer $occurence An occurence number
-     * @return boolean
+     * @param int $occurence An occurence number
+     * @return bool
      */
     public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
-        if (($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) {
-            if ($occurence === $lastUpdate) {
-                return true;
-            }
+        if ((($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) && $occurence === $lastUpdate) {
+            return true;
         }
 
         return false;
@@ -2184,7 +2196,7 @@ class AssessmentTestSession extends State
      * Notify which $occurence of $assessmentItemRef was the last updated.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @param integer $occurence An occurence number for $assessmentItemRef.
+     * @param int $occurence An occurence number for $assessmentItemRef.
      */
     protected function notifyLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
@@ -2200,16 +2212,14 @@ class AssessmentTestSession extends State
      */
     public function whichLastOccurenceUpdate($assessmentItemRef)
     {
-        if (gettype($assessmentItemRef) === 'string') {
+        if (is_string($assessmentItemRef)) {
             $assessmentItemRefs = $this->getAssessmentItemRefs();
             if (isset($assessmentItemRefs[$assessmentItemRef]) === true) {
                 $assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];
             }
-        } else {
-            if (!$assessmentItemRef instanceof AssessmentItemRef) {
-                $msg = "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.";
-                throw new InvalidArgumentException($msg);
-            }
+        } elseif (!$assessmentItemRef instanceof AssessmentItemRef) {
+            $msg = "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.";
+            throw new InvalidArgumentException($msg);
         }
 
         $lastOccurenceUpdate = $this->getLastOccurenceUpdate();
@@ -2227,7 +2237,8 @@ class AssessmentTestSession extends State
      * * If the current navigation mode is LINEAR, false is returned.
      * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
      *
-     * @return boolean
+     * @return bool
+     * @throws AssessmentTestSessionException
      */
     public function canMoveBackward()
     {
@@ -2239,11 +2250,7 @@ class AssessmentTestSession extends State
             if ($previousRouteItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) {
                 return false;
             } else {
-                if ($this->getCurrentNavigationMode() === NavigationMode::NONLINEAR) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return $this->getCurrentNavigationMode() === NavigationMode::NONLINEAR;
             }
         }
     }
@@ -2254,7 +2261,8 @@ class AssessmentTestSession extends State
      *
      * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
      *
-     * @param integer $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
+     * @param int $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
+     * @param string $identifier
      * @return JumpCollection A collection of Jump objects.
      */
     public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = '')
@@ -2273,15 +2281,15 @@ class AssessmentTestSession extends State
                     break;
 
                 case AssessmentTestPlace::TEST_PART:
-                    $jumpables = $route->getRouteItemsByTestPart((empty($identifier) === true) ? $this->getCurrentTestPart() : $identifier);
+                    $jumpables = $route->getRouteItemsByTestPart((empty($identifier)) ? $this->getCurrentTestPart() : $identifier);
                     break;
 
                 case AssessmentTestPlace::ASSESSMENT_SECTION:
-                    $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier) === true) ? $this->getCurrentAssessmentSection() : $identifier);
+                    $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier)) ? $this->getCurrentAssessmentSection() : $identifier);
                     break;
 
                 case AssessmentTestPlace::ASSESSMENT_ITEM:
-                    $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier) === true) ? $this->getCurrentAssessmentItemRef() : $identifier);
+                    $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier)) ? $this->getCurrentAssessmentItemRef() : $identifier);
                     break;
             }
 
@@ -2311,7 +2319,7 @@ class AssessmentTestSession extends State
     public function isCurrentTestPartComplete()
     {
         if ($this->getCurrentSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
-            $msg = "It makes no sense to check if the current TestPart is complete when the current navigation mode is not SIMULTANEOUS.";
+            $msg = 'It makes no sense to check if the current TestPart is complete when the current navigation mode is not SIMULTANEOUS.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);
         }
 
@@ -2321,7 +2329,7 @@ class AssessmentTestSession extends State
     /**
      * Get the acceptable latency time for the AssessmentTestSession.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      */
     public function getAcceptableLatency()
     {
@@ -2332,7 +2340,7 @@ class AssessmentTestSession extends State
      * Get the time constraints running for the current testPart or/and current assessmentSection
      * or/and assessmentItem.
      *
-     * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
+     * @param int $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
      * @return TimeConstraintCollection A collection of TimeConstraint objects.
      * @qtism-test-duration-update
      */
@@ -2349,6 +2357,8 @@ class AssessmentTestSession extends State
         $durationStore = $this->getDurationStore();
         $considerMinTime = $this->mustConsiderMinTime();
 
+        $constraints = new TimeConstraintCollection();
+        
         if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
             $source = $routeItem->getAssessmentTest();
             $duration = $durationStore[$source->getIdentifier()];
@@ -2392,9 +2402,9 @@ class AssessmentTestSession extends State
      * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_OVERFLOW
      * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_UNDERFLOW
      *
-     * @param boolean $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
-     * @param boolean $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
-     * @param boolean $acceptableLatency Whether or not consider the acceptable latency.
+     * @param bool $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
+     * @param bool $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
+     * @param bool $acceptableLatency Whether or not consider the acceptable latency.
      * @throws AssessmentTestSessionException If one or more time limits in force are not respected.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
      */
@@ -2405,7 +2415,7 @@ class AssessmentTestSession extends State
         $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
         // Include assessmentItem only if formally asked by client-code.
         if ($includeAssessmentItem === true) {
-            $places = $places | AssessmentTestPlace::ASSESSMENT_ITEM;
+            $places |= AssessmentTestPlace::ASSESSMENT_ITEM;
         }
 
         $constraints = $this->getTimeConstraints($places);
@@ -2513,7 +2523,7 @@ class AssessmentTestSession extends State
     protected function suspendItemSession()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot suspend the item session if the test session is not running.";
+            $msg = 'Cannot suspend the item session if the test session is not running.';
             $code = AssessmentTestSessionException::STATE_VIOLATION;
             throw new AssessmentTestSessionException($msg, $code);
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
@@ -2521,7 +2531,7 @@ class AssessmentTestSession extends State
                 $itemSession->suspend();
             }
         } else {
-            $msg = "Cannot retrieve the current item session.";
+            $msg = 'Cannot retrieve the current item session.';
             throw new UnexpectedValueException($msg);
         }
     }
@@ -2536,7 +2546,7 @@ class AssessmentTestSession extends State
     protected function interactWithItemSession()
     {
         if ($this->isRunning() === false) {
-            $msg = "Cannot set the item session in interacting state if test session is not running.";
+            $msg = 'Cannot set the item session in interacting state if test session is not running.';
             $code = AssessmentTestSessionException::STATE_VIOLATION;
             throw new AssessmentTestSessionException($msg, $code);
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
@@ -2544,7 +2554,7 @@ class AssessmentTestSession extends State
                 $itemSession->interact();
             }
         } else {
-            $msg = "Cannot retrieve the current item session.";
+            $msg = 'Cannot retrieve the current item session.';
             throw new UnexpectedValueException($msg);
         }
     }
@@ -2553,7 +2563,7 @@ class AssessmentTestSession extends State
      * Get the number of responded items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberResponded($identifier = '')
     {
@@ -2578,7 +2588,7 @@ class AssessmentTestSession extends State
      * Get the number of correctly answered items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberCorrect($identifier = '')
     {
@@ -2603,7 +2613,7 @@ class AssessmentTestSession extends State
      * Get the number of incorrectly answered items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberIncorrect($identifier = '')
     {
@@ -2628,7 +2638,7 @@ class AssessmentTestSession extends State
      * Get the number of presented items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberPresented($identifier = '')
     {
@@ -2653,7 +2663,7 @@ class AssessmentTestSession extends State
      * Get the number of selected items.
      *
      * @param string $identifier An optional assessmentSection identifier.
-     * @return integer
+     * @return int
      */
     public function numberSelected($identifier = '')
     {
@@ -2682,7 +2692,7 @@ class AssessmentTestSession extends State
      * * The navigation mode in force for the item is non-linear, and its completion status is 'complete'.
      * * The navigation mode in force for the item is linear, and it was presented at least one time.
      *
-     * @return integer The number of completed items.
+     * @return int The number of completed items.
      */
     public function numberCompleted()
     {
@@ -2706,10 +2716,8 @@ class AssessmentTestSession extends State
 
                 if ($isAdaptive === true && $itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
                     $numberCompleted++;
-                } else {
-                    if ($isAdaptive === false && $itemSession->isResponded() === true) {
-                        $numberCompleted++;
-                    }
+                } elseif ($isAdaptive === false && $itemSession->isResponded() === true) {
+                    $numberCompleted++;
                 }
             }
         }
@@ -2736,7 +2744,7 @@ class AssessmentTestSession extends State
         if ($e instanceof AssessmentItemSessionException) {
             switch ($e->getCode()) {
                 case AssessmentItemSessionException::UNKNOWN:
-                    $msg = "An unknown error occured at the AssessmentItemSession level.";
+                    $msg = 'An unknown error occurred at the AssessmentItemSession level.';
                     $code = AssessmentTestSessionException::UNKNOWN;
                     break;
 
@@ -2760,7 +2768,7 @@ class AssessmentTestSession extends State
 
                 case AssessmentItemSessionException::RUNTIME_ERROR:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "A runtime error occured at the AssessmentItemSession level.";
+                    $msg = 'A runtime error occurred at the AssessmentItemSession level.';
                     $code = AssessmentTestSessionException::UNKNOWN;
                     break;
 
@@ -2786,7 +2794,7 @@ class AssessmentTestSession extends State
             return new AssessmentTestSessionException($msg, $code, $e);
         } else {
             // Generic exception...
-            $msg = "An unexpected error occured at the level of the Test Session.";
+            $msg = 'An unexpected error occurred at the level of the Test Session.';
 
             return new AssessmentTestSessionException($msg, AssessmentTestSessionException::UNKNOWN, $e);
         }
@@ -2808,8 +2816,8 @@ class AssessmentTestSession extends State
     /**
      * Whether or not time limits are in force for the current route item.
      *
-     * @param boolean $excludeItem Whether or not include item time limits.
-     * @return boolean
+     * @param bool $excludeItem Whether or not include item time limits.
+     * @return bool
      */
     protected function timeLimitsInForce($excludeItem = false)
     {
@@ -2821,7 +2829,7 @@ class AssessmentTestSession extends State
      *
      * Whether or not Branch Rules have to be applied.
      *
-     * @return boolean
+     * @return bool
      */
     protected function mustApplyBranchRules()
     {
@@ -2833,8 +2841,8 @@ class AssessmentTestSession extends State
      *
      * Whether or not PreConditions have to be applied.
      *
-     * @param boolean $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
-     * @return boolean
+     * @param bool $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
+     * @return bool
      */
     protected function mustApplyPreConditions($nextRouteItem = false)
     {
@@ -2856,7 +2864,7 @@ class AssessmentTestSession extends State
      *
      * Otherwise, this method returns true.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNextRouteItemPredictible()
     {

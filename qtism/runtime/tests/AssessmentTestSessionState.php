@@ -41,6 +41,9 @@ class AssessmentTestSessionState implements Enumeration
 
     const CLOSED = 4;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -52,6 +55,10 @@ class AssessmentTestSessionState implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -81,6 +88,10 @@ class AssessmentTestSessionState implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

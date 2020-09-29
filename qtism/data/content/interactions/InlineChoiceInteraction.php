@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -46,7 +47,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * the order in which the choices are initially presented, subject to the
      * value of the fixed attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -61,7 +62,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * including a blank value among the choices. Where 'required=false' is set
      * the rendering system must ensure it is possible to select a blank response.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $required = false;
@@ -99,12 +100,12 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Set whether the delivery engine must shuffle the choices.
      *
-     * @param boolean $shuffle
+     * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -115,7 +116,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Whether the delivery engine must shuffle the choices.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -125,12 +126,12 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Set whether a choice is required to be selected by the candidate.
      *
-     * @param boolean $required
+     * @param bool $required
      * @throws InvalidArgumentException If $required is not a boolean value.
      */
     public function setRequired($required)
     {
-        if (is_bool($required) === true) {
+        if (is_bool($required)) {
             $this->required = $required;
         } else {
             $msg = "The 'required' argument must be a boolean value, '" . gettype($required) . "' given.";
@@ -141,7 +142,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * Whether a choice is required to be selected by the candidate.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRequired()
     {
@@ -159,7 +160,7 @@ class InlineChoiceInteraction extends InlineInteraction
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "An InlineChoiceInteraction must be composed by at lease one InlineChoice object, none given.";
+            $msg = 'An InlineChoiceInteraction must be composed by at lease one InlineChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -175,7 +176,7 @@ class InlineChoiceInteraction extends InlineInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return InlineChoiceCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -183,7 +184,7 @@ class InlineChoiceInteraction extends InlineInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

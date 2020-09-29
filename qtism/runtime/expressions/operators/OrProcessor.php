@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
 use qtism\runtime\common\Container;
 
@@ -44,20 +42,10 @@ use qtism\runtime\common\Container;
  */
 class OrProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof OrOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
-     * @return boolean True if the expression is true, false otherwise.
+     * @return QtiBoolean True if the expression is true, false otherwise.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -67,19 +55,15 @@ class OrProcessor extends OperatorProcessor
 
         foreach ($operands as $op) {
             if ($op instanceof Container) {
-                $msg = "The Or Expression only accept operands with single cardinality.";
+                $msg = 'The Or Expression only accept operands with single cardinality.';
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
             } elseif ($op === null) {
                 continue;
-            } else {
-                if (!$op instanceof QtiBoolean) {
-                    $msg = "The Or Expression only accept operands with boolean baseType.";
-                    throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-                } else {
-                    if ($op->getValue() !== false) {
-                        $allFalse = false;
-                    }
-                }
+            } elseif (!$op instanceof QtiBoolean) {
+                $msg = 'The Or Expression only accept operands with boolean baseType.';
+                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+            } elseif ($op->getValue() !== false) {
+                $allFalse = false;
             }
         }
 
@@ -94,5 +78,13 @@ class OrProcessor extends OperatorProcessor
         }
 
         return new QtiBoolean(false);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return OrOperator::class;
     }
 }

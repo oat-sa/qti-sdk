@@ -45,8 +45,8 @@ class AnyNMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'min', $component->getMin());
-        self::setDOMElementAttribute($element, 'max', $component->getMax());
+        $this->setDOMElementAttribute($element, 'min', $component->getMin());
+        $this->setDOMElementAttribute($element, 'max', $component->getMax());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -65,19 +65,17 @@ class AnyNMarshaller extends OperatorMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($min = static::getDOMElementAttributeAs($element, 'min')) !== null) {
+        if (($min = $this->getDOMElementAttributeAs($element, 'min')) !== null) {
             if (Format::isInteger($min)) {
-                $min = intval($min);
+                $min = (int)$min;
             }
 
-            if (($max = static::getDOMElementAttributeAs($element, 'max')) !== null) {
+            if (($max = $this->getDOMElementAttributeAs($element, 'max')) !== null) {
                 if (Format::isInteger($max)) {
-                    $max = intval($max);
+                    $max = (int)$max;
                 }
 
-                $object = new AnyN($children, $min, $max);
-
-                return $object;
+                return new AnyN($children, $min, $max);
             } else {
                 $msg = "The mandatory attribute 'max' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

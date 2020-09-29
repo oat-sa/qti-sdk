@@ -50,11 +50,19 @@ class QtiVersion extends Version
     /** @var string */
     private $versionNumber;
 
+    /**
+     * QtiVersion constructor.
+     *
+     * @param string $versionNumber
+     */
     public function __construct(string $versionNumber)
     {
         $this->versionNumber = $versionNumber;
     }
 
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->versionNumber;
@@ -148,21 +156,33 @@ class QtiVersion extends Version
         return '';
     }
 
+    /**
+     * @return string
+     */
     public function getLocalXsd(): string
     {
         return __DIR__ . '/../schemes/' . static::LOCAL_XSD;
     }
 
+    /**
+     * @return string
+     */
     public function getNamespace(): string
     {
         return static::XMLNS;
     }
 
+    /**
+     * @return string
+     */
     public function getXsdLocation(): string
     {
         return static::XSD;
     }
 
+    /**
+     * @return string
+     */
     public function getMarshallerFactoryClass(): string
     {
         return static::MARSHALLER_FACTORY;

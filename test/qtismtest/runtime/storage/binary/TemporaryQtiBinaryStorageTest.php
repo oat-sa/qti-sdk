@@ -24,7 +24,11 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\tests\AssessmentTestSession;
 
+/**
+ * Class TemporaryQtiBinaryStorageTest
+ */
 class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 {
     public function testTemporaryQtiBinaryStorage()
@@ -38,7 +42,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->instantiate($test);
         $sessionId = $session->getSessionId();
 
-        $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
+        $this->assertInstanceOf(AssessmentTestSession::class, $session);
         $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
 
         $session->beginTestSession();
@@ -65,7 +69,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         // The outcome variables composing the test-level global scope
         // must be set with their default value if any.
         foreach ($doc->getDocumentComponent()->getOutcomeDeclarations() as $outcomeDeclaration) {
-            $this->assertFalse(is_null($session[$outcomeDeclaration->getIdentifier()]));
+            $this->assertFalse($session[$outcomeDeclaration->getIdentifier()] === null);
             $this->assertEquals(0, $session[$outcomeDeclaration->getIdentifier()]->getValue());
         }
 

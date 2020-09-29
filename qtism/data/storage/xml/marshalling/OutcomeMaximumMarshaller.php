@@ -35,17 +35,17 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall an outcomeMaximum object in its DOMElement equivalent.
      *
-     * @param QtiComponent A OutcomeMaximum object.
+     * @param QtiComponent $component A OutcomeMaximum object.
      * @return DOMElement The corresponding outcomeMaximum QTI element.
      */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
 
         $weightIdentifier = $component->getWeightIdentifier();
         if (!empty($weightIdentifier)) {
-            self::setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
+            $this->setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
         }
 
         return $element;
@@ -54,20 +54,21 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall an outcomeMaximum QTI element in its OutcomeMaximum object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding OutcomeMaximum object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($outcomeIdentifier = static::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+        if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
             $object = new OutcomeMaximum($outcomeIdentifier);
             $object->setSectionIdentifier($baseComponent->getSectionIdentifier());
             $object->setIncludeCategories($baseComponent->getIncludeCategories());
             $object->setExcludeCategories($baseComponent->getExcludeCategories());
 
-            if (($weightIdentifier = static::getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
+            if (($weightIdentifier = $this->getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
                 $object->setWeightIdentifier($weightIdentifier);
             }
 
@@ -79,7 +80,7 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

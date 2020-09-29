@@ -27,12 +27,15 @@ use DOMElement;
 use DOMNode;
 use qtism\common\utils\Reflection;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\operators\AndOperator;
 use qtism\data\expressions\operators\CustomOperator;
 use qtism\data\expressions\operators\Operator;
+use qtism\data\expressions\operators\OrOperator;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\storage\xml\Utils;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * The OperatorMarshaller class focuses on Marshaller/Unmarshalling
@@ -131,7 +134,10 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -139,13 +145,11 @@ class OperatorMarshaller extends RecursiveMarshaller
         // AndOperator because of PHP reserved words restriction.
 
         if ($element->localName === 'and') {
-            $className = 'qtism\\data\\expressions\\operators\\AndOperator';
+            $className = AndOperator::class;
+        } elseif ($element->localName === 'or') {
+            $className = OrOperator::class;
         } else {
-            if ($element->localName === 'or') {
-                $className = 'qtism\\data\\expressions\\operators\\OrOperator';
-            } else {
-                $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
-            }
+            $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
         }
 
         $class = new ReflectionClass($className);
@@ -159,11 +163,11 @@ class OperatorMarshaller extends RecursiveMarshaller
             $params[] = $frag->ownerDocument->saveXML($frag);
             $component = Reflection::newInstance($class, $params);
 
-            if (($class = self::getDOMElementAttributeAs($element, 'class')) !== null) {
+            if (($class = $this->getDOMElementAttributeAs($element, 'class')) !== null) {
                 $component->setClass($class);
             }
 
-            if (($definition = self::getDOMElementAttributeAs($element, 'definition')) !== null) {
+            if (($definition = $this->getDOMElementAttributeAs($element, 'definition')) !== null) {
                 $component->setDefinition($definition);
             }
 
@@ -174,7 +178,9 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -185,18 +191,18 @@ class OperatorMarshaller extends RecursiveMarshaller
 
         if ($component instanceof CustomOperator) {
             if ($component->hasClass() === true) {
-                self::setDOMElementAttribute($element, 'class', $component->getClass());
+                $this->setDOMElementAttribute($element, 'class', $component->getClass());
             }
 
             if ($component->hasDefinition() === true) {
-                self::setDOMElementAttribute($element, 'definition', $component->getDefinition());
+                $this->setDOMElementAttribute($element, 'definition', $component->getDefinition());
             }
 
             // Now, we have to extract the LAX content of the custom operator and put it into
             // what we are putting out. (It is possible to have no LAX content at all, it is not mandatory).
             $xml = $component->getXml();
             $operatorElt = $xml->documentElement->cloneNode(true);
-            $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
+            $qtiOperatorElts = $this->getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
 
             foreach ($qtiOperatorElts as $qtiOperatorElt) {
                 $operatorElt->removeChild($qtiOperatorElt);
@@ -210,7 +216,8 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     * @param DOMNode $element
+     * @return bool
      */
     protected function isElementFinal(DOMNode $element)
     {
@@ -218,7 +225,8 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     * @param QtiComponent $component
+     * @return bool
      */
     protected function isComponentFinal(QtiComponent $component)
     {
@@ -226,15 +234,17 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     * @param DOMElement $element
+     * @return array
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
+        return $this->getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     * @param QtiComponent $component
+     * @return array
      */
     protected function getChildrenComponents(QtiComponent $component)
     {
@@ -246,7 +256,8 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     * @param DOMElement $currentNode
+     * @return ExpressionCollection
      */
     protected function createCollection(DOMElement $currentNode)
     {
@@ -254,7 +265,7 @@ class OperatorMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

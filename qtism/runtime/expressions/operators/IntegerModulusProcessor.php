@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\IntegerModulus;
 
 /**
@@ -42,20 +40,10 @@ use qtism\data\expressions\operators\IntegerModulus;
  */
 class IntegerModulusProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IntegerModulus) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IntegerModulusProcessor class only processes IntegerModulus QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the IntegerModulus operator.
      *
-     * @return integer|null An integer value that corresponds to the remainder of the Integer Division or NULL if the second expression is 0 or if either of the sub-expressions is NULL.
+     * @return QtiInteger|null An integer value that corresponds to the remainder of the Integer Division or NULL if the second expression is 0 or if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -67,12 +55,12 @@ class IntegerModulusProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerModulus operator only accepts operands with single cardinality.";
+            $msg = 'The IntegerModulus operator only accepts operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerModulus operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerModulus operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -84,6 +72,14 @@ class IntegerModulusProcessor extends OperatorProcessor
             return null;
         }
 
-        return new QtiInteger(intval($operand1->getValue() % $operand2->getValue()));
+        return new QtiInteger(($operand1->getValue() % $operand2->getValue()));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return IntegerModulus::class;
     }
 }

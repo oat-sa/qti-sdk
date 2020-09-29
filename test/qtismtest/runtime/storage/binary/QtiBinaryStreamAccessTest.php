@@ -19,7 +19,10 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\SubmissionMode;
@@ -39,8 +42,12 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use ReflectionException;
 use ReflectionProperty;
 
+/**
+ * Class QtiBinaryStreamAccessTest
+ */
 class QtiBinaryStreamAccessTest extends QtiSmTestCase
 {
     /**
@@ -49,6 +56,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
      * @param Variable $variable
      * @param string $binary
      * @param mixed $expectedValue
+     * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testReadVariableValue(Variable $variable, $binary, $expectedValue)
     {
@@ -57,9 +67,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $access->readVariableValue($variable);
 
-        if (is_scalar($expectedValue) === true) {
+        if (is_scalar($expectedValue)) {
             $this->assertEquals($expectedValue, $variable->getValue()->getValue());
-        } elseif (is_null($expectedValue) === true) {
+        } elseif ($expectedValue === null) {
             $this->assertSame($expectedValue, $variable->getValue());
         } elseif ($expectedValue instanceof RecordContainer) {
             $this->assertEquals($expectedValue->getCardinality(), $variable->getCardinality());
@@ -77,6 +87,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function readVariableValueProvider()
     {
         $returnValue = [];
@@ -245,7 +258,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
 
-        $this->setExpectedException(QtiBinaryStreamAccessException::class, "Datatype mismatch for variable 'VAR'");
+        $this->expectException(QtiBinaryStreamAccessException::class);
+        $this->expectExceptionMessage("Datatype mismatch for variable 'VAR'");
         $access->readVariableValue($variable);
     }
 
@@ -253,6 +267,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
      * @dataProvider writeVariableValueProvider
      *
      * @param Variable $variable
+     * @throws QtiBinaryStreamAccessException
+     * @throws BinaryStreamAccessException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
      */
     public function testWriteVariableValue(Variable $variable)
     {
@@ -275,9 +293,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $readValue = $testVariable->getValue();
 
         // Compare.
-        if (is_null($originalValue) === true) {
+        if ($originalValue === null) {
             $this->assertSame($originalValue, $readValue);
-        } elseif (is_scalar($originalValue) === true) {
+        } elseif (is_scalar($originalValue)) {
             $this->assertEquals($originalValue, $readValue);
         } elseif ($originalValue instanceof RecordContainer) {
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
@@ -286,7 +304,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
             // MULTIPLE or ORDERED container.
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertEquals($readValue->getBaseType(), $readValue->getBaseType());
-            $this->assertTrue($readValue->equals($originalValue), $originalValue . " != " . $readValue);
+            $this->assertTrue($readValue->equals($originalValue), $originalValue . ' != ' . $readValue);
         } elseif ($originalValue instanceof Comparable) {
             // Complex QTI Runtime object.
             $this->assertTrue($readValue->equals($originalValue));
@@ -296,6 +314,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function writeVariableValueProvider()
     {
         return [
@@ -501,10 +522,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals(2, $session['numAttempts']->getValue());
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals('incomplete', $session['completionStatus']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('scoring'));
+        $this->assertInstanceOf(OutcomeVariable::class, $session->getVariable('scoring'));
         $this->assertInstanceOf(QtiFloat::class, $session['scoring']);
         $this->assertEquals(1.0, $session['scoring']->getValue());
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $session->getVariable('RESPONSE'));
         $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
         $this->assertInstanceOf(QtiString::class, $session['RESPONSE']);
         $this->assertEquals('ChoiceA', $session['RESPONSE']->getValue());
@@ -526,7 +547,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        
+
         $version = $this->createVersionMock(2);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
 
@@ -562,7 +583,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $version = $this->createVersionMock(3);
         $routeItem = $access->readRouteItem($seeker, $version);
-        
+
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S01', $routeItem->getAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
@@ -623,7 +644,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $pendingResponses = $access->readPendingResponses($seeker);
         $state = $pendingResponses->getState();
         $this->assertEquals(1, count($state));
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $state->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this->assertEquals('ChoiceA', $state['RESPONSE']->getValue());
 
         $itemRef = $pendingResponses->getAssessmentItemRef();
@@ -663,7 +684,12 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals(0, $pendingResponses->getOccurence());
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
-    
+
+    /**
+     * @param int $versionNumber
+     * @return QtiBinaryVersion
+     * @throws ReflectionException
+     */
     public function createVersionMock(int $versionNumber): QtiBinaryVersion
     {
         $version = new QtiBinaryVersion();
@@ -671,7 +697,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $property->setAccessible(true);
         $property->setValue($version, $versionNumber);
         $property->setAccessible(false);
-        
+
         return $version;
     }
 }

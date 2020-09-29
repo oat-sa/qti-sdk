@@ -8,7 +8,12 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\interactions\Choice;
+use qtism\data\content\interactions\Hotspot;
 
+/**
+ * Class AssociableHotspotMarshallerTest
+ */
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -39,9 +44,9 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Hotspot', $component);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Choice', $component);
+        $this->assertInstanceOf(AssociableHotspot::class, $component);
+        $this->assertInstanceOf(Hotspot::class, $component);
+        $this->assertInstanceOf(Choice::class, $component);
 
         $this->assertEquals('hotspot1', $component->getIdentifier());
         $this->assertEquals(QtiShape::RECT, $component->getShape());

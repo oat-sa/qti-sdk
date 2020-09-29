@@ -35,7 +35,7 @@ class FileManagerException extends Exception
      * Error code to use when the constitution of the error
      * is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -43,7 +43,7 @@ class FileManagerException extends Exception
      * Create a new FileManagerException object.
      *
      * @param string $message A human-readable error message.
-     * @param integer $code A machine understandable error code (see class constants).
+     * @param int $code A machine understandable error code (see class constants).
      * @param Exception $previous A possible previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

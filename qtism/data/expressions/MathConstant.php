@@ -77,7 +77,7 @@ class MathConstant extends Expression
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

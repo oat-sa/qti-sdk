@@ -5,7 +5,11 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\content\Math;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
+/**
+ * Class MathMarshallerTest
+ */
 class MathMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -34,9 +38,9 @@ class MathMarshallerTest extends QtiSmTestCase
             </m:math>');
 
         $math = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\Math', $math);
+        $this->assertInstanceOf(Math::class, $math);
         $xml = $math->getXml();
-        $this->assertInstanceOf('\\DOMDocument', $xml);
+        $this->assertInstanceOf(DOMDocument::class, $xml);
 
         $mathElement = $xml->documentElement;
         $this->assertEquals('m', $mathElement->prefix);
@@ -55,7 +59,7 @@ class MathMarshallerTest extends QtiSmTestCase
             </m:math>');
 
         $math = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
         $xml = $math->getXml();
     }
 }

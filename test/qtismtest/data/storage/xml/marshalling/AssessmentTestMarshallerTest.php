@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
@@ -19,6 +20,9 @@ use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestMarshallerTest
+ */
 class AssessmentTestMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -54,7 +58,7 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentTest', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($title, $element->getAttribute('title'));
@@ -109,7 +113,7 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $component);
+        $this->assertInstanceOf(AssessmentTest::class, $component);
         $this->assertEquals('myAssessmentTest', $component->getIdentifier());
         $this->assertEquals('My Assessment Test', $component->getTitle());
         $this->assertEquals('QTIStateMachine', $component->getToolName());

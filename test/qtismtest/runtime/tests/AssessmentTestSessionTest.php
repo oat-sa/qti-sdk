@@ -14,13 +14,16 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\NavigationMode;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSession;
@@ -28,7 +31,11 @@ use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use qtism\data\state\Weight;
 
+/**
+ * Class AssessmentTestSessionTest
+ */
 class AssessmentTestSessionTest extends QtiSmTestCase
 {
     protected $state;
@@ -51,6 +58,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         unset($this->state);
     }
 
+    /**
+     * @return AssessmentTestSession
+     */
     public function getState()
     {
         return $this->state;
@@ -373,6 +383,10 @@ class AssessmentTestSessionTest extends QtiSmTestCase
      *
      * @param array $responses
      * @param array $outcomes
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
+     * @throws XmlStorageException
+     * @throws AssessmentItemSessionException
      */
     public function testLinearOutcomeProcessing(array $responses, array $outcomes)
     {
@@ -411,6 +425,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function linearOutcomeProcessingProvider()
     {
         $returnValue = [];
@@ -880,10 +897,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $assessmentTestSession->beginTestSession();
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentTestSessionException',
-            "Jumps are not allowed in LINEAR navigation mode."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage('Jumps are not allowed in LINEAR navigation mode.');
         $assessmentTestSession->jumpTo(1);
     }
 
@@ -1084,7 +1099,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         $v = new VariableIdentifier($identifier);
         $weight = $state->getWeight($v);
-        $this->assertInstanceOf('qtism\\data\\state\\Weight', $weight);
+        $this->assertInstanceOf(Weight::class, $weight);
         $this->assertEquals($v->getVariableName(), $weight->getIdentifier());
         $this->assertEquals($expectedValue, $weight->getValue());
     }
@@ -1111,10 +1126,13 @@ class AssessmentTestSessionTest extends QtiSmTestCase
     public function testGetWeightMalformed($identifier)
     {
         $state = $this->getState();
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $state->getWeight($identifier);
     }
 
+    /**
+     * @return array
+     */
     public function getWeightProvider()
     {
         return [
@@ -1125,6 +1143,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getWeightNotFoundProvider()
     {
         return [
@@ -1135,6 +1156,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getWeightMalformed()
     {
         return [

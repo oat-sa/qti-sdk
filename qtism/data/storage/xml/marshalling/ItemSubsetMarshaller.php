@@ -35,7 +35,8 @@ use qtism\data\QtiComponent;
 class ItemSubsetMarshaller extends Marshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     * @param QtiComponent $component
+     * @return DOMElement
      */
     protected function marshall(QtiComponent $component)
     {
@@ -43,39 +44,40 @@ class ItemSubsetMarshaller extends Marshaller
 
         $sectionIdentifier = $component->getSectionIdentifier();
         if (!empty($sectionIdentifier)) {
-            self::setDOMElementAttribute($element, 'sectionIdentifier', $sectionIdentifier);
+            $this->setDOMElementAttribute($element, 'sectionIdentifier', $sectionIdentifier);
         }
 
         $includeCategories = $component->getIncludeCategories();
         if (count($includeCategories) > 0) {
-            self::setDOMElementAttribute($element, 'includeCategory', implode(' ', $includeCategories->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'includeCategory', implode(' ', $includeCategories->getArrayCopy()));
         }
 
         $excludeCategories = $component->getExcludeCategories();
         if (count($excludeCategories) > 0) {
-            self::setDOMElementAttribute($element, 'excludeCategory', implode(' ', $excludeCategories->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'excludeCategory', implode(' ', $excludeCategories->getArrayCopy()));
         }
 
         return $element;
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+     * @param DOMElement $element
+     * @return ItemSubset
      */
     protected function unmarshall(DOMElement $element)
     {
         $object = new ItemSubset();
 
-        if (($sectionIdentifier = static::getDOMElementAttributeAs($element, 'sectionIdentifier')) !== null) {
+        if (($sectionIdentifier = $this->getDOMElementAttributeAs($element, 'sectionIdentifier')) !== null) {
             $object->setSectionIdentifier($sectionIdentifier);
         }
 
-        if (($includeCategories = static::getDOMElementAttributeAs($element, 'includeCategory')) !== null) {
+        if (($includeCategories = $this->getDOMElementAttributeAs($element, 'includeCategory')) !== null) {
             $includeCategories = new IdentifierCollection(explode("\x20", $includeCategories));
             $object->setIncludeCategories($includeCategories);
         }
 
-        if (($excludeCategories = static::getDOMElementAttributeAs($element, 'excludeCategory')) !== null) {
+        if (($excludeCategories = $this->getDOMElementAttributeAs($element, 'excludeCategory')) !== null) {
             $excludeCategories = new IdentifierCollection(explode("\x20", $excludeCategories));
             $object->setExcludeCategories($excludeCategories);
         }
@@ -84,7 +86,7 @@ class ItemSubsetMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

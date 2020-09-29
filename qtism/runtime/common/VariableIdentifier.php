@@ -56,7 +56,7 @@ class VariableIdentifier
     /**
      * The detected sequence number.
      *
-     * @var integer
+     * @var int
      */
     private $sequenceNumber = 0;
 
@@ -81,7 +81,6 @@ class VariableIdentifier
      *
      * @param string $identifier A prefixed identifier.
      * @throws InvalidArgumentException If $identifier is not a valid variable identifier.
-     *
      */
     public function __construct($identifier)
     {
@@ -102,7 +101,7 @@ class VariableIdentifier
             } else {
                 // count = 3, sequence number found.
                 $this->setVariableName($parts[2]);
-                $this->setSequenceNumber(intval($parts[1]));
+                $this->setSequenceNumber((int)$parts[1]);
             }
 
             $this->setPrefix($parts[0]);
@@ -141,12 +140,12 @@ class VariableIdentifier
     /**
      * Set the detected sequence number.
      *
-     * @param integer $sequenceNumber A integer sequence number.
+     * @param int $sequenceNumber A integer sequence number.
      * @throws InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
      */
     protected function setSequenceNumber($sequenceNumber)
     {
-        if (gettype($sequenceNumber) === 'integer') {
+        if (is_int($sequenceNumber)) {
             if ($sequenceNumber > 0) {
                 $this->sequenceNumber = $sequenceNumber;
             } else {
@@ -163,7 +162,7 @@ class VariableIdentifier
      * Returns the sequence number found in the variable identifier. If no such
      * sequence number is found, integer 0 is returned.
      *
-     * @return integer A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
+     * @return int A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
      */
     public function getSequenceNumber()
     {
@@ -173,7 +172,7 @@ class VariableIdentifier
     /**
      * Whether the identifier is composed by a sequence number.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSequenceNumber()
     {
@@ -188,10 +187,10 @@ class VariableIdentifier
      */
     protected function setVariableName($variableName)
     {
-        if (gettype($variableName) === 'string' && empty($variableName) === false) {
+        if (is_string($variableName) && empty($variableName) === false) {
             $this->variableName = $variableName;
         } else {
-            $msg = "The variableName argument must be a non-empty string.";
+            $msg = 'The variableName argument must be a non-empty string.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -214,10 +213,10 @@ class VariableIdentifier
      */
     protected function setPrefix($prefix)
     {
-        if (gettype($prefix) === 'string' && empty($prefix) === false) {
+        if (is_string($prefix) && empty($prefix) === false) {
             $this->prefix = $prefix;
         } else {
-            $msg = "The prefix argument must be a non-empty string.";
+            $msg = 'The prefix argument must be a non-empty string.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -238,7 +237,7 @@ class VariableIdentifier
     /**
      * Whether a prefix was found in the variable identifier.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPrefix()
     {

@@ -3,10 +3,14 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TimeLimitsMarshallerTest
+ */
 class TimeLimitsMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -18,7 +22,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('timeLimits', $element->nodeName);
         $this->assertEquals(50, $element->getAttribute('minTime'));
         $this->assertEquals(100, $element->getAttribute('maxTime'));
@@ -34,7 +38,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\TimeLimits', $component);
+        $this->assertInstanceOf(TimeLimits::class, $component);
         $this->assertTrue($component->hasMinTime());
         $this->assertEquals($component->getMinTime() . '', 'PT50S');
         $this->assertTrue($component->hasMaxTime());
@@ -51,6 +55,6 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\TimeLimits', $component);
+        $this->assertInstanceOf(TimeLimits::class, $component);
     }
 }

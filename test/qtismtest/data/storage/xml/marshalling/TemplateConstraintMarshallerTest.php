@@ -9,6 +9,9 @@ use qtism\data\expressions\RandomInteger;
 use qtism\data\rules\TemplateConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConstraintMarshallerTest
+ */
 class TemplateConstraintMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -39,7 +42,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateConstraint = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateConstraint', $templateConstraint);
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $templateConstraint->getExpression());
+        $this->assertInstanceOf(TemplateConstraint::class, $templateConstraint);
+        $this->assertInstanceOf(Match::class, $templateConstraint->getExpression());
     }
 }

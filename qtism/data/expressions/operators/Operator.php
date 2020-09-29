@@ -38,14 +38,14 @@ abstract class Operator extends Expression
     /**
      * The minimal number of operands the operator can take.
      *
-     * @var integer
+     * @var int
      */
     private $minOperands = 0;
 
     /**
      * The maximal number of operands the operator can take.
      *
-     * @var integer
+     * @var int
      */
     private $maxOperands = -1;
 
@@ -75,8 +75,8 @@ abstract class Operator extends Expression
      * Create a new instance of Operator.
      *
      * @param ExpressionCollection $expressions The sub-expressions that form the operator.
-     * @param integer $minOperands The minimum operands count (0 equals no min).
-     * @param integer $maxOperands The maximum operands count (-1 equals no max).
+     * @param int $minOperands The minimum operands count (0 equals no min).
+     * @param int $maxOperands The maximum operands count (-1 equals no max).
      * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
      * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
      * @throws InvalidArgumentException If $expressions does not match the restrictions or an invalid argument is given.
@@ -113,7 +113,7 @@ abstract class Operator extends Expression
     }
 
     /**
-     * @see \qtism\data\expressions\Expression::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -128,7 +128,7 @@ abstract class Operator extends Expression
      * @param int $minOperands An integer which is >= 0.
      * @throws InvalidArgumentException If $minOperands is not an integer >= 0.
      */
-    protected function setMinOperands($minOperands)
+    public function setMinOperands($minOperands)
     {
         if (is_int($minOperands) && $minOperands >= 0) {
             $this->minOperands = $minOperands;

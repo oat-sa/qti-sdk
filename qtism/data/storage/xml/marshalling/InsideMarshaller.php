@@ -39,15 +39,15 @@ class InsideMarshaller extends OperatorMarshaller
     /**
      * Unmarshall an Inside object into a QTI inside element.
      *
-     * @param QtiComponent The Inside object to marshall.
+     * @param QtiComponent $component The Inside object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI inside element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
-        self::setDOMElementAttribute($element, 'coords', $component->getCoords());
+        $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
+        $this->setDOMElementAttribute($element, 'coords', $component->getCoords());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -59,21 +59,19 @@ class InsideMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI inside operator element into an Inside object.
      *
-     * @param DOMElement The inside element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The inside element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent An Inside object.
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
-            if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null) {
+        if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
+            if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {
                 $shape = QtiShape::getConstantByName($shape);
                 $coords = Utils::stringToCoords($coords, $shape);
 
-                $object = new Inside($children, $shape, $coords);
-
-                return $object;
+                return new Inside($children, $shape, $coords);
             } else {
                 $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);

@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Power;
 
 /**
@@ -43,20 +41,10 @@ use qtism\data\expressions\operators\Power;
  */
 class PowerProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Power) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The PowerProcessor class only processes Power QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Power operator.
      *
-     * @return float|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
+     * @return QtiFloat|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -68,18 +56,18 @@ class PowerProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Power operator only accepts operands with a single cardinality.";
+            $msg = 'The Power operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Power operator only accepts operands with a baseType of integer or float.";
+            $msg = 'The Power operator only accepts operands with a baseType of integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand1 = $operands[0];
         $operand2 = $operands[1];
-        $raised = pow($operand1->getValue(), $operand2->getValue());
+        $raised = $operand1->getValue() ** $operand2->getValue();
 
         if (is_nan($raised)) {
             return null;
@@ -100,7 +88,7 @@ class PowerProcessor extends OperatorProcessor
         // pow() returns integers as much as it can, so we must cast.
         // If the casted value cannot be contained in a float, we are
         // subject to an overflow/underflow.
-        $floatval = floatval($raised);
+        $floatval = (float)$raised;
         if ($raised != 0 && $floatval == 0) {
             // underflow
             return null;
@@ -110,5 +98,13 @@ class PowerProcessor extends OperatorProcessor
         } else {
             return new QtiFloat($floatval);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Power::class;
     }
 }

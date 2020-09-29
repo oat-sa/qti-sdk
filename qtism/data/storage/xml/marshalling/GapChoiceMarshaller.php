@@ -36,70 +36,75 @@ use qtism\data\ShowHide;
 class GapChoiceMarshaller extends ContentMarshaller
 {
     private static $gapTextAllowedContent = [
-        'textRun',
-        'printedVariable',
-        'feedbackInline',
-        'templateInline',
-        'math',
-        'include',
-        'img',
-        'br',
-        'object',
-        'em',
         'a',
-        'code',
-        'span',
-        'sub',
-        'acronym',
-        'big',
-        'tt',
-        'kbd',
-        'q',
-        'i',
-        'dfn',
         'abbr',
-        'strong',
-        'sup',
-        'var',
-        'small',
-        'samp',
+        'acronym',
         'b',
+        'big',
+        'br',
         'cite',
+        'code',
+        'dfn',
+        'em',
+        'feedbackInline',
+        'i',
+        'img',
+        'include',
+        'kbd',
+        'math',
+        'object',
+        'printedVariable',
+        'q',
+        'samp',
+        'small',
+        'span',
+        'strong',
+        'sub',
+        'sup',
+        'templateInline',
+        'textRun',
+        'tt',
+        'var',
     ];
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+        $expectedGapImgName = 'gapImg';
+
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
                 $fqClass = $this->lookupClass($element);
 
-                if ($element->localName === 'gapImg') {
+                if ($element->localName === $expectedGapImgName) {
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
                     } else {
-                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . " given.";
+                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . ' given.';
                         throw new UnmarshallingException($msg, $element);
                     }
                 } else {
                     $component = new $fqClass($identifier, $matchMax);
                 }
 
-                if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
 
-                if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+                if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                     $component->setFixed($fixed);
                 }
 
-                if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                     $component->setTemplateIdentifier($templateIdentifier);
                 }
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
 
@@ -123,13 +128,12 @@ class GapChoiceMarshaller extends ContentMarshaller
                         $msg = "Invalid content in 'gapText' element.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
-                } else {
-                    if (($objectLabel = self::getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
-                        $component->setObjectLabel($objectLabel);
-                    }
+                } elseif (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
+                    $component->setObjectLabel($objectLabel);
                 }
 
                 $this->fillBodyElement($component, $element);
+
                 return $component;
             } else {
                 $msg = "The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element.";
@@ -142,34 +146,36 @@ class GapChoiceMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if ($component->getMatchMin() !== 0) {
-            self::setDOMElementAttribute($element, 'matchMin', $matchMin);
+            $this->setDOMElementAttribute($element, 'matchMin', $matchMin);
         }
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($element->localName === 'gapImg' && $component->hasObjectLabel() === true) {
-            self::setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
+            $this->setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
         }
 
         foreach ($elements as $e) {
@@ -179,9 +185,6 @@ class GapChoiceMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

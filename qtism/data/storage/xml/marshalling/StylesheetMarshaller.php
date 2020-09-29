@@ -42,12 +42,12 @@ class StylesheetMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
-        self::setDOMElementAttribute($element, 'media', $component->getMedia());
-        self::setDOMElementAttribute($element, 'type', $component->getType());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'media', $component->getMedia());
+        $this->setDOMElementAttribute($element, 'type', $component->getType());
 
         if (($title = $component->getTitle()) != '') {
-            self::setDOMElementAttribute($element, 'title', $component->getTitle());
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
         return $element;
@@ -63,18 +63,18 @@ class StylesheetMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // href is a mandatory value, retrieve it first.
-        if (($value = static::getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
             $object = new Stylesheet($value);
 
-            if (($value = static::getDOMElementAttributeAs($element, 'type', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'type', 'string')) !== null) {
                 $object->setType($value);
             }
 
-            if (($value = static::getDOMElementAttributeAs($element, 'media', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'media', 'string')) !== null) {
                 $object->setMedia($value);
             }
 
-            if (($value = static::getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
                 $object->setTitle($value);
             }
         } else {
@@ -86,7 +86,7 @@ class StylesheetMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

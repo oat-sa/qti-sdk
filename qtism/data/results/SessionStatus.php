@@ -25,6 +25,9 @@ namespace qtism\data\results;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * Class SessionStatus
+ */
 class SessionStatus implements Enumeration
 {
     /**

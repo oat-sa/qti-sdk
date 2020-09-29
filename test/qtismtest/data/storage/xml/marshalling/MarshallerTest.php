@@ -3,28 +3,34 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\ItemSessionControl;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
 
+/**
+ * Class MarshallerTest
+ */
 class MarshallerTest extends QtiSmTestCase
 {
     public function testCradle()
     {
         // Set cradle method accessible
-        $class = new ReflectionClass('qtism\\data\\storage\\xml\\marshalling\\Marshaller');
+        $class = new ReflectionClass(Marshaller::class);
         $method = $class->getMethod('getDOMCradle');
         $method->setAccessible(true);
 
-        $this->assertInstanceOf('\\DOMDocument', $method->invoke(null));
+        $this->assertInstanceOf(DOMDocument::class, $method->invoke(null));
     }
 
     public function testGetMarshaller()
     {
         $component = new ItemSessionControl();
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ItemSessionControlMarshaller', $marshaller);
+        $this->assertInstanceOf(ItemSessionControlMarshaller::class, $marshaller);
     }
 
     public function testGetUnmarshaller()
@@ -32,7 +38,7 @@ class MarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<itemSessionControl xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" maxAttempts="1" validateResponses="true"/>');
         $marshaller = $this->getMarshallerFactory()->createMarshaller($dom->documentElement);
-        $this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ItemSessionControlMarshaller', $marshaller);
+        $this->assertInstanceOf(ItemSessionControlMarshaller::class, $marshaller);
     }
 
     public function testGetFirstChildElement()
@@ -42,7 +48,7 @@ class MarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $child = Marshaller::getFirstChildElement($element);
-        $this->assertInstanceOf('\\DOMElement', $child);
+        $this->assertInstanceOf(DOMElement::class, $child);
         $this->assertEquals('child', $child->nodeName);
     }
 
@@ -77,8 +83,9 @@ class MarshallerTest extends QtiSmTestCase
         // We should find only 2 direct child elements.
         $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
         $element = $dom->documentElement;
+        $marshaller = new FakeMarshaller('2.1.0');
 
-        $this->assertEquals(2, count(Marshaller::getChildElementsByTagName($element, 'child')));
+        $this->assertCount(2, $marshaller->getChildElementsByTagName($element, 'child'));
     }
 
     public function testGetChildElementsByTagNameMultiple()
@@ -86,8 +93,9 @@ class MarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
         $element = $dom->documentElement;
+        $marshaller = new FakeMarshaller('2.1.0');
 
-        $this->assertEquals(3, count(Marshaller::getChildElementsByTagName($element, ['child', 'grandChild'])));
+        $this->assertCount(3, $marshaller->getChildElementsByTagName($element, ['child', 'grandChild']));
     }
 
     public function testGetChildElementsByTagNameEmpty()
@@ -98,8 +106,9 @@ class MarshallerTest extends QtiSmTestCase
         // should be found.
         $dom->loadXML('<parent><parent><child/></parent></parent>');
         $element = $dom->documentElement;
+        $marshaller = new FakeMarshaller('2.1.0');
 
-        $this->assertEquals(0, count(Marshaller::getChildElementsByTagName($element, 'child')));
+        $this->assertCount(0, $marshaller->getChildElementsByTagName($element, 'child'));
     }
 
     public function testGetXmlBase()
@@ -137,5 +146,29 @@ class MarshallerTest extends QtiSmTestCase
         $this->assertFalse(Marshaller::getXmlBase($foo));
         $this->assertEquals('http://my-new-base.com', Marshaller::getXmlBase($bar));
         $this->assertFalse(Marshaller::getXmlBase($baz));
+    }
+}
+
+class FakeMarshaller extends Marshaller
+{
+    /**
+     * @inheritDoc
+     */
+    protected function marshall(QtiComponent $component)
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function unmarshall(DOMElement $element)
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getExpectedQtiClassName()
+    {
     }
 }

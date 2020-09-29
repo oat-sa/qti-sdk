@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -15,6 +16,9 @@ use qtism\data\state\WeightCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentItemRefMarshallerTest
+ */
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
@@ -24,7 +28,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -39,7 +43,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this->assertFalse($component->isTimeDependent());
         $this->assertFalse($component->isAdaptive());
         $this->assertEquals(0, count($component->getOutcomeDeclarations()));
@@ -71,7 +75,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItemRef', $element->nodeName);
         $this->assertEquals('Q01', $element->getAttribute('identifier'));
         $this->assertEquals('./q01.xml', $element->getAttribute('href'));
@@ -112,7 +116,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this->assertEquals('Q01', $component->getIdentifier());
         $this->assertTrue($component->isTimeDependent());
         $this->assertTrue($component->isAdaptive());

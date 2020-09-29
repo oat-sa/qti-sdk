@@ -84,7 +84,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
+     * @return bool
      */
     public function hasXmlBase()
     {
@@ -92,7 +92,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -100,7 +100,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

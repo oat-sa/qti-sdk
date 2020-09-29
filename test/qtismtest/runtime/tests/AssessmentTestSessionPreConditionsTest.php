@@ -10,6 +10,9 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionPreConditionsTest
+ */
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testInstantiationSample1()
@@ -95,7 +98,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         // Because of the autoforward, the test is finished.
         $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $testSession['Q01.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
         $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
         $this->assertEquals(0.0, $testSession['Q02.SCORE']->getValue());
         $this->assertEquals(0.0, $testSession['Q03.SCORE']->getValue());

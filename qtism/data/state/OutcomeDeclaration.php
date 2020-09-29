@@ -109,7 +109,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * the range [-1.0,1.0]. normalMaximum has no affect on responseProcessing or the values
      * that the outcome variable itself can take.
      *
-     * @var boolean|number
+     * @var bool|number
      * @qtism-bean-property
      */
     private $normalMaximum = false;
@@ -122,7 +122,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * The normalMinimum attribute optionally defines the minimum value of numeric outcome
      * variables, it may be negative.
      *
-     * @var boolean|number
+     * @var bool|number
      * @qtism-bean-property
      */
     private $normalMinimum = false;
@@ -135,7 +135,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * The masteryValue attribute optionally defines a value for numeric outcome variables
      * above which the aspect being measured is considered to have been mastered by the candidate.
      *
-     * @var boolean|number
+     * @var bool|number
      * @qtism-bean-property
      */
     private $masteryValue = false;
@@ -150,7 +150,8 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * The externalScored attribute is determining custom way to score item
-     * @var integer|null
+     *
+     * @var int|null
      */
     private $externalScored = null;
 
@@ -161,7 +162,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param int $baseType A value from the BaseType enumeration.
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
-     * @param int|null $externalScored A ExternalScore object.
+     * @param int|null $externalScored A ExternalScored object.
      *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
@@ -210,12 +211,11 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set the human interpretation of the outcome variable's value.
      *
      * @param string $interpretation A string.
-     *
      * @throws InvalidArgumentException If $interpretation is not a string.
      */
     public function setInterpretation($interpretation)
     {
-        if (gettype($interpretation) === 'string') {
+        if (is_string($interpretation)) {
             $this->interpretation = $interpretation;
         } else {
             $msg = "Interpretation must be a string, '" . gettype($interpretation) . "' given.";
@@ -237,12 +237,11 @@ class OutcomeDeclaration extends VariableDeclaration
      * Set a link (URI) to an extended interpretation of the outcome variable's value.
      *
      * @param string $longInterpretation A string.
-     *
      * @throws InvalidArgumentException If $longInterpretation is not a string.
      */
     public function setLongInterpretation($longInterpretation)
     {
-        if (gettype($longInterpretation) === 'string') {
+        if (is_string($longInterpretation)) {
             $this->longInterpretation = $longInterpretation;
         } else {
             $msg = "LongInterpretation must be a string, '" . gettype($longInterpretation) . "' given.";
@@ -253,7 +252,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Get the normal minimum. Returns false if not specifed.
      *
-     * @return boolean|float A numeric value.
+     * @return bool|float A numeric value.
      */
     public function getNormalMinimum()
     {
@@ -263,8 +262,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set the normal minimum.
      *
-     * @param boolean|numeric $normalMinimum A numeric value.
-     *
+     * @param bool|numeric $normalMinimum A numeric value.
      * @throws InvalidArgumentException If $normalMinimum is not numeric nor false.
      */
     public function setNormalMinimum($normalMinimum)
@@ -280,7 +278,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Get the normal maximum. false if not specfied.
      *
-     * @return boolean|number A numeric value or false.
+     * @return bool|number A numeric value or false.
      */
     public function getNormalMaximum()
     {
@@ -290,8 +288,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set the normal maximum.
      *
-     * @param boolean|number $normalMaximum A numeric value.
-     *
+     * @param bool|number $normalMaximum A numeric value.
      * @throws InvalidArgumentException If $normalMaximum is not a numeric value nor false.
      */
     public function setNormalMaximum($normalMaximum)
@@ -307,7 +304,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Get the mastery value. Returns false if not specified.
      *
-     * @return boolean|number A numeric value or false.
+     * @return bool|number A numeric value or false.
      */
     public function getMasteryValue()
     {
@@ -317,8 +314,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set the mastery value. Set to false if not specified.
      *
-     * @param boolean|number $masteryValue A numeric value or false.
-     *
+     * @param bool|number $masteryValue A numeric value or false.
      * @throws InvalidArgumentException If $masteryValue is not numeric nor false.
      */
     public function setMasteryValue($masteryValue)
@@ -352,7 +348,7 @@ class OutcomeDeclaration extends VariableDeclaration
     }
 
     /**
-     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -360,7 +356,7 @@ class OutcomeDeclaration extends VariableDeclaration
     }
 
     /**
-     * @see \qtism\data\state\VariableDeclaration::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -388,6 +384,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
+     *
      * @return int|null
      */
     public function getExternalScored()
@@ -397,6 +394,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Is the outcome declaration externally scored?
+     *
      * @return bool
      */
     public function isExternallyScored()
@@ -406,6 +404,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
+     *
      * @return bool
      */
     public function isScoredByHuman()
@@ -415,6 +414,7 @@ class OutcomeDeclaration extends VariableDeclaration
 
     /**
      * Get externalScored attribute
+     *
      * @return bool
      */
     public function isScoredByExternalMachine()

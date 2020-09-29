@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Inside;
 
 /**
@@ -41,20 +39,10 @@ use qtism\data\expressions\operators\Inside;
  */
 class InsideProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Inside) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The InsideProcessor class only processes Inside QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Inside operator.
      *
-     * @return boolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
+     * @return QtiBoolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -66,12 +54,12 @@ class InsideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Inside operator only accepts operands with a single cardinality.";
+            $msg = 'The Inside operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyPoint() === false) {
-            $msg = "The Inside operator only accepts operands with a baseType of point.";
+            $msg = 'The Inside operator only accepts operands with a baseType of point.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -79,5 +67,13 @@ class InsideProcessor extends OperatorProcessor
         $coords = $this->getExpression()->getCoords();
 
         return new QtiBoolean($coords->inside($operand));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Inside::class;
     }
 }

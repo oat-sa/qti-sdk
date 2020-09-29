@@ -44,7 +44,7 @@ class BaseValueMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
+        $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
         self::setDOMElementValue($element, $component->getValue());
 
         return $element;
@@ -59,12 +59,10 @@ class BaseValueMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($baseType = static::getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
+        if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
             $value = $element->nodeValue;
             $baseTypeCst = BaseType::getConstantByName($baseType);
-            $object = new BaseValue($baseTypeCst, Utils::stringToDatatype($value, $baseTypeCst));
-
-            return $object;
+            return new BaseValue($baseTypeCst, Utils::stringToDatatype($value, $baseTypeCst));
         } else {
             $msg = "The mandatory attribute 'baseType' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
@@ -72,7 +70,7 @@ class BaseValueMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

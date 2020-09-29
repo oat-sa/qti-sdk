@@ -32,7 +32,7 @@ interface Shufflable
     /**
      * Whether the Shufflable component is fixed.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFixed();
 }

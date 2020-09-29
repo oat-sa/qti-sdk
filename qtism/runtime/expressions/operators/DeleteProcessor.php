@@ -23,11 +23,10 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\Comparable;
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Delete;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -49,20 +48,10 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  */
 class DeleteProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Delete) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DeleteProcessor class only processes Delete QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Delete operator.
      *
-     * @return Container A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
+     * @return Container|null A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -74,20 +63,20 @@ class DeleteProcessor extends OperatorProcessor
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Delete operator only accepts operands with the same baseType.";
+            $msg = 'The Delete operator only accepts operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand1 = $operands[0];
         if (RuntimeUtils::inferCardinality($operand1) !== Cardinality::SINGLE) {
-            $msg = "The first operand of the Delete operator must have the single cardinality.";
+            $msg = 'The first operand of the Delete operator must have the single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         $operand2 = $operands[1];
         $cardinality = RuntimeUtils::inferCardinality($operand2);
         if ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
-            $msg = "The second operand of the Delete operator must have a cardinality or multiple or ordered.";
+            $msg = 'The second operand of the Delete operator must have a cardinality or multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -104,5 +93,13 @@ class DeleteProcessor extends OperatorProcessor
         }
 
         return $returnValue;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Delete::class;
     }
 }

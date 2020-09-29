@@ -28,7 +28,6 @@ use qtism\data\content\Stylesheet;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
-use qtism\runtime\rendering\RenderingException;
 
 /**
  * Base class of all XHTML renderers.
@@ -44,7 +43,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     private $replacementTagName = '';
 
     /**
-     * A set of additional CSS classes to be added
+     * A set of additional QTI specific classes to be added
      * to the rendered element.
      *
      * @var array
@@ -65,8 +64,9 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      *
+     * @param QtiComponent $component
+     * @param string $base
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
-     * @throws RenderingException If an error occurs while rendering $component.
      */
     public function render($component, $base = '')
     {
@@ -111,7 +111,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
         if ($this->hasAdditionalClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalClasses());
             $currentClasses = $fragment->firstChild->getAttribute('class');
-            $glue = ($currentClasses !== '') ? "\x20" : "";
+            $glue = ($currentClasses !== '') ? "\x20" : '';
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
 
@@ -125,6 +125,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -137,6 +138,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -150,6 +152,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -179,7 +182,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether a replacement tag name is defined.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasReplacementTagName()
     {
@@ -223,7 +226,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     /**
      * Whether additional CSS classes are defined for rendering.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasAdditionalClasses()
     {

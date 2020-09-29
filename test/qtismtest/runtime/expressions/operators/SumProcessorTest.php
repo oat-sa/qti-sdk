@@ -6,12 +6,18 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SumProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\common\Processable;
+use RuntimeException;
 
+/**
+ * Class SumProcessorTest
+ */
 class SumProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -22,7 +28,7 @@ class SumProcessorTest extends QtiSmTestCase
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\Processable', $sumProcessor);
+        $this->assertInstanceOf(Processable::class, $sumProcessor);
         $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(2, $result->getValue());
     }
@@ -69,7 +75,7 @@ class SumProcessorTest extends QtiSmTestCase
     {
         $sum = $this->createFakeSumComponent();
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)]);
         $sumProcessor = new SumProcessor($sum, $operands);
@@ -83,7 +89,7 @@ class SumProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::BOOLEAN, [new QtiBoolean(true), new QtiBoolean(false)]);
         $sumProcessor = new SumProcessor($sum, $operands);
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
         $result = $sumProcessor->process();
     }
 
@@ -96,15 +102,16 @@ class SumProcessorTest extends QtiSmTestCase
         $this->assertTrue($result === null);
     }
 
+    /**
+     * @return QtiComponent
+     */
     private function createFakeSumComponent()
     {
-        $sum = $this->createComponentFromXml('
+        return $this->createComponentFromXml('
 			<sum xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
 				<baseValue baseType="integer">1</baseValue>
 				<baseValue baseType="integer">3</baseValue>
 			</sum>
 		');
-
-        return $sum;
     }
 }

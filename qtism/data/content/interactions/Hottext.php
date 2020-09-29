@@ -25,8 +25,10 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\InlineStaticCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -42,6 +44,8 @@ use qtism\data\content\InlineStaticCollection;
  */
 class Hottext extends Choice implements FlowStatic, InlineStatic
 {
+    use FlowTrait;
+
     /**
      * The components composing the hottext.
      *
@@ -49,19 +53,6 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
      * @qtism-bean-property
      */
     private $content;
-
-    /**
-     * From IMS QTI:
-     *
-     * An optional URI used to change the base for resolving relative
-     * URI for the scope of this object. Particular care needs to be
-     * taken when resolving relative URI included as part of an Item
-     * Fragment. See Item and Test Fragments for more information.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
 
     /**
      * Create a new Hottext object.
@@ -77,37 +68,6 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     {
         parent::__construct($identifier, $id, $class, $lang, $label);
         $this->setContent(new InlineStaticCollection());
-    }
-
-    /**
-     * Set the base URI of the HotText.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the HotText.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 
     /**
@@ -131,7 +91,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return InlineStaticCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -139,7 +99,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

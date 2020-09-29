@@ -54,7 +54,9 @@ class OrderInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -74,7 +76,9 @@ class OrderInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

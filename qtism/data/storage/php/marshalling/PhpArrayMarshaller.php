@@ -38,7 +38,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      * Marshall an array into PHP source code.
      *
      * @throws PhpMarshallingException If something wrong happens during marshalling.
-     * @throws StreamdAccessException
+     * @throws StreamAccessException
      */
     public function marshall()
     {
@@ -49,7 +49,7 @@ class PhpArrayMarshaller extends PhpMarshaller
 
         foreach ($array as $a) {
             if (PhpUtils::isScalar($a) === false) {
-                $msg = "The PhpArrayMarshaller class only deals with PHP scalar values, object or resource given.";
+                $msg = 'The PhpArrayMarshaller class only deals with PHP scalar values, object or resource given.';
                 throw new PhpMarshallingException($msg);
             }
 
@@ -71,7 +71,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      *
      * @param mixed $toMarshall
      *
-     * @return boolean
+     * @return bool
      */
     protected function isMarshallable($toMarshall)
     {

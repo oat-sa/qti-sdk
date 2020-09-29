@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Lte;
 
 /**
@@ -41,20 +39,10 @@ use qtism\data\expressions\operators\Lte;
  */
 class LteProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Lte) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The LteProcessor class only processes Lte QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Lte operator.
      *
-     * @return boolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
+     * @return QtiBoolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -66,15 +54,23 @@ class LteProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Lte operator only accepts operands with a single cardinality.";
+            $msg = 'The Lte operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Lte operator only accepts operands with a float or integer baseType.";
+            $msg = 'The Lte operator only accepts operands with a float or integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         return new QtiBoolean($operands[0]->getValue() <= $operands[1]->getValue());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Lte::class;
     }
 }

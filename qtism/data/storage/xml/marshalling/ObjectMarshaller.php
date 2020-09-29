@@ -34,26 +34,29 @@ use qtism\data\QtiComponentCollection;
 class ObjectMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         // At item authoring time, we could admit that an empty data attribute
         // may occur.
-        if (($data = self::getDOMElementAttributeAs($element, 'data')) === null) {
+        if (($data = $this->getDOMElementAttributeAs($element, 'data')) === null) {
             $data = '';
         }
 
-        if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+        if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass($data, $type);
             $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
 
-            if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
+            if (($width = $this->getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
                 $component->setWidth($width);
             }
 
-            if (($height = self::getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
+            if (($height = $this->getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
                 $component->setHeight($height);
             }
 
@@ -71,20 +74,22 @@ class ObjectMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'data', $component->getData());
-        self::setDOMElementAttribute($element, 'type', $component->getType());
+        $this->setDOMElementAttribute($element, 'data', $component->getData());
+        $this->setDOMElementAttribute($element, 'type', $component->getType());
 
         if ($component->hasWidth() === true) {
-            self::setDOMElementAttribute($element, 'width', $component->getWidth());
+            $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
         if ($component->hasHeight() === true) {
-            self::setDOMElementAttribute($element, 'height', $component->getHeight());
+            $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -95,14 +100,11 @@ class ObjectMarshaller extends ContentMarshaller
             $element->appendChild($e);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\xhtml"];

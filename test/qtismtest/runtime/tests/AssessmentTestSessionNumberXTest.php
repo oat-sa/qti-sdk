@@ -5,32 +5,39 @@ namespace qtismtest\runtime\tests;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionNumberXTest
+ */
 class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCase
 {
     /**
-     *
      * @dataProvider numberXMethodProvider
      * @param string $method
+     * @throws XmlStorageException
      */
     public function testNumberXNonRunning($method)
     {
         // Test AssessmentTestSession::numberCorrect, numberIncorrect, numberResponded, numberSelected, numberPresented
         //  with a non running test session.
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/subset/number_x.xml');
-        $this->assertEquals(0, call_user_func([$session, $method]));
-        $this->assertEquals(0, call_user_func([$session, $method], 'S01'));
-        $this->assertEquals(0, call_user_func([$session, $method], 'S01A'));
-        $this->assertEquals(0, call_user_func([$session, $method], 'S01B'));
-        $this->assertEquals(0, call_user_func([$session, $method]), 'S02');
+        $this->assertEquals(0, $session->$method());
+        $this->assertEquals(0, $session->$method('S01'));
+        $this->assertEquals(0, $session->$method('S01A'));
+        $this->assertEquals(0, $session->$method('S01B'));
+        $this->assertEquals(0, $session->$method('S02'));
 
         // query for an unexisting ID.
-        $this->assertEquals(0, call_user_func([$session, $method]), 'S0X');
+        $this->assertEquals(0, $session->$method('S0X'));
     }
 
+    /**
+     * @return array
+     */
     public function numberXMethodProvider()
     {
         return [

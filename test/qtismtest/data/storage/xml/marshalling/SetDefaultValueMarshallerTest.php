@@ -11,6 +11,9 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetDefaultValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetDefaultValueMarshallerTest
+ */
 class SetDefaultValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -40,8 +43,8 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase
 	    ');
 
         $setDefaultValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\SetDefaultValue', $setDefaultValue);
+        $this->assertInstanceOf(SetDefaultValue::class, $setDefaultValue);
         $this->assertEquals('tpl1', $setDefaultValue->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $setDefaultValue->getExpression());
+        $this->assertInstanceOf(Match::class, $setDefaultValue->getExpression());
     }
 }

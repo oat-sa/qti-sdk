@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\Comparable;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Match;
 
 /**
@@ -46,25 +44,9 @@ use qtism\data\expressions\operators\Match;
 class MatchProcessor extends OperatorProcessor
 {
     /**
-     * Set the Expression object to be processed.
-     *
-     * @param Expression $expression An Expression object to be processed.
-     * @throws InvalidArgumentException If $expression is not a Match QTI Data Model Expression object.
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Match) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MatchProcessor only accepts Match QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
      * Process the Match Expression object.
      *
-     * @return boolean|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
+     * @return QtiBoolean|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -77,12 +59,12 @@ class MatchProcessor extends OperatorProcessor
         }
 
         if ($operands->sameCardinality() === false) {
-            $msg = "The Match Expression only accepts operands with the same cardinality.";
+            $msg = 'The Match Expression only accepts operands with the same cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Match Expression only accepts operands with the same baseType.";
+            $msg = 'The Match Expression only accepts operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -95,5 +77,13 @@ class MatchProcessor extends OperatorProcessor
         } else {
             return new QtiBoolean($operands[0] === $operands[1]);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Match::class;
     }
 }

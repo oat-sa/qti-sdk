@@ -25,7 +25,6 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\AbstractRenderingContext;
 
 /**
  * GapImg renderer. This renderer will transform the gapChoice into a 'div'
@@ -51,7 +50,9 @@ use qtism\runtime\rendering\AbstractRenderingContext;
 class GapImgRenderer extends GapChoiceRenderer
 {
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\GapChoiceRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

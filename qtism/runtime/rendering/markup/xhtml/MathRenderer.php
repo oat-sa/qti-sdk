@@ -35,7 +35,10 @@ use RuntimeException;
 class MathRenderer extends ExternalQtiComponentRenderer
 {
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
+     * @throws RenderingException
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -46,7 +49,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
             $node->setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
-            $msg = "An error occured while rendering the XML content of the 'MathML' external component.";
+            $msg = "An error occurred while rendering the XML content of the 'MathML' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }
     }

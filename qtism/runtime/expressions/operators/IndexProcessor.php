@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Index;
 use qtism\runtime\expressions\Utils as ProcessingUtils;
 
@@ -44,16 +42,6 @@ use qtism\runtime\expressions\Utils as ProcessingUtils;
  */
 class IndexProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Index) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IndexProcessor class only processes Index QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Index operator.
      *
@@ -69,12 +57,12 @@ class IndexProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyOrdered() === false) {
-            $msg = "The Index operator only accepts values with a cardinality of ordered.";
+            $msg = 'The Index operator only accepts values with a cardinality of ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         $n = $this->getExpression()->getN();
-        if (gettype($n) === 'string') {
+        if (is_string($n)) {
             // The value of $n comes from the state.
             $state = $this->getState();
             if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
@@ -95,7 +83,7 @@ class IndexProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
         }
 
-        $n = $n - 1; // QTI indexes begin at 1...
+        $n--; // QTI indexes begin at 1...
         if ($n > count($operands[0]) - 1) {
             // As per specs, if n exceeds the number of values in the container,
             // the result of the index operator is NULL.
@@ -103,5 +91,13 @@ class IndexProcessor extends OperatorProcessor
         }
 
         return $operands[0][$n];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Index::class;
     }
 }

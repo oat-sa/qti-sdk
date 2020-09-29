@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\runtime\expressions\Utils;
@@ -63,20 +61,10 @@ use qtism\runtime\expressions\Utils;
  */
 class EqualProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Equal) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The EqualProcessor class only processes Equal QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Equal operator.
      *
-     * @return boolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
+     * @return QtiBoolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -88,12 +76,12 @@ class EqualProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Equal operator only accepts operands with a single cardinality.";
+            $msg = 'The Equal operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Equal operator only accepts operands with an integer or float baseType";
+            $msg = 'The Equal operator only accepts operands with an integer or float baseType';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -106,7 +94,7 @@ class EqualProcessor extends OperatorProcessor
         } else {
             $tolerance = $expression->getTolerance();
 
-            if (gettype($tolerance[0]) === 'string') {
+            if (is_string($tolerance[0])) {
                 $strTolerance = $tolerance;
                 $tolerance = [];
 
@@ -115,7 +103,7 @@ class EqualProcessor extends OperatorProcessor
                 $tolerance0Name = Utils::sanitizeVariableRef($strTolerance[0]);
                 $varValue = $state[$tolerance0Name];
 
-                if (is_null($varValue)) {
+                if ($varValue === null) {
                     $msg = "The variable with name '${tolerance0Name}' could not be resolved.";
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
                 } elseif (!$varValue instanceof QtiFloat) {
@@ -125,7 +113,7 @@ class EqualProcessor extends OperatorProcessor
 
                 $tolerance[] = $varValue->getValue();
 
-                if (isset($strTolerance[1]) && gettype($strTolerance[1]) === 'string') {
+                if (isset($strTolerance[1]) && is_string($strTolerance[1])) {
                     // A second variableRef to handle.
                     $tolerance1Name = Utils::sanitizeVariableRef($strTolerance[1]);
 
@@ -137,7 +125,7 @@ class EqualProcessor extends OperatorProcessor
 
             if ($expression->getToleranceMode() === ToleranceMode::ABSOLUTE) {
                 $t0 = $operand1->getValue() - $tolerance[0];
-                $t1 = $operand1->getValue() + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]);
+                $t1 = $operand1->getValue() + ($tolerance[1] ?? $tolerance[0]);
 
                 $moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
                 $lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
@@ -147,7 +135,7 @@ class EqualProcessor extends OperatorProcessor
                 // Tolerance mode RELATIVE
                 $tolerance = $expression->getTolerance();
                 $t0 = $operand1->getValue() * (1 - $tolerance[0] / 100);
-                $t1 = $operand1->getValue() * (1 + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]) / 100);
+                $t1 = $operand1->getValue() * (1 + ($tolerance[1] ?? $tolerance[0]) / 100);
 
                 $moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
                 $lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
@@ -155,5 +143,13 @@ class EqualProcessor extends OperatorProcessor
                 return new QtiBoolean($moreThanLower && $lessThanUpper);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Equal::class;
     }
 }

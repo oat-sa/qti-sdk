@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\Comparable;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Contains;
 
 /**
@@ -41,20 +40,10 @@ use qtism\data\expressions\operators\Contains;
  */
 class ContainsProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Contains) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The ContainsProcessor class only processes Contains QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Returns the logical negation of the sub-expressions.
      *
-     * @return boolean
+     * @return QtiBoolean
      * @throws OperatorProcessingException
      */
     public function process()
@@ -66,17 +55,17 @@ class ContainsProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The Contains Expression only accept operands with multiple or ordered cardinality.";
+            $msg = 'The Contains Expression only accept operands with multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameCardinality() === false) {
-            $msg = "The Contains Expression only accept operands with the same cardinality.";
+            $msg = 'The Contains Expression only accept operands with the same cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Contains Expression only accept operands with the same baseType.";
+            $msg = 'The Contains Expression only accept operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -123,5 +112,13 @@ class ContainsProcessor extends OperatorProcessor
                 return new QtiBoolean(false);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Contains::class;
     }
 }

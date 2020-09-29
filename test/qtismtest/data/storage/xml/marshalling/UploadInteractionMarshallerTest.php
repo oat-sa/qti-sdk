@@ -9,6 +9,9 @@ use qtism\data\content\interactions\UploadInteraction;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class UploadInteractionMarshallerTest
+ */
 class UploadInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -32,7 +35,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\UploadInteraction', $component);
+        $this->assertInstanceOf(UploadInteraction::class, $component);
         $this->assertEquals('my-upload', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
 

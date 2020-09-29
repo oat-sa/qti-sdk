@@ -57,7 +57,9 @@ class PrintedVariableRenderer extends BodyElementRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -87,7 +89,9 @@ class PrintedVariableRenderer extends BodyElementRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -119,14 +123,14 @@ class PrintedVariableRenderer extends BodyElementRenderer
                         PhpUtils::doubleQuotedPhpString($component->getIdentifier()),
                         PhpUtils::doubleQuotedPhpString($component->getFormat()),
                         ($component->mustPowerForm() === true) ? 'true' : 'false',
-                        (is_int($base) === true) ? $base : PhpUtils::doubleQuotedPhpString($base),
-                        (is_int($index) === true) ? $index : PhpUtils::doubleQuotedPhpString($index),
+                        (is_int($base)) ? $base : PhpUtils::doubleQuotedPhpString($base),
+                        (is_int($index)) ? $index : PhpUtils::doubleQuotedPhpString($index),
                         PhpUtils::doubleQuotedPhpString($component->getDelimiter()),
                         PhpUtils::doubleQuotedPhpString($component->getField()),
                         PhpUtils::doubleQuotedPhpString($component->getMappingIndicator()),
                     ];
 
-                    $value = " qtism-printVariable(" . implode(', ', $params) . ") ";
+                    $value = ' qtism-printVariable(' . implode(', ', $params) . ') ';
                     $fragment->firstChild->appendChild($fragment->ownerDocument->createComment($value));
                     break;
             }

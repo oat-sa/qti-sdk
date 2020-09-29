@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\BaseValue;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\EqualRounded;
 use qtism\data\expressions\operators\RoundTo;
@@ -58,20 +56,10 @@ use qtism\runtime\expressions\Utils;
  */
 class EqualRoundedProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof EqualRounded) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The EqualRoundedProcessor class only processes EqualRounded QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the EqualRounded operator.
      *
-     * @return boolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
+     * @return QtiBoolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -83,12 +71,12 @@ class EqualRoundedProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The EqualRounded operator only accepts operands with a single cardinality.";
+            $msg = 'The EqualRounded operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The EqualRounded operator only accepts operands with an integer or float baseType.";
+            $msg = 'The EqualRounded operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -97,13 +85,13 @@ class EqualRoundedProcessor extends OperatorProcessor
         $roundingMode = $expression->getRoundingMode();
         $figures = $expression->getFigures();
 
-        if (gettype($figures) === 'string') {
+        if (is_string($figures)) {
             // Variable reference to deal with.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($figures);
             $varValue = $state[$varName];
 
-            if (is_null($varValue) === true) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -125,11 +113,19 @@ class EqualRoundedProcessor extends OperatorProcessor
             try {
                 $rounded[] = $roundToProcessor->process();
             } catch (OperatorProcessingException $e) {
-                $msg = "An error occured while rounding '${operand}'.";
+                $msg = "An error occurred while rounding '${operand}'.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR, $e);
             }
         }
 
         return new QtiBoolean($rounded[0]->getValue() == $rounded[1]->getValue());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return EqualRounded::class;
     }
 }

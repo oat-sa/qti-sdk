@@ -23,7 +23,6 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\CustomOperator;
 
@@ -64,13 +63,11 @@ abstract class CustomOperatorProcessor extends OperatorProcessor
         parent::__construct($expression, $operands);
     }
 
-    public function setExpression(Expression $expression)
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
     {
-        if ($expression instanceof CustomOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The CustomOperatorProcessor can only process CustomOperator objects.";
-            throw new InvalidArgumentException($msg);
-        }
+        return CustomOperator::class;
     }
 }

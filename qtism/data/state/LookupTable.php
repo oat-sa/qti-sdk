@@ -81,7 +81,7 @@ abstract class LookupTable extends QtiComponent
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -89,7 +89,7 @@ abstract class LookupTable extends QtiComponent
     }
 
     /**
-     * @inheritDoc
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

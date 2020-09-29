@@ -38,19 +38,20 @@ class ColgroupMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Colgroup object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('colgroup');
-        self::setDOMElementAttribute($element, 'span', $component->getSpan());
+        $this->setDOMElementAttribute($element, 'span', $component->getSpan());
 
         foreach ($component->getContent() as $col) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($col);
-            $element->appendChild($marshaller->marshall());
+            $element->appendChild($marshaller->marshall($col));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -60,18 +61,19 @@ class ColgroupMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Colgroup object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         $component = new Colgroup();
 
-        if ((self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = $this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 
         $cols = new ColCollection();
-        foreach (self::getChildElementsByTagName($element, 'col') as $colElt) {
+        foreach ($this->getChildElementsByTagName($element, 'col') as $colElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($colElt);
             $cols[] = $marshaller->unmarshall($colElt);
         }
@@ -83,7 +85,7 @@ class ColgroupMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

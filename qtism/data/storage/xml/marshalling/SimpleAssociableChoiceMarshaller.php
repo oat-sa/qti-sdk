@@ -35,28 +35,31 @@ use qtism\data\ShowHide;
 class SimpleAssociableChoiceMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
                 $fqClass = $this->lookupClass($element);
                 $component = new $fqClass($identifier, $matchMax);
 
-                if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+                if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                     $component->setFixed($fixed);
                 }
 
-                if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                     $component->setTemplateIdentifier($templateIdentifier);
                 }
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
 
-                if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
 
@@ -75,30 +78,32 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($component->getMatchMin() !== 0) {
-            self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+            $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
 
         foreach ($elements as $e) {
@@ -108,9 +113,6 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

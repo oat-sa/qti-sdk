@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiScalar;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Gcd;
 
 /**
@@ -46,20 +44,10 @@ use qtism\data\expressions\operators\Gcd;
  */
 class GcdProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Gcd) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The GcdProcessor class only processes Gcd QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Gcd operator.
      *
-     * @return integer The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
+     * @return QtiInteger|null The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -71,12 +59,12 @@ class GcdProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Gcd operator only accepts operands with a cardinality of single, multiple or ordered.";
+            $msg = 'The Gcd operator only accepts operands with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The Gcd operator only accepts operands with an integer baseType.";
+            $msg = 'The Gcd operator only accepts operands with an integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -126,5 +114,13 @@ class GcdProcessor extends OperatorProcessor
 
             return $g;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Gcd::class;
     }
 }

@@ -167,7 +167,7 @@ class AssessmentResult extends QtiComponent
      */
     public function hasTestResult()
     {
-        return !is_null($this->testResult);
+        return $this->testResult !== null;
     }
 
     /**
@@ -199,6 +199,6 @@ class AssessmentResult extends QtiComponent
      */
     public function hasItemResults()
     {
-        return !is_null($this->itemResults);
+        return $this->itemResults !== null;
     }
 }

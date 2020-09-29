@@ -26,37 +26,52 @@ namespace qtismtest\data\content\enums;
 use qtism\data\content\enums\AriaLive;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class AriaLiveTest
+ */
 class AriaLiveTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return AriaLive::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
             'off',
             'polite',
-            'assertive'
+            'assertive',
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
             'OFF',
             'POLITE',
-            'ASSERTIVE'
+            'ASSERTIVE',
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [
             AriaLive::OFF,
             AriaLive::POLITE,
-            AriaLive::ASSERTIVE
+            AriaLive::ASSERTIVE,
         ];
     }
 }

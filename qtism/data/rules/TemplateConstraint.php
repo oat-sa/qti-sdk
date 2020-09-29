@@ -98,7 +98,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -106,7 +106,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

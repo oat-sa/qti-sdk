@@ -28,8 +28,8 @@ use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiIdentifiable;
+use qtism\data\QtiIdentifiableTrait;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * An extension of QTI that represents a reference
@@ -38,12 +38,7 @@ use SplObserver;
  */
 class RubricBlockRef extends QtiComponent implements QtiIdentifiable
 {
-    /**
-     * A collection of SplObservers.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers = null;
+    use QtiIdentifiableTrait;
 
     /**
      * The identifier of the rubricBlockRef.
@@ -129,62 +124,23 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
+     * @return QtiComponentCollection
      */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'rubricBlockRef';
     }
 
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
+    public function __clone()
     {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
+        $this->setObservers(new SplObjectStorage());
     }
 }

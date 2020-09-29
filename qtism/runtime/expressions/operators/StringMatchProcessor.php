@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\StringMatch;
 
 /**
@@ -44,20 +42,10 @@ use qtism\data\expressions\operators\StringMatch;
  */
 class StringMatchProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof StringMatch) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The StringMatchProcessor class only processes StringMatch QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the StringMatch operator.
      *
-     * @return boolean Whether the two string match according to the comparison rules of the operator's attributes or NULL if either of the sub-expressions is NULL.
+     * @return QtiBoolean Whether the two string match according to the comparison rules of the operator's attributes or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -69,12 +57,12 @@ class StringMatchProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The StringMatch operator only accepts operands with a single cardinality.";
+            $msg = 'The StringMatch operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The StringMatch operator only accepts operands with a string baseType.";
+            $msg = 'The StringMatch operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -86,5 +74,13 @@ class StringMatchProcessor extends OperatorProcessor
         $func = ($expression->isCaseSensitive() === true) ? 'strcmp' : 'strcasecmp';
 
         return new QtiBoolean($func($operands[0]->getValue(), $operands[1]->getValue()) === 0);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return StringMatch::class;
     }
 }

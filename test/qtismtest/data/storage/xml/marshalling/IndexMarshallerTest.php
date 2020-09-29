@@ -3,11 +3,15 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class IndexMarshallerTest
+ */
 class IndexMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -16,7 +20,7 @@ class IndexMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('index', $element->nodeName);
         $this->assertEquals('3', $element->getAttribute('n'));
 
@@ -39,12 +43,12 @@ class IndexMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Index', $component);
+        $this->assertInstanceOf(Index::class, $component);
         $this->assertEquals(3, $component->getN());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\Variable', $sub1);
+        $this->assertInstanceOf(Variable::class, $sub1);
         $this->assertEquals('orderedVar', $sub1->getIdentifier());
     }
 }

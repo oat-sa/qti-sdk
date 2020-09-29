@@ -53,7 +53,9 @@ class AssociateInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -67,7 +69,9 @@ class AssociateInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -81,6 +85,10 @@ class AssociateInteractionRenderer extends InteractionRenderer
         //
         // * minAssociations, if different from 0 is used to determine the possible associations to display. Otherwise,
         // * a single possible association is displayed. Actions to undertake when this first association is done by the candidate depends on the implementation.
+
+        // QUESTION: Should we delegate that to implementers decisions i.e. JS libraries to generate as they whish?
+        // Below is commented code of such a generation directly in the markup...
+        // At the present time, my feeling is to delegate ...
         $nbAssoc = (($assoc = $component->getMaxAssociations()) > 0) ? $assoc : ((($assoc = $component->getMinAssociations()) > 0) ? $assoc : 1);
 
         for ($i = 0; $i < $nbAssoc; $i++) {

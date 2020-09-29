@@ -33,55 +33,57 @@ use qtism\data\QtiComponent;
 class ItemSessionControlMarshaller extends Marshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     * @param QtiComponent $component
+     * @return DOMElement
      */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        static::setDOMElementAttribute($element, 'maxAttempts', $component->getMaxAttempts());
-        static::setDOMElementAttribute($element, 'showFeedback', $component->mustShowFeedback());
-        static::setDOMElementAttribute($element, 'allowReview', $component->doesAllowReview());
-        static::setDOMElementAttribute($element, 'showSolution', $component->mustShowSolution());
-        static::setDOMElementAttribute($element, 'allowComment', $component->doesAllowComment());
-        static::setDOMElementAttribute($element, 'allowSkipping', $component->doesAllowSkipping());
-        static::setDOMElementAttribute($element, 'validateResponses', $component->mustValidateResponses());
+        $this->setDOMElementAttribute($element, 'maxAttempts', $component->getMaxAttempts());
+        $this->setDOMElementAttribute($element, 'showFeedback', $component->mustShowFeedback());
+        $this->setDOMElementAttribute($element, 'allowReview', $component->doesAllowReview());
+        $this->setDOMElementAttribute($element, 'showSolution', $component->mustShowSolution());
+        $this->setDOMElementAttribute($element, 'allowComment', $component->doesAllowComment());
+        $this->setDOMElementAttribute($element, 'allowSkipping', $component->doesAllowSkipping());
+        $this->setDOMElementAttribute($element, 'validateResponses', $component->mustValidateResponses());
 
         return $element;
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+     * @param DOMElement $element
+     * @return ItemSessionControl
      */
     protected function unmarshall(DOMElement $element)
     {
         $object = new ItemSessionControl();
 
-        if (($value = static::getDOMElementAttributeAs($element, 'maxAttempts', 'integer')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'maxAttempts', 'integer')) !== null) {
             $object->setMaxAttempts($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'showFeedback', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'showFeedback', 'boolean')) !== null) {
             $object->setShowFeedback($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowReview', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowReview', 'boolean')) !== null) {
             $object->setAllowReview($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'showSolution', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'showSolution', 'boolean')) !== null) {
             $object->setShowSolution($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowComment', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowComment', 'boolean')) !== null) {
             $object->setAllowComment($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowSkipping', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowSkipping', 'boolean')) !== null) {
             $object->setAllowSkipping($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'validateResponses', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'validateResponses', 'boolean')) !== null) {
             $object->setValidateResponses($value);
         }
 
@@ -89,7 +91,7 @@ class ItemSessionControlMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

@@ -16,6 +16,9 @@ use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\RenderingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BodyElementRendererTest
+ */
 class BodyElementRendererTest extends QtiSmTestCase
 {
     public function testRenderNoChildren()
@@ -34,8 +37,8 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this->assertEquals('en-US', $element->getAttribute('lang'));
         $this->assertEquals('', $element->getAttribute('label'));
     }
+
     /**
-     * @throws RenderingException
      */
     public function testRenderChildren()
     {
@@ -75,7 +78,6 @@ class BodyElementRendererTest extends QtiSmTestCase
     }
 
     /**
-     * @throws RenderingException
      */
     public function testRenderFullAria()
     {

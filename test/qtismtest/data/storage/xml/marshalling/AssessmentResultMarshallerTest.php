@@ -23,8 +23,8 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use oat\dtms\DateTime;
 use DOMElement;
+use oat\dtms\DateTime;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiUri;
 use qtism\data\results\AssessmentResult;
@@ -43,6 +43,9 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentResultMarshallerTest
+ */
 class AssessmentResultMarshallerTest extends QtiSmTestCase
 {
     public function testValidMinimalXml()

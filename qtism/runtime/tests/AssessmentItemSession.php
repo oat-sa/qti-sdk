@@ -37,6 +37,7 @@ use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\common\OutcomeVariable;
@@ -163,7 +164,7 @@ class AssessmentItemSession extends State
     /**
      * The state of the Item Session as described by the AssessmentItemSessionState enumeration.
      *
-     * @var integer
+     * @var int
      */
     private $state = AssessmentItemSessionState::NOT_SELECTED;
 
@@ -187,7 +188,7 @@ class AssessmentItemSession extends State
      *
      * Default is NavigationMode::LINEAR.
      *
-     * @var integer
+     * @var int
      */
     private $navigationMode = NavigationMode::LINEAR;
 
@@ -196,7 +197,7 @@ class AssessmentItemSession extends State
      *
      * Default is SubmissionMode::INDIVIDUAL.
      *
-     * @var integer
+     * @var int
      */
     private $submissionMode = SubmissionMode::INDIVIDUAL;
 
@@ -211,7 +212,7 @@ class AssessmentItemSession extends State
      * Whether or not the session (SUSPENDED or INTERACTING) is currently attempting an attempt.
      * In other words, a candidate begun an attempt and did not ended it yet.
      *
-     * @var boolean
+     * @var bool
      */
     private $attempting = false;
 
@@ -223,7 +224,6 @@ class AssessmentItemSession extends State
     private $onDurationUpdate = [];
 
     /**
-     *
      * @var AbstractSessionManager
      */
     private $sessionManager;
@@ -245,8 +245,8 @@ class AssessmentItemSession extends State
      *
      * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
      * @param AbstractSessionManager $sessionManager
-     * @param integer $navigationMode The current navigation mode. Default is LINEAR.
-     * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
+     * @param int $navigationMode The current navigation mode. Default is LINEAR.
+     * @param int $submissionMode The current submission mode. Default is INDIVIDUAL.
      * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
      */
     public function __construct(IAssessmentItem $assessmentItem, AbstractSessionManager $sessionManager, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
@@ -272,7 +272,7 @@ class AssessmentItemSession extends State
      *
      * The state of the session is a value from the AssessmentItemSessionState enumeration.
      *
-     * @param integer $state A value from the AssessmentItemSessionState enumeration.
+     * @param int $state A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
      */
     public function setState($state)
@@ -285,7 +285,7 @@ class AssessmentItemSession extends State
      *
      * The state of the session is a value from the AssessmentItemSessionState enumeration.
      *
-     * @return integer A value from the AssessmentItemSessionState enumeration.
+     * @return int A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
      */
     public function getState()
@@ -341,7 +341,7 @@ class AssessmentItemSession extends State
      *
      * The time reference is used to inform the session "what time it is" prior to interacting with it.
      *
-     * @param DateTime $timeReference A DateTime object.
+     * @param \DateTime $timeReference A DateTime object.
      */
     public function setTimeReference(\DateTime $timeReference)
     {
@@ -364,7 +364,7 @@ class AssessmentItemSession extends State
      * Get the acceptable latency time to be applied when timelimits
      * are in force.
      *
-     * @return Duration A Duration object.
+     * @return QtiDuration A Duration object.
      */
     public function getAcceptableLatency()
     {
@@ -374,7 +374,7 @@ class AssessmentItemSession extends State
     /**
      * Whether or not minimum time limits must be taken into account.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustConsiderMinTime()
     {
@@ -384,7 +384,7 @@ class AssessmentItemSession extends State
     /**
      * Whether or not the session is driven by a TimeLimits object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {
@@ -394,7 +394,7 @@ class AssessmentItemSession extends State
     /**
      * Set the navigation mode in use during the item session.
      *
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function setNavigationMode($navigationMode)
@@ -405,7 +405,7 @@ class AssessmentItemSession extends State
     /**
      * Get the navigation mode in use during the item session.
      *
-     * @return integer A value from the NavigationMode enumeration.
+     * @return int A value from the NavigationMode enumeration.
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function getNavigationMode()
@@ -416,7 +416,7 @@ class AssessmentItemSession extends State
     /**
      * Set the submission mode in use during the item session.
      *
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @see \qtism\data\SubmissionMode The SubmissionMode enumeration.
      */
     public function setSubmissionMode($submissionMode)
@@ -427,7 +427,7 @@ class AssessmentItemSession extends State
     /**
      * Get the submission mode in use during the item session.
      *
-     * @return integer A value from the SubmissionMode enumeration.
+     * @return int A value from the SubmissionMode enumeration.
      * @see \qtism\data\SubmissionMode The SubmissionMode enumeration.
      */
     public function getSubmissionMode()
@@ -440,7 +440,7 @@ class AssessmentItemSession extends State
      *
      * Whether the navigation mode in use for the item session is LINEAR.
      *
-     * @return boolean
+     * @return bool
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function isNavigationLinear()
@@ -453,7 +453,7 @@ class AssessmentItemSession extends State
      *
      * Whether the navigation mode in use for the item session is NON_LINEAR.
      *
-     * @return boolean
+     * @return bool
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
     public function isNavigationNonLinear()
@@ -484,7 +484,7 @@ class AssessmentItemSession extends State
     /**
      * Set whether a candidate is currently performing an attempt.
      *
-     * @param boolean $attempting
+     * @param bool $attempting
      * @throws InvalidArgumentException If $attempting is not a boolean value.
      */
     public function setAttempting($attempting)
@@ -499,7 +499,7 @@ class AssessmentItemSession extends State
      * it means that the candidate was interacting with the item, but went in suspend
      * state by ending the candidate session rather than ending the attempt.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAttempting()
     {
@@ -588,7 +588,6 @@ class AssessmentItemSession extends State
          * cannot be seen during the test. Whether or not the candidate can return to review
          * their responses and/or any item-level feedback after the test, is outside the scope
          * of this specification. Simultaneous mode is typical of paper-based tests.
-         *
          */
         $maxAttempts = $this->itemSessionControl->getMaxAttempts();
         if ($this->submissionMode === SubmissionMode::SIMULTANEOUS) {
@@ -643,9 +642,10 @@ class AssessmentItemSession extends State
      * * Otherwise, the item session goes to the SUSPENDED state, waiting for a next attempt.
      *
      * @param State $responses (optional) A State composed by the candidate's responses to the item.
-     * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
-     * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
+     * @param bool $responseProcessing (optional) Whether to execute the responseProcessing or not.
+     * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
      * @throws AssessmentItemSessionException
+     * @throws PhpStorageException
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false)
     {
@@ -665,14 +665,12 @@ class AssessmentItemSession extends State
         if ($this->hasTimeLimits() === true) {
             // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
             // assessmentItems only when linear navigation mode is in effect.
-            if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
-                if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
-                    // An exception is thrown to prevent the numAttempts to be incremented.
-                    // Suspend and wait for a next attempt.
-                    $this->suspend();
-                    $msg = "The minimal duration is not yet reached.";
-                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
-                }
+            if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true && $this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
+                // An exception is thrown to prevent the numAttempts to be incremented.
+                // Suspend and wait for a next attempt.
+                $this->suspend();
+                $msg = 'The minimal duration is not yet reached.';
+                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
             }
 
             // Check if the maxTime constraint is respected.
@@ -683,7 +681,7 @@ class AssessmentItemSession extends State
 
                 if ($this->timeLimits->doesAllowLateSubmission() === false && $allowLateSubmission === false) {
                     $this['completionStatus']->setValue(self::COMPLETION_STATUS_INCOMPLETE);
-                    $msg = "The maximal duration is exceeded.";
+                    $msg = 'The maximal duration is exceeded.';
                     $this->endItemSession();
                     throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
                 } else {
@@ -717,7 +715,7 @@ class AssessmentItemSession extends State
                 catch (ExpressionProcessingException $e) {
                     $responseIdentifier = $response->getIdentifier();
                     $msg = "The current itemSessionControl.validResponses attribute is set to true but an error ";
-                    $msg.= "occured while trying to detect if response '${responseIdentifier}' was correct.";
+                    $msg.= "occurred while trying to detect if response '${responseIdentifier}' was correct.";
                     throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::RUNTIME_ERROR, $e);
                 }
             }
@@ -768,27 +766,21 @@ class AssessmentItemSession extends State
         if ($maxTimeExceeded === true) {
             $this->endItemSession();
             $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
-        } else {
-            // -- Adaptive item.
-            if ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+        } elseif ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+            //  -- Adaptive item.
+            $this->endItemSession();
+        } elseif ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
+            // -- Non-adaptive item + maxAttempts reached.
+            // Close only if $maxAttempts !== 0 because 0 means no limit!
+            if ($maxAttempts !== 0) {
                 $this->endItemSession();
-            } else {
-                // -- Non-adaptive item + maxAttempts reached.
-                if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
-                    // Close only if $maxAttempts !== 0 because 0 means no limit!
-                    if ($maxAttempts !== 0) {
-                        $this->endItemSession();
-                    }
-
-                    // Even if there is no limit of attempts, we consider the item completed.
-                    $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
-                    // -- Non-adaptive - remaining attempts.
-                } else {
-                    if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() < $maxAttempts) {
-                        $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
-                    }
-                }
             }
+
+            // Even if there is no limit of attempts, we consider the item completed.
+            $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
+            // -- Non-adaptive - remaining attempts.
+        } elseif ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() < $maxAttempts) {
+            $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
         }
         // else...
         // Wait for the next attempt.
@@ -845,7 +837,6 @@ class AssessmentItemSession extends State
     /**
      * Update the duration built-in variable. The update will only take
      * place if the current state of the item session is INTERACTING.
-     *
      */
     public function updateDuration()
     {
@@ -861,7 +852,7 @@ class AssessmentItemSession extends State
             $this->setTimeReference($now);
 
             foreach ($this->onDurationUpdate as $callBack) {
-                call_user_func_array($callBack, [$this, QtiDuration::createFromDateInterval($diff)]);
+                $callBack($this, QtiDuration::createFromDateInterval($diff));
             }
         }
     }
@@ -869,7 +860,7 @@ class AssessmentItemSession extends State
     /**
      * Get the time that remains to the candidate to submit its responses.
      *
-     * @return false|Duration A Duration object or false if there is no time limit.
+     * @return false|QtiDuration A Duration object or false if there is no time limit.
      */
     public function getRemainingTime()
     {
@@ -915,6 +906,7 @@ class AssessmentItemSession extends State
      * will be set to their default value or NULL and submitted.
      *
      * @throws AssessmentItemSessionException If skipping is not allowed with respect with the current itemSessionControl.
+     * @throws PhpStorageException
      */
     public function skip()
     {
@@ -941,7 +933,7 @@ class AssessmentItemSession extends State
      * Be careful! If the item of the session is adaptive but not yet completed or if the maxAttempts is unlimited, -1 is returned
      * because there is no way to determine how much remaining attempts are available.
      *
-     * @return integer The number of remaining items. -1 means unlimited.
+     * @return int The number of remaining items. -1 means unlimited.
      */
     public function getRemainingAttempts()
     {
@@ -976,8 +968,7 @@ class AssessmentItemSession extends State
      *
      * If the item session has the NOT_SELECTED state, false is directly returned because it is certain that there is no correct response yet in the session.
      *
-     * @return boolean
-     * @throws AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
+     * @return bool
      */
     public function isCorrect()
     {
@@ -1010,7 +1001,7 @@ class AssessmentItemSession extends State
      * Whether the item of the session has been attempted (at least once).
      * In other words, items which the user has interacted, whether or not they provided a response.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPresented()
     {
@@ -1020,7 +1011,7 @@ class AssessmentItemSession extends State
     /**
      * Whether the item of the session has been selected for presentation to the candidate, regardless of whether the candidate has attempted them or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSelected()
     {
@@ -1032,8 +1023,8 @@ class AssessmentItemSession extends State
      *
      * Whether the item of the session has been attempted (at least once) and for which responses were given.
      *
-     * @param boolean $partially (optional) Whether or not consider partially responded sessions as responded.
-     * @return boolean
+     * @param bool $partially (optional) Whether or not consider partially responded sessions as responded.
+     * @return bool
      */
     public function isResponded($partially = true)
     {
@@ -1053,10 +1044,8 @@ class AssessmentItemSession extends State
                     if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
                         return (($partially) ? true : false);
                     }
-                } else {
-                    if ($value->equals($defaultValue) === (($partially) ? false : true)) {
-                        return (($partially) ? true : false);
-                    }
+                } elseif ($value->equals($defaultValue) === (($partially) ? false : true)) {
+                    return (($partially) ? true : false);
                 }
             }
         }
@@ -1067,7 +1056,7 @@ class AssessmentItemSession extends State
     /**
      * Whether a new attempt is possible for this AssessmentItemSession.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAttemptable()
     {
@@ -1077,7 +1066,7 @@ class AssessmentItemSession extends State
     /**
      * Whether or not the item has been attempted at least one.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAttempted()
     {
@@ -1088,7 +1077,8 @@ class AssessmentItemSession extends State
      * Get a cloned $duration with the acceptable latency of the item
      * session added.
      *
-     * @return Duration $duration + acceptable latency.
+     * @param QtiDuration $duration
+     * @return QtiDuration $duration + acceptable latency.
      */
     protected function getDurationWithLatency(QtiDuration $duration)
     {
@@ -1101,16 +1091,14 @@ class AssessmentItemSession extends State
      * Whether or not the maximum time limits in force are reached.
      * If there is no time limits in force, this method systematically returns false.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isMaxTimeReached()
     {
         $reached = false;
 
-        if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
-            if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
-                $reached = true;
-            }
+        if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true && $this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
+            $reached = true;
         }
 
         return $reached;
@@ -1119,7 +1107,7 @@ class AssessmentItemSession extends State
     /**
      * Get the ResponseVariable objects contained in the AssessmentItemSession.
      *
-     * @param boolean $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
+     * @param bool $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
      * @return State A State object composed exclusively with ResponseVariable objects.
      */
     public function getResponseVariables($builtIn = true)
@@ -1139,7 +1127,7 @@ class AssessmentItemSession extends State
     /**
      * Get the OutcomeVariable objects contained in the AssessmentItemSession.
      *
-     * @param boolean $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
+     * @param bool $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
      * @return State A State object composed exclusively with OutcomeVariable objects.
      */
     public function getOutcomeVariables($builtIn = true)
@@ -1167,6 +1155,9 @@ class AssessmentItemSession extends State
         return new ResponseProcessingEngine($responseProcessing, $this);
     }
 
+    /**
+     * @param array $callback
+     */
     public function onDurationUpdate(array $callback)
     {
         $this->onDurationUpdate[] = $callback;

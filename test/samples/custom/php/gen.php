@@ -1,11 +1,11 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../../qtism/qtism.php');
+require_once(__DIR__ . '/../../../../qtism/qtism.php');
 
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlCompactDocument;
 
-$xmlFile = dirname(__FILE__) . '/../runtime/nonlinear_40_items.xml';
+$xmlFile = __DIR__ . '/../runtime/nonlinear_40_items.xml';
 $xmlDoc = new XmlCompactDocument();
 $xmlDoc->load($xmlFile);
 

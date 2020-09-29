@@ -7,6 +7,9 @@ use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtismtest\QtiSmPhpMarshallerTestCase;
 
+/**
+ * Class PhpCollectionMarshallerTest
+ */
 class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
     public function testEmptyCollection()
@@ -15,8 +18,8 @@ class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpCollectionMarshaller($this->createMarshallingContext(), $collection);
         $marshaller->marshall();
 
-        $expected = "\$array_0 = array();\n";
-        $expected .= "\$integercollection_0 = new qtism\\common\\collections\\IntegerCollection(\$array_0);\n";
+        $expected = '$array_0 = array();' . "\n";
+        $expected .= '$integercollection_0 = new ' . IntegerCollection::class . '($array_0);' . "\n";
 
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
@@ -35,11 +38,11 @@ class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
         $collectionMarshaller = new PhpCollectionMarshaller($ctx, $collection);
         $collectionMarshaller->marshall();
 
-        $expected = "\$integer_0 = 10;\n";
-        $expected .= "\$integer_1 = 11;\n";
-        $expected .= "\$integer_2 = 12;\n";
-        $expected .= "\$array_0 = array(\$integer_0, \$integer_1, \$integer_2);\n";
-        $expected .= "\$integercollection_0 = new qtism\\common\\collections\\IntegerCollection(\$array_0);\n";
+        $expected = '$integer_0 = 10;' . "\n";
+        $expected .= '$integer_1 = 11;' . "\n";
+        $expected .= '$integer_2 = 12;' . "\n";
+        $expected .= '$array_0 = array($integer_0, $integer_1, $integer_2);' . "\n";
+        $expected .= '$integercollection_0 = new ' . IntegerCollection::class . '($array_0);' . "\n";
 
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }

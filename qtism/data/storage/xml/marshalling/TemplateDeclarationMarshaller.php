@@ -38,17 +38,19 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A TemplateDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
 
         if ($component->isParamVariable() === true) {
-            self::setDOMElementAttribute($element, 'paramVariable', true);
+            $this->setDOMElementAttribute($element, 'paramVariable', true);
         }
 
         if ($component->isMathVariable() === true) {
-            self::setDOMElementAttribute($element, 'mathVariable', true);
+            $this->setDOMElementAttribute($element, 'mathVariable', true);
         }
 
         return $element;
@@ -60,6 +62,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TemplateDeclaration object.
      * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -70,23 +73,23 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
-            if (($paramVariable = self::getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
+            if (($paramVariable = $this->getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
                 $object->setParamVariable($paramVariable);
             }
 
-            if (($mathVariable = self::getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
+            if (($mathVariable = $this->getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
                 $object->setMathVariable($mathVariable);
             }
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the templateDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the templateDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

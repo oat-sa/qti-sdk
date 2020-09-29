@@ -3,22 +3,26 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\FieldValue;
 use qtism\data\expressions\Variable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class FieldValueMarshallerTest
+ */
 class FieldValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $fieldIdentifier = "myField";
+        $fieldIdentifier = 'myField';
 
         $component = new FieldValue(new ExpressionCollection([new Variable('recordVar')]), $fieldIdentifier);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('fieldValue', $element->nodeName);
         $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
 
@@ -41,12 +45,12 @@ class FieldValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\FieldValue', $component);
+        $this->assertInstanceOf(FieldValue::class, $component);
         $this->assertEquals('myField', $component->getFieldIdentifier());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\Variable', $sub1);
+        $this->assertInstanceOf(Variable::class, $sub1);
         $this->assertEquals('recordVar', $sub1->getIdentifier());
     }
 }

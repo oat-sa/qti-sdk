@@ -26,7 +26,6 @@ namespace qtism\runtime\rules;
 use InvalidArgumentException;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\rules\Rule;
 use qtism\runtime\expressions\ExpressionEngine;
 
 /**
@@ -60,24 +59,6 @@ abstract class AbstractConditionProcessor extends RuleProcessor
     {
         parent::__construct($rule);
         $this->setRuleProcessorFactory(new RuleProcessorFactory());
-    }
-
-    /**
-     * Set the OutcomeCondition/ResponseCondition object to be processed.
-     *
-     * @param Rule $rule An OutcomeCondition/ResponseCondition object.
-     * @throws InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
-     */
-    public function setRule(Rule $rule)
-    {
-        $className = ucfirst($this->getQtiNature()) . 'Condition';
-
-        if (get_class($rule) === 'qtism\\data\\rules\\' . $className) {
-            parent::setRule($rule);
-        } else {
-            $msg = "The ${className}Processor only accepts ${className} objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
     }
 
     /**
@@ -182,18 +163,20 @@ abstract class AbstractConditionProcessor extends RuleProcessor
 
             if (get_class($rule) === $nsClass) {
                 // Let's try for if.
-                $ifStatement = call_user_func([$rule, $statementGetter . 'If']);
+                $ifGetter = $statementGetter . 'If';
+                $ifStatement = $rule->$ifGetter();
                 $ifExpression = $ifStatement->getExpression();
                 $exprEngine = new ExpressionEngine($ifExpression, $state);
                 $value = $exprEngine->process();
 
                 if ($value !== null && $value->getValue() === true) {
                     // Follow the if.
-                    $this->pushTrail(call_user_func([$ifStatement, $ruleGetter]));
+                    $this->pushTrail($ifStatement->$ruleGetter());
                 } else {
                     // Let's try for else ifs.
                     $followElseIf = false;
-                    $elseIfStatements = call_user_func([$rule, $statementGetter . 'ElseIfs']);
+                    $elseIfGetter = $statementGetter . 'ElseIfs';
+                    $elseIfStatements = $rule->$elseIfGetter();
 
                     foreach ($elseIfStatements as $elseIfStatement) {
                         $elseIfExpression = $elseIfStatement->getExpression();
@@ -202,17 +185,18 @@ abstract class AbstractConditionProcessor extends RuleProcessor
 
                         if ($value !== null && $value->getValue() === true) {
                             // Follow the current else if.
-                            $this->pushTrail(call_user_func([$elseIfStatement, $ruleGetter]));
+                            $this->pushTrail($elseIfStatement->$ruleGetter());
                             $followElseIf = true;
                             break;
                         }
                     }
 
-                    $elseStatement = call_user_func([$rule, $statementGetter . 'Else']);
+                    $elseGetter = $statementGetter . 'Else';
+                    $elseStatement = $rule->$elseGetter();
 
-                    if ($followElseIf === false && is_null($elseStatement) === false) {
+                    if ($followElseIf === false && $elseStatement !== null) {
                         // No else if followed, the last resort is the else.
-                        $this->pushTrail(call_user_func([$elseStatement, $ruleGetter]));
+                        $this->pushTrail($elseStatement->$ruleGetter());
                     }
                 }
             } else {

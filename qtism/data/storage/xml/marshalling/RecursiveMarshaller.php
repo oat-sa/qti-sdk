@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use DOMNode;
 use DOMText;
+use qtism\common\collections\AbstractCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -143,9 +144,10 @@ abstract class RecursiveMarshaller extends Marshaller
     /**
      * Empty the final stack to get the objects inside.
      *
+     * @param int $count
      * @return array The content of the final stack.
      */
-    protected function emptyFinal($count)
+    protected function emptyFinal(int $count)
     {
         $returnValue = [];
 
@@ -184,10 +186,10 @@ abstract class RecursiveMarshaller extends Marshaller
     }
 
     /**
-     * Wether an $object is marked is already processed.
+     * Whether an $object is marked is already processed.
      *
      * @param mixed $object The object to check;
-     * @return boolean Wether $object is marked.
+     * @return bool Whether $object is marked.
      */
     protected function isMarked($object)
     {
@@ -199,6 +201,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @param QtiComponent $component The QtiComponent object to marshall.
      * @return DOMElement A DOMElement corresponding to the QtiComponent to marshall.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException If an error occurs during the marshalling process.
      */
     protected function marshall(QtiComponent $component)
@@ -236,16 +239,13 @@ abstract class RecursiveMarshaller extends Marshaller
                 } else {
                     $this->pushTrail($element);
                 }
+            } elseif ($node instanceof DOMElement) {
+                $this->pushFinal($node);
             } else {
-                // It's a leaf!
-                if ($node instanceof DOMElement) {
-                    $this->pushFinal($node);
-                } else {
-                    $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
-                    $processed = $marshaller->marshall($node);
-                    $this->pushFinal($processed);
-                    $this->pushProcessed($processed);
-                }
+                $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
+                $processed = $marshaller->marshall($node);
+                $this->pushFinal($processed);
+                $this->pushProcessed($processed);
             }
         }
     }
@@ -256,6 +256,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param DOMElement $element The DOMElement object to unmarshall.
      * @param QtiComponent $rootComponent An optional already instantiated QtiComponent to use as the root component.
      * @return QtiComponent A QtiComponent object corresponding to the DOMElement to unmarshall.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element, QtiComponent $rootComponent = null)
     {
@@ -295,12 +296,10 @@ abstract class RecursiveMarshaller extends Marshaller
                 // Root node?
                 if ($node === $element && !empty($rootComponent)) {
                     $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection, $rootComponent);
+                } elseif ($marshaller instanceof self) {
+                    $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
                 } else {
-                    if ($marshaller instanceof RecursiveMarshaller) {
-                        $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
-                    } else {
-                        $component = $marshaller->unmarshall($node);
-                    }
+                    $component = $marshaller->unmarshall($node);
                 }
 
                 $this->pushProcessed($component);
@@ -312,21 +311,18 @@ abstract class RecursiveMarshaller extends Marshaller
                 } else {
                     $this->pushTrail($component);
                 }
+            } elseif ($node instanceof QtiComponent) {
+                $this->pushFinal($node);
             } else {
-                // Leaf node.
-                if ($node instanceof QtiComponent) {
-                    $this->pushFinal($node);
-                } else {
-                    if ($node instanceof DOMText) {
-                        $node = self::getDOMCradle()->createElement('textRun', preg_replace('/&(?!\w+;)/', '&amp;', $node->wholeText));
-                    }
-
-                    // Process it and make its a final element to be used by hierarchical nodes.
-                    $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
-                    $processed = $marshaller->unmarshall($node);
-                    $this->pushFinal($processed);
-                    $this->pushProcessed($processed);
+                if ($node instanceof DOMText) {
+                    $node = self::getDOMCradle()->createElement('textRun', preg_replace('/&(?!\w+;)/', '&amp;', $node->wholeText));
                 }
+
+                // Process it and make its a final element to be used by hierarchical nodes.
+                $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
+                $processed = $marshaller->unmarshall($node);
+                $this->pushFinal($processed);
+                $this->pushProcessed($processed);
             }
         }
     }
@@ -342,7 +338,7 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children);
 
     /**
-     * Whether a given $element is final. In other words, wheter the $element
+     * Whether a given $element is final. In other words, whether the $element
      * has child elements.
      *
      * @param DOMNode $element
@@ -358,10 +354,10 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function getChildrenElements(DOMElement $element);
 
     /**
-     *
      * Create a collection from DOMElement objects.
      *
-     * @return AbstractCollecton
+     * @param DOMElement $currentNode
+     * @return AbstractCollection
      */
     abstract protected function createCollection(DOMElement $currentNode);
 
@@ -376,7 +372,7 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function marshallChildrenKnown(QtiComponent $component, array $elements);
 
     /**
-     * Wheter or not a QtiComponent object is final. In other words, whether $component
+     * Whether or not a QtiComponent object is final. In other words, whether $component
      * contains child QtiComponent objects.
      *
      * @param QtiComponent $component

@@ -6,12 +6,15 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TestVariablesTest
+ */
 class TestVariablesTest extends QtiSmTestCase
 {
     public function testTestVariables()
     {
         $testVariables = new TestVariables('SCORE', BaseType::FLOAT, 'WEIGHT');
-        $this->assertInstanceOf('qtism\\data\\expressions\\TestVariables', $testVariables);
+        $this->assertInstanceOf(TestVariables::class, $testVariables);
         $this->assertEquals('SCORE', $testVariables->getVariableIdentifier());
         $this->assertEquals('WEIGHT', $testVariables->getWeightIdentifier());
         $this->assertEquals(BaseType::FLOAT, $testVariables->getBaseType());

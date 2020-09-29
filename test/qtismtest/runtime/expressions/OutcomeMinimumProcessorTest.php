@@ -10,13 +10,16 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\OutcomeMinimumProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class OutcomeMinimumProcessorTest
+ */
 class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
      * @dataProvider outcomeMinimumProvider
      *
      * @param OutcomeMinimum $expression
-     * @param integer $expectedResult
+     * @param int $expectedResult
      */
     public function testOutcomeMaximum(OutcomeMinimum $expression, $expectedResult)
     {
@@ -29,12 +32,15 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
         if ($expectedResult === null) {
             $this->assertSame($expectedResult, $result);
         } else {
-            $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+            $this->assertInstanceOf(MultipleContainer::class, $result);
             $this->assertEquals(BaseType::FLOAT, $result->getBaseType());
             $this->assertTrue($result->equals($expectedResult));
         }
     }
 
+    /**
+     * @return array
+     */
     public function outcomeMinimumProvider()
     {
         return [
@@ -47,6 +53,14 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param $outcomeIdentifier
+     * @param string $weightIdentifier
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return OutcomeMinimum
+     */
     protected static function getOutcomeMinimum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $outcomeMinimum = new OutcomeMinimum($outcomeIdentifier);

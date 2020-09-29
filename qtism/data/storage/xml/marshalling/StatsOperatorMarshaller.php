@@ -46,7 +46,7 @@ class StatsOperatorMarshaller extends OperatorMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'name', Statistics::getNameByConstant($component->getName()));
+        $this->setDOMElementAttribute($element, 'name', Statistics::getNameByConstant($component->getName()));
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -58,17 +58,15 @@ class StatsOperatorMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI statsOperator operator element into a StatsOperator object.
      *
-     * @param DOMElement The statsOperator element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The statsOperator element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A StatsOperator object.
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
-            $object = new StatsOperator($children, Statistics::getConstantByName($name));
-
-            return $object;
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
+            return new StatsOperator($children, Statistics::getConstantByName($name));
         } else {
             $msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

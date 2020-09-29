@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use InvalidArgumentException;
-use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
@@ -38,7 +37,7 @@ use qtism\common\enums\Cardinality;
  * and vertical (y-axis) positions respectively. The up/down and
  * left/right senses of the axes are context dependent.
  */
-class QtiPoint implements Comparable, QtiDatatype
+class QtiPoint implements QtiDatatype
 {
     /**
      * The position on the x-axis.
@@ -124,11 +123,11 @@ class QtiPoint implements Comparable, QtiDatatype
      * are considered to be the same if they have the same coordinates.
      *
      * @param mixed $obj An object.
-     * @return boolean Whether or not the equality is established.
+     * @return bool Whether or not the equality is established.
      */
     public function equals($obj)
     {
-        return (gettype($obj) === 'object' &&
+        return (is_object($obj) &&
             $obj instanceof self &&
             $obj->getX() === $this->getX() &&
             $obj->getY() === $this->getY());
@@ -150,7 +149,7 @@ class QtiPoint implements Comparable, QtiDatatype
      * Get the BaseType of the value. This method systematically returns
      * the BaseType::POINT value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -161,7 +160,7 @@ class QtiPoint implements Comparable, QtiDatatype
      * Get the Cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

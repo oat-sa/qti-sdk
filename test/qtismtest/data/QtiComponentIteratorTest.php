@@ -10,6 +10,9 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiComponentIteratorTest
+ */
 class QtiComponentIteratorTest extends QtiSmTestCase
 {
     public function testSimple()

@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomInteger;
 
 /**
@@ -38,16 +36,6 @@ use qtism\data\expressions\RandomInteger;
  */
 class RandomIntegerProcessor extends ExpressionProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof RandomInteger) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The RandomIntegerProcessor class only accepts to process RandomInteger Expression objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the RandomInteger expression.
      *
@@ -55,7 +43,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
      * * Throws an ExpressionProcessingException if a variable reference is not found in the current state.
      * * Throws an ExpressionProcessingException if a variable reference's value is not an integer.
      *
-     * @return integer A random integer value.
+     * @return QtiInteger A random integer value.
      * @throws ExpressionProcessingException
      */
     public function process()
@@ -66,11 +54,11 @@ class RandomIntegerProcessor extends ExpressionProcessor
         $step = $expr->getStep();
         $state = $this->getState();
 
-        $min = (gettype($min) === 'integer') ? $min : $state[Utils::sanitizeVariableRef($min)]->getValue();
-        $max = (gettype($max) === 'integer') ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
-        $step = (gettype($step) === 'integer') ? $step : $state[Utils::sanitizeVariableRef($step)]->getValue();
+        $min = (is_int($min)) ? $min : $state[Utils::sanitizeVariableRef($min)]->getValue();
+        $max = (is_int($max)) ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
+        $step = (is_int($step)) ? $step : $state[Utils::sanitizeVariableRef($step)]->getValue();
 
-        if (gettype($min) === 'integer' && gettype($max) === 'integer' && gettype($step) === 'integer') {
+        if (is_int($min) && is_int($max) && is_int($step)) {
             if ($min > $max) {
                 $msg = "'min':'${min}' is greater than 'max':'${max}'.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);
@@ -80,14 +68,20 @@ class RandomIntegerProcessor extends ExpressionProcessor
                 return new QtiInteger(mt_rand($min, $max));
             } else {
                 $distance = ($min < 0) ? ($max + abs($min)) : ($max - $min);
-                $mult = mt_rand(0, intval(floor($distance / $step)));
-                $random = new QtiInteger($min + ($mult * $step));
-
-                return $random;
+                $mult = mt_rand(0, (int)floor($distance / $step));
+                return new QtiInteger($min + ($mult * $step));
             }
         } else {
             $msg = "At least one of the following variables is not an integer: 'min', 'max', 'step' while processing RandomInteger.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return RandomInteger::class;
     }
 }

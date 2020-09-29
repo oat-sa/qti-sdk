@@ -3,11 +3,15 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AreaMapEntryMarshallerTest
+ */
 class AreaMapEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -20,7 +24,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('areaMapEntry', $element->nodeName);
         $this->assertEquals('rect', $element->getAttribute('shape'));
         $this->assertEquals('0,20,100,0', $element->getAttribute('coords'));
@@ -36,7 +40,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\AreaMapEntry', $component);
+        $this->assertInstanceOf(AreaMapEntry::class, $component);
         $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
         $this->assertEquals([0, 20, 100, 0], $component->getCoords()->getArrayCopy());
         $this->assertEquals(QtiShape::RECT, $component->getShape());

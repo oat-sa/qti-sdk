@@ -37,17 +37,17 @@ use qtism\data\QtiComponentCollection;
 class EqualRoundedMarshaller extends OperatorMarshaller
 {
     /**
-     * Unmarshall an EqualRounded object into a QTI equalRounded element.
+     * Marshall an EqualRounded object into a QTI equalRounded element.
      *
-     * @param QtiComponent The EqualRounded object to marshall.
+     * @param QtiComponent $component The EqualRounded object to marshall.
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI equalRounded element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
-        self::setDOMElementAttribute($element, 'figures', $component->getFigures());
+        $this->setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
+        $this->setDOMElementAttribute($element, 'figures', $component->getFigures());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -59,21 +59,21 @@ class EqualRoundedMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI equalRounded operator element into an EqualRounded object.
      *
-     * @param DOMElement The EqualRounded element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The EqualRounded element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent An EqualRounded object.
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($figures = static::getDOMElementAttributeAs($element, 'figures')) !== null) {
+        if (($figures = $this->getDOMElementAttributeAs($element, 'figures')) !== null) {
             if (Format::isInteger($figures)) {
-                $figures = intval($figures);
+                $figures = (int)$figures;
             }
 
             $object = new EqualRounded($children, $figures);
 
-            if (($roundingMode = static::getDOMElementAttributeAs($element, 'roundingMode')) !== null) {
+            if (($roundingMode = $this->getDOMElementAttributeAs($element, 'roundingMode')) !== null) {
                 $object->setRoundingMode(RoundingMode::getConstantByName($roundingMode));
             }
 

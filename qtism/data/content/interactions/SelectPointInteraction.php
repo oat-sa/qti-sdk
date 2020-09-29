@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -50,7 +50,7 @@ class SelectPointInteraction extends GraphicInteraction
      * than 1 (or 0) then the interaction must be bound to a response with
      * multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 1;
@@ -63,7 +63,7 @@ class SelectPointInteraction extends GraphicInteraction
      * to select any choices. minChoices must be less than or equal to the limit
      * imposed by maxChoices.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = 0;
@@ -72,15 +72,15 @@ class SelectPointInteraction extends GraphicInteraction
      * Create a new SelectPointInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param Object $object The associated image as an Object object.
-     * @param integer $maxChoices The maximum number of choices that the candidate is allowed to select as a positive (>= 0) integer.
+     * @param ObjectElement $object The associated image as an ObjectElement object.
+     * @param int $maxChoices The maximum number of choices that the candidate is allowed to select as a positive (>= 0) integer.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, QtiObject $object, $maxChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $maxChoices, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setMaxChoices($maxChoices);
@@ -90,7 +90,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Get the maximum number of points that the candidate is allowed to select.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxChoices()
     {
@@ -100,12 +100,12 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Set the maximum number of points that the candidate is allowed to select.
      *
-     * @param integer $maxChoices A positive (>= 0) integer.
+     * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -116,7 +116,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Get the minimum number of points that the candidate is allowed to select.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinChoices()
     {
@@ -126,12 +126,12 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Set the minimum number of points that the candidate is allowed to select.
      *
-     * @param integer $minChoices A positive (>= 0) integer.
+     * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer.
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && $minChoices >= 0) {
+        if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
         } else {
             $msg = "The 'minChoices' argument must be a positive (>= 0) integer, '" . gettype($minChoices) . "' given.";
@@ -140,7 +140,7 @@ class SelectPointInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -148,7 +148,7 @@ class SelectPointInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

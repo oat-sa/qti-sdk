@@ -30,7 +30,7 @@ use qtism\common\enums\Cardinality;
 /**
  * Represents the QTI Float datatype.
  */
-class QtiFloat extends QtiScalar implements QtiDatatype
+class QtiFloat extends QtiScalar
 {
     /**
      * Check whether or not $value is a Float object.
@@ -40,8 +40,8 @@ class QtiFloat extends QtiScalar implements QtiDatatype
      */
     protected function checkType($value)
     {
-        if (is_double($value) !== true) {
-            $msg = "The Float Datatype only accepts to store float values.";
+        if (!is_float($value)) {
+            $msg = 'The Float Datatype only accepts to store float values.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -50,7 +50,7 @@ class QtiFloat extends QtiScalar implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * the BaseType::FLOAT value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -61,13 +61,16 @@ class QtiFloat extends QtiScalar implements QtiDatatype
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return '' . $this->getValue();

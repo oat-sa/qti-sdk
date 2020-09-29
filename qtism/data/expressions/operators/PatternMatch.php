@@ -68,7 +68,7 @@ class PatternMatch extends Operator
      */
     public function setPattern($pattern)
     {
-        if (gettype($pattern) === 'string') {
+        if (is_string($pattern)) {
             $this->pattern = $pattern;
         } else {
             $msg = "The pattern argument must be a string or a variable reference, '" . $pattern . "' given.";
@@ -87,7 +87,7 @@ class PatternMatch extends Operator
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

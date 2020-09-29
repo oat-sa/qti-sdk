@@ -23,7 +23,7 @@
 
 namespace qtism\data\content;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
 /**

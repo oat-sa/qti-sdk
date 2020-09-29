@@ -30,7 +30,7 @@ use qtism\common\enums\Cardinality;
 /**
  * Represents the Boolean QTI Datatype.
  */
-class QtiBoolean extends QtiScalar implements QtiDatatype
+class QtiBoolean extends QtiScalar
 {
     /**
      * Check whether or not the intrinsic $value is a PHP boolean.
@@ -41,7 +41,7 @@ class QtiBoolean extends QtiScalar implements QtiDatatype
     protected function checkType($value)
     {
         if (is_bool($value) !== true) {
-            $msg = "The Boolean Datatype only accepts to store boolean values.";
+            $msg = 'The Boolean Datatype only accepts to store boolean values.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -50,7 +50,7 @@ class QtiBoolean extends QtiScalar implements QtiDatatype
      * Get the baseType of the Boolean value. This method
      * systematically returns BaseType::BOOLEAN.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -61,7 +61,7 @@ class QtiBoolean extends QtiScalar implements QtiDatatype
      * Get the cardinality of the Boolean value. This method
      * systematically returns Cardinality::SINGLE.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getCardinality()
     {

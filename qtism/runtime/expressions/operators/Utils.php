@@ -36,9 +36,9 @@ class Utils
      * If either $a or $b is negative, its absolute value will be used
      * instead.
      *
-     * @param integer $a A positive integer
-     * @param integer $b A positive integer
-     * @return integer The GCD of $a and $b.
+     * @param int $a A positive integer
+     * @param int $b A positive integer
+     * @return int The GCD of $a and $b.
      */
     public static function gcd($a, $b)
     {
@@ -60,9 +60,9 @@ class Utils
     /**
      * Compute LCM (Least Common Multiple) of $a and $b.
      *
-     * @param integer $a
-     * @param integer $b
-     * @return integer the LCM of $a and $b.
+     * @param int $a
+     * @param int $b
+     * @return int the LCM of $a and $b.
      */
     public static function lcm($a, $b)
     {
@@ -73,7 +73,7 @@ class Utils
             return 0;
         }
 
-        $a = $a / self::gcd($a, $b);
+        $a /= self::gcd($a, $b);
 
         return $a * $b;
     }
@@ -117,7 +117,7 @@ class Utils
      * returns false.
      *
      * @param array $sample An array of numeric values.
-     * @param boolean $correction (optional) Apply the Bessel's correction on the computed variance.
+     * @param bool $correction (optional) Apply the Bessel's correction on the computed variance.
      * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
      * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
      */
@@ -143,7 +143,7 @@ class Utils
         $sum = 0;
 
         foreach ($sample as $s) {
-            $sum += pow($s - $mean, 2);
+            $sum += ($s - $mean) ** 2;
         }
 
         $d = ($correction === true) ? $count - 1 : $count;
@@ -162,7 +162,7 @@ class Utils
      * returns false.
      *
      * @param array $sample An array of numeric values.
-     * @param boolean $correction (optional) Whether to apply Bessel's correction.
+     * @param bool $correction (optional) Whether to apply Bessel's correction.
      * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
      * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
      */
@@ -184,7 +184,7 @@ class Utils
      * method is multi-byte safe safe.
      *
      * @param string $string
-     * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
+     * @return string|bool The delimited string or false if no appropriate delimiters can be found.
      */
     public static function pregAddDelimiter($string)
     {
@@ -195,8 +195,8 @@ class Utils
      * Get the amout of backslash (\) characters in $string that precede $offset.
      *
      * @param string $string
-     * @param integer $offset
-     * @return integer
+     * @param int $offset
+     * @return int
      */
     public static function getPrecedingBackslashesCount($string, $offset)
     {
@@ -233,14 +233,12 @@ class Utils
 
         for ($i = 0; $i < $len; $i++) {
             $char = mb_substr($string, $i, 1); // get a multi-byte char.
-            if (in_array($char, $symbols) === true) {
-                // Check escaping.
-                // If the amount of preceding backslashes is odd, it is escaped.
-                // If the amount of preceding backslashes is even, it is not escaped.
-                if (static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
-                    // It is not escaped, so ecape it.
-                    $returnValue .= '\\';
-                }
+            // Check escaping.
+            // If the amount of preceding backslashes is odd, it is escaped.
+            // If the amount of preceding backslashes is even, it is not escaped.
+            if ((in_array($char, $symbols)) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
+                // It is not escaped, so ecape it.
+                $returnValue .= '\\';
             }
 
             $returnValue .= $char;
@@ -254,7 +252,7 @@ class Utils
      * fully qualified class name e.g. 'org\qtism\custom\Explode'.
      *
      * @param string $class A custom operator class name where namespace separator is '.' (dot).
-     * @return boolean|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
+     * @return bool|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
      */
     public static function customOperatorClassToPhpClass($class)
     {
@@ -264,13 +262,8 @@ class Utils
             return false;
         }
 
-        $class = strval($class);
+        $class = (string)$class;
         $tokens = explode('.', $class);
-
-        if ($tokens === false) {
-            return $tokens;
-        }
-
         $tokenCount = count($tokens);
 
         if ($tokenCount <= 1) {
@@ -283,5 +276,67 @@ class Utils
         $tokens[$lastPosition] = $lastToken;
 
         return implode("\\", $tokens);
+    }
+
+    /**
+     * Get a meaningful message for the last PREG error that occurred.
+     *
+     * The following PREG error codes are considered by this method:
+     *
+     * * PREG_BACKTRACK_LIMIT_ERROR
+     * * PREG_RECURSION_LIMIT_ERROR
+     * * PREG_BAD_UTF8_ERROR
+     * * PREG_BAD_UTF8_OFFSET_ERROR
+     *
+     * @return string
+     */
+    public static function lastPregErrorMessage()
+    {
+        $error = preg_last_error();
+        $errorType = 'PCRE Engine error';
+
+        switch ($error) {
+            case PREG_INTERNAL_ERROR:
+                $errorType = 'PCRE Engine internal error';
+                break;
+
+            case PREG_BACKTRACK_LIMIT_ERROR:
+                $errorType = 'PCRE Engine backtrack limit exceeded';
+                break;
+
+            case PREG_RECURSION_LIMIT_ERROR:
+                $errorType = 'PCRE Engine recursion limit exceeded';
+                break;
+
+            case PREG_BAD_UTF8_ERROR:
+                $errorType = 'PCRE Engine malformed UTF-8 error';
+                break;
+
+            case PREG_BAD_UTF8_OFFSET_ERROR:
+                $errorType = 'PCRE Engine UTF-8 offset error';
+                break;
+        }
+
+        return $errorType;
+    }
+
+    /**
+     * Prepare an XSD Regular Expression pattern into a PCRE compliant one.
+     *
+     * @param string $pattern
+     * @return string
+     */
+    public static function prepareXsdPatternForPcre($pattern)
+    {
+        // XML schema always implicitly anchors the entire regular expression
+        // because there is no carret (^) nor dollar ($) signs.
+        // see http://www.regular-expressions.info/xml.html
+        $pattern = self::escapeSymbols($pattern, ['$', '^']);
+        $pattern = self::pregAddDelimiter('^' . $pattern . '$');
+
+        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
+        $pattern .= 's';
+
+        return $pattern;
     }
 }

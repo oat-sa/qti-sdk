@@ -41,6 +41,8 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      * @param QtiComponent $component
      * @param array $elements
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -59,14 +61,17 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      *
      * @param DOMElement $element
      * @param QtiComponentCollection $children
+     * @param AssessmentSection|null $assessmentSection
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
     {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);
 
-        $rubricBlockRefElts = self::getChildElementsByTagName($element, 'rubricBlockRef');
+        $rubricBlockRefElts = $this->getChildElementsByTagName($element, 'rubricBlockRef');
         if (count($rubricBlockRefElts) > 0) {
             $rubricBlockRefs = new RubricBlockRefCollection();
 

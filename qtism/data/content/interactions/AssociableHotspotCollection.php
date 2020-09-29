@@ -41,7 +41,7 @@ class AssociableHotspotCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof AssociableHotspot) {
-            $msg = "AssociableHotspotCollection objects only accepts to store AssociableHotspot objects.";
+            $msg = 'AssociableHotspotCollection objects only accepts to store AssociableHotspot objects.';
             throw new InvalidArgumentException($msg);
         }
     }

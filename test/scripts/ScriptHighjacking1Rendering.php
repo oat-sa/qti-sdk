@@ -9,11 +9,11 @@ use qtism\data\storage\StorageException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
 try {
-    $doc->load(dirname(__FILE__) . '/../samples/rendering/script_highjacking_1.xml');
+    $doc->load(__DIR__ . '/../samples/rendering/script_highjacking_1.xml');
 } catch (StorageException $e) {
     do {
         echo $e->getMessage() . "\n";

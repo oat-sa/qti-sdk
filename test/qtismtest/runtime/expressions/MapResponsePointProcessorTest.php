@@ -13,6 +13,9 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\MapResponsePointProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MapResponsePointProcessorTest
+ */
 class MapResponsePointProcessorTest extends QtiSmTestCase
 {
     public function testSingleCardinality()
@@ -99,7 +102,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $processor = new MapResponsePointProcessor($expr);
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -153,7 +156,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -182,7 +185,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
 
-        $this->setExpectedException(ExpressionProcessingException::class);
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 

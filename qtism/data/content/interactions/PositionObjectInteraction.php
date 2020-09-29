@@ -25,7 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\common\datatypes\QtiPoint;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -55,7 +55,7 @@ class PositionObjectInteraction extends Interaction
      * several position object interactions and is therefore defined in a class
      * of its own: positionObjectStage.
      *
-     * @var Point
+     * @var QtiPoint
      * @qtism-bean-property
      */
     private $centerPoint = null;
@@ -67,7 +67,7 @@ class PositionObjectInteraction extends Interaction
      * If maxChoices is 0 there is no limit. If maxChoices is greater than 1 (or 0)
      * then the interaction must be bound to a response with multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 1;
@@ -82,7 +82,7 @@ class PositionObjectInteraction extends Interaction
      *
      * If $minChoices is negative it means that no minChoices is specifed.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = -1;
@@ -90,7 +90,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * The image to be positioned on the stage by the candidate.
      *
-     * @var Object
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -99,14 +99,14 @@ class PositionObjectInteraction extends Interaction
      * Create a new PositionObjectInteraction object.
      *
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param Object $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -116,7 +116,7 @@ class PositionObjectInteraction extends Interaction
      * Set the centerPoint attribute. Give the null value if there is no centerPoint
      * specified.
      *
-     * @param Point $centerPoint A Point object or null.
+     * @param QtiPoint $centerPoint A Point object or null.
      */
     public function setCenterPoint(QtiPoint $centerPoint = null)
     {
@@ -127,7 +127,7 @@ class PositionObjectInteraction extends Interaction
      * Get the centerPoint attribute. The null value is returned if there is no centerPoint
      * specified.
      *
-     * @return Point A Point object or null.
+     * @return QtiPoint A Point object or null.
      */
     public function getCenterPoint()
     {
@@ -137,7 +137,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Whether the PositionObjectInteraction has a centerPoint.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCenterPoint()
     {
@@ -147,12 +147,12 @@ class PositionObjectInteraction extends Interaction
     /**
      * Set the maximum number of positions (on the stage) that the image can be placed.
      *
-     * @param integer $maxChoices A positive (>= 0) integer.
+     * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -163,7 +163,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Get the maximum number of positions (on the stage) that the image can be placed.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxChoices()
     {
@@ -174,7 +174,7 @@ class PositionObjectInteraction extends Interaction
      * Set the minimum number of positions that the image must be placed to form a valid response
      * to the interaction.
      *
-     * @param integer $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
+     * @param int $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
     public function setMinChoices($minChoices)
@@ -196,7 +196,7 @@ class PositionObjectInteraction extends Interaction
      * Get the minimum number of positions that the image must be placed to form a valid response
      * to the interaction.
      *
-     * @return integer A strictly positive integer or a negative integer which specifies there is no 'minChoices'.
+     * @return int A strictly positive integer or a negative integer which specifies there is no 'minChoices'.
      */
     public function getMinChoices()
     {
@@ -206,7 +206,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Whether or not a value is defined for the minChoices attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinChoices()
     {
@@ -216,9 +216,9 @@ class PositionObjectInteraction extends Interaction
     /**
      * Set the image to be positioned on the stage by the candidate.
      *
-     * @param Object $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -226,7 +226,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Get the image to be positioned on the stage by the candidate.
      *
-     * @return Object An image as an Object object.
+     * @return ObjectElement An image as an ObjectElement object.
      */
     public function getObject()
     {
@@ -234,7 +234,7 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -242,7 +242,7 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

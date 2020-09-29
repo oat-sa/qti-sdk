@@ -9,7 +9,12 @@ use qtism\data\content\PrintedVariable;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtism\data\content\xhtml\text\Strong;
 
+/**
+ * Class GapTextMarshallerTest
+ */
 class GapTextMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -34,7 +39,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapText', $gapText);
+        $this->assertInstanceOf(GapText::class, $gapText);
         $this->assertEquals('gapText1', $gapText->getIdentifier());
         $this->assertEquals(1, $gapText->getMatchMax());
         $this->assertEquals(0, $gapText->getMatchMin());
@@ -45,12 +50,12 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallComplexContentForQti22()
     {
-        $element = $element = $this->createDOMElement('
+        $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
 	    ');
 
         $gapText = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapText', $gapText);
+        $this->assertInstanceOf(GapText::class, $gapText);
         $this->assertEquals('gapText1', $gapText->getIdentifier());
         $this->assertEquals(1, $gapText->getMatchMax());
         $this->assertEquals(0, $gapText->getMatchMin());
@@ -59,16 +64,16 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
 
         $this->assertCount(3, $gapText->getContent());
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $gapText->getContent()[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Strong', $gapText->getContent()[1]);
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $gapText->getContent()[2]);
+        $this->assertInstanceOf(TextRun::class, $gapText->getContent()[0]);
+        $this->assertInstanceOf(Strong::class, $gapText->getContent()[1]);
+        $this->assertInstanceOf(TextRun::class, $gapText->getContent()[2]);
     }
 
     public function testUnmarshallInvalid()
     {
         // Only textRun and/or printedVariable.
-        $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
-        $element = $element = $this->createDOMElement('
+        $this->expectException(UnmarshallingException::class);
+        $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <div>invalid</div>!</gapText>
 	    ');
 

@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Round;
 
 /**
@@ -44,20 +42,10 @@ use qtism\data\expressions\operators\Round;
  */
 class RoundProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Round) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The RoundProcessor class only processes Round QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Round operator.
      *
-     * @return integer|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
+     * @return QtiInteger|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -69,18 +57,26 @@ class RoundProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Round operator only accepts operands with a single cardinality.";
+            $msg = 'The Round operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Round operator only accepts operands with baseType integer or float.";
+            $msg = 'The Round operator only accepts operands with baseType integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand = $operands[0];
         $mode = ($operand->getValue() >= 0) ? PHP_ROUND_HALF_UP : PHP_ROUND_HALF_DOWN;
 
-        return new QtiInteger(intval(round($operand->getValue(), 0, $mode)));
+        return new QtiInteger((int)round($operand->getValue(), 0, $mode));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Round::class;
     }
 }

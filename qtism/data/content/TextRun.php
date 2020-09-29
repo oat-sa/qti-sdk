@@ -35,13 +35,7 @@ use qtism\data\QtiComponentCollection;
  */
 class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVariable
 {
-    /**
-     * The base URI.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The characters contained in the TextRun.
@@ -82,38 +76,6 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
     }
 
     /**
-     * Set the base URI.
-     *
-     * @param string $base A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
-    }
-
-    /**
-     *
      * @return QtiComponentCollection
      */
     public function getComponents()
@@ -121,6 +83,9 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
         return new QtiComponentCollection();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'textRun';

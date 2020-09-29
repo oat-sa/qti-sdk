@@ -27,11 +27,15 @@ use InvalidArgumentException;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\AbstractEngine;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
 
+/**
+ * Class ResponseProcessingEngine
+ */
 class ResponseProcessingEngine extends AbstractEngine
 {
     /**
@@ -55,7 +59,7 @@ class ResponseProcessingEngine extends AbstractEngine
     {
         parent::__construct($responseProcessing, $context);
 
-        $templateDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+        $templateDir = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
         // Response Processing Templates content are the same in QTI 2.1 and 2.2.
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'match_correct.php');
@@ -79,7 +83,7 @@ class ResponseProcessingEngine extends AbstractEngine
         if ($responseProcessing instanceof ResponseProcessing) {
             parent::setComponent($responseProcessing);
         } else {
-            $msg = "The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.";
+            $msg = 'The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -93,12 +97,12 @@ class ResponseProcessingEngine extends AbstractEngine
      */
     public function addTemplateMapping($uri, $url)
     {
-        if (gettype($uri) !== 'string') {
+        if (!is_string($uri)) {
             $msg = "The uri argument must be a string, '" . gettype($uri) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
-        if (gettype($url) !== 'string') {
+        if (!is_string($url)) {
             $msg = "The url argument must be a string, '" . gettype($uri) . "' given.";
             throw new InvalidArgumentException($msg);
         }
@@ -116,14 +120,14 @@ class ResponseProcessingEngine extends AbstractEngine
      */
     public function removeTemplateMapping($uri)
     {
-        if (gettype($uri) !== 'string') {
+        if (!is_string($uri)) {
             $msg = "The uri argument must be a string, '" . gettype($uri) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
         $templateMapping = &$this->getTemplateMapping();
 
-        if (isset($templateMapping[$uri]) === true) {
+        if (isset($templateMapping[$uri])) {
             unset($templateMapping[$uri]);
         }
     }
@@ -148,6 +152,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * * ResponseProcessingException: If there is a problem with the response processing template processing bound to the ResponseProcessing.
      *
      * @throws ProcessingException
+     * @throws PhpStorageException
      */
     public function process()
     {
@@ -160,6 +165,10 @@ class ResponseProcessingEngine extends AbstractEngine
         }
     }
 
+    /**
+     * @return mixed
+     * @throws PhpStorageException
+     */
     public function getResponseProcessingRules()
     {
         // @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.
@@ -181,15 +190,13 @@ class ResponseProcessingEngine extends AbstractEngine
                 }
             }
 
-            if (empty($finalTemplateFile) === true && empty($templateLocation) === false) {
-                // The template could not be resolved using the mapping.
-                // Try to use template location.
-                if (@is_readable($templateLocation) === true) {
-                    $finalTemplateFile = $templateLocation;
-                }
+            // The template could not be resolved using the mapping.
+            // Try to use template location.
+            if (empty($finalTemplateFile) && empty($templateLocation) === false && @is_readable($templateLocation)) {
+                $finalTemplateFile = $templateLocation;
             }
 
-            if (empty($finalTemplateFile) === true) {
+            if (empty($finalTemplateFile)) {
                 $msg = "The template file could not be found: template='${template}', templateLocation='${templateLocation}'.";
                 throw new ResponseProcessingException($msg, $this, ResponseProcessingException::TEMPLATE_NOT_FOUND);
             }
@@ -199,7 +206,7 @@ class ResponseProcessingEngine extends AbstractEngine
             $php = new PhpDocument();
             $php->load($finalTemplateFile);
             $rules = $php->getDocumentComponent()->getResponseRules();
-            $this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
+            $this->trace(count($rules) . ' responseRule(s) extracted from the response processing template');
         }
 
         return $rules;

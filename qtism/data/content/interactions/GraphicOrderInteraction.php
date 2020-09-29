@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -69,7 +69,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * If $minChoices is a negative value, it means it was not specified.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = -1;
@@ -84,7 +84,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * If $maxChoices is a negative value, it means it was not specified.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = -1;
@@ -93,7 +93,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Create a new GraphicOrderInteraction object.
      *
      * @param string $responseIdentifier The response identifier associated to the interaction.
-     * @param Object $object The image associated with the interaction as an object.
+     * @param ObjectElement $object The image associated with the interaction as an object.
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects that define the choices that are to be ordered.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -101,7 +101,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, QtiObject $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setHotspotChoices($hotspotChoices);
@@ -111,14 +111,14 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Set the hotspots that define the choices that are to be ordered by the candidate.
      *
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
-     * @throws InvalidArgumentException If the given $hotspotChoices is empty.
+     * @throws InvalidArgumentException If the given $hotspotChoices collection is empty.
      */
     public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices)
     {
         if (count($hotspotChoices) > 0) {
             $this->hotspotChoices = $hotspotChoices;
         } else {
-            $msg = "A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.";
+            $msg = 'A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -137,7 +137,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Set the minimum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no minChoice is indicated.
      *
-     * @param integer $minChoices A strictly negative or positive integer.
+     * @param int $minChoices A strictly negative or positive integer.
      * @throws InvalidArgumentException If $minChoice is not a strictly negative or positive integer.
      */
     public function setMinChoices($minChoices)
@@ -159,7 +159,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Get the minimum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no minChoice is indicated.
      *
-     * @return integer A strictly negative or positive integer.
+     * @return int A strictly negative or positive integer.
      */
     public function getMinChoices()
     {
@@ -169,7 +169,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * Whether or not a value is defined for the minChoices attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinChoices()
     {
@@ -180,7 +180,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Set the maximum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no maxChoice is indicated.
      *
-     * @param integer $maxChoices A strictly negative or positive integer.
+     * @param int $maxChoices A strictly negative or positive integer.
      * @throws InvalidArgumentException If $maxChoices is not a strictly negative or positive integer.
      */
     public function setMaxChoices($maxChoices)
@@ -202,7 +202,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Get the maximum number of choices that the candidate must select and order to form a valid response. A negative
      * value means that no maxChoice is indicated.
      *
-     * @return integer A strictly negative or positive integer.
+     * @return int A strictly negative or positive integer.
      */
     public function getMaxChoices()
     {
@@ -212,7 +212,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * Whether or not a value is defined for the maxChoice attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxChoices()
     {
@@ -220,7 +220,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -228,7 +228,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\NumberCorrect;
 
 /**
@@ -41,20 +39,10 @@ use qtism\data\expressions\NumberCorrect;
  */
 class NumberCorrectProcessor extends ItemSubsetProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberCorrect) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NumberCorrectProcessor class only accepts NumberCorrect expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
      * Process the related NumberCorrect expression.
      *
-     * @return integer The number of items of the given sub-set for which all the response variables match their associated correct response.
+     * @return QtiInteger The number of items of the given sub-set for which all the response variables match their associated correct response.
      * @throws ExpressionProcessingException
      */
     public function process()
@@ -66,13 +54,23 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isCorrect() === true) {
-                    $numberCorrect++;
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isCorrect() === true) {
+                        $numberCorrect++;
+                    }
                 }
             }
         }
 
         return new QtiInteger($numberCorrect);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return NumberCorrect::class;
     }
 }

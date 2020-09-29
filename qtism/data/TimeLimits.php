@@ -49,7 +49,7 @@ class TimeLimits extends QtiComponent
      *
      * null = unlimited
      *
-     * @var Duration
+     * @var QtiDuration
      * @qtism-bean-property
      */
     private $minTime = null;
@@ -59,7 +59,7 @@ class TimeLimits extends QtiComponent
      *
      * null = unlimited
      *
-     * @var Duration
+     * @var QtiDuration
      * @qtism-bean-property
      */
     private $maxTime = null;
@@ -70,7 +70,7 @@ class TimeLimits extends QtiComponent
      * The allowLateSubmission attribute regulates whether a candidate's response that is
      * beyond the maxTime should still be accepted.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $allowLateSubmission = false;
@@ -78,9 +78,9 @@ class TimeLimits extends QtiComponent
     /**
      * Create a new instance of TimeLimits.
      *
-     * @param Duration $minTime The minimum time. Give null if not defined.
-     * @param Duration $maxTime The maximum time. Give null if not defined.
-     * @param string $allowLateSubmission Wether it allows late submission of responses.
+     * @param QtiDuration $minTime The minimum time. Give null if not defined.
+     * @param QtiDuration $maxTime The maximum time. Give null if not defined.
+     * @param bool $allowLateSubmission Whether it allows late submission of responses.
      */
     public function __construct($minTime = null, $maxTime = null, $allowLateSubmission = false)
     {
@@ -92,7 +92,7 @@ class TimeLimits extends QtiComponent
     /**
      * Get the minimum time.
      *
-     * @return Duration A Duration object or null if unlimited.
+     * @return QtiDuration A Duration object or null if unlimited.
      */
     public function getMinTime()
     {
@@ -102,22 +102,22 @@ class TimeLimits extends QtiComponent
     /**
      * Whether a minTime is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinTime()
     {
-        return !is_null($this->getMinTime());
+        return $this->getMinTime() !== null;
     }
 
     /**
      * Set the minimum time.
      *
-     * @param Duration $minTime A Duration object or null if unlimited.
+     * @param QtiDuration $minTime A Duration object or null if unlimited.
      */
     public function setMinTime(QtiDuration $minTime = null)
     {
         // Prevent to get 0s durations stored.
-        if (is_null($minTime) === false && $minTime->getSeconds(true) === 0) {
+        if ($minTime !== null && $minTime->getSeconds(true) === 0) {
             $minTime = null;
         }
 
@@ -127,7 +127,7 @@ class TimeLimits extends QtiComponent
     /**
      * Get the maximum time. Returns null if unlimited
      *
-     * @return Duration A Duration object or null if unlimited.
+     * @return QtiDuration A Duration object or null if unlimited.
      */
     public function getMaxTime()
     {
@@ -137,22 +137,22 @@ class TimeLimits extends QtiComponent
     /**
      * Whether a maxTime is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxTime()
     {
-        return !is_null($this->getMaxTime());
+        return $this->getMaxTime() !== null;
     }
 
     /**
      * Set the maximum time or null if unlimited.
      *
-     * @param Duration $maxTime A duration object or null if unlimited.
+     * @param QtiDuration $maxTime A duration object or null if unlimited.
      */
     public function setMaxTime(QtiDuration $maxTime = null)
     {
         // Prevent to get 0s durations stored.
-        if (is_null($maxTime) === false && $maxTime->getSeconds(true) === 0) {
+        if ($maxTime !== null && $maxTime->getSeconds(true) === 0) {
             $maxTime = null;
         }
 
@@ -160,10 +160,10 @@ class TimeLimits extends QtiComponent
     }
 
     /**
-     * Wether a candidate's response that is beyond the maxTime should be still
+     * Whether a candidate's response that is beyond the maxTime should be still
      * accepted.
      *
-     * @return boolean true if the candidate's response should still be accepted, false if not.
+     * @return bool true if the candidate's response should still be accepted, false if not.
      */
     public function doesAllowLateSubmission()
     {
@@ -171,10 +171,10 @@ class TimeLimits extends QtiComponent
     }
 
     /**
-     * Set wether a candidate's response that is beyond the maxTime should be still
+     * Set whether a candidate's response that is beyond the maxTime should be still
      * accepted.
      *
-     * @param boolean $allowLateSubmission true if the candidate's response should still be accepted, false if not.
+     * @param bool $allowLateSubmission true if the candidate's response should still be accepted, false if not.
      * @throws InvalidArgumentException If $allowLateSubmission is not a boolean.
      */
     public function setAllowLateSubmission($allowLateSubmission)
@@ -187,11 +187,17 @@ class TimeLimits extends QtiComponent
         }
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'timeLimits';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

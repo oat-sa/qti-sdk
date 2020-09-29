@@ -11,6 +11,9 @@ use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssociateInteractionMarshallerTest
+ */
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -48,7 +51,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociateInteraction', $component);
+        $this->assertInstanceOf(AssociateInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertTrue($component->hasPrompt());

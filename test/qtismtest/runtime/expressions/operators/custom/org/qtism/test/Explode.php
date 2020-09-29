@@ -9,8 +9,14 @@ use qtism\runtime\expressions\operators\CustomOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class Explode
+ */
 class Explode extends CustomOperatorProcessor
 {
+    /**
+     * @param OperandsCollection $operands
+     */
     public function setOperands(OperandsCollection $operands)
     {
         $count = count($operands);
@@ -26,6 +32,9 @@ class Explode extends CustomOperatorProcessor
         }
     }
 
+    /**
+     * @return array|OrderedContainer|string
+     */
     public function process()
     {
         $operands = $this->getOperands();

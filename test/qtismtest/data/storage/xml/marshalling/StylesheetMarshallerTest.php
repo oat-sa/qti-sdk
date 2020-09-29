@@ -3,9 +3,13 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\content\Stylesheet;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StylesheetMarshallerTest
+ */
 class StylesheetMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallOne()
@@ -23,7 +27,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('stylesheet', $element->nodeName);
         $this->assertEquals($uri, $element->getAttribute('href'));
         $this->assertEquals($type, $element->getAttribute('type'));
@@ -40,7 +44,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('stylesheet', $element->nodeName);
         $this->assertEquals($uri, $element->getAttribute('href'));
         $this->assertEquals('text/css', $element->getAttribute('type')); // default
@@ -57,7 +61,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\Stylesheet', $component);
+        $this->assertInstanceOf(Stylesheet::class, $component);
         $this->assertEquals($component->getHref(), 'http://myuri.com');
         $this->assertEquals($component->getTitle(), 'A pure stylesheet');
         $this->assertEquals($component->getMedia(), 'screen');

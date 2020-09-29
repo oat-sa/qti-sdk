@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\DurationLT;
 
 /**
@@ -50,20 +48,10 @@ use qtism\data\expressions\operators\DurationLT;
  */
 class DurationLTProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof DurationLT) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DurationLTProcessor class only processes DurationLT QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the DurationLT operator.
      *
-     * @return boolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
+     * @return QtiBoolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -75,15 +63,23 @@ class DurationLTProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The DurationLT operator only accepts operands with a single cardinality.";
+            $msg = 'The DurationLT operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyDuration() === false) {
-            $msg = "The DurationLT operator only accepts operands with a duration baseType.";
+            $msg = 'The DurationLT operator only accepts operands with a duration baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         return new QtiBoolean($operands[0]->shorterThan($operands[1]));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return DurationLT::class;
     }
 }

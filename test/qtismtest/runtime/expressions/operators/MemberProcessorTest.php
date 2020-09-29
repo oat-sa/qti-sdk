@@ -10,13 +10,18 @@ use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MemberProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MemberProcessorTest
+ */
 class MemberProcessorTest extends QtiSmTestCase
 {
     public function testMultiple()
@@ -83,7 +88,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::IDENTIFIER, [new QtiIdentifier('String2'), new QtiIdentifier('String1'), null]);
         $processor = new MemberProcessor($expression, $operands);
 
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -94,7 +99,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPair('A', 'B');
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
         $processor = new MemberProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -105,7 +110,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(13, 37)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
         $processor = new MemberProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -116,7 +121,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(13, 37);
         $operands[] = new RecordContainer(['key' => new QtiString('value')]);
         $processor = new MemberProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -125,7 +130,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
         $operands[] = new QtiPoint(13, 37);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new MemberProcessor($expression, $operands);
     }
 
@@ -136,7 +141,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(13, 37);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new MemberProcessor($expression, $operands);
     }
 
@@ -149,10 +154,13 @@ class MemberProcessorTest extends QtiSmTestCase
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertInstanceOf(QtiBoolean::class, $result);
         $this->assertTrue($result->getValue());
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

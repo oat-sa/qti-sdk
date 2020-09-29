@@ -141,7 +141,9 @@ class MediaInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -156,7 +158,9 @@ class MediaInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -174,20 +178,20 @@ class MediaInteractionRenderer extends InteractionRenderer
 
         $media = null;
 
-        if (in_array($component->getObject()->getType(), $this->getVideoTypes()) === true) {
+        if (in_array($component->getObject()->getType(), $this->getVideoTypes())) {
             // Transform the object element representing the video.
             $media = $fragment->ownerDocument->createElement('video');
             $source = $fragment->ownerDocument->createElement('source');
             $source->setAttribute('type', $component->getObject()->getType());
             $source->setAttribute('src', $component->getObject()->getData());
             $media->appendChild($source);
-        } elseif (in_array($component->getObject()->getType(), $this->getAudioTypes()) === true) {
+        } elseif (in_array($component->getObject()->getType(), $this->getAudioTypes())) {
             $media = $fragment->ownerDocument->createElement('audio');
             $source = $fragment->ownerDocument->createElement('source');
             $source->setAttribute('type', $component->getObject()->getType());
             $source->setAttribute('src', $component->getObject()->getData());
             $media->appendChild($source);
-        } elseif (in_array($component->getObject()->getType(), $this->getImageTypes()) === true) {
+        } elseif (in_array($component->getObject()->getType(), $this->getImageTypes())) {
             $media = $fragment->ownerDocument->createElement('img');
             $media->setAttribute('src', $component->getObject()->getData());
         }

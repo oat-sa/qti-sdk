@@ -15,6 +15,9 @@ use qtism\data\content\xhtml\text\P;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DivMarshallerTest
+ */
 class DivMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()
@@ -36,50 +39,50 @@ class DivMarshallerTest extends QtiSmTestCase
             </div>
         ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
         $this->assertEquals('main-container', $div->getId());
         $this->assertEquals('ui-pane', $div->getClass());
 
         $mainContainerContent = $div->getContent();
         $this->assertEquals(5, count($mainContainerContent));
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $mainContainerContent[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\Div', $mainContainerContent[1]);
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $mainContainerContent[2]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $mainContainerContent[3]);
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $mainContainerContent[4]);
+        $this->assertInstanceOf(TextRun::class, $mainContainerContent[0]);
+        $this->assertInstanceOf(Div::class, $mainContainerContent[1]);
+        $this->assertInstanceOf(TextRun::class, $mainContainerContent[2]);
+        $this->assertInstanceOf(Div::class, $mainContainerContent[3]);
+        $this->assertInstanceOf(TextRun::class, $mainContainerContent[4]);
 
         $menu = $mainContainerContent[1];
         $this->assertEquals('menu', $menu->getId());
         $menuContent = $menu->getContent();
         $this->assertEquals(3, count($menuContent));
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $menuContent[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\Ul', $menuContent[1]);
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $menuContent[2]);
+        $this->assertInstanceOf(TextRun::class, $menuContent[0]);
+        $this->assertInstanceOf(Ul::class, $menuContent[1]);
+        $this->assertInstanceOf(TextRun::class, $menuContent[2]);
 
         $list = $menuContent[1];
         $listContent = $list->getContent();
         $this->assertEquals(4, count($listContent));
 
         $li1 = $listContent[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\Li', $li1);
+        $this->assertInstanceOf(Li::class, $li1);
         $liContent = $li1->getContent();
         $this->assertEquals(1, count($liContent));
         $this->assertEquals('Start the Game', $liContent[0]->getContent());
 
         $li2 = $listContent[1];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\Li', $li2);
+        $this->assertInstanceOf(Li::class, $li2);
         $liContent = $li2->getContent();
         $this->assertEquals(1, count($liContent));
         $this->assertEquals('Configure Inputs', $liContent[0]->getContent());
 
         $li3 = $listContent[2];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\Li', $li3);
+        $this->assertInstanceOf(Li::class, $li3);
         $liContent = $li3->getContent();
         $this->assertEquals(1, count($liContent));
         $this->assertEquals('Hall of Fame', $liContent[0]->getContent());
 
         $li4 = $listContent[3];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\Li', $li4);
+        $this->assertInstanceOf(Li::class, $li4);
         $liContent = $li4->getContent();
         $this->assertEquals(1, count($liContent));
         $this->assertEquals('Quit', $liContent[0]->getContent());
@@ -88,11 +91,11 @@ class DivMarshallerTest extends QtiSmTestCase
         $this->assertEquals('content', $content->getId());
         $contentContent = $content->getContent();
         $this->assertEquals(5, count($contentContent));
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $contentContent[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H1', $contentContent[1]);
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $contentContent[2]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $contentContent[3]);
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $contentContent[4]);
+        $this->assertInstanceOf(TextRun::class, $contentContent[0]);
+        $this->assertInstanceOf(H1::class, $contentContent[1]);
+        $this->assertInstanceOf(TextRun::class, $contentContent[2]);
+        $this->assertInstanceOf(P::class, $contentContent[3]);
+        $this->assertInstanceOf(TextRun::class, $contentContent[4]);
 
         $h1 = $contentContent[1];
         $h1Content = $h1->getContent();

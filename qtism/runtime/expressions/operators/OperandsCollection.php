@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\collections\Stack;
 use qtism\common\datatypes\QtiBoolean;
@@ -48,30 +48,27 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * Check if $value is a QTI Runtime compliant value.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a QTI Runtime compliant value.
      */
     protected function checkType($value)
     {
-        if (RuntimeUtils::isRuntimeCompliant($value)) {
-            return;
-        } elseif ($value instanceof MultipleContainer || $value instanceof OrderedContainer || $value instanceof RecordContainer) {
-            return;
-        } else {
-            $value = (gettype($value) === 'object') ? get_class($value) : $value;
+        if (!RuntimeUtils::isRuntimeCompliant($value)) {
+            $value = (is_object($value)) ? get_class($value) : $value;
             $msg = "The OperandsCollection only accepts QTI Runtime compliant values, '" . $value . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * Wether the collection contains a QTI Runtime compliant value which is
+     * Whether the collection contains a QTI Runtime compliant value which is
      * considered to be NULL.
      *
      * * If the collection of operands is empty, true is returned.
      * * If the collection of operands contains null, an empty container, or an empty string, true is returned.
      * * In any other case, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsNull()
     {
@@ -79,7 +76,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if ($v instanceof Container && $v->isNull()) {
                 return true;
-            } elseif (($v instanceof QtiString && $v->getValue() === '') || is_null($v)) {
+            } elseif (($v instanceof QtiString && $v->getValue() === '') || $v === null) {
                 return true;
             }
         }
@@ -97,7 +94,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection contains a container with cardinality RECORD, it is not considered exclusively numeric.
      * * If the the current OperandsCollection is empty, false is returned.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function exclusivelyNumeric()
     {
@@ -118,14 +115,14 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains exclusively boolean values or containers.
+     * Whether the collection contains exclusively boolean values or containers.
      *
      * * If the collection of operands is empty, false is returned.
      * * If the collection of operands contains a NULL value or a NULL container, false is returned.
      * * If the collection of operands contains a value or container which is not boolean, false is returned.
      * * If the collection of operands contains a RECORD container, false is returned, because records are not typed.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyBoolean()
     {
@@ -146,10 +143,10 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains exclusively single cardinality values. If the container
+     * Whether the collection contains exclusively single cardinality values. If the container
      * is empty or contains a null value, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelySingle()
     {
@@ -159,7 +156,7 @@ class OperandsCollection extends AbstractCollection implements Stack
 
         foreach (array_keys($this->getDataPlaceHolder()) as $key) {
             $v = $this[$key];
-            if (is_null($v) || $v instanceof Container) {
+            if ($v === null || $v instanceof Container) {
                 return false;
             }
         }
@@ -177,7 +174,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the collection contains a container with cardinality RECORD, it is not considered exclusively string.
      * * If the the current OperandsCollection is empty, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyString()
     {
@@ -200,7 +197,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * Whether the collection contains only MultipleContainer OR OrderedContainer.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyMultipleOrOrdered()
     {
@@ -226,7 +223,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * Only integer primitives and non-NULL Multiple/OrderedContainer objects are considered valid integers.
      * * If the the current OperandsCollection is empty, false is returned.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function exclusivelyInteger()
     {
@@ -247,14 +244,14 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains only Single primitive values or MultipleContainer objects.
+     * Whether the collection contains only Single primitive values or MultipleContainer objects.
      *
      * * If the collection of operands is empty, false is returned.
      * * If the collection of operands contains a RecordContainer object, false is returned.
      * * If the collection of operands contains an OrderedContainer object, false is returned.
      * * In any other case, true is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelySingleOrMultiple()
     {
@@ -274,14 +271,14 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains only Single primitive values or OrderedContainer objects.
+     * Whether the collection contains only Single primitive values or OrderedContainer objects.
      *
      * * If the collection of operands is empty, false is returned.
      * * If the collection of operands contains a RecordContainer object, false is returned.
      * * If the collection of operands contains a MultipleContainer object, false is returned.
      * * In any other case, true is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelySingleOrOrdered()
     {
@@ -307,7 +304,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * Returns false if any of the value contained in the collection of operands is not a RecordContainer object.
      * * In any other case, returns true;
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyRecord()
     {
@@ -326,13 +323,13 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection contains exclusively OrderedContainer objects.
+     * Whether the collection contains exclusively OrderedContainer objects.
      *
      * * Returns false if the collection of operands is empty.
      * * Returns false if any of the value contained in the collection of operands is not an OrderedContainer object.
      * * Returns true in any other case.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyOrdered()
     {
@@ -353,7 +350,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * Whether the collection contains anything but a RecordContainer object.
      *
-     * @return boolean
+     * @return bool
      */
     public function anythingButRecord()
     {
@@ -375,7 +372,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * * If the OperandsCollection contains a value considered to be null, false is returned.
      * * If the OperandsCollection is composed exclusively by non-null RecordContainer objects, true is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function sameBaseType()
     {
@@ -402,13 +399,13 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wether the collection is composed of values with the same cardinality. Please
+     * Whether the collection is composed of values with the same cardinality. Please
      * note that:
      *
      * * If the OperandsCollection is empty, false is returned.
      * * If the OperandsCollection contains a NULL value or a NULL container (empty), false is returned
      *
-     * @return boolean
+     * @return bool
      */
     public function sameCardinality()
     {
@@ -429,13 +426,13 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wheter the collection of operands is composed exclusively of Point objects or Container objects
+     * Whether the collection of operands is composed exclusively of Point objects or Container objects
      * with a point baseType.
      *
      * If the collection of operands contains something other than a Point object or a null Container object
      * with baseType point, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyPoint()
     {
@@ -456,13 +453,13 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * Wheter the collection of operands is composed exclusively of Duration objects or Container objects
+     * Whether the collection of operands is composed exclusively of Duration objects or Container objects
      * with a duration baseType.
      *
      * If the collection of operands contains something other than a Duration object or a null Container object
      * with baseType duration, false is returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function exclusivelyDuration()
     {
@@ -483,7 +480,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * @see \qtism\common\collections\Stack::push()
+     * @param mixed $value
      */
     public function push($value)
     {
@@ -494,16 +491,17 @@ class OperandsCollection extends AbstractCollection implements Stack
     }
 
     /**
-     * @see \qtism\common\collections\Stack::pop()
+     * @param int $count
+     * @return array|OperandsCollection
      */
     public function pop($count = 1)
     {
         $data = &$this->getDataPlaceHolder();
         if ($count === 1) {
-            return new OperandsCollection([array_pop($data)]);
+            return new self([array_pop($data)]);
         }
 
-        $returnValue = new OperandsCollection();
+        $returnValue = new self();
         $opCount = count($data);
         $i = $opCount - $count;
         while ($i < $opCount) {

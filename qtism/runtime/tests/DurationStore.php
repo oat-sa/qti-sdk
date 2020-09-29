@@ -41,6 +41,7 @@ class DurationStore extends State
      * * has a 'duration' QTI baseType.
      * * has 'single' QTI cardinality.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If one or more of the conditions above are not respected.
      */
     protected function checkType($value)

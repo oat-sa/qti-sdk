@@ -5,13 +5,22 @@ namespace qtismtest\data;
 use qtism\data\View;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class ViewTest
+ */
 class ViewTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return View::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -24,6 +33,9 @@ class ViewTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -36,6 +48,9 @@ class ViewTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

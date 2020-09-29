@@ -49,22 +49,6 @@ use qtism\runtime\expressions\ExpressionEngine;
 class SetOutcomeValueProcessor extends RuleProcessor
 {
     /**
-     * Set the SetOutcomeValue object to be processed.
-     *
-     * @param Rule $rule A SetOutcomeValue object.
-     * @throws InvalidArgumentException If $rule is not a SetOutcomeValue object.
-     */
-    public function setRule(Rule $rule)
-    {
-        if ($rule instanceof SetOutcomeValue) {
-            parent::setRule($rule);
-        } else {
-            $msg = "The SetOutcomeValueProcessor only accepts SetOutcomeValue objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
      * Process the setOutcomeValue rule.
      *
      * A RuleProcessingException will be thrown if:
@@ -83,14 +67,12 @@ class SetOutcomeValueProcessor extends RuleProcessor
         $identifier = $rule->getIdentifier();
         $var = $state->getVariable($identifier);
 
-        if (is_null($var) === true) {
+        if ($var === null) {
             $msg = "No variable with identifier '${identifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
-        } else {
-            if (!$var instanceof OutcomeVariable) {
-                $msg = "The variable to set '${identifier}' is not an OutcomeVariable.";
-                throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
-            }
+        } elseif (!$var instanceof OutcomeVariable) {
+            $msg = "The variable to set '${identifier}' is not an OutcomeVariable.";
+            throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
         }
 
         // Process the expression.
@@ -99,7 +81,7 @@ class SetOutcomeValueProcessor extends RuleProcessor
             $expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
             $val = $expressionEngine->process();
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound with the setOutcomeValue rule.";
+            $msg = 'An error occurred while processing the expression bound with the setOutcomeValue rule.';
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
 
@@ -115,11 +97,9 @@ class SetOutcomeValueProcessor extends RuleProcessor
                 }
 
                 if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
-                    $val = new QtiInteger(intval($val->getValue()));
-                } else {
-                    if ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
-                        $val = new QtiFloat(floatval($val->getValue()));
-                    }
+                    $val = new QtiInteger((int)$val->getValue());
+                } elseif ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
+                    $val = new QtiFloat((float)$val->getValue());
                 }
             }
 
@@ -131,5 +111,13 @@ class SetOutcomeValueProcessor extends RuleProcessor
             $msg = "Unable to set value ${val} to variable '${identifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRuleType()
+    {
+        return SetOutcomeValue::class;
     }
 }

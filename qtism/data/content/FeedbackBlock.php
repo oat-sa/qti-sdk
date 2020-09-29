@@ -25,6 +25,7 @@ namespace qtism\data\content;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 
 /**
@@ -32,13 +33,7 @@ use qtism\data\ShowHide;
  */
 class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, FeedbackElement
 {
-    /**
-     * The base URI.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The components composing the FeedbackBlock content.
@@ -71,7 +66,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      * default and hidden if the associated outcome variable matches, or contains,
      * the value of the identifier attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
@@ -92,7 +87,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @param string $outcomeIdentifier The identifier of an outcome variable controlling the visibility of the feedbackElement.
      * @param string $identifier The identifier value that determines the visibility of the feedbackElement in conjunction with $showHide.
-     * @param integer $showHide A values of the ShowHide enumeration that determines hot the visibility of the feedbackElement is controlled.
+     * @param int $showHide A values of the ShowHide enumeration that determines hot the visibility of the feedbackElement is controlled.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class(es) of the bodyElement. If multiple classes, separate them with whitespaces (' ').
      * @param string $lang The language of the bodyElement.
@@ -139,11 +134,11 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      * and shown only if the outcome variable has the correct value. If set to ShowHide::hide, the feedback is shown by default
      * and hidden if the outcome variable has the correct value.
      *
-     * @param integer A value from the ShowHide enumeration.
+     * @param int A value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray(), true) === true) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration, '" . $showHide . "' given.";
@@ -154,7 +149,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
     /**
      * Get how the visibility of the feedbackElement is controlled.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {
@@ -207,49 +202,19 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
         return $this->content;
     }
 
+    /**
+     * @return FlowCollection|QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'feedbackBlock';
-    }
-
-    /**
-     * Set the base URI of the TemplateBlock.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'base' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the TemplateBlock.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-     * Whether a value is defined for the base URI of the TemplateBlock.
-     *
-     * @return boolean
-     */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 }

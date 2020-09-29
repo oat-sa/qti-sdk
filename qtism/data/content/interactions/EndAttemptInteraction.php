@@ -60,7 +60,6 @@ class EndAttemptInteraction extends InlineInteraction
     private $title;
 
     /**
-     *
      * @param string $responseIdentifier The identifier of the associated response variable.
      * @param string $title The title to be displayed to the candidate as a prompt for ending the attempt.
      * @param string $id The id of the bodyElement.
@@ -84,7 +83,7 @@ class EndAttemptInteraction extends InlineInteraction
      */
     public function setTitle($title)
     {
-        if (is_string($title) === true && empty($title) === false) {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "The 'title' argument must be a string, '" . gettype($title) . "' given.";
@@ -104,7 +103,7 @@ class EndAttemptInteraction extends InlineInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -112,7 +111,7 @@ class EndAttemptInteraction extends InlineInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -6,10 +6,12 @@ use DOMDocument;
 use qtism\data\storage\xml\Utils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlUtilsTest
+ */
 class XmlUtilsTest extends QtiSmTestCase
 {
     /**
-     *
      * @param string $originalXmlString
      * @param string $expectedXmlString
      * @dataProvider anonimizeElementProvider
@@ -22,6 +24,9 @@ class XmlUtilsTest extends QtiSmTestCase
         $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
     }
 
+    /**
+     * @return array
+     */
     public function anonimizeElementProvider()
     {
         return [
@@ -47,7 +52,7 @@ class XmlUtilsTest extends QtiSmTestCase
      *
      * @param string $file
      * @param string $namespaceUri
-     * @param boolean|string $expectedLocation
+     * @param bool|string $expectedLocation
      */
     public function testGetXsdLocation($file, $namespaceUri, $expectedLocation)
     {
@@ -58,6 +63,9 @@ class XmlUtilsTest extends QtiSmTestCase
         $this->assertSame($expectedLocation, $location);
     }
 
+    /**
+     * @return array
+     */
     public function getXsdLocationProvider()
     {
         return [

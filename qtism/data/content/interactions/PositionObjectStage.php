@@ -25,7 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\Block;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -40,7 +40,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * The image to be used as a stage onto which individual positionObjectInteractions
      * allow the candidate to place their objects.
      *
-     * @var Object
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -56,10 +56,10 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Set the image to be used as a stage.
      *
-     * @param Object $object An Object object.
+     * @param ObjectElement $object An ObjectElement object.
      * @qtism-bean-property
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
@@ -67,7 +67,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Get the image to be used as a stage.
      *
-     * @return Object An Object object.
+     * @return ObjectElement An ObjectElement object.
      * @qtism-bean-property
      */
     public function getObject()
@@ -78,10 +78,10 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * Create a new PositionObjectStage object.
      *
-     * @param Object $object The image to be used as a stage.
+     * @param ObjectElement $object The image to be used as a stage.
      * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
      */
-    public function __construct(QtiObject $object, PositionObjectInteractionCollection $positionObjectInteractions)
+    public function __construct(ObjectElement $object, PositionObjectInteractionCollection $positionObjectInteractions)
     {
         $this->setObject($object);
         $this->setPositionObjectInteractions($positionObjectInteractions);
@@ -98,7 +98,7 @@ class PositionObjectStage extends QtiComponent implements Block
         if (count($positionObjectInteractions) > 0) {
             $this->positionObjectInteractions = $positionObjectInteractions;
         } else {
-            $msg = "A PositionObjectStage object must be composed of at least 1 PositionObjectInteraction object, none given.";
+            $msg = 'A PositionObjectStage object must be composed of at least 1 PositionObjectInteraction object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -114,7 +114,7 @@ class PositionObjectStage extends QtiComponent implements Block
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -122,7 +122,7 @@ class PositionObjectStage extends QtiComponent implements Block
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -39,6 +39,8 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      *
      * @param QtiComponent $component
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -60,8 +62,8 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $element->appendChild($respProcElt);
         }
 
-        self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
-        self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+        $this->setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
+        $this->setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
 
         return $element;
     }
@@ -72,6 +74,8 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      *
      * @param DOMElement $element
      * @return ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -92,7 +96,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setCategories($baseComponent->getCategories());
 
         // ResponseDeclarations.
-        $responseDeclarationElts = self::getChildElementsByTagName($element, 'responseDeclaration');
+        $responseDeclarationElts = $this->getChildElementsByTagName($element, 'responseDeclaration');
         $responseDeclarations = new ResponseDeclarationCollection();
         foreach ($responseDeclarationElts as $responseDeclarationElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseDeclarationElt);
@@ -101,7 +105,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setResponseDeclarations($responseDeclarations);
 
         // OutcomeDeclarations.
-        $outcomeDeclarationElts = self::getChildElementsByTagName($element, 'outcomeDeclaration');
+        $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
         $outcomeDeclarations = new OutcomeDeclarationCollection();
         foreach ($outcomeDeclarationElts as $outcomeDeclarationElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclarationElt);
@@ -110,17 +114,17 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setOutcomeDeclarations($outcomeDeclarations);
 
         // ResponseProcessing.
-        $responseProcessingElts = self::getChildElementsByTagName($element, 'responseProcessing');
+        $responseProcessingElts = $this->getChildElementsByTagName($element, 'responseProcessing');
         if (count($responseProcessingElts) === 1) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
             $compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
         }
 
-        if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+        if (($adaptive = $this->getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);
         }
 
-        if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
+        if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
             $compactAssessmentItemRef->setTimeDependent($timeDependent);
         } else {
             $msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->localName . "'.";

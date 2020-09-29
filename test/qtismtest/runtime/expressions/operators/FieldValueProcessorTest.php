@@ -5,19 +5,24 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\FieldValueProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class FieldValueProcessorTest
+ */
 class FieldValueProcessorTest extends QtiSmTestCase
 {
     public function testNotEnoughOperands()
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
     }
 
@@ -27,7 +32,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new RecordContainer();
         $operands[] = new RecordContainer();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
     }
 
@@ -49,7 +54,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         // null value as operand.
         $operands[] = null;
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
         $result = $processor->process();
     }
@@ -61,7 +66,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10);
         $processor = new FieldValueProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -72,7 +77,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiPoint(1, 2);
         $processor = new FieldValueProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -84,7 +89,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
 
         // Wrong container (Multiple, Ordered)
         $processor = new FieldValueProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -105,6 +110,10 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $result);
     }
 
+    /**
+     * @param string $identifier
+     * @return QtiComponent
+     */
     public function createFakeExpression($identifier = '')
     {
         // The following XML Component creation

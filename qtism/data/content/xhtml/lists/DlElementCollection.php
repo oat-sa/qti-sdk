@@ -41,7 +41,7 @@ class DlElementCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof DlElement) {
-            $msg = "DlElementCollection objects only accept to store DlElement objects.";
+            $msg = 'DlElementCollection objects only accept to store DlElement objects.';
             throw new InvalidArgumentException($msg);
         }
     }

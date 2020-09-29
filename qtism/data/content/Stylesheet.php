@@ -108,7 +108,7 @@ class Stylesheet extends QtiComponent
      */
     public function setHref($href)
     {
-        if (gettype($href) === 'string') {
+        if (is_string($href)) {
             $this->href = $href;
         } else {
             $msg = "Href must be a string, '" . gettype($href) . "' given.";
@@ -134,7 +134,7 @@ class Stylesheet extends QtiComponent
      */
     public function setType($type)
     {
-        if (gettype($type) === 'string') {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "Type must be a string, '" . gettype($type) . "' given.";
@@ -171,7 +171,7 @@ class Stylesheet extends QtiComponent
     /**
      * Whether a value is defined for the media attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMedia()
     {
@@ -196,7 +196,7 @@ class Stylesheet extends QtiComponent
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";
@@ -207,18 +207,24 @@ class Stylesheet extends QtiComponent
     /**
      * Whether a value is defined for the title attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTitle()
     {
         return $this->getTitle() !== '';
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'stylesheet';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();

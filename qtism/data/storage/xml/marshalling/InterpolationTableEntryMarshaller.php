@@ -41,7 +41,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
      * Get the baseType of the variableDeclaration that contains
      * the interpolationTableEntry to marshall.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -60,7 +60,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType attribute must be a value from the BaseType enumeration.";
+            $msg = 'The baseType attribute must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -68,7 +68,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
     /**
      * Create a new instance of InterpolationTableEntryMarshaller.
      *
-     * @param string $version
+     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
      * @param int $baseType The baseType of the variableDeclaration containing the InterpolationTableEntry to unmarshall.
      */
     public function __construct($version, $baseType = -1)
@@ -87,9 +87,9 @@ class InterpolationTableEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
-        self::setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
-        self::setDOMElementAttribute($element, 'includeBoundary', $component->doesIncludeBoundary());
+        $this->setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
+        $this->setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
+        $this->setDOMElementAttribute($element, 'includeBoundary', $component->doesIncludeBoundary());
 
         return $element;
     }
@@ -103,11 +103,11 @@ class InterpolationTableEntryMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($sourceValue = static::getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
-            if (($targetValue = static::getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
+        if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
+            if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
                 $object = new InterpolationTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()));
 
-                if (($includeBoundary = static::getDOMElementAttributeAs($element, 'includeBoundary', 'boolean')) !== null) {
+                if (($includeBoundary = $this->getDOMElementAttributeAs($element, 'includeBoundary', 'boolean')) !== null) {
                     $object->setIncludeBoundary($includeBoundary);
                 }
 
@@ -120,7 +120,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

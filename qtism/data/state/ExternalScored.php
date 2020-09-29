@@ -26,6 +26,9 @@ namespace qtism\data\state;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * Class ExternalScored
+ */
 class ExternalScored implements Enumeration
 {
     const HUMAN = 1;
@@ -39,10 +42,10 @@ class ExternalScored implements Enumeration
      */
     public static function asArray()
     {
-        return array(
+        return [
             'HUMAN' => self::HUMAN,
             'EXTERNAL_MACHINE' => self::EXTERNAL_MACHINE,
-        );
+        ];
     }
 
     /**

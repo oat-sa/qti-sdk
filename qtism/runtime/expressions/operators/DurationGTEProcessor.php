@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\DurationGTE;
 
 /**
@@ -43,20 +41,10 @@ use qtism\data\expressions\operators\DurationGTE;
  */
 class DurationGTEProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof DurationGTE) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DurationGTEProcessor class only processes DurationGTE QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the DurationGTE operator.
      *
-     * @return boolean|null A boolean with a value of true if the first duration is longer or equal to the second, otherwise false. If either sub-expression is NULL, the result of the operator is NULL.
+     * @return QtiBoolean|null A boolean with a value of true if the first duration is longer or equal to the second, otherwise false. If either sub-expression is NULL, the result of the operator is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -68,15 +56,23 @@ class DurationGTEProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The DurationGTE operator only accepts operands with a single cardinality.";
+            $msg = 'The DurationGTE operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyDuration() === false) {
-            $msg = "The DurationGTE operator only accepts operands with a duration baseType.";
+            $msg = 'The DurationGTE operator only accepts operands with a duration baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         return new QtiBoolean($operands[0]->longerThanOrEquals($operands[1]));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return DurationGTE::class;
     }
 }

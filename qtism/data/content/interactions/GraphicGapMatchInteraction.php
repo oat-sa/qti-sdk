@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -76,7 +77,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * Create a new GraphicGapMatchInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
-     * @param Object $object An image as an Object object.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param GapImgCollection $gapImgs A collection of GapImg objects.
      * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.
@@ -85,7 +86,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setGapImgs($gapImgs);
@@ -103,7 +104,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         if (count($gapImgs) > 0) {
             $this->gapImgs = $gapImgs;
         } else {
-            $msg = "A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.";
+            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -129,7 +130,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
         } else {
-            $msg = "A GraphicGapMatch interaction must be composed of at least 1 AssociableHotspot object, none given.";
+            $msg = 'A GraphicGapMatch interaction must be composed of at least 1 AssociableHotspot object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -145,7 +146,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -159,7 +160,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

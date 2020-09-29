@@ -51,7 +51,7 @@ class AnyN extends Operator
      *
      * The minimum number of sub-expressions that must be true.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $min;
@@ -61,7 +61,7 @@ class AnyN extends Operator
      *
      * The maximum number of sub-expressions that may be true.
      *
-     * @var string|integer
+     * @var string|int
      * @qtism-bean-property
      */
     private $max;
@@ -70,8 +70,8 @@ class AnyN extends Operator
      * Create a new instance of AnyN.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param string|integer $min An integer or a variable reference.
-     * @param string|integer $max An integer or a variable reference.
+     * @param string|int $min An integer or a variable reference.
+     * @param string|int $max An integer or a variable reference.
      */
     public function __construct(ExpressionCollection $expressions, $min, $max)
     {
@@ -83,12 +83,12 @@ class AnyN extends Operator
     /**
      * Set the min attribute.
      *
-     * @param string|integer $min An integer or a variable reference.
+     * @param string|int $min An integer or a variable reference.
      * @throws InvalidArgumentException If $min is not an integer nor a variable reference.
      */
     public function setMin($min)
     {
-        if (is_int($min) || (gettype($min) === 'string' && Format::isVariableRef($min))) {
+        if (is_int($min) || (is_string($min) && Format::isVariableRef($min))) {
             $this->min = $min;
         } else {
             $msg = "The min attribute must be an integer or a variable reference, '" . $min . "' given.";
@@ -99,7 +99,7 @@ class AnyN extends Operator
     /**
      * Get the min attribute.
      *
-     * @return string|integer An integer or a variable reference.
+     * @return string|int An integer or a variable reference.
      */
     public function getMin()
     {
@@ -109,12 +109,12 @@ class AnyN extends Operator
     /**
      * Set the max attribute.
      *
-     * @param string|integer $max An integer or a variable reference.
+     * @param string|int $max An integer or a variable reference.
      * @throws InvalidArgumentException If $max is not an integer nor a variable reference.
      */
     public function setMax($max)
     {
-        if (is_int($max) || (gettype($max) === 'string' && Format::isVariableRef($max))) {
+        if (is_int($max) || (is_string($max) && Format::isVariableRef($max))) {
             $this->max = $max;
         } else {
             $msg = "The max attribute must be an integer or a variable reference, '" . $max . "' given.";
@@ -125,7 +125,7 @@ class AnyN extends Operator
     /**
      * Get the max attribute.
      *
-     * @return string|integer An integer or a variable reference.
+     * @return string|int An integer or a variable reference.
      */
     public function getMax()
     {
@@ -133,7 +133,7 @@ class AnyN extends Operator
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

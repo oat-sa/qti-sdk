@@ -33,6 +33,9 @@ use qtism\data\storage\xml\XmlResultDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlResultDocumentTest
+ */
 class XmlResultDocumentTest extends QtiSmTestCase
 {
     public function testLoad()
@@ -71,10 +74,8 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
     public function testLoadMissingData()
     {
-        $this->setExpectedExceptionRegExp(
-            XmlStorageException::class,
-            '/^The document could not be validated with XML Schema/'
-        );
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessageRegExp('/^The document could not be validated with XML Schema/');
 
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-data.xml', true);
@@ -109,6 +110,9 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $xmlDoc->getVersion());
     }
 
+    /**
+     * @return array
+     */
     public function inferVersionAndSchemaValidateProvider(): array
     {
         return [

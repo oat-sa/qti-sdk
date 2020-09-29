@@ -3,25 +3,29 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\StringMatch;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StringMatchMarshallerTest
+ */
 class StringMatchMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
         $subs = new ExpressionCollection();
-        $subs[] = new BaseValue(BaseType::STRING, "hell");
-        $subs[] = new BaseValue(BaseType::STRING, "hello");
+        $subs[] = new BaseValue(BaseType::STRING, 'hell');
+        $subs[] = new BaseValue(BaseType::STRING, 'hello');
 
         $component = new StringMatch($subs, false);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('stringMatch', $element->nodeName);
         $this->assertEquals('false', $element->getAttribute('caseSensitive'));
         $this->assertEquals('false', $element->getAttribute('substring'));
@@ -44,7 +48,7 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\StringMatch', $component);
+        $this->assertInstanceOf(StringMatch::class, $component);
         $this->assertInternalType('boolean', $component->isCaseSensitive());
         $this->assertTrue($component->isCaseSensitive());
         $this->assertInternalType('boolean', $component->mustSubstring());

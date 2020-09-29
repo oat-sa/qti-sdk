@@ -35,10 +35,10 @@ use qtism\data\content\SimpleInline;
 class Acronym extends SimpleInline
 {
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
-        return 'accronym';
+        return 'acronym';
     }
 }

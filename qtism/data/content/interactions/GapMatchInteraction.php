@@ -50,7 +50,7 @@ class GapMatchInteraction extends BlockInteraction
      * the order in which the choices (not the gaps) are initially presented,
      * subject to the value of the fixed attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -102,12 +102,12 @@ class GapMatchInteraction extends BlockInteraction
      * Set whether the delivery engine must randomize the order in which the choices (not
      * the gaps) are initially presented.
      *
-     * @param boolean $shuffle A boolean value.
+     * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -119,7 +119,7 @@ class GapMatchInteraction extends BlockInteraction
      * Whether the delivery engine must randomize the order in which the choices (not
      * the gaps) are initially presented.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -137,7 +137,7 @@ class GapMatchInteraction extends BlockInteraction
         if (count($gapChoices) > 0) {
             $this->gapChoices = $gapChoices;
         } else {
-            $msg = "A GapMatchInteraction object must be composed of at least one GapChoice object, none given.";
+            $msg = 'A GapMatchInteraction object must be composed of at least one GapChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -163,7 +163,7 @@ class GapMatchInteraction extends BlockInteraction
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "A GapMatchInteraction object must be composed of at lease one BlockStatic object, none given.";
+            $msg = 'A GapMatchInteraction object must be composed of at lease one BlockStatic object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -179,7 +179,7 @@ class GapMatchInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -189,7 +189,7 @@ class GapMatchInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -35,12 +35,16 @@ use qtism\data\QtiComponentCollection;
 class GapMatchInteractionMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $gapChoiceElts = self::getChildElementsByTagName($element, ['gapText', 'gapImg']);
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            $gapChoiceElts = $this->getChildElementsByTagName($element, ['gapText', 'gapImg']);
             if (count($gapChoiceElts) > 0) {
                 $gapChoices = new GapChoiceCollection();
                 foreach ($gapChoiceElts as $g) {
@@ -50,12 +54,12 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
                 $fqClass = $this->lookupClass($element);
                 $component = new $fqClass($responseIdentifier, $gapChoices, new BlockStaticCollection($children->getArrayCopy()));
 
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) === 1) {
                     $component->setPrompt($this->getMarshallerFactory()->createMarshaller($promptElts[0])->unmarshall($promptElts[0]));
                 }
 
-                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+                if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                     $component->setShuffle($shuffle);
                 }
 
@@ -77,16 +81,20 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->fillElement($element, $component);
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->mustShuffle() === true) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
+            $this->setDOMElementAttribute($element, 'shuffle', true);
         }
 
         if ($component->hasXmlBase() === true) {
@@ -108,9 +116,6 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

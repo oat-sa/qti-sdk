@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -13,7 +14,11 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\IndexProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IndexProcessorTest
+ */
 class IndexProcessorTest extends QtiSmTestCase
 {
     public function testIndexNumeric()
@@ -68,7 +73,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $state = new State();
         $state->setVariable(new OutcomeVariable('variableXXX', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(3)));
         $processor->setState($state);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -82,7 +87,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $state = new State();
         $state->setVariable(new OutcomeVariable('variable1', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(1, 2)));
         $processor->setState($state);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -93,7 +98,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $processor = new IndexProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -114,7 +119,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $processor = new IndexProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -132,7 +137,7 @@ class IndexProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new IndexProcessor($expression, $operands);
     }
 
@@ -142,10 +147,14 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new IndexProcessor($expression, $operands);
     }
 
+    /**
+     * @param int $n
+     * @return QtiComponent
+     */
     public function createFakeExpression($n = -1)
     {
         if ($n === -1) {

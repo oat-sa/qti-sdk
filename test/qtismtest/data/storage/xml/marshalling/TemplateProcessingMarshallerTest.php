@@ -14,6 +14,9 @@ use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateProcessingMarshallerTest
+ */
 class TemplateProcessingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -54,17 +57,17 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateProcessing = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\processing\\TemplateProcessing', $templateProcessing);
+        $this->assertInstanceOf(TemplateProcessing::class, $templateProcessing);
         $templateRules = $templateProcessing->getTemplateRules();
         $this->assertEquals(3, count($templateRules));
 
         $templateConstraint = $templateRules[0];
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateConstraint', $templateConstraint);
+        $this->assertInstanceOf(TemplateConstraint::class, $templateConstraint);
 
         $templateCondition = $templateRules[1];
-        $this->assertInstanceOf('qtism\\data\\rules\\TemplateCondition', $templateCondition);
+        $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
 
         $exitTemplate = $templateRules[2];
-        $this->assertInstanceOf('qtism\\data\\rules\\ExitTemplate', $exitTemplate);
+        $this->assertInstanceOf(ExitTemplate::class, $exitTemplate);
     }
 }

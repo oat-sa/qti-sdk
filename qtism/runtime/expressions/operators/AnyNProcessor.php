@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\AnyN;
 use qtism\runtime\expressions\Utils;
 
@@ -50,20 +48,10 @@ use qtism\runtime\expressions\Utils;
  */
 class AnyNProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof AnyN) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The AnyNProcessor class only processes AnyN QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the AnyN processor.
      *
-     * @return boolean|null A boolean value of true if at least min of the sub-expressions are true and at most max of the sub-expressions are true. NULL is returned if the correct value for the operator cannot be determined.
+     * @return QtiBoolean|null A boolean value of true if at least min of the sub-expressions are true and at most max of the sub-expressions are true. NULL is returned if the correct value for the operator cannot be determined.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -76,13 +64,13 @@ class AnyNProcessor extends OperatorProcessor
 
         // @todo write a generic method to retrieve variable references.
 
-        if (is_string($min) === true) {
+        if (is_string($min)) {
             // variable reference for 'min' to handle.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($min);
             $varValue = $state[$varName];
 
-            if (is_null($varValue)) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved or is null.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -93,13 +81,13 @@ class AnyNProcessor extends OperatorProcessor
             }
         }
 
-        if (is_string($max) === true) {
+        if (is_string($max)) {
             // variable reference for 'max' to handle.
             $state = $this->getState();
             $varName = Utils::sanitizeVariableRef($max);
             $varValue = $state[$varName];
 
-            if (is_null($varValue)) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved or is null.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -114,7 +102,7 @@ class AnyNProcessor extends OperatorProcessor
         $trueCount = 0;
 
         foreach ($operands as $operand) {
-            if (is_null($operand)) {
+            if ($operand === null) {
                 $nullCount++;
                 continue;
             } elseif ($operand instanceof QtiBoolean) {
@@ -123,21 +111,26 @@ class AnyNProcessor extends OperatorProcessor
                 }
             } else {
                 // Not null, not a boolean, we have a problem...
-                $msg = "The AnyN operator only accepts values with cardinality single and baseType boolean.";
+                $msg = 'The AnyN operator only accepts values with cardinality single and baseType boolean.';
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE_OR_CARDINALITY);
             }
         }
 
         if ($trueCount >= $min && $trueCount <= $max) {
             return new QtiBoolean(true);
+        } elseif ($trueCount + $nullCount >= $min && $trueCount + $nullCount <= $max) {
+            // It could have match if nulls were true values.
+            return null;
         } else {
-            // Should we return false or null?
-            if ($trueCount + $nullCount >= $min && $trueCount + $nullCount <= $max) {
-                // It could have match if nulls were true values.
-                return null;
-            } else {
-                return new QtiBoolean(false);
-            }
+            return new QtiBoolean(false);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return AnyN::class;
     }
 }

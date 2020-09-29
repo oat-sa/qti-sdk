@@ -47,8 +47,8 @@ class InterpolationTableMarshaller extends Marshaller
      * needs to know the baseType of the variableDeclaration that contains the interpolationTable,
      * a $baseType can be passed as an argument for instantiation.
      *
-     * @param $version
-     * @param integer $baseType A value from the BaseType enumeration or -1.
+     * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
+     * @param int $baseType A value from the BaseType enumeration or -1.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
     public function __construct($version, $baseType = -1)
@@ -62,15 +62,15 @@ class InterpolationTableMarshaller extends Marshaller
      * to marshall is contained. Set to -1 if no baseType found for the related
      * variableDeclaration.
      *
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
     public function setBaseType($baseType)
     {
-        if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
+        if (in_array($baseType, BaseType::asArray(), true) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The BaseType attribute must be a value from the BaseType enumeration.";
+            $msg = 'The BaseType attribute must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -80,7 +80,7 @@ class InterpolationTableMarshaller extends Marshaller
      * to marshall is contained. It returns -1 if no baseType found for the related
      * variableDeclaration.
      *
-     * @return integer A value from the BaseType enumeration or -1 if no baseType found for the related variableDeclaration.
+     * @return int A value from the BaseType enumeration or -1 if no baseType found for the related variableDeclaration.
      */
     public function getBaseType()
     {
@@ -92,6 +92,8 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param QtiComponent $component An InterpolationTable object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -102,7 +104,7 @@ class InterpolationTableMarshaller extends Marshaller
         }
 
         if ($component->getDefaultValue() !== null) {
-            static::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+            $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
         }
 
         return $element;
@@ -113,6 +115,7 @@ class InterpolationTableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An InterpolationTable object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If $element does not contain any interpolationTableEntry QTI elements.
      */
     protected function unmarshall(DOMElement $element)
@@ -128,7 +131,7 @@ class InterpolationTableMarshaller extends Marshaller
 
             $object = new InterpolationTable($interpolationTableEntryCollection);
 
-            if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+            if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
                 try {
                     $object->setDefaultValue(Utils::stringToDatatype($defaultValue, $this->getBaseType()));
                 } catch (InvalidArgumentException $e) {
@@ -146,7 +149,7 @@ class InterpolationTableMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

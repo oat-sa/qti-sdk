@@ -32,11 +32,11 @@ use Exception;
 class StorageException extends Exception
 {
     /**
-     * The error code to be used when the nature of the error
-     * is unknown. Should be used in absolute necessity. Otherwise,
-     * use the appropriate error code.
+     * The error code to be used when the nature of the error is unknown.
+     * Should be used in absolute necessity. Otherwise, use the appropriate
+     * error code.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -44,35 +44,31 @@ class StorageException extends Exception
      * Error code to be used when an error occurs while
      * instantiating an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const INSTANTIATION = 1;
 
     /**
-     * Error code to use when an error occurs while
-     * persisting an AssessmentTestSession.
-     *
-     * @var integer
+     * @var int
+     * @deprecated since 0.23.0. Use qtism\runtime\storage\common\StorageException::PERSISTENCE instead. Will be dropped in 0.24.0.
+     * Know usage:
+     * https://github.com/oat-sa/extension-tao-testqti/blob/4260de91509d2bdb4a101faf6e31fdbcbed1f048/helpers/class.TestSessionStorage.php#L199
      */
     const PERSITANCE = 2;
 
     /**
      * Error code to use when an error occurs while
-     * retrieving an AssessmentTestSession.
+     * persisting an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
-    const RETRIEVAL = 3;
+    const PERSISTENCE = 2;
 
     /**
-     * Create a new StorageException instance.
+     * Error code to use when an error occurs while
+     * retrieving an AssessmentTestSession.
      *
-     * @param string $message A human-readable message describing the encountered error.
-     * @param integer $code A code enabling client-code to identify the cause of the error.
-     * @param Exception $previous An optional previous Exception that was thrown and catched.
+     * @var int
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
+    const RETRIEVAL = 3;
 }

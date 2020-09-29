@@ -8,15 +8,24 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSection;
+use qtism\data\AssessmentTest;
+use qtism\data\storage\php\PhpStorageException;
+use qtism\data\storage\xml\XmlStorageException;
+use qtism\data\TestPart;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSessionException;
-use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionTimingTest
+ */
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testTestPartAssessmentSectionsDurations()
@@ -120,9 +129,14 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 
     /**
      * This test aims at testing if it is possible to force the attempt to be performed
-     * event if time constraints in force are exceeded, by the use of the $allowLateSubmission
+     * even if time constraints in force are exceeded, by the use of the $allowLateSubmission
      * argument.
      *
+     * @param bool $forceLateSubmission
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testForceLateSubmission($forceLateSubmission = true)
     {
@@ -156,6 +170,10 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * This test aims at testing that an exception is thrown if we move
      * to a next target item which is timed out.
      *
+     * @param bool $allowTimeout
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws XmlStorageException
      */
     public function testJumpToTargetTimeout($allowTimeout = false)
     {
@@ -198,28 +216,28 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertFalse($timeConstraints[0]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[0]->maxTimeInForce());
         $this->assertFalse($timeConstraints[0]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $timeConstraints[0]->getSource());
+        $this->assertInstanceOf(AssessmentTest::class, $timeConstraints[0]->getSource());
 
         // TestPart level
         $this->assertFalse($timeConstraints[1]->getMaximumRemainingTime());
         $this->assertFalse($timeConstraints[1]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[1]->maxTimeInForce());
         $this->assertFalse($timeConstraints[1]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\TestPart', $timeConstraints[1]->getSource());
+        $this->assertInstanceOf(TestPart::class, $timeConstraints[1]->getSource());
 
         // AssessmentSection level (1st)
         $this->assertFalse($timeConstraints[2]->getMaximumRemainingTime());
         $this->assertFalse($timeConstraints[2]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[2]->maxTimeInForce());
         $this->assertFalse($timeConstraints[2]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $timeConstraints[2]->getSource());
+        $this->assertInstanceOf(AssessmentSection::class, $timeConstraints[2]->getSource());
 
         // AssessmentItem level
         $this->assertEquals('PT1S', $timeConstraints[3]->getMinimumRemainingTime()->round()->__toString());
         $this->assertEquals('PT3S', $timeConstraints[3]->getMaximumRemainingTime()->round()->__toString());
         $this->assertTrue($timeConstraints[3]->maxTimeInForce());
         $this->assertTrue($timeConstraints[3]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $timeConstraints[3]->getSource());
+        $this->assertInstanceOf(AssessmentItemRef::class, $timeConstraints[3]->getSource());
 
         sleep(2);
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
@@ -264,7 +282,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             // are not to be considered.
             $this->assertTrue(true);
         } catch (AssessmentTestSessionException $e) {
-            $this->fail("No exception should be thrown because minTime must not be considered on Q01.");
+            $this->fail('No exception should be thrown because minTime must not be considered on Q01.');
         }
 
         // On the other hand, if we go back to min time consideration...
@@ -275,9 +293,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             // Minimum time not respected...
             $session->beginAttempt();
             $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
-            $this->fail("An exception should be thrown because minTime must be considered now on Q01.");
+            $this->fail('An exception should be thrown because minTime must be considered now on Q01.');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW, $e->getCode(), "The thrown exception should have code ASSESSMENT_ITEM_DURATION_UNDERFLOW, exception message is: " . $e->getMessage());
+            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW, $e->getCode(), 'The thrown exception should have code ASSESSMENT_ITEM_DURATION_UNDERFLOW, exception message is: ' . $e->getMessage());
         }
     }
 

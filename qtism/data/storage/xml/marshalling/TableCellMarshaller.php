@@ -37,14 +37,17 @@ use qtism\data\QtiComponentCollection;
 class TableCellMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
 
-        if (($headers = self::getDOMElementAttributeAs($element, 'headers')) !== null) {
+        if (($headers = $this->getDOMElementAttributeAs($element, 'headers')) !== null) {
             try {
                 $headersCollection = new IdentifierCollection();
 
@@ -59,23 +62,23 @@ class TableCellMarshaller extends ContentMarshaller
             }
         }
 
-        if (($scope = self::getDOMElementAttributeAs($element, 'scope')) !== null) {
+        if (($scope = $this->getDOMElementAttributeAs($element, 'scope')) !== null) {
             $component->setScope(TableCellScope::getConstantByName($scope));
         }
 
-        if (($abbr = self::getDOMElementAttributeAs($element, 'abbr')) !== null) {
+        if (($abbr = $this->getDOMElementAttributeAs($element, 'abbr')) !== null) {
             $component->setAbbr($abbr);
         }
 
-        if (($axis = self::getDOMElementAttributeAs($element, 'axis')) !== null) {
+        if (($axis = $this->getDOMElementAttributeAs($element, 'axis')) !== null) {
             $component->setAxis($axis);
         }
 
-        if (($rowspan = self::getDOMElementAttributeAs($element, 'rowspan', 'integer')) !== null) {
+        if (($rowspan = $this->getDOMElementAttributeAs($element, 'rowspan', 'integer')) !== null) {
             $component->setRowspan($rowspan);
         }
 
-        if (($colspan = self::getDOMElementAttributeAs($element, 'colspan', 'integer')) !== null) {
+        if (($colspan = $this->getDOMElementAttributeAs($element, 'colspan', 'integer')) !== null) {
             $component->setColspan($colspan);
         }
 
@@ -91,7 +94,11 @@ class TableCellMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -99,27 +106,27 @@ class TableCellMarshaller extends ContentMarshaller
 
         $headers = $component->getHeaders();
         if (count($headers) > 0) {
-            self::setDOMElementAttribute($element, 'headers', implode("\x20", $headers->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'headers', implode("\x20", $headers->getArrayCopy()));
         }
 
         if ($component->hasScope() === true) {
-            self::setDOMElementAttribute($element, 'scope', TableCellScope::getNameByConstant($component->getScope()));
+            $this->setDOMElementAttribute($element, 'scope', TableCellScope::getNameByConstant($component->getScope()));
         }
 
         if ($component->hasAbbr() === true) {
-            self::setDOMElementAttribute($element, 'abbr', $component->getAbbr());
+            $this->setDOMElementAttribute($element, 'abbr', $component->getAbbr());
         }
 
         if ($component->hasAxis() === true) {
-            self::setDOMElementAttribute($element, 'axis', $component->getAxis());
+            $this->setDOMElementAttribute($element, 'axis', $component->getAxis());
         }
 
         if ($component->hasRowspan() === true) {
-            self::setDOMElementAttribute($element, 'rowspan', $component->getRowspan());
+            $this->setDOMElementAttribute($element, 'rowspan', $component->getRowspan());
         }
 
         if ($component->hasColspan() === true) {
-            self::setDOMElementAttribute($element, 'colspan', $component->getColspan());
+            $this->setDOMElementAttribute($element, 'colspan', $component->getColspan());
         }
 
         foreach ($component->getContent() as $c) {
@@ -127,14 +134,11 @@ class TableCellMarshaller extends ContentMarshaller
             $element->appendChild($marshaller->marshall($c));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\xhtml\\tables"];

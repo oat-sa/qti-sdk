@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\IntegerToFloat;
 
 /**
@@ -40,20 +38,10 @@ use qtism\data\expressions\operators\IntegerToFloat;
  */
 class IntegerToFloatProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IntegerToFloat) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IntegerToFloatProcessor class only processes IntegerToFloat QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the IntegerToFloat operator.
      *
-     * @return float|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
+     * @return QtiFloat|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -65,17 +53,25 @@ class IntegerToFloatProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerToFloat operator only accepts operands with a single cardinality.";
+            $msg = 'The IntegerToFloat operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerToFloat operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerToFloat operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand = $operands[0];
 
-        return new QtiFloat(floatval($operand->getValue()));
+        return new QtiFloat((float)$operand->getValue());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return IntegerToFloat::class;
     }
 }

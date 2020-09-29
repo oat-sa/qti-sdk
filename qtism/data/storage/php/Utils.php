@@ -35,22 +35,22 @@ class Utils
      * value or the null value.
      *
      * @param mixed $value
-     * @return boolean
+     * @return bool
      */
     public static function isScalar($value)
     {
-        return is_scalar($value) === true || is_null($value) === true;
+        return is_scalar($value) || $value === null;
     }
 
     /**
      * Whether a given $string represents a variable reference e.g. '$foobar'.
      *
      * @param string $string
-     * @return boolean
+     * @return bool
      */
     public static function isVariableReference($string)
     {
-        return is_string($string) === true && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
+        return is_string($string) && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
     }
 
     /**
@@ -61,9 +61,9 @@ class Utils
      */
     public static function doubleQuotedPhpString($string)
     {
-        $escapes = ["\\", '"', "\n", "\t", "\v", "\r", "\f", "$"];
+        $escapes = ["\\", '"', "\n", "\t", "\v", "\r", "\f", '$'];
         $replace = ["\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f", "\\$"];
 
-        return "\"" . str_replace($escapes, $replace, $string) . "\""; // UTF-8 safe.
+        return '"' . str_replace($escapes, $replace, $string) . '"'; // UTF-8 safe.
     }
 }

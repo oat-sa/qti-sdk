@@ -31,7 +31,7 @@ use qtism\data\content\AtomicBlock;
 class H6 extends AtomicBlock
 {
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

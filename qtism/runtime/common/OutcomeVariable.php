@@ -24,6 +24,7 @@
 namespace qtism\runtime\common;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
@@ -48,21 +49,21 @@ class OutcomeVariable extends Variable
     /**
      * The normal maximum.
      *
-     * @var boolean|float
+     * @var bool|float
      */
     private $normalMaximum = false;
 
     /**
      * The normal minimum.
      *
-     * @var boolean|float
+     * @var bool|float
      */
     private $normalMinimum = false;
 
     /**
      * The mastery value.
      *
-     * @var boolean|float
+     * @var bool|float
      */
     private $masteryValue = false;
 
@@ -78,12 +79,12 @@ class OutcomeVariable extends Variable
      * the appropriate container will be instantiated internally as the $value argument.
      *
      * @param string $identifier An identifier for the variable.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-     * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
-    public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
     {
         parent::__construct($identifier, $cardinality, $baseType, $value);
     }
@@ -111,12 +112,12 @@ class OutcomeVariable extends Variable
     /**
      * Set the normal maximum.
      *
-     * @param float|double|boolean $normalMaximum The normal maximum or false if not defined.
+     * @param float|bool $normalMaximum The normal maximum or false if not defined.
      * @throws InvalidArgumentException If $normalMaximum is not false nor a floating point value.
      */
     public function setNormalMaximum($normalMaximum)
     {
-        if ((is_bool($normalMaximum) && $normalMaximum === false) || is_float($normalMaximum) || is_double($normalMaximum)) {
+        if ((is_bool($normalMaximum) && $normalMaximum === false) || is_float($normalMaximum)) {
             $this->normalMaximum = $normalMaximum;
         } else {
             $msg = "The normalMaximum argument must be a floating point value or false, '" . gettype($normalMaximum) . "' given.";
@@ -127,7 +128,7 @@ class OutcomeVariable extends Variable
     /**
      * Get the normal maximum.
      *
-     * @return boolean|float|double False if not defined, otherwise a floating point value.
+     * @return bool|float False if not defined, otherwise a floating point value.
      */
     public function getNormalMaximum()
     {
@@ -137,12 +138,12 @@ class OutcomeVariable extends Variable
     /**
      * Set the normal minimum.
      *
-     * @param float|double|boolean $normalMinimum The normal minimum or false if not defined.
+     * @param float|bool $normalMinimum The normal minimum or false if not defined.
      * @throws InvalidArgumentException If $normalMinimum is not false nor a floating point value.
      */
     public function setNormalMinimum($normalMinimum)
     {
-        if ((is_bool($normalMinimum) && $normalMinimum === false) || is_float($normalMinimum) || is_double($normalMinimum)) {
+        if ((is_bool($normalMinimum) && $normalMinimum === false) || is_float($normalMinimum)) {
             $this->normalMinimum = $normalMinimum;
         } else {
             $msg = "The normalMinimum argument must be a floating point value or false, '" . gettype($normalMinimum) . "' given.";
@@ -153,7 +154,7 @@ class OutcomeVariable extends Variable
     /**
      * Get the normal minimum.
      *
-     * @return boolean|float|double False if not defined, otherwise a floating point value.
+     * @return bool|float|double False if not defined, otherwise a floating point value.
      */
     public function getNormalMinimum()
     {
@@ -163,12 +164,12 @@ class OutcomeVariable extends Variable
     /**
      * Set the mastery value.
      *
-     * @param float|double|boolean $masteryValue A floating point value or false if not defined.
+     * @param float|double|bool $masteryValue A floating point value or false if not defined.
      * @throws InvalidArgumentException If $masteryValue is not a floating point value nor false.
      */
     public function setMasteryValue($masteryValue)
     {
-        if ((is_bool($masteryValue) && $masteryValue === false) || is_float($masteryValue) || is_double($masteryValue)) {
+        if ((is_bool($masteryValue) && $masteryValue === false) || is_float($masteryValue)) {
             $this->masteryValue = $masteryValue;
         } else {
             $msg = "The masteryValue argument must be a floating point value or false, '" . gettype($masteryValue) . "' given.";
@@ -179,7 +180,7 @@ class OutcomeVariable extends Variable
     /**
      * Get the mastery value.
      *
-     * @return float|double|boolean False if not defined, otherwise a floating point value.
+     * @return float|double|bool False if not defined, otherwise a floating point value.
      */
     public function getMasteryValue()
     {
@@ -226,7 +227,7 @@ class OutcomeVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "OutcomeVariable::createFromDataModel only accept 'qtism\\data\\state\\OutcomeDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "OutcomeVariable::createFromDataModel only accept '" . OutcomeDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -236,13 +237,12 @@ class OutcomeVariable extends Variable
      *
      * If no default value is described, and the cardinality is single and the baseType
      * is integer or float, the value of the variable becomes 0.
-     *
      */
     public function applyDefaultValue()
     {
         parent::applyDefaultValue();
 
-        if (is_null($this->getDefaultValue()) === true && $this->getCardinality() === Cardinality::SINGLE) {
+        if ($this->getDefaultValue() === null && $this->getCardinality() === Cardinality::SINGLE) {
             if ($this->getBaseType() === BaseType::INTEGER) {
                 $this->setValue(new QtiInteger(0));
             } elseif ($this->getBaseType() === BaseType::FLOAT) {
@@ -251,9 +251,6 @@ class OutcomeVariable extends Variable
         }
     }
 
-    /**
-     * @see \qtism\runtime\common\Variable::__clone()
-     */
     public function __clone()
     {
         parent::__clone();

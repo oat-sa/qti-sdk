@@ -45,7 +45,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * Multiplicity [0,1]
      *
-     * @var integer
+     * @var int
      */
     protected $view = null;
 
@@ -196,13 +196,13 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasValues()
     {
-        return !is_null($this->values);
+        return $this->values !== null;
     }
 
     /**
      * Get the view
      *
-     * @return integer
+     * @return int
      */
     public function getView()
     {
@@ -218,7 +218,7 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function setView($view = null)
     {
-        if (!is_null($view) && !in_array($view, View::asArray())) {
+        if ($view !== null && !in_array($view, View::asArray())) {
             $msg = sprintf('Invalid View. Should be one of "%s"', implode('", "', View::asArray()));
             throw new InvalidArgumentException($msg);
         }
@@ -233,7 +233,7 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasView()
     {
-        return !is_null($this->view);
+        return $this->view !== null;
     }
 
     /**
@@ -265,7 +265,7 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasInterpretation()
     {
-        return !is_null($this->interpretation);
+        return $this->interpretation !== null;
     }
 
     /**
@@ -297,7 +297,7 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasLongInterpretation()
     {
-        return !is_null($this->longInterpretation);
+        return $this->longInterpretation !== null;
     }
 
     /**
@@ -329,7 +329,7 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasNormalMaximum()
     {
-        return !is_null($this->normalMaximum);
+        return $this->normalMaximum !== null;
     }
 
     /**
@@ -361,7 +361,7 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasNormalMinimum()
     {
-        return !is_null($this->normalMinimum);
+        return $this->normalMinimum !== null;
     }
 
     /**
@@ -393,6 +393,6 @@ class ResultOutcomeVariable extends ItemVariable
      */
     public function hasMasteryValue()
     {
-        return !is_null($this->masteryValue);
+        return $this->masteryValue !== null;
     }
 }

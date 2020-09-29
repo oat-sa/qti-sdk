@@ -28,7 +28,6 @@ use qtism\common\utils\Format;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * From IMS QTI:
@@ -40,6 +39,8 @@ use SplObserver;
  */
 class AssessmentTest extends QtiComponent implements QtiIdentifiable
 {
+    use QtiIdentifiableTrait;
+
     /**
      * From IMS QTI:
      *
@@ -140,12 +141,12 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     private $testFeedbacks;
 
     /**
-     * The observers of this object.
+     * AssessmentTest constructor.
      *
-     * @var SplObjectStorage
+     * @param $identifier
+     * @param $title
+     * @param TestPartCollection|null $testParts
      */
-    private $observers = null;
-
     public function __construct($identifier, $title, TestPartCollection $testParts = null)
     {
         $this->setObservers(new SplObjectStorage());
@@ -202,7 +203,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";
@@ -229,7 +230,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function setToolName($toolName)
     {
-        if (gettype($toolName) === 'string') {
+        if (is_string($toolName)) {
             $this->toolName = $toolName;
         } else {
             $msg = "Toolname must be a string, '" . gettype($toolName) . "' given.";
@@ -257,7 +258,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      */
     public function setToolVersion($toolVersion)
     {
-        if (gettype($toolVersion) === 'string') {
+        if (is_string($toolVersion)) {
             $this->toolVersion = $toolVersion;
         } else {
             $msg = "ToolVersion must be a string, '" . gettype($toolVersion) . "' given.";
@@ -349,11 +350,11 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the AssessmentTest holds an OutcomeProcessing object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasOutcomeProcessing()
     {
-        return is_null($this->getOutcomeProcessing()) !== true;
+        return $this->getOutcomeProcessing() !== null;
     }
 
     /**
@@ -377,7 +378,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -385,7 +386,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -407,60 +408,10 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
-    }
-
-    /**
      * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
      * the result will be false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isExclusivelyLinear()
     {
@@ -485,10 +436,15 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the AssessmentTest as a TimeLimits component bound to it.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {
         return $this->getTimeLimits() !== null;
+    }
+
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
     }
 }

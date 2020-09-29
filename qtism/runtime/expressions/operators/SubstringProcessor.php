@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Substring;
 
 /**
@@ -41,20 +39,10 @@ use qtism\data\expressions\operators\Substring;
  */
 class SubstringProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Substring) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The SubstringProcessor class only processes Substring QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Substring operator.
      *
-     * @return boolean|null Whether the first sub-expression is a substring of the second sub-expression or NULL if either sub-expression is NULL.
+     * @return QtiBoolean|null Whether the first sub-expression is a substring of the second sub-expression or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -66,12 +54,12 @@ class SubstringProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Substring operator only accepts operands with a single cardinality.";
+            $msg = 'The Substring operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The Substring operator only accepts operands with a string baseType.";
+            $msg = 'The Substring operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -81,5 +69,13 @@ class SubstringProcessor extends OperatorProcessor
         $call = ($this->getExpression()->isCaseSensitive() === true) ? 'mb_strpos' : 'mb_stripos';
 
         return new QtiBoolean($call($operand2->getValue(), $operand1->getValue(), 0, 'UTF-8') !== false);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Substring::class;
     }
 }

@@ -5,13 +5,22 @@ namespace qtismtest\data\content\xhtml;
 use qtism\data\content\xhtml\ParamType;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class ParamTypeTest
+ */
 class ParamTypeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return ParamType::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -20,6 +29,9 @@ class ParamTypeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -28,6 +40,9 @@ class ParamTypeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\OutcomeCondition;
+
 /**
  * From IMS QTI:
  *
@@ -38,10 +40,18 @@ namespace qtism\runtime\rules;
 class OutcomeConditionProcessor extends AbstractConditionProcessor
 {
     /**
-     * @see \qtism\runtime\rules\AbstractConditionProcessor::getQtiNature()
+     * @return string
      */
     public function getQtiNature()
     {
         return 'outcome';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRuleType()
+    {
+        return OutcomeCondition::class;
     }
 }

@@ -6,6 +6,9 @@ use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\SelectableRouteCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SelectableRouteCollectionTest
+ */
 class SelectableRouteCollectionTest extends QtiSmTestCase
 {
     public function testInsertAt()

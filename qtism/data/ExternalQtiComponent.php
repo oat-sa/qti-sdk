@@ -40,7 +40,6 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     private $xml = null;
 
     /**
-     *
      * @var string
      * @qtism-bean-property
      */
@@ -123,7 +122,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     /**
      * Whether or not a target namespace is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTargetNamespace()
     {
@@ -157,11 +156,10 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
      */
     protected function buildTargetNamespace()
     {
-        return '';
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -169,7 +167,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -50,8 +50,8 @@ class QtiComponentCollection extends AbstractCollection
     }
 
     /**
-     * @inheritDoc
-     * @see AbstractCollection::offsetSet()
+     * @param mixed $offset
+     * @param mixed $value
      */
     public function offsetSet($offset, $value)
     {
@@ -64,8 +64,7 @@ class QtiComponentCollection extends AbstractCollection
     }
 
     /**
-     * @inheritDoc
-     * @see AbstractCollection::offsetUnset()
+     * @param mixed $offset
      */
     public function offsetUnset($offset)
     {

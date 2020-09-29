@@ -83,19 +83,19 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     }
 
     /**
-     * Get the AssessmentTestSeeker object used by this implementation.
+     * Set the BinaryAssessmentTestSeeker object used by this implementation.
      *
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object.
+     * @param BinaryAssessmentTestSeeker $seeker An AssessmentTestSeeker object.
      */
-    protected function setSeeker(AssessmentTestSeeker $seeker)
+    protected function setSeeker(BinaryAssessmentTestSeeker $seeker)
     {
         $this->seeker = $seeker;
     }
 
     /**
-     * Set the AssessmentTestSeeker object used by this implementation.
+     * Get the BinaryAssessmentTestSeeker object used by this implementation.
      *
-     * @return AssessmentTestSeeker An AssessmentTestSeeker object.
+     * @return BinaryAssessmentTestSeeker An AssessmentTestSeeker object.
      */
     protected function getSeeker()
     {
@@ -113,7 +113,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     public function instantiate(AssessmentTest $test, $sessionId = '')
     {
         // If not provided, generate a session ID.
-        if (empty($sessionId) === true) {
+        if (empty($sessionId)) {
             $sessionId = uniqid('qtism', true);
         }
 
@@ -123,16 +123,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $session;
         } catch (Exception $e) {
-            $msg = "An error occured while instantiating the given AssessmentTest.";
+            $msg = 'An error occurred while instantiating the given AssessmentTest.';
             throw new StorageException($msg, StorageException::INSTANTIATION, $e);
         }
     }
 
     /**
-     * Persist an AssessmentTestSession into binary data.
-     *
-     * The QTI Binary Storage Version that will be used to persist the AssessmentTestSession
-     * will be systematically the one defined in QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION.
+     * Persist an AssessmentTestSession into persistent binary data.
      *
      * @param AssessmentTestSession $assessmentTestSession
      * @throws StorageException
@@ -150,6 +147,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             // Deal with intrinsic values of the Test Session.
             $access->writeTinyInt($assessmentTestSession->getState());
 
+            // Write the current position in the route.
             $route = $assessmentTestSession->getRoute();
             $access->writeInteger($route->getPosition());
 
@@ -174,28 +172,29 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
 
+            $seeker = $this->getSeeker();
             $routeItems = $route->getAllRouteItems();
             foreach ($routeItems as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
 
                 // Deal with RouteItem
-                $access->writeRouteItem($this->getSeeker(), $routeItem);
+                $access->writeRouteItem($seeker, $routeItem);
 
                 // Deal with ItemSession related to the previously written RouteItem.
-                $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
-                $access->writeAssessmentItemSession($this->getSeeker(), $itemSession);
+                    $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
+                    $access->writeAssessmentItemSession($seeker, $itemSession);
 
-                // Deal with last occurence update.
-                $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
+                    // Deal with last occurence update.
+                    $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
 
-                // Deal with PendingResponses
-                if (($pendingResponses = $pendingResponseStore->getPendingResponses($item, $occurence)) !== false) {
-                    $access->writeBoolean(true);
-                    $access->writePendingResponses($this->getSeeker(), $pendingResponses);
-                } else {
-                    $access->writeBoolean(false);
-                }
+                    // Deal with PendingResponses
+                    if (($pendingResponses = $pendingResponseStore->getPendingResponses($item, $occurence)) !== false) {
+                        $access->writeBoolean(true);
+                        $access->writePendingResponses($seeker, $pendingResponses);
+                    } else {
+                        $access->writeBoolean(false);
+                    }
             }
 
             // Deal with test session configuration.
@@ -220,8 +219,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->close();
         } catch (Exception $e) {
             $sessionId = $assessmentTestSession->getSessionId();
-            $msg = "An error occured while persisting AssessmentTestSession with ID '${sessionId}'.";
-            throw new StorageException($msg, StorageException::PERSITANCE, $e);
+            $msg = "An error occurred while persisting AssessmentTestSession with ID '${sessionId}': " . $e->getMessage();
+            throw new StorageException($msg, StorageException::PERSISTENCE, $e);
         }
     }
 
@@ -231,7 +230,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @param AssessmentTest $test
      * @param string $sessionId
      * @return AssessmentTestSession An AssessmentTestSession object.
-     * @throws StorageException If the AssessmentTestSession could not be retrieved from storage.
+     * @throws StorageException If the AssessmentTestSession could not be retrieved from persistent binary storage.
      */
     public function retrieve(AssessmentTest $test, $sessionId)
     {
@@ -266,34 +265,36 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 ? $access->readBoolean()
                 : false;
             $mustTrackPath = $this->version->storesTrackPath()
-                ? $access->readBoolean() 
+                ? $access->readBoolean()
                 : false;
             $mustAlwaysAllowJumps = $this->version->storesAlwaysAllowJumps()
-                ? $access->readBoolean() 
+                ? $access->readBoolean()
                 : false;
-            $path = $this->version->storesTrackPath() 
-                ? $access->readPath() 
+            $path = $this->version->storesTrackPath()
+                ? $access->readPath()
                 : [];
 
             // Create the item session factory that will be used to instantiate
             // new item sessions.
 
+            $seeker = $this->getSeeker();
+
             for ($i = 0; $i < $routeCount; $i++) {
-                $routeItem = $access->readRouteItem($this->getSeeker(), $this->version);
-                $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker(), $this->version);
+                $routeItem = $access->readRouteItem($seeker, $this->version);
+                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker, $this->version);
 
-                // last-update
-                if ($access->readBoolean() === true) {
-                    $lastOccurenceUpdate[$routeItem->getAssessmentItemRef()] = $routeItem->getOccurence();
-                }
+                    // last-update
+                    if ($access->readBoolean() === true) {
+                        $lastOccurenceUpdate[$routeItem->getAssessmentItemRef()] = $routeItem->getOccurence();
+                    }
 
-                // pending-responses
-                if ($access->readBoolean() === true) {
-                    $pendingResponseStore->addPendingResponses($access->readPendingResponses($this->getSeeker()));
-                }
+                    // pending-responses
+                    if ($access->readBoolean() === true) {
+                        $pendingResponseStore->addPendingResponses($access->readPendingResponses($seeker));
+                    }
 
                 $route->addRouteItemObject($routeItem);
-                $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
+                    $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
             }
 
             $route->setPosition($currentPosition);
@@ -340,7 +341,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $assessmentTestSession;
         } catch (Exception $e) {
-            $msg = "An error occured while retrieving AssessmentTestSession.";
+            $msg = 'An error occurred while retrieving AssessmentTestSession. ' . $e->getMessage();
             throw new StorageException($msg, StorageException::RETRIEVAL, $e);
         }
     }
@@ -357,8 +358,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     abstract protected function getRetrievalStream($sessionId);
 
     /**
-     * Persist A MemoryStream that contains the binary data representing $assessmentTestSession
-     * in an appropriate location.
+     * Persist A MemoryStream that contains the binary data representing $assessmentTestSession in an appropriate location.
      *
      * Be careful, the implementation of this method must not close the given $stream.
      *

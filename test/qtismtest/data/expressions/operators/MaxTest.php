@@ -9,6 +9,9 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Max;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MaxTest
+ */
 class MaxTest extends QtiSmTestCase
 {
     public function testInstantiation()
@@ -18,7 +21,7 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Max', $max);
+        $this->assertInstanceOf(Max::class, $max);
         $this->assertTrue(in_array(Cardinality::SINGLE, $max->getAcceptedCardinalities()));
         $this->assertTrue(in_array(Cardinality::MULTIPLE, $max->getAcceptedCardinalities()));
         $this->assertTrue(in_array(Cardinality::ORDERED, $max->getAcceptedCardinalities()));

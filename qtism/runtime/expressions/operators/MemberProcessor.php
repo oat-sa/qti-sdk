@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\Cardinality;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Member;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\Utils as CommonUtils;
@@ -46,20 +44,10 @@ use qtism\runtime\common\Utils as CommonUtils;
  */
 class MemberProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Member) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MemberProcessor class only processes Member QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Member operator.
      *
-     * @return boolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
+     * @return QtiBoolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -71,7 +59,7 @@ class MemberProcessor extends OperatorProcessor
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Member operator only accepts values with the same baseType.";
+            $msg = 'The Member operator only accepts values with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -80,7 +68,7 @@ class MemberProcessor extends OperatorProcessor
 
         // The first expression must have single cardinality.
         if (CommonUtils::inferCardinality($operand1) !== Cardinality::SINGLE) {
-            $msg = "The first operand of the Member operator must have a single cardinality.";
+            $msg = 'The first operand of the Member operator must have a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -90,10 +78,18 @@ class MemberProcessor extends OperatorProcessor
         if ($cardinality === Cardinality::SINGLE) {
             $operand2 = new MultipleContainer($operand1->getBaseType(), [$operand2]);
         } elseif ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
-            $msg = "The second operand of the Member operator must have a single, multiple or ordered cardinality.";
+            $msg = 'The second operand of the Member operator must have a single, multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         return new QtiBoolean($operand2->contains($operand1));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Member::class;
     }
 }

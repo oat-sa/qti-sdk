@@ -6,16 +6,19 @@ use DOMDocument;
 use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ImgMarshallerTest
+ */
 class ImgMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
     {
-        $img = new Img('my/image.png', "An Image...", "my-img");
+        $img = new Img('my/image.png', 'An Image...', 'my-img');
         $img->setClass('beautiful');
         $img->setHeight('40%');
         $img->setWidth(30);
         $img->setLang('en-YO');
-        $img->setLongdesc("A Long Description...");
+        $img->setLongdesc('A Long Description...');
         $img->setXmlBase('/home/jerome');
 
         // aria-* attributes are ignored in QTI 2.1
@@ -31,7 +34,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
     public function testMarshall22()
     {
-        $img = new Img('my/image.png', "An Image...", "my-img");
+        $img = new Img('my/image.png', 'An Image...', 'my-img');
 
         // aria-* attributes are NOT ignored in QTI 2.2.1
         $img->setAriaOwns('IDREF');
@@ -64,7 +67,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $img = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Img', $img);
+        $this->assertInstanceOf(Img::class, $img);
         $this->assertEquals('my/image.png', $img->getSrc());
         $this->assertEquals('An Image...', $img->getAlt());
         $this->assertSame(30, $img->getWidth());
@@ -112,6 +115,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         // For img components, we prefer aria-flowsto.
         $this->assertEquals('IDREF2', $img->getAriaFlowTo());
     }
+
     public function testUnmarshall22FallbackFlowTo()
     {
         $element = $this->createDOMElement('

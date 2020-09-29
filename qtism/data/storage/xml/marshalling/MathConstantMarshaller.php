@@ -43,7 +43,7 @@ class MathConstantMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'name', MathEnumeration::getNameByConstant($component->getName()));
+        $this->setDOMElementAttribute($element, 'name', MathEnumeration::getNameByConstant($component->getName()));
 
         return $element;
     }
@@ -57,11 +57,9 @@ class MathConstantMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
             if (($cst = MathEnumeration::getConstantByName($name)) !== false) {
-                $object = new MathConstant($cst);
-
-                return $object;
+                return new MathConstant($cst);
             } else {
                 $msg = "'${name}' is not a valid value for the attribute 'name' from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
@@ -73,7 +71,7 @@ class MathConstantMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

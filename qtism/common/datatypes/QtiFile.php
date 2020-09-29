@@ -24,7 +24,6 @@
 namespace qtism\common\datatypes;
 
 use RuntimeException;
-use qtism\common\Comparable;
 
 /**
  * The interface to implement to create a new QTI File datatype
@@ -38,7 +37,7 @@ use qtism\common\Comparable;
  * of an interaction). The content type of the file is one
  * of the MIME types defined by [RFC2045].
  */
-interface QtiFile extends QtiDatatype, Comparable
+interface QtiFile extends QtiDatatype
 {
     /**
      * Get the sequence of bytes composing the file.
@@ -56,7 +55,7 @@ interface QtiFile extends QtiDatatype, Comparable
     /**
      * Whether or not a file name is defined for this file.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFilename();
 

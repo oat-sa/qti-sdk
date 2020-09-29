@@ -7,14 +7,17 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\DrawingInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DrawingInteractionMarshallerTest
+ */
 class DrawingInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $object = new QtiObject('my-canvas.png', 'image/png');
+        $object = new ObjectElement('my-canvas.png', 'image/png');
         $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -37,7 +40,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\DrawingInteraction', $component);
+        $this->assertInstanceOf(DrawingInteraction::class, $component);
         $this->assertEquals('my-drawings', $component->getId());
         $this->assertEquals('draw-it', $component->getClass());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());

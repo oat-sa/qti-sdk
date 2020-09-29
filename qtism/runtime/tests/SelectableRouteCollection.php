@@ -35,6 +35,7 @@ class SelectableRouteCollection extends AbstractCollection
     /**
      * Check if $value is a Route object
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Route object.
      */
     protected function checkType($value)
@@ -76,7 +77,7 @@ class SelectableRouteCollection extends AbstractCollection
      * Insert the SelectableRoute object $route at $position.
      *
      * @param SelectableRoute $route A SelectableRoute object.
-     * @param integer $position An integer index where $route must be placed.
+     * @param int $position An integer index where $route must be placed.
      */
     public function insertAt(SelectableRoute $route, $position)
     {

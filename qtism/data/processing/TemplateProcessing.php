@@ -25,6 +25,7 @@ namespace qtism\data\processing;
 
 use InvalidArgumentException;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 use qtism\data\rules\TemplateRuleCollection;
 
 /**
@@ -86,7 +87,7 @@ class TemplateProcessing extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection|TemplateRuleCollection
      */
     public function getComponents()
     {
@@ -94,7 +95,7 @@ class TemplateProcessing extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

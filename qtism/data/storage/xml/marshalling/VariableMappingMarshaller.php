@@ -43,8 +43,8 @@ class VariableMappingMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceIdentifier', $component->getSource());
-        self::setDOMElementAttribute($element, 'targetIdentifier', $component->getTarget());
+        $this->setDOMElementAttribute($element, 'sourceIdentifier', $component->getSource());
+        $this->setDOMElementAttribute($element, 'targetIdentifier', $component->getTarget());
 
         return $element;
     }
@@ -58,12 +58,10 @@ class VariableMappingMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($source = static::getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {
-            if (($target = static::getDOMElementAttributeAs($element, 'targetIdentifier', 'string')) !== null) {
+        if (($source = $this->getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {
+            if (($target = $this->getDOMElementAttributeAs($element, 'targetIdentifier', 'string')) !== null) {
                 try {
-                    $object = new VariableMapping($source, $target);
-
-                    return $object;
+                    return new VariableMapping($source, $target);
                 } catch (InvalidArgumentException $e) {
                     $msg = "'targetIdentifier or/and 'sourceIdentifier' are not valid QTI Identifiers.";
                     throw new UnmarshallingException($msg, $element, $e);
@@ -79,7 +77,7 @@ class VariableMappingMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

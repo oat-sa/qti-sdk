@@ -101,7 +101,7 @@ class CustomOperator extends Operator implements IExternal
      */
     public function setClass($class)
     {
-        if (is_string($class) === true) {
+        if (is_string($class)) {
             $this->class = $class;
         } else {
             $msg = "The 'class' argument must be a string, '" . gettype($class) . "' given.";
@@ -122,7 +122,7 @@ class CustomOperator extends Operator implements IExternal
     /**
      * Whether or not a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -138,7 +138,7 @@ class CustomOperator extends Operator implements IExternal
      */
     public function setDefinition($definition)
     {
-        if (is_string($definition) === true) {
+        if (is_string($definition)) {
             $this->definition = $definition;
         } else {
             $msg = "The 'definition' argument must be a string, '" . gettype($definition) . "' given.";
@@ -160,7 +160,7 @@ class CustomOperator extends Operator implements IExternal
     /**
      * Whether or not a value is defined for the definition attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefinition()
     {
@@ -223,7 +223,7 @@ class CustomOperator extends Operator implements IExternal
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

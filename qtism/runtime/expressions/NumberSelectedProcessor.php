@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\NumberSelected;
 
 /**
@@ -41,20 +39,10 @@ use qtism\data\expressions\NumberSelected;
  */
 class NumberSelectedProcessor extends ItemSubsetProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberSelected) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NumberSelectedProcessor class only accepts NumberSelected expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
      * Process the related NumberSelected expression.
      *
-     * @return integer The number of items in the given sub-set that have been selected for presentation to the candidate.
+     * @return QtiInteger The number of items in the given sub-set that have been selected for presentation to the candidate.
      * @throws ExpressionProcessingException
      */
     public function process()
@@ -66,13 +54,23 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isSelected() === true) {
-                    $numberSelected++;
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isSelected() === true) {
+                        $numberSelected++;
+                    }
                 }
             }
         }
 
         return new QtiInteger($numberSelected);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return NumberSelected::class;
     }
 }

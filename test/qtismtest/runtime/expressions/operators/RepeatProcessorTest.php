@@ -9,12 +9,18 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RepeatProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class RepeatProcessorTest
+ */
 class RepeatProcessorTest extends QtiSmTestCase
 {
     public function testRepeatScalarOnly()
@@ -39,10 +45,8 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection($initialVal);
         $processor = new RepeatProcessor($expression, $operands);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
-            "The variable with name 'repeat' could not be resolved."
-        );
+        $this->expectException(OperatorProcessingException::class);
+        $this->expectExceptionMessage("The variable with name 'repeat' could not be resolved.");
 
         $processor->process();
     }
@@ -108,7 +112,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING);
 
         $processor = new RepeatProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -117,7 +121,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)])]);
         $processor = new RepeatProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -126,7 +130,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), new QtiFloat(10.3)]);
         $processor = new RepeatProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -134,10 +138,14 @@ class RepeatProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new RepeatProcessor($expression, $operands);
     }
 
+    /**
+     * @param int $numberRepeats
+     * @return QtiComponent
+     */
     public function createFakeExpression($numberRepeats = 1)
     {
         return $this->createComponentFromXml('

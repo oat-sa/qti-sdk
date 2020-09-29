@@ -37,12 +37,14 @@ class TemplateDefaultMarshaller extends Marshaller
      *
      * @param QtiComponent $component A TemplateDefault object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+        $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
 
         $expr = $component->getExpression();
         $exprMarshaller = $this->getMarshallerFactory()->createMarshaller($expr);
@@ -58,11 +60,12 @@ class TemplateDefaultMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A templateDefault object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'templateIdentifier' is missing or has an unexpected number of expressions.
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($tplIdentifier = static::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+        if (($tplIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
 
             if ($expressionElt !== false) {
@@ -73,9 +76,7 @@ class TemplateDefaultMarshaller extends Marshaller
                 throw new UnmarshallingException($msg, $element);
             }
 
-            $object = new TemplateDefault($tplIdentifier, $expr);
-
-            return $object;
+            return new TemplateDefault($tplIdentifier, $expr);
         } else {
             $msg = "The mandatory attribute 'templateIdentifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
@@ -83,7 +84,7 @@ class TemplateDefaultMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

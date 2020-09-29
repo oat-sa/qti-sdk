@@ -3,11 +3,16 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
-use qtism\data\content\PrintedVariable;
-use qtismtest\QtiSmTestCase;
+use DOMElement;
 use qtism\data\content\enums\AriaOrientation;
+use qtism\data\content\PrintedVariable;
 use qtism\data\storage\xml\marshalling\MarshallingException;
+use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class PrintedVariableMarshallerTest
+ */
 class PrintedVariableMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -19,7 +24,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('printedVariable', $element->nodeName);
         $this->assertEquals('PRID', $element->getAttribute('identifier'));
         $this->assertEquals('0', $element->getAttribute('index'));
@@ -38,7 +43,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         // aria-* must be ignored for printedVariables.
         $this->assertFalse($element->hasAttribute('aria-orientation'));
     }
@@ -52,7 +57,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('\\qtism\\data\\content\\PrintedVariable', $component);
+        $this->assertInstanceOf(PrintedVariable::class, $component);
         $this->assertEquals('PRID', $component->getIdentifier());
         $this->assertEquals(0, $component->getIndex());
         $this->assertEquals('field', $component->getField());
@@ -69,7 +74,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         /** @var PrintedVariable $component */
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('\\qtism\\data\\content\\PrintedVariable', $component);
+        $this->assertInstanceOf(PrintedVariable::class, $component);
         $this->assertEquals('PRID', $component->getIdentifier());
         $this->assertFalse($component->hasAriaOrientation());
     }
@@ -82,10 +87,8 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\data\storage\xml\marshalling\UnmarshallingException',
-            "The mandatory 'identifier' attribute is missing from the 'printedVariable' element"
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from the 'printedVariable' element");
         $component = $marshaller->unmarshall($element);
     }
 }

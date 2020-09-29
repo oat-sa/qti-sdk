@@ -126,7 +126,7 @@ class ResponseProcessing extends QtiComponent
     /**
      * Whether the ResponseProcessing has a response processing template.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplate()
     {
@@ -142,7 +142,7 @@ class ResponseProcessing extends QtiComponent
      */
     public function setTemplate($template)
     {
-        if (Format::isUri($template) === true || (gettype($template) === 'string' && empty($template) === true)) {
+        if (Format::isUri($template) === true || (is_string($template) && empty($template))) {
             $this->template = $template;
         } else {
             $msg = "The given template '${template}' is not a valid URI.";
@@ -164,7 +164,7 @@ class ResponseProcessing extends QtiComponent
     /**
      * Whether the ResponseProcessing has a response processing template location.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateLocation()
     {
@@ -180,7 +180,7 @@ class ResponseProcessing extends QtiComponent
      */
     public function setTemplateLocation($templateLocation)
     {
-        if (Format::isUri($templateLocation) === true || (gettype($templateLocation) === 'string' && empty($templateLocation) === true)) {
+        if (Format::isUri($templateLocation) === true || (is_string($templateLocation) && empty($templateLocation))) {
             $this->templateLocation = $templateLocation;
         } else {
             $msg = "The given templateLocation '${templateLocation}' is not a valid URI.";
@@ -189,7 +189,7 @@ class ResponseProcessing extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -197,7 +197,7 @@ class ResponseProcessing extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

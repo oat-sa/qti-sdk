@@ -36,21 +36,24 @@ use qtism\data\QtiComponentCollection;
 class SimpleInlineMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $fqClass = $this->lookupClass($element);
 
         if ($element->localName === 'a') {
-            if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
+            if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
 
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
                     $component->setXmlBase($xmlBase);
                 }
 
-                if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+                if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
                     $component->setType($type);
                 }
             } else {
@@ -65,7 +68,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
         $this->fillBodyElement($component, $element);
 
         // The q class has a specific cite (URI) attribute.
-        if ($component instanceof Q && ($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
+        if ($component instanceof Q && ($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
             try {
                 $component->setCite($cite);
             } catch (InvalidArgumentException $e) {
@@ -78,12 +81,14 @@ class SimpleInlineMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
@@ -106,9 +111,6 @@ class SimpleInlineMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = [

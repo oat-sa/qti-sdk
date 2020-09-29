@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Arrays;
+use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use RuntimeException;
@@ -59,13 +60,13 @@ class RecordContainer extends Container implements QtiDatatype
 
             reset($dataPlaceHolder);
         } else {
-            $msg = "The array argument must be an associative array.";
+            $msg = 'The array argument must be an associative array.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @see \qtism\common\collections\Container::getCardinality()
+     * @return int
      */
     public function getCardinality()
     {
@@ -83,12 +84,12 @@ class RecordContainer extends Container implements QtiDatatype
      */
     public function offsetSet($offset, $value)
     {
-        if (gettype($offset) === 'string') {
+        if (is_string($offset)) {
             $this->checkType($value);
             $placeholder = &$this->getDataPlaceHolder();
             $placeholder[$offset] = $value;
         } else {
-            $msg = "The offset of a value in a RecordContainer must be a string.";
+            $msg = 'The offset of a value in a RecordContainer must be a string.';
             throw new RuntimeException($msg);
         }
     }
@@ -109,8 +110,8 @@ class RecordContainer extends Container implements QtiDatatype
             if (!empty($fieldIdentifier)) {
                 $container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
             } else {
-                $msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";
-                $msg .= "because it has no fieldIdentifier specified.";
+                $msg = 'Cannot include ' . Value::class . "'" . $value->getValue() . "' in the RecordContainer ";
+                $msg .= 'because it has no fieldIdentifier specified.';
                 throw new InvalidArgumentException($msg);
             }
         }
@@ -119,7 +120,7 @@ class RecordContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getToStringBounds()
+     * @return array
      */
     protected function getToStringBounds()
     {
@@ -127,7 +128,7 @@ class RecordContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\datatypes\QtiDatatype::getBaseType()
+     * @return int
      */
     public function getBaseType()
     {

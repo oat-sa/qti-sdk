@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiScalar;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Lcm;
 
 /**
@@ -44,20 +42,10 @@ use qtism\data\expressions\operators\Lcm;
  */
 class LcmProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Lcm) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The LcmProcessor class only processes Lcm QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Lcm operator.
      *
-     * @return integer|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
+     * @return QtiInteger|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -69,12 +57,12 @@ class LcmProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Lcm operator only accepts operands with a cardinality of single, multiple or ordered.";
+            $msg = 'The Lcm operator only accepts operands with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The Lcm operator only accepts operands with an integer baseType.";
+            $msg = 'The Lcm operator only accepts operands with an integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -116,5 +104,13 @@ class LcmProcessor extends OperatorProcessor
         }
 
         return $g;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Lcm::class;
     }
 }

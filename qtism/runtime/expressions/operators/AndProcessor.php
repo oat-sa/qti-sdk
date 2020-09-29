@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\AndOperator;
 
 /**
@@ -44,20 +42,10 @@ use qtism\data\expressions\operators\AndOperator;
  */
 class AndProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof AndOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
-     * @return boolean True if the expression is true, false otherwise.
+     * @return QtiBoolean True if the expression is true, false otherwise.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -69,12 +57,12 @@ class AndProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The And Expression only accept operands with single cardinality.";
+            $msg = 'The And Expression only accept operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyBoolean() === false) {
-            $msg = "The And Expression only accept operands with boolean baseType.";
+            $msg = 'The And Expression only accept operands with boolean baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -85,5 +73,13 @@ class AndProcessor extends OperatorProcessor
         }
 
         return new QtiBoolean(true);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return AndOperator::class;
     }
 }

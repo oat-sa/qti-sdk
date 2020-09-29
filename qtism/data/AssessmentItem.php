@@ -34,7 +34,6 @@ use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\TemplateDeclarationCollection;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * The AssessmentItem QTI class implementation. It contains all the information
@@ -42,6 +41,8 @@ use SplObserver;
  */
 class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmentItem
 {
+    use QtiIdentifiableTrait;
+
     /**
      * From IMS QTI:
      *
@@ -88,15 +89,15 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * Items are classified into Adaptive Items and Non-adaptive Items.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $adaptive = false;
 
     /**
-     * Wether the item is time dependent or not.
+     * Whether the item is time dependent or not.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $timeDependent;
@@ -190,18 +191,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     private $modalFeedbacks;
 
     /**
-     * The observers of this object.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers;
-
-    /**
      * Create a new AssessmentItem object.
      *
      * @param string $identifier A QTI Identifier.
      * @param string $title The title of the item.
-     * @param boolean $timeDependent Whether the item is time dependent.
+     * @param bool $timeDependent Whether the item is time dependent.
      * @param string $lang The language (code) of the item.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value.
      */
@@ -255,7 +249,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function setTitle($title)
     {
-        if (is_string($title) === true) {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "The title argument must be a string, '" . gettype($title) . "' given.";
@@ -281,7 +275,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function setLang($lang = '')
     {
-        if (gettype($lang) === 'string') {
+        if (is_string($lang)) {
             $this->lang = $lang;
         } else {
             $msg = "The lang argument must be a string, '" . gettype($lang) . "' given.";
@@ -300,7 +294,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         if (Format::isString256($label) === true) {
             $this->label = $label;
         } else {
-            $msg = "The label argument must be a string with at most 256 characters.";
+            $msg = 'The label argument must be a string with at most 256 characters.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -308,7 +302,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a value is defined for the label attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLabel()
     {
@@ -336,9 +330,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-     * Wether the AssessmentItem has a language.
+     * Whether the AssessmentItem has a language.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLang()
     {
@@ -350,7 +344,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Set whether the item is adaptive.
      *
-     * @param boolean $adaptive Adaptive or not.
+     * @param bool $adaptive Adaptive or not.
      * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
     public function setAdaptive($adaptive)
@@ -366,7 +360,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether the item is adaptive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdaptive()
     {
@@ -376,7 +370,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Set whether the item is time dependent or not.
      *
-     * @param boolean $timeDependent Time dependent or not.
+     * @param bool $timeDependent Time dependent or not.
      * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
     public function setTimeDependent($timeDependent)
@@ -390,9 +384,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-     * Wether the item is time dependent.
+     * Whether the item is time dependent.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeDependent()
     {
@@ -410,7 +404,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         if (Format::isString256($toolName) === true) {
             $this->toolName = $toolName;
         } else {
-            $msg = "The toolName argument must be a string with at most 256 characters.";
+            $msg = 'The toolName argument must be a string with at most 256 characters.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -428,7 +422,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a value is defined for the toolName attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasToolName()
     {
@@ -446,7 +440,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         if (Format::isString256($toolVersion) === true) {
             $this->toolVersion = $toolVersion;
         } else {
-            $msg = "The toolVersion argument must be a string with at most 256 characters.";
+            $msg = 'The toolVersion argument must be a string with at most 256 characters.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -464,7 +458,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a value is defined for the toolVersion attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasToolVersion()
     {
@@ -557,7 +551,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not a TemplateProcessing object is bound to the item.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateProcessing()
     {
@@ -607,7 +601,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether or not the object has an ItemBody object representing its content.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItemBody()
     {
@@ -637,7 +631,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Whether the AssessmentItem has a response processing.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasResponseProcessing()
     {
@@ -664,63 +658,16 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         return $this->modalFeedbacks;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'assessmentItem';
     }
 
     /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
-    }
-
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -747,5 +694,10 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         $comp = array_merge($comp, $this->getModalFeedbacks()->getArrayCopy());
 
         return new QtiComponentCollection($comp);
+    }
+
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
     }
 }

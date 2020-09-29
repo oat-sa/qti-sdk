@@ -3,7 +3,6 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
-use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\Orientation;
@@ -13,6 +12,9 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ChoiceInteractionMarshallerTest
+ */
 class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -45,7 +47,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);
+        $this->assertInstanceOf(ChoiceInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());

@@ -38,16 +38,19 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * The baseType of values.
      *
-     * @var integer
+     * @var int
      */
     private $baseType = -1;
 
+    /**
+     * @param int $baseType
+     */
     public function setBaseType($baseType = -1)
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType argument must be a value from the BaseType enumeration.";
+            $msg = 'The baseType argument must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -55,7 +58,7 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * Get the base type of inner values.
      *
-     * @return integer
+     * @return int
      */
     public function getBaseType()
     {
@@ -65,8 +68,8 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * Create a new CorrectResponseMarshaller object.
      *
-     * @param $version
-     * @param integer $baseType The base type of the Variable referencing this CorrectResponse.
+     * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
+     * @param int $baseType The base type of the Variable referencing this CorrectResponse.
      */
     public function __construct($version, $baseType = -1)
     {
@@ -79,6 +82,8 @@ class CorrectResponseMarshaller extends Marshaller
      *
      * @param QtiComponent $component A CorrectResponse object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -86,7 +91,7 @@ class CorrectResponseMarshaller extends Marshaller
 
         $interpretation = $component->getInterpretation();
         if (!empty($interpretation)) {
-            self::setDOMElementAttribute($element, 'interpretation', $interpretation);
+            $this->setDOMElementAttribute($element, 'interpretation', $interpretation);
         }
 
         // A CorrectResponse contains 1..* Value objects
@@ -104,11 +109,12 @@ class CorrectResponseMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A CorrectResponse object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid CorrectResponse object.
      */
     protected function unmarshall(DOMElement $element)
     {
-        $interpretation = static::getDOMElementAttributeAs($element, 'interpretation', 'string');
+        $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
 
         // Retrieve the values ...
@@ -121,9 +127,7 @@ class CorrectResponseMarshaller extends Marshaller
                 $values[] = $valueMarshaller->unmarshall($valueElements->item($i));
             }
 
-            $object = new CorrectResponse($values, $interpretation);
-
-            return $object;
+            return new CorrectResponse($values, $interpretation);
         } else {
             $msg = "A 'correctResponse' QTI element must contain at least one 'value' QTI element.";
             throw new UnmarshallingException($msg, $element);
@@ -131,7 +135,7 @@ class CorrectResponseMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

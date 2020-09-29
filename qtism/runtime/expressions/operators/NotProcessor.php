@@ -24,8 +24,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
-use qtism\data\expressions\operators\Not;
+use qtism\data\expressions\operators\NotOperator;
 
 /**
  * The NotProcessor class aims at processing Not QTI DataModel expressions.
@@ -39,20 +38,10 @@ use qtism\data\expressions\operators\Not;
  */
 class NotProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Not) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NotProcessor class only processes Not QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Returns the logical negation of the sub-expressions.
      *
-     * @return boolean
+     * @return QtiBoolean
      * @throws OperatorProcessingException
      */
     public function process()
@@ -64,17 +53,25 @@ class NotProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Not Expression only accept operands with single cardinality.";
+            $msg = 'The Not Expression only accept operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyBoolean() === false) {
-            $msg = "The Not Expression only accept operands with boolean baseType.";
+            $msg = 'The Not Expression only accept operands with boolean baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand = $operands[0];
 
         return new QtiBoolean(!$operand->getValue());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return NotOperator::class;
     }
 }

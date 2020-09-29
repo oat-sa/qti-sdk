@@ -40,15 +40,13 @@ class NumberPresentedMarshaller extends ItemSubsetMarshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = parent::marshall($component);
-
-        return $element;
+        return parent::marshall($component);
     }
 
     /**
      * Marshall an numberPresented QTI element in its NumberPresented object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding NumberPresented object.
      */
     protected function unmarshall(DOMElement $element)
@@ -63,7 +61,7 @@ class NumberPresentedMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

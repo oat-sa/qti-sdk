@@ -24,10 +24,10 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
-use qtism\data\QtiComponent;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
+use qtism\data\QtiComponent;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * BodyElement renderer.
@@ -48,7 +48,9 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

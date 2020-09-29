@@ -46,7 +46,9 @@ abstract class GraphicInteractionRenderer extends InteractionRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

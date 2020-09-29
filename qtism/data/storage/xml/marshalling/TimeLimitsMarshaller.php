@@ -45,14 +45,14 @@ class TimeLimitsMarshaller extends Marshaller
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
         if ($component->hasMinTime() === true) {
-            self::setDOMElementAttribute($element, 'minTime', $component->getMinTime()->getSeconds(true));
+            $this->setDOMElementAttribute($element, 'minTime', $component->getMinTime()->getSeconds(true));
         }
 
         if ($component->hasMaxTime() === true) {
-            self::setDOMElementAttribute($element, 'maxTime', $component->getMaxTime()->getSeconds(true));
+            $this->setDOMElementAttribute($element, 'maxTime', $component->getMaxTime()->getSeconds(true));
         }
 
-        self::setDOMElementAttribute($element, 'allowLateSubmission', $component->doesAllowLateSubmission());
+        $this->setDOMElementAttribute($element, 'allowLateSubmission', $component->doesAllowLateSubmission());
 
         return $element;
     }
@@ -62,21 +62,20 @@ class TimeLimitsMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TimeLimits object.
-     * @throws UnmarshallingException If the attribute 'allowLateSubmission' is not a valid boolean value.
      */
     protected function unmarshall(DOMElement $element)
     {
         $object = new TimeLimits();
 
-        if (($value = static::getDOMElementAttributeAs($element, 'minTime', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'minTime', 'string')) !== null) {
             $object->setMinTime(StorageUtils::stringToDatatype("PT${value}S", BaseType::DURATION));
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'maxTime', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'maxTime', 'string')) !== null) {
             $object->setMaxTime(StorageUtils::stringToDatatype("PT${value}S", BaseType::DURATION));
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowLateSubmission', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowLateSubmission', 'boolean')) !== null) {
             $object->setAllowLateSubmission($value);
         }
 
@@ -84,7 +83,7 @@ class TimeLimitsMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

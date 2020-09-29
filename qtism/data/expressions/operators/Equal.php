@@ -45,7 +45,7 @@ class Equal extends Operator
      * rounding errors. The tolerance mode determines whether the comparison is done
      * exactly, using an absolute range or a relative range.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $toleranceMode = ToleranceMode::EXACT;
@@ -78,7 +78,7 @@ class Equal extends Operator
      *
      * Controls whether or not the lower bound is included in the comparison.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $includeLowerBound = true;
@@ -86,7 +86,7 @@ class Equal extends Operator
     /**
      * FROM IMS QTI:
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $includeUpperBound = true;
@@ -95,10 +95,10 @@ class Equal extends Operator
      * Create a new Equal object.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $toleranceMode The tolerance mode, a value from the ToleranceMode enumeration.
+     * @param int $toleranceMode The tolerance mode, a value from the ToleranceMode enumeration.
      * @param array $tolerance An array of 1 or 2 elements which are float or variableRef values.
-     * @param boolean $includeLowerBound Whether or not to include the lower bound in the comparison.
-     * @param boolean $includeUpperBound Whether or not to include the upper bound in the comparison.
+     * @param bool $includeLowerBound Whether or not to include the lower bound in the comparison.
+     * @param bool $includeUpperBound Whether or not to include the upper bound in the comparison.
      * @throws UnexpectedValueException If The tolerance argument is ABSOLUTE or RELATIVE but no $tolerance array is given.
      * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode, if $tolerance is not a valid tolerance array, if $includeLowerBound/$includeUpperBound is not a boolean.
      */
@@ -108,7 +108,7 @@ class Equal extends Operator
         $this->setToleranceMode($toleranceMode);
 
         if (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && empty($tolerance)) {
-            $msg = "The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.";
+            $msg = 'The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.';
             throw new UnexpectedValueException($msg);
         }
 
@@ -120,7 +120,7 @@ class Equal extends Operator
     /**
      * Set the tolerance mode.
      *
-     * @param integer $toleranceMode A value from the ToleranceMode enumeration.
+     * @param int $toleranceMode A value from the ToleranceMode enumeration.
      * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode enumeration.
      */
     public function setToleranceMode($toleranceMode)
@@ -136,7 +136,7 @@ class Equal extends Operator
     /**
      * Get the tolerance mode.
      *
-     * @return integer A value from the ToleranceMode enumeration.
+     * @return int A value from the ToleranceMode enumeration.
      */
     public function getToleranceMode()
     {
@@ -154,10 +154,10 @@ class Equal extends Operator
     public function setTolerance(array $tolerance)
     {
         if (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && count($tolerance) < 1) {
-            $msg = "The tolerance array must contain at least t0.";
+            $msg = 'The tolerance array must contain at least t0.';
             throw new InvalidArgumentException($msg);
         } elseif (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && count($tolerance) > 2) {
-            $msg = "The tolerance array must contain at most t0 and t1";
+            $msg = 'The tolerance array must contain at most t0 and t1';
             throw new InvalidArgumentException($msg);
         }
 
@@ -179,7 +179,7 @@ class Equal extends Operator
     /**
      * Set whether or not the lower bound must be included in the comparison.
      *
-     * @param boolean $includeLowerBound
+     * @param bool $includeLowerBound
      * @throws InvalidArgumentException If $includedLowerBound is not a boolean value.
      */
     public function setIncludeLowerBound($includeLowerBound)
@@ -195,7 +195,7 @@ class Equal extends Operator
     /**
      * Whether or not the lower bound must be included in the comparison.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesIncludeLowerBound()
     {
@@ -205,7 +205,7 @@ class Equal extends Operator
     /**
      * Set whether or not the upper bound must be included in the comparison.
      *
-     * @param boolean $includeUpperBound
+     * @param bool $includeUpperBound
      * @throws InvalidArgumentException If $includeUpperBound is not a boolean.
      */
     public function setIncludeUpperBound($includeUpperBound)
@@ -221,7 +221,7 @@ class Equal extends Operator
     /**
      * Whether or not the upper bound must be included in the comparison.
      *
-     * @return boolean
+     * @return bool
      */
     public function doesIncludeUpperBound()
     {
@@ -229,7 +229,7 @@ class Equal extends Operator
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

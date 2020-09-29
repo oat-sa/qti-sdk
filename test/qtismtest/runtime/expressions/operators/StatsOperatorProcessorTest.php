@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Statistics;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -17,6 +18,9 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\StatsOperatorProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StatsOperatorProcessorTest
+ */
 class StatsOperatorProcessorTest extends QtiSmTestCase
 {
     /**
@@ -91,8 +95,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
     /**
      * @dataProvider wrongCardinalityProvider
-     *
-     * @param OperandsCollection $operands
+     * @param array $operands
      */
     public function testWrongCardinality(array $operands)
     {
@@ -112,7 +115,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @dataProvider wrongBaseTypeProvider
      *
-     * @param OperandsCollection $operands
+     * @param array $operands
      */
     public function testWrongBaseType(array $operands)
     {
@@ -133,7 +136,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $processor = new StatsOperatorProcessor($expression, $operands);
     }
 
@@ -141,13 +144,17 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0)])]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $processor = new StatsOperatorProcessor($expression, $operands);
     }
 
+    /**
+     * @param $expected
+     * @param $value
+     */
     protected function check($expected, $value)
     {
-        if (is_null($expected)) {
+        if ($expected === null) {
             $this->assertTrue($value === null);
         } else {
             $this->assertInstanceOf(QtiFloat::class, $value);
@@ -155,6 +162,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function meanProvider()
     {
         return [
@@ -165,6 +175,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sampleVarianceProvider()
     {
         return [
@@ -175,6 +188,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sampleSDProvider()
     {
         return [
@@ -185,6 +201,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function popVarianceProvider()
     {
         return [
@@ -194,6 +213,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function popSDProvider()
     {
         return [
@@ -203,6 +225,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function wrongCardinalityProvider()
     {
         return [
@@ -212,6 +237,9 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function wrongBaseTypeProvider()
     {
         return [
@@ -220,6 +248,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @param $name
+     * @return QtiComponent
+     */
     public function createFakeExpression($name)
     {
         $name = Statistics::getNameByConstant($name);

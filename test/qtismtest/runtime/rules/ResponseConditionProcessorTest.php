@@ -10,6 +10,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\rules\ResponseConditionProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseConditionProcessorTest
+ */
 class ResponseConditionProcessorTest extends QtiSmTestCase
 {
     /**
@@ -71,6 +74,9 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
         $this->assertTrue($expectedScore->equals($state['SCORE']));
     }
 
+    /**
+     * @return array
+     */
     public function responseConditionMatchCorrectProvider()
     {
         return [

@@ -37,14 +37,15 @@ class SelectPointInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SelectPointInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+        $this->fillElement($element, $component);
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -53,7 +54,7 @@ class SelectPointInteractionMarshaller extends Marshaller
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
         if ($component->getMinChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -68,52 +69,55 @@ class SelectPointInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SelectPointInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = self::getChildElementsByTagName($element, 'object');
-            if (count($objectElts) > 0) {
-                $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-
-                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                    $component = new SelectPointInteraction($responseIdentifier, $object, $maxChoices);
-
-                    if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                        $component->setMinChoices($minChoices);
-                    }
-
-                    if (($xmlBase = self::getXmlBase($element)) !== false) {
-                        $component->setXmlBase($xmlBase);
-                    }
-
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
-                    if (count($promptElts) > 0) {
-                        $promptElt = $promptElts[0];
-                        $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                        $component->setPrompt($prompt);
-                    }
-
-                    $this->fillBodyElement($component, $element);
-
-                    return $component;
-                } else {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element.";
-                    throw new UnmarshallingException($msg, $element);
-                }
-            } else {
-                $msg = "A 'selectPointInteraction' element must contain exactly one 'object' element, none given.";
-                throw new UnmarshallingException($msg, $element);
-            }
-        } else {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) === null) {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'selectPointInteraction' element.";
             throw new UnmarshallingException($msg, $element);
         }
+
+        $objectElts = $this->getChildElementsByTagName($element, 'object');
+        if (count($objectElts) <= 0) {
+            $msg = "A 'selectPointInteraction' element must contain exactly one 'object' element, none given.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer');
+        // This has to be fixed since maxChoices is only mandatory in QTI 2.1 and before.
+        if ($maxChoices === null) {
+            $msg = "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
+        $component = new SelectPointInteraction($responseIdentifier, $object, $maxChoices);
+
+        $minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer');
+        if ($minChoices !== null) {
+            $component->setMinChoices($minChoices);
+        }
+
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+
+        $promptElts = $this->getChildElementsByTagName($element, 'prompt');
+        if (count($promptElts) > 0) {
+            $promptElt = $promptElts[0];
+            $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+            $component->setPrompt($prompt);
+        }
+
+        $this->fillBodyElement($component, $element);
+
+        return $component;
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

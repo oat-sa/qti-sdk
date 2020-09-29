@@ -57,7 +57,7 @@ use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Li;
 use qtism\data\content\xhtml\lists\Ol;
 use qtism\data\content\xhtml\lists\Ul;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
 use qtism\data\content\xhtml\tables\Th;
@@ -75,6 +75,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
 {
     /**
      * Create a new ContentMarshaller object.
+     *
+     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1.0'.
      */
     public function __construct($version)
     {
@@ -119,7 +121,6 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'endAttemptInteraction',
         'customInteraction',
         'printedVariable',
-        'math',
         'include',
     ];
 
@@ -175,7 +176,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     ];
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     * @param DOMNode $element
+     * @return bool
      */
     protected function isElementFinal(DOMNode $element)
     {
@@ -183,7 +185,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     * @param QtiComponent $component
+     * @return bool
      */
     protected function isComponentFinal(QtiComponent $component)
     {
@@ -191,7 +194,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     * @param DOMElement $currentNode
+     * @return QtiComponentCollection
      */
     protected function createCollection(DOMElement $currentNode)
     {
@@ -199,7 +203,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     * @param QtiComponent $component
+     * @return array
      */
     protected function getChildrenComponents(QtiComponent $component)
     {
@@ -225,7 +230,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof DlElement) {
             return $component->getContent()->getArrayCopy();
-        } elseif ($component instanceof QtiObject) {
+        } elseif ($component instanceof ObjectElement) {
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof Div) {
             return $component->getContent()->getArrayCopy();
@@ -283,46 +288,50 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     * @param DOMElement $element
+     * @return array
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        if (in_array($element->localName, self::$simpleComposites) === true) {
+        $simpleComposites = self::$simpleComposites;
+        $localName = $element->localName;
+
+        if (in_array($localName, $simpleComposites)) {
             return self::getChildElements($element, true);
-        } elseif ($element->localName === 'choiceInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'orderInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'associateInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'matchInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleMatchSet');
-        } elseif ($element->localName === 'gapMatchInteraction') {
-            return self::getChildElementsByTagName($element, ['gapText', 'gapImg', 'prompt'], true);
-        } elseif ($element->localName === 'inlineChoiceInteraction') {
-            return self::getChildElementsByTagName($element, 'inlineChoice');
-        } elseif ($element->localName === 'hottextInteraction') {
-            return self::getChildElementsByTagName($element, 'prompt', true);
-        } elseif ($element->localName === 'hotspotInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'graphicAssociateInteraction') {
-            return self::getChildElementsByTagName($element, 'associableHotspot');
-        } elseif ($element->localName === 'graphicOrderInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'tr') {
-            return self::getChildElementsByTagName($element, ['td', 'th']);
-        } elseif ($element->localName === 'ul' || $element->localName === 'ol') {
-            return self::getChildElementsByTagName($element, 'li');
-        } elseif ($element->localName === 'dl') {
-            return self::getChildElementsByTagName($element, ['dd', 'dt']);
-        } elseif ($element->localName === 'itemBody') {
+        } elseif ($localName === 'choiceInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
+        } elseif ($localName === 'orderInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
+        } elseif ($localName === 'associateInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === 'matchInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleMatchSet');
+        } elseif ($localName === 'gapMatchInteraction') {
+            return $this->getChildElementsByTagName($element, ['gapText', 'gapImg', 'prompt'], true);
+        } elseif ($localName === 'inlineChoiceInteraction') {
+            return $this->getChildElementsByTagName($element, 'inlineChoice');
+        } elseif ($localName === 'hottextInteraction') {
+            return $this->getChildElementsByTagName($element, 'prompt', true);
+        } elseif ($localName === 'hotspotInteraction') {
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
+        } elseif ($localName === 'graphicAssociateInteraction') {
+            return $this->getChildElementsByTagName($element, 'associableHotspot');
+        } elseif ($localName === 'graphicOrderInteraction') {
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
+        } elseif ($localName === 'tr') {
+            return $this->getChildElementsByTagName($element, ['td', 'th']);
+        } elseif ($localName === 'ul' || $element->localName === 'ol') {
+            return $this->getChildElementsByTagName($element, 'li');
+        } elseif ($localName === 'dl') {
+            return $this->getChildElementsByTagName($element, ['dd', 'dt']);
+        } elseif ($localName === 'itemBody') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'blockquote') {
+        } elseif ($localName === 'blockquote') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'simpleMatchSet') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'gapImg') {
-            return self::getChildElementsByTagName($element, 'object');
+        } elseif ($localName === 'simpleMatchSet') {
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === 'gapImg') {
+            return $this->getChildElementsByTagName($element, 'object');
         } elseif ($element->localName === 'infoControl') {
             $elts = self::getChildElements($element, true);
             $finalElts = [];
@@ -342,7 +351,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {
@@ -373,24 +382,25 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function lookupClass(DOMElement $element)
     {
+        $localName = $element->localName;
         $lookup = $this->getLookupClasses();
-        $class = ucfirst($element->localName);
+        $class = ucfirst($localName);
 
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
 
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
 
             $fqClass = $l . "\\Qti" . $class;
 
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
         }
 
-        $msg = "No class could be found for tag with name '" . $element->localName . "'.";
+        $msg = "No class could be found for tag with name '" . $localName . "'.";
         throw new UnmarshallingException($msg, $element);
     }
 }

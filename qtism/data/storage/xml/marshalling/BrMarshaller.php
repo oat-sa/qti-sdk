@@ -37,7 +37,6 @@ class BrMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Br object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -47,7 +46,8 @@ class BrMarshaller extends Marshaller
             self::setXmlBase($element, $component->setXmlBase());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
+
         return $element;
     }
 
@@ -67,11 +67,12 @@ class BrMarshaller extends Marshaller
         }
 
         $this->fillBodyElement($component, $element);
+
         return $component;
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

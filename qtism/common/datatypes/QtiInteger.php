@@ -35,7 +35,7 @@ use qtism\common\enums\Cardinality;
  * An integer value is a whole number in the range [-2147483648,2147483647].
  * This is the range of a twos-complement 32-bit integer.
  */
-class QtiInteger extends QtiScalar implements QtiDatatype
+class QtiInteger extends QtiScalar
 {
     /**
      * Checks whether or not $value is an integer compliant
@@ -48,7 +48,7 @@ class QtiInteger extends QtiScalar implements QtiDatatype
     protected function checkType($value)
     {
         if (Utils::isQtiInteger($value) !== true) {
-            $msg = "The Integer Datatype only accepts to store integer values.";
+            $msg = 'The Integer Datatype only accepts to store integer values.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -57,7 +57,7 @@ class QtiInteger extends QtiScalar implements QtiDatatype
      * Get the baseType of the value. This method systematically
      * returns the BaseType::INTEGER value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -73,6 +73,9 @@ class QtiInteger extends QtiScalar implements QtiDatatype
         return Cardinality::SINGLE;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return '' . $this->getValue();

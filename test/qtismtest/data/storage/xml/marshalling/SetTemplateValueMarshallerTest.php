@@ -11,6 +11,9 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetTemplateValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetTemplateValueMarshallerTest
+ */
 class SetTemplateValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -40,8 +43,8 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
 	    ');
 
         $setTemplateValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $setTemplateValue);
+        $this->assertInstanceOf(SetTemplateValue::class, $setTemplateValue);
         $this->assertEquals('tpl1', $setTemplateValue->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $setTemplateValue->getExpression());
+        $this->assertInstanceOf(Match::class, $setTemplateValue->getExpression());
     }
 }

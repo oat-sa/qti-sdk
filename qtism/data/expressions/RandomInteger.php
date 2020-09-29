@@ -37,7 +37,7 @@ class RandomInteger extends Expression
     /**
      * The min attribute value.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $min = 0;
@@ -45,7 +45,7 @@ class RandomInteger extends Expression
     /**
      * The max attribute value.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $max;
@@ -53,7 +53,7 @@ class RandomInteger extends Expression
     /**
      * The step attribute value.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $step = 1;
@@ -76,7 +76,7 @@ class RandomInteger extends Expression
     /**
      * Get the value of the min attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getMin()
     {
@@ -86,12 +86,12 @@ class RandomInteger extends Expression
     /**
      * Set the value of the min attribute.
      *
-     * @param integer $min
+     * @param int $min
      * @throws InvalidArgumentException
      */
     public function setMin($min)
     {
-        if (is_int($min) || Format::isVariableRef($max)) {
+        if (is_int($min) || Format::isVariableRef($min)) {
             $this->min = $min;
         } else {
             $msg = "'Min' must be an integer, '" . gettype($min) . "' given.";
@@ -102,7 +102,7 @@ class RandomInteger extends Expression
     /**
      * Get the value of the max attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getMax()
     {
@@ -112,7 +112,7 @@ class RandomInteger extends Expression
     /**
      * Set the value of the max attribute.
      *
-     * @param integer $max
+     * @param int $max
      * @throws InvalidArgumentException
      */
     public function setMax($max)
@@ -128,7 +128,7 @@ class RandomInteger extends Expression
     /**
      * Get the value of the step attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getStep()
     {
@@ -138,7 +138,7 @@ class RandomInteger extends Expression
     /**
      * Set the value of the step attribute.
      *
-     * @param integer $step
+     * @param int $step
      * @throws InvalidArgumentException
      */
     public function setStep($step)
@@ -152,7 +152,7 @@ class RandomInteger extends Expression
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

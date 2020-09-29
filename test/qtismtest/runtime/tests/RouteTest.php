@@ -16,6 +16,9 @@ use qtism\data\TestPartCollection;
 use qtism\runtime\tests\Route;
 use qtismtest\QtiSmRouteTestCase;
 
+/**
+ * Class RouteTest
+ */
 class RouteTest extends QtiSmRouteTestCase
 {
     public function testRouteTest()
@@ -301,7 +304,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->next();
 
         // Q3 - Thrid position, there is no next route item.
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $nextItem = $route->getNext();
     }
 
@@ -324,7 +327,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->previous();
 
         $this->assertEquals('Q1', $route->current()->getAssessmentItemRef()->getIdentifier());
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $route->getPrevious();
     }
 

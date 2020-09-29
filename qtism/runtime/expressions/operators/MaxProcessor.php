@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Max;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
@@ -48,20 +46,10 @@ use qtism\runtime\common\MultipleContainer;
  */
 class MaxProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Max) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MaxProcessor class only accepts Max QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
-     * @return float|integer|null The greatest of the operand values or NULL if any of the operand values is NULL.
+     * @return QtiFloat|QtiInteger|null The greatest of the operand values or NULL if any of the operand values is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -73,7 +61,7 @@ class MaxProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Max operator only accept values with a cardinality of single, multiple or ordered.";
+            $msg = 'The Max operator only accept values with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -97,7 +85,7 @@ class MaxProcessor extends OperatorProcessor
             }
 
             foreach ($value as $v) {
-                if (is_null($v)) {
+                if ($v === null) {
                     return null;
                 }
 
@@ -110,6 +98,14 @@ class MaxProcessor extends OperatorProcessor
             }
         }
 
-        return ($integerCount === $valueCount) ? new QtiInteger(intval($max)) : new QtiFloat(floatval($max));
+        return ($integerCount === $valueCount) ? new QtiInteger((int)$max) : new QtiFloat((float)$max);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Max::class;
     }
 }

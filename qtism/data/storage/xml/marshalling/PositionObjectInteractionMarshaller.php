@@ -39,25 +39,26 @@ class PositionObjectInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A PositionObjectInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('positionObjectInteraction');
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
         if ($component->hasMinChoices() === true) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasCenterPoint() === true) {
             $centerPoint = $component->getCenterPoint();
-            self::setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
+            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . ' ' . $centerPoint->getY());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -67,32 +68,33 @@ class PositionObjectInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A PositionObjectInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 $component = new PositionObjectInteraction($responseIdentifier, $object);
 
-                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                     $component->setMaxChoices($maxChoices);
                 }
 
-                if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
                 }
 
-                if (($centerPoint = self::getDOMElementAttributeAs($element, 'centerPoint')) !== null) {
+                if (($centerPoint = $this->getDOMElementAttributeAs($element, 'centerPoint')) !== null) {
                     $points = explode("\x20", $centerPoint);
                     $pointsCount = count($points);
 
                     if ($pointsCount === 2) {
                         if (Format::isInteger($points[0]) === true) {
                             if (Format::isInteger($points[1]) === true) {
-                                $component->setCenterPoint(new QtiPoint(intval($points[0]), intval($points[1])));
+                                $component->setCenterPoint(new QtiPoint((int)$points[0], (int)$points[1]));
                             } else {
                                 $msg = "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.";
                                 throw new UnmarshallingException($msg, $element);
@@ -121,7 +123,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

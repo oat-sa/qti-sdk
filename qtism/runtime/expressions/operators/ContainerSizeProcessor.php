@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\ContainerSize;
 
 /**
@@ -40,20 +38,10 @@ use qtism\data\expressions\operators\ContainerSize;
  */
 class ContainerSizeProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof ContainerSize) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The ContainerSizeProcessor class only accepts ContainerSize QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
-     * @return integer|null The size of the container or null if it contains NULL.
+     * @return QtiInteger The size of the container or null if it contains NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -65,10 +53,18 @@ class ContainerSizeProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The ContainerSize operator only accepts operands with a multiple or ordered cardinality.";
+            $msg = 'The ContainerSize operator only accepts operands with a multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         return new QtiInteger(count($operands[0]));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return ContainerSize::class;
     }
 }

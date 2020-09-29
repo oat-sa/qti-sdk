@@ -10,6 +10,9 @@ use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InlineChoiceInteractionMarshallerTest
+ */
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -54,7 +57,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $inlineChoiceInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoiceInteraction', $inlineChoiceInteraction);
+        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
         $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
         $this->assertTrue($inlineChoiceInteraction->mustShuffle());
         $this->assertTrue($inlineChoiceInteraction->isRequired());

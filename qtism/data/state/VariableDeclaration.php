@@ -30,8 +30,8 @@ use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiIdentifiable;
+use qtism\data\QtiIdentifiableTrait;
 use SplObjectStorage;
-use SplObserver;
 
 /**
  * From IMS QTI:
@@ -48,6 +48,8 @@ use SplObserver;
  */
 class VariableDeclaration extends QtiComponent implements QtiIdentifiable
 {
+    use QtiIdentifiableTrait;
+
     /**
      * From IMS QTI:
      *
@@ -96,13 +98,6 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * @qtism-bean-property
      */
     private $defaultValue = null;
-
-    /**
-     * The observers of this object.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers;
 
     /**
      * Create a new instance of VariableDeclaration.
@@ -170,7 +165,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -179,7 +174,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * Whether or not the baseType attribute is defined for this
      * VariableDeclaration.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBaseType()
     {
@@ -211,7 +206,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     /**
      * Whether or not a DefaultValue object is contained by the VariableDeclaration.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefaultValue()
     {
@@ -239,13 +234,13 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         if (in_array($cardinality, Cardinality::asArray())) {
             $this->cardinality = $cardinality;
         } else {
-            $msg = "The cardinality must be a value from the Cardinality enumeration.";
+            $msg = 'The cardinality must be a value from the Cardinality enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -253,7 +248,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -266,53 +261,8 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         return new QtiComponentCollection($comp);
     }
 
-    /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
+    public function __clone()
     {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
+        $this->setObservers(new SplObjectStorage());
     }
 }

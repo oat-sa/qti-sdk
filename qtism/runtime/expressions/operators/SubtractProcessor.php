@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Subtract;
 
 /**
@@ -42,20 +40,10 @@ use qtism\data\expressions\operators\Subtract;
  */
 class SubtractProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Subtract) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The SubtractProcessor class only processes Subtract QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the Subtract operator.
      *
-     * @return float|integer|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
+     * @return QtiFloat|QtiInteger|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -67,12 +55,12 @@ class SubtractProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Subtract operator only accepts operands with a single cardinality";
+            $msg = 'The Subtract operator only accepts operands with a single cardinality';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Subtract operator only accepts operands with a baseType of integer or float";
+            $msg = 'The Subtract operator only accepts operands with a baseType of integer or float';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -81,6 +69,14 @@ class SubtractProcessor extends OperatorProcessor
 
         $subtract = $operand1->getValue() - $operand2->getValue();
 
-        return (is_int($subtract) === true) ? new QtiInteger($subtract) : new QtiFloat($subtract);
+        return (is_int($subtract)) ? new QtiInteger($subtract) : new QtiFloat($subtract);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Subtract::class;
     }
 }

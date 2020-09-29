@@ -34,13 +34,13 @@ class TimeConstraintCollection extends AbstractCollection
     /**
      * Checks whether or not $value is an instance of TimeConstraint.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TimeConstraint.
-     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value)
     {
         if (!$value instanceof TimeConstraint) {
-            $msg = "TimeConstraintCollection objects only accept to store TimeConstraint objects.";
+            $msg = 'TimeConstraintCollection objects only accept to store TimeConstraint objects.';
             throw new InvalidArgumentException($msg);
         }
     }

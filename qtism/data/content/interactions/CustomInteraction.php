@@ -25,9 +25,9 @@ namespace qtism\data\content\interactions;
 
 use DOMDocument;
 use InvalidArgumentException;
-use qtism\common\utils\Format;
 use qtism\data\content\Block;
 use qtism\data\content\Flow;
+use qtism\data\content\FlowTrait;
 use qtism\data\ExternalQtiComponent;
 use qtism\data\IExternal;
 use qtism\data\QtiComponentCollection;
@@ -41,13 +41,7 @@ use RuntimeException;
  */
 class CustomInteraction extends Interaction implements IExternal, Block, Flow
 {
-    /**
-     * The base URI of the CustomInteraction.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The xml string content of the custom interaction.
@@ -58,7 +52,6 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     private $xmlString;
 
     /**
-     *
      * @var ExternalQtiComponent
      */
     private $externalComponent = null;
@@ -82,7 +75,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -144,43 +137,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     }
 
     /**
-     * Set the base URI of the CustomInteraction.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the CustomInteraction.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-     * Whether or not a base URI is defined for the CustomInteraction.
-     *
-     * @return boolean
-     */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
-    }
-
-    /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

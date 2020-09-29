@@ -1,16 +1,16 @@
 <?php
 
-$string_0 = "";
-$string_1 = "";
-$string_2 = "RESPONSE";
-$string_3 = "";
+$string_0 = '';
+$string_1 = '';
+$string_2 = 'RESPONSE';
+$string_3 = '';
 $variable_0 = new qtism\data\expressions\Variable($string_2, $string_3);
-$string_4 = "RESPONSE";
+$string_4 = 'RESPONSE';
 $correct_0 = new qtism\data\expressions\Correct($string_4);
 $array_0 = [$variable_0, $correct_0];
 $expressioncollection_0 = new qtism\data\expressions\ExpressionCollection($array_0);
 $match_0 = new qtism\data\expressions\operators\Match($expressioncollection_0);
-$string_5 = "SCORE";
+$string_5 = 'SCORE';
 $integer_0 = 2;
 $integer_1 = 1;
 $basevalue_0 = new qtism\data\expressions\BaseValue($integer_0, $integer_1);
@@ -20,7 +20,7 @@ $responserulecollection_0 = new qtism\data\rules\ResponseRuleCollection($array_1
 $responseif_0 = new qtism\data\rules\ResponseIf($match_0, $responserulecollection_0);
 $array_2 = [];
 $responseelseifcollection_0 = new qtism\data\rules\ResponseElseIfCollection($array_2);
-$string_6 = "SCORE";
+$string_6 = 'SCORE';
 $integer_2 = 2;
 $integer_3 = 0;
 $basevalue_1 = new qtism\data\expressions\BaseValue($integer_2, $integer_3);

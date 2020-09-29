@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use InvalidArgumentException;
 use qtism\data\expressions\BaseValue;
-use qtism\data\expressions\Expression;
 use qtism\runtime\common\Utils as RuntimeUtils;
 
 /**
@@ -37,26 +35,23 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  */
 class BaseValueProcessor extends ExpressionProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof BaseValue) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The BaseValueProcessor class only processes BaseValue QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the BaseValue.
      *
      * @return mixed A QTI Runtime compliant scalar value.
-     * @see \qtism\runtime\common\Processable::process()
      */
     public function process()
     {
         $expression = $this->getExpression();
 
         return RuntimeUtils::valueToRuntime($expression->getValue(), $expression->getBaseType());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return BaseValue::class;
     }
 }

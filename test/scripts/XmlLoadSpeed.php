@@ -1,9 +1,15 @@
 <?php
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
+/**
+ * @param array $files
+ * @param bool $validate
+ * @throws XmlStorageException
+ */
 function testAssessmentItems(array $files, $validate = false)
 {
     $loaded = 0;
@@ -18,13 +24,13 @@ function testAssessmentItems(array $files, $validate = false)
         $spent = spentTime($start, $end);
         $totalSpent += $spent;
 
-        output("Item '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
+        output("Item '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf('%.8f', $spent) . ' seconds.');
 
         $outcomeDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('outcomeDeclaration'));
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 
         outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription('Memory usage is ' . (memory_get_usage() / 1024 ** 2) . ' MB');
         output('');
 
         $loaded++;
@@ -33,6 +39,11 @@ function testAssessmentItems(array $files, $validate = false)
     outputAverage($totalSpent / $loaded);
 }
 
+/**
+ * @param array $files
+ * @param bool $validate
+ * @throws XmlStorageException
+ */
 function testAssessmentTests(array $files, $validate = false)
 {
     $loaded = 0;
@@ -47,14 +58,14 @@ function testAssessmentTests(array $files, $validate = false)
         $spent = spentTime($start, $end);
         $totalSpent += $spent;
 
-        output("Test '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
+        output("Test '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf('%.8f', $spent) . ' seconds.');
 
         $partCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('testPart'));
         $sectionCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentSection'));
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 
         outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription('Memory usage is ' . (memory_get_usage() / 1024 ** 2) . ' MB');
 
         output('');
 
@@ -64,6 +75,9 @@ function testAssessmentTests(array $files, $validate = false)
     outputAverage($totalSpent / $loaded);
 }
 
+/**
+ * @param $msg
+ */
 function outputTitle($msg)
 {
     output('');
@@ -72,30 +86,43 @@ function outputTitle($msg)
     output(str_repeat('+', strlen($msg)));
 }
 
+/**
+ * @param $avg
+ */
 function outputAverage($avg)
 {
-    output(sprintf("--> Average loading time is %.8f seconds.", $avg));
+    output(sprintf('--> Average loading time is %.8f seconds.', $avg));
 }
 
+/**
+ * @param $msg
+ */
 function outputDescription($msg)
 {
     output(" + ${msg}");
 }
 
+/**
+ * @param $msg
+ */
 function output($msg)
 {
     echo "${msg}\n";
 }
 
+/**
+ * @param $start
+ * @param $end
+ * @return mixed
+ */
 function spentTime($start, $end)
 {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
-    $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
-    return $time;
+    return ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 }
 
-define('SAMPLES_DIR', dirname(__FILE__) . '/../samples/');
+define('SAMPLES_DIR', __DIR__ . '/../samples/');
 
 $items = [
     SAMPLES_DIR . 'ims/items/2_0/adaptive_template.xml',
@@ -129,7 +156,7 @@ $items = [
     SAMPLES_DIR . 'ims/items/2_0/upload.xml',
 ];
 
-outputTitle("Loading QTI-XML Items 2.0 samples:");
+outputTitle('Loading QTI-XML Items 2.0 samples:');
 testAssessmentItems($items);
 
 $items = [
@@ -149,7 +176,7 @@ $items = [
     SAMPLES_DIR . 'ims/items/2_1/text_entry.xml',
 ];
 
-outputTitle("Loading QTI-XML Items 2.1 samples:");
+outputTitle('Loading QTI-XML Items 2.1 samples:');
 testAssessmentItems($items);
 
 $tests = [
@@ -173,5 +200,5 @@ $tests = [
     SAMPLES_DIR . 'custom/very_long_assessmenttest.xml',
 ];
 
-outputTitle("Loading QTI-XML Tests 2.1 samples:");
+outputTitle('Loading QTI-XML Tests 2.1 samples:');
 testAssessmentTests($tests);

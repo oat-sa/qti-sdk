@@ -11,6 +11,9 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateDeclarationMarshallerTest
+ */
 class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -32,13 +35,13 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\state\\TemplateDeclaration', $component);
+        $this->assertInstanceOf(TemplateDeclaration::class, $component);
         $this->assertEquals('tpl1', $component->getIdentifier());
         $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
         $this->assertEquals(BaseType::IDENTIFIER, $component->getBaseType());
 
         $default = $component->getDefaultValue();
-        $this->assertInstanceOf('qtism\\data\\state\\DefaultValue', $default);
+        $this->assertInstanceOf(DefaultValue::class, $default);
         $values = $default->getValues();
         $this->assertEquals(1, count($values));
         $this->assertEquals('tplx', $values[0]->getValue());

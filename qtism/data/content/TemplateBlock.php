@@ -24,6 +24,7 @@
 namespace qtism\data\content;
 
 use InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -32,13 +33,7 @@ use InvalidArgumentException;
  */
 class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
 {
-    /**
-     * The base URI.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The content of the TemplateBlock.
@@ -85,44 +80,19 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
         return $this->content;
     }
 
+    /**
+     * @return FlowStaticCollection|QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'templateBlock';
-    }
-
-    /**
-     * Set the base URI of the TemplateBlock.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'base' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the SimpleBlock.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 }

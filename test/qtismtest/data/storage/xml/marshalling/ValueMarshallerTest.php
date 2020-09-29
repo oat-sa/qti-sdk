@@ -3,11 +3,16 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class ValueMarshallerTest
+ */
 class ValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallBaseType()
@@ -21,7 +26,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('value', $element->nodeName);
         $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
         $this->assertEquals('integer', $element->getAttribute('baseType'));
@@ -38,8 +43,8 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
-        $this->assertTrue('false' === $element->nodeValue);
+        $this->assertInstanceOf(DOMElement::class, $element);
+        $this->assertTrue($element->nodeValue === 'false');
     }
 
     public function testMarshallNoBaseType()
@@ -62,7 +67,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+        $this->assertInstanceOf(Value::class, $component);
         $this->assertInternalType('string', $component->getValue());
         $this->assertEquals($component->getValue(), 'A B');
     }
@@ -78,8 +83,8 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::PAIR]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $component->getValue());
+        $this->assertInstanceOf(Value::class, $component);
+        $this->assertInstanceOf(QtiPair::class, $component->getValue());
         $this->assertEquals($component->getValue()->getFirst(), 'A');
         $this->assertEquals($component->getValue()->getSecond(), 'B');
     }
@@ -93,14 +98,14 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::STRING]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+        $this->assertInstanceOf(Value::class, $component);
         $this->assertInternalType('string', $component->getValue());
         $this->assertSame('Hello <b>bold</b>', $component->getValue());
     }
 
     public function testMarshallNoBaseTypeButForcedAndEntities()
     {
-        $value = "Hello <b>bold</b>";
+        $value = 'Hello <b>bold</b>';
         $baseType = BaseType::STRING;
         $component = new Value($value, $baseType);
 
@@ -133,7 +138,7 @@ class ValueMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallNoValueIntegerExpected()
     {
-        $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
+        $this->expectException(UnmarshallingException::class);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
         $element = $dom->documentElement;
@@ -152,7 +157,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+        $this->assertInstanceOf(Value::class, $component);
         $this->assertInstanceOf(QtiPair::class, $component->getValue());
         $this->assertEquals($component->getValue()->getFirst(), 'A');
         $this->assertEquals($component->getValue()->getSecond(), 'B');

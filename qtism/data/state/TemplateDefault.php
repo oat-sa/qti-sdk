@@ -23,9 +23,9 @@
 
 namespace qtism\data\state;
 
-use InvalidArgumentException as InvalidArgumentException;
-use qtism\common\utils\Format as Format;
-use qtism\data\expressions\Expression as Expression;
+use InvalidArgumentException;
+use qtism\common\utils\Format;
+use qtism\data\expressions\Expression;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -117,7 +117,7 @@ class TemplateDefault extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -125,7 +125,7 @@ class TemplateDefault extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

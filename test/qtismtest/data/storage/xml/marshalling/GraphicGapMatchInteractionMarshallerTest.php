@@ -13,9 +13,12 @@ use qtism\data\content\interactions\GapImgCollection;
 use qtism\data\content\interactions\GraphicGapMatchInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GraphicGapMatchInteractionMarshallerTest
+ */
 class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -23,13 +26,13 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
 
-        $object = new QtiObject('myimg.png', 'image/png');
+        $object = new ObjectElement('myimg.png', 'image/png');
 
-        $img1 = new QtiObject('img1.png', 'image/png');
+        $img1 = new ObjectElement('img1.png', 'image/png');
         $gapImg1 = new GapImg('gapImg1', 1, $img1);
-        $img2 = new QtiObject('img2.png', 'image/png');
+        $img2 = new ObjectElement('img2.png', 'image/png');
         $gapImg2 = new GapImg('gapImg2', 1, $img2);
-        $img3 = new QtiObject('img3.png', 'image/png');
+        $img3 = new ObjectElement('img3.png', 'image/png');
         $gapImg3 = new GapImg('gapImg3', 1, $img3);
         $gapImgs = new GapImgCollection([$gapImg1, $gapImg2, $gapImg3]);
 
@@ -59,7 +62,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicGapMatchInteraction', $component);
+        $this->assertInstanceOf(GraphicGapMatchInteraction::class, $component);
         $this->assertEquals('my-gaps', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
 

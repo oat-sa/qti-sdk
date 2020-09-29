@@ -26,7 +26,7 @@ namespace qtism\runtime\storage\binary;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\storage\IStream;
 use qtism\common\storage\MemoryStream;
-use qtism\data\Document;
+use qtism\common\storage\StreamAccessException;
 use qtism\runtime\tests\AssessmentTestSession;
 use RuntimeException;
 
@@ -42,8 +42,8 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      * Persist the binary stream $stream which contains the binary equivalent of $assessmentTestSession in
      * the temporary directory of the file system.
      *
-     * @param AssessmentTestSession The AssessmentTestSession to be persisted.
-     * @param MemoryStream The MemoryStream to be stored in the temporary directory of the host file system.
+     * @param AssessmentTestSession $assessmentTestSession The AssessmentTestSession to be persisted.
+     * @param MemoryStream $stream The MemoryStream to be stored in the temporary directory of the host file system.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
     protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream)
@@ -54,7 +54,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
         $written = @file_put_contents($path, $stream->getBinary());
 
         if ($written === false || $written === 0) {
-            $msg = "An error occured while persisting the binary stream at '${path}'.";
+            $msg = "An error occurred while persisting the binary stream at '${path}'.";
             throw new RuntimeException($msg);
         }
     }
@@ -74,13 +74,18 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
         $read = @file_get_contents($path);
 
         if ($read === false || strlen($read) === 0) {
-            $msg = "An error occured while retrieving the binary stream at '${path}'.";
+            $msg = "An error occurred while retrieving the binary stream at '${path}'.";
             throw new RuntimeException($msg);
         }
 
         return new MemoryStream($read);
     }
 
+    /**
+     * @param IStream $stream
+     * @return QtiBinaryStreamAccess
+     * @throws StreamAccessException
+     */
     protected function createBinaryStreamAccess(IStream $stream)
     {
         return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());

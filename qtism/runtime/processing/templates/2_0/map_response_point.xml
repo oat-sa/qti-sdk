@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <responseProcessing xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p0 imsqti_v2p0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p0 http://www.imsglobal.org/xsd/imsqti_v2p0.xsd">
     <responseCondition>
         <responseIf>
             <isNull>

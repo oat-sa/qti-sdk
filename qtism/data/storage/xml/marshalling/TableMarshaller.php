@@ -40,6 +40,7 @@ class TableMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Table object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -47,7 +48,7 @@ class TableMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement('table');
 
         if ($component->hasSummary() === true) {
-            self::setDOMElementAttribute($element, 'summary', $component->getSummary());
+            $this->setDOMElementAttribute($element, 'summary', $component->getSummary());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -93,7 +94,7 @@ class TableMarshaller extends Marshaller
             $element->appendChild($marshaller->marshall($tbody));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -103,11 +104,12 @@ class TableMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Table object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
-        $tbodyElts = self::getChildElementsByTagName($element, 'tbody');
+        $tbodyElts = $this->getChildElementsByTagName($element, 'tbody');
 
         if (count($tbodyElts) > 0) {
             $tbodies = new TbodyCollection();
@@ -119,7 +121,7 @@ class TableMarshaller extends Marshaller
 
             $component = new Table($tbodies);
 
-            if (($summary = self::getDOMElementAttributeAs($element, 'summary')) !== null) {
+            if (($summary = $this->getDOMElementAttributeAs($element, 'summary')) !== null) {
                 $component->setSummary($summary);
             }
 
@@ -127,13 +129,13 @@ class TableMarshaller extends Marshaller
                 $component->setXmlBase($xmlBase);
             }
 
-            $captionElts = self::getChildElementsByTagName($element, 'caption');
+            $captionElts = $this->getChildElementsByTagName($element, 'caption');
             if (count($captionElts) > 0) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($captionElts[0]);
                 $component->setCaption($marshaller->unmarshall($captionElts[0]));
             }
 
-            $colElts = self::getChildElementsByTagName($element, 'col');
+            $colElts = $this->getChildElementsByTagName($element, 'col');
             if (count($colElts) > 0) {
                 $cols = new ColCollection();
                 foreach ($colElts as $c) {
@@ -143,7 +145,7 @@ class TableMarshaller extends Marshaller
                 $component->setCols($cols);
             }
 
-            $colgroupElts = self::getChildElementsByTagName($element, 'colgroup');
+            $colgroupElts = $this->getChildElementsByTagName($element, 'colgroup');
             if (count($colgroupElts) > 0) {
                 $colgroups = new ColgroupCollection();
                 foreach ($colgroupElts as $c) {
@@ -153,13 +155,13 @@ class TableMarshaller extends Marshaller
                 $component->setColgroups($colgroups);
             }
 
-            $theadElts = self::getChildElementsByTagName($element, 'thead');
+            $theadElts = $this->getChildElementsByTagName($element, 'thead');
             if (count($theadElts) > 0) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($theadElts[0]);
                 $component->setThead($marshaller->unmarshall($theadElts[0]));
             }
 
-            $tfootElts = self::getChildElementsByTagName($element, 'tfoot');
+            $tfootElts = $this->getChildElementsByTagName($element, 'tfoot');
             if (count($tfootElts) > 0) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($tfootElts[0]);
                 $component->setTfoot($marshaller->unmarshall($tfootElts[0]));
@@ -175,7 +177,7 @@ class TableMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

@@ -120,7 +120,7 @@ class SetTemplateValue extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -128,7 +128,7 @@ class SetTemplateValue extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

@@ -23,7 +23,6 @@
 
 namespace qtism\data\content;
 
-use InvalidArgumentException;
 use qtism\data\ExternalQtiComponent;
 
 /**
@@ -35,50 +34,21 @@ use qtism\data\ExternalQtiComponent;
  */
 class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic
 {
+    use FlowTrait;
+
+    /**
+     * Math constructor.
+     *
+     * @param $xmlString
+     */
     public function __construct($xmlString)
     {
         parent::__construct($xmlString);
     }
 
     /**
-     * A base URI.
-     *
-     * @var string
-     * @qtism-bean-property
+     * @return string
      */
-    private $xmlBase = '';
-
-    /**
-     * Set the base URI of the Math.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI of the Math.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
-    }
-
     public function getQtiClassName()
     {
         return 'math';

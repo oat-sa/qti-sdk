@@ -40,7 +40,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
      * If true then this gap must be filled by the candidate inorder to form a
      * valid response to the interaction.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $required = false;
@@ -49,7 +49,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
      * Create a new Gap object.
      *
      * @param string $identifier The identifier of the gap.
-     * @param boolean $required Whether or not the Gap is required to be filled to form a valid response.
+     * @param bool $required Whether or not the Gap is required to be filled to form a valid response.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -65,12 +65,12 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     /**
      * Set whether the gap must be filled by the candidate or not.
      *
-     * @param boolean $required
+     * @param bool $required
      * @throws InvalidArgumentException If $required is not a boolean value.
      */
     public function setRequired($required)
     {
-        if (is_bool($required) === true) {
+        if (is_bool($required)) {
             $this->required = $required;
         } else {
             $msg = "The 'required' argument must be a boolean value, '" . gettype($required) . "' given.";
@@ -81,7 +81,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     /**
      * Whether the gap must be filled by the candidate.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function isRequired()
     {
@@ -89,7 +89,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -97,7 +97,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

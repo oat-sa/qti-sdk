@@ -26,11 +26,15 @@ namespace qtism\data\results;
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
 
+/**
+ * Class ItemResultCollection
+ */
 class ItemResultCollection extends QtiComponentCollection
 {
     /**
      * Check if a given $value is an instance of ItemResult.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ItemResult.
      */
     protected function checkType($value)

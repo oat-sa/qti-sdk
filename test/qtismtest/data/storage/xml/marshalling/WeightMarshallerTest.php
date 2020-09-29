@@ -3,9 +3,13 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\state\Weight;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class WeightMarshallerTest
+ */
 class WeightMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -17,7 +21,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('weight', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($value . '', $element->getAttribute('value'));
@@ -32,7 +36,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Weight', $component);
+        $this->assertInstanceOf(Weight::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myWeight1');
         $this->assertEquals($component->getValue(), 3.45);
     }

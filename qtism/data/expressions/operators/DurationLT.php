@@ -56,7 +56,7 @@ class DurationLT extends Operator
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

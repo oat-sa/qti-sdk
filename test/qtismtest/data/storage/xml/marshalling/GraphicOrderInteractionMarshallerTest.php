@@ -11,9 +11,12 @@ use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class GraphicOrderInteractionMarshallerTest
+ */
 class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -26,7 +29,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $choice3 = new HotspotChoice('choice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [4, 4, 15]));
         $choices = new HotspotChoiceCollection([$choice1, $choice2, $choice3]);
 
-        $object = new QtiObject('my-img.png', 'image/png');
+        $object = new ObjectElement('my-img.png', 'image/png');
 
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', $object, $choices, 'my-graphicOrder');
         $graphicOrderInteraction->setPrompt($prompt);
@@ -50,7 +53,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicOrderInteraction', $component);
+        $this->assertInstanceOf(GraphicOrderInteraction::class, $component);
         $this->assertEquals('my-graphicOrder', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMinChoices());

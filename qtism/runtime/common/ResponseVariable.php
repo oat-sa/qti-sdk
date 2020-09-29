@@ -25,6 +25,7 @@ namespace qtism\runtime\common;
 
 use InvalidArgumentException;
 use qtism\common\Comparable;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\Mapping;
 use qtism\data\state\ResponseDeclaration;
@@ -73,12 +74,12 @@ class ResponseVariable extends Variable
      * the appropriate container will be instantiated interally as the $value argument.
      *
      * @param string $identifier An identifier for the variable.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-     * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
-    public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
     {
         parent::__construct($identifier, $cardinality, $baseType, $value);
     }
@@ -86,48 +87,27 @@ class ResponseVariable extends Variable
     /**
      * Set the correct response.
      *
-     * @param mixed $correctResponse A QTI Runtime compliant object.
+     * @param QtiDatatype|null $correctResponse A QtiDatatype object or null.
+     * @throws InvalidArgumentException If $correctResponse does not match baseType and/or cardinality of the variable.
      */
-    public function setCorrectResponse($correctResponse)
+    public function setCorrectResponse(QtiDatatype $correctResponse = null)
     {
-        if (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true) {
-            $this->correctResponse = $correctResponse;
-            return;
-        } else {
-            if ($correctResponse instanceof Container) {
-                if ($correctResponse->getCardinality() === $this->getCardinality()) {
-                    if (
-                        get_class($correctResponse) === 'qtism\\runtime\\common\\Container'
-                        || $correctResponse->getBaseType() === $this->getBaseType()
-                    ) {
-                        // This is a simple container with no baseType restriction
-                        // or a Multiple|Record|Ordered container with a compliant
-                        // baseType.
-                        $this->correctResponse = $correctResponse;
-                        return;
-                    } else {
-                        $msg = "The baseType of the given container ('" . BaseType::getNameByConstant($correctResponse->getBaseType()) . "') ";
-                        $msg .= "is not compliant with ";
-                        $msg .= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
-                        throw new InvalidArgumentException($msg);
-                    }
-                } else {
-                    $msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
-                    $msg .= "is not compliant with ";
-                    $msg .= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
-                    throw new InvalidArgumentException($msg);
-                }
-            }
+        if ($correctResponse !== null 
+            && (!Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse)
+                || !Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse)
+            )
+        ) {
+            $msg = 'The given correct response is not compliant with the associated response variable.';
+            throw new InvalidArgumentException($msg);
         }
 
-        $msg = "The provided value is not compliant with the baseType of the ResponseVariable.";
-        throw new InvalidArgumentException($msg);
+        $this->correctResponse = $correctResponse;
     }
 
     /**
      * Get the correct response.
      *
-     * @return mixed A QTI Runtime value (primitive or container).
+     * @return QtiDatatype|null A QTI Runtime value (primitive or container).
      */
     public function getCorrectResponse()
     {
@@ -137,11 +117,11 @@ class ResponseVariable extends Variable
     /**
      * Whether the ResponseVariable holds a CorrectResponse object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCorrectResponse()
     {
-        return is_null($this->getCorrectResponse()) === false;
+        return $this->getCorrectResponse() !== null;
     }
 
     /**
@@ -188,7 +168,7 @@ class ResponseVariable extends Variable
      * Whether the value of the ResponseVariable matches its
      * correct response.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCorrect()
     {
@@ -232,16 +212,16 @@ class ResponseVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "ResponseVariable::createFromDataModel only accept 'qtism\\data\\state\\ResponseDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "ResponseVariable::createFromDataModel only accepts '" . ResponseDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
 
-    /**
-     * @see \qtism\runtime\common\Variable::__clone()
-     */
     public function __clone()
     {
         parent::__clone();
+        if (($cv = $this->getCorrectResponse()) !== null) {
+            $this->correctResponse = clone $cv;
+        }
     }
 }

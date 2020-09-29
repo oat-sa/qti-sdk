@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\IntegerDivide;
 
 /**
@@ -41,20 +39,10 @@ use qtism\data\expressions\operators\IntegerDivide;
  */
 class IntegerDivideProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IntegerDivide) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IntegerDivideProcessor class only processes IntegerDivide QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the IntegerDivide operator.
      *
-     * @return integer|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
+     * @return QtiInteger|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
      */
     public function process()
     {
@@ -65,12 +53,12 @@ class IntegerDivideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The IntegerDivide operator only accepts operands with single cardinality.";
+            $msg = 'The IntegerDivide operator only accepts operands with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The IntegerDivide operator only accepts operands with baseType integer.";
+            $msg = 'The IntegerDivide operator only accepts operands with baseType integer.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -82,6 +70,14 @@ class IntegerDivideProcessor extends OperatorProcessor
             return null;
         }
 
-        return new QtiInteger(intval(floor($operand1->getValue() / $operand2->getValue())));
+        return new QtiInteger((int)floor($operand1->getValue() / $operand2->getValue()));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return IntegerDivide::class;
     }
 }

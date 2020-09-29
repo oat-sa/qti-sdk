@@ -5,20 +5,25 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\GcdProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
+/**
+ * Class GcdProcessorTest
+ */
 class GcdProcessorTest extends QtiSmTestCase
 {
     /**
      * @dataProvider gcdProvider
      *
      * @param array $operands
-     * @param integer $expected
+     * @param int $expected
      */
     public function testGcd(array $operands, $expected)
     {
@@ -32,7 +37,7 @@ class GcdProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $processor = new GcdProcessor($expression, $operands);
     }
 
@@ -41,7 +46,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiInteger(10)]);
         $processor = new GcdProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $result = $processor->process();
     }
 
@@ -50,7 +55,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(20), new RecordContainer(['A' => new QtiInteger(10)]), new QtiInteger(30)]);
         $processor = new GcdProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectException(OperatorProcessingException::class);
         $result = $processor->process();
     }
 
@@ -67,6 +72,9 @@ class GcdProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return array
+     */
     public function gcdProvider()
     {
         return [
@@ -85,6 +93,9 @@ class GcdProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function gcdWithNullValuesProvider()
     {
         return [
@@ -97,6 +108,9 @@ class GcdProcessorTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return QtiComponent
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -53,7 +53,7 @@ class Utils
      * is thrown.
      *
      * @param mixed $value A value.
-     * @param integer $occurence An occurence number.
+     * @param int $occurence An occurence number.
      * @return string A variable name.
      * @throws InvalidArgumentException If $occurence is not a positive integer or if $value cannot be handled by this method.
      */
@@ -64,21 +64,20 @@ class Utils
             throw new InvalidArgumentException($msg);
         }
 
-        if (is_object($value) === true) {
+        if (is_object($value)) {
             $object = new ReflectionObject($value);
             $className = mb_strtolower($object->getShortName(), 'UTF-8');
 
             return "${className}_${occurence}";
-        } elseif (is_scalar($value) === true) {
-            // Is it a PHP scalar value?
+        } elseif (is_scalar($value)) {
             return gettype($value) . '_' . $occurence;
-        } elseif (is_array($value) === true) {
+        } elseif (is_array($value)) {
             return 'array_' . $occurence;
-        } elseif (is_null($value) === true) {
+        } elseif ($value === null) {
             // null value?
             return 'nullvalue_' . $occurence;
         } else {
-            $msg = "Cannot handle the given value.";
+            $msg = 'Cannot handle the given value.';
             throw new InvalidArgumentException($msg);
         }
     }

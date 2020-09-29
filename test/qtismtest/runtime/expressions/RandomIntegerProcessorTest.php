@@ -5,7 +5,11 @@ namespace qtismtest\runtime\expressions;
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\expressions\RandomIntegerProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RandomIntegerProcessorTest
+ */
 class RandomIntegerProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -38,7 +42,7 @@ class RandomIntegerProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createComponentFromXml('<randomInteger min="100" max="10"/>');
         $processor = new RandomIntegerProcessor($expression);
-        $this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 }

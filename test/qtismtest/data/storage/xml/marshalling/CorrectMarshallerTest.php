@@ -3,9 +3,13 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\Correct;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CorrectMarshallerTest
+ */
 class CorrectMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -16,7 +20,7 @@ class CorrectMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('correct', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
     }
@@ -30,7 +34,7 @@ class CorrectMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\Correct', $component);
+        $this->assertInstanceOf(Correct::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myCorrect1');
     }
 }

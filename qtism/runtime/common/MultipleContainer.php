@@ -71,7 +71,7 @@ class MultipleContainer extends Container implements QtiDatatype
         if (in_array($baseType, BaseType::asArray(), true)) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType argument must be a value from the BaseType enumeration.";
+            $msg = 'The baseType argument must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -87,7 +87,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::checkType()
+     * @param mixed $value
      */
     protected function checkType($value)
     {
@@ -102,7 +102,7 @@ class MultipleContainer extends Container implements QtiDatatype
      * Create a MultipleContainer object from a Data Model ValueCollection object.
      *
      * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @return MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
      * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
      */
@@ -117,7 +117,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getToStringBounds()
+     * @return array
      */
     protected function getToStringBounds()
     {
@@ -125,7 +125,7 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-     * @see \qtism\common\collections\Container::getCardinality()
+     * @return int
      */
     public function getCardinality()
     {

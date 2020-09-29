@@ -6,6 +6,9 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\SessionManager;
 
+/**
+ * Class QtiSmItemSubsetTestCase
+ */
 abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
 {
     /**

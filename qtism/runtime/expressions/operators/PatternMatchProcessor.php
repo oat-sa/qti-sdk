@@ -23,9 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\PatternMatch;
 use qtism\runtime\expressions\operators\Utils as OperatorUtils;
 
@@ -49,20 +47,10 @@ use qtism\runtime\expressions\operators\Utils as OperatorUtils;
  */
 class PatternMatchProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof PatternMatch) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The PatternMatchProcessor class only processes PatternMatch QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the PatternMatch.
      *
-     * @return boolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
+     * @return QtiBoolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -74,12 +62,12 @@ class PatternMatchProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The PatternMatch operator only accepts operands with a single cardinality.";
+            $msg = 'The PatternMatch operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyString() === false) {
-            $msg = "The PatternMatch operator only accepts operands with a string baseType.";
+            $msg = 'The PatternMatch operator only accepts operands with a string baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -87,12 +75,7 @@ class PatternMatchProcessor extends OperatorProcessor
         // because there is no carret (^) nor dollar ($) signs.
         // see http://www.regular-expressions.info/xml.html
         $rawPattern = $this->getExpression()->getPattern();
-        $pattern = OperatorUtils::escapeSymbols($rawPattern, ['$', '^']);
-        $pattern = OperatorUtils::pregAddDelimiter('^' . $pattern . '$');
-
-        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-        $pattern .= 's';
-
+        $pattern = OperatorUtils::prepareXsdPatternForPcre($rawPattern);
         $result = @preg_match($pattern, $operands[0]->getValue());
 
         if ($result === 1) {
@@ -100,33 +83,17 @@ class PatternMatchProcessor extends OperatorProcessor
         } elseif ($result === 0) {
             return new QtiBoolean(false);
         } else {
-            $error = preg_last_error();
-            $errorType = 'PCRE Engine compilation error';
-
-            switch ($error) {
-                case PREG_INTERNAL_ERROR:
-                    $errorType = "PCRE Engine internal error";
-                    break;
-
-                case PREG_BACKTRACK_LIMIT_ERROR:
-                    $errorType = "PCRE Engine backtrack limit exceeded";
-                    break;
-
-                case PREG_RECURSION_LIMIT_ERROR:
-                    $errorType = "PCRE Engine recursion limit exceeded";
-                    break;
-
-                case PREG_BAD_UTF8_ERROR:
-                    $errorType = "PCRE Engine malformed UTF-8";
-                    break;
-
-                case PREG_BAD_UTF8_OFFSET_ERROR:
-                    $errorType = "PCRE Engine UTF-8 offset error";
-                    break;
-            }
-
-            $msg = "An internal error occured while processing the regular expression '${rawPattern}': ${errorType}.";
+            $errorType = OperatorUtils::lastPregErrorMessage();
+            $msg = "An internal error occurred while processing the regular expression '${rawPattern}': ${errorType}.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return PatternMatch::class;
     }
 }

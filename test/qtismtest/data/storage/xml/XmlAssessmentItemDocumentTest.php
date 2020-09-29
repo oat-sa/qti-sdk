@@ -4,14 +4,22 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
+use qtism\data\AssessmentItem;
 
+/**
+ * Class XmlAssessmentItemDocumentTest
+ */
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 {
-
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testLoad($uri, $expectedVersion)
     {
@@ -20,12 +28,14 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
-
 
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      */
     public function testLoadFromString($uri, $expectedVersion)
     {
@@ -34,11 +44,15 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
 
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testWrite($uri, $expectedVersion)
     {
@@ -47,7 +61,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
@@ -62,6 +76,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
+     * @throws MarshallingException
      */
     public function testSaveToString($uri, $expectedVersion)
     {
@@ -70,7 +88,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         file_put_contents($file, $doc->saveToString());
@@ -111,9 +129,13 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertEquals('2.0.0', $doc->getVersion());
     }
 
+    /**
+     * @param string $uri
+     * @throws XmlStorageException
+     */
     public function testLoadTemplate($uri = '')
     {
-        $file = (empty($uri) === true) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
+        $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
 
         $doc = new XmlDocument();
         $doc->load($file, true);
@@ -164,13 +186,17 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertFalse(file_exists($file));
     }
 
+    /**
+     * @param string $url
+     * @throws XmlStorageException
+     */
     public function testLoadPCIItem($url = '')
     {
         $doc = new XmlDocument();
-        $doc->load((empty($url) === true) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
+        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
         $item = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentItem', $item);
+        $this->assertInstanceOf(AssessmentItem::class, $item);
         $this->assertEquals('SimpleExample', $item->getIdentifier());
         $this->assertEquals('Example', $item->getTitle());
         $this->assertFalse($item->isAdaptive());
@@ -260,6 +286,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->assertTrue(true);
     }
 
+    /**
+     * @return array
+     */
     public function validFileProvider()
     {
         return [
@@ -379,10 +408,15 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
             // Other miscellaneous items...
             [self::samplesDir() . 'custom/items/custom_operator_item.xml', '2.1.0'],
-            [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0']
+            [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0'],
         ];
     }
 
+    /**
+     * @param $uri
+     * @param string $version
+     * @return string
+     */
     private static function decorateUri($uri, $version = '2.1')
     {
         if ($version === '2.1' || $version === '2.1.0') {

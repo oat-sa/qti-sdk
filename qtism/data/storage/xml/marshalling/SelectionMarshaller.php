@@ -43,8 +43,8 @@ class SelectionMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'select', $component->getSelect());
-        self::setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
+        $this->setDOMElementAttribute($element, 'select', $component->getSelect());
+        $this->setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
 
         if (($xml = $component->getXml()) !== null) {
             $selectionElt = $xml->documentElement->cloneNode(true);
@@ -72,10 +72,10 @@ class SelectionMarshaller extends Marshaller
         $xmlString = $frag->ownerDocument->saveXML($frag);
 
         // select is a mandatory value, retrieve it first.
-        if (($value = static::getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
             $withReplacement = false;
 
-            if (($withReplacementValue = static::getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
+            if (($withReplacementValue = $this->getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
                 $withReplacement = $withReplacementValue;
             }
 
@@ -89,7 +89,7 @@ class SelectionMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

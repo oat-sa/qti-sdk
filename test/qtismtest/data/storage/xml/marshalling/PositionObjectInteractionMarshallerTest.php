@@ -8,14 +8,17 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PositionObjectInteractionMarshallerTest
+ */
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $object = new QtiObject('myimg.jpg', 'image/jpeg');
+        $object = new ObjectElement('myimg.jpg', 'image/jpeg');
         $object->setWidth(400);
         $object->setHeight(300);
 
@@ -43,7 +46,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\PositionObjectInteraction', $component);
+        $this->assertInstanceOf(PositionObjectInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMaxChoices());
         $this->assertEquals(1, $component->getMinChoices());

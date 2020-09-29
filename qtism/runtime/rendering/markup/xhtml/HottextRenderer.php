@@ -57,7 +57,9 @@ class HottextRenderer extends ChoiceRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
@@ -65,6 +67,11 @@ class HottextRenderer extends ChoiceRenderer
         $this->additionalClass('qti-hottext');
     }
 
+    /**
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         parent::appendChildren($fragment, $component);

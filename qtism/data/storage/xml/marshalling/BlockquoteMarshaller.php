@@ -35,7 +35,10 @@ use qtism\data\QtiComponentCollection;
 class BlockquoteMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -53,12 +56,12 @@ class BlockquoteMarshaller extends ContentMarshaller
         }
         $component->setContent($blockCollection);
 
-        if ($component->hasCite() === true) {
-            self::setDOMElementAttribute($element, 'cite', $component->getCite());
+        if (($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
+            $component->setCite($cite);
         }
 
-        if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->getXmlBase());
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
         }
 
         $this->fillBodyElement($component, $element);
@@ -67,32 +70,31 @@ class BlockquoteMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
-            $component->setCite($cite);
+        if ($component->hasCite() === true) {
+            $element->setAttribute('cite', $component->getCite());
         }
 
-        if (($xmlBase = self::getXmlBase($element)) !== false) {
-            $component->setXmlBase($xmlBase);
+        if ($component->hasXmlBase() === true) {
+            $element->setAttribute('xml:base', $component->getXmlBase());
         }
 
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\xhtml\\text"];

@@ -36,23 +36,23 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall a TestVariable object in its DOMElement equivalent.
      *
-     * @param QtiComponent A TestVariable object.
+     * @param QtiComponent $component A TestVariable object.
      * @return DOMElement The corresponding testVariable QTI element.
      */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'variableIdentifier', $component->getVariableIdentifier());
+        $this->setDOMElementAttribute($element, 'variableIdentifier', $component->getVariableIdentifier());
 
         $baseType = $component->getBaseType();
         if ($baseType != -1) {
-            self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
         }
 
         $weightIdentifier = $component->getWeightIdentifier();
         if (!empty($weightIdentifier)) {
-            self::setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
+            $this->setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
         }
 
         return $element;
@@ -61,24 +61,25 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall a testVariable QTI element in its TestVariable object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding TestVariable object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($variableIdentifier = static::getDOMElementAttributeAs($element, 'variableIdentifier')) !== null) {
+        if (($variableIdentifier = $this->getDOMElementAttributeAs($element, 'variableIdentifier')) !== null) {
             $object = new TestVariables($variableIdentifier);
             $object->setSectionIdentifier($baseComponent->getSectionIdentifier());
             $object->setIncludeCategories($baseComponent->getIncludeCategories());
             $object->setExcludeCategories($baseComponent->getExcludeCategories());
 
-            if (($baseType = static::getDOMElementAttributeAs($element, 'baseType')) !== null) {
+            if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType')) !== null) {
                 $object->setBaseType(BaseType::getConstantByName($baseType));
             }
 
-            if (($weightIdentifier = static::getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
+            if (($weightIdentifier = $this->getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
                 $object->setWeightIdentifier($weightIdentifier);
             }
 
@@ -90,7 +91,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

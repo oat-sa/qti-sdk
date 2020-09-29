@@ -23,11 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Min;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
@@ -49,20 +47,10 @@ use qtism\runtime\common\MultipleContainer;
  */
 class MinProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Min) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MinProcessor class only accepts Min QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the current expression.
      *
-     * @return float|integer|null The smallest of the operand values or NULL if any of the operand values is NULL.
+     * @return QtiFloat|QtiInteger|null The smallest of the operand values or NULL if any of the operand values is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -74,7 +62,7 @@ class MinProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Min operator only accept values with a cardinality of single, multiple or ordered.";
+            $msg = 'The Min operator only accept values with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -111,6 +99,14 @@ class MinProcessor extends OperatorProcessor
             }
         }
 
-        return ($integerCount === $valueCount) ? new QtiInteger(intval($min)) : new QtiFloat(floatval($min));
+        return ($integerCount === $valueCount) ? new QtiInteger((int)$min) : new QtiFloat((float)$min);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return Min::class;
     }
 }

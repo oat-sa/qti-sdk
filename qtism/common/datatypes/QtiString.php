@@ -30,7 +30,7 @@ use qtism\common\enums\Cardinality;
 /**
  * Represents the String QTI datatype.
  */
-class QtiString extends QtiScalar implements QtiDatatype
+class QtiString extends QtiScalar
 {
     /**
      * Checks whether or not $value is a valid string.
@@ -41,7 +41,7 @@ class QtiString extends QtiScalar implements QtiDatatype
     protected function checkType($value)
     {
         if (is_string($value) !== true) {
-            $msg = "The String Datatype only accepts to store string values.";
+            $msg = 'The String Datatype only accepts to store string values.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -50,7 +50,7 @@ class QtiString extends QtiScalar implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * the BaseType::STRING value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -61,7 +61,7 @@ class QtiString extends QtiScalar implements QtiDatatype
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -69,14 +69,14 @@ class QtiString extends QtiScalar implements QtiDatatype
     }
 
     /**
-     * Wheter or not the current QtiString object is equal to $obj.
+     * Whether or not the current QtiString object is equal to $obj.
      *
      * Two QtiString objects are considered to be identical if their intrinsic
      * values are equals. If the current QtiString is an empty string, and $obj
      * is NULL, the values are considered equal.
      *
      * @param mixed $obj
-     * @return boolean
+     * @return bool
      */
     public function equals($obj)
     {
@@ -89,6 +89,9 @@ class QtiString extends QtiScalar implements QtiDatatype
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getValue();

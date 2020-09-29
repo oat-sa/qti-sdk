@@ -79,7 +79,7 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-     * @see AbstractCollection::checkType()
+     * @param mixed $value
      */
     protected function checkType($value)
     {
@@ -93,7 +93,7 @@ class Container extends AbstractCollection implements Comparable
      * have the NULL value. This method helps you to know whether or not
      * the container has the NULL value.
      *
-     * @return boolean Whether the container has to be considered as NULL.
+     * @return bool Whether the container has to be considered as NULL.
      */
     public function isNull()
     {
@@ -112,7 +112,7 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-     * Wheter the container is equal to $obj.
+     * Whether the container is equal to $obj.
      *
      * * If $obj is not an instance of Container, false is returned.
      * * If $obj is [A,B,C] and the container is [C,A,B], true is returned because the order does not matter.
@@ -120,7 +120,7 @@ class Container extends AbstractCollection implements Comparable
      * * If $obj is [] and the container is [], true is returned.
      *
      * @param mixed $obj A value to compare to this one.
-     * @return boolean Whether the container is equal to $obj.
+     * @return bool Whether the container is equal to $obj.
      */
     public function equals($obj)
     {
@@ -167,11 +167,9 @@ class Container extends AbstractCollection implements Comparable
                 if ($t->equals($obj)) {
                     $occurences++;
                 }
-            } else {
+            } elseif ($obj === $t) {
                 // Both primitive.
-                if ($obj === $t) {
-                    $occurences++;
-                }
+                $occurences++;
             }
         }
 
@@ -228,7 +226,7 @@ class Container extends AbstractCollection implements Comparable
         foreach (array_keys($data) as $k) {
             $d = $data[$k];
 
-            if (is_null($d) === true) {
+            if ($d === null) {
                 $strings[] = 'NULL';
             } elseif ($d instanceof QtiString) {
                 $strings[] = "'${d}'";
@@ -280,7 +278,7 @@ class Container extends AbstractCollection implements Comparable
             }
 
             if ($found === false) {
-                if (is_string($key) === true) {
+                if (is_string($key)) {
                     $newDataPlaceHolder[$key] = $value;
                 } else {
                     $newDataPlaceHolder[] = $value;

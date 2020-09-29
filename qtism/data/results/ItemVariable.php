@@ -50,7 +50,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * Multiplicity [1]
      *
-     * @var integer
+     * @var int
      */
     private $cardinality;
 
@@ -60,7 +60,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * Multiplicity [0,1]
      *
-     * @var integer
+     * @var int
      */
     private $baseType = null;
 
@@ -103,7 +103,7 @@ abstract class ItemVariable extends QtiComponent
     /**
      * Get the cardinality of the Variable.
      *
-     * @return integer
+     * @return int
      */
     public function getCardinality()
     {
@@ -131,7 +131,7 @@ abstract class ItemVariable extends QtiComponent
     /**
      * Get the baseType of the Variable.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getBaseType()
     {
@@ -148,7 +148,7 @@ abstract class ItemVariable extends QtiComponent
      */
     public function setBaseType($baseType = null)
     {
-        if (!is_null($baseType) && !in_array($baseType, BaseType::asArray())) {
+        if ($baseType !== null && !in_array($baseType, BaseType::asArray())) {
             $msg = sprintf('Invalid baseType. Should be one of "%s"', implode('", "', BaseType::asArray()));
             throw new InvalidArgumentException($msg);
         }
@@ -163,6 +163,6 @@ abstract class ItemVariable extends QtiComponent
      */
     public function hasBaseType()
     {
-        return !is_null($this->baseType);
+        return $this->baseType !== null;
     }
 }

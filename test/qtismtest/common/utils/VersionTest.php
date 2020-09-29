@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class VersionTest
+ */
 class VersionTest extends QtiSmTestCase
 {
     /**
@@ -29,6 +32,9 @@ class VersionTest extends QtiSmTestCase
         Version::compare('2.1.1', '2.2.0', '!==');
     }
 
+    /**
+     * @return array
+     */
     public function versionCompareValidProvider(): array
     {
         return [
@@ -59,7 +65,7 @@ class VersionTest extends QtiSmTestCase
             ['2.1', '2.2', 'ne', true],
         ];
     }
-    
+
     /**
      * Append patch version to $version if $version only contains
      * major and minor versions.
@@ -74,6 +80,9 @@ class VersionTest extends QtiSmTestCase
         $this->assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
     }
 
+    /**
+     * @return array
+     */
     public function appendPatchVersionProvider(): array
     {
         return [
@@ -97,7 +106,7 @@ class VersionTest extends QtiSmTestCase
     {
         $versionNumber = 'whatever';
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Provided version number '".$versionNumber."' is not compliant to semantic versioning.");
+        $this->expectExceptionMessage("Provided version number '" . $versionNumber . "' is not compliant to semantic versioning.");
         Version::appendPatchVersion($versionNumber);
     }
 }

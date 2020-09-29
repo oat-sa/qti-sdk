@@ -26,10 +26,13 @@ namespace qtism\data\storage\php;
 use Exception;
 use ParseError;
 use qtism\common\beans\Bean;
+use qtism\common\beans\BeanException;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentTest;
@@ -40,10 +43,12 @@ use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtism\data\storage\php\Utils as PhpUtils;
+use ReflectionException;
 use SplStack;
 
 /**
@@ -70,8 +75,11 @@ class PhpDocument extends QtiDocument
      * Save the PhpDocument to a specific location.
      *
      * @param string $url A URL (Uniform Resource Locator) describing where to save the document.
-     * @return $this
      * @throws PhpStorageException If an error occurs while saving.
+     * @throws ReflectionException
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
      */
     public function save($url)
     {
@@ -79,7 +87,7 @@ class PhpDocument extends QtiDocument
             $stream = $this->transformToPhp();
             file_put_contents($url, $stream->getBinary());
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while writing the PHP source code stream.";
+            $msg = 'An error occurred while writing the PHP source code stream.';
             throw new PhpStorageException($msg, 0, $e);
         }
     }
@@ -87,8 +95,12 @@ class PhpDocument extends QtiDocument
     /**
      * Return components as string
      *
-     * @return Stream
+     * @return string
+     * @throws BeanException
+     * @throws MemoryStreamException
      * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws PhpMarshallingException
      */
     public function saveToString()
     {
@@ -96,7 +108,7 @@ class PhpDocument extends QtiDocument
             $memoryStream = $this->transformToPhp();
             return $memoryStream->getBinary();
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while writing the PHP source code stream.";
+            $msg = 'An error occurred while writing the PHP source code stream.';
             throw new PhpStorageException($msg, 0, $e);
         }
     }
@@ -105,7 +117,12 @@ class PhpDocument extends QtiDocument
      * Convert components to php source
      *
      * @return MemoryStream
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
      * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws StreamAccessException
      */
     protected function transformToPhp()
     {
@@ -141,7 +158,8 @@ class PhpDocument extends QtiDocument
                 $getters = array_reverse(array_merge($bodyGetters->getArrayCopy(), $ctorGetters->getArrayCopy()));
 
                 foreach ($getters as $getter) {
-                    $stack->push(call_user_func([$component, $getter->getName()]));
+                    $getterName = $getter->getName();
+                    $stack->push($component->$getterName());
                 }
             } elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
                 // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
@@ -178,7 +196,7 @@ class PhpDocument extends QtiDocument
                 // Leaf node (QtiDatatype or PHP scalar (including the null value)).
                 $marshaller = new PhpScalarMarshaller($ctx, $component);
                 $marshaller->marshall();
-            } elseif (is_array($component) === true) {
+            } elseif (is_array($component)) {
                 // Leaf node array.
                 $marshaller = new PhpArrayMarshaller($ctx, $component);
                 $marshaller->marshall();
@@ -256,15 +274,15 @@ class PhpDocument extends QtiDocument
             if ($evaluation !== false && isset($rootcomponent)) {
                 $this->setDocumentComponent($rootcomponent);
             } else {
-                $msg = "The PHP string could not be loaded properly.";
+                $msg = 'The PHP string could not be loaded properly.';
                 throw new PhpStorageException($msg);
             }
         } catch (Exception $e) {
-            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
+            $msg = 'A PHP Runtime Error occurred while executing the PHP source code representing the document.';
             throw new PhpStorageException($msg, 0, $e);
         } catch (ParseError $e) {
             // For PHP 7.X
-            $msg = "A PHP Parsing Error occurred while executing the PHP source code representing the document.";
+            $msg = 'A PHP Parsing Error occurred while executing the PHP source code representing the document.';
             throw new PhpStorageException($msg);
         } finally {
             if ($obstart) {
@@ -273,18 +291,22 @@ class PhpDocument extends QtiDocument
         }
     }
 
+    /**
+     * @param $object
+     * @return string
+     */
     protected static function getBaseImplementation($object)
     {
         if ($object instanceof AssessmentTest) {
-            return "qtism\\data\\AssessmentTest";
+            return AssessmentTest::class;
         } elseif ($object instanceof AssessmentItem) {
-            return "qtism\\data\\AssessmentItem";
+            return AssessmentItem::class;
         } elseif ($object instanceof ResponseProcessing) {
-            return "qtism\\data\\processing\\ResponseProcessing";
+            return ResponseProcessing::class;
         } elseif ($object instanceof ExtendedAssessmentSection) {
-            return 'qtism\\data\\ExtendedAssessmentSection';
+            return ExtendedAssessmentSection::class;
         } elseif ($object instanceof AssessmentSection) {
-            return "qtism\\data\\AssessmentSection";
+            return AssessmentSection::class;
         } else {
             return get_class($object);
         }

@@ -82,7 +82,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -90,7 +90,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @inheritDoc
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

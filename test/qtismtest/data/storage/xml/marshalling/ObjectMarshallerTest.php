@@ -6,9 +6,12 @@ use DOMDocument;
 use qtism\data\content\ObjectFlowCollection;
 use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ObjectMarshallerTest
+ */
 class ObjectMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallSimple()
@@ -20,7 +23,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
 	        </object>                
 	    ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\QtiObject', $object);
+        $this->assertInstanceOf(ObjectElement::class, $object);
         $this->assertEquals('flash-movie', $object->getId());
         $this->assertEquals('http://mywebsite.com/movie.swf', $object->getData());
         $this->assertEquals('application/x-shockwave-flash', $object->getType());
@@ -29,13 +32,13 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this->assertEquals(5, count($objectContent)); // Including text nodes.
 
         $param1 = $objectContent[1];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Param', $param1);
+        $this->assertInstanceOf(Param::class, $param1);
         $this->assertEquals('movie', $param1->getName());
         $this->assertEquals('movie.swf', $param1->getValue());
         $this->assertEquals(ParamType::REF, $param1->getValueType());
 
         $param2 = $objectContent[3];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Param', $param2);
+        $this->assertInstanceOf(Param::class, $param2);
         $this->assertEquals('quality', $param2->getName());
         $this->assertEquals('high', $param2->getValue());
         $this->assertEquals(ParamType::DATA, $param2->getValueType());
@@ -47,7 +50,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
 	        <object id="flash-movie" data="" type="application/x-shockwave-flash"/>
 	    ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\QtiObject', $object);
+        $this->assertInstanceOf(ObjectElement::class, $object);
         $this->assertEquals('flash-movie', $object->getId());
         $this->assertEquals('', $object->getData());
         $this->assertEquals('application/x-shockwave-flash', $object->getType());
@@ -57,7 +60,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
     {
         $param1 = new Param('movie', 'movie.swf', ParamType::REF);
         $param2 = new Param('quality', 'high', ParamType::DATA);
-        $object = new QtiObject('http://mywebsite.com/movie.swf', 'application/x-shockwave-flash', 'flash-movie');
+        $object = new ObjectElement('http://mywebsite.com/movie.swf', 'application/x-shockwave-flash', 'flash-movie');
         $object->setContent(new ObjectFlowCollection([$param1, $param2]));
 
         $element = $this->getMarshallerFactory()->createMarshaller($object)->marshall($object);
@@ -69,7 +72,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
 
     public function testMarshallNoDataAttributeValue()
     {
-        $object = new QtiObject('', 'application/x-shockwave-flash', 'flash-movie');
+        $object = new ObjectElement('', 'application/x-shockwave-flash', 'flash-movie');
         $element = $this->getMarshallerFactory()->createMarshaller($object)->marshall($object);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);

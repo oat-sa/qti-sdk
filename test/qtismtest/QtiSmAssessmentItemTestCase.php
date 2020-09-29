@@ -3,10 +3,15 @@
 namespace qtismtest;
 
 use qtism\common\datatypes\QtiDuration;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
 
+/**
+ * Class QtiSmAssessmentItemTestCase
+ */
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
     public function setUp()
@@ -19,10 +24,15 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
         parent::tearDown();
     }
 
-    protected static function createExtendedAssessmentItemRefFromXml($xmlString)
+    /**
+     * @param $xmlString
+     * @return ExtendedAssessmentItemRef
+     * @throws UnmarshallingException
+     */
+    protected function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
-        $element = self::createDOMElement($xmlString);
+        $element = $this->createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }
 
@@ -34,11 +44,13 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * The responseProcessing for item of the session is the template 'match_correct'.
      *
+     * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
+     * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
+    protected function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -56,7 +68,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 
         $manager = new SessionManager();
 
-        if (is_null($acceptableLatency) === false) {
+        if ($acceptableLatency !== null) {
             $manager->setAcceptableLatency($acceptableLatency);
         }
 
@@ -74,11 +86,13 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
      * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
      *
+     * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
+     * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
+    protected function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -121,7 +135,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 
         $manager = new SessionManager();
 
-        if (is_null($acceptableLatency) === false) {
+        if ($acceptableLatency !== null) {
             $manager->setAcceptableLatency($acceptableLatency);
         }
 

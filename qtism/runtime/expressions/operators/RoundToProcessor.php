@@ -23,10 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\expressions\operators\RoundTo;
 use qtism\runtime\expressions\Utils as ExprUtils;
@@ -58,16 +56,6 @@ use qtism\runtime\expressions\Utils as ExprUtils;
  */
 class RoundToProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof RoundTo) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The RoundToProcessor class only accepts RoundTo Operator objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
      * Process the RoundTo operator.
      *
@@ -77,7 +65,7 @@ class RoundToProcessor extends OperatorProcessor
      * * The cardinality of the operand is not single.
      * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
      *
-     * @return null|float A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
+     * @return null|QtiFloat A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -92,13 +80,13 @@ class RoundToProcessor extends OperatorProcessor
         }
 
         if (!$operands->exclusivelySingle()) {
-            $msg = "The RoundTo operator accepts 1 operand with single cardinality.";
+            $msg = 'The RoundTo operator accepts 1 operand with single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         // Accept only numerical operands.
         if (!$operands->exclusivelyNumeric()) {
-            $msg = "The RoundTo operand accepts 1 operand with numerical baseType.";
+            $msg = 'The RoundTo operand accepts 1 operand with numerical baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -112,12 +100,12 @@ class RoundToProcessor extends OperatorProcessor
         $roundingMode = $this->getExpression()->getRoundingMode();
         $figures = $this->getExpression()->getFigures();
 
-        if (gettype($figures) === 'string') {
+        if (is_string($figures)) {
             // try to recover the value from the state.
             $figuresIdentifier = ExprUtils::sanitizeVariableRef($figures);
             $figures = $state[$figuresIdentifier];
 
-            if (is_null($figures)) {
+            if ($figures === null) {
                 $msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$figures instanceof QtiInteger) {
@@ -139,12 +127,12 @@ class RoundToProcessor extends OperatorProcessor
             }
 
             $d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
-            $power = $figures - intval($d);
+            $power = $figures - (int)$d;
 
-            $magnitude = pow(10, $power);
+            $magnitude = 10 ** $power;
             $shifted = round($operand->getValue() * $magnitude);
 
-            return new QtiFloat(floatval($shifted / $magnitude));
+            return new QtiFloat((float)($shifted / $magnitude));
         } else {
             // As per QTI 2.1 spec.
             if ($figures < 0) {
@@ -154,5 +142,13 @@ class RoundToProcessor extends OperatorProcessor
 
             return new QtiFloat(round($operand->getValue(), $figures));
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return RoundTo::class;
     }
 }

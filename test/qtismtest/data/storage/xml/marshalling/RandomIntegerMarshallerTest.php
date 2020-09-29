@@ -3,9 +3,13 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\RandomInteger;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RandomIntegerMarshallerTest
+ */
 class RandomIntegerMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -17,7 +21,7 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals($min . '', $element->getAttribute('min'));
         $this->assertEquals($max, $element->getAttribute('max'));
         $this->assertEquals($step . '', $element->getAttribute('step'));
@@ -32,7 +36,7 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\RandomInteger', $component);
+        $this->assertInstanceOf(RandomInteger::class, $component);
         $this->assertEquals($component->getMin(), 3);
         $this->assertEquals($component->getMax(), '{tplVariable1}');
         $this->assertEquals($component->getStep(), 2);

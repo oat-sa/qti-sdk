@@ -37,6 +37,7 @@ class TablePartMarshaller extends Marshaller
      *
      * @param QtiComponent $component A TBody/Thead/Tfoot object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -48,7 +49,7 @@ class TablePartMarshaller extends Marshaller
             $element->appendChild($marshaller->marshall($tr));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -58,12 +59,13 @@ class TablePartMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Tbody/Thead/Tfoot object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         $trs = new TrCollection();
-        foreach (self::getChildElementsByTagName($element, 'tr') as $trElt) {
+        foreach ($this->getChildElementsByTagName($element, 'tr') as $trElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($trElt);
             $trs[] = $marshaller->unmarshall($trElt);
         }
@@ -82,7 +84,7 @@ class TablePartMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

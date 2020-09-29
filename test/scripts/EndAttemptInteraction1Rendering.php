@@ -3,7 +3,7 @@
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
 $doc->load('../samples/rendering/endattemptinteraction_1.xml');

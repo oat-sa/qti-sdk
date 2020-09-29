@@ -40,7 +40,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * The maximum number of choices this choice may be associated with.
      * If matchMax is 0 there is no restriction.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $matchMax;
@@ -53,7 +53,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * associate this choice with any others at all. matchMin must be less than or
      * equal to the limit imposed by matchMax.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $matchMin = 0;
@@ -63,7 +63,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var Shape
+     * @var QtiShape
      * @qtism-bean-property
      */
     private $shape;
@@ -73,7 +73,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * The size and position of the hotspot, interpreted in conjunction with the shape.
      *
-     * @var Coords
+     * @var QtiCoords
      * @qtism-bean-property
      */
     private $coords;
@@ -94,9 +94,9 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * Create a new AssociableHotspot object.
      *
      * @param string $identifier The identifier of the associableHotspot.
-     * @param integer $matchMax The matchMax attribute.
-     * @param integer $shape A value of the Shape enumeration.
-     * @param Coords $coords The coords of the associableHotspot.
+     * @param int $matchMax The matchMax attribute.
+     * @param int $shape A value of the Shape enumeration.
+     * @param QtiCoords $coords The coords of the associableHotspot.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -114,12 +114,12 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Set the matchMax of the associableHotspot.
      *
-     * @param integer $matchMax A positive (>= 0) integer.
+     * @param int $matchMax A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMax is not a positive integer.
      */
     public function setMatchMax($matchMax)
     {
-        if (is_int($matchMax) === true && $matchMax >= 0) {
+        if (is_int($matchMax) && $matchMax >= 0) {
             $this->matchMax = $matchMax;
         } else {
             $msg = "The 'matchMax' argument must be a positive integer, '" . gettype($matchMax) . "' given.";
@@ -130,7 +130,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Get the matchMax of the associableHotspot.
      *
-     * @return integer A positive integer.
+     * @return int A positive integer.
      */
     public function getMatchMax()
     {
@@ -140,12 +140,12 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Set the matchMin of the associableHotspot.
      *
-     * @param integer $matchMin A positive (>= 0) integer.
+     * @param int $matchMin A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMin is not a positive integer.
      */
     public function setMatchMin($matchMin)
     {
-        if (is_int($matchMin) === true && $matchMin >= 0) {
+        if (is_int($matchMin) && $matchMin >= 0) {
             $this->matchMin = $matchMin;
         } else {
             $msg = "The 'matchMin' argument must be a positive integer, '" . gettype($matchMin) . "' given.";
@@ -156,7 +156,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Get the matchMin of the associableHotspot.
      *
-     * @return integer
+     * @return int
      */
     public function getMatchMin()
     {
@@ -166,11 +166,11 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Set the shape of the associableHotspot.
      *
-     * @param integer $shape A value from the Shape enumeration.
+     * @param int $shape A value from the Shape enumeration.
      */
     public function setShape($shape)
     {
-        if (in_array($shape, QtiShape::asArray(), true) === true) {
+        if (in_array($shape, QtiShape::asArray(), true)) {
             $this->shape = $shape;
         } else {
             $msg = "The 'shape' argument must be a value from the Shape enumeration, '" . $shape . "' given.";
@@ -181,7 +181,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Get the shape of the associableHotspot.
      *
-     * @return Shape A Shape object.
+     * @return QtiShape A Shape object.
      */
     public function getShape()
     {
@@ -191,7 +191,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Set the coords of the associableHotspot.
      *
-     * @param Coords $coords A Coords object.
+     * @param QtiCoords $coords A Coords object.
      */
     public function setCoords(QtiCoords $coords)
     {
@@ -201,7 +201,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Get the coords of the associableHotspot.
      *
-     * @return Coords A Coords object.
+     * @return QtiCoords A Coords object.
      */
     public function getCoords()
     {
@@ -237,7 +237,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * Whether or not the associableHotspot has an hotspotLabel.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHotspotLabel()
     {
@@ -245,7 +245,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -253,7 +253,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

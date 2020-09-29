@@ -11,6 +11,9 @@ use qtism\data\content\xhtml\A;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PromptMarshallerTest
+ */
 class PromptMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -33,7 +36,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Prompt', $component);
+        $this->assertInstanceOf(Prompt::class, $component);
         $this->assertEquals('my-prompt', $component->getId());
         $this->assertEquals('qti-prompt', $component->getClass());
 

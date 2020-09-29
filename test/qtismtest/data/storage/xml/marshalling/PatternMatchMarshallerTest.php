@@ -3,12 +3,16 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\PatternMatch;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PatternMatchMarshallerTest
+ */
 class PatternMatchMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -16,13 +20,13 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         $subs = new ExpressionCollection();
         $subs[] = new BaseValue(BaseType::STRING, 'Hello World');
 
-        $pattern = "^Hello World$";
+        $pattern = '^Hello World$';
 
         $component = new PatternMatch($subs, $pattern);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('patternMatch', $element->nodeName);
         $this->assertEquals($pattern, $element->getAttribute('pattern'));
         $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
@@ -43,7 +47,7 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\PatternMatch', $component);
+        $this->assertInstanceOf(PatternMatch::class, $component);
         $this->assertEquals('^Hello World$', $component->getPattern());
         $this->assertEquals(1, count($component->getExpressions()));
     }

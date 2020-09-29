@@ -24,6 +24,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
 use qtism\data\state\MatchTableEntry;
@@ -41,14 +42,14 @@ class MatchTableEntryMarshaller extends Marshaller
     /**
      * The baseType of the expected targetValue.
      *
-     * @var integer
+     * @var int
      */
     private $baseType;
 
     /**
      * Get the baseType of the expected targetValue.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     protected function getBaseType()
     {
@@ -58,7 +59,7 @@ class MatchTableEntryMarshaller extends Marshaller
     /**
      * Set the base type of the expected targetValue.
      *
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
     protected function setBaseType($baseType)
@@ -66,7 +67,7 @@ class MatchTableEntryMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -76,8 +77,8 @@ class MatchTableEntryMarshaller extends Marshaller
      * has a specific constructor because its parameteric. It needs to know
      * the baseType of its targetValue, which is defined by its parent variableDeclaration.
      *
-     * @param string $version
-     * @param integer $baseType A value from the BaseType enumeration.
+     * @param string $version The QTI version number on which the Marshaller has to operate e.g. '2.1'.
+     * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
      */
     public function __construct($version, $baseType = -1)
@@ -96,8 +97,8 @@ class MatchTableEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
-        self::setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
+        $this->setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
+        $this->setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
 
         return $element;
     }
@@ -111,11 +112,9 @@ class MatchTableEntryMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($sourceValue = static::getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
-            if (($targetValue = static::getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
-                $object = new MatchTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()), $this->getBaseType());
-
-                return $object;
+        if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
+            if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
+                return new MatchTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()), $this->getBaseType());
             } else {
                 $msg = "The mandatory attribute 'targetValue' is missing.";
                 throw new InvalidArgumentException($msg, $element);
@@ -127,7 +126,7 @@ class MatchTableEntryMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

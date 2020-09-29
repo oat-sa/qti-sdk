@@ -7,14 +7,17 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\MediaInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MediaInteractionMarshallerTest
+ */
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $object = new QtiObject('my-video.mp4', 'video/mp4');
+        $object = new ObjectElement('my-video.mp4', 'video/mp4');
         $object->setWidth(400);
         $object->setHeight(300);
 
@@ -44,7 +47,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\MediaInteraction', $component);
+        $this->assertInstanceOf(MediaInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-media', $component->getId());
         $this->assertFalse($component->mustAutostart());

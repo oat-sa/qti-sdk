@@ -38,14 +38,14 @@ class RepeatMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a Repeat object into a QTI repeat element.
      *
-     * @param QtiComponent The Repeat object to marshall.
-     * @param array An array of child DOMEelement objects.
+     * @param QtiComponent $component The Repeat object to marshall.
+     * @param array $elements An array of child DOMElement objects.
      * @return DOMElement The marshalled QTI repeat element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'numberRepeats', $component->getNumberRepeats());
+        $this->setDOMElementAttribute($element, 'numberRepeats', $component->getNumberRepeats());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -64,14 +64,12 @@ class RepeatMarshaller extends OperatorMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($numberRepeats = static::getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
+        if (($numberRepeats = $this->getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
             if (Format::isInteger($numberRepeats)) {
-                $numberRepeats = intval($numberRepeats);
+                $numberRepeats = (int)$numberRepeats;
             }
 
-            $object = new Repeat($children, $numberRepeats);
-
-            return $object;
+            return new Repeat($children, $numberRepeats);
         } else {
             $msg = "The mandatory attribute 'numberRepeats' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

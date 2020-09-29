@@ -115,7 +115,6 @@ abstract class BodyElement extends QtiComponent
      */
     private $ariaOwns = '';
 
-
     /**
      * @var string
      * @qtism-bean-property
@@ -180,7 +179,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function setId($id = '')
     {
-        if (is_string($id) && (empty($id) === true || Format::isIdentifier($id, false) === true)) {
+        if (is_string($id) && (empty($id) || Format::isIdentifier($id, false) === true)) {
             $this->id = $id;
         } else {
             $msg = "The 'id' argument of a body element must be a valid identifier or an empty string";
@@ -191,7 +190,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value is defined for the id attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasId()
     {
@@ -217,7 +216,7 @@ abstract class BodyElement extends QtiComponent
     public function setClass($class = '')
     {
         $class = trim($class);
-        if (is_string($class) && (empty($class) === true || Format::isClass($class) === true)) {
+        if (is_string($class) && (empty($class) || Format::isClass($class) === true)) {
             $this->class = $class;
         } else {
             $msg = "The 'class' argument must be a valid class name, '" . $class . "' given";
@@ -228,7 +227,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Wehther a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -258,7 +257,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value for the lang attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLang()
     {
@@ -294,7 +293,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * Whether a value is defined for the label attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLabel()
     {
@@ -474,7 +473,7 @@ abstract class BodyElement extends QtiComponent
             throw new InvalidArgumentException($msg);
         }
 
-        $this->ariaLevel = strval($ariaLevel);
+        $this->ariaLevel = (string)$ariaLevel;
     }
 
     /**

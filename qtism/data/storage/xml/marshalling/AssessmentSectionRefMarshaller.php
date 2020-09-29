@@ -37,12 +37,14 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
      *
      * @param QtiComponent $component An AssessmentSectionRef object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         return $element;
     }
@@ -53,12 +55,13 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An AssessmentSectionRef object.
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($href = static::getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
+        if (($href = $this->getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
             $object = new AssessmentSectionRef($baseComponent->getIdentifier(), $href);
             $object->setRequired($baseComponent->isRequired());
             $object->setFixed($baseComponent->isFixed());
@@ -75,7 +78,7 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

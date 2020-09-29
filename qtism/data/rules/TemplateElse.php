@@ -24,6 +24,7 @@
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The QTI templateElse class.
@@ -69,7 +70,7 @@ class TemplateElse extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return mixed|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -77,7 +78,7 @@ class TemplateElse extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

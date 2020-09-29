@@ -37,17 +37,16 @@ class ColMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Col object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('col');
 
         if ($component->getSpan() !== 1) {
-            self::setDOMElementAttribute($element, 'span', $component->getSpan());
+            $this->setDOMElementAttribute($element, 'span', $component->getSpan());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -63,7 +62,7 @@ class ColMarshaller extends Marshaller
     {
         $component = new Col();
 
-        if (($span = self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = $this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 
@@ -73,7 +72,7 @@ class ColMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

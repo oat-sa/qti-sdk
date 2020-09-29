@@ -9,6 +9,9 @@ use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateInlineMarshallerTest
+ */
 class TemplateInlineMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -30,7 +33,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\TemplateInline', $component);
+        $this->assertInstanceOf(TemplateInline::class, $component);
         $this->assertEquals('tpl1', $component->getTemplateIdentifier());
         $this->assertEquals('inline1', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());

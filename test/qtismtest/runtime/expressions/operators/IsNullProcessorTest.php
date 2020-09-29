@@ -8,13 +8,18 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\IsNullProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class IsNullProcessorTest
+ */
 class IsNullProcessorTest extends QtiSmTestCase
 {
     public function testWithEmptyString()
@@ -90,7 +95,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     public function testLessThanNeededOperands()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
 
         $operands = new OperandsCollection();
         $expression = $this->getFakeExpression();
@@ -100,7 +105,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     public function testMoreThanNeededOperands()
     {
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
 
         $operands = new OperandsCollection([new QtiInteger(25), null]);
         $expression = $this->getFakeExpression();
@@ -108,14 +113,15 @@ class IsNullProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
+    /**
+     * @return QtiComponent
+     */
     private function getFakeExpression()
     {
-        $expression = $this->createComponentFromXml('
+        return $this->createComponentFromXml('
 			<isNull>
 				<baseValue baseType="string"></baseValue>
 			</isNull>
 		');
-
-        return $expression;
     }
 }

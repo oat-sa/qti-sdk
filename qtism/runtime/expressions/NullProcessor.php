@@ -23,7 +23,6 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\data\expressions\Expression;
 use qtism\data\expressions\NullValue;
 
 /**
@@ -36,16 +35,6 @@ use qtism\data\expressions\NullValue;
  */
 class NullProcessor extends ExpressionProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NullValue) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NullProcessor class only processes NullValue QTI Data Model objects.";
-            throw new InvalidArgumentException();
-        }
-    }
-
     /**
      * Returns NULL.
      *
@@ -54,5 +43,13 @@ class NullProcessor extends ExpressionProcessor
     public function process()
     {
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpressionType()
+    {
+        return NullValue::class;
     }
 }

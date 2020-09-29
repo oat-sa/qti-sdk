@@ -12,6 +12,9 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderInteractionMarshallerTest
+ */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -46,7 +49,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\OrderInteraction', $component);
+        $this->assertInstanceOf(OrderInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());

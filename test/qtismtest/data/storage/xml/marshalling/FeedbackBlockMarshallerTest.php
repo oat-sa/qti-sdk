@@ -10,12 +10,15 @@ use qtism\data\content\xhtml\text\Div;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class FeedbackBlockMarshallerTest
+ */
 class FeedbackBlockMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
         $div = new Div();
-        $div->setContent(new FlowCollection([new TextRun("This is text...")]));
+        $div->setContent(new FlowCollection([new TextRun('This is text...')]));
         $content = new FlowCollection();
         $content[] = $div;
         $feedback = new FeedbackBlock('outcome1', 'please_show_me', ShowHide::SHOW);
@@ -35,7 +38,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\FeedbackBlock', $component);
+        $this->assertInstanceOf(FeedbackBlock::class, $component);
         $this->assertEquals('outcome1', $component->getOutcomeIdentifier());
         $this->assertEquals('please_show_me', $component->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
@@ -43,7 +46,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $content = $component->getContent();
         $this->assertEquals(1, count($content));
         $div = $content[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Div', $div);
+        $this->assertInstanceOf(Div::class, $div);
 
         $divContent = $div->getContent();
         $this->assertEquals(1, count($divContent));

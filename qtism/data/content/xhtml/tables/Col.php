@@ -35,7 +35,7 @@ class Col extends BodyElement
     /**
      * The span attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $span = 1;
@@ -58,12 +58,12 @@ class Col extends BodyElement
     /**
      * Set the span attribute.
      *
-     * @param integer $span A strictly positive integer.
+     * @param int $span A strictly positive integer.
      * @throws InvalidArgumentException If $span is not a positive integer.
      */
     public function setSpan($span)
     {
-        if (is_int($span) === true && $span > 0) {
+        if (is_int($span) && $span > 0) {
             $this->span = $span;
         } else {
             $msg = "The 'span' attribute must be a strictly positive (> 0) integer, '" . gettype($span) . "' given.";
@@ -74,7 +74,7 @@ class Col extends BodyElement
     /**
      * Get the span attribute.
      *
-     * @return integer A strictly positive integer.
+     * @return int A strictly positive integer.
      */
     public function getSpan()
     {
@@ -82,7 +82,7 @@ class Col extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -90,7 +90,7 @@ class Col extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

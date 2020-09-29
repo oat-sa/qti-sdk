@@ -6,6 +6,9 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\BaseValueProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BaseValueProcessorTest
+ */
 class BaseValueProcessorTest extends QtiSmTestCase
 {
     public function testBaseValue()

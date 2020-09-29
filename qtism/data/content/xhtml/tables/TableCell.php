@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\BodyElement;
 use qtism\data\content\FlowCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -47,7 +48,7 @@ abstract class TableCell extends BodyElement
     /**
      * The XHTML scope attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $scope = -1;
@@ -71,7 +72,7 @@ abstract class TableCell extends BodyElement
     /**
      * The XHTML rowspan attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $rowspan = -1;
@@ -79,7 +80,7 @@ abstract class TableCell extends BodyElement
     /**
      * The XHTML colspan attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $colspan = -1;
@@ -136,7 +137,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether at least one value is defined for the headers attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHeaders()
     {
@@ -146,12 +147,12 @@ abstract class TableCell extends BodyElement
     /**
      * Set the scope attribute.
      *
-     * @param integer $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
+     * @param int $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
      * @throws InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
      */
     public function setScope($scope)
     {
-        if (in_array($scope, TableCellScope::asArray(), true) === true || $scope === -1) {
+        if (in_array($scope, TableCellScope::asArray(), true) || $scope === -1) {
             $this->scope = $scope;
         } else {
             $msg = "The 'scope' argument must be a value from the TableCellScope enumeration, '" . $scope . "' given.";
@@ -162,7 +163,7 @@ abstract class TableCell extends BodyElement
     /**
      * Get the scope attribute.
      *
-     * @return integer A value from the TableCellScope enumeration or -1 if no scope is defined.
+     * @return int A value from the TableCellScope enumeration or -1 if no scope is defined.
      */
     public function getScope()
     {
@@ -172,7 +173,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a scope is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasScope()
     {
@@ -187,7 +188,7 @@ abstract class TableCell extends BodyElement
      */
     public function setAbbr($abbr)
     {
-        if (is_string($abbr) === true) {
+        if (is_string($abbr)) {
             $this->abbr = $abbr;
         } else {
             $msg = "The 'abbr' attribute must be a string, '" . gettype($abbr) . "' given.";
@@ -208,7 +209,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value for the attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAbbr()
     {
@@ -223,7 +224,7 @@ abstract class TableCell extends BodyElement
      */
     public function setAxis($axis)
     {
-        if (is_string($axis) === true) {
+        if (is_string($axis)) {
             $this->axis = $axis;
         } else {
             $msg = "The 'axis' argument must be a string, '" . gettype($axis) . "' given.";
@@ -244,7 +245,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value is defined for the axis attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAxis()
     {
@@ -255,12 +256,12 @@ abstract class TableCell extends BodyElement
      * Set the value of the rowspan attribute. Give a negative value if
      * no rowspan attribute is set.
      *
-     * @param integer $rowspan
+     * @param int $rowspan
      * @throws InvalidArgumentException If $rowspan is not an integer.
      */
     public function setRowspan($rowspan)
     {
-        if (is_int($rowspan) === true) {
+        if (is_int($rowspan)) {
             $this->rowspan = $rowspan;
         } else {
             $msg = "The 'rowspan' argument must be an integer, '" . gettype($rowspan) . "' given.";
@@ -272,7 +273,7 @@ abstract class TableCell extends BodyElement
      * Get the value of the rowspan attribute. A negative value indicates that
      * no rowspan attribute is set.
      *
-     * @return integer
+     * @return int
      */
     public function getRowspan()
     {
@@ -282,7 +283,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value for the rowspan attribute is set.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRowspan()
     {
@@ -293,12 +294,12 @@ abstract class TableCell extends BodyElement
      * Set the colspan attribute. Give a negative integer to indicate that
      * no colspan is set.
      *
-     * @param integer $colspan An integer.
+     * @param int $colspan An integer.
      * @throws InvalidArgumentException If $colspan is not an integer.
      */
     public function setColspan($colspan)
     {
-        if (is_int($colspan) === true) {
+        if (is_int($colspan)) {
             $this->colspan = $colspan;
         } else {
             $msg = "The 'colspan' argument must be an integer, '" . gettype($colspan) . "' given.";
@@ -310,7 +311,7 @@ abstract class TableCell extends BodyElement
      * Get the colspan attribute. A negative value indicates that no colspan
      * is set.
      *
-     * @return integer
+     * @return int
      */
     public function getColspan()
     {
@@ -320,7 +321,7 @@ abstract class TableCell extends BodyElement
     /**
      * Whether a value for the colspan attribute is set.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasColspan()
     {
@@ -348,7 +349,7 @@ abstract class TableCell extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return FlowCollection|QtiComponentCollection
      */
     public function getComponents()
     {

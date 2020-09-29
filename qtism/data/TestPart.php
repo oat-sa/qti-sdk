@@ -28,14 +28,14 @@ use qtism\common\utils\Format;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
 use SplObjectStorage;
-use SplObserver;
 
 /**
- *
  * The TestPart class.
  */
 class TestPart extends QtiComponent implements QtiIdentifiable
 {
+    use QtiIdentifiableTrait;
+
     /**
      * From IMS QTI:
      *
@@ -125,13 +125,6 @@ class TestPart extends QtiComponent implements QtiIdentifiable
      * @qtism-bean-property
      */
     private $testFeedbacks;
-
-    /**
-     * The observers of this object.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers;
 
     /**
      * Create a new instance of TestPart.
@@ -298,11 +291,11 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the TestPart holds an ItemSessionControl object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItemSessionControl()
     {
-        return is_null($this->getItemSessionControl()) === false;
+        return $this->getItemSessionControl() !== null;
     }
 
     /**
@@ -330,11 +323,11 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the TestPart holds a TimeLimits object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {
-        return is_null($this->getTimeLimits()) === false;
+        return $this->getTimeLimits() !== null;
     }
 
     /**
@@ -359,7 +352,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
             // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
             foreach ($assessmentSections as $assessmentSection) {
                 if (!$assessmentSection instanceof AssessmentSection && !$assessmentSection instanceof AssessmentSectionRef) {
-                    $msg = "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.";
+                    $msg = 'A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.';
                     throw new InvalidArgumentException($msg);
                 }
             }
@@ -391,11 +384,17 @@ class TestPart extends QtiComponent implements QtiIdentifiable
         $this->testFeedbacks = $testFeedbacks;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'testPart';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(
@@ -416,53 +415,8 @@ class TestPart extends QtiComponent implements QtiIdentifiable
         return new QtiComponentCollection($comp);
     }
 
-    /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
+    public function __clone()
     {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
+        $this->setObservers(new SplObjectStorage());
     }
 }

@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\QtiObject;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -46,9 +46,9 @@ class GapImg extends GapChoice
     private $objectLabel = '';
 
     /**
-     * The image as an Object object.
+     * The image as an ObjectElement object.
      *
-     * @var Object
+     * @var ObjectElement
      * @qtism-bean-property
      */
     private $object;
@@ -57,15 +57,15 @@ class GapImg extends GapChoice
      * Create a new GapImg object.
      *
      * @param string $identifier The identifier of the response associated to the GapImg object.
-     * @param integer $matchMax The maximum number of choice association.
-     * @param Object $object An image as an Object object.
+     * @param int $matchMax The maximum number of choice association.
+     * @param ObjectElement $object An image as an ObjectElement object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $matchMax, QtiObject $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($identifier, $matchMax, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
         $this->setObject($object);
@@ -81,7 +81,7 @@ class GapImg extends GapChoice
      */
     public function setObjectLabel($objectLabel)
     {
-        if (is_string($objectLabel) === true) {
+        if (is_string($objectLabel)) {
             $this->objectLabel = $objectLabel;
         } else {
             $msg = "The 'objectLabel' argument must be a string, '" . gettype($objectLabel) . "' given.";
@@ -103,7 +103,7 @@ class GapImg extends GapChoice
     /**
      * Whether a value is defined for the 'objectLabel' attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasObjectLabel()
     {
@@ -111,19 +111,19 @@ class GapImg extends GapChoice
     }
 
     /**
-     * Set the Object representing the GapImg's image.
+     * Set the ObjectElement representing the GapImg's image.
      *
-     * @param Object $object An Object object.
+     * @param ObjectElement $object An ObjectElement object.
      */
-    public function setObject(QtiObject $object)
+    public function setObject(ObjectElement $object)
     {
         $this->object = $object;
     }
 
     /**
-     * Get the Object representing the GapImg's image.
+     * Get the ObjectElement representing the GapImg's image.
      *
-     * @return Object An Object object.
+     * @return ObjectElement An ObjectElement object.
      */
     public function getObject()
     {
@@ -131,7 +131,7 @@ class GapImg extends GapChoice
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -139,7 +139,7 @@ class GapImg extends GapChoice
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

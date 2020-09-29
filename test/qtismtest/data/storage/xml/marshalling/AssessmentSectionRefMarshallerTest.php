@@ -3,9 +3,13 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\AssessmentSectionRef;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentSectionRefMarshallerTest
+ */
 class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -17,7 +21,7 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentSectionRef', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($href, $element->getAttribute('href'));
@@ -32,7 +36,7 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $component);
+        $this->assertInstanceOf(AssessmentSectionRef::class, $component);
         $this->assertEquals($component->getIdentifier(), 'mySectionRef');
         $this->assertEquals($component->getHref(), 'http://www.rdfabout.com');
     }

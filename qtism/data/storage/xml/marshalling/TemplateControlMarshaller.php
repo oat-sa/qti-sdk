@@ -38,6 +38,7 @@ use qtism\data\rules\TemplateElseIf;
 use qtism\data\rules\TemplateIf;
 use qtism\data\rules\TemplateRuleCollection;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * Unmarshalling/Marshalling implementation focusing on the components composing
@@ -46,11 +47,16 @@ use ReflectionClass;
 class TemplateControlMarshaller extends RecursiveMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
+     * @throws ReflectionException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        $expressionElts = self::getChildElementsByTagName($element, Expression::getExpressionClassNames());
+        $expressionElts = $this->getChildElementsByTagName($element, Expression::getExpressionClassNames());
 
         if (count($expressionElts) > 0) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElts[0]);
@@ -74,7 +80,11 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -93,7 +103,8 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     * @param DOMNode $element
+     * @return bool
      */
     protected function isElementFinal(DOMNode $element)
     {
@@ -107,7 +118,8 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     * @param QtiComponent $component
+     * @return bool
      */
     protected function isComponentFinal(QtiComponent $component)
     {
@@ -119,11 +131,12 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     * @param DOMElement $element
+     * @return array
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, [
+        return $this->getChildElementsByTagName($element, [
             'exitTemplate',
             'setDefaultValue',
             'setCorrectResponse',
@@ -134,7 +147,8 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     * @param QtiComponent $component
+     * @return array
      */
     protected function getChildrenComponents(QtiComponent $component)
     {
@@ -142,7 +156,8 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     * @param DOMElement $currentNode
+     * @return TemplateRuleCollection
      */
     protected function createCollection(DOMElement $currentNode)
     {
@@ -150,7 +165,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

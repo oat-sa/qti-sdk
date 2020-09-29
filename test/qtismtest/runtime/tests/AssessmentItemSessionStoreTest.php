@@ -8,6 +8,9 @@ use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentItemSessionStoreTest
+ */
 class AssessmentItemSessionStoreTest extends QtiSmTestCase
 {
     public function testHasMultipleOccurences()

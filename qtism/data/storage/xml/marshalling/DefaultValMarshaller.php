@@ -42,7 +42,7 @@ class DefaultValMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         return $element;
     }
@@ -56,10 +56,8 @@ class DefaultValMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
-            $object = new DefaultVal($identifier);
-
-            return $object;
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+            return new DefaultVal($identifier);
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
@@ -67,7 +65,7 @@ class DefaultValMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

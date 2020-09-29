@@ -38,6 +38,8 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component A ResponseDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -67,6 +69,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A ResponseDeclaration object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -78,21 +81,21 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
-            $correctResponseElts = self::getChildElementsByTagName($element, 'correctResponse');
+            $correctResponseElts = $this->getChildElementsByTagName($element, 'correctResponse');
             if (count($correctResponseElts) === 1) {
                 $correctResponseElt = $correctResponseElts[0];
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($correctResponseElt, [$baseComponent->getBaseType()]);
                 $object->setCorrectResponse($marshaller->unmarshall($correctResponseElt));
             }
 
-            $mappingElts = self::getChildElementsByTagName($element, 'mapping');
+            $mappingElts = $this->getChildElementsByTagName($element, 'mapping');
             if (count($mappingElts) === 1) {
                 $mappingElt = $mappingElts[0];
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($mappingElt, [$baseComponent->getBaseType()]);
                 $object->setMapping($marshaller->unmarshall($mappingElt));
             }
 
-            $areaMappingElts = self::getChildElementsByTagName($element, 'areaMapping');
+            $areaMappingElts = $this->getChildElementsByTagName($element, 'areaMapping');
             if (count($areaMappingElts) === 1) {
                 $areaMappingElt = $areaMappingElts[0];
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($areaMappingElt);
@@ -101,13 +104,13 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the responseDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the responseDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

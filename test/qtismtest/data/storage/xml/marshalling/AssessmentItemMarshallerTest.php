@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\AssessmentItem;
@@ -12,6 +13,9 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentItemMarshallerTest
+ */
 class AssessmentItemMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
@@ -31,7 +35,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($assessmentItem);
         $element = $marshaller->marshall($assessmentItem);
 
-        $this->assertInstanceOf('\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, title, label, toolName, toolVersion
@@ -58,7 +62,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\assessmentItem', $component);
+        $this->assertInstanceOf(AssessmentItem::class, $component);
         $this->assertEquals('Q01', $component->getIdentifier());
         $this->assertEquals('Test Item', $component->getTitle());
         $this->assertEquals(false, $component->isTimeDependent());
@@ -96,7 +100,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($item);
         $element = $marshaller->marshall($item);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, lang, title
@@ -136,7 +140,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\assessmentItem', $component);
+        $this->assertInstanceOf(AssessmentItem::class, $component);
         $this->assertEquals('Q01', $component->getIdentifier());
         $this->assertEquals('test item', $component->getTitle());
         $this->assertEquals(false, $component->isTimeDependent());
