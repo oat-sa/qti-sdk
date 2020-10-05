@@ -56,7 +56,7 @@ class SessionStatus implements Enumeration
      * The values of the outcome variables represent the values assigned during response processing at the end of the previous attempt or,
      * in the case of the first attempt, the default values given in the variable declarations.
      */
-    const STATUS_PENDING_SUBMISSON = 3;
+    const STATUS_PENDING_SUBMISSION = 3;
 
     /**
      * Get the array representation of SessionStatuses
@@ -66,10 +66,10 @@ class SessionStatus implements Enumeration
     public static function asArray()
     {
         return [
-            self::STATUS_FINAL,
-            self::STATUS_INITIAL,
-            self::STATUS_PENDING_RESPONSE_PROCESSING,
-            self::STATUS_PENDING_SUBMISSON,
+            'STATUS_FINAL' => self::STATUS_FINAL,
+            'STATUS_INITIAL' => self::STATUS_INITIAL,
+            'STATUS_PENDING_RESPONSE_PROCESSING' => self::STATUS_PENDING_RESPONSE_PROCESSING,
+            'STATUS_PENDING_SUBMISSION' => self::STATUS_PENDING_SUBMISSION,
         ];
     }
 
@@ -82,7 +82,7 @@ class SessionStatus implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch ($name) {
+        switch (strtolower($name)) {
             case 'final':
                 return self::STATUS_FINAL;
                 break;
@@ -91,12 +91,12 @@ class SessionStatus implements Enumeration
                 return self::STATUS_INITIAL;
                 break;
 
-            case 'pendingResponseProcessing':
+            case 'pendingresponseprocessing':
                 return self::STATUS_PENDING_RESPONSE_PROCESSING;
                 break;
 
-            case 'pendingSubmission':
-                return self::STATUS_PENDING_SUBMISSON;
+            case 'pendingsubmission':
+                return self::STATUS_PENDING_SUBMISSION;
                 break;
 
             default:
@@ -127,7 +127,7 @@ class SessionStatus implements Enumeration
                 return 'pendingResponseProcessing';
                 break;
 
-            case self::STATUS_PENDING_SUBMISSON:
+            case self::STATUS_PENDING_SUBMISSION:
                 return 'pendingSubmission';
                 break;
 
