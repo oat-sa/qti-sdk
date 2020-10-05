@@ -90,7 +90,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
             "mime" : "%s", 
             "data" : "%s", 
             "name" : "%s" } } }',
-            FileHash::FILE_HASh_KEY,
+            FileHash::FILE_HASH_KEY,
             $mimeType,
             base64_encode($sha256),
             $filename            

@@ -15,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -39,7 +39,7 @@ class FileHash implements QtiFile
      * Key to use in json payload to trigger the storage of a file hash instead
      * of a hash.
      */
-    const FILE_HASh_KEY = 'fileHash';
+    const FILE_HASH_KEY = 'fileHash';
 
     /**
      * The hash of the file contents.
@@ -63,7 +63,7 @@ class FileHash implements QtiFile
     private $filename;
 
     /**
-     * Create a new PersistentFile object.
+     * Create a new FileHash object.
      *
      * @param string $hash The hash of the file.
      * @param string $mimeType The mime-type of the file.
