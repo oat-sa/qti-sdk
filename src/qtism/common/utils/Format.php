@@ -25,6 +25,7 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
+use InvalidArgumentException;
 
 /**
  * A utility class focusing on string format checks.
@@ -274,18 +275,31 @@ class Format
      */
     public static function isBoolean($string)
     {
-        if (is_string($string)) {
-            $string = self::toLowerTrim($string);
-            if ($string == 'true') {
-                return true;
-            } elseif ($string == 'false') {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if (!is_string($string)) {
             return false;
         }
+
+        $string = self::toLowerTrim($string);
+        return $string === 'true' || $string === 'false';
+    }
+
+    /**
+     * Transforms a string into a boolean.
+     * Only strings that can be read as "true" or "false" are converted.
+     *
+     * @param mixed $string
+     * @return bool
+     */
+    public static function stringToBoolean($string): bool
+    {
+        if (!self::isBoolean($string)) {
+            $given = is_string($string)
+                ? $string
+                : gettype($string);
+            throw new InvalidArgumentException('String value "true" or "false" expected, "' . $given . '" given.');
+        }
+
+        return self::toLowerTrim($string) === 'true';
     }
 
     /**
@@ -614,5 +628,18 @@ class Format
         }
 
         return true;
+    }
+
+    /**
+     * @param string $string
+     * @return bool
+     */
+    public static function isMimeType($string): bool
+    {
+        if (!is_string($string)) {
+            return false;
+        }
+
+        return preg_match('/^[-a-z]+\/[-+\.a-z0-9]+$/', $string) === 1;
     }
 }
