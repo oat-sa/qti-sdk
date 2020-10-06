@@ -2,6 +2,7 @@
 
 namespace qtismtest\common\utils;
 
+use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtismtest\QtiSmTestCase;
 use stdClass;
@@ -72,6 +73,15 @@ class FormatTest extends QtiSmTestCase
     public function testValidUriFormat($string)
     {
         $this->assertTrue(Format::isUri($string));
+    }
+
+    /**
+     * @dataProvider invalidUriFormatProvider
+     * @param string $string
+     */
+    public function testInvalidUriFormat($string)
+    {
+        $this->assertFalse(Format::isUri($string));
     }
 
     /**
@@ -319,6 +329,22 @@ class FormatTest extends QtiSmTestCase
     /**
      * @return array
      */
+    public function invalidUriFormatProvider()
+    {
+        return [
+            // TODO: fix the isUri method because a relative path can be
+            // accepted as a valid URI but not an empty string.
+            // [' '],
+            // ['^'],
+            [12],
+            [true],
+            [['key' => 'value']],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function validClassFormatProvider()
     {
         return [
@@ -544,6 +570,77 @@ class FormatTest extends QtiSmTestCase
             [2.453, true],
             ['1.453', true],
             ['2.453', true],
+        ];
+    }
+
+    /**
+     * @dataProvider stringToBooleanProvider
+     * @param bool $expected
+     * @param string $string
+     */
+    public function testStringToBooleanWithValidValues(bool $expected, string $string)
+    {
+        $this->assertEquals($expected, Format::stringToBoolean($string));
+    }
+
+    public function stringToBooleanProvider(): array
+    {
+        return [
+            [true, "  TrUe"],
+            [false, '  FALSE '],
+            [true, 'true'],
+        ];
+    }
+
+    /**
+     * @dataProvider  stringToBooleanInvalidProvider
+     * @param mixed $string
+     * @param mixed $given
+     */
+    public function testStringToBooleanWithInvalidValues($string, $given = null)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('String value "true" or "false" expected, "' . ($given ?? $string) . '" given.');
+        Format::stringToBoolean($string);
+    }
+
+    public function stringToBooleanInvalidProvider(): array
+    {
+        return [
+            [false, 'boolean'],
+            [''],
+            [78, 'integer'],
+            ['robert'],
+            [[], 'array'],
+        ];
+    }
+
+    /**
+     * @dataProvider isMimeTypeProvider
+     * @param bool $expected
+     * @param mixed $string
+     */
+    public function testIsMimeType(bool $expected, $string)
+    {
+        $this->assertEquals($expected, Format::isMimeType($string));
+    }
+
+    public function isMimeTypeProvider(): array
+    {
+        return [
+            [true, 'video/webm'],
+            [true, 'text/plain'],
+            [true, 'application/octet-stream'],
+            [true, 'audio/ogg'],
+            [true, 'x-conference/x-cooltalk'],
+            [true, 'application/vnd.adobe.air-application-installer-package+zip'],
+            [true, 'image/jpeg'],
+            [true, 'application/rdf+xml'],
+            [false, false],
+            [false, ''],
+            [false, 78],
+            [false, 'robert'],
+            [false, []],
         ];
     }
 }
