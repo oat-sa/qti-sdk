@@ -151,6 +151,14 @@ abstract class Media extends Html5Element
     /**
      * @return bool
      */
+    public function hasAutoPlay(): bool
+    {
+        return $this->autoPlay !== false;
+    }
+
+    /**
+     * @return bool
+     */
     public function getControls(): bool
     {
         return $this->controls;
@@ -171,6 +179,14 @@ abstract class Media extends Html5Element
         }
 
         $this->controls = $controls;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasControls(): bool
+    {
+        return $this->controls !== false;
     }
 
     /**
@@ -205,6 +221,14 @@ abstract class Media extends Html5Element
     /**
      * @return bool
      */
+    public function hasCrossOrigin(): bool
+    {
+        return $this->crossOrigin !== CrossOrigin::ANONYMOUS;
+    }
+
+    /**
+     * @return bool
+     */
     public function getLoop(): bool
     {
         return $this->loop;
@@ -230,6 +254,14 @@ abstract class Media extends Html5Element
     /**
      * @return bool
      */
+    public function hasLoop(): bool
+    {
+        return $this->loop !== false;
+    }
+
+    /**
+     * @return bool
+     */
     public function getMuted(): bool
     {
         return $this->muted;
@@ -250,6 +282,14 @@ abstract class Media extends Html5Element
         }
 
         $this->muted = $muted;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMuted(): bool
+    {
+        return $this->muted !== false;
     }
 
     /**
@@ -279,5 +319,13 @@ abstract class Media extends Html5Element
         }
 
         $this->src = $src;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSrc(): bool
+    {
+        return $this->src !== '';
     }
 }

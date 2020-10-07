@@ -24,11 +24,17 @@ class MediaTest extends QtiSmTestCase
     {
         $subject = new FakeMedia();
 
+        $this->assertFalse($subject->hasAutoPlay());
         $this->assertFalse($subject->getAutoPlay());
+        $this->assertFalse($subject->hasControls());
         $this->assertFalse($subject->getControls());
+        $this->assertFalse($subject->hasCrossOrigin());
         $this->assertEmpty($subject->getCrossOrigin());
+        $this->assertFalse($subject->hasLoop());
         $this->assertFalse($subject->getLoop());
+        $this->assertFalse($subject->hasMuted());
         $this->assertFalse($subject->getMuted());
+        $this->assertFalse($subject->hasSrc());
         $this->assertEmpty($subject->getSrc());
     }
 
@@ -87,11 +93,17 @@ class MediaTest extends QtiSmTestCase
         $subject->setMuted($muted);
         $subject->setSrc($src);
 
+        $this->assertTrue($subject->hasAutoPlay());
         $this->assertEquals($autoplay, $subject->getAutoPlay());
+        $this->assertTrue($subject->hasControls());
         $this->assertEquals($controls, $subject->getControls());
+        $this->assertTrue($subject->hasCrossOrigin());
         $this->assertEquals($crossOrigin, $subject->getCrossOrigin());
+        $this->assertTrue($subject->hasLoop());
         $this->assertEquals($loop, $subject->getLoop());
+        $this->assertTrue($subject->hasMuted());
         $this->assertEquals($muted, $subject->getMuted());
+        $this->assertTrue($subject->hasSrc());
         $this->assertEquals($src, $subject->getSrc());
     }
 
