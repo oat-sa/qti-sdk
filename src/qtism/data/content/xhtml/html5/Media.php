@@ -25,12 +25,20 @@ namespace qtism\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 
 /**
  * All the common features of Html 5 media (audio and video).
  */
 abstract class Media extends Html5Element
 {
+    /**
+     * Contains the collection of sources and tracks.
+     *
+     * @var QtiComponentCollection
+     */
+    private $components;
+
     /**
      * Must the media start automatically?
      *
@@ -72,6 +80,48 @@ abstract class Media extends Html5Element
      * @var string
      */
     private $src = '';
+
+    /**
+     * Create a new BodyElement object.
+     *
+     * @param string $id A QTI identifier.
+     * @param string $class One or more class names separated by spaces.
+     * @param string $lang An RFC3066 language.
+     * @param string $label A label that does not exceed 256 characters.
+     */
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
+        parent::__construct($id, $class, $lang, $label);
+        $this->components = new QtiComponentCollection();
+    }
+
+    /**
+     * @return QtiComponentCollection
+     */
+    public function getComponents(): QtiComponentCollection
+    {
+        return $this->components;
+    }
+
+    /**
+     * Adds a source element.
+     *
+     * @param Source $source
+     */
+    public function addSource(Source $source)
+    {
+        $this->components->attach($source);
+    }
+
+    /**
+     * Adds a track element.
+     *
+     * @param Track $track
+     */
+    public function addTrack(Track $track)
+    {
+        $this->components->attach($track);
+    }
 
     /**
      * @return bool

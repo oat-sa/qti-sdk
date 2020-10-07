@@ -3,12 +3,23 @@
 namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
+use qtism\data\content\xhtml\html5\Audio;
 use qtism\data\content\xhtml\html5\CrossOrigin;
 use qtism\data\content\xhtml\html5\Media;
+use qtism\data\content\xhtml\html5\Source;
+use qtism\data\content\xhtml\html5\Track;
+use qtism\data\QtiComponentCollection;
 use qtismtest\QtiSmTestCase;
 
 class MediaTest extends QtiSmTestCase
 {
+    public function testConstructor()
+    {
+        $subject = new FakeMedia();
+
+        $this->assertEquals(new QtiComponentCollection(), $subject->getComponents());
+    }
+
     public function testCreateWithNoValues()
     {
         $subject = new FakeMedia();
@@ -19,6 +30,44 @@ class MediaTest extends QtiSmTestCase
         $this->assertFalse($subject->getLoop());
         $this->assertFalse($subject->getMuted());
         $this->assertEmpty($subject->getSrc());
+    }
+
+    public function testAddSource()
+    {
+        $src = 'http://example.com/';
+        $source = new Source($src);
+
+        $subject = new Audio();
+
+        $components = $subject->getComponents();
+        $this->assertCount(0, $components);
+
+        $subject->addSource($source);
+
+        $components = $subject->getComponents();
+        $this->assertCount(1, $components);
+        $component = $components[0];
+        $this->assertInstanceOf(Source::class, $component);
+        $this->assertEquals($src, $component->getSrc());
+    }
+
+    public function testAddTrack()
+    {
+        $src = 'http://example.com/';
+        $track = new Track($src);
+
+        $subject = new Audio();
+
+        $components = $subject->getComponents();
+        $this->assertCount(0, $components);
+
+        $subject->addTrack($track);
+
+        $components = $subject->getComponents();
+        $this->assertCount(1, $components);
+        $component = $components[0];
+        $this->assertInstanceOf(Track::class, $component);
+        $this->assertEquals($src, $component->getSrc());
     }
 
     public function testSetters()
@@ -138,10 +187,6 @@ class MediaTest extends QtiSmTestCase
 class FakeMedia extends Media
 {
     public function getQtiClassName()
-    {
-    }
-
-    public function getComponents()
     {
     }
 }
