@@ -334,8 +334,8 @@ class FormatTest extends QtiSmTestCase
         return [
             // TODO: fix the isUri method because a relative path can be
             // accepted as a valid URI but not an empty string.
-            // [' '],
             // ['^'],
+            [''],
             [12],
             [true],
             [['key' => 'value']],

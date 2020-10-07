@@ -74,12 +74,12 @@ class Blockquote extends SimpleBlock
      */
     public function setCite($cite)
     {
-        if (Format::isUri($cite) === true) {
-            $this->cite = $cite;
-        } else {
+        if ($cite !== '' && !Format::isUri($cite)) {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
             throw new InvalidArgumentException($msg);
         }
+
+        $this->cite = $cite;
     }
 
     /**
