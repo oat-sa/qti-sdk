@@ -249,7 +249,7 @@ class Track extends Html5EmptyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

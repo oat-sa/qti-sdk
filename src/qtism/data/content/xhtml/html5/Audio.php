@@ -24,12 +24,12 @@
 namespace qtism\data\content\xhtml\html5;
 
 /**
- * All the common features of Html 5 media (audio and video).
+ * Html 5 Audio element.
  */
 class Audio extends Media
 {
     /**
-     * Preload type. For Audio, this parameter is fixed.
+     * Preload type. For Audio, this parameter is fixed, so no setter.
      *
      * @var int
      */
