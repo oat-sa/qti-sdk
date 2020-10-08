@@ -98,7 +98,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $mimeType = 'text/plain';
         $filename = 'http://some.cloud.storage/path/to/file.txt';
 
-        $expectedFile = new FileHash(base64_encode($sha256), $mimeType, $filename);
+        $expectedFile = new FileHash($sha256, $mimeType, $filename);
 
         $json = sprintf('{ "base" : { "%s" : {
             "mime" : "%s", 

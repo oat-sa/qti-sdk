@@ -376,7 +376,7 @@ class Marshaller
         $data = [
             'base' => [
                 $fileKey => [
-                    'mime' => $file->getMimeType(), 
+                    'mime' => $file->getMimeType(),
                     'data' => base64_encode($file->getData())
                 ]
             ]

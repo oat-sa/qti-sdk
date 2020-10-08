@@ -415,14 +415,14 @@ class Unmarshaller
 
     /**
      * Unmarshall an uploaded file hash JSON PCI representation.
-     * 
+     *
      * This is not a standard QTI feature but a convenience to store only
      * a hash of the file, to avoid storing huge files in the test session.
      * This suppose the following:
-     * * Payload of the file has been previously persisted before.
-     * * "name" key contains the persisted file path with proper wrapper. 
-     * * "data" key contains the hash, not base64_encode'd.
-     * 
+     * * Payload of the file has been persisted before.
+     * * "name" key contains the persisted file path with proper wrapper.
+     * * "data" key contains the hash, base64_encoded.
+     *
      * @see https://www.php.net/manual/de/function.stream-get-wrappers.php
      * to find which wrappers are supported by the current installation.
      *
@@ -438,7 +438,7 @@ class Unmarshaller
         }
 
         return new FileHash(
-            $fileHashArray['data'],
+            base64_decode($fileHashArray['data']),
             $fileHashArray['mime'],
             $fileHashArray['name']
         );
