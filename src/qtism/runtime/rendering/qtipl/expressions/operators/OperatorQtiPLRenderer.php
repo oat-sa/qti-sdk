@@ -93,20 +93,20 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
     public function getSignAsOperatorMap()
     {
         $map = [];
-        $map['and'] = "&&";
-        $map['divide'] = "/";
-        $map['gt'] = ">";
-        $map['gte'] = ">=";
-        $map['integerModulus'] = "%";
-        $map['lt'] = "<";
-        $map['lte'] = "<=";
-        $map['not'] = "!";
-        $map['or'] = "||";
-        $map['power'] = "^";
-        $map['product'] = "*";
-        $map['subtract'] = "-";
-        $map['sum'] = "+";
-        $map['match'] = "==";
+        $map['and'] = '&&';
+        $map['divide'] = '/';
+        $map['gt'] = '>';
+        $map['gte'] = '>=';
+        $map['integerModulus'] = '%';
+        $map['lt'] = '<';
+        $map['lte'] = '<=';
+        $map['not'] = '!';
+        $map['or'] = '||';
+        $map['power'] = '^';
+        $map['product'] = '*';
+        $map['subtract'] = '-';
+        $map['sum'] = '+';
+        $map['match'] = '==';
 
         return $map;
     }
@@ -135,6 +135,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return string The default QtiPL rendering for an Operator
+     * @throws RenderingException
      */
     public function getDefaultRendering($something)
     {
@@ -149,10 +150,11 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      * @param mixed $something Something to render into another consitution.
      * @return string The default QtiPL rendering for an Operator with a specific sign and
      * 2 sub-expressions
+     * @throws RenderingException
      */
     private function renderWithSignAsOperator($something)
     {
-        $qtipl = "";
+        $qtipl = '';
         $renderer = new QtiPLRenderer($this->getCRO());
         $needsparenthesis0 = array_key_exists($something->getExpressions()[0]->getQtiClassName(), $this->getSignAsOperatorMap())
             && $something->getExpressions()[0]->getExpressions()->count() == 2;
@@ -162,7 +164,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
         $qtipl .= ($needsparenthesis0) ? $renderer->getOpenChildElement() .
             $renderer->render($something->getExpressions()[0]) . $renderer->getCloseChildElement() :
             $renderer->render($something->getExpressions()[0]);
-        $qtipl .= " " . $this->getSignAsOperatorMap()[$something->getQtiClassName()] . " ";
+        $qtipl .= ' ' . $this->getSignAsOperatorMap()[$something->getQtiClassName()] . ' ';
         $qtipl .= ($needsparenthesis1) ? $renderer->getOpenChildElement() .
             $renderer->render($something->getExpressions()[1]) . $renderer->getCloseChildElement() :
             $renderer->render($something->getExpressions()[1]);

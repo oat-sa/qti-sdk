@@ -65,7 +65,7 @@ class PhpMarshallingContext
     /**
      * Whether to format the output PHP source code.
      *
-     * @var boolean
+     * @var bool
      */
     private $formatOutput;
 
@@ -153,7 +153,7 @@ class PhpMarshallingContext
     /**
      * Set whether to format the output PHP source code.
      *
-     * @param boolean $formatOutput
+     * @param bool $formatOutput
      */
     public function setFormatOutput($formatOutput)
     {
@@ -163,7 +163,7 @@ class PhpMarshallingContext
     /**
      * Whether to format the output PHP source code.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustFormatOutput()
     {
@@ -204,7 +204,7 @@ class PhpMarshallingContext
 
         foreach ($values as $value) {
             if (is_string($value) === false) {
-                $msg = "The pushOnVariableStack method only accepts non-empty string values.";
+                $msg = 'The pushOnVariableStack method only accepts non-empty string values.';
                 throw new InvalidArgumentException($msg);
             }
 
@@ -215,14 +215,14 @@ class PhpMarshallingContext
     /**
      * Pop a given $quantity of values from the variable names stack.
      *
-     * @param integer $quantity
+     * @param int $quantity
      * @return array An array of strings.
      * @throws RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
      * @throws InvalidArgumentException If $quantity < 1.
      */
     public function popFromVariableStack($quantity = 1)
     {
-        $quantity = intval($quantity);
+        $quantity = (int)$quantity;
         if ($quantity < 1) {
             $msg = "The 'quantity' argument must be >= 1, '${quantity}' given.";
             throw new InvalidArgumentException($msg);
@@ -254,7 +254,7 @@ class PhpMarshallingContext
     {
         $occurence = 0;
 
-        if (is_object($value) === true) {
+        if (is_object($value)) {
             $counter = $this->getObjectCount();
             $className = get_class($value);
 
@@ -265,10 +265,10 @@ class PhpMarshallingContext
                 $occurence = $counter[$className];
             }
 
-            $counter[$className] += 1;
+            $counter[$className]++;
             $this->setObjectCount($counter);
         } else {
-            if (is_null($value) === true) {
+            if ($value === null) {
                 $type = 'null';
             } else {
                 $type = gettype($value);
@@ -276,7 +276,7 @@ class PhpMarshallingContext
 
             $counter = $this->getDatatypeCount();
             $occurence = $counter[$type];
-            $counter[$type] += 1;
+            $counter[$type]++;
 
             $this->setDatatypeCount($counter);
         }

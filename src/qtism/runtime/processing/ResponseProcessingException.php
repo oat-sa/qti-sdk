@@ -36,7 +36,7 @@ class ResponseProcessingException extends ProcessingException
      * Error code to use when a response processing
      * template cannot be found.
      *
-     * @var integer
+     * @var int
      */
     const TEMPLATE_NOT_FOUND = 11;
 
@@ -44,7 +44,7 @@ class ResponseProcessingException extends ProcessingException
      * Error code to use when a response processing
      * template contains or produces errors.
      *
-     * @var integer
+     * @var int
      */
     const TEMPLATE_ERROR = 12;
 
@@ -59,7 +59,7 @@ class ResponseProcessingException extends ProcessingException
         if ($source instanceof ResponseProcessingEngine) {
             parent::setSource($source);
         } else {
-            $msg = "ResponseProcessingException::setSource only accepts ResponseProcessingEngine objects.";
+            $msg = 'ResponseProcessingException::setSource only accepts ResponseProcessingEngine objects.';
             throw new InvalidArgumentException($msg);
         }
     }

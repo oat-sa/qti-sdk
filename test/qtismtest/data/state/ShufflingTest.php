@@ -2,12 +2,16 @@
 
 namespace qtismtest\data\state;
 
+use OutOfBoundsException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ShufflingTest
+ */
 class ShufflingTest extends QtiSmTestCase
 {
     public function testShufflingShuffle()
@@ -61,6 +65,7 @@ class ShufflingTest extends QtiSmTestCase
 
     /**
      * @dataProvider getIdentifierAtWithInvalidIndexesProvider
+     * @param mixed $index
      */
     public function testGetIdentifierAtWithInvalidIndexes($index)
     {
@@ -70,10 +75,13 @@ class ShufflingTest extends QtiSmTestCase
         $group2 = new ShufflingGroup($identifiers2);
         $shuffling = new Shuffling('RESPONSE', new ShufflingGroupCollection([$group1, $group2]));
 
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $identifier = $shuffling->getIdentifierAt($index);
     }
 
+    /**
+     * @return array
+     */
     public function getIdentifierAtWithInvalidIndexesProvider()
     {
         return [

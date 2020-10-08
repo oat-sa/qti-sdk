@@ -46,7 +46,7 @@ class Tt extends SimpleInline
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

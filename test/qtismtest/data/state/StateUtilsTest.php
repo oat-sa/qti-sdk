@@ -24,6 +24,9 @@ use qtism\data\content\xhtml\text\Div;
 use qtism\data\state\Utils as StateUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StateUtilsTest
+ */
 class StateUtilsTest extends QtiSmTestCase
 {
     public function testCreateShufflingFromInteractionChoice()

@@ -40,7 +40,7 @@ class ModalFeedbackRuleCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof ModalFeedbackRule) {
-            $msg = "A RubricBlockRefCollection object only accepts to store ModalFeedbackRule objects.";
+            $msg = 'A RubricBlockRefCollection object only accepts to store ModalFeedbackRule objects.';
             throw new InvalidArgumentException($msg);
         }
     }

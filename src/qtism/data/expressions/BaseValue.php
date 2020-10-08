@@ -33,7 +33,7 @@ use qtism\common\enums\BaseType;
  *
  * The simplest expression returns a single value from the set defined by the given baseType.
  */
-class BaseValue extends Expression implements Pure
+class BaseValue extends Expression
 {
     /**
      * The baseType of the value.
@@ -85,7 +85,7 @@ class BaseValue extends Expression implements Pure
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -111,7 +111,7 @@ class BaseValue extends Expression implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -121,9 +121,7 @@ class BaseValue extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

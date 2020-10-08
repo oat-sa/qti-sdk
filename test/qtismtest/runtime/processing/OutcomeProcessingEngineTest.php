@@ -13,6 +13,9 @@ use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\runtime\rules\RuleProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeProcessingEngineTest
+ */
 class OutcomeProcessingEngineTest extends QtiSmTestCase
 {
     public function testResponseProcessingMatchCorrect()
@@ -87,7 +90,7 @@ class OutcomeProcessingEngineTest extends QtiSmTestCase
             // In other words, the following code must be not reachable.
             $this->assertTrue(false);
         } catch (ProcessingException $e) {
-            $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
+            $this->assertInstanceOf(RuleProcessingException::class, $e);
             $this->assertEquals(RuleProcessingException::EXIT_TEST, $e->getCode());
         }
     }

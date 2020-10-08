@@ -11,6 +11,9 @@ use qtism\data\content\xhtml\A;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PromptMarshallerTest
+ */
 class PromptMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -33,7 +36,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\Prompt', $component);
+        $this->assertInstanceOf(Prompt::class, $component);
         $this->assertEquals('my-prompt', $component->getId());
         $this->assertEquals('qti-prompt', $component->getClass());
 
@@ -46,10 +49,8 @@ class PromptMarshallerTest extends QtiSmTestCase
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt with a <pre>pre which is not allowed.</pre></prompt>');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "A 'prompt' cannot contain 'pre' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'prompt' cannot contain 'pre' elements.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -64,10 +65,8 @@ class PromptMarshallerTest extends QtiSmTestCase
                 </choiceInteraction>
             </prompt>');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "A 'prompt' cannot contain 'choiceInteraction' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'prompt' cannot contain 'choiceInteraction' elements.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

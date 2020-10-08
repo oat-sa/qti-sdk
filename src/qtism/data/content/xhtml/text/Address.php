@@ -31,7 +31,7 @@ use qtism\data\content\AtomicBlock;
 class Address extends AtomicBlock
 {
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

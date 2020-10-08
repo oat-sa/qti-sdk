@@ -46,10 +46,10 @@ class OutcomeConditionQtiPLRenderer extends AbstractQtiPLRenderer
         $qtipl = $renderer->render($something->getOutcomeIf());
 
         foreach ($something->getOutcomeElseIfs() as $elseif) {
-            $qtipl .= " " . $renderer->render($elseif);
+            $qtipl .= ' ' . $renderer->render($elseif);
         }
 
-        $qtipl .= ($something->getOutcomeElse() == null) ? "" : $renderer->render($something->getOutcomeElse());
+        $qtipl .= ($something->getOutcomeElse() == null) ? '' : $renderer->render($something->getOutcomeElse());
         return $qtipl;
     }
 }

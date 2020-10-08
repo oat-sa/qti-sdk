@@ -3,10 +3,14 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\state\InterpolationTableEntry;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InterpolationTableEntryMarshallerTest
+ */
 class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -20,7 +24,7 @@ class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('interpolationTableEntry', $element->nodeName);
         $this->assertEquals($sourceValue . '', $element->getAttribute('sourceValue'));
         $this->assertEquals($targetValue . '', $element->getAttribute('targetValue'));
@@ -36,7 +40,7 @@ class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]); // With fake variableDeclaration baseType.
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\InterpolationTableEntry', $component);
+        $this->assertInstanceOf(InterpolationTableEntry::class, $component);
         $this->assertEquals(243.3, $component->getSourceValue());
         $this->assertInternalType('float', $component->getSourceValue());
         $this->assertInternalType('integer', $component->getTargetValue());

@@ -7,17 +7,29 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\php\PhpStorageException;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSessionState;
+use qtism\runtime\tests\OrderingException;
 use qtism\runtime\tests\TimeConstraintCollection;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
+use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSection;
+use qtism\data\TestPart;
+use qtism\data\AssessmentTest;
+use qtism\common\datatypes\QtiFloat;
 
+/**
+ * Class AssessmentTestSessionTimingTest
+ */
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testTestPartAssessmentSectionsDurations()
@@ -169,6 +181,12 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * even if time constraints in force are exceeded, by the use of the $allowLateSubmission
      * argument.
      *
+     * @param bool $forceLateSubmission
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws XmlStorageException
+     * @throws PhpStorageException
+     * @throws OrderingException
      */
     public function testForceLateSubmission($forceLateSubmission = true)
     {
@@ -190,7 +208,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 
             // If $forceLateSubmission = true, an exception is thrown and we go the catch block.
             $this->assertTrue($forceLateSubmission, '$forceLateSubmission is false but the attempt dit not raised an exception.');
-            $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $session['Q01.SCORE']);
             $this->assertEquals(1.0, $session['Q01.SCORE']->getValue());
             $this->assertFalse($session->isRunning());
 
@@ -226,28 +244,28 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertFalse($timeConstraints[0]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[0]->maxTimeInForce());
         $this->assertFalse($timeConstraints[0]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $timeConstraints[0]->getSource());
+        $this->assertInstanceOf(AssessmentTest::class, $timeConstraints[0]->getSource());
 
         // TestPart level
         $this->assertFalse($timeConstraints[1]->getMaximumRemainingTime());
         $this->assertFalse($timeConstraints[1]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[1]->maxTimeInForce());
         $this->assertFalse($timeConstraints[1]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\TestPart', $timeConstraints[1]->getSource());
+        $this->assertInstanceOf(TestPart::class, $timeConstraints[1]->getSource());
 
         // AssessmentSection level (1st)
         $this->assertFalse($timeConstraints[2]->getMaximumRemainingTime());
         $this->assertFalse($timeConstraints[2]->getMinimumRemainingTime());
         $this->assertFalse($timeConstraints[2]->maxTimeInForce());
         $this->assertFalse($timeConstraints[2]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $timeConstraints[2]->getSource());
+        $this->assertInstanceOf(AssessmentSection::class, $timeConstraints[2]->getSource());
 
         // AssessmentItem level
         $this->assertEquals('PT1S', $timeConstraints[3]->getMinimumRemainingTime()->__toString());
         $this->assertEquals('PT3S', $timeConstraints[3]->getMaximumRemainingTime()->__toString());
         $this->assertTrue($timeConstraints[3]->maxTimeInForce());
         $this->assertTrue($timeConstraints[3]->minTimeInForce());
-        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $timeConstraints[3]->getSource());
+        $this->assertInstanceOf(AssessmentItemRef::class, $timeConstraints[3]->getSource());
 
         // The candidate ends an attempt on Q01 at 13:00:04 (time elapsed on item is 2 seconds).
         $session->setTime(self::createDate('2014-07-14 13:00:04', 'Europe/Luxembourg'));

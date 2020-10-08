@@ -7,12 +7,18 @@ use qtismtest\QtiSmTestCase;
 use RuntimeException;
 use stdClass;
 
+/**
+ * Class FileSystemFileTest
+ */
 class FileSystemFileTest extends QtiSmTestCase
 {
     /**
      * @dataProvider retrieveProvider
      *
      * @param string $path The path to the QTI file instance.
+     * @param string $expectedFilename
+     * @param string $expectedMimeType
+     * @param string $expectedData
      */
     public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData)
     {
@@ -27,7 +33,7 @@ class FileSystemFileTest extends QtiSmTestCase
      *
      * @param string $source
      * @param string $mimeType
-     * @param boolean|string $withFilename
+     * @param bool|string $withFilename
      */
     public function testCreateFromExistingFile($source, $mimeType, $withFilename = true)
     {
@@ -59,7 +65,7 @@ class FileSystemFileTest extends QtiSmTestCase
                 'text/plain'
             );
 
-            $this->assertFalse(true, "Should throw an error.");
+            $this->assertFalse(true, 'Should throw an error.');
         } catch (RuntimeException $e) {
             $this->assertEquals("Unable to create destination directory at '/root/root/root'.", $e->getMessage());
         }
@@ -74,7 +80,7 @@ class FileSystemFileTest extends QtiSmTestCase
                 'text/plain'
             );
         } catch (RuntimeException $e) {
-            $this->assertInstanceOf('\\RuntimeException', $e);
+            $this->assertInstanceOf(RuntimeException::class, $e);
         }
     }
 
@@ -86,9 +92,9 @@ class FileSystemFileTest extends QtiSmTestCase
                 '/root/root/root/root.txt',
                 'text/plain'
             );
-            $this->assertFalse(true, "Should throw an error.");
+            $this->assertFalse(true, 'Should throw an error.');
         } catch (RuntimeException $e) {
-            $this->assertInstanceOf('\\RuntimeException', $e);
+            $this->assertInstanceOf(RuntimeException::class, $e);
         }
     }
 
@@ -128,7 +134,7 @@ class FileSystemFileTest extends QtiSmTestCase
 
         try {
             $pFile->getStream();
-            $this->assertFalse(true, "calling FileSystemFile::getStream() on a non-existing file must throw an exception!");
+            $this->assertFalse(true, 'calling FileSystemFile::getStream() on a non-existing file must throw an exception!');
         } catch (RuntimeException $e) {
             $this->assertTrue(true);
         }
@@ -136,10 +142,13 @@ class FileSystemFileTest extends QtiSmTestCase
 
     public function testInstantiationWrongPath()
     {
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
         new FileSystemFile('/qtism/test');
     }
 
+    /**
+     * @return array
+     */
     public function retrieveProvider()
     {
         return [
@@ -149,6 +158,9 @@ class FileSystemFileTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getStreamProvider()
     {
         return [
@@ -158,6 +170,9 @@ class FileSystemFileTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function createFromExistingFileProvider()
     {
         return [

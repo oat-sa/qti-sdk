@@ -66,7 +66,7 @@ abstract class AbstractStreamAccess
     protected function setStream(IStream $stream)
     {
         if ($stream->isOpen() === false) {
-            $msg = "An AbstractStreamAccess do not accept closed streams to be read.";
+            $msg = 'An AbstractStreamAccess do not accept closed streams to be read.';
             throw new StreamAccessException($msg, $this, StreamAccessException::NOT_OPEN);
         }
 

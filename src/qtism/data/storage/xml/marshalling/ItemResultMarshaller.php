@@ -46,6 +46,7 @@ class ItemResultMarshaller extends Marshaller
      *
      * @param QtiComponent|ItemResult $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -79,6 +80,7 @@ class ItemResultMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -100,9 +102,9 @@ class ItemResultMarshaller extends Marshaller
         $sessionStatus = SessionStatus::getConstantByName($element->getAttribute('sessionStatus'));
 
         $variableElements = array_merge(
-            self::getChildElementsByTagName($element, 'responseVariable'),
-            self::getChildElementsByTagName($element, 'outcomeVariable'),
-            self::getChildElementsByTagName($element, 'templateVariable')
+            $this->getChildElementsByTagName($element, 'responseVariable'),
+            $this->getChildElementsByTagName($element, 'outcomeVariable'),
+            $this->getChildElementsByTagName($element, 'templateVariable')
         );
 
         if (!empty($variableElements)) {
@@ -117,7 +119,7 @@ class ItemResultMarshaller extends Marshaller
             $variableCollection = null;
         }
 
-        $candidateCommentElements = self::getChildElementsByTagName($element, 'candidateComment');
+        $candidateCommentElements = $this->getChildElementsByTagName($element, 'candidateComment');
         if (!empty($candidateCommentElements)) {
             $candidateCommentElement = array_shift($candidateCommentElements);
             $candidateComment = new QtiString($candidateCommentElement->textContent);
@@ -126,7 +128,7 @@ class ItemResultMarshaller extends Marshaller
         }
 
         $sequenceIndex = $element->hasAttribute('sequenceIndex')
-            ? new QtiInteger(intval($element->getAttribute('sequenceIndex')))
+            ? new QtiInteger((int)$element->getAttribute('sequenceIndex'))
             : null;
 
         return new ItemResult($identifier, $datestamp, $sessionStatus, $variableCollection, $candidateComment, $sequenceIndex);

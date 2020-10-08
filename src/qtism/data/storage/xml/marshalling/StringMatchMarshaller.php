@@ -37,7 +37,7 @@ class StringMatchMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a StringMatch object into a QTI stringMatch element.
      *
-     * @param QtiComponent The StringMatch object to marshall.
+     * @param QtiComponent $component The StringMatch object to marshall.
      * @param array $elements An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI stringMatch element.
      */
@@ -57,8 +57,8 @@ class StringMatchMarshaller extends OperatorMarshaller
     /**
      * Unmarshall a QTI stringMatch operator element into an StringMatch object.
      *
-     * @param DOMElement The stringMatch element to unmarshall.
-     * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+     * @param DOMElement $element The stringMatch element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent An StringMatch object.
      * @throws UnmarshallingException
      */

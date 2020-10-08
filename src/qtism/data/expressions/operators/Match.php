@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -39,7 +38,7 @@ use qtism\data\expressions\Pure;
  * compare subexpressions with base-types of float and must not be used on
  * sub-expressions with a base-type of duration.
  */
-class Match extends Operator implements Pure
+class Match extends Operator
 {
     /**
      * Create a new Match object.
@@ -52,22 +51,10 @@ class Match extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'match';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

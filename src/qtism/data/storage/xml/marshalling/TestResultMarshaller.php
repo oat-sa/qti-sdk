@@ -43,6 +43,7 @@ class TestResultMarshaller extends Marshaller
      *
      * @param QtiComponent|TestResult $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -70,6 +71,7 @@ class TestResultMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -86,9 +88,9 @@ class TestResultMarshaller extends Marshaller
         $datestamp = new DateTime($element->getAttribute('datestamp'), new DateTimeZone('UTC'));
 
         $variableElements = array_merge(
-            self::getChildElementsByTagName($element, 'responseVariable'),
-            self::getChildElementsByTagName($element, 'outcomeVariable'),
-            self::getChildElementsByTagName($element, 'templateVariable')
+            $this->getChildElementsByTagName($element, 'responseVariable'),
+            $this->getChildElementsByTagName($element, 'outcomeVariable'),
+            $this->getChildElementsByTagName($element, 'templateVariable')
         );
 
         if (!empty($variableElements)) {

@@ -103,7 +103,7 @@ class A extends SimpleInline
      */
     public function setType($type)
     {
-        if (is_string($type) === true) {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a non-empty string representing a mime-type, '" . gettype($type) . "' given.";
@@ -125,7 +125,7 @@ class A extends SimpleInline
     /**
      * Whether a value is defined for the type attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasType()
     {
@@ -133,7 +133,7 @@ class A extends SimpleInline
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

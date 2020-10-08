@@ -41,7 +41,7 @@ class SimpleAssociableChoiceCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof SimpleAssociableChoice) {
-            $msg = "SimpleAssociableChoiceCollection objects only accepts to store SimpleAssociableChoice objects.";
+            $msg = 'SimpleAssociableChoiceCollection objects only accepts to store SimpleAssociableChoice objects.';
             throw new InvalidArgumentException($msg);
         }
     }

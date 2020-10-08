@@ -86,7 +86,7 @@ class PhpArgument
      * Whether the represented argument is a reference to a variable or a plain
      * PHP scalar value.
      *
-     * @return boolean
+     * @return bool
      */
     public function isVariableReference()
     {
@@ -96,7 +96,7 @@ class PhpArgument
     /**
      * Whether the represented argument is a PHP scalar value.
      *
-     * @return boolean
+     * @return bool
      */
     public function isScalar()
     {

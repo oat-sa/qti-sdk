@@ -40,7 +40,7 @@ class TextOrVariableCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof TextOrVariable) {
-            $msg = "TextOrVariableCollection objects only accept to store TextOrVariable objects.";
+            $msg = 'TextOrVariableCollection objects only accept to store TextOrVariable objects.';
             throw new InvalidArgumentException($msg);
         }
     }

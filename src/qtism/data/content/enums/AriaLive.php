@@ -60,7 +60,7 @@ class AriaLive implements Enumeration
         return [
             'OFF' => self::OFF,
             'POLITE' => self::POLITE,
-            'ASSERTIVE' => self::ASSERTIVE
+            'ASSERTIVE' => self::ASSERTIVE,
         ];
     }
 

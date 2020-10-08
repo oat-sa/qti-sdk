@@ -41,7 +41,7 @@ class Utils
      *
      * @param DOMDocument $document A DOMDocument object.
      * @param string $namespaceUri A Namespace URI you want to know the related XSD file location.
-     * @return boolean|string False if no location can be found for $namespaceUri, otherwise the location of the XSD file.
+     * @return bool|string False if no location can be found for $namespaceUri, otherwise the location of the XSD file.
      */
     public static function getXsdLocation(DOMDocument $document, $namespaceUri)
     {
@@ -125,7 +125,7 @@ class Utils
                 for ($i = 0; $i < $node->childNodes->length; $i++) {
                     $stack->push($node->childNodes->item($i));
                 }
-            } elseif ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === true) {
+            } elseif ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true)) {
                 // Build hierarchical node copy from the current node. All the attributes
                 // of $node must be copied into $newNode.
                 $newNode = $node->ownerDocument->createElement($node->localName);
@@ -153,7 +153,7 @@ class Utils
      *
      * @param DOMElement $from The source DOMElement.
      * @param DOMElement $into The target DOMElement.
-     * @param boolean $deep Whether or not to import the whole node hierarchy.
+     * @param bool $deep Whether or not to import the whole node hierarchy.
      */
     public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true)
     {
@@ -197,7 +197,7 @@ class Utils
      * * & --> &amp;
      *
      * @param string $string An input string.
-     * @param boolean $isAttribute Whether or not to escape ', >, < which do not have to be escaped in attributes.
+     * @param bool $isAttribute Whether or not to escape ', >, < which do not have to be escaped in attributes.
      * @return string An escaped string.
      */
     public static function escapeXmlSpecialChars($string, $isAttribute = false)
@@ -283,19 +283,16 @@ class Utils
                     break;
 
                 case 'integer':
-                    return intval($attr);
-                    break;
-
-                case 'float':
-                    return floatval($attr);
+                    return (int)$attr;
                     break;
 
                 case 'double':
-                    return doubleval($attr);
+                case 'float':
+                    return (float)$attr;
                     break;
 
                 case 'boolean':
-                    return ($attr === 'true') ? true : false;
+                    return $attr === 'true';
                     break;
 
                 default:
@@ -334,8 +331,8 @@ class Utils
      *
      * @param DOMElement $element A DOMElement object.
      * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-     * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
-     * @param boolean $withText (optional) Wether text nodes must be returned or not.
+     * @param bool $exclude (optional) Whether the $tagName parameter must be considered as a blacklist.
+     * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
     public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
@@ -360,7 +357,7 @@ class Utils
      * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param boolean $withText Wether text nodes must be returned or not.
+     * @param bool $withText Whether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
     public static function getChildElements($element, $withText = false)

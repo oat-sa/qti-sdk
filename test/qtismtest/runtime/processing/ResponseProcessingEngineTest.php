@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\processing;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
@@ -13,6 +14,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseProcessingEngineTest
+ */
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {
     public function testResponseProcessingMatchCorrect()
@@ -108,7 +112,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $context['RESPONSE'] = new QtiIdentifier('ChoiceC');
         $engine->process();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $context['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
         $this->assertEquals(1.0, $context['SCORE']->getValue());
     }
 
@@ -219,10 +223,8 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
               </responseIf>'
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            'The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The ResponseProcessingEngine class only accepts ResponseProcessing objects to be executed.');
 
         $engine = new ResponseProcessingEngine($responseProcessing);
     }
@@ -235,10 +237,8 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The uri argument must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The uri argument must be a string, 'integer' given.");
 
         $engine->addTemplateMapping(10, 'http://taotesting.com');
     }
@@ -251,10 +251,8 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The url argument must be a string, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The url argument must be a string, 'string' given.");
 
         $engine->addTemplateMapping('http://taotesting.com', 10);
     }
@@ -267,10 +265,8 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The uri argument must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The uri argument must be a string, 'integer' given.");
 
         $engine->removeTemplateMapping(10);
     }

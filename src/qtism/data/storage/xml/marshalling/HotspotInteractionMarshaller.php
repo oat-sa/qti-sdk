@@ -35,62 +35,76 @@ use qtism\data\QtiComponentCollection;
 class HotspotInteractionMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = $this->getChildElementsByTagName($element, 'object');
-            if (count($objectElts) > 0) {
-                $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-                $choices = new HotspotChoiceCollection($children->getArrayCopy());
-
-                if (count($choices) > 0) {
-                    $fqClass = $this->lookupClass($element);
-                    $component = new $fqClass($responseIdentifier, $object, $choices);
-
-                    if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                        $component->setMinChoices($minChoices);
-                    }
-
-                    if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                        $component->setMaxChoices($maxChoices);
-                    } elseif (Version::compare($version, '2.1.0', '<') === true) {
-                        $msg = "The mandatory 'maxChoices' attribute is missing from the '" . $element->localName . "' element.";
-                        throw new UnmarshallingException($msg, $element);
-                    }
-
-                    if (($xmlBase = self::getXmlBase($element)) !== false) {
-                        $component->setXmlBase($xmlBase);
-                    }
-
-                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
-                    if (count($promptElts) > 0) {
-                        $promptElt = $promptElts[0];
-                        $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                        $component->setPrompt($prompt);
-                    }
-
-                    $this->fillBodyElement($component, $element);
-
-                    return $component;
-                } else {
-                    $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
-                    throw new UnmarshallingException($msg, $element);
-                }
-            } else {
-                $msg = "A 'hotspotInteraction' element must contain exactly one 'object' element, none given.";
-                throw new UnmarshallingException($msg, $element);
-            }
-        } else {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) === null) {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->localName . "' element.";
             throw new UnmarshallingException($msg, $element);
         }
+
+        $objectElts = $this->getChildElementsByTagName($element, 'object');
+        if (count($objectElts) <= 0) {
+            $msg = "A 'hotspotInteraction' element must contain exactly one 'object' element, none given.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $choices = new HotspotChoiceCollection($children->getArrayCopy());
+        if (count($choices) <= 0) {
+            $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer');
+        if ($maxChoices === null
+            // This has to be fixed since maxChoices is still mandatory in QTI 2.1.
+            && Version::compare($version, '2.1.0', '<') === true
+        ) {
+            $msg = "The mandatory 'maxChoices' attribute is missing from the '" . $element->localName . "' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
+        $fqClass = $this->lookupClass($element);
+        $component = new $fqClass($responseIdentifier, $object, $choices);
+        if ($maxChoices !== null) {
+            $component->setMaxChoices($maxChoices);
+        }
+
+        $minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer');
+        if ($minChoices !== null
+            && Version::compare($version, '2.1.0', '>=') === true
+        ) {
+            $component->setMinChoices($minChoices);
+        }
+
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+
+        $promptElts = $this->getChildElementsByTagName($element, 'prompt');
+        if (count($promptElts) > 0) {
+            $promptElt = $promptElts[0];
+            $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+            $component->setPrompt($prompt);
+        }
+
+        $this->fillBodyElement($component, $element);
+        return $component;
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -123,9 +137,6 @@ class HotspotInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

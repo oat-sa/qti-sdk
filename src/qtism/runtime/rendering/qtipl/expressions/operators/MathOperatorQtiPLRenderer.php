@@ -45,7 +45,7 @@ class MathOperatorQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['name'] = "\"" . MathFunctions::getNameByConstant($something->getName()) . "\"";
+        $attributes['name'] = '"' . MathFunctions::getNameByConstant($something->getName()) . '"';
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)
             . $renderer->writeChildElements($something->getExpressions());

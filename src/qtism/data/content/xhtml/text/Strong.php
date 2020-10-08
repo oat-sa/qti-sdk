@@ -31,7 +31,7 @@ use qtism\data\content\SimpleInline;
 class Strong extends SimpleInline
 {
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

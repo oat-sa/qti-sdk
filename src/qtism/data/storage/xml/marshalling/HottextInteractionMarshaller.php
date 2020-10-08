@@ -36,7 +36,11 @@ use qtism\data\QtiComponentCollection;
 class HottextInteractionMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -81,13 +85,17 @@ class HottextInteractionMarshaller extends ContentMarshaller
 
             return $component;
         } else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . " element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . ' element.';
             throw new UnmarshallingException($msg, $element);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -119,9 +127,6 @@ class HottextInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

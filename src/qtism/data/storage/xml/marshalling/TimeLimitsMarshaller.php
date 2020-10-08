@@ -62,7 +62,6 @@ class TimeLimitsMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TimeLimits object.
-     * @throws UnmarshallingException If the attribute 'allowLateSubmission' is not a valid boolean value.
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -84,7 +83,7 @@ class TimeLimitsMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

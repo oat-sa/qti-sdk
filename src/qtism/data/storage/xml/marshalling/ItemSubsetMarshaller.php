@@ -35,7 +35,8 @@ use qtism\data\QtiComponent;
 class ItemSubsetMarshaller extends Marshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     * @param QtiComponent $component
+     * @return DOMElement
      */
     protected function marshall(QtiComponent $component)
     {
@@ -60,7 +61,8 @@ class ItemSubsetMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+     * @param DOMElement $element
+     * @return ItemSubset
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -84,7 +86,7 @@ class ItemSubsetMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

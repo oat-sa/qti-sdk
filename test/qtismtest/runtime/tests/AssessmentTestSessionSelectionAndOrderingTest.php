@@ -4,6 +4,9 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionSelectionAndOrderingTest
+ */
 class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testSelectionAndOrderingWithReplacement()

@@ -23,11 +23,11 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Max;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 
 /**
@@ -61,7 +61,7 @@ class MaxProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Max operator only accept values with a cardinality of single, multiple or ordered.";
+            $msg = 'The Max operator only accept values with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -85,7 +85,7 @@ class MaxProcessor extends OperatorProcessor
             }
 
             foreach ($value as $v) {
-                if (is_null($v)) {
+                if ($v === null) {
                     return null;
                 }
 
@@ -98,11 +98,11 @@ class MaxProcessor extends OperatorProcessor
             }
         }
 
-        return ($integerCount === $valueCount) ? new QtiInteger(intval($max)) : new QtiFloat(floatval($max));
+        return ($integerCount === $valueCount) ? new QtiInteger((int)$max) : new QtiFloat((float)$max);
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

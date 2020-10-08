@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use InvalidArgumentException;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -35,7 +34,7 @@ use qtism\data\expressions\Pure;
  * the sub-expression matches the regular expression given by pattern and false if it
  * doesn't. If the sub-expression is NULL then the operator results in NULL.
  */
-class PatternMatch extends Operator implements Pure
+class PatternMatch extends Operator
 {
     /**
      * From IMS QTI:
@@ -69,7 +68,7 @@ class PatternMatch extends Operator implements Pure
      */
     public function setPattern($pattern)
     {
-        if (gettype($pattern) === 'string') {
+        if (is_string($pattern)) {
             $this->pattern = $pattern;
         } else {
             $msg = "The pattern argument must be a string or a variable reference, '" . $pattern . "' given.";
@@ -88,22 +87,10 @@ class PatternMatch extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'patternMatch';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

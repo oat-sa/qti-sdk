@@ -11,6 +11,9 @@ use qtism\data\expressions\Variable;
 use qtism\data\rules\SetCorrectResponse;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetCorrectResponseMarshallerTest
+ */
 class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -40,8 +43,8 @@ class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 	    ');
 
         $setCorrectResponse = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\rules\\SetCorrectResponse', $setCorrectResponse);
+        $this->assertInstanceOf(SetCorrectResponse::class, $setCorrectResponse);
         $this->assertEquals('tpl1', $setCorrectResponse->getIdentifier());
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $setCorrectResponse->getExpression());
+        $this->assertInstanceOf(Match::class, $setCorrectResponse->getExpression());
     }
 }

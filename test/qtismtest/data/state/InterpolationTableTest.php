@@ -2,19 +2,21 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\data\state\InterpolationTable;
 use qtism\data\state\InterpolationTableEntry;
 use qtism\data\state\InterpolationTableEntryCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class InterpolationTableTest
+ */
 class InterpolationTableTest extends QtiSmTestCase
 {
     public function testCreateNotEnoughInterpolationEntries()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "An InterpolationTable object must contain at least one InterpolationTableEntry object."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('An InterpolationTable object must contain at least one InterpolationTableEntry object.');
 
         new InterpolationTable(new InterpolationTableEntryCollection());
     }
@@ -31,6 +33,6 @@ class InterpolationTableTest extends QtiSmTestCase
 
         $components = $interpolationTable->getComponents();
         $this->assertCount(1, $components);
-        $this->assertInstanceOf('qtism\\data\\state\InterpolationTableEntry', $components[0]);
+        $this->assertInstanceOf(InterpolationTableEntry::class, $components[0]);
     }
 }

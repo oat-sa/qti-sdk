@@ -50,7 +50,6 @@ class QtiDuration implements QtiDatatype
     private $refDate;
 
     /**
-     *
      * @var DateInterval
      */
     private $interval;
@@ -82,22 +81,23 @@ class QtiDuration implements QtiDatatype
      */
     public function __construct($intervalSpec)
     {
-        if (gettype($intervalSpec) === 'string' && $intervalSpec !== '') {
+        if (is_string($intervalSpec) && $intervalSpec !== '') {
             try {
                 $tz = new DateTimeZone(self::TIMEZONE);
                 $d1 = new DateTime('now', $tz);
                 $d2 = clone $d1;
+
                 $d2->add(new DateInterval($intervalSpec));
                 $interval = $d2->diff($d1);
                 $interval->invert = ($interval->invert === 1) ? 0 : 1;
                 $this->interval = $interval;
                 $this->refDate = new DateTime('@0', $tz);
             } catch (Exception $e) {
-                $msg = "The specified interval specification cannot be processed as an ISO8601 duration.";
+                $msg = 'The specified interval specification cannot be processed as an ISO8601 duration.';
                 throw new InvalidArgumentException($msg, 0, $e);
             }
         } else {
-            $msg = "The intervalSpec argument must be a non-empty string.";
+            $msg = 'The intervalSpec argument must be a non-empty string.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -159,7 +159,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of days.
      *
-     * @param boolean $total Whether the number of days must be the total of days or simply an offset (default).
+     * @param bool $total Whether the number of days must be the total of days or simply an offset (default).
      * @return int
      */
     public function getDays($total = false)
@@ -190,7 +190,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Get the number of seconds.
      *
-     * @param boolean $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
+     * @param bool $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
      * @return int The value of the total duration in seconds.
      */
     public function getSeconds($total = false)
@@ -232,7 +232,11 @@ class QtiDuration implements QtiDatatype
             $string .= $this->interval->d . 'D';
         }
 
-        if ($this->interval->h > 0 || $this->interval->i > 0 || $this->interval->s > 0) {
+        if (
+            $this->interval->h > 0
+            || $this->interval->i > 0
+            || $this->interval->s > 0
+        ) {
             $string .= 'T';
 
             if ($this->interval->h > 0) {
@@ -260,13 +264,14 @@ class QtiDuration implements QtiDatatype
      * Whether a given $obj is equal to this Duration.
      *
      * @param mixed $obj A given value.
-     * @return boolean Whether the equality is established.
+     * @return bool Whether the equality is established.
      */
     public function equals($obj)
     {
-        return (gettype($obj) === 'object' &&
-            $obj instanceof self &&
-            '' . $obj === '' . $this);
+        return is_object($obj)
+            && $obj instanceof self
+            && '' . $this === '' . $obj
+        ;
     }
 
     /**
@@ -274,7 +279,7 @@ class QtiDuration implements QtiDatatype
      * than the one described by $duration.
      *
      * @param QtiDuration $duration A Duration object to compare with this one.
-     * @return boolean
+     * @return bool
      */
     public function shorterThan(QtiDuration $duration)
     {
@@ -286,7 +291,7 @@ class QtiDuration implements QtiDatatype
      * equal to the one described by $duration.
      *
      * @param QtiDuration $duration A Duration object to compare with this one.
-     * @return boolean
+     * @return bool
      */
     public function longerThanOrEquals(QtiDuration $duration)
     {
@@ -299,13 +304,14 @@ class QtiDuration implements QtiDatatype
      * For instance, PT1S + PT1S = PT2S.
      *
      * @param QtiDuration|DateInterval $duration A QtiDuration or DateInterval object.
+     * @throws Exception
      */
     public function add($duration)
     {
         $d1 = $this->refDate;
         $d2 = clone $d1;
 
-        if ($duration instanceof QtiDuration) {
+        if ($duration instanceof self) {
             $toAdd = $duration;
         } elseif ($duration instanceof DateInterval) {
             $toAdd = self::createFromDateInterval($duration);
@@ -327,6 +333,7 @@ class QtiDuration implements QtiDatatype
      * For instance P2S - P1S = P1S
      *
      * @param QtiDuration $duration
+     * @throws Exception
      */
     public function sub(QtiDuration $duration)
     {
@@ -370,7 +377,7 @@ class QtiDuration implements QtiDatatype
     /**
      * Whether or not the duration is negative e.g. -PT20S = -20 seconds.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNegative()
     {
@@ -381,7 +388,7 @@ class QtiDuration implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * the BaseType::DURATION value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -392,7 +399,7 @@ class QtiDuration implements QtiDatatype
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

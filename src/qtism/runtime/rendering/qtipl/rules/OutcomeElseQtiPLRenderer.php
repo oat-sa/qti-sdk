@@ -46,9 +46,9 @@ class OutcomeElseQtiPLRenderer extends AbstractQtiPLRenderer
         $qtipl = " else {\n";
 
         foreach ($something->getOutcomeRules() as $rules) {
-            $qtipl .= str_repeat(" ", $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
+            $qtipl .= str_repeat(' ', $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
         }
 
-        return $qtipl . "}";
+        return $qtipl . '}';
     }
 }

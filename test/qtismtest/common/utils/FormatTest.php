@@ -6,10 +6,14 @@ use qtism\common\utils\Format;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class FormatTest
+ */
 class FormatTest extends QtiSmTestCase
 {
     /**
      * @dataProvider validIdentifierFormatProvider
+     * @param string $string
      */
     public function testValidIdentifierFormat($string)
     {
@@ -18,6 +22,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidIdentifierFormatProvider
+     * @param string $string
      */
     public function testInvalidIdentifierFormat($string)
     {
@@ -26,6 +31,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validVariableRefFormatProvider
+     * @param string $string
      */
     public function testValidVariableRefFormat($string)
     {
@@ -34,6 +40,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidVariableRefFormatProvider
+     * @param string $string
      */
     public function testInvalidVariableRefFormat($string)
     {
@@ -42,6 +49,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validCoordinatesFormatProvider
+     * @param string $string
      */
     public function testValidCoordinatesFormat($string)
     {
@@ -50,6 +58,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidCoordinatesFormatProvider
+     * @param string $string
      */
     public function testInvalidCoordinatesFormat($string)
     {
@@ -58,6 +67,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validUriFormatProvider
+     * @param string $string
      */
     public function testValidUriFormat($string)
     {
@@ -66,6 +76,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validClassFormatProvider
+     * @param string $string
      */
     public function testValidClassFormatProvider($string)
     {
@@ -74,6 +85,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidClassFormatProvider
+     * @param string $string
      */
     public function testInvalidClassFormatProvider($string)
     {
@@ -82,6 +94,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validString256FormatProvider
+     * @param string $string
      */
     public function testValidString256Provider($string)
     {
@@ -90,6 +103,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidString256FormatProvider
+     * @param string $string
      */
     public function testInvalidString256Provider($string)
     {
@@ -98,6 +112,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validFileFormatProvider
+     * @param string $string
      */
     public function testValidFile($string)
     {
@@ -106,6 +121,10 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider scale10Provider
+     * @param float $float
+     * @param string $expected
+     * @param string $x
+     * @param int|bool $precision
      */
     public function testScale10($float, $expected, $x = 'x', $precision = false)
     {
@@ -116,7 +135,7 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider isPrintfIsoFormatProvider
      *
      * @param string $input
-     * @param string $expected
+     * @param bool $expected
      */
     public function testIsPrintfIsoFormat($input, $expected)
     {
@@ -127,7 +146,7 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider printfFormatIsoToPhpProvider
      *
      * @param string $input
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testPrintfFormatIsoToPhp($input, $expected)
     {
@@ -138,7 +157,7 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider isXhtmlLengthProvider
      *
      * @param mixed $input
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testIsXhtmlLength($input, $expected)
     {
@@ -147,6 +166,8 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider sanitizeProvider
+     * @param string $dirty
+     * @param mixed $clean
      */
     public function testSanitizeIdentifier($dirty, $clean)
     {
@@ -157,6 +178,7 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider sanitizeProvider2
+     * @param mixed $dirty
      */
     public function testSanitizeIdentifier2($dirty)
     {
@@ -173,6 +195,9 @@ class FormatTest extends QtiSmTestCase
         $this->assertSame($expected, Format::isAriaLevel($input));
     }
 
+    /**
+     * @return array
+     */
     public function scale10Provider()
     {
         return [
@@ -198,6 +223,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validIdentifierFormatProvider()
     {
         return [
@@ -210,6 +238,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidIdentifierFormatProvider()
     {
         return [
@@ -221,6 +252,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validVariableRefFormatProvider()
     {
         return [
@@ -233,6 +267,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidVariableRefFormatProvider()
     {
         return [
@@ -244,6 +281,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validCoordinatesFormatProvider()
     {
         return [
@@ -253,6 +293,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidCoordinatesFormatProvider()
     {
         return [
@@ -262,6 +305,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validUriFormatProvider()
     {
         return [
@@ -270,6 +316,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validClassFormatProvider()
     {
         return [
@@ -285,32 +334,45 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidClassFormatProvider()
     {
         return [
             ["a\tb"],
-            [" "],
+            [' '],
             [''],
+            [false],
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validString256FormatProvider()
     {
         return [
-            [""],
+            [''],
             ["\t\n\r"],
-            ["Hello World!"],
-            ["世界，你好！"] // Hello World!
+            ['Hello World!'],
+            ['世界，你好！'] // Hello World!
         ];
     }
 
+    /**
+     * @return array
+     */
     public function invalidString256FormatProvider()
     {
         return [
-            ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue."],
+            ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue.'],
         ];
     }
 
+    /**
+     * @return array
+     */
     public function validFileFormatProvider()
     {
         return [
@@ -318,6 +380,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isPrintfIsoFormatProvider()
     {
         return [
@@ -356,22 +421,25 @@ class FormatTest extends QtiSmTestCase
             [":%-15.10s:\n", true],
             ["This is an integer with padding %03d\n", true],
             ['This is an integer with padding...', false],
-            ["Escape or not? %%s", false],
-            ["Escape or not? %%%s", true],
-            ["Escape or not? %%%%s", false],
-            ["Escape or not? %%%%%s", true],
-            ["%s bla %s and %%%s is %s and %%%%s", true],
-            ["%%s bla %s and %%%s is %s and %%%%s", true],
-            ["%%s bla %%s and %%%s is %s and %%%%s", true],
-            ["%%s bla %%s and %%s is %s and %%%%s", true],
-            ["%%s bla %%s and %%s is %%%%s and %%%%s", false],
-            ["%s", true],
-            ["%S", false],
-            ["bla %S bli %s", true],
-            ["blabla", false],
+            ['Escape or not? %%s', false],
+            ['Escape or not? %%%s', true],
+            ['Escape or not? %%%%s', false],
+            ['Escape or not? %%%%%s', true],
+            ['%s bla %s and %%%s is %s and %%%%s', true],
+            ['%%s bla %s and %%%s is %s and %%%%s', true],
+            ['%%s bla %%s and %%%s is %s and %%%%s', true],
+            ['%%s bla %%s and %%s is %s and %%%%s', true],
+            ['%%s bla %%s and %%s is %%%%s and %%%%s', false],
+            ['%s', true],
+            ['%S', false],
+            ['bla %S bli %s', true],
+            ['blabla', false],
         ];
     }
 
+    /**
+     * @return array
+     */
     public function printfFormatIsoToPhpProvider()
     {
         return [
@@ -388,6 +456,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isXhtmlLengthProvider()
     {
         return [
@@ -407,30 +478,36 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sanitizeProvider()
     {
         return [
-            ["GoodIdentifier", "GoodIdentifier"],
-            ["abc 123", "abc123"],
-            ["@bc", "bc"],
-            ["-bc", "bc"],
-            ["---bc", "bc"],
-            ["-bc-", "bc-"],
-            ["2017id", "id"],
-            ["abc@@@", "abc"],
-            ["20i17d", "i17d"],
-            ["20id@@", "id"],
-            ["9bc", "bc"],
-            ["bc@", "bc"],
+            ['GoodIdentifier', 'GoodIdentifier'],
+            ['abc 123', 'abc123'],
+            ['@bc', 'bc'],
+            ['-bc', 'bc'],
+            ['---bc', 'bc'],
+            ['-bc-', 'bc-'],
+            ['2017id', 'id'],
+            ['abc@@@', 'abc'],
+            ['20i17d', 'i17d'],
+            ['20id@@', 'id'],
+            ['9bc', 'bc'],
+            ['bc@', 'bc'],
         ];
     }
 
+    /**
+     * @return array
+     */
     public function sanitizeProvider2()
     {
         return [
-            [""],
-            ["\""],
-            ["123@"],
+            [''],
+            ['"'],
+            ['123@'],
             [123],
             [12.3],
             [null],
@@ -441,6 +518,9 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function isAriaLevelProvider()
     {
         // input, expected
@@ -452,7 +532,7 @@ class FormatTest extends QtiSmTestCase
             ['-20.4532', false],
             ['abc', false],
             [null, false],
-            [new \stdClass(), false],
+            [new stdClass(), false],
             [-1, false],
             [0, false],
             [-20.5432, false],

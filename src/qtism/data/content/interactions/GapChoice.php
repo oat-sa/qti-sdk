@@ -41,7 +41,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
      * The maximum number of choices this choice may be associated with.
      * If matchMax is 0 there is no restriction.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $matchMax;
@@ -54,7 +54,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
      * required to associate this choice with any gaps at all. matchMin
      * must be less than or equal to the limit imposed by matchMax.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $matchMin = 0;
@@ -76,7 +76,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
      * Create a new GapChoice object.
      *
      * @param string $identifier The identifier of the GapChoice.
-     * @param integer $matchMax The matchMax attribute of the GapChoice.
+     * @param int $matchMax The matchMax attribute of the GapChoice.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -94,12 +94,12 @@ abstract class GapChoice extends Choice implements AssociableChoice
     /**
      * Set the matchMax attribute of the gapChoice.
      *
-     * @param integer $matchMax A postive (>= 0) integer.
+     * @param int $matchMax A postive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMax is not a positive integer.
      */
     public function setMatchMax($matchMax)
     {
-        if (is_int($matchMax) === true && $matchMax >= 0) {
+        if (is_int($matchMax) && $matchMax >= 0) {
             $this->matchMax = $matchMax;
         } else {
             $msg = "The 'matchMax' argument must be a positive integer, '" . gettype($matchMax) . "' given.";
@@ -110,7 +110,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
     /**
      * Get the matchMax attribute of the gapChoice.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMatchMax()
     {
@@ -120,12 +120,12 @@ abstract class GapChoice extends Choice implements AssociableChoice
     /**
      * Set the matchMin attribute of the gapChoice.
      *
-     * @param integer $matchMin A positive (>= 0) integer.
+     * @param int $matchMin A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMin is not a positive integer.
      */
     public function setMatchMin($matchMin)
     {
-        if (is_int($matchMin) === true && $matchMin >= 0) {
+        if (is_int($matchMin) && $matchMin >= 0) {
             $this->matchMin = $matchMin;
         } else {
             $msg = "The 'matchMin' argument must be a positive integer, '" . gettype($matchMin) . "' given.";
@@ -136,7 +136,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
     /**
      * Get the matchMin attribute of the gapChoice.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMatchMin()
     {
@@ -144,7 +144,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
     }
 
     /**
-     * @see \qtism\data\content\interactions\AssociableChoice::setMatchGroup()
+     * @param IdentifierCollection $matchGroup
      */
     public function setMatchGroup(IdentifierCollection $matchGroup)
     {
@@ -152,7 +152,7 @@ abstract class GapChoice extends Choice implements AssociableChoice
     }
 
     /**
-     * @see \qtism\data\content\interactions\AssociableChoice::getMatchGroup()
+     * @return IdentifierCollection
      */
     public function getMatchGroup()
     {

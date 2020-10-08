@@ -34,7 +34,7 @@ use qtism\common\utils\Format;
  * item identifier prefixing (see variable) may be used to obtain the correct response from
  * an individual item.
  */
-class Correct extends Expression implements Pure
+class Correct extends Expression
 {
     /**
      * The identifier of the response variable you want the correct value.
@@ -82,7 +82,7 @@ class Correct extends Expression implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -92,9 +92,7 @@ class Correct extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

@@ -51,6 +51,12 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      */
     private $asInstanceOf = '';
 
+    /**
+     * PhpQtiComponentMarshaller constructor.
+     *
+     * @param PhpMarshallingContext $context
+     * @param $toMarshall
+     */
     public function __construct(PhpMarshallingContext $context, $toMarshall)
     {
         parent::__construct($context, $toMarshall);
@@ -96,9 +102,6 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
         return $this->variableName;
     }
 
-    /**
-     * @see \qtism\data\storage\php\marshalling\PhpMarshaller::marshall()
-     */
     public function marshall()
     {
         $ctx = $this->getContext();
@@ -124,11 +127,11 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
             }
 
             $componentVarName = $this->getVariableName();
-            $componentVarName = (empty($componentVarName) === true) ? $ctx->generateVariableName($component) : $componentVarName;
+            $componentVarName = (empty($componentVarName)) ? $ctx->generateVariableName($component) : $componentVarName;
 
             $access->writeVariable($componentVarName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $access->writeInstantiation((empty($asInstanceOf) === true) ? get_class($component) : $asInstanceOf, $phpArgs);
+            $access->writeInstantiation((empty($asInstanceOf)) ? get_class($component) : $asInstanceOf, $phpArgs);
             $access->writeSemicolon($ctx->mustFormatOutput());
 
             // -- Call to setters (that are not involved in the component construction).
@@ -148,13 +151,14 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($componentVarName);
         } catch (BeanException $e) {
-            $msg = "The given QtiComponent to be marshalled into PHP source code is not a strict bean.";
+            $msg = 'The given QtiComponent to be marshalled into PHP source code is not a strict bean.';
             throw new PhpMarshallingException($msg, PhpMarshallingException::RUNTIME, $e);
         }
     }
 
     /**
-     * @see \qtism\data\storage\php\marshalling\PhpMarshaller::isMarshallable()
+     * @param mixed $toMarshall
+     * @return bool
      */
     protected function isMarshallable($toMarshall)
     {

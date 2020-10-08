@@ -52,7 +52,9 @@ class FeedbackBlockRenderer extends FeedbackElementRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\FeedbackElementRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

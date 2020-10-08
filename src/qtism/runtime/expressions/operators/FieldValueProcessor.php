@@ -47,7 +47,7 @@ class FieldValueProcessor extends OperatorProcessor
         $operands = $this->getOperands();
 
         if ($operands->exclusivelyRecord() === false) {
-            $msg = "The FieldValue operator only accepts operands with a cardinality of record.";
+            $msg = 'The FieldValue operator only accepts operands with a cardinality of record.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -57,7 +57,7 @@ class FieldValueProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

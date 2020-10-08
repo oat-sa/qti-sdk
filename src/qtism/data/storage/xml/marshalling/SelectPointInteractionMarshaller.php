@@ -38,6 +38,7 @@ class SelectPointInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A SelectPointInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -73,54 +74,63 @@ class SelectPointInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A SelectPointInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-            $objectElts = $this->getChildElementsByTagName($element, 'object');
-            if (count($objectElts) > 0) {
-                $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-                $component = new SelectPointInteraction($responseIdentifier, $object);
-
-                if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                    $component->setMinChoices($minChoices);
-                }
-
-                if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                    $component->setMaxChoices($maxChoices);
-                } elseif (Version::compare($version, '2.1.0', '<') === true) {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element.";
-                    throw new UnmarshallingException($msg, $element);
-                }
-
-                if (($xmlBase = self::getXmlBase($element)) !== false) {
-                    $component->setXmlBase($xmlBase);
-                }
-
-                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
-                if (count($promptElts) > 0) {
-                    $promptElt = $promptElts[0];
-                    $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                    $component->setPrompt($prompt);
-                }
-
-                $this->fillBodyElement($component, $element);
-
-                return $component;
-            } else {
-                $msg = "A 'selectPointInteraction' element must contain exactly one 'object' element, none given.";
-                throw new UnmarshallingException($msg, $element);
-            }
-        } else {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) === null) {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'selectPointInteraction' element.";
             throw new UnmarshallingException($msg, $element);
         }
+
+        $objectElts = $this->getChildElementsByTagName($element, 'object');
+        if (count($objectElts) <= 0) {
+            $msg = "A 'selectPointInteraction' element must contain exactly one 'object' element, none given.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer');
+        // This has to be fixed since maxChoices is still mandatory in QTI 2.1.
+        if ($maxChoices === null
+            && Version::compare($version, '2.1.0', '<') === true
+        ) {
+            $msg = "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
+
+        $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
+        $component = new SelectPointInteraction($responseIdentifier, $object);
+        if ($maxChoices !== null) {
+            $component->setMaxChoices($maxChoices);
+        }
+
+        $minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer');
+        if ($minChoices !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true) {
+                $component->setMinChoices($minChoices);
+            }
+        }
+
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+
+        $promptElts = $this->getChildElementsByTagName($element, 'prompt');
+        if (count($promptElts) > 0) {
+            $promptElt = $promptElts[0];
+            $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+            $component->setPrompt($prompt);
+        }
+
+        $this->fillBodyElement($component, $element);
+
+        return $component;
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

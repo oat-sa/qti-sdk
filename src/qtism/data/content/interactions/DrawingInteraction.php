@@ -87,7 +87,7 @@ class DrawingInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -97,7 +97,7 @@ class DrawingInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

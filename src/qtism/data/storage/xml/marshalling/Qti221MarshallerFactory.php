@@ -33,7 +33,9 @@ use ReflectionClass;
 class Qti221MarshallerFactory extends Qti22MarshallerFactory
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
+     * @param ReflectionClass $class
+     * @param array $args
+     * @return mixed
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

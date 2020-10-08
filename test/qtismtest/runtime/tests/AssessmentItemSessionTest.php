@@ -14,6 +14,7 @@ use qtism\data\ItemSessionControl;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -22,6 +23,9 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionTest
+ */
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
     public function testExternalScored()
@@ -51,7 +55,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testInstantiation()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $this->assertFalse($itemSession->isNavigationNonLinear());
 
         // isPresented? isCorrect? isResponded? isSelected?
@@ -75,24 +79,24 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this->assertFalse($itemSession->hasTimeLimits());
 
         // Response variables instantiated and set to NULL?
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('RESPONSE'));
+        $this->assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('RESPONSE'));
         $this->assertSame(null, $itemSession['RESPONSE']);
 
         // Outcome variables instantiated and set to their default if any?
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('SCORE'));
+        $this->assertInstanceOf(OutcomeVariable::class, $itemSession->getVariable('SCORE'));
         $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
 
         // Built-in variables instantiated and values initialized correctly?
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('numAttempts'));
+        $this->assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('numAttempts'));
         $this->assertInstanceOf(QtiInteger::class, $itemSession['numAttempts']);
         $this->assertEquals(0, $itemSession['numAttempts']->getValue());
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('duration'));
+        $this->assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('duration'));
         $this->assertInstanceOf(QtiDuration::class, $itemSession['duration']);
         $this->assertEquals('PT0S', $itemSession['duration']->__toString());
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('completionStatus'));
+        $this->assertInstanceOf(OutcomeVariable::class, $itemSession->getVariable('completionStatus'));
         $this->assertInstanceOf(QtiString::class, $itemSession['completionStatus']);
         $this->assertEquals('not_attempted', $itemSession['completionStatus']->getValue());
         $this->assertEquals(BaseType::IDENTIFIER, $itemSession->getVariable('completionStatus')->getBaseType());
@@ -107,7 +111,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testEvolutionBasic()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $this->assertTrue($itemSession->isSelected());
 
@@ -155,7 +159,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testGetResponseVariables()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         // Get response variables with built-in ones.
@@ -173,7 +177,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testGetOutcomeVariables()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         // Get outcome variables with the built-in ones included.
@@ -190,7 +194,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testEvolutionAdaptiveItem()
     {
-        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
 
         // reminder, the value of maxAttempts is ignored when dealing with
@@ -232,7 +236,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testSkippingForbiddenSimple()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
         $itemSession->setItemSessionControl($itemSessionControl);
@@ -305,7 +309,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testSkippingAllowedSimple()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
 
         $itemSession->beginAttempt();
@@ -318,7 +322,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testValidResponsesInForceValid()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setValidateResponses(false);
         $itemSession->setItemSessionControl($itemSessionControl);
@@ -332,7 +336,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testIsCorrect()
     {
-        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $itemSession->getState());
 
         // The item session is in NOT_SELECTED mode, then false is returned directly.
@@ -457,7 +461,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
     {
         // We want to test that if the current submission mode is SIMULTANEOUS,
         // only one attempt is allowed.
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->setSubmissionMode(SubmissionMode::SIMULTANEOUS);
 
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
@@ -503,7 +507,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testSuspendWithResponses()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
 
@@ -583,17 +587,14 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testMultipleAttemptsSimultaneousSubmissionMode()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->setSubmissionMode(SubmissionMode::SIMULTANEOUS);
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
-            "A new attempt for item 'Q01' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.",
-            AssessmentItemSessionException::ATTEMPTS_OVERFLOW
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("A new attempt for item 'Q01' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.");
 
         // Beginning a 2nd attempt in simultaneous submission mode must throw an exception. Only a single attempt is accepted.
         $itemSession->beginAttempt();
@@ -601,80 +602,66 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
     public function testMultipleAttemptsIndividualSubmissionModeWhenSingleAttemptAllowed()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts(1);
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
-            "A new attempt for item 'Q01' is not allowed. The maximum number of attempts (1) is reached.",
-            AssessmentItemSessionException::ATTEMPTS_OVERFLOW
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("A new attempt for item 'Q01' is not allowed. The maximum number of attempts (1) is reached.");
+        $this->expectExceptionCode(AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 
         $itemSession->beginAttempt();
     }
 
     public function testBeginAttemptAdaptiveCompletionStatusComplete()
     {
-        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentItemSessionException',
-            "A new attempt for item 'Q01' is not allowed. It is adaptive and its completion status is 'completed'.",
-            AssessmentItemSessionException::ATTEMPTS_OVERFLOW
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("A new attempt for item 'Q01' is not allowed. It is adaptive and its completion status is 'completed'.");
 
         $itemSession->beginAttempt();
     }
 
     public function testSuspendStateViolation()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentItemSessionException',
-            "Cannot switch from state NOTSELECTED to state SUSPENDED.",
-            AssessmentItemSessionException::STATE_VIOLATION
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("Cannot switch from state NOTSELECTED to state SUSPENDED.");
 
         $itemSession->suspend();
     }
 
     public function testBeginCandidateSessionStateViolation()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentItemSessionException',
-            "Cannot switch from state NOTSELECTED to state INTERACTING.",
-            AssessmentItemSessionException::STATE_VIOLATION
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("Cannot switch from state NOTSELECTED to state INTERACTING.");
 
         $itemSession->beginCandidateSession();
     }
 
     public function testEndCandidateSessionStateViolation()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentItemSessionException',
-            "Cannot switch from state NOTSELECTED to state SUSPENDED.",
-            AssessmentItemSessionException::STATE_VIOLATION
-        );
+        $this->expectException(AssessmentItemSessionException::class);
+        $this->expectExceptionMessage("Cannot switch from state NOTSELECTED to state SUSPENDED.");
 
         $itemSession->endCandidateSession();
     }
 
     public function testIsRespondedValueNullDefaultNotNull()
     {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $itemSession->getVariable('RESPONSE')->setDefaultValue(new QtiIdentifier('ChoiceA'));

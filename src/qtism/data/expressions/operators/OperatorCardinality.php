@@ -39,7 +39,7 @@ class OperatorCardinality extends Cardinality
      * Express that all the expressions involved in an operator have
      * the same cardinality.
      *
-     * @var integer
+     * @var int
      */
     const SAME = 4;
 
@@ -47,10 +47,13 @@ class OperatorCardinality extends Cardinality
      * Express that all the expressions involved in an operator may
      * have any cardinality.
      *
-     * @var integer
+     * @var int
      */
     const ANY = 5;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         $values = Cardinality::asArray();

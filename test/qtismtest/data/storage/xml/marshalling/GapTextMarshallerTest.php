@@ -10,7 +10,11 @@ use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class GapTextMarshallerTest
+ */
 class GapTextMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -61,7 +65,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapText', $gapText);
+        $this->assertInstanceOf(GapText::class, $gapText);
         $this->assertEquals('gapText1', $gapText->getIdentifier());
         $this->assertEquals(1, $gapText->getMatchMax());
         $this->assertEquals(0, $gapText->getMatchMin());
@@ -70,9 +74,9 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
 
         $content = $gapText->getContent();
-        $this->assertInstanceOf('\\qtism\\data\\content\\TextOrVariableCollection', $content);
-        $this->assertInstanceOf('\\qtism\\data\\content\\TextRun', $content[0]);
-        $this->assertInstanceOf('\\qtism\\data\\content\\PrintedVariable', $content[1]);
+        $this->assertInstanceOf(TextOrVariableCollection::class, $content);
+        $this->assertInstanceOf(TextRun::class, $content[0]);
+        $this->assertInstanceOf(PrintedVariable::class, $content[1]);
         $this->assertEquals('My var is ', $content[0]->getContent());
         $this->assertEquals('var1', $content[1]->getIdentifier());
     }
@@ -86,7 +90,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapText', $gapText);
+        $this->assertInstanceOf(GapText::class, $gapText);
         $this->assertEquals('gapText1', $gapText->getIdentifier());
         $this->assertEquals(3, $gapText->getMatchMax());
         $this->assertEquals(0, $gapText->getMatchMin());
@@ -105,7 +109,8 @@ class GapTextMarshallerTest extends QtiSmTestCase
         // to unmarshall a gapText containing other stuff than plain/text
         // in a QTI 2.0 context.
         $expectedMsg = "A 'gapText' element must only contain text. Children elements found.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="0">Some text and a <printedVariable identifier="myVar"/></gapText>
 	    ');
@@ -117,7 +122,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
     public function testUnmarshallInvalid21()
     {
         // Only textRun and/or printedVariable.
-        $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
+        $this->expectException(UnmarshallingException::class);
         $element = $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
 	    ');

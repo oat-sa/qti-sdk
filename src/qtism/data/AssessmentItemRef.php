@@ -123,7 +123,7 @@ class AssessmentItemRef extends SectionPart
      */
     public function setHref($href)
     {
-        if (gettype($href) === 'string') {
+        if (is_string($href)) {
             $this->href = $href;
         } else {
             $msg = "href must be a string, '" . gettype($href) . "' given.";
@@ -214,7 +214,7 @@ class AssessmentItemRef extends SectionPart
     }
 
     /**
-     * @see \qtism\data\SectionPart::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -222,7 +222,7 @@ class AssessmentItemRef extends SectionPart
     }
 
     /**
-     * @see \qtism\data\SectionPart::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -236,6 +236,9 @@ class AssessmentItemRef extends SectionPart
         return new QtiComponentCollection($comp);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getIdentifier();

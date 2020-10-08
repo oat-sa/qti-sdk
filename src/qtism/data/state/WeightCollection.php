@@ -34,6 +34,7 @@ class WeightCollection extends QtiIdentifiableCollection
     /**
      * Check if a given $value is an instance of Weight.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of Weight.
      */
     protected function checkType($value)

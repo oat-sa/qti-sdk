@@ -31,29 +31,28 @@ use qtism\common\enums\Enumeration;
 class TableCellScope implements Enumeration
 {
     /**
-     *
-     * @var integer
+     * @var int
      */
     const ROW = 0;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     const COL = 1;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     const ROWGROUP = 2;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     const COLGROUP = 3;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -64,6 +63,10 @@ class TableCellScope implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -89,6 +92,10 @@ class TableCellScope implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

@@ -59,7 +59,7 @@ class FileSystemFile implements QtiFile
      * When dealing with files, compare, read, write, ...
      * in CHUNK_SIZE to not eat up memory.
      *
-     * @var integer
+     * @var int
      */
     const CHUNK_SIZE = 2048;
 
@@ -71,11 +71,20 @@ class FileSystemFile implements QtiFile
      */
     public function __construct($path)
     {
+        $this->readInfo($path);
+        $this->setPath($path);
+    }
+
+    /**
+     * @param $path
+     */
+    private function readInfo($path)
+    {
         // Retrieve filename and mime type.
         $fp = @fopen($path, 'r');
 
         if ($fp === false) {
-            $msg = "Unable to retrieve QTI file at '${path}.";
+            $msg = 'Unable to retrieve QTI file at "' . $path . '".';
             throw new RuntimeException($msg);
         }
 
@@ -91,7 +100,6 @@ class FileSystemFile implements QtiFile
 
         $this->setFilename($filename);
         $this->setMimeType($mimeType);
-        $this->setPath($path);
     }
 
     /**
@@ -209,20 +217,22 @@ class FileSystemFile implements QtiFile
      */
     public static function createFromExistingFile($source, $destination, $mimeType, $withFilename = true)
     {
-        if (is_file($source) === true) {
-            if (is_readable($source) === true) {
+        if (is_file($source)) {
+            if (is_readable($source)) {
                 // Should we build the path to $destination?
                 $pathinfo = pathinfo($destination);
+                if (isset($pathinfo['dirname']) === false) {
+                    $msg = "The destination argument '${destination}' is a malformed path.";
+                    throw new RuntimeException($msg);
+                }
 
-                if (is_dir($pathinfo['dirname']) === false) {
-                    if (($mkdir = @mkdir($pathinfo['dirname'], '0770', true)) === false) {
-                        $msg = "Unable to create destination directory at '" . $pathinfo['dirname'] . "'.";
-                        throw new RuntimeException($msg);
-                    }
+                if ((is_dir($pathinfo['dirname']) === false) && ($mkdir = @mkdir($pathinfo['dirname'], '0770', true)) === false) {
+                    $msg = "Unable to create destination directory at '" . $pathinfo['dirname'] . "'.";
+                    throw new RuntimeException($msg);
                 }
 
                 $pathinfo = pathinfo($source);
-                $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : strval($withFilename);
+                $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : (string)$withFilename;
 
                 // --- We store the file name and the mimetype in the file itself.
 
@@ -305,7 +315,7 @@ class FileSystemFile implements QtiFile
     /**
      * Get the cardinality of the File value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -315,7 +325,7 @@ class FileSystemFile implements QtiFile
     /**
      * Get the baseType of the File value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -325,7 +335,7 @@ class FileSystemFile implements QtiFile
     /**
      * Whether or not the File has a file name.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFilename()
     {
@@ -337,7 +347,8 @@ class FileSystemFile implements QtiFile
      * are considered to be identical if they have the same file name,
      * mime-type and data.
      *
-     * @return boolean
+     * @param mixed $obj
+     * @return bool
      */
     public function equals($obj)
     {

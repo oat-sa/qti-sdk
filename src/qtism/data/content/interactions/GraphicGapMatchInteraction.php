@@ -88,7 +88,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setGapImgs($gapImgs);
@@ -106,7 +106,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         if (count($gapImgs) > 0) {
             $this->gapImgs = $gapImgs;
         } else {
-            $msg = "A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.";
+            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -132,7 +132,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
         } else {
-            $msg = "A GraphicGapMatch interaction must be composed of at least 1 AssociableHotspot object, none given.";
+            $msg = 'A GraphicGapMatch interaction must be composed of at least 1 AssociableHotspot object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -148,7 +148,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint|null
      */
     public function getResponseValidityConstraint()
     {
@@ -172,7 +172,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -180,11 +180,11 @@ class GraphicGapMatchInteraction extends GraphicInteraction
         $components = $prompt
             ? [$prompt]
             : [];
-                
+
         return new QtiComponentCollection(
             array_merge(
                 $components,
-                array($this->getObject()),
+                [$this->getObject()],
                 $this->getGapImgs()->getArrayCopy(),
                 $this->getAssociableHotspots()->getArrayCopy()
             )
@@ -192,7 +192,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

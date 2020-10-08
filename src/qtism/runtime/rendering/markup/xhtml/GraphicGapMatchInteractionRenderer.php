@@ -37,7 +37,9 @@ use qtism\data\QtiComponent;
 class GraphicGapMatchInteractionRenderer extends GraphicInteractionRenderer
 {
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\GraphicInteractionRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

@@ -57,9 +57,7 @@ class CorrectMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
-            $object = new Correct($identifier);
-
-            return $object;
+            return new Correct($identifier);
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
@@ -67,7 +65,7 @@ class CorrectMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

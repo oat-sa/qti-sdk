@@ -55,7 +55,7 @@ abstract class SetValueProcessor extends RuleProcessor
         $identifier = $rule->getIdentifier();
         $var = $state->getVariable($identifier);
 
-        if (is_null($var) === true) {
+        if ($var === null) {
             $msg = "No variable with identifier '${identifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (Reflection::isInstanceOf($var, $this->getVariableType()) === false) {
@@ -69,7 +69,7 @@ abstract class SetValueProcessor extends RuleProcessor
             $expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
             $val = $expressionEngine->process();
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound with the '" . Reflection::shortClassName($rule) . "' rule.";
+            $msg = "An error occurred while processing the expression bound with the '" . Reflection::shortClassName($rule) . "' rule.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
 
@@ -85,9 +85,9 @@ abstract class SetValueProcessor extends RuleProcessor
                 }
 
                 if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
-                    $val = new QtiInteger(intval($val->getValue()));
+                    $val = new QtiInteger((int)$val->getValue());
                 } elseif ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
-                    $val = new QtiFloat(floatval($val->getValue()));
+                    $val = new QtiFloat((float)$val->getValue());
                 }
             }
 
@@ -101,5 +101,8 @@ abstract class SetValueProcessor extends RuleProcessor
         }
     }
 
+    /**
+     * @return mixed
+     */
     abstract protected function getVariableType();
 }

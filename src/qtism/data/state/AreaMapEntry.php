@@ -136,7 +136,7 @@ class AreaMapEntry extends QtiComponent
      */
     public function setMappedValue($mappedValue)
     {
-        if (is_float($mappedValue) || is_double($mappedValue)) {
+        if (is_float($mappedValue)) {
             $this->mappedValue = $mappedValue;
         } else {
             $msg = "The mappedValue argument must be a float, '" . gettype($mappedValue) . "' given.";
@@ -155,7 +155,7 @@ class AreaMapEntry extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -163,7 +163,7 @@ class AreaMapEntry extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

@@ -55,17 +55,17 @@ class ContainsProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyMultipleOrOrdered() === false) {
-            $msg = "The Contains Expression only accept operands with multiple or ordered cardinality.";
+            $msg = 'The Contains Expression only accept operands with multiple or ordered cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameCardinality() === false) {
-            $msg = "The Contains Expression only accept operands with the same cardinality.";
+            $msg = 'The Contains Expression only accept operands with the same cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->sameBaseType() === false) {
-            $msg = "The Contains Expression only accept operands with the same baseType.";
+            $msg = 'The Contains Expression only accept operands with the same baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -115,7 +115,7 @@ class ContainsProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

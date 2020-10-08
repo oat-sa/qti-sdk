@@ -35,14 +35,13 @@ class ExitTemplate extends QtiComponent implements TemplateRule
 {
     /**
      * Create a new ExitTemplate object.
-     *
      */
     public function __construct()
     {
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -50,7 +49,7 @@ class ExitTemplate extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

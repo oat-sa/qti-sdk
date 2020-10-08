@@ -38,7 +38,12 @@ use qtism\data\SectionPartCollection;
 class AssessmentSectionMarshaller extends RecursiveMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @param AssessmentSection|null $assessmentSection
+     * @return AssessmentSection
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
     {
@@ -72,7 +77,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 // Deal with selection elements.
                 $selectionElements = $this->getChildElementsByTagName($element, 'selection');
                 if (count($selectionElements) == 1) {
-                    $select = intval($selectionElements[0]->getAttribute('select'));
+                    $select = (int)$selectionElements[0]->getAttribute('select');
 
                     if ($select > 0) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($selectionElements[0]);
@@ -114,7 +119,11 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -155,7 +164,8 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     * @param DOMNode $element
+     * @return bool
      */
     protected function isElementFinal(DOMNode $element)
     {
@@ -163,7 +173,8 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     * @param QtiComponent $component
+     * @return bool
      */
     protected function isComponentFinal(QtiComponent $component)
     {
@@ -171,7 +182,8 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     * @param DOMElement $element
+     * @return array
      */
     protected function getChildrenElements(DOMElement $element)
     {
@@ -198,7 +210,8 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     * @param QtiComponent $component
+     * @return array
      */
     protected function getChildrenComponents(QtiComponent $component)
     {
@@ -210,7 +223,8 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     * @param DOMElement $currentNode
+     * @return SectionPartCollection
      */
     protected function createCollection(DOMElement $currentNode)
     {
@@ -218,7 +232,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

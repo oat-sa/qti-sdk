@@ -3,11 +3,15 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\LookupOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class LookupOutcomeValueMarshallerTest
+ */
 class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -17,7 +21,7 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('lookupOutcomeValue', $element->nodeName);
         $this->assertEquals('myVariable1', $element->getAttribute('identifier'));
         $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
@@ -40,8 +44,8 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\LookupOutcomeValue', $component);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getExpression());
+        $this->assertInstanceOf(LookupOutcomeValue::class, $component);
+        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
         $this->assertInternalType('string', $component->getExpression()->getValue());
         $this->assertEquals('a value', $component->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $component->getExpression()->getBaseType());

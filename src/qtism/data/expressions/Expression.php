@@ -119,10 +119,19 @@ abstract class Expression extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
+    
+    /**
+     * Checks whether this expression is pure.
+     *
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return bool True if the expression is pure, false otherwise
+     */
+    abstract public function isPure();
 }

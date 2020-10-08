@@ -25,8 +25,10 @@ namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\IStream;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentTest;
 use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AbstractSessionManager;
@@ -98,7 +100,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $written = @file_put_contents($path, $stream->getBinary());
 
         if ($written === false || $written === 0) {
-            $msg = "An error occured while persisting the binary stream at '${path}'.";
+            $msg = "An error occurred while persisting the binary stream at '${path}'.";
             throw new RuntimeException($msg);
         }
     }
@@ -118,7 +120,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $read = @file_get_contents($path);
 
         if ($read === false || strlen($read) === 0) {
-            $msg = "An error occured while retrieving the binary stream at '${path}'. Nothing could be read. The file is empty or missing.";
+            $msg = "An error occurred while retrieving the binary stream at '${path}'. Nothing could be read. The file is empty or missing.";
             throw new RuntimeException($msg);
         }
 
@@ -126,7 +128,9 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     }
 
     /**
-     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStorage::createBinaryStreamAccess()
+     * @param IStream $stream
+     * @return BinaryStreamAccess|QtiBinaryStreamAccess
+     * @throws StreamAccessException
      */
     protected function createBinaryStreamAccess(IStream $stream)
     {
@@ -134,7 +138,8 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     }
 
     /**
-     * @see \qtism\runtime\storage\common\AbstractStorage::exists()
+     * @param string $sessionId
+     * @return bool
      */
     public function exists($sessionId)
     {
@@ -143,7 +148,9 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     }
 
     /**
-     * @see \qtism\runtime\storage\common\AbstractStorage::delete()
+     * @param AssessmentTestSession $assessmentTestSession
+     * @return bool
+     * @throws StorageException
      */
     public function delete(AssessmentTestSession $assessmentTestSession)
     {
@@ -153,7 +160,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
                 $fileManager->delete($file);
             } catch (FileManagerException $e) {
                 throw new StorageException(
-                    "An unexpected error occured while deleting file '" . $file->getIdentifier() . "' bound to Assessment Test Session '" . $assessmentTestSession->getSessionId() . "'.",
+                    "An unexpected error occurred while deleting file '" . $file->getIdentifier() . "' bound to Assessment Test Session '" . $assessmentTestSession->getSessionId() . "'.",
                     StorageException::DELETION,
                     $e
                 );

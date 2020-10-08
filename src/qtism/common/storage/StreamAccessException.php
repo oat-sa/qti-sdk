@@ -35,14 +35,14 @@ class StreamAccessException extends Exception
     /**
      * Unknown error.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
     /**
      * A closed IStream object is given as the stream to be read.
      *
-     * @var integer
+     * @var int
      */
     const NOT_OPEN = 1;
 
@@ -58,7 +58,7 @@ class StreamAccessException extends Exception
      *
      * @param string $message A human-readable message.
      * @param AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
-     * @param integer $code An exception code. See class constants.
+     * @param int $code An exception code. See class constants.
      * @param Exception $previous An optional previously thrown exception.
      */
     public function __construct($message, AbstractStreamAccess $source, $code = 0, Exception $previous = null)

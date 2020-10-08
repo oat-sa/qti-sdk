@@ -35,6 +35,6 @@ class QtiVersion200 extends QtiVersion
     const XSD = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
 
     const LOCAL_XSD = 'imsqti_v2p0.xsd';
-    
+
     const MARSHALLER_FACTORY = Qti20MarshallerFactory::class;
 }

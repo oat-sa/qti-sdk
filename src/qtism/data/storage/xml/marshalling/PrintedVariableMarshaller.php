@@ -98,11 +98,11 @@ class PrintedVariableMarshaller extends Marshaller
             }
 
             if (($base = $this->getDOMElementAttributeAs($element, 'base')) !== null) {
-                $component->setBase((Format::isInteger($base) === true) ? intval($base) : $base);
+                $component->setBase((Format::isInteger($base) === true) ? (int)$base : $base);
             }
 
             if (($index = $this->getDOMElementAttributeAs($element, 'index')) !== null) {
-                $component->setIndex((Format::isInteger($index) === true) ? intval($index) : $base);
+                $component->setIndex((Format::isInteger($index) === true) ? (int)$index : $base);
             }
 
             if (Version::compare($version, '2.1.0', '>=') === true && ($delimiter = $this->getDOMElementAttributeAs($element, 'delimiter')) !== null) {
@@ -131,7 +131,7 @@ class PrintedVariableMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

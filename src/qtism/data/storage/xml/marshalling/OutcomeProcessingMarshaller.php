@@ -38,6 +38,7 @@ class OutcomeProcessingMarshaller extends Marshaller
      *
      * @param QtiComponent $component An OutcomeProcessing object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -57,7 +58,7 @@ class OutcomeProcessingMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An OutcomeProcessing object.
-     * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -69,13 +70,11 @@ class OutcomeProcessingMarshaller extends Marshaller
             $outcomeRules[] = $marshaller->unmarshall($outcomeRuleElts[$i]);
         }
 
-        $object = new OutcomeProcessing($outcomeRules);
-
-        return $object;
+        return new OutcomeProcessing($outcomeRules);
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

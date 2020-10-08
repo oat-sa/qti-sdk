@@ -26,8 +26,12 @@ namespace qtism\data\content;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
 
+/**
+ * Class ModalFeedback
+ */
 class ModalFeedback extends QtiComponent
 {
     /**
@@ -52,7 +56,7 @@ class ModalFeedback extends QtiComponent
      * attribute. If set to hide then the feedback is shown by default and hidden if the
      * associated outcome variable matches, or contains, the value of the identifier attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
@@ -112,7 +116,7 @@ class ModalFeedback extends QtiComponent
     {
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setIdentifier($identifier);
-        $this->setContent((is_null($content) === true) ? new FlowStaticCollection() : $content);
+        $this->setContent($content ?? new FlowStaticCollection());
         $this->setTitle($title);
     }
 
@@ -147,12 +151,12 @@ class ModalFeedback extends QtiComponent
     /**
      * Set how the visibility of the modal feedback is controlled.
      *
-     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray(), true) === true) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration, '" . $showHide . "' given.";
@@ -163,7 +167,7 @@ class ModalFeedback extends QtiComponent
     /**
      * Get how the visibility of the modal feedback is controlled.
      *
-     * @return integer A value from the ShowHide enumeration.
+     * @return int A value from the ShowHide enumeration.
      */
     public function getShowHide()
     {
@@ -221,7 +225,7 @@ class ModalFeedback extends QtiComponent
     /**
      * Whether or not a value is defined for the title attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTitle()
     {
@@ -248,11 +252,17 @@ class ModalFeedback extends QtiComponent
         return $this->content;
     }
 
+    /**
+     * @return FlowStaticCollection|QtiComponentCollection
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'modalFeedback';

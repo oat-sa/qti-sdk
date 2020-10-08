@@ -104,20 +104,20 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
                         if ($identifier === $id) {
                             $var = $itemSession->getVariable($id);
-                            $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
+                            $weight = (empty($weightIdentifier)) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
 
                             // Single cardinality? Does it match the baseType?
-                            if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
+                            if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) && $var->getValue() !== null) {
                                 $val = clone($var->getValue());
 
-                                if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true && ($val instanceof QtiInteger || $val instanceof QtiFloat)) {
+                                if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) && ($val instanceof QtiInteger || $val instanceof QtiFloat)) {
                                     // A weight has to be applied.
                                     $val->setValue($val->getValue() * $weight->getValue());
                                 }
 
                                 $values[] = $val;
 
-                                if (gettype($val->getValue()) === 'integer') {
+                                if (is_int($val->getValue())) {
                                     $integerCount++;
                                 }
                             }
@@ -138,7 +138,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
                 // values are subject to type promotion.
                 foreach ($values as $v) {
-                    $result[] = new QtiFloat(floatval($v->getValue()));
+                    $result[] = new QtiFloat((float)$v->getValue());
                 }
             }
         } else {
@@ -150,7 +150,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

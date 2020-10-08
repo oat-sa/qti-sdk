@@ -34,6 +34,7 @@ class VariableDeclarationCollection extends QtiIdentifiableCollection
     /**
      * Check if a given $value is an instance of VariableDeclaration.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of VariableDeclaration.
      */
     protected function checkType($value)

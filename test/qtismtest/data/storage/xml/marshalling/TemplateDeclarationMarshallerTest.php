@@ -10,7 +10,11 @@ use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TemplateDeclarationMarshallerTest
+ */
 class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -32,13 +36,13 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\state\\TemplateDeclaration', $component);
+        $this->assertInstanceOf(TemplateDeclaration::class, $component);
         $this->assertEquals('tpl1', $component->getIdentifier());
         $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
         $this->assertEquals(BaseType::IDENTIFIER, $component->getBaseType());
 
         $default = $component->getDefaultValue();
-        $this->assertInstanceOf('qtism\\data\\state\\DefaultValue', $default);
+        $this->assertInstanceOf(DefaultValue::class, $default);
         $values = $default->getValues();
         $this->assertEquals(1, count($values));
         $this->assertEquals('tplx', $values[0]->getValue());
@@ -66,7 +70,8 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $expectedMsg = "The mandatory attribute 'paramVariable' is missing from element 'templateDeclaration'.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }
 
@@ -77,7 +82,8 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $expectedMsg = "The mandatory attribute 'mathVariable' is missing from element 'templateDeclaration'.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }
 }

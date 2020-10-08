@@ -5,7 +5,11 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\content\interactions\EndAttemptInteraction;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class EndAttemptInteractionMarshallerTest
+ */
 class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -26,7 +30,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\EndAttemptInteraction', $component);
+        $this->assertInstanceOf(EndAttemptInteraction::class, $component);
         $this->assertEquals('my-end', $component->getId());
         $this->assertEquals('ending', $component->getClass());
         $this->assertEquals('BOOL_RESP', $component->getResponseIdentifier());
@@ -56,10 +60,8 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
             <endAttemptInteraction id="my-end" class="ending"/>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'responseIdentifier' attribute is missing from the 'endAttemptInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'endAttemptInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

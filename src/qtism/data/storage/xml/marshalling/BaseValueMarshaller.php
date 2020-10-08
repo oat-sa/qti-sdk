@@ -68,9 +68,7 @@ class BaseValueMarshaller extends Marshaller
                 $value = trim($value);
             }
 
-            $object = new BaseValue($baseTypeCst, Utils::stringToDatatype($value, $baseTypeCst));
-
-            return $object;
+            return new BaseValue($baseTypeCst, Utils::stringToDatatype($value, $baseTypeCst));
         } else {
             $msg = "The mandatory attribute 'baseType' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
@@ -78,7 +76,7 @@ class BaseValueMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

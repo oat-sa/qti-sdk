@@ -1,9 +1,15 @@
 <?php
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
+/**
+ * @param array $files
+ * @param bool $validate
+ * @throws XmlStorageException
+ */
 function testAssessmentItems(array $files, $validate = false)
 {
     $loaded = 0;
@@ -24,7 +30,7 @@ function testAssessmentItems(array $files, $validate = false)
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 
         outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription("Memory usage is " . (memory_get_usage() / 1024 ** 2) . " MB");
         output('');
 
         $loaded++;
@@ -33,6 +39,11 @@ function testAssessmentItems(array $files, $validate = false)
     outputAverage($totalSpent / $loaded);
 }
 
+/**
+ * @param array $files
+ * @param bool $validate
+ * @throws XmlStorageException
+ */
 function testAssessmentTests(array $files, $validate = false)
 {
     $loaded = 0;
@@ -54,7 +65,7 @@ function testAssessmentTests(array $files, $validate = false)
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 
         outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
-        outputDescription("Memory usage is " . (memory_get_usage() / pow(1024, 2)) . " MB");
+        outputDescription("Memory usage is " . (memory_get_usage() / 1024 ** 2) . " MB");
 
         output('');
 
@@ -64,6 +75,9 @@ function testAssessmentTests(array $files, $validate = false)
     outputAverage($totalSpent / $loaded);
 }
 
+/**
+ * @param $msg
+ */
 function outputTitle($msg)
 {
     output('');
@@ -72,27 +86,40 @@ function outputTitle($msg)
     output(str_repeat('+', strlen($msg)));
 }
 
+/**
+ * @param $avg
+ */
 function outputAverage($avg)
 {
     output(sprintf("--> Average loading time is %.8f seconds.", $avg));
 }
 
+/**
+ * @param $msg
+ */
 function outputDescription($msg)
 {
     output(" + ${msg}");
 }
 
+/**
+ * @param $msg
+ */
 function output($msg)
 {
     echo "${msg}\n";
 }
 
+/**
+ * @param $start
+ * @param $end
+ * @return mixed
+ */
 function spentTime($start, $end)
 {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
-    $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
-    return $time;
+    return ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 }
 
 define('SAMPLES_DIR', dirname(__FILE__) . '/../samples/');

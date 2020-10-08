@@ -33,7 +33,7 @@ use qtism\runtime\rendering\RenderingException;
  */
 class NotQtiPLRenderer extends AbstractQtiPLRenderer
 {
-    private $signAsOperator = "!";
+    private $signAsOperator = '!';
 
     /**
      * Render a QtiComponent object into another constitution.
@@ -47,9 +47,9 @@ class NotQtiPLRenderer extends AbstractQtiPLRenderer
         $renderer = new QtiPLRenderer($this->getCRO());
         $orenderer = new OperatorQtiPLRenderer($this->getCRO());
         $needsparenthesis0 = array_key_exists(
-            $something->getExpressions()[0]->getQtiClassName(),
-            $orenderer->getSignAsOperatorMap()
-        )
+                $something->getExpressions()[0]->getQtiClassName(),
+                $orenderer->getSignAsOperatorMap()
+            )
             && $something->getExpressions()[0]->getExpressions()->count() == 2;
 
         if ($needsparenthesis0) {

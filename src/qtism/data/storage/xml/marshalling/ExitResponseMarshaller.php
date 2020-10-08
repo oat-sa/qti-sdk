@@ -40,9 +40,7 @@ class ExitResponseMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
-
-        return $element;
+        return static::getDOMCradle()->createElement($component->getQtiClassName());
     }
 
     /**
@@ -53,13 +51,11 @@ class ExitResponseMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        $object = new ExitResponse();
-
-        return $object;
+        return new ExitResponse();
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

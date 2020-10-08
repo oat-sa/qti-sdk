@@ -25,20 +25,24 @@ namespace qtism\runtime\rendering\markup;
 
 use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\RenderingException;
+use qtism\runtime\rendering\markup\Utils;
 
+/**
+ * Class MarkupPostRenderer
+ */
 class MarkupPostRenderer implements Renderable
 {
     /**
      * Whether or not format the XML output.
      *
-     * @var boolean
+     * @var bool
      */
     private $formatOutput = false;
 
     /**
      * Whether or not clean up XML declarations.
      *
-     * @var boolean
+     * @var bool
      */
     private $cleanUpXmlDeclaration = false;
 
@@ -46,7 +50,7 @@ class MarkupPostRenderer implements Renderable
      * Whether or not transforms template statements
      * into PHP statements.
      *
-     * @var boolean
+     * @var bool
      */
     private $templateOriented = false;
 
@@ -67,9 +71,9 @@ class MarkupPostRenderer implements Renderable
     /**
      * Create a new MarkupPostRenderer object.
      *
-     * @param boolean $formatOutput Whether or not format the XML output.
-     * @param boolean $cleanUpXmlDeclaration Whether or not clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
-     * @param boolean $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
+     * @param bool $formatOutput Whether or not format the XML output.
+     * @param bool $cleanUpXmlDeclaration Whether or not clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
+     * @param bool $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
      */
     public function __construct($formatOutput = false, $cleanUpXmlDeclaration = false, $templateOriented = false)
     {
@@ -81,7 +85,7 @@ class MarkupPostRenderer implements Renderable
     /**
      * Set whether or not to format the XML output.
      *
-     * @param boolean $formatOutput
+     * @param bool $formatOutput
      */
     public function formatOutput($formatOutput)
     {
@@ -91,7 +95,7 @@ class MarkupPostRenderer implements Renderable
     /**
      * Whether or not the XML output will be formatted.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustFormatOutput()
     {
@@ -102,7 +106,7 @@ class MarkupPostRenderer implements Renderable
      * Set whether or not XML declarations must
      * be clean up.
      *
-     * @param boolean $cleanUpXmlDeclaration
+     * @param bool $cleanUpXmlDeclaration
      */
     public function cleanUpXmlDeclaration($cleanUpXmlDeclaration)
     {
@@ -112,7 +116,7 @@ class MarkupPostRenderer implements Renderable
     /**
      * Whether or not XML declarations must be clean up.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustCleanUpXmlDeclaration()
     {
@@ -123,7 +127,7 @@ class MarkupPostRenderer implements Renderable
      * Set whether or not template statements (qtism-if,  qtism-endif, ...)
      * must be transformed into PHP statements.
      *
-     * @param boolean $templateOriented
+     * @param bool $templateOriented
      */
     public function templateOriented($templateOriented)
     {
@@ -134,7 +138,7 @@ class MarkupPostRenderer implements Renderable
      * Whether or not template statements (qtism-if, qtism-endif, ...)
      * must be transformed into PHP statements.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTemplateOriented()
     {
@@ -184,10 +188,15 @@ class MarkupPostRenderer implements Renderable
         return $this->fragmentPrefix;
     }
 
+    /**
+     * @param mixed $document
+     * @return mixed|string|string[]|null
+     * @throws RenderingException
+     */
     public function render($document)
     {
         if ($document->documentElement === null) {
-            $msg = "The XML Document to be rendered has no root element (i.e. it is empty).";
+            $msg = 'The XML Document to be rendered has no root element (i.e. it is empty).';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
@@ -205,18 +214,19 @@ class MarkupPostRenderer implements Renderable
 
         if ($output === false) {
             $document->formatOutput = $oldFormatOutput;
-            $msg = "A PHP internal error occured while rendering the XML Document.";
+            $msg = 'A PHP internal error occurred while rendering the XML Document.';
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
         /*
-         * 2. Transform qtism-if, qtism-printVariable, qtism-include statements into PHP statements.
+         * 2. Transform qtism-if, qtism-printVariable, qtism-include statements
+         * into PHP statements.
          */
         if ($this->isTemplateOriented() === true) {
             $output = preg_replace('/<!--\s+qtism-if\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);
             $output = preg_replace('/<!--\s+qtism-endif\s+-->/iu', '<?php endif; ?>', $output);
 
-            $className = "qtism\\runtime\\rendering\\markup\\Utils";
+            $className = Utils::class;
             $call = "<?php echo ${className}::printVariable(\\1); ?>";
             $output = preg_replace('/<!--\s+qtism-printVariable\((.+?)\)\s+-->/iu', $call, $output);
 

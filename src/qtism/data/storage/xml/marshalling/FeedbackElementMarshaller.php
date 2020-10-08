@@ -38,7 +38,10 @@ use qtism\data\ShowHide;
 class FeedbackElementMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -65,7 +68,7 @@ class FeedbackElementMarshaller extends ContentMarshaller
                             $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
                             throw new UnmarshallingException($msg, $element);
                         }
-                        if ($inline === false && in_array($child->getQtiClassName(), $blockExclusion) === true) {
+                        if ($inline === false && in_array($child->getQtiClassName(), $blockExclusion)) {
                             $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
                             throw new UnmarshallingException($msg, $element);
                         }
@@ -94,7 +97,9 @@ class FeedbackElementMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -115,9 +120,6 @@ class FeedbackElementMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content"];

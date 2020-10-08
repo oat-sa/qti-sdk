@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -34,10 +33,10 @@ use qtism\data\expressions\Pure;
  * by the logical negation of the sub-expression's value. If the sub-expression
  * is NULL then the not operator also results in NULL.
  */
-class NotOperator extends Operator implements Pure
+class NotOperator extends Operator
 {
     /**
-     * Create a new Not object.
+     * Create a new NotOperator object.
      *
      * @param ExpressionCollection $expressions
      */
@@ -47,22 +46,10 @@ class NotOperator extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'not';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

@@ -66,7 +66,7 @@ abstract class PhpMarshaller
     public function setToMarshall($toMarshall)
     {
         if ($this->isMarshallable($toMarshall) === false) {
-            $msg = "The value to marshall cannot be managed by this implementation.";
+            $msg = 'The value to marshall cannot be managed by this implementation.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -117,7 +117,7 @@ abstract class PhpMarshaller
      * whether or not the value $toMarshall can be handled or not.
      *
      * @param mixed $toMarshall The value the current PhpMarshaller implementation has to deal with.
-     * @return boolean Whether or not the value $toMarshall can be marshalled or not by this implementation.
+     * @return bool Whether or not the value $toMarshall can be marshalled or not by this implementation.
      */
     abstract protected function isMarshallable($toMarshall);
 }

@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
+use qtism\data\rules\LookupOutcomeValue;
 use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -64,7 +65,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
         $identifier = $rule->getIdentifier();
         $var = $state->getVariable($identifier);
 
-        if (is_null($var) === true) {
+        if ($var === null) {
             $msg = "The variable to set '${identifier}' does not exist in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof OutcomeVariable) {
@@ -80,7 +81,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
 
             // Let's lookup the associated table.
             $table = $var->getLookupTable();
-            if (is_null($table) === true) {
+            if ($table === null) {
                 $msg = "No lookupTable in declaration of variable '${identifier}'.";
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
             }
@@ -136,16 +137,16 @@ class LookupOutcomeValueProcessor extends RuleProcessor
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR);
             }
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound to the lookupOutcomeValue rule.";
+            $msg = 'An error occurred while processing the expression bound to the lookupOutcomeValue rule.';
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
     }
 
     /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     * @return string
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\LookupOutcomeValue';
+        return LookupOutcomeValue::class;
     }
 }

@@ -40,7 +40,6 @@ class GapMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Gap object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -119,7 +118,7 @@ class GapMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

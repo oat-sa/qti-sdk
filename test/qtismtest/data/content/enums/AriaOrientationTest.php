@@ -26,34 +26,49 @@ namespace qtismtest\data\content\enums;
 use qtism\data\content\enums\AriaOrientation;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class AriaOrientationTest
+ */
 class AriaOrientationTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return AriaOrientation::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
             'horizontal',
-            'vertical'
+            'vertical',
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
             'HORIZONTAL',
-            'VERTICAL'
+            'VERTICAL',
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [
             AriaOrientation::HORIZONTAL,
-            AriaOrientation::VERTICAL
+            AriaOrientation::VERTICAL,
         ];
     }
 }

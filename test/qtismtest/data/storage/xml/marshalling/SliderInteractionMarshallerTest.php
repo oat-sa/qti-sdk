@@ -9,7 +9,11 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\SliderInteraction;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class SliderInteractionMarshallerTest
+ */
 class SliderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -44,7 +48,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SliderInteraction', $component);
+        $this->assertInstanceOf(SliderInteraction::class, $component);
         $this->assertEquals('my-slider', $component->getId());
         $this->assertEquals('slide-it', $component->getClass());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
@@ -70,10 +74,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\storage\\xml\\marshalling\\UnmarshallingException',
-            "The value of the 'orientation' attribute of the 'sliderInteraction' is invalid."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the 'orientation' attribute of the 'sliderInteraction' is invalid.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -89,10 +91,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'upperBound' attribute is missing from the 'sliderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'upperBound' attribute is missing from the 'sliderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -108,10 +108,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'lowerBound' attribute is missing from the 'sliderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'lowerBound' attribute is missing from the 'sliderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -127,10 +125,8 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'responseIdentifier' attribute is missing from the 'sliderInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'sliderInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

@@ -30,6 +30,7 @@ use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\ObjectFlowCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -69,7 +70,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The width. -1 means no height was provided.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $width = -1;
@@ -77,7 +78,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The height. -1 means no height was provided.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $height = -1;
@@ -111,7 +112,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setData($data)
     {
-        if ((is_string($data) === true && $data === '') || Format::isUri($data) === true) {
+        if ((is_string($data) && $data === '') || Format::isUri($data) === true) {
             $this->data = $data;
         } else {
             $msg = "The 'data' argument must be a URI or an empty string, '" . gettype($data) . "' given.";
@@ -137,7 +138,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setType($type)
     {
-        if (is_string($type) === true && empty($type) === false) {
+        if (is_string($type) && empty($type) === false) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a non-empty string, '" . gettype($type) . "' given.";
@@ -160,12 +161,12 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @param integer $width A width.
+     * @param int $width A width.
      * @throws InvalidArgumentException
      */
     public function setWidth($width)
     {
-        if (is_int($width) === true) {
+        if (is_int($width)) {
             $this->width = $width;
         } else {
             $msg = "The 'width' argument must be an integer, '" . gettype($width) . "' given.";
@@ -178,7 +179,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @return integer A width.
+     * @return int A width.
      */
     public function getWidth()
     {
@@ -188,7 +189,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * Whether a width is defined for the object.
      *
-     * @return boolean.
+     * @return bool.
      */
     public function hasWidth()
     {
@@ -200,12 +201,12 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no height is provided.
      *
-     * @param integer $height A height.
+     * @param int $height A height.
      * @throws InvalidArgumentException If $height is not an integer value.
      */
     public function setHeight($height)
     {
-        if (is_int($height) === true) {
+        if (is_int($height)) {
             $this->height = $height;
         } else {
             $msg = "The 'height' argument must be an integer, '" . gettype($height) . "' given.";
@@ -217,7 +218,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * Get the width of the object. A negative value describes that no height is
      * provided.
      *
-     * @return integer A height.
+     * @return int A height.
      */
     public function getHeight()
     {
@@ -226,7 +227,6 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
 
     /**
      * Whether the object has a height.
-     *
      */
     public function hasHeight()
     {
@@ -234,7 +234,9 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * Get the components composing the Object.
+     *
+     * @return ObjectFlowCollection|QtiComponentCollection A collection of ObjectFlow objects.
      */
     public function getComponents()
     {
@@ -262,7 +264,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

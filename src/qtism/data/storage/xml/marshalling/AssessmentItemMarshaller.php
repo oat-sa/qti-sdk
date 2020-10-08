@@ -42,6 +42,8 @@ class AssessmentItemMarshaller extends Marshaller
      *
      * @param QtiComponent $component An AssessmentItem object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -121,6 +123,7 @@ class AssessmentItemMarshaller extends Marshaller
      * @param DOMElement $element A DOMElement object.
      * @param AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
      * @return QtiComponent An AssessmentItem object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null)
@@ -250,7 +253,7 @@ class AssessmentItemMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

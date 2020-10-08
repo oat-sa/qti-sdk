@@ -38,7 +38,6 @@ class BaseValueQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws RenderingException If something goes wrong while rendering the component.
      */
     public function render($something)
     {
@@ -52,12 +51,12 @@ class BaseValueQtiPLRenderer extends AbstractQtiPLRenderer
             case 3: // FLOAT
                 return $something->getValue();
             case 4: // STRING
-                return "\"" . $something->getValue() . "\"";
+                return '"' . $something->getValue() . '"';
             case 10: // URI
-                return "`" . $something->getValue() . "`";
+                return '`' . $something->getValue() . '`';
             default:
-                return strtolower(BaseType::getNameByConstant($something->getBaseType())) . "(" .
-                    $something->getValue() . ")";
+                return strtolower(BaseType::getNameByConstant($something->getBaseType())) . '(' .
+                    $something->getValue() . ')';
         }
     }
 }

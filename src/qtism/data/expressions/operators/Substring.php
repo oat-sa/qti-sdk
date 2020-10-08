@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use InvalidArgumentException;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -36,7 +35,7 @@ use qtism\data\expressions\Pure;
  * false if it isn't. If either sub-expression is NULL then the result of the operator
  * is NULL.
  */
-class Substring extends Operator implements Pure
+class Substring extends Operator
 {
     /**
      * From IMS QTI:
@@ -46,7 +45,7 @@ class Substring extends Operator implements Pure
      * a substring of "Shell". If false then the match is not case sensitive and "Hell"
      * is a substring of "Shell".
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $caseSensitive = true;
@@ -55,7 +54,7 @@ class Substring extends Operator implements Pure
      * Create a new Substring.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param boolean $caseSensitive A boolean value.
+     * @param bool $caseSensitive A boolean value.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean or if the count of $expressions is not correct.
      */
     public function __construct(ExpressionCollection $expressions, $caseSensitive = true)
@@ -67,7 +66,7 @@ class Substring extends Operator implements Pure
     /**
      * Set the caseSensitive attribute.
      *
-     * @param boolean $caseSensitive A boolean value.
+     * @param bool $caseSensitive A boolean value.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
      */
     public function setCaseSensitive($caseSensitive)
@@ -81,9 +80,9 @@ class Substring extends Operator implements Pure
     }
 
     /**
-     * Wether or not the operator is case sensitive.
+     * Whether or not the operator is case sensitive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCaseSensitive()
     {
@@ -91,22 +90,10 @@ class Substring extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'substring';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

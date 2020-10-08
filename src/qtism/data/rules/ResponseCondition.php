@@ -75,7 +75,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     {
         $this->setResponseIf($responseIf);
         $this->setResponseElse($responseElse);
-        $this->setResponseElseIfs((is_null($responseElseIfs)) ? new ResponseElseIfCollection() : $responseElseIfs);
+        $this->setResponseElseIfs($responseElseIfs ?? new ResponseElseIfCollection());
     }
 
     /**
@@ -141,7 +141,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     /**
      * Whether or not a ResponseElse object is defined for the response condition.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasResponseElse()
     {
@@ -149,7 +149,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -157,7 +157,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -166,7 +166,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
             $this->getResponseElseIfs()->getArrayCopy()
         );
 
-        if (!is_null($this->getResponseElse())) {
+        if ($this->getResponseElse() !== null) {
             $comp[] = $this->getResponseElse();
         }
 

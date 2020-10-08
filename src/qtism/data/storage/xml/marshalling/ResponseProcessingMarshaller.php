@@ -38,6 +38,7 @@ class ResponseProcessingMarshaller extends Marshaller
      *
      * @param QtiComponent $component A ResponseProcessing object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -64,8 +65,9 @@ class ResponseProcessingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI responseProcessing element.
      *
      * @param DOMElement $element A DOMElement object.
+     * @param ResponseProcessing|null $responseProcessing
      * @return QtiComponent A ResponseProcessing object.
-     * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element, ResponseProcessing $responseProcessing = null)
     {
@@ -77,7 +79,7 @@ class ResponseProcessingMarshaller extends Marshaller
             $responseRules[] = $marshaller->unmarshall($responseRuleElts[$i]);
         }
 
-        if (is_null($responseProcessing) === true) {
+        if ($responseProcessing === null) {
             $object = new ResponseProcessing($responseRules);
         } else {
             $object = $responseProcessing;
@@ -96,7 +98,7 @@ class ResponseProcessingMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

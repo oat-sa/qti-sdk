@@ -68,7 +68,7 @@ class NumberRespondedProcessor extends ItemSubsetProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

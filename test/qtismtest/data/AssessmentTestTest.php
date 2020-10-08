@@ -2,6 +2,7 @@
 
 namespace qtismtest\data;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\data\AssessmentSection;
@@ -15,6 +16,9 @@ use qtism\data\TestPartCollection;
 use qtism\data\TimeLimits;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class AssessmentTestTest
+ */
 class AssessmentTestTest extends QtiSmTestCase
 {
     public function testTimeLimits()
@@ -33,30 +37,24 @@ class AssessmentTestTest extends QtiSmTestCase
 
     public function testCreateAssessmentTestWrongIdentifier()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "'999' is not a valid QTI Identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
 
         $test = new AssessmentTest('999', 'Nine Nine Nine');
     }
 
     public function testCreateAssessmentTestWrongTitle()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "Title must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Title must be a string, 'integer' given.");
 
         $test = new AssessmentTest('ABC', 999);
     }
 
     public function testSetToolNameWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "Toolname must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Toolname must be a string, 'integer' given.");
 
         $test = new AssessmentTest('ABC', 'ABC');
         $test->setToolName(999);
@@ -64,10 +62,8 @@ class AssessmentTestTest extends QtiSmTestCase
 
     public function testSetToolVersionWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "ToolVersion must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("ToolVersion must be a string, 'integer' given.");
 
         $test = new AssessmentTest('ABC', 'ABC');
         $test->setToolVersion(999);
@@ -81,7 +77,7 @@ class AssessmentTestTest extends QtiSmTestCase
         );
 
         $components = $test->getComponents();
-        $this->assertInstanceOf('\\qtism\\data\\TimeLimits', $components[count($components) - 1]);
+        $this->assertInstanceOf(TimeLimits::class, $components[count($components) - 1]);
     }
 
     public function testIsExclusivelyLinearNoTestParts()

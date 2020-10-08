@@ -39,11 +39,19 @@ class Sub extends ExternalQtiComponent implements FlowStatic, InlineStatic
 {
     use FlowTrait;
 
+    /**
+     * Sub constructor.
+     *
+     * @param $xmlString
+     */
     public function __construct($xmlString)
     {
         parent::__construct($xmlString);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'sub';

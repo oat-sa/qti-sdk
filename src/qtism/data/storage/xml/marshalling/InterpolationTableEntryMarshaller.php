@@ -41,7 +41,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
      * Get the baseType of the variableDeclaration that contains
      * the interpolationTableEntry to marshall.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -60,7 +60,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "The baseType attribute must be a value from the BaseType enumeration.";
+            $msg = 'The baseType attribute must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -120,7 +120,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

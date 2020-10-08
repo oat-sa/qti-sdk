@@ -34,6 +34,7 @@ class VariableMappingCollection extends QtiComponentCollection
     /**
      * Check if a given $value is an instance of VariableMapping.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of VariableMapping.
      */
     protected function checkType($value)

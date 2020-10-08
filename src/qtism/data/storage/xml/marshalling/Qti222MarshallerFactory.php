@@ -17,7 +17,7 @@
  *
  * Copyright (c) 2019-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Julien Sébire <julien@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
@@ -33,7 +33,9 @@ use ReflectionClass;
 class Qti222MarshallerFactory extends Qti221MarshallerFactory
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
+     * @param ReflectionClass $class
+     * @param array $args
+     * @return mixed
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

@@ -10,7 +10,13 @@ use qtism\data\rules\OutcomeIf;
 use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
+use qtism\data\rules\OutcomeElse;
+use qtism\data\rules\OutcomeElseIf;
+use qtism\data\expressions\operators\Equal;
 
+/**
+ * Class OutcomeConditionMarshallerTest
+ */
 class OutcomeConditionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallIfMinimal()
@@ -49,14 +55,14 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeCondition', $component);
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeIf', $component->getOutcomeIf());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getOutcomeIf()->getExpression());
+        $this->assertInstanceOf(OutcomeCondition::class, $component);
+        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
         $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
         $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
     }
 
@@ -86,24 +92,24 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeCondition', $component);
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeIf', $component->getOutcomeIf());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getOutcomeIf()->getExpression());
+        $this->assertInstanceOf(OutcomeCondition::class, $component);
+        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
 
         $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
         $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
         $this->assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $outcomeElseIfs[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeElseIfs[0]->getExpression());
+        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
     }
 
@@ -138,30 +144,30 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeCondition', $component);
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeIf', $component->getOutcomeIf());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getOutcomeIf()->getExpression());
+        $this->assertInstanceOf(OutcomeCondition::class, $component);
+        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
 
         $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
         $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
         $this->assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $outcomeElseIfs[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeElseIfs[0]->getExpression());
+        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElse', $component->getOutcomeElse());
+        $this->assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
 
         $outcomeRules = $component->getOutcomeElse()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 
@@ -202,37 +208,37 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeCondition', $component);
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeIf', $component->getOutcomeIf());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getOutcomeIf()->getExpression());
+        $this->assertInstanceOf(OutcomeCondition::class, $component);
+        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
 
         $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
         $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
         $this->assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $outcomeElseIfs[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeElseIfs[0]->getExpression());
+        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('ElseIf1!', $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $outcomeElseIfs[1]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeElseIfs[1]->getExpression());
+        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[1]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[1]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[1]->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('ElseIf2!', $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElse', $component->getOutcomeElse());
+        $this->assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
 
         $outcomeRules = $component->getOutcomeElse()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 
@@ -302,14 +308,14 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeCondition', $component);
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeIf', $component->getOutcomeIf());
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getOutcomeIf()->getExpression());
+        $this->assertInstanceOf(OutcomeCondition::class, $component);
+        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
         $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeCondition', $outcomeRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $outcomeRules[0]->getOutcomeIf()->getExpression());
+        $this->assertInstanceOf(OutcomeCondition::class, $outcomeRules[0]);
+        $this->assertInstanceOf(Equal::class, $outcomeRules[0]->getOutcomeIf()->getExpression());
         $this->assertEquals(1, count($outcomeRules[0]->getOutcomeElseIfs()));
 
         $outcomeElseIfs = $outcomeRules[0]->getOutcomeElseIfs();
@@ -317,24 +323,24 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $this->assertEquals('3 + 3 = 6', $subOutcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $outcomeElseIfs[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeElseIfs[0]->getExpression());
+        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('ElseIf1!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $outcomeElseIfs[1]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeElseIfs[1]->getExpression());
+        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[1]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[1]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[1]->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('ElseIf2!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeRules = $component->getOutcomeElse()->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElse', $component->getOutcomeElse());
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
+        $this->assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 }

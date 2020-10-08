@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -70,12 +69,12 @@ use qtism\data\expressions\Pure;
  * * If the first argument is negative infinity and the second argument is positive infinity, then the result is the double value closest to -π/4.
  * * If both arguments are negative infinity, then the result is the double value closest to -3*π/4.
  */
-class MathOperator extends Operator implements Pure
+class MathOperator extends Operator
 {
     /**
      * The name of the mathematical function.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $name;
@@ -84,7 +83,7 @@ class MathOperator extends Operator implements Pure
      * Create a new instance of MathOperator.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $name The math functions to use as a value from the MathFunctions enumeration.
+     * @param int $name The math functions to use as a value from the MathFunctions enumeration.
      */
     public function __construct(ExpressionCollection $expressions, $name)
     {
@@ -95,7 +94,7 @@ class MathOperator extends Operator implements Pure
     /**
      * Get the name of the math function to use.
      *
-     * @return integer A value from the MathFunctions enumeration.
+     * @return int A value from the MathFunctions enumeration.
      */
     public function getName()
     {
@@ -105,7 +104,7 @@ class MathOperator extends Operator implements Pure
     /**
      * Set the name of the math function to use.
      *
-     * @param integer $name A value from the MathFunctions enumeration.
+     * @param int $name A value from the MathFunctions enumeration.
      * @throws InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
      */
     public function setName($name)
@@ -119,22 +118,10 @@ class MathOperator extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'mathOperator';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

@@ -36,7 +36,7 @@ class PhpStorageException extends StorageException
      * Create a new PhpStorageException object.
      *
      * @param string $message A human-readable message.
-     * @param integer $code An error code.
+     * @param int $code An error code.
      * @param Exception $previous A previously thrown and caught exception.
      */
     public function __construct($message, $code = 0, Exception $previous = null)

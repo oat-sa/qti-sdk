@@ -60,7 +60,7 @@ class CorrectProcessor extends ExpressionProcessor
 
         $var = $state->getVariable($identifier);
 
-        if (is_null($var)) {
+        if ($var === null) {
             return null;
         } elseif ($var instanceof ResponseVariable) {
             return $var->getCorrectResponse();
@@ -71,7 +71,7 @@ class CorrectProcessor extends ExpressionProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

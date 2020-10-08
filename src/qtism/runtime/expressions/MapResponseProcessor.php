@@ -69,11 +69,11 @@ class MapResponseProcessor extends ExpressionProcessor
         $identifier = $expr->getIdentifier();
         $variable = $state->getVariable($identifier);
 
-        if (!is_null($variable)) {
+        if ($variable !== null) {
             if ($variable instanceof ResponseVariable) {
                 $mapping = $variable->getMapping();
 
-                if (is_null($mapping)) {
+                if ($mapping === null) {
                     return new QtiFloat(0.0);
                 }
 
@@ -126,7 +126,7 @@ class MapResponseProcessor extends ExpressionProcessor
                         $mappedCount = 0;
 
                         for ($i = 0; $i < count($mapEntries); $i++) {
-                            $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
+                            $mapKey = $mapEntries[$i]->getMapKey();
                             if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
                                 $val = new QtiString(mb_strtolower($val->getValue(), 'UTF-8'));
                                 $mapKey = mb_strtolower($mapKey, 'UTF-8');
@@ -153,11 +153,11 @@ class MapResponseProcessor extends ExpressionProcessor
                         return new QtiFloat($result);
                     }
                 } else {
-                    $msg = "MapResponse cannot be applied on a Record container.";
+                    $msg = 'MapResponse cannot be applied on a Record container.';
                     throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
             } else {
-                $msg = "The target variable of a MapResponse expression must be a ResponseVariable.";
+                $msg = 'The target variable of a MapResponse expression must be a ResponseVariable.';
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
             }
         } else {
@@ -167,7 +167,7 @@ class MapResponseProcessor extends ExpressionProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

@@ -6,13 +6,19 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MaxProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MaxProcessorTest
+ */
 class MaxProcessorTest extends QtiSmTestCase
 {
     public function testWrongBaseType()
@@ -41,7 +47,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $result);
 
         $rec['A'] = new QtiInteger(1);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -101,6 +107,10 @@ class MaxProcessorTest extends QtiSmTestCase
         $this->assertEquals(1337.1337, $result->getValue());
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

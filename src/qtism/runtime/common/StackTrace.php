@@ -40,9 +40,7 @@ class StackTrace extends AbstractCollection implements Stack
     public function pop()
     {
         $data = &$this->getDataPlaceHolder();
-        $val = array_pop($data);
-
-        return $val;
+        return array_pop($data);
     }
 
     /**
@@ -59,12 +57,12 @@ class StackTrace extends AbstractCollection implements Stack
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::checkType()
+     * @param mixed $value
      */
     public function checkType($value)
     {
         if (!$value instanceof StackTraceItem) {
-            $msg = "The StackTrace class only accepts to store StackTraceItem objects.";
+            $msg = 'The StackTrace class only accepts to store StackTraceItem objects.';
             throw new InvalidArgumentException($msg);
         }
     }

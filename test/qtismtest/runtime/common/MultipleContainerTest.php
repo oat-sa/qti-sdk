@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\common;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
@@ -12,6 +13,9 @@ use qtism\data\state\ValueCollection;
 use qtism\runtime\common\MultipleContainer;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MultipleContainerTest
+ */
 class MultipleContainerTest extends QtiSmTestCase
 {
     public function testCreationEmpty()
@@ -34,19 +38,19 @@ class MultipleContainerTest extends QtiSmTestCase
 
     public function testCreationEmptyWrongBaseType1()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $container = new MultipleContainer('invalid');
     }
 
     public function testCreationEmptyWrongBaseType2()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $container = new MultipleContainer(14);
     }
 
     public function testCreationWithWrongValues()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $data = [new QtiPoint(20, 20)];
         $container = new MultipleContainer(BaseType::DURATION, $data);
     }
@@ -58,7 +62,7 @@ class MultipleContainerTest extends QtiSmTestCase
         $valueCollection[] = new Value(new QtiPoint(20, 40), BaseType::POINT);
 
         $container = MultipleContainer::createFromDataModel($valueCollection, BaseType::POINT);
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $container);
+        $this->assertInstanceOf(MultipleContainer::class, $container);
         $this->assertEquals(2, count($container));
         $this->assertEquals(BaseType::POINT, $container->getBaseType());
         $this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
@@ -68,22 +72,29 @@ class MultipleContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider validCreateFromDataModelProvider
+     * @param int $baseType
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelValid($baseType, ValueCollection $valueCollection)
     {
         $container = MultipleContainer::createFromDataModel($valueCollection, $baseType);
-        $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $container);
+        $this->assertInstanceOf(MultipleContainer::class, $container);
     }
 
     /**
      * @dataProvider invalidCreateFromDataModelProvider
+     * @param int $baseType
+     * @param ValueCollection $valueCollection
      */
     public function testCreateFromDataModelInvalid($baseType, ValueCollection $valueCollection)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $container = MultipleContainer::createFromDataModel($valueCollection, $baseType);
     }
 
+    /**
+     * @return array
+     */
     public function invalidCreateFromDataModelProvider()
     {
         $returnValue = [];
@@ -96,6 +107,9 @@ class MultipleContainerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function validCreateFromDataModelProvider()
     {
         $returnValue = [];
@@ -137,21 +151,26 @@ class MultipleContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider distinctProvider
+     * @param MultipleContainer $originalContainer
+     * @param MultipleContainer $expectedContainer
      */
-    public function testDistinct($originalContainer, $expectedContainer)
+    public function testDistinct(MultipleContainer $originalContainer, MultipleContainer $expectedContainer)
     {
         $distinctContainer = $originalContainer->distinct();
         $this->assertTrue($distinctContainer->equals($expectedContainer));
         $this->assertTrue($expectedContainer->equals($distinctContainer));
     }
 
+    /**
+     * @return array
+     */
     public function distinctProvider()
     {
         return [
             [new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER)],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5)])],
             [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
-            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5)], null), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
+            [new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null, new QtiInteger(5), null]), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), null])],
         ];
     }
 }

@@ -36,7 +36,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall a TestVariable object in its DOMElement equivalent.
      *
-     * @param QtiComponent A TestVariable object.
+     * @param QtiComponent $component A TestVariable object.
      * @return DOMElement The corresponding testVariable QTI element.
      */
     protected function marshall(QtiComponent $component)
@@ -61,8 +61,9 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     /**
      * Marshall a testVariable QTI element in its TestVariable object equivalent.
      *
-     * @param DOMElement A DOMElement object.
+     * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding TestVariable object.
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -90,7 +91,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

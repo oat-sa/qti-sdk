@@ -35,7 +35,11 @@ use qtism\data\QtiComponentCollection;
 class AssociateInteractionMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -89,7 +93,11 @@ class AssociateInteractionMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -108,10 +116,8 @@ class AssociateInteractionMarshaller extends ContentMarshaller
         // shuffle.
         if (Version::compare($version, '2.1.0', '>=') && $component->mustShuffle() !== false) {
             $this->setDOMElementAttribute($element, 'shuffle', true);
-        } else {
-            if (Version::compare($version, '2.0.0', '==') === true) {
-                $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
-            }
+        } elseif (Version::compare($version, '2.0.0', '==') === true) {
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         // maxAssociations.
@@ -136,9 +142,6 @@ class AssociateInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

@@ -37,7 +37,6 @@ class XIncludeMarshaller extends Marshaller
      *
      * @param QtiComponent $component An XInclude object.
      * @return DOMElement The according DOMElement object.
-     * @throws \qtism\data\storage\marshalling\MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -49,7 +48,6 @@ class XIncludeMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Math object.
-     * @throws \qtism\data\storage\marshalling\UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -59,7 +57,7 @@ class XIncludeMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

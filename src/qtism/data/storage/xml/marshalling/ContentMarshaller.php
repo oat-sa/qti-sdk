@@ -78,7 +78,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     /**
      * Create a new ContentMarshaller object.
      *
-     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
+     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1.0'.
      */
     public function __construct($version)
     {
@@ -180,7 +180,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     ];
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     * @param DOMNode $element
+     * @return bool
      */
     protected function isElementFinal(DOMNode $element)
     {
@@ -188,7 +189,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     * @param QtiComponent $component
+     * @return bool
      */
     protected function isComponentFinal(QtiComponent $component)
     {
@@ -196,7 +198,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     * @param DOMElement $currentNode
+     * @return QtiComponentCollection
      */
     protected function createCollection(DOMElement $currentNode)
     {
@@ -204,7 +207,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     * @param QtiComponent $component
+     * @return array
      */
     protected function getChildrenComponents(QtiComponent $component)
     {
@@ -288,7 +292,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     * @param DOMElement $element
+     * @return array
      */
     protected function getChildrenElements(DOMElement $element)
     {
@@ -297,12 +302,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller
 
         if ($this->isWebComponentFriendly() === true) {
             $qtiFriendlyName = XmlUtils::qtiFriendlyName($localName);
-            if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses) === true) {
+            if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses)) {
                 $localName = $qtiFriendlyName;
             }
         }
 
-        if (in_array($localName, $simpleComposites) === true) {
+        if (in_array($localName, $simpleComposites)) {
             return self::getChildElements($element, true);
         } elseif ($localName === 'choiceInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleChoice');
@@ -344,7 +349,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {
@@ -386,12 +391,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
 
-            if (class_exists($fqClass) === true) {
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
 
-            $fqClass = $fqClass . 'Element';
-            if (class_exists($fqClass) === true) {
+            $fqClass .= 'Element';
+            if (class_exists($fqClass)) {
                 return $fqClass;
             }
         }

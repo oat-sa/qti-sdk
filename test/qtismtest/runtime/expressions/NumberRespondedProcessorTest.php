@@ -16,6 +16,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\NumberRespondedProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class NumberRespondedProcessorTest
+ */
 class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
 {
     public function testNumberResponded()
@@ -114,6 +117,12 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
         $session->moveNext();
     }
 
+    /**
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return NumberResponded
+     */
     protected static function getNumberResponded($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $numberResponded = new NumberResponded();

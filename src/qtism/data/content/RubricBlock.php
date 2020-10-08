@@ -111,7 +111,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
         if (count($views) > 0) {
             $this->views = $views;
         } else {
-            $msg = "A RubricBlock object must contain at least one View.";
+            $msg = 'A RubricBlock object must contain at least one View.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -136,7 +136,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      */
     public function setUse($use)
     {
-        if (gettype($use) === 'string') {
+        if (is_string($use)) {
             $this->use = $use;
         } else {
             $msg = "The use argument must be a string, '" . gettype($use) . "' given";
@@ -164,11 +164,17 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
         $this->stylesheets = $stylesheets;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'rubricBlock';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $components = $this->getContent();

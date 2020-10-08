@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The simpleMatchSet QTI class.
@@ -47,7 +48,7 @@ class SimpleMatchSet extends QtiComponent
      */
     public function __construct(SimpleAssociableChoiceCollection $simpleAssociableChoices = null)
     {
-        $this->setSimpleAssociableChoices((is_null($simpleAssociableChoices) === true) ? new SimpleAssociableChoiceCollection() : $simpleAssociableChoices);
+        $this->setSimpleAssociableChoices($simpleAssociableChoices ?? new SimpleAssociableChoiceCollection());
     }
 
     /**
@@ -71,7 +72,7 @@ class SimpleMatchSet extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return SimpleAssociableChoiceCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -79,7 +80,7 @@ class SimpleMatchSet extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

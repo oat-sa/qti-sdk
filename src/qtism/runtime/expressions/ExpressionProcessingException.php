@@ -43,7 +43,7 @@ class ExpressionProcessingException extends ProcessingException
         if ($source instanceof ExpressionProcessor) {
             parent::setSource($source);
         } else {
-            $msg = "ExpressionProcessingException::setSource only accept ExpressionProcessor objects.";
+            $msg = 'ExpressionProcessingException::setSource only accept ExpressionProcessor objects.';
             throw new InvalidArgumentException($msg);
         }
     }

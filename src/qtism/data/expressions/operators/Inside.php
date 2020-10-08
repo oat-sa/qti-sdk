@@ -27,7 +27,6 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -38,7 +37,7 @@ use qtism\data\expressions\Pure;
  * true if any of the points are inside the area. If either sub-expression is NULL then
  * the operator results in NULL.
  */
-class Inside extends Operator implements Pure
+class Inside extends Operator
 {
     /**
      * From IMS QTI:
@@ -122,22 +121,10 @@ class Inside extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'inside';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

@@ -77,11 +77,7 @@ class State extends AbstractCollection
     public function getVariable($variableIdentifier)
     {
         $data = &$this->getDataPlaceHolder();
-        if (isset($data[$variableIdentifier])) {
-            return $data[$variableIdentifier];
-        } else {
-            return null;
-        }
+        return $data[$variableIdentifier] ?? null;
     }
 
     /**
@@ -106,7 +102,7 @@ class State extends AbstractCollection
     {
         $data = &$this->getDataPlaceHolder();
 
-        if (gettype($variable) === 'string') {
+        if (is_string($variable)) {
             $variableIdentifier = $variable;
         } elseif ($variable instanceof Variable) {
             $variableIdentifier = $variable->getIdentifier();
@@ -124,11 +120,12 @@ class State extends AbstractCollection
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::offsetSet()
+     * @param string $offset
+     * @param mixed $value
      */
     public function offsetSet($offset, $value)
     {
-        if (gettype($offset) === 'string' && empty($offset) === false) {
+        if (is_string($offset) && empty($offset) === false) {
             $placeholder = &$this->getDataPlaceHolder();
 
             if (isset($placeholder[$offset])) {
@@ -138,17 +135,18 @@ class State extends AbstractCollection
                 throw new OutOfBoundsException($msg);
             }
         } else {
-            $msg = "A State object can only be adressed by a valid string.";
+            $msg = 'A State object can only be addressed by a valid string.';
             throw new OutOfRangeException($msg);
         }
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::offsetGet()
+     * @param string $offset
+     * @return mixed|null
      */
     public function offsetGet($offset)
     {
-        if (is_string($offset) === true && $offset !== '') {
+        if (is_string($offset) && $offset !== '') {
             $data = &$this->getDataPlaceHolder();
             if (isset($data[$offset])) {
                 return $data[$offset]->getValue();
@@ -156,7 +154,7 @@ class State extends AbstractCollection
                 return null;
             }
         } else {
-            $msg = "A State object can only be addressed by a valid string.";
+            $msg = 'A State object can only be addressed by a valid string.';
             throw new OutOfRangeException($msg);
         }
     }
@@ -164,7 +162,7 @@ class State extends AbstractCollection
     /**
      * Reset all outcome variables to their defaults.
      *
-     * @param boolean $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
+     * @param bool $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
      */
     public function resetOutcomeVariables($preserveBuiltIn = true)
     {
@@ -204,7 +202,7 @@ class State extends AbstractCollection
      * to be NULL as well. Moreover, if the State is empty of any variable, the method
      * will return true.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsNullOnly()
     {
@@ -224,7 +222,7 @@ class State extends AbstractCollection
     /**
      * Whether or not the State contains only values that are equals to their variable default value only.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsValuesEqualToVariableDefaultOnly()
     {
@@ -247,12 +245,12 @@ class State extends AbstractCollection
     }
 
     /**
-     * @see \qtism\common\collections\AbstractCollection::checkType()
+     * @param mixed $value
      */
     protected function checkType($value)
     {
         if (!$value instanceof Variable) {
-            $msg = "A State object stores Variable objects only.";
+            $msg = 'A State object stores Variable objects only.';
             throw new InvalidArgumentException($msg);
         }
     }

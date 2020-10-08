@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
@@ -10,6 +11,9 @@ use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MathOperatorMarshallerTest
+ */
 class MathOperatorMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -20,7 +24,7 @@ class MathOperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('mathOperator', $element->nodeName);
         $this->assertEquals('sin', $element->getAttribute('name'));
 
@@ -45,12 +49,12 @@ class MathOperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\MathOperator', $component);
+        $this->assertInstanceOf(MathOperator::class, $component);
         $this->assertEquals(MathFunctions::SIN, $component->getName());
 
         $subExpr = $component->getExpressions();
         $this->assertEquals(1, count($subExpr));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $subExpr[0]);
+        $this->assertInstanceOf(BaseValue::class, $subExpr[0]);
         $this->assertInternalType('float', $subExpr[0]->getValue());
         $this->assertEquals(1.57, $subExpr[0]->getValue());
         $this->assertEquals(BaseType::FLOAT, $subExpr[0]->getBaseType());

@@ -107,6 +107,6 @@ class CandidateResponse extends QtiComponent
      */
     public function hasValues()
     {
-        return !is_null($this->values);
+        return $this->values !== null;
     }
 }

@@ -57,15 +57,16 @@ class MapResponseMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
-            $object = new MapResponse($identifier);
-
-            return $object;
+            return new MapResponse($identifier);
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
     }
 
+    /**
+     * @return string
+     */
     public function getExpectedQtiClassName()
     {
         return 'mapResponse';

@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * A QTI 3.0.0 (aQTI) MarshallerFactory
@@ -77,46 +78,46 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
         $this->removeMappingEntry('templateInline');
         $this->removeMappingEntry('infoControl');
 
-        $this->addMappingEntry('qti-associable-hotspot', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
-        $this->addMappingEntry('qti-gap', 'qtism\\data\\storage\\xml\\marshalling\\GapMarshaller');
-        $this->addMappingEntry('qti-gap-img', 'qtism\\data\\storage\\xml\\marshalling\\GapChoiceMarshaller');
-        $this->addMappingEntry('qti-gap-text', 'qtism\\data\\storage\\xml\\marshalling\\GapChoiceMarshaller');
-        $this->addMappingEntry('qti-simple-associable-choice', 'qtism\\data\\storage\\xml\\marshalling\\SimpleAssociableChoiceMarshaller');
-        $this->addMappingEntry('qti-hotspot-choice', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
-        $this->addMappingEntry('qti-hottext', 'qtism\\data\\storage\\xml\\marshalling\\HottextMarshaller');
-        $this->addMappingEntry('qti-inline-choice', 'qtism\\data\\storage\\xml\\marshalling\\InlineChoiceMarshaller');
-        $this->addMappingEntry('qti-simple-choice', 'qtism\\data\\storage\\xml\\marshalling\\SimpleChoiceMarshaller');
-        $this->addMappingEntry('qti-associate-interaction', 'qtism\\data\\storage\\xml\\marshalling\\AssociateInteractionMarshaller');
-        $this->addMappingEntry('qti-choice-interaction', 'qtism\\data\\storage\\xml\\marshalling\\ChoiceInteractionMarshaller');
-        $this->addMappingEntry('qti-drawing-interaction', 'qtism\\data\\storage\\xml\\marshalling\\DrawingInteractionMarshaller');
-        $this->addMappingEntry('qti-extended-text-interaction', 'qtism\\data\\storage\\xml\\marshalling\\TextInteractionMarshaller');
-        $this->addMappingEntry('qti-gap-match-interaction', 'qtism\\data\\storage\\xml\\marshalling\\GapMatchInteractionMarshaller');
-        $this->addMappingEntry('qti-graphic-associate-interaction', 'qtism\\data\\storage\\xml\\marshalling\\GraphicAssociateInteractionMarshaller');
-        $this->addMappingEntry('qti-graphic-gap-match-interaction', 'qtism\\data\\storage\\xml\\marshalling\\GraphicGapMatchInteractionMarshaller');
-        $this->addMappingEntry('qti-graphic-order-interaction', 'qtism\\data\\storage\\xml\\marshalling\\GraphicOrderInteractionMarshaller');
-        $this->addMappingEntry('qti-hotspot-interaction', 'qtism\\data\\storage\\xml\\marshalling\\HotspotInteractionMarshaller');
-        $this->addMappingEntry('qti-select-point-interaction', 'qtism\\data\\storage\\xml\\marshalling\\SelectPointInteractionMarshaller');
-        $this->addMappingEntry('qti-hottext-interaction', 'qtism\\data\\storage\\xml\\marshalling\\HottextInteractionMarshaller');
-        $this->addMappingEntry('qti-match-interaction', 'qtism\\data\\storage\\xml\\marshalling\\MatchInteractionMarshaller');
-        $this->addMappingEntry('qti-media-interaction', 'qtism\\data\\storage\\xml\\marshalling\\MediaInteractionMarshaller');
-        $this->addMappingEntry('qti-order-interaction', 'qtism\\data\\storage\\xml\\marshalling\\ChoiceInteractionMarshaller');
-        $this->addMappingEntry('qti-slider-interaction', 'qtism\\data\\storage\\xml\\marshalling\\SliderInteractionMarshaller');
-        $this->addMappingEntry('qti-upload-interaction', 'qtism\\data\\storage\\xml\\marshalling\\UploadInteractionMarshaller');
-        $this->addMappingEntry('qti-custom-interaction', 'qtism\\data\\storage\\xml\\marshalling\\CustomInteractionMarshaller');
-        $this->addMappingEntry('qti-end-attempt-interaction', 'qtism\\data\\storage\\xml\\marshalling\\EndAttemptInteractionMarshaller');
-        $this->addMappingEntry('qti-inline-choice-interaction', 'qtism\\data\\storage\\xml\\marshalling\\InlineChoiceInteractionMarshaller');
-        $this->addMappingEntry('qti-text-entry-interaction', 'qtism\\data\\storage\\xml\\marshalling\\TextInteractionMarshaller');
-        $this->addMappingEntry('qti-position-object-interaction', 'qtism\\data\\storage\\xml\\marshalling\\PositionObjectInteractionMarshaller');
-        $this->addMappingEntry('qti-printed-variable', 'qtism\\data\\storage\\xml\\marshalling\\PrintedVariableMarshaller');
-        $this->addMappingEntry('qti-prompt', 'qtism\\data\\storage\\xml\\marshalling\\PromptMarshaller');
-        $this->addMappingEntry('qti-feedback-block', 'qtism\\data\\storage\\xml\\marshalling\\FeedbackElementMarshaller');
-        $this->addMappingEntry('qti-template-inline', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
-        $this->addMappingEntry('qti-rubric-block', 'qtism\\data\\storage\\xml\\marshalling\\RubricBlockMarshaller');
-        $this->addMappingEntry('qti-template-block', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
-        $this->addMappingEntry('qti-template-inline', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
-        $this->addMappingEntry('qti-info-control', 'qtism\\data\\storage\\xml\\marshalling\\InfoControlMarshaller');
+        $this->addMappingEntry('qti-associable-hotspot', HotspotMarshaller::class);
+        $this->addMappingEntry('qti-gap', GapMarshaller::class);
+        $this->addMappingEntry('qti-gap-img', GapChoiceMarshaller::class);
+        $this->addMappingEntry('qti-gap-text', GapChoiceMarshaller::class);
+        $this->addMappingEntry('qti-simple-associable-choice', SimpleAssociableChoiceMarshaller::class);
+        $this->addMappingEntry('qti-hotspot-choice', HotspotMarshaller::class);
+        $this->addMappingEntry('qti-hottext', HottextMarshaller::class);
+        $this->addMappingEntry('qti-inline-choice', InlineChoiceMarshaller::class);
+        $this->addMappingEntry('qti-simple-choice', SimpleChoiceMarshaller::class);
+        $this->addMappingEntry('qti-associate-interaction', AssociateInteractionMarshaller::class);
+        $this->addMappingEntry('qti-choice-interaction', ChoiceInteractionMarshaller::class);
+        $this->addMappingEntry('qti-drawing-interaction', DrawingInteractionMarshaller::class);
+        $this->addMappingEntry('qti-extended-text-interaction', TextInteractionMarshaller::class);
+        $this->addMappingEntry('qti-gap-match-interaction', GapMatchInteractionMarshaller::class);
+        $this->addMappingEntry('qti-graphic-associate-interaction', GraphicAssociateInteractionMarshaller::class);
+        $this->addMappingEntry('qti-graphic-gap-match-interaction', GraphicGapMatchInteractionMarshaller::class);
+        $this->addMappingEntry('qti-graphic-order-interaction', GraphicOrderInteractionMarshaller::class);
+        $this->addMappingEntry('qti-hotspot-interaction', HotspotInteractionMarshaller::class);
+        $this->addMappingEntry('qti-select-point-interaction', SelectPointInteractionMarshaller::class);
+        $this->addMappingEntry('qti-hottext-interaction', HottextInteractionMarshaller::class);
+        $this->addMappingEntry('qti-match-interaction', MatchInteractionMarshaller::class);
+        $this->addMappingEntry('qti-media-interaction', MediaInteractionMarshaller::class);
+        $this->addMappingEntry('qti-order-interaction', ChoiceInteractionMarshaller::class);
+        $this->addMappingEntry('qti-slider-interaction', SliderInteractionMarshaller::class);
+        $this->addMappingEntry('qti-upload-interaction', UploadInteractionMarshaller::class);
+        $this->addMappingEntry('qti-custom-interaction', CustomInteractionMarshaller::class);
+        $this->addMappingEntry('qti-end-attempt-interaction', EndAttemptInteractionMarshaller::class);
+        $this->addMappingEntry('qti-inline-choice-interaction', InlineChoiceInteractionMarshaller::class);
+        $this->addMappingEntry('qti-text-entry-interaction', TextInteractionMarshaller::class);
+        $this->addMappingEntry('qti-position-object-interaction', PositionObjectInteractionMarshaller::class);
+        $this->addMappingEntry('qti-printed-variable', PrintedVariableMarshaller::class);
+        $this->addMappingEntry('qti-prompt', PromptMarshaller::class);
+        $this->addMappingEntry('qti-feedback-block', FeedbackElementMarshaller::class);
+        $this->addMappingEntry('qti-template-inline', TemplateElementMarshaller::class);
+        $this->addMappingEntry('qti-rubric-block', RubricBlockMarshaller::class);
+        $this->addMappingEntry('qti-template-block', TemplateElementMarshaller::class);
+        $this->addMappingEntry('qti-template-inline', TemplateElementMarshaller::class);
+        $this->addMappingEntry('qti-info-control', InfoControlMarshaller::class);
 
-        $this->addMappingEntry('sub', 'qtism\\data\\storage\\xml\\marshalling\\SsmlSubMarshaller', 'http://www.w3.org/2010/10/synthesis');
+        $this->addMappingEntry('sub', SsmlSubMarshaller::class, 'http://www.w3.org/2010/10/synthesis');
     }
 
     /**
@@ -127,7 +128,6 @@ class Qti30MarshallerFactory extends Qti221MarshallerFactory
      * @param ReflectionClass $class
      * @param array $args
      * @return Marshaller
-     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
      */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {

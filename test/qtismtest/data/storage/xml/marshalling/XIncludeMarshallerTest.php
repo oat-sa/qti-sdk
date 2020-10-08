@@ -5,7 +5,11 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\XInclude;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
+/**
+ * Class XIncludeMarshallerTest
+ */
 class XIncludeMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -23,10 +27,10 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\XInclude', $xinclude);
+        $this->assertInstanceOf(XInclude::class, $xinclude);
         $this->assertEquals('path/to/file', $xinclude->getHref());
         $xml = $xinclude->getXml();
-        $this->assertInstanceOf('\\DOMDocument', $xml);
+        $this->assertInstanceOf(DOMDocument::class, $xml);
 
         $includeElement = $xml->documentElement;
         $this->assertEquals('xi', $includeElement->prefix);
@@ -38,7 +42,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
         $xml = $xinclude->getXml();
     }
 }

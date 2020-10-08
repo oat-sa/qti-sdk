@@ -40,6 +40,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
      *
      * @param QtiComponent $component A PositionObjectInteraction object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -59,7 +60,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
 
         if ($component->hasCenterPoint() === true) {
             $centerPoint = $component->getCenterPoint();
-            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
+            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . ' ' . $centerPoint->getY());
         }
 
         $this->fillElement($element, $component);
@@ -72,6 +73,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A PositionObjectInteraction object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -98,7 +100,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
                     if ($pointsCount === 2) {
                         if (Format::isInteger($points[0]) === true) {
                             if (Format::isInteger($points[1]) === true) {
-                                $component->setCenterPoint(new QtiPoint(intval($points[0]), intval($points[1])));
+                                $component->setCenterPoint(new QtiPoint((int)$points[0], (int)$points[1]));
                             } else {
                                 $msg = "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.";
                                 throw new UnmarshallingException($msg, $element);
@@ -127,7 +129,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

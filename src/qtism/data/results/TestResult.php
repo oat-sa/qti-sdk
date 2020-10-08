@@ -64,18 +64,18 @@ class TestResult extends QtiComponent
      *
      * Multiplicity [0,*]
      *
-     * @var ItemVariable
+     * @var ItemVariableCollection
      */
     protected $itemVariables = null;
 
     /**
      * TestResult constructor.
      *
-     * @param string $identifier The identifier of TestResult
+     * @param QtiIdentifier $identifier The identifier of TestResult
      * @param DateTime $datestamp The timestamp when testResult has been registered
      * @param ItemVariableCollection|null $itemVariables All variables
      */
-    public function __construct($identifier, DateTime $datestamp, ItemVariableCollection $itemVariables = null)
+    public function __construct(QtiIdentifier $identifier, DateTime $datestamp, ItemVariableCollection $itemVariables = null)
     {
         $this->setIdentifier($identifier);
         $this->setDatestamp($datestamp);
@@ -180,6 +180,6 @@ class TestResult extends QtiComponent
      */
     public function hasItemVariables()
     {
-        return !is_null($this->itemVariables);
+        return $this->itemVariables !== null;
     }
 }

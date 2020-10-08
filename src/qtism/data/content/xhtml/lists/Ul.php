@@ -122,7 +122,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
+     * @return bool
      */
     public function hasXmlBase()
     {
@@ -130,7 +130,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

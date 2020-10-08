@@ -133,11 +133,11 @@ class QtiPair implements QtiDatatype
      * of $obj are the same as the ones of $obj.
      *
      * @param mixed $obj A value to compare.
-     * @return boolean Whether or not the equality could be established.
+     * @return bool Whether or not the equality could be established.
      */
     public function equals($obj)
     {
-        if (gettype($obj) === 'object' && $obj instanceof self) {
+        if (is_object($obj) && $obj instanceof self) {
             $a = [$this->getFirst(), $this->getSecond()];
             $b = [$obj->getFirst(), $obj->getSecond()];
 
@@ -151,7 +151,7 @@ class QtiPair implements QtiDatatype
      * Get the baseType of the value. This method systematically returns
      * The BaseType::PAIR value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -162,7 +162,7 @@ class QtiPair implements QtiDatatype
      * Get the Cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return int A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {

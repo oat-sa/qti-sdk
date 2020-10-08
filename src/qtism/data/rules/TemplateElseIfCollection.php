@@ -41,7 +41,7 @@ class TemplateElseIfCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof TemplateElseIf) {
-            $msg = "A TemplateElseIfCollection aims at storing TemplateElseIf objects only.";
+            $msg = 'A TemplateElseIfCollection aims at storing TemplateElseIf objects only.';
             throw new InvalidArgumentException($msg);
         }
     }

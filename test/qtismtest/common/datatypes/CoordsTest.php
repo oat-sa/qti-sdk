@@ -9,6 +9,9 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class CoordsTest
+ */
 class CoordsTest extends QtiSmTestCase
 {
     public function testInstantiate()

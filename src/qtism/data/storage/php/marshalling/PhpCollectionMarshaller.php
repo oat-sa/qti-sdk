@@ -71,7 +71,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($collectionVarName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occured while marshalling a collection into PHP source code.";
+            $msg = 'An error occurred while marshalling a collection into PHP source code.';
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }
@@ -80,7 +80,8 @@ class PhpCollectionMarshaller extends PhpMarshaller
      * Whether the $toMarshall value is marshallable by this implementation which
      * only supports AbstractCollection objects to be marshalled.
      *
-     * @return boolean
+     * @param mixed $toMarshall
+     * @return bool
      */
     protected function isMarshallable($toMarshall)
     {

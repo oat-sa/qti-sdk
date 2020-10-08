@@ -56,18 +56,18 @@ class PowerProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Power operator only accepts operands with a single cardinality.";
+            $msg = 'The Power operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Power operator only accepts operands with a baseType of integer or float.";
+            $msg = 'The Power operator only accepts operands with a baseType of integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand1 = $operands[0];
         $operand2 = $operands[1];
-        $raised = pow($operand1->getValue(), $operand2->getValue());
+        $raised = $operand1->getValue() ** $operand2->getValue();
 
         if (is_nan($raised)) {
             return null;
@@ -88,7 +88,7 @@ class PowerProcessor extends OperatorProcessor
         // pow() returns integers as much as it can, so we must cast.
         // If the casted value cannot be contained in a float, we are
         // subject to an overflow/underflow.
-        $floatval = floatval($raised);
+        $floatval = (float)$raised;
         if ($raised != 0 && $floatval == 0) {
             // underflow
             return null;
@@ -101,7 +101,7 @@ class PowerProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

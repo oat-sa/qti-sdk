@@ -58,12 +58,12 @@ class DivideProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Divide operator only accepts operands with a single cardinality.";
+            $msg = 'The Divide operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Divide operator only accepts operands with a baseType of integer or float.";
+            $msg = 'The Divide operator only accepts operands with a baseType of integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -74,13 +74,13 @@ class DivideProcessor extends OperatorProcessor
             return null;
         }
 
-        $divide = floatval($operand1->getValue() / $operand2->getValue());
+        $divide = (float)($operand1->getValue() / $operand2->getValue());
 
         return is_nan($divide) ? null : new QtiFloat($divide);
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

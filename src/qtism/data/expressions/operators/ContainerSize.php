@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -37,7 +36,7 @@ use qtism\data\expressions\Pure;
  * determining how many choices were selected in a multiple-response
  * choiceInteraction, for example.
  */
-class ContainerSize extends Operator implements Pure
+class ContainerSize extends Operator
 {
     /**
      * Create a new ContainerSize object.
@@ -50,22 +49,10 @@ class ContainerSize extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'containerSize';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

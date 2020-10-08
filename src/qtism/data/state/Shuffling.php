@@ -58,6 +58,7 @@ class Shuffling extends QtiComponent
     /**
      * Create a new Shuffling object.
      *
+     * @param string $responseIdentifier
      * @param ShufflingGroupCollection $shufflingGroups
      * @throws InvalidArgumentException If $shufflingGroups does not contain 1 to 2 ShufflingGroup objects.
      */
@@ -96,7 +97,7 @@ class Shuffling extends QtiComponent
     public function setShufflingGroups(ShufflingGroupCollection $shufflingGroups)
     {
         if (count($shufflingGroups) === 0) {
-            $msg = "A Shuffling object must be composed of at least 1 ShufflingGroup object. None given";
+            $msg = 'A Shuffling object must be composed of at least 1 ShufflingGroup object. None given';
             throw new InvalidArgumentException($msg);
         } elseif (($c = count($shufflingGroups)) > 2) {
             $msg = "A Shuffling object must be composed of at most 2 ShufflingGroup objects. ${c} given.";
@@ -165,7 +166,7 @@ class Shuffling extends QtiComponent
      * respectively ['id1', 'id2', 'id3'] and ['id4', 'id5', 'id6'], then 'id2' is at index 1 and
      * 'id5' is at index 4.
      *
-     * @param integer $index
+     * @param int $index
      * @return string
      * @throws OutOfBoundsException
      */
@@ -201,7 +202,7 @@ class Shuffling extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -209,7 +210,7 @@ class Shuffling extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

@@ -8,6 +8,9 @@ use qtism\data\ShowHide;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ModalFeedbackRuleMarshallerTest
+ */
 class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallNoTitle()
@@ -18,7 +21,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $mf = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\ModalFeedbackRule', $mf);
+        $this->assertInstanceOf(ModalFeedbackRule::class, $mf);
         $this->assertEquals('SHOW_MEH', $mf->getIdentifier());
         $this->assertEquals('SHOW_HIM', $mf->getOutcomeIdentifier());
         $this->assertEquals(ShowHide::SHOW, $mf->getShowHide());

@@ -36,11 +36,19 @@ class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, Inli
 {
     use FlowTrait;
 
+    /**
+     * Math constructor.
+     *
+     * @param $xmlString
+     */
     public function __construct($xmlString)
     {
         parent::__construct($xmlString);
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'math';

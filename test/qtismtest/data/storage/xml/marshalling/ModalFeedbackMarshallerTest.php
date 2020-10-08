@@ -8,7 +8,11 @@ use qtism\data\content\ModalFeedback;
 use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class ModalFeedbackMarshallerTest
+ */
 class ModalFeedbackMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -31,7 +35,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	    ');
 
         $modalFeedback = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\ModalFeedback', $modalFeedback);
+        $this->assertInstanceOf(ModalFeedback::class, $modalFeedback);
         $this->assertEquals('outcome1', $modalFeedback->getOutcomeIdentifier());
         $this->assertEquals('hello', $modalFeedback->getIdentifier());
         $this->assertEquals(ShowHide::SHOW, $modalFeedback->getShowHide());
@@ -48,10 +52,8 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="shower" title="Modal Feedback Example">Please show me!</modalFeedback>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "'shower' is not a valid value for the 'showHide' attribute of element 'modalFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("'shower' is not a valid value for the 'showHide' attribute of element 'modalFeedback'.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -66,10 +68,8 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
             </modalFeedback>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The content of the 'modalFeedback' is invalid. It must only contain 'flowStatic' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The content of the 'modalFeedback' is invalid. It must only contain 'flowStatic' elements.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -80,10 +80,8 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" title="Modal Feedback Example">Please show me!</modalFeedback>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'showHide' attribute is missing from element 'modalFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'showHide' attribute is missing from element 'modalFeedback'.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -94,10 +92,8 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	        <modalFeedback identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'outcomeIdentifier' attribute is missing from element 'modalFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'outcomeIdentifier' attribute is missing from element 'modalFeedback'.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -108,10 +104,8 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	        <modalFeedback outcomeIdentifier="outcome1" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'identifier' attribute is missing from element 'modalFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'modalFeedback'.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }

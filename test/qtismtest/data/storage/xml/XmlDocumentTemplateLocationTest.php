@@ -2,10 +2,14 @@
 
 namespace qtismtest\data\storage\xml;
 
+use LogicException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class XmlDocumentTemplateLocationTest
+ */
 class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 {
     /**
@@ -35,6 +39,9 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         $this->assertEquals('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $responseProcessings[0]->getTemplate());
     }
 
+    /**
+     * @return array
+     */
     public function correctlyFormedProvider()
     {
         return [
@@ -47,7 +54,8 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
 
-        $this->setExpectedException('\\LogicException', 'Cannot resolve template location before loading any file.');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Cannot resolve template location before loading any file.');
         $doc->resolveTemplateLocation();
     }
 
@@ -67,10 +75,13 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $doc->load($file, true);
 
-        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException');
+        $this->expectException(XmlStorageException::class);
         $doc->resolveTemplateLocation();
     }
 
+    /**
+     * @return array
+     */
     public function wrongTargetProvider()
     {
         return [
@@ -95,10 +106,15 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $doc->load($file, true);
 
-        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', "'responseProcessingZ' components are not supported in QTI version '2.1.0'.", XmlStorageException::VERSION);
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage("'responseProcessingZ' components are not supported in QTI version '2.1.0'.");
+        $this->expectExceptionCode( XmlStorageException::VERSION);
         $doc->resolveTemplateLocation();
     }
 
+    /**
+     * @return array
+     */
     public function invalidTargetNoValidationProvider()
     {
         return [
@@ -123,10 +139,14 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $doc->load($file, true);
 
-        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', null, XmlStorageException::XSD_VALIDATION);
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionCode(XmlStorageException::XSD_VALIDATION);
         $doc->resolveTemplateLocation(true);
     }
 
+    /**
+     * @return array
+     */
     public function invalidTargetValidationProvider()
     {
         return [

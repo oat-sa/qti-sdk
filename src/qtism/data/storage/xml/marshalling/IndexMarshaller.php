@@ -36,7 +36,11 @@ use qtism\data\QtiComponentCollection;
 class IndexMarshaller extends OperatorMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
+     * Unmarshall an Index object into a QTI index element.
+     *
+     * @param QtiComponent $component The Index object to marshall.
+     * @param array An array of child DOMEelement objects.
+     * @return DOMElement The marshalled QTI index element.
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -51,18 +55,21 @@ class IndexMarshaller extends OperatorMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
+     * Unmarshall a QTI index operator element into an Index object.
+     *
+     * @param DOMElement $element The index element to unmarshall.
+     * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+     * @return QtiComponent An Index object.
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         if (($n = $this->getDOMElementAttributeAs($element, 'n')) !== null) {
             if (Format::isInteger($n)) {
-                $n = intval($n);
+                $n = (int)$n;
             }
 
-            $object = new Index($children, $n);
-
-            return $object;
+            return new Index($children, $n);
         } else {
             $msg = "The mandatory attribute 'n' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);

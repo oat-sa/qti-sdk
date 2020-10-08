@@ -2,6 +2,9 @@
 
 namespace qtismtest;
 
+/**
+ * Class QtiSmEnumTestCase
+ */
 abstract class QtiSmEnumTestCase extends QtiSmTestCase
 {
     public function setUp()
@@ -24,15 +27,10 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
 
     public function testAsArray()
     {
-        $array = call_user_func(
-            [
-                $this->getEnumerationFqcn(),
-                'asArray',
-            ]
-        );
-
         $keys = $this->getKeys();
         $constants = $this->getConstants();
+        $className = $this->getEnumerationFqcn();
+        $array = $className::asArray();
 
         for ($i = 0; $i < count($keys); $i++) {
             $key = $keys[$i];
@@ -45,77 +43,69 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     {
         $names = $this->getNames();
         $constants = $this->getConstants();
+        $className = $this->getEnumerationFqcn();
 
         for ($i = 0; $i < count($names); $i++) {
             $name = $names[$i];
             $this->assertEquals(
                 $constants[$i],
-                call_user_func(
-                    [
-                        $this->getEnumerationFqcn(),
-                        'getConstantByName',
-                    ],
-                    $name
-                )
+                $className::getConstantByName($name)
             );
         }
 
-        $this->assertFalse(
-            call_user_func(
-                [
-                    $this->getEnumerationFqcn(),
-                    'getConstantByName',
-                ],
-                $this->getUnknownConstantName()
-            )
-        );
+        $this->assertFalse($className::getConstantByName($this->getUnknownConstantName()));
     }
 
     public function testGetNameByConstant()
     {
         $names = $this->getNames();
         $constants = $this->getConstants();
+        $className = $this->getEnumerationFqcn();
 
         for ($i = 0; $i < count($constants); $i++) {
             $constant = $constants[$i];
             $this->assertEquals(
                 $names[$i],
-                call_user_func(
-                    [
-                        $this->getEnumerationFqcn(),
-                        'getNameByConstant',
-                    ],
-                    $constant
-                )
+                $className::getNameByConstant($constant)
             );
         }
 
-        $this->assertFalse(
-            call_user_func(
-                [
-                    $this->getEnumerationFqcn(),
-                    'getNameByConstant',
-                ],
-                $this->getUnknownConstantValue()
-            )
-        );
+        $this->assertFalse($className::getNameByConstant($this->getUnknownConstantValue()));
     }
 
+    /**
+     * @return string
+     */
     protected function getUnknownConstantName()
     {
         return 'xyz';
     }
 
+    /**
+     * @return int
+     */
     protected function getUnknownConstantValue()
     {
         return PHP_INT_MAX;
     }
 
+    /**
+     * @return mixed
+     */
     abstract protected function getNames();
 
+    /**
+     * @return mixed
+     */
     abstract protected function getKeys();
 
+    /**
+     * @return mixed
+     */
     abstract protected function getConstants();
 
+    /**
+     * @return mixed
+     */
     abstract protected function getEnumerationFqcn();
 }

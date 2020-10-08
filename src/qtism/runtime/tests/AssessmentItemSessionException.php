@@ -37,7 +37,7 @@ class AssessmentItemSessionException extends Exception
     /**
      * Error code to use when the nature of the error is unknown.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
@@ -45,7 +45,7 @@ class AssessmentItemSessionException extends Exception
      * Error code to use when timelimits are in force and the
      * maximum duration is exceeded at 'endAttempt' time.
      *
-     * @var integer
+     * @var int
      */
     const DURATION_OVERFLOW = 1;
 
@@ -53,7 +53,7 @@ class AssessmentItemSessionException extends Exception
      * Error code to use when timelimits are in force and
      * the minimum duration is not exceeded at 'endAttempt' time.
      *
-     * @var integer
+     * @var int
      */
     const DURATION_UNDERFLOW = 2;
 
@@ -61,7 +61,7 @@ class AssessmentItemSessionException extends Exception
      * Error code to use when the maximum amount attempts for a non-adaptive
      * item is exceeded.
      *
-     * @var integer
+     * @var int
      */
     const ATTEMPTS_OVERFLOW = 3;
 
@@ -69,7 +69,7 @@ class AssessmentItemSessionException extends Exception
      * Error code to use when a runtime error that could not be corrected
      * occurs during the assessment item session lifecycle.
      *
-     * @var integer
+     * @var int
      */
     const RUNTIME_ERROR = 4;
 
@@ -77,7 +77,7 @@ class AssessmentItemSessionException extends Exception
      * Error code to return when itemSessionControl.validateResponses is in force
      * but a provided response is incorrect.
      *
-     * @var integer
+     * @var int
      */
     const INVALID_RESPONSE = 5;
 
@@ -85,14 +85,14 @@ class AssessmentItemSessionException extends Exception
      * Error code to use when itemSessionControl.allowSkipping is not in force
      * but a request to skip the item is performed.
      *
-     * @var integer
+     * @var int
      */
     const SKIPPING_FORBIDDEN = 6;
 
     /**
      * Error code to use when a sequence of states is violated.
      *
-     * @var integer
+     * @var int
      */
     const STATE_VIOLATION = 7;
 
@@ -107,8 +107,8 @@ class AssessmentItemSessionException extends Exception
      * Create a new AssessmentItemSessionException object.
      *
      * @param string $message A human-readable message describing the nature of the exception.
-     * @param AssessmentItemSession $source The AssessmentItemSession object from where the error occured.
-     * @param integer $code A numeric error code. The accepted error codes are described in the constants of this class.
+     * @param AssessmentItemSession $source The AssessmentItemSession object from where the error occurred.
+     * @param int $code A numeric error code. The accepted error codes are described in the constants of this class.
      * @param Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
      */
     public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, Exception $previous = null)

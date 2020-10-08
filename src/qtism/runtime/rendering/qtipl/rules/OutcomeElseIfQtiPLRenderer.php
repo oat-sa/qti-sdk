@@ -43,12 +43,12 @@ class OutcomeElseIfQtiPLRenderer extends AbstractQtiPLRenderer
     public function render($something)
     {
         $renderer = new QtiPLRenderer($this->getCRO());
-        $qtipl = "elseif (" . $renderer->render($something->getExpression()) . ") {\n";
+        $qtipl = 'elseif (' . $renderer->render($something->getExpression()) . ") {\n";
 
         foreach ($something->getOutcomeRules() as $rules) {
-            $qtipl .= str_repeat(" ", $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
+            $qtipl .= str_repeat(' ', $this->getCRO()->getIndentation()) . $renderer->render($rules) . ";\n";
         }
 
-        return $qtipl . "}";
+        return $qtipl . '}';
     }
 }

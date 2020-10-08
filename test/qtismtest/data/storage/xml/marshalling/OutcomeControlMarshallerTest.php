@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\OutcomeElse;
@@ -12,6 +13,9 @@ use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeControlMarshallerTest
+ */
 class OutcomeControlMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallIfMinimal()
@@ -24,7 +28,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeIf', $element->nodeName);
         $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
@@ -52,7 +56,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeElseIf', $element->nodeName);
         $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
@@ -78,7 +82,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('outcomeElse', $element->nodeName);
         $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
 
@@ -109,13 +113,13 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeIf', $component);
+        $this->assertInstanceOf(OutcomeIf::class, $component);
         $this->assertEquals(1, count($component->getOutcomeRules()));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getExpression());
+        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeRules[0]->getExpression());
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
         $this->assertInternalType('string', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
@@ -139,13 +143,13 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElseIf', $component);
+        $this->assertInstanceOf(OutcomeElseIf::class, $component);
         $this->assertEquals(1, count($component->getOutcomeRules()));
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component->getExpression());
+        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeRules[0]->getExpression());
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
         $this->assertInternalType('string', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
@@ -168,12 +172,12 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\rules\\OutcomeElse', $component);
+        $this->assertInstanceOf(OutcomeElse::class, $component);
         $this->assertEquals(1, count($component->getOutcomeRules()));
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $outcomeRules[0]);
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $outcomeRules[0]->getExpression());
+        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
         $this->assertInternalType('string', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());

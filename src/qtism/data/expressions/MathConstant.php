@@ -30,7 +30,7 @@ use InvalidArgumentException;
  *
  * The result is a mathematical constant returned as a single float, e.g. π and e.
  */
-class MathConstant extends Expression implements Pure
+class MathConstant extends Expression
 {
     /**
      * The name of the math constant.
@@ -77,7 +77,7 @@ class MathConstant extends Expression implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -87,9 +87,7 @@ class MathConstant extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

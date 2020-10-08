@@ -9,7 +9,11 @@ use qtism\data\content\interactions\InlineChoiceInteraction;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class InlineChoiceInteractionMarshallerTest
+ */
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -76,7 +80,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $inlineChoiceInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoiceInteraction', $inlineChoiceInteraction);
+        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
         $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
         $this->assertTrue($inlineChoiceInteraction->mustShuffle());
         $this->assertTrue($inlineChoiceInteraction->isRequired());
@@ -94,10 +98,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
             </inlineChoiceInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -115,10 +117,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
             </inlineChoiceInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The value of the attribute 'responseIdentifier' for element 'inlineChoiceInteraction' is not a valid identifier."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the attribute 'responseIdentifier' for element 'inlineChoiceInteraction' is not a valid identifier.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -136,10 +136,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
             </inlineChoiceInteraction>
         ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'responseIdentifier' attribute is missing from the 'inlineChoiceInteraction' element."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'inlineChoiceInteraction' element.");
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -157,7 +155,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $inlineChoiceInteraction = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoiceInteraction', $inlineChoiceInteraction);
+        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
         $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
         $this->assertTrue($inlineChoiceInteraction->mustShuffle());
         $this->assertFalse($inlineChoiceInteraction->isRequired());
@@ -170,7 +168,8 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
     public function testUnmarshallErrorIfoShuffle20()
     {
         $expectedMsg = "The mandatory 'shuffle' attribute is missing from the 'inlineChoiceInteraction' element.";
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage($expectedMsg);
 
         $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE">

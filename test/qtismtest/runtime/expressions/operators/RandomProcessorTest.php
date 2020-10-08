@@ -8,13 +8,19 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RandomProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class RandomProcessorTest
+ */
 class RandomProcessorTest extends QtiSmTestCase
 {
     public function testPrimitiveMultiple()
@@ -92,7 +98,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10);
         $processor = new RandomProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -102,7 +108,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new RecordContainer(['A' => new QtiInteger(1)]);
         $processor = new RandomProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -110,7 +116,7 @@ class RandomProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
     }
@@ -121,11 +127,15 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $operands[] = new MultipleContainer(BaseType::PAIR);
         $operands[] = new MultipleContainer(BaseType::PAIR);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression()
     {
         return $this->createComponentFromXml('

@@ -1,7 +1,28 @@
 <?php
+/**
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *
+ * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @license GPLv2
+ */
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ExternalScored;
@@ -11,6 +32,9 @@ use qtism\data\state\MatchTableEntryCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeDeclarationTest
+ */
 class OutcomeDeclarationTest extends QtiSmTestCase
 {
     /** @var OutcomeDeclaration */
@@ -23,50 +47,40 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
     public function testSetInterpretationWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "Interpretation must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Interpretation must be a string, 'integer' given.");
 
         $this->subject->setInterpretation(999);
     }
 
     public function testSetLongInterpretationWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "LongInterpretation must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("LongInterpretation must be a string, 'integer' given.");
 
         $this->subject->setLongInterpretation(999);
     }
 
     public function testSetNormalMinimumWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "NormalMinimum must be a number or (boolean) false, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("NormalMinimum must be a number or (boolean) false, 'string' given.");
 
         $this->subject->setNormalMinimum('string');
     }
 
     public function testSetNormalMaximumWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "NormalMaximum must be a number or (boolean) false, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("NormalMaximum must be a number or (boolean) false, 'string' given.");
 
         $this->subject->setNormalMaximum('string');
     }
 
     public function testSetMasteryValueWrongType()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "MasteryValue must be a number or (boolean) false, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("MasteryValue must be a number or (boolean) false, 'string' given.");
 
         $this->subject->setMasteryValue('string');
     }
@@ -83,7 +97,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $components = $this->getComponents();
         $last = $components[count($components) - 1];
-        $this->assertInstanceOf('qtism\\data\\state\\MatchTable', $last);
+        $this->assertInstanceOf(MatchTable::class, $last);
     }
 
     public function testExternalScoredAccessors()

@@ -165,7 +165,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "BaseType must be a value from the BaseType enumeration.";
+            $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -174,7 +174,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * Whether or not the baseType attribute is defined for this
      * VariableDeclaration.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBaseType()
     {
@@ -206,7 +206,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     /**
      * Whether or not a DefaultValue object is contained by the VariableDeclaration.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefaultValue()
     {
@@ -234,13 +234,13 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         if (in_array($cardinality, Cardinality::asArray())) {
             $this->cardinality = $cardinality;
         } else {
-            $msg = "The cardinality must be a value from the Cardinality enumeration.";
+            $msg = 'The cardinality must be a value from the Cardinality enumeration.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -248,7 +248,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

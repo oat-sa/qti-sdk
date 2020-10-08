@@ -35,29 +35,28 @@ use qtism\common\enums\Cardinality;
 class OrderedContainer extends MultipleContainer implements QtiDatatype
 {
     /**
-     * @see \qtism\common\collections\Container::equals()
+     * @param mixed $obj
+     * @return bool
      */
     public function equals($obj)
     {
         $countA = count($this);
 
-        if (gettype($obj) === 'object' && $obj instanceof self && $countA === count($obj)) {
+        if (is_object($obj) && $obj instanceof self && $countA === count($obj)) {
             for ($i = 0; $i < $countA; $i++) {
                 $objA = $this[$i];
                 $objB = $obj[$i];
 
-                if (gettype($objA) === 'object' && $obj instanceof Comparable) {
+                if (is_object($objA) && $obj instanceof Comparable) {
                     if ($objA->equals($objB) === false) {
                         return false;
                     }
-                } elseif (gettype($objB) === 'object' && $obj instanceof Comparable) {
+                } elseif (is_object($objB) && $obj instanceof Comparable) {
                     if ($objB->equals($objA) === false) {
                         return false;
                     }
-                } else {
-                    if ($objA !== $objB) {
-                        return false;
-                    }
+                } elseif ($objA !== $objB) {
+                    return false;
                 }
             }
 
@@ -68,7 +67,7 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     }
 
     /**
-     * @see \qtism\runtime\common\MultipleContainer::getCardinality()
+     * @return int
      */
     public function getCardinality()
     {
@@ -76,7 +75,7 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     }
 
     /**
-     * @see \qtism\runtime\common\MultipleContainer::getToStringBounds()
+     * @return array
      */
     protected function getToStringBounds()
     {
