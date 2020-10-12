@@ -255,6 +255,7 @@ abstract class MarshallerFactory
         $this->addMappingEntry('simpleMatchSet', SimpleMatchSetMarshaller::class);
         $this->addMappingEntry('sliderInteraction', SliderInteractionMarshaller::class);
         $this->addMappingEntry('small', SimpleInlineMarshaller::class);
+        $this->addMappingEntry('source', SourceMarshaller::class);
         $this->addMappingEntry('span', SimpleInlineMarshaller::class);
         $this->addMappingEntry('statsOperator', StatsOperatorMarshaller::class);
         $this->addMappingEntry('stringMatch', StringMatchMarshaller::class);
