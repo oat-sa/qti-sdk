@@ -290,6 +290,7 @@ abstract class MarshallerFactory
         $this->addMappingEntry('thead', TablePartMarshaller::class);
         $this->addMappingEntry('timeLimits', TimeLimitsMarshaller::class);
         $this->addMappingEntry('tr', TrMarshaller::class);
+        $this->addMappingEntry('track', TrackMarshaller::class);
         $this->addMappingEntry('truncate', OperatorMarshaller::class);
         $this->addMappingEntry('tt', SimpleInlineMarshaller::class);
         $this->addMappingEntry('ul', ListMarshaller::class);
