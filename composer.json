@@ -25,10 +25,11 @@
 	],
 	"require" : {
 		"php" : "~7.0",
-		"ext-dom": "*",
-		"ext-mbstring": "*",
-		"ext-json": "*",
 		"ext-date": "*",
+		"ext-dom": "*",
+		"ext-json": "*",
+		"ext-libxml": "*",
+		"ext-mbstring": "*",
 		"wp-cli/php-cli-tools": "0.10.3",
 		"league/flysystem": "^1.0"
 	},
