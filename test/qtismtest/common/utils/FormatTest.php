@@ -643,4 +643,31 @@ class FormatTest extends QtiSmTestCase
             [false, []],
         ];
     }
+
+    /**
+     * @dataProvider isNormalizedStringProvider
+     * @param bool $expected
+     * @param mixed $string
+     */
+    public function testIsNormalizedString(bool $expected, $string)
+    {
+        for ($i = 0; $i< 100000; $i++) {
+            $this->assertEquals($expected, Format::isNormalizedString($string));
+        }
+    }
+
+    public function isNormalizedStringProvider(): array
+    {
+        return [
+            [true, 'plain text'],
+            [true, 'text with weird characters like: éàçùè'],
+            [true, '\/:?;324_èé'],
+            [true, ''],
+            [false, "some \t text with   weird    spaces "],
+            [false, "some \t text with \r  line    breaks \n"],
+            [false, false],
+            [false, 1012],
+            [false, []],
+        ];
+    }
 }

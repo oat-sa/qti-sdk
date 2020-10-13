@@ -642,4 +642,21 @@ class Format
 
         return preg_match('/^[-a-z]+\/[-+\.a-z0-9]+$/', $string) === 1;
     }
+
+    /**
+     * Is the given string a normalized string (no line break nor tabulation)?
+     *
+     * @param string $string
+     * @return bool
+     */
+    public static function isNormalizedString($string): bool
+    {
+        if (!is_string($string)) {
+            return false;
+        }
+
+        return strpos($string, "\n") === false
+            && strpos($string, "\r") === false
+            && strpos($string, "\t") === false;
+    }
 }
