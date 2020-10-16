@@ -276,9 +276,9 @@ class Unmarshaller
                     return $this->unmarshallFile($unit);
                     break;
 
-                    case FileHash::FILE_HASH_KEY:
-                        return $this->unmarshallFileHash($unit);
-                        break;
+                case FileHash::FILE_HASH_KEY:
+                    return $this->unmarshallFileHash($unit);
+                    break;
 
                 case 'uri':
                     return $this->unmarshallUri($unit);
@@ -433,14 +433,15 @@ class Unmarshaller
     protected function unmarshallFileHash(array $unit)
     {
         $fileHashArray = $unit['base'][FileHash::FILE_HASH_KEY];
-        if (empty($fileHashArray['name'])) {
-            throw new FileManagerException('To store an uploaded file hash, the file has to be persisted before and the final file name provided in the "name" key.');
+        if (empty($fileHashArray['path'])) {
+            throw new FileManagerException('To store an uploaded file hash, the file has to be persisted before and the final path provided in the "path" key.');
         }
 
         return new FileHash(
-            base64_decode($fileHashArray['data']),
+            $fileHashArray['path'],
             $fileHashArray['mime'],
-            $fileHashArray['name']
+            $fileHashArray['name'],
+            base64_decode($fileHashArray['data'])
         );
     }
 

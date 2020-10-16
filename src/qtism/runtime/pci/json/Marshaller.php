@@ -382,8 +382,12 @@ class Marshaller
             ]
         ];
 
-        if ($file->hasFilename() === true) {
+        if ($file->hasFilename()) {
             $data['base'][$fileKey]['name'] = $file->getFilename();
+        }
+
+        if ($file instanceof FileHash) {
+            $data['base'][$fileKey]['path'] = $file->getPath();
         }
 
         return $data;
