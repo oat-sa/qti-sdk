@@ -94,24 +94,24 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallFileHash()
     {
-        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+        $id = 'http://some.cloud.storage/path/to/file.txt';
         $mimeType = 'text/plain';
-        $filename = 'http://some.cloud.storage/path/to/file.txt';
-        $path = 'file.txt';
+        $filename = 'file.txt';
+        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
 
-        $expectedFile = new FileHash($path, $mimeType, $filename, $sha256);
+        $expectedFile = new FileHash($id, $mimeType, $filename, $sha256);
 
         $json = sprintf(
             '{ "base" : { "%s" : {
             "mime" : "%s", 
             "data" : "%s", 
             "name" : "%s",
-            "path" : "%s" } } }',
+            "id" : "%s" } } }',
             FileHash::FILE_HASH_KEY,
             $mimeType,
             base64_encode($sha256),
             $filename,
-            $path
+            $id
         );      
 
         $unmarshaller = self::createUnmarshaller();

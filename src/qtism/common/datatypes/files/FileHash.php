@@ -41,11 +41,11 @@ class FileHash implements QtiFile
     const FILE_HASH_KEY = 'fileHash';
 
     /**
-     * The path to the file on the persistent storage.
+     * The id of the file on the persistent storage.
      *
      * @var string
      */
-    private $path;
+    private $id;
 
     /**
      * The MIME type of the file content.
@@ -71,37 +71,37 @@ class FileHash implements QtiFile
     /**
      * Create a new FileHash object.
      *
-     * @param string $path The path where the file is actually stored.
+     * @param string $id The id of the file in the external file store.
      * @param string $mimeType The mime-type of the file.
      * @param string $filename The name of the original file.
      * @param string $hash The hash of the file.
      */
-    public function __construct($path, $mimeType, $filename, $hash)
+    public function __construct($id, $mimeType, $filename, $hash)
     {
-        $this->setPath($path);
+        $this->setId($id);
         $this->setMimeType($mimeType);
         $this->setFilename($filename);
         $this->setHash($hash);
     }
 
     /**
-     * Set the path to the file.
+     * Set the id of the file.
      *
-     * @param string $path
+     * @param string $id
      */
-    protected function setPath($path)
+    protected function setId($id)
     {
-        $this->path = $path;
+        $this->id = $id;
     }
 
     /**
-     * Get the path to the file.
+     * Get the id of the file.
      *
      * @return string
      */
-    public function getPath()
+    public function getId()
     {
-        return $this->path;
+        return $this->id;
     }
 
     /**
@@ -224,7 +224,7 @@ class FileHash implements QtiFile
             return false;
         }
 
-        return $this->getPath() === $obj->getPath()
+        return $this->getId() === $obj->getId()
             && $this->getMimeType() === $obj->getMimeType()
             && $this->getFilename() === $obj->getFilename()
             && $this->getHash() === $obj->getHash();
@@ -237,7 +237,7 @@ class FileHash implements QtiFile
      */
     public function getIdentifier()
     {
-        return $this->getPath();
+        return $this->getId();
     }
 
     /**

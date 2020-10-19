@@ -387,7 +387,7 @@ class Marshaller
         }
 
         if ($file instanceof FileHash) {
-            $data['base'][$fileKey]['path'] = $file->getPath();
+            $data['base'][$fileKey]['id'] = $file->getId();
         }
 
         return $data;

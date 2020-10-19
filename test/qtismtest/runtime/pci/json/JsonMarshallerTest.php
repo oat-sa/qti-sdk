@@ -173,13 +173,13 @@ class JsonMarshallerTest extends QtiSmTestCase
         $file = new FileSystemFile($samples . 'datatypes/file/image-png_noname_data.png');
         $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]])];
 
-        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+        $id = 'http://some.cloud.storage/path/to/stored-file.txt';
         $mimeType = 'text/plain';
-        $path = 'http://some.cloud.storage/path/to/stored-file.txt';
         $filename = 'file.txt';
-        
-        $fileHash = new FileHash($path, $mimeType, $filename, $sha256);
-        $returnValue[] = [$fileHash, json_encode(['base' => [FileHash::FILE_HASH_KEY => ['mime' => $mimeType, 'data' => base64_encode($sha256), 'name' => $filename, 'path' => $path]]])];
+        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+
+        $fileHash = new FileHash($id, $mimeType, $filename, $sha256);
+        $returnValue[] = [$fileHash, json_encode(['base' => [FileHash::FILE_HASH_KEY => ['mime' => $mimeType, 'data' => base64_encode($sha256), 'name' => $filename, 'id' => $id]]])];
 
         return $returnValue;
     }

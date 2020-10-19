@@ -420,11 +420,8 @@ class Unmarshaller
      * a hash of the file, to avoid storing huge files in the test session.
      * This suppose the following:
      * * Payload of the file has been persisted before.
-     * * "name" key contains the persisted file path with proper wrapper.
+     * * "id" key contains the persisted file id in the external file store.
      * * "data" key contains the hash, base64_encoded.
-     *
-     * @see https://www.php.net/manual/de/function.stream-get-wrappers.php
-     * to find which wrappers are supported by the current installation.
      *
      * @param array $unit
      * @return QtiFile
@@ -433,12 +430,12 @@ class Unmarshaller
     protected function unmarshallFileHash(array $unit)
     {
         $fileHashArray = $unit['base'][FileHash::FILE_HASH_KEY];
-        if (empty($fileHashArray['path'])) {
-            throw new FileManagerException('To store an uploaded file hash, the file has to be persisted before and the final path provided in the "path" key.');
+        if (empty($fileHashArray['id'])) {
+            throw new FileManagerException('To store an uploaded file hash, the file has to be persisted before and the file id provided in the "id" key.');
         }
 
         return new FileHash(
-            $fileHashArray['path'],
+            $fileHashArray['id'],
             $fileHashArray['mime'],
             $fileHashArray['name'],
             base64_decode($fileHashArray['data'])
