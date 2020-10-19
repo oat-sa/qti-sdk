@@ -26,7 +26,6 @@ namespace qtism\common\datatypes\files;
 use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use RuntimeException;
 
 /**
  * An implementation of File storing only a hash of the file.
@@ -74,9 +73,8 @@ class FileHash implements QtiFile
      *
      * @param string $path The path where the file is actually stored.
      * @param string $mimeType The mime-type of the file.
-     * @param string $filename The path to the file on the external persistent storage.
+     * @param string $filename The name of the original file.
      * @param string $hash The hash of the file.
-     * @throws RuntimeException If the file cannot be retrieved correctly.
      */
     public function __construct($path, $mimeType, $filename, $hash)
     {
