@@ -23,6 +23,7 @@
 
 namespace qtism\common\datatypes\files;
 
+use JsonSerializable;
 use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -32,7 +33,7 @@ use qtism\common\enums\Cardinality;
  * File contents has to be previously persisted externally.
  * Hash string will serve the purpose of comparing files only.
  */
-class FileHash implements QtiFile
+class FileHash implements QtiFile, JsonSerializable
 {
     /**
      * Key to use in json payload to trigger the storage of a file hash instead
@@ -82,6 +83,32 @@ class FileHash implements QtiFile
         $this->setMimeType($mimeType);
         $this->setFilename($filename);
         $this->setHash($hash);
+    }
+
+    /**
+     * Create a new FileHash object from an array of properties.
+     *
+     * @param array $properties
+     * @return FileHash
+     */
+    public static function createFromArray(array $properties): self
+    {
+        return new self(
+            $properties['id'],
+            $properties['mime'],
+            $properties['name'],
+            $properties['hash']
+        );
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'mime' => $this->mimeType,
+            'name' => $this->filename,
+            'hash' => $this->hash,
+        ];
     }
 
     /**
