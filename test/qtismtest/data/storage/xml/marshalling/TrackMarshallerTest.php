@@ -6,22 +6,28 @@ use DOMDocument;
 use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\content\xhtml\html5\TrackKind;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
-class TrackMarshallerTest extends QtiSmTestCase
+class TrackMarshallerTest extends Html5ElementMarshallerTest
 {
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
     public function testMarshallerDoesNotExistInQti21()
     {
         $track = new Track('http://example.com/');
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No marshaller implementation found while marshalling component \'track\'.');
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($track);
-        $marshaller->marshall($track);
+        $this->assertHtml5MarshallingOnlyInQti22AndAbove($track, 'track');
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
     public function testMarshall22()
     {
         $src = 'http://example.com/';
@@ -47,40 +53,34 @@ class TrackMarshallerTest extends QtiSmTestCase
 
         $track = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang, $id, $class, $lang, $label);
 
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($track);
-        $element = $marshaller->marshall($track);
-
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $element = $dom->importNode($element, true);
-        $this->assertEquals($expected, $dom->saveXML($element));
+        $this->assertMarshalling($expected, $track);
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
     public function testMarshall22WithDefaultValues()
     {
         $src = 'http://example.com/';
 
         $expected = sprintf('<track src="%s"/>', $src);
-
         $track = new Track($src);
 
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($track);
-        $element = $marshaller->marshall($track);
-
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $element = $dom->importNode($element, true);
-        $this->assertEquals($expected, $dom->saveXML($element));
+        $this->assertMarshalling($expected, $track);
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     */
     public function testUnMarshallerDoesNotExistInQti21()
     {
-        $element = $this->createDOMElement('<track src="http://example.com/"/>');
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No Marshaller implementation found while unmarshalling element \'track\'.');
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        $marshaller->unmarshall($element);
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<track/>', 'track');
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     */
     public function testUnmarshall22()
     {
         $src = 'http://example.com/';
@@ -119,6 +119,9 @@ class TrackMarshallerTest extends QtiSmTestCase
         $this->assertEquals($label, $track->getLabel());
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     */
     public function testUnmarshall22WithDefaultValues()
     {
         $src = 'http://example.com/';
@@ -147,6 +150,9 @@ class TrackMarshallerTest extends QtiSmTestCase
         $this->assertEquals($label, $track->getLabel());
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     */
     public function testUnmarshallMissingSrc()
     {
         $element = $this->createDOMElement('<track/>');
@@ -163,6 +169,7 @@ class TrackMarshallerTest extends QtiSmTestCase
      * @param string $xml
      * @param string $exception
      * @param string $message
+     * @throws MarshallerNotFoundException
      */
     public function testUnmarshallWithWrongTypesOrValues(string $xml, string $exception, string $message)
     {
