@@ -228,6 +228,8 @@ class Marshaller
             return $this->marshallPair($complex);
         } elseif ($complex instanceof QtiDuration) {
             return $this->marshallDuration($complex);
+        } elseif ($complex instanceof FileHash) {
+            return $this->marshallFileHash($complex);
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         } else {
@@ -371,25 +373,34 @@ class Marshaller
      */
     protected function marshallFile(QtiFile $file)
     {
-        $fileKey = $file instanceof FileHash ? FileHash::FILE_HASH_KEY : 'file';
-
         $data = [
             'base' => [
-                $fileKey => [
+                'file' => [
                     'mime' => $file->getMimeType(),
-                    'data' => base64_encode($file->getData())
-                ]
-            ]
+                    'data' => base64_encode($file->getData()),
+                ],
+            ],
         ];
 
         if ($file->hasFilename()) {
-            $data['base'][$fileKey]['name'] = $file->getFilename();
-        }
-
-        if ($file instanceof FileHash) {
-            $data['base'][$fileKey]['id'] = $file->getId();
+            $data['base']['file']['name'] = $file->getFilename();
         }
 
         return $data;
+    }
+
+    /**
+     * Marshall a QTI fileHash datatype into its PCI JSON Representation.
+     *
+     * @param FileHash $file
+     * @return array
+     */
+    protected function marshallFileHash(FileHash $file)
+    {
+        return [
+            'base' => [
+                FileHash::FILE_HASH_KEY => $file->jsonSerialize()
+            ],
+        ];
     }
 }

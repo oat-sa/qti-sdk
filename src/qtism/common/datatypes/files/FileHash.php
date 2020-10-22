@@ -97,7 +97,7 @@ class FileHash implements QtiFile, JsonSerializable
             $properties['id'],
             $properties['mime'],
             $properties['name'],
-            $properties['hash']
+            $properties['data']
         );
     }
 
@@ -107,7 +107,7 @@ class FileHash implements QtiFile, JsonSerializable
             'id' => $this->id,
             'mime' => $this->mimeType,
             'name' => $this->filename,
-            'hash' => $this->hash,
+            'data' => $this->hash,
         ];
     }
 

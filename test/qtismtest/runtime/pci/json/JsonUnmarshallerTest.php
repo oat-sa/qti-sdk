@@ -109,7 +109,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
             "id" : "%s" } } }',
             FileHash::FILE_HASH_KEY,
             $mimeType,
-            base64_encode($sha256),
+            $sha256,
             $filename,
             $id
         );      

@@ -438,7 +438,7 @@ class Unmarshaller
             $fileHashArray['id'],
             $fileHashArray['mime'],
             $fileHashArray['name'],
-            base64_decode($fileHashArray['data'])
+            $fileHashArray['data']
         );
     }
 

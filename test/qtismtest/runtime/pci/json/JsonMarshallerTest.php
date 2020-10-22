@@ -179,7 +179,9 @@ class JsonMarshallerTest extends QtiSmTestCase
         $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
 
         $fileHash = new FileHash($id, $mimeType, $filename, $sha256);
-        $returnValue[] = [$fileHash, json_encode(['base' => [FileHash::FILE_HASH_KEY => ['mime' => $mimeType, 'data' => base64_encode($sha256), 'name' => $filename, 'id' => $id]]])];
+        $returnValue[] = [$fileHash, json_encode(
+            ['base' => [FileHash::FILE_HASH_KEY => ['id' => $id, 'mime' => $mimeType, 'name' => $filename, 'data' => $sha256]]]
+        )];
 
         return $returnValue;
     }
