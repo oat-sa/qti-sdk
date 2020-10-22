@@ -68,6 +68,13 @@ abstract class Media extends Html5Element
     private $loop = false;
 
     /**
+     * Media group
+     *
+     * @var string
+     */
+    private $mediaGroup = '';
+
+    /**
      * Is the media muted?
      *
      * @var bool
@@ -257,6 +264,43 @@ abstract class Media extends Html5Element
     public function hasLoop(): bool
     {
         return $this->loop !== false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMediaGroup(): string
+    {
+        return $this->mediaGroup;
+    }
+
+    /**
+     * @param string $mediaGroup
+     */
+    public function setMediaGroup($mediaGroup)
+    {
+        if (!Format::isNormalizedString($mediaGroup)) {
+            $given = is_string($mediaGroup)
+                ? $mediaGroup
+                : gettype($mediaGroup);
+
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "src" argument must be a non-empty string, "%s" given.',
+                    $given
+                )
+            );
+        }
+
+        $this->mediaGroup = $mediaGroup;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMediaGroup(): bool
+    {
+        return $this->mediaGroup !== '';
     }
 
     /**

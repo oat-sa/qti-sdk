@@ -82,6 +82,7 @@ class MediaTest extends QtiSmTestCase
         $controls = true;
         $crossOrigin = CrossOrigin::USE_CREDENTIALS;
         $loop = true;
+        $mediaGroup = 'any normalized string';
         $muted = true;
         $src = 'http://example.com/';
         
@@ -90,6 +91,7 @@ class MediaTest extends QtiSmTestCase
         $subject->setControls($controls);
         $subject->setCrossOrigin($crossOrigin);
         $subject->setLoop($loop);
+        $subject->setMediaGroup($mediaGroup);
         $subject->setMuted($muted);
         $subject->setSrc($src);
 
@@ -101,6 +103,8 @@ class MediaTest extends QtiSmTestCase
         $this->assertEquals($crossOrigin, $subject->getCrossOrigin());
         $this->assertTrue($subject->hasLoop());
         $this->assertEquals($loop, $subject->getLoop());
+        $this->assertTrue($subject->hasMediaGroup());
+        $this->assertEquals($mediaGroup, $subject->getMediaGroup());
         $this->assertTrue($subject->hasMuted());
         $this->assertEquals($muted, $subject->getMuted());
         $this->assertTrue($subject->hasSrc());
