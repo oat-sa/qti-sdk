@@ -69,6 +69,14 @@ abstract class Html5Element extends BodyElement
     }
 
     /**
+     * @return bool
+     */
+    public function hasTitle(): bool
+    {
+        return $this->title !== '';
+    }
+
+    /**
      * Sets the role of the html5 element.
      * @param int $role One of the Role constants.
      */
@@ -91,10 +99,18 @@ abstract class Html5Element extends BodyElement
     }
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getRole(): string
+    public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRole(): bool
+    {
+        return $this->role !== null;
     }
 }

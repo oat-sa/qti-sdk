@@ -9,6 +9,13 @@ use qtismtest\QtiSmTestCase;
 
 class Html5ElementTest extends QtiSmTestCase
 {
+    public function testCreateWithoutTitle()
+    {
+        $subject = new fakeHtml5Element();
+
+        $this->assertFalse($subject->hasTitle());
+    }
+
     public function testCreateWithValidTitle()
     {
         $title = 'a title';
@@ -25,6 +32,13 @@ class Html5ElementTest extends QtiSmTestCase
         $this->expectExceptionMessage('The "title" argument must be a string, "integer" given.');
 
         (new FakeHtml5Element())->setTitle(12);
+    }
+
+    public function testCreateWithoutRole()
+    {
+        $subject = new fakeHtml5Element();
+
+        $this->assertFalse($subject->hasRole());
     }
 
     /**
