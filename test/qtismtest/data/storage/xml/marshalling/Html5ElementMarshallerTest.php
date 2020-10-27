@@ -3,7 +3,12 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\content\xhtml\html5\Html5Element;
+use qtism\data\content\xhtml\html5\Role;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\Html5ElementMarshaller;
+use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
@@ -11,6 +16,36 @@ use RuntimeException;
 
 class Html5ElementMarshallerTest extends QtiSmTestCase
 {
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testMarshall22()
+    {
+        $id = 'identifier';
+        $class = 'the class';
+        $lang = 'english';
+        $label = 'This is a label.';
+        $title = 'a title';
+        $role = 'note';
+
+        $expected = sprintf(
+            '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            $id,
+            $class,
+            $lang,
+            $label,
+            $title,
+            $role
+        );
+
+        $html5Element = new FakeHtml5Element($id, $class, $lang, $label, $title, Role::getConstantByName($role));
+
+        $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
+
+        $this->assertMarshalling($expected, $html5Element, $marshaller);
+    }
+
     /**
      * @param Html5Element $object
      * @param string $elementName
@@ -42,16 +77,55 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
     /**
      * @param string $expected
      * @param Html5Element $object
+     * @param Marshaller|null $marshaller Optional marshaller to use for marshalling he object.
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function assertMarshalling(string $expected, Html5Element $object)
+    protected function assertMarshalling(string $expected, Html5Element $object, Marshaller $marshaller = null)
     {
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($object);
+        if ($marshaller === null) {
+            $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($object);
+        }
         $element = $marshaller->marshall($object);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals($expected, $dom->saveXML($element));
+    }
+}
+
+class FakeHtml5Element extends Html5Element
+{
+    public function getQtiClassName()
+    {
+    }
+
+    public function getComponents()
+    {
+    }
+}
+
+class FakeHtml5ElementMarshaller extends Html5ElementMarshaller
+{
+    public function __call($method, $args)
+    {
+        if ($method === 'marshall') {
+            return $this->marshall($args[0]);
+        }
+    }
+
+    protected function marshall(QtiComponent $component)
+    {
+        $element = self::getDOMCradle()->createElement('html5');
+        $this->fillElement($element, $component);
+        return $element;
+    }
+
+    protected function unmarshall(DOMElement $element)
+    {
+    }
+
+    public function getExpectedQtiClassName()
+    {
     }
 }
