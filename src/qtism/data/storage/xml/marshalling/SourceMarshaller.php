@@ -31,7 +31,7 @@ use qtism\data\QtiComponent;
 /**
  * Marshalling/Unmarshalling implementation for Html5 Track.
  */
-class SourceMarshaller extends Marshaller
+class SourceMarshaller extends Html5ElementMarshaller
 {
     /**
      * Marshall a Source object into a DOMElement object.

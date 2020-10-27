@@ -95,10 +95,18 @@ abstract class Media extends Html5Element
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
+     * @param string $title A title in the sense of Html title attribute
+     * @param int|null $role A role taken in the Role constants.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '')
-    {
-        parent::__construct($id, $class, $lang, $label);
+    public function __construct(
+        $id = '',
+        $class = '',
+        $lang = '',
+        $label = '',
+        $title = '',
+        $role = null
+    ) {
+        parent::__construct($id, $class, $lang, $label, $title, $role);
         $this->components = new QtiComponentCollection();
     }
 

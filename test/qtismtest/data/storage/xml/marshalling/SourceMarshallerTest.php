@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use InvalidArgumentException;
+use qtism\data\content\xhtml\html5\Role;
 use qtism\data\content\xhtml\html5\Source;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
@@ -29,18 +30,22 @@ class SourceMarshallerTest extends QtiSmTestCase
         $class = 'a css class';
         $lang = 'es';
         $label = 'A label';
+        $title = 'a title';
+        $role = 'note';
 
         $expected = sprintf(
-            '<source src="%s" type="%s" id="%s" class="%s" xml:lang="%s" label="%s"/>',
+            '<source src="%s" type="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
             $src,
             $type,
             $id,
             $class,
             $lang,
-            $label
+            $label,
+            $title,
+            $role
         );
 
-        $source = new Source($src, $type, $id, $class, $lang, $label);
+        $source = new Source($src, $type, $id, $class, $lang, $label, $title, Role::getConstantByName($role));
 
         $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($source);
         $element = $marshaller->marshall($source);
@@ -84,15 +89,19 @@ class SourceMarshallerTest extends QtiSmTestCase
         $class = 'a css class';
         $lang = 'es';
         $label = 'A label';
+        $title = 'a title';
+        $role = 'note';
 
         $xml = sprintf(
-            '<source src="%s" type="%s" id="%s" class="%s" xml:lang="%s" label="%s"/>',
+            '<source src="%s" type="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
             $src,
             $type,
             $id,
             $class,
             $lang,
-            $label
+            $label,
+            $title,
+            $role
         );
 
         $element = $this->createDOMElement($xml);
@@ -106,6 +115,8 @@ class SourceMarshallerTest extends QtiSmTestCase
         $this->assertEquals($class, $source->getClass());
         $this->assertEquals($lang, $source->getLang());
         $this->assertEquals($label, $source->getLabel());
+        $this->assertEquals($title, $source->getTitle());
+        $this->assertEquals($role, Role::getNameByConstant($source->getRole()));
     }
 
     public function testUnmarshall22WithDefaultValues()

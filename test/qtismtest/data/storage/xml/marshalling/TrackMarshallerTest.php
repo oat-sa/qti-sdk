@@ -4,6 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use InvalidArgumentException;
+use qtism\data\content\xhtml\html5\Role;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\content\xhtml\html5\TrackKind;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
@@ -20,7 +21,6 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     public function testMarshallerDoesNotExistInQti21()
     {
         $track = new Track('http://example.com/');
-
         $this->assertHtml5MarshallingOnlyInQti22AndAbove($track, 'track');
     }
 
@@ -38,9 +38,11 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $class = 'a css class';
         $lang = 'es';
         $label = 'A label';
+        $title = 'a title';
+        $role = 'note';
 
         $expected = sprintf(
-            '<track src="%s" default="%s" kind="%s" srclang="%s" id="%s" class="%s" xml:lang="%s" label="%s"/>',
+            '<track src="%s" default="%s" kind="%s" srclang="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
             $src,
             $default ? 'true' : 'false',
             $kind,
@@ -48,10 +50,12 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
             $id,
             $class,
             $lang,
-            $label
+            $label,
+            $title,
+            $role
         );
 
-        $track = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang, $id, $class, $lang, $label);
+        $track = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang, $id, $class, $lang, $label, $title, Role::getConstantByName($role));
 
         $this->assertMarshalling($expected, $track);
     }
@@ -91,9 +95,11 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $class = 'a css class';
         $lang = 'es';
         $label = 'A label';
+        $title = '';
+        $role = null;
 
         $xml = sprintf(
-            '<track src="%s" default="%s" kind="%s" srclang="%s" id="%s" class="%s" xml:lang="%s" label="%s"/>',
+            '<track src="%s" default="%s" kind="%s" srclang="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
             $src,
             $default ? 'true' : 'false',
             $kind,
@@ -101,7 +107,9 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
             $id,
             $class,
             $lang,
-            $label
+            $label,
+            $title,
+            $role
         );
 
         $element = $this->createDOMElement($xml);
@@ -117,6 +125,8 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $this->assertEquals($class, $track->getClass());
         $this->assertEquals($lang, $track->getLang());
         $this->assertEquals($label, $track->getLabel());
+        $this->assertEquals($title, $track->getTitle());
+        $this->assertEquals($role, Role::getNameByConstant($track->getRole()));
     }
 
     /**
@@ -132,6 +142,8 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $class = '';
         $lang = '';
         $label = '';
+        $title = '';
+        $role = null;
 
         $xml = sprintf('<track src="%s"/>', $src);
 
@@ -148,6 +160,8 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $this->assertEquals($class, $track->getClass());
         $this->assertEquals($lang, $track->getLang());
         $this->assertEquals($label, $track->getLabel());
+        $this->assertEquals($title, $track->getTitle());
+        $this->assertEquals($role, $track->getRole());
     }
 
     /**
