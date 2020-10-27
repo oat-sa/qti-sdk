@@ -24,6 +24,7 @@
 namespace qtism\runtime\pci\json;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -227,6 +228,8 @@ class Marshaller
             return $this->marshallPair($complex);
         } elseif ($complex instanceof QtiDuration) {
             return $this->marshallDuration($complex);
+        } elseif ($complex instanceof FileHash) {
+            return $this->marshallFileHash($complex);
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         } else {
@@ -370,12 +373,34 @@ class Marshaller
      */
     protected function marshallFile(QtiFile $file)
     {
-        $data = ['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]];
+        $data = [
+            'base' => [
+                'file' => [
+                    'mime' => $file->getMimeType(),
+                    'data' => base64_encode($file->getData()),
+                ],
+            ],
+        ];
 
-        if ($file->hasFilename() === true) {
+        if ($file->hasFilename()) {
             $data['base']['file']['name'] = $file->getFilename();
         }
 
         return $data;
+    }
+
+    /**
+     * Marshall a QTI fileHash datatype into its PCI JSON Representation.
+     *
+     * @param FileHash $file
+     * @return array
+     */
+    protected function marshallFileHash(FileHash $file)
+    {
+        return [
+            'base' => [
+                FileHash::FILE_HASH_KEY => $file->jsonSerialize()
+            ],
+        ];
     }
 }

@@ -5,6 +5,7 @@ namespace qtismtest\runtime\storage\binary;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\Comparable;
 use qtism\common\datatypes\files\DefaultFileManager;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
@@ -397,6 +398,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $returnValue[] = [new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, [new QtiIntOrIdentifier(1)])), "\x01", null];
         $returnValue[] = [new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, [new QtiIntOrIdentifier(1)])), "\x01", null, $rw_defaultValue];
 
+        // Files
         $returnValue[] = [new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x01", null];
         $returnValue[] = [new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x01", null, $rw_defaultValue];
         $returnValue[] = [new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x01", null, $rw_correctResponse];
@@ -857,10 +859,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE);
         $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'));
+        $data[] = [$v, $rw_value];
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE);
+        $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'));
         $data[] = [$v, $rw_defaultValue];
         $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE);
         $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'));
         $data[] = [$v, $rw_correctResponse];
+
+        // FileHash
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE);
+        $v->setDefaultValue(new FileHash('id', 'text/plain', 'my_file.txt', 'AA025C4DB95A39A2CB8525F83F1387C1A2B13595C8E4C337CDF9AD7B043518A3'));
+        $data[] = [$v, $rw_defaultValue];
 
         // Records
         $data[] = [new OutcomeVariable('VAR', Cardinality::RECORD)];
