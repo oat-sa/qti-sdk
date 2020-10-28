@@ -39,11 +39,19 @@ abstract class AbstractMarkupRenderer implements Renderable
 {
     private $renderingEngine;
 
+    /**
+     * AbstractMarkupRenderer constructor.
+     *
+     * @param AbstractMarkupRenderingEngine|null $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         $this->setRenderingEngine($renderingEngine);
     }
 
+    /**
+     * @param AbstractMarkupRenderingEngine|null $renderingEngine
+     */
     public function setRenderingEngine(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         $this->renderingEngine = $renderingEngine;
@@ -93,13 +101,17 @@ abstract class AbstractMarkupRenderer implements Renderable
         }
     }
 
+    /**
+     * @param QtiComponent $component
+     * @param DOMNode $node
+     */
     protected function handleXmlBase(QtiComponent $component, DOMNode $node)
     {
         if (
-            $node instanceof DOMElement &&
-            $this->getRenderingEngine()->getXmlBasePolicy() === AbstractMarkupRenderingEngine::XMLBASE_KEEP &&
-            $component instanceof Flow &&
-            $component->hasXmlBase()
+            $node instanceof DOMElement
+            && $this->getRenderingEngine()->getXmlBasePolicy() === AbstractMarkupRenderingEngine::XMLBASE_KEEP
+            && $component instanceof Flow
+            && $component->hasXmlBase()
         ) {
             $node->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $component->getXmlBase());
         }

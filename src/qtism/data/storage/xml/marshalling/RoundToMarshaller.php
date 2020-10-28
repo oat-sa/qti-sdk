@@ -69,7 +69,7 @@ class RoundToMarshaller extends OperatorMarshaller
     {
         if (($figures = $this->getDOMElementAttributeAs($element, 'figures', 'string')) !== null) {
             if (!Format::isVariableRef($figures)) {
-                $figures = intval($figures);
+                $figures = (int)$figures;
             }
 
             $object = new RoundTo($children, $figures);

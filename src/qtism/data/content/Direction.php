@@ -35,24 +35,27 @@ class Direction implements Enumeration
     /**
      * Automatic direction detection.
      *
-     * @var integer
+     * @var int
      */
     const AUTO = 0;
 
     /**
      * Left To Right direction.
      *
-     * @var integer
+     * @var int
      */
     const LTR = 1;
 
     /**
      * Right to Left direction.
      *
-     * @var integer
+     * @var int
      */
     const RTL = 2;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -62,6 +65,10 @@ class Direction implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -83,6 +90,10 @@ class Direction implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

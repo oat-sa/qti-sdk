@@ -3,10 +3,16 @@
 namespace qtismtest;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
 
+/**
+ * Class QtiSmAssessmentItemTestCase
+ */
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
     public function setUp()
@@ -19,10 +25,16 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
         parent::tearDown();
     }
 
-    protected static function createExtendedAssessmentItemRefFromXml($xmlString)
+    /**
+     * @param $xmlString
+     * @return ExtendedAssessmentItemRef
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
+     */
+    protected function createExtendedAssessmentItemRefFromXml($xmlString)
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
-        $element = self::createDOMElement($xmlString);
+        $element = $this->createDOMElement($xmlString);
         return $marshaller->unmarshall($element);
     }
 
@@ -35,10 +47,12 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * The responseProcessing for item of the session is the template 'match_correct'.
      *
      * @return AssessmentItemSession
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAssessmentItemSession()
+    protected function instantiateBasicAssessmentItemSession()
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
@@ -69,10 +83,12 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
      *
      * @return AssessmentItemSession
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
-    protected static function instantiateBasicAdaptiveAssessmentItem()
+    protected function instantiateBasicAdaptiveAssessmentItem()
     {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
+        $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>

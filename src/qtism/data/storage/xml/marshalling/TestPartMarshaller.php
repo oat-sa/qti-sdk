@@ -39,7 +39,10 @@ use qtism\data\TestPart;
 class TestPartMarshaller extends Marshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     * @param QtiComponent $component
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -85,7 +88,10 @@ class TestPartMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+     * @param DOMElement $element
+     * @return TestPart
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -153,7 +159,7 @@ class TestPartMarshaller extends Marshaller
 
                         return $object;
                     } else {
-                        $msg = "A testPart element must contain at least one assessmentSection.";
+                        $msg = 'A testPart element must contain at least one assessmentSection.';
                         throw new UnmarshallingException($msg, $element);
                     }
                 } else {
@@ -171,7 +177,7 @@ class TestPartMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

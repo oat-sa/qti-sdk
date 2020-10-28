@@ -2,14 +2,18 @@
 
 namespace qtismtest\common\datatypes;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BooleanTest
+ */
 class BooleanTest extends QtiSmTestCase
 {
     public function testWrongValue()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $boolean = new QtiBoolean('string');
     }
 

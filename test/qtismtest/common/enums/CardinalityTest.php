@@ -5,13 +5,22 @@ namespace qtismtest\common\enums;
 use qtism\common\enums\Cardinality;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class CardinalityTest
+ */
 class CardinalityTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return Cardinality::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -22,6 +31,9 @@ class CardinalityTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -32,6 +44,9 @@ class CardinalityTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

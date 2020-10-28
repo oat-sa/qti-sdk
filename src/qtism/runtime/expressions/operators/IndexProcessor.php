@@ -57,12 +57,12 @@ class IndexProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelyOrdered() === false) {
-            $msg = "The Index operator only accepts values with a cardinality of ordered.";
+            $msg = 'The Index operator only accepts values with a cardinality of ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         $n = $this->getExpression()->getN();
-        if (gettype($n) === 'string') {
+        if (is_string($n)) {
             // The value of $n comes from the state.
             $state = $this->getState();
             if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
@@ -83,7 +83,7 @@ class IndexProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
         }
 
-        $n = $n - 1; // QTI indexes begin at 1...
+        $n--; // QTI indexes begin at 1...
         if ($n > count($operands[0]) - 1) {
             // As per specs, if n exceeds the number of values in the container,
             // the result of the index operator is NULL.
@@ -94,7 +94,7 @@ class IndexProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

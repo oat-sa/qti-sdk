@@ -4,7 +4,12 @@ namespace qtismtest\runtime\expressions;
 
 use qtism\runtime\expressions\ExpressionProcessorFactory;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\BaseValueProcessor;
+use RuntimeException;
 
+/**
+ * Class ExpressionProcessorFactoryTest
+ */
 class ExpressionProcessorFactoryTest extends QtiSmTestCase
 {
     public function testCreateProcessor()
@@ -13,7 +18,7 @@ class ExpressionProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new ExpressionProcessorFactory();
         $processor = $factory->createProcessor($expression);
-        $this->assertInstanceOf('qtism\\runtime\\expressions\\BaseValueProcessor', $processor);
+        $this->assertInstanceOf(BaseValueProcessor::class, $processor);
         $this->assertEquals('baseValue', $processor->getExpression()->getQtiClassName());
     }
 
@@ -26,7 +31,7 @@ class ExpressionProcessorFactoryTest extends QtiSmTestCase
 			</sum>');
 
         $factory = new ExpressionProcessorFactory();
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
         $processor = $factory->createProcessor($expression);
     }
 }

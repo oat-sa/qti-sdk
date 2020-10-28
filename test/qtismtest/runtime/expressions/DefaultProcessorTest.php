@@ -12,6 +12,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\expressions\DefaultProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class DefaultProcessorTest
+ */
 class DefaultProcessorTest extends QtiSmTestCase
 {
     public function testMultipleCardinality()

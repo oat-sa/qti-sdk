@@ -73,7 +73,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     public function __construct(TemplateIf $templateIf, TemplateElseIfCollection $templateElseIfs = null, TemplateElse $templateElse = null)
     {
         $this->setTemplateIf($templateIf);
-        $this->setTemplateElseIfs((is_null($templateElseIfs)) ? new TemplateElseIfCollection() : $templateElseIfs);
+        $this->setTemplateElseIfs($templateElseIfs ?? new TemplateElseIfCollection());
         $this->setTemplateElse($templateElse);
     }
 
@@ -140,7 +140,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     /**
      * Whether or not a TemplateElse object is defined for this template condition.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTemplateElse()
     {
@@ -148,7 +148,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return array|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -162,7 +162,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -6,16 +6,17 @@ use InvalidArgumentException;
 use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedTextInteractionTest
+ */
 class ExtendedTextInteractionTest extends QtiSmTestCase
 {
     public function testSetBaseWrongType()
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'base' argument must be a positive (>= 0) integer value, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'base' argument must be a positive (>= 0) integer value, 'string' given.");
 
         $extendedTextInteraction->setBase('wrong');
     }
@@ -24,10 +25,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'responseIdentifier' argument must be a valid QTI identifier."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'responseIdentifier' argument must be a valid QTI identifier.");
 
         $extendedTextInteraction->setResponseIdentifier(1337);
     }
@@ -37,7 +36,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "boolean" given.');
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0) or null, "boolean" given.');
 
         $extendedTextInteraction->setExpectedLength(true);
     }
@@ -61,7 +60,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0), "-1" given.');
+        $this->expectExceptionMessage('The "expectedLength" argument must be a non-negative integer (>= 0) or null, "-1" given.');
 
         $textEntryInteraction->setExpectedLength(-1);
     }
@@ -80,10 +79,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'patternMask' argument must be a string value, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'patternMask' argument must be a string value, 'boolean' given.");
 
         $extendedTextInteraction->setPatternMask(true);
     }
@@ -92,10 +89,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'placeholderText' argument must be a string value, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'placeholderText' argument must be a string value, 'boolean' given.");
 
         $extendedTextInteraction->setPlaceholderText(true);
     }
@@ -104,10 +99,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'maxStrings' argument must be a strictly positive (> 0) integer or -1, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'maxStrings' argument must be a strictly positive (> 0) integer or -1, 'boolean' given.");
 
         $extendedTextInteraction->setMaxStrings(true);
     }
@@ -116,10 +109,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'minStrings' argument must be a positive (>= 0) integer, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minStrings' argument must be a positive (>= 0) integer, 'boolean' given.");
 
         $extendedTextInteraction->setMinStrings(true);
     }
@@ -129,7 +120,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0), "boolean" given.');
+        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0) or null, "boolean" given.');
 
         $extendedTextInteraction->setExpectedLines(true);
     }
@@ -153,7 +144,7 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $textEntryInteraction = new ExtendedTextInteraction('RESPONSE');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0), "-1" given.');
+        $this->expectExceptionMessage('The "expectedLines" argument must be a non-negative integer (>= 0) or null, "-1" given.');
 
         $textEntryInteraction->setExpectedLines(-1);
     }
@@ -182,10 +173,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'format' argument must be a value from the TextFormat enumeration, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'format' argument must be a value from the TextFormat enumeration, 'integer' given.");
 
         $extendedTextInteraction->setFormat(999);
     }

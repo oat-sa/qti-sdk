@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\ExitTemplate;
+
 /**
  * From IMS QTI:
  *
@@ -39,15 +41,15 @@ class ExitTemplateProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Template Processing.";
+        $msg = 'Termination of Template Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEMPLATE);
     }
 
     /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     * @return string
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\ExitTemplate';
+        return ExitTemplate::class;
     }
 }

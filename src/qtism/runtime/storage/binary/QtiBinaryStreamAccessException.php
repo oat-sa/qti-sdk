@@ -23,8 +23,6 @@
 
 namespace qtism\runtime\storage\binary;
 
-use Exception;
-use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 
 /**
@@ -33,127 +31,114 @@ use qtism\common\storage\BinaryStreamAccessException;
 class QtiBinaryStreamAccessException extends BinaryStreamAccessException
 {
     /**
-     * An error occured while reading/writing a Variable.
+     * An error occurred while reading/writing a Variable.
      *
-     * @var integer
+     * @var int
      */
     const VARIABLE = 10;
 
     /**
-     * An error occured while reading/writing a Record Field.
+     * An error occurred while reading/writing a Record Field.
      *
-     * @var integer
+     * @var int
      */
     const RECORDFIELD = 11;
 
     /**
-     * An error occured while reading/writing a QTI identifier.
+     * An error occurred while reading/writing a QTI identifier.
      *
-     * @var integer
+     * @var int
      */
     const IDENTIFIER = 12;
 
     /**
-     * An error occured while reading/writing a QTI point.
+     * An error occurred while reading/writing a QTI point.
      *
-     * @var integer
+     * @var int
      */
     const POINT = 13;
 
     /**
-     * An error occured while reading/writing a QTI pair.
+     * An error occurred while reading/writing a QTI pair.
      *
-     * @var integer
+     * @var int
      */
     const PAIR = 14;
 
     /**
-     * An error occured while reading/writing a QTI directedPair.
+     * An error occurred while reading/writing a QTI directedPair.
      *
-     * @var integer
+     * @var int
      */
     const DIRECTEDPAIR = 15;
 
     /**
-     * An error occured while reading/writing a QTI duration.
+     * An error occurred while reading/writing a QTI duration.
      *
-     * @var integer
+     * @var int
      */
     const DURATION = 16;
 
     /**
-     * An error occured while reading/writing a URI.
+     * An error occurred while reading/writing a URI.
      *
-     * @var integer
+     * @var int
      */
     const URI = 17;
 
     /**
-     * An error occured while reading/writing File's binary data.
+     * An error occurred while reading/writing File's binary data.
      *
-     * @var integer
+     * @var int
      */
     const FILE = 18;
 
     /**
-     * An error occured while reading/writing an intOrIdentifier.
+     * An error occurred while reading/writing an intOrIdentifier.
      *
-     * @var integer
+     * @var int
      */
     const INTORIDENTIFIER = 19;
 
     /**
-     * An error occured while reading/writing an assessment item session.
+     * An error occurred while reading/writing an assessment item session.
      *
-     * @var integer
+     * @var int
      */
     const ITEM_SESSION = 20;
 
     /**
-     * An error occured while reading/writing a route item.
+     * An error occurred while reading/writing a route item.
      *
-     * @var integer
+     * @var int
      */
     const ROUTE_ITEM = 21;
 
     /**
-     * An error occured while reading/writing pending responses.
+     * An error occurred while reading/writing pending responses.
      *
-     * @var integer
+     * @var int
      */
     const PENDING_RESPONSES = 22;
 
     /**
-     * An error occured while reading/writing shuffling states.
+     * An error occurred while reading/writing path.
      *
-     * @var integer
+     * @var int
      */
-    const SHUFFLING_STATE = 23;
+    const PATH = 23;
 
     /**
-     * An error occured while reading/writing a shuffling group.
+     * An error occurred while reading/writing shuffling states.
      *
-     * @var integer
+     * @var int
      */
-    const SHUFFLING_GROUP = 24;
+    const SHUFFLING_STATE = 24;
 
     /**
-     * An error occured while reading/writing path.
+     * An error occurred while reading/writing a shuffling group.
      *
-     * @var integer
+     * @var int
      */
-    const PATH = 25;
-
-    /**
-     * Create a new QtiBinaryStreamAccessException object.
-     *
-     * @param string $message A human-readable message.
-     * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
-     * @param integer $code An exception code. See class constants.
-     * @param Exception $previous An optional previously thrown exception.
-     */
-    public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $source, $code, $previous);
-    }
+    const SHUFFLING_GROUP = 25;
 }

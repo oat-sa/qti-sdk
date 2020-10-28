@@ -43,6 +43,7 @@ use qtism\data\storage\xml\versions\CompactVersion;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtism\data\TestFeedbackRef;
 use qtism\data\TestPart;
+use ReflectionException;
 use SplObjectStorage;
 
 /**
@@ -63,7 +64,7 @@ class XmlCompactDocument extends XmlDocument
      * Whether or not the rubricBlock elements
      * must be separated from the core document.
      *
-     * @var boolean
+     * @var bool
      */
     private $explodeRubricBlocks = false;
 
@@ -71,7 +72,7 @@ class XmlCompactDocument extends XmlDocument
      * Whether or not the testFeedback elements
      * must be separated from the core document.
      *
-     * @var boolean
+     * @var bool
      */
     private $explodeTestFeedbacks = false;
 
@@ -106,15 +107,19 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Whether or not the rubrickBlock components contained in the document should be separated from the document.
+     * Whether or not the rubrickBlock components contained in the document
+     * should be separated from the document.
      *
-     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save() will make the following rules to be applied:
+     * If $explodedRubricBlocks is set to true, a call to
+     * XmlCompactDocument::save() will make the following rules to be applied:
      *
      * * rubricBlock components will be removed from the document.
      * * a replacement of the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes will occur.
      * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
      *
-     * @param boolean $explodeRubricBlocks Wheter rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
+     * Please note that this is taken under consideration only when the XmlDocument::save() method is used.
+     *
+     * @param bool $explodeRubricBlocks Whether rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
      */
     public function setExplodeRubricBlocks($explodeRubricBlocks)
     {
@@ -124,7 +129,7 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Whether or not the rubricBlock components contained in the document should be separated from the document.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustExplodeRubricBlocks()
     {
@@ -140,7 +145,7 @@ class XmlCompactDocument extends XmlDocument
      * * a replacement of the testFeedback components by testFeedbackRef components with a suitable value for the href attribute will occur.
      * * place the substituted testFeedback contents in separate QTI-XML files, in a valid location and with a valid name regarding the generated testFeedbackRef components.
      *
-     * @param boolean $explodeTestFeedbacks
+     * @param bool $explodeTestFeedbacks
      */
     public function setExplodeTestFeedbacks($explodeTestFeedbacks)
     {
@@ -150,7 +155,7 @@ class XmlCompactDocument extends XmlDocument
     /**
      * Whether or not the testFeedback components contained in the document should be separated from the document.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustExplodeTestFeedbacks()
     {
@@ -161,10 +166,11 @@ class XmlCompactDocument extends XmlDocument
      * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
      *
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
-     * @param FileResolver (optional) $resolver A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
+     * @param FileResolver $resolver (optional) A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
      * @param string $version QTI version to compile to.
      * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
+     * @throws ReflectionException
      */
     public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1')
     {
@@ -183,7 +189,7 @@ class XmlCompactDocument extends XmlDocument
         $assessmentTest->setToolName($xmlAssessmentTestDocument->getDocumentComponent()->getToolName());
         $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 
-        if (is_null($resolver) === true) {
+        if (is_null($resolver)) {
             $resolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
         } else {
             $resolver->setBasePath($xmlAssessmentTestDocument->getUrl());
@@ -358,6 +364,7 @@ class XmlCompactDocument extends XmlDocument
      * @param FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
      * @return XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
      * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
+     * @throws ReflectionException
      */
     protected static function resolveAssessmentSectionRef(XmlDocument $sourceDocument, AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
     {
@@ -377,7 +384,10 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
+     * @param QtiComponent $documentComponent
+     * @param string $uri
+     * @throws XmlStorageException
+     * @throws marshalling\MarshallingException
      */
     public function beforeSave(QtiComponent $documentComponent, $uri)
     {
@@ -392,7 +402,7 @@ class XmlCompactDocument extends XmlDocument
                     $pathinfo = pathinfo($uri);
                     $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
                 } catch (XmlStorageException $e) {
-                    $msg = "An error occurred while creating external rubrickBlock definition(s).";
+                    $msg = 'An error occurred while creating external rubrickBlock definition(s).';
                     throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }
@@ -412,11 +422,11 @@ class XmlCompactDocument extends XmlDocument
                         $testPartCount[$parent] = 0;
                     }
 
-                    $testPartCount[$parent] = $testPartCount[$parent] + 1;
+                    $testPartCount[$parent] += 1;
                     $occurence = $testPartCount[$parent];
                 } else {
                     // It's a testFeedback related to an assessmentTest.
-                    $testCount += 1;
+                    $testCount++;
                     $occurence = $testCount;
                 }
 
@@ -470,7 +480,7 @@ class XmlCompactDocument extends XmlDocument
                 $sectionCount[$section] = 0;
             }
 
-            $sectionCount[$section] = $sectionCount[$section] + 1;
+            $sectionCount[$section] += 1;
             $occurence = $sectionCount[$section];
 
             // determine a suitable file name for the external rubricBlock definition.

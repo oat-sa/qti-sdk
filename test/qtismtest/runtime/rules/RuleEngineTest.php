@@ -9,6 +9,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class RuleEngineTest
+ */
 class RuleEngineTest extends QtiSmTestCase
 {
     public function testSetOutcomeValue()

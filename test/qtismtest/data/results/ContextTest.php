@@ -28,6 +28,9 @@ use qtism\data\results\Context;
 use qtism\data\results\DuplicateSourceIdException;
 use qtism\data\results\SessionIdentifier;
 
+/**
+ * Class ContextTest
+ */
 class ContextTest extends TestCase
 {
     public function testAddSessionIdentifier()

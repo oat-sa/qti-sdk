@@ -25,6 +25,9 @@ namespace qtism\data\results;
 
 use Exception;
 
+/**
+ * Class DuplicateSourceIdException
+ */
 class DuplicateSourceIdException extends Exception
 {
 }

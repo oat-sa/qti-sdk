@@ -6,6 +6,9 @@ use qtism\runtime\rules\ExitTemplateProcessor;
 use qtism\runtime\rules\RuleProcessingException;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExitTemplateProcessorTest
+ */
 class ExitTemplateProcessorTest extends QtiSmTestCase
 {
     public function testExitTest()
@@ -13,11 +16,8 @@ class ExitTemplateProcessorTest extends QtiSmTestCase
         $rule = $this->createComponentFromXml('<exitTemplate/>');
         $processor = new ExitTemplateProcessor($rule);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            'Termination of Template Processing.',
-            RuleProcessingException::EXIT_TEMPLATE
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Termination of Template Processing.');
 
         $processor->process();
     }

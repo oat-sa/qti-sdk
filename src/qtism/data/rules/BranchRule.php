@@ -130,7 +130,7 @@ class BranchRule extends QtiComponent implements Rule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -138,7 +138,7 @@ class BranchRule extends QtiComponent implements Rule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

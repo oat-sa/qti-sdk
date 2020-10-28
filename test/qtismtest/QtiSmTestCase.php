@@ -11,6 +11,7 @@ use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
@@ -19,6 +20,9 @@ use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 
+/**
+ * Class QtiSmTestCase
+ */
 abstract class QtiSmTestCase extends TestCase
 {
     /**
@@ -97,6 +101,10 @@ abstract class QtiSmTestCase extends TestCase
         $this->outputFileSystem = $filesystem;
     }
 
+    /**
+     * @param string $version
+     * @return MarshallerFactory
+     */
     public function getMarshallerFactory($version = '2.1')
     {
         if (Version::compare($version, '2.0.0', '==') === true) {
@@ -124,7 +132,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     public static function samplesDir()
     {
-        return dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
+        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'samples' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -174,7 +182,7 @@ abstract class QtiSmTestCase extends TestCase
      * @param string $xmlString A string containing XML markup
      * @return DOMElement The according DOMElement;
      */
-    public static function createDOMElement($xmlString)
+    public function createDOMElement($xmlString)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML($xmlString);
@@ -187,7 +195,7 @@ abstract class QtiSmTestCase extends TestCase
      *
      * @param string $date A date
      * @param string $tz A timezone name.
-     * @return Date
+     * @return DateTime
      */
     public static function createDate($date, $tz = 'UTC')
     {
@@ -200,10 +208,11 @@ abstract class QtiSmTestCase extends TestCase
      * @param string $xmlString An XML String to transform in a QtiComponent object.
      * @param string $version A QTI version rule the creation of the component.
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createComponentFromXml($xmlString, $version = '2.1.0')
     {
-        $element = QtiSmTestCase::createDOMElement($xmlString);
+        $element = $this->createDOMElement($xmlString);
         $factory = $this->getMarshallerFactory($version);
         $marshaller = $factory->createMarshaller($element);
         return $marshaller->unmarshall($element);

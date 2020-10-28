@@ -47,7 +47,7 @@ class StringMatchQtiPLRenderer extends AbstractQtiPLRenderer
         $attributes['caseSensitive'] = strtolower(var_export($something->isCaseSensitive(), true));
 
         if ($something->mustSubstring()) {
-            $attributes['substring'] = "true";
+            $attributes['substring'] = 'true';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

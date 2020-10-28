@@ -37,7 +37,7 @@ class Time
      *
      * @param DateTime $time1
      * @param DateTime $time2
-     * @return integer a number of seconds.
+     * @return int a number of seconds.
      */
     public static function timeDiffSeconds(DateTime $time1, DateTime $time2)
     {
@@ -50,7 +50,7 @@ class Time
      * Get the total number of seconds a given date $interval represents.
      *
      * @param DateInterval $interval
-     * @return integer
+     * @return int
      */
     public static function totalSeconds(DateInterval $interval)
     {

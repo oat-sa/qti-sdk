@@ -94,7 +94,7 @@ class AssessmentSectionRef extends SectionPart
     }
 
     /**
-     * @see \qtism\data\SectionPart::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

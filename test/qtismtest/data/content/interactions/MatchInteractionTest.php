@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\interactions\MatchInteraction;
 use qtism\data\content\interactions\SimpleAssociableChoice;
 use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
@@ -9,6 +10,9 @@ use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\interactions\SimpleMatchSetCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MatchInteractionTest
+ */
 class MatchInteractionTest extends QtiSmTestCase
 {
     public function testSetShuffleWrongType()
@@ -24,10 +28,8 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'shuffle' argument must be a boolean value, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'shuffle' argument must be a boolean value, 'string' given.");
 
         $matchInteraction->setShuffle('true');
     }
@@ -45,10 +47,8 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'maxAssociations' argument must be a positive (>= 0) integer, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'maxAssociations' argument must be a positive (>= 0) integer, 'string' given.");
 
         $matchInteraction->setMaxAssociations('true');
     }
@@ -66,10 +66,8 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'minAssociations' argument must be a positive (>= 0) integer, 'string' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minAssociations' argument must be a positive (>= 0) integer, 'string' given.");
 
         $matchInteraction->setMinAssociations('true');
     }
@@ -87,10 +85,8 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.");
 
         $matchInteraction->setMaxAssociations(3);
         $matchInteraction->setMinAssociations(4);
@@ -116,10 +112,8 @@ class MatchInteractionTest extends QtiSmTestCase
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "A MatchInteraction object must be composed of exactly two SimpleMatchSet objects."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.');
 
         $matchInteraction = new MatchInteraction(
             'RESPONSE',

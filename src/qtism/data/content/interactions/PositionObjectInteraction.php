@@ -68,7 +68,7 @@ class PositionObjectInteraction extends Interaction
      * If maxChoices is 0 there is no limit. If maxChoices is greater than 1 (or 0)
      * then the interaction must be bound to a response with multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 0;
@@ -83,7 +83,7 @@ class PositionObjectInteraction extends Interaction
      *
      * If $minChoices is negative it means that no minChoices is specifed.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = 0;
@@ -138,7 +138,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Whether the PositionObjectInteraction has a centerPoint.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCenterPoint()
     {
@@ -148,12 +148,12 @@ class PositionObjectInteraction extends Interaction
     /**
      * Set the maximum number of positions (on the stage) that the image can be placed.
      *
-     * @param integer $maxChoices A positive (>= 0) integer.
+     * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -164,7 +164,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Get the maximum number of positions (on the stage) that the image can be placed.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxChoices()
     {
@@ -175,7 +175,7 @@ class PositionObjectInteraction extends Interaction
      * Set the minimum number of positions that the image must be placed to form a valid response
      * to the interaction.
      *
-     * @param integer $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
+     * @param int $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
     public function setMinChoices($minChoices)
@@ -197,7 +197,7 @@ class PositionObjectInteraction extends Interaction
      * Get the minimum number of positions that the image must be placed to form a valid response
      * to the interaction.
      *
-     * @return integer A strictly positive integer or a negative integer which specifies there is no 'minChoices'.
+     * @return int A strictly positive integer or a negative integer which specifies there is no 'minChoices'.
      */
     public function getMinChoices()
     {
@@ -207,7 +207,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * Whether or not a value is defined for the minChoices attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinChoices()
     {
@@ -235,7 +235,7 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
     {
@@ -247,7 +247,7 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -255,7 +255,7 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

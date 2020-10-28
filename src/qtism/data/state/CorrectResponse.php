@@ -86,7 +86,7 @@ class CorrectResponse extends QtiComponent
      */
     public function setInterpretation($interpretation)
     {
-        if (gettype($interpretation) === 'string') {
+        if (is_string($interpretation)) {
             $this->interpretation = $interpretation;
         } else {
             $msg = "Interpretation must be a string, '" . gettype($interpretation) . "' given.";
@@ -115,13 +115,13 @@ class CorrectResponse extends QtiComponent
         if (count($values) > 0) {
             $this->values = $values;
         } else {
-            $msg = "Values must contain at lease one Value.";
+            $msg = 'Values must contain at lease one Value.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -129,7 +129,7 @@ class CorrectResponse extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

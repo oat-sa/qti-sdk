@@ -98,7 +98,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      */
     public function setTitle($title)
     {
-        if (is_string($title) === true) {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "The 'title' argument must be a string, '" . gettype($title) . "' given.";
@@ -116,11 +116,17 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
         return $this->title;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'infoControl';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         return new QtiComponentCollection($this->getContent()->getArrayCopy());

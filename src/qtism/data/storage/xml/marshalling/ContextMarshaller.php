@@ -41,6 +41,7 @@ class ContextMarshaller extends Marshaller
      *
      * @param QtiComponent $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException If an error occurs during the marshalling process.
      */
     protected function marshall(QtiComponent $component)
@@ -67,7 +68,8 @@ class ContextMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI context element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return Context A QtiComponent object.
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -75,7 +77,7 @@ class ContextMarshaller extends Marshaller
             ? new QtiIdentifier($element->getAttribute('sourcedId'))
             : null;
 
-        $sessionIdentifierElements = self::getChildElementsByTagName($element, 'sessionIdentifier');
+        $sessionIdentifierElements = $this->getChildElementsByTagName($element, 'sessionIdentifier');
         if (!empty($sessionIdentifierElements)) {
             $sessionIdentifiers = [];
             foreach ($sessionIdentifierElements as $sessionIdentifierElement) {

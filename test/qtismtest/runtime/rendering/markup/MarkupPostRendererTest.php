@@ -5,11 +5,17 @@ namespace qtismtest\runtime\rendering\markup;
 use DOMDocument;
 use qtism\runtime\rendering\markup\MarkupPostRenderer;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rendering\RenderingException;
 
+/**
+ * Class MarkupPostRendererTest
+ */
 class MarkupPostRendererTest extends QtiSmTestCase
 {
     /**
      * @dataProvider xmlDeclarationCleanUpProvider
+     * @param string $relativeUri
+     * @throws RenderingException
      */
     public function testXmlDeclarationCleanUp($relativeUri)
     {
@@ -28,6 +34,9 @@ class MarkupPostRendererTest extends QtiSmTestCase
         $this->assertTrue(mb_strpos($output, '<itemBody', 0, 'UTF-8') === 0);
     }
 
+    /**
+     * @return array
+     */
     public function xmlDeclarationCleanUpProvider()
     {
         return [
@@ -42,7 +51,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
 
     public function testNoDocumentElement()
     {
-        $this->setExpectedException('qtism\\runtime\\rendering\\RenderingException');
+        $this->expectException(RenderingException::class);
 
         $doc = new DOMDocument('1.0', 'UTF-8');
         $renderer = new MarkupPostRenderer();

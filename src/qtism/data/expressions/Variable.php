@@ -57,7 +57,7 @@ use qtism\common\utils\Format;
  * same assessmentItemRef (through the use of selection withReplacement) is taken from
  * the last instance submitted if submission is simultaneous, otherwise it is undefined.
  */
-class Variable extends Expression implements Pure
+class Variable extends Expression
 {
     /**
      * QTI Identifier of the variable.
@@ -156,7 +156,7 @@ class Variable extends Expression implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -166,9 +166,7 @@ class Variable extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

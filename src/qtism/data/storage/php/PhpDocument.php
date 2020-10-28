@@ -25,10 +25,13 @@ namespace qtism\data\storage\php;
 
 use Exception;
 use qtism\common\beans\Bean;
+use qtism\common\beans\BeanException;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
+use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentTest;
@@ -40,10 +43,12 @@ use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
+use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
 use qtism\data\storage\php\Utils as PhpUtils;
+use ReflectionException;
 use SplStack;
 
 /**
@@ -57,8 +62,40 @@ class PhpDocument extends QtiDocument
      *
      * @param string $url A URL (Uniform Resource Locator) describing where to save the document.
      * @throws PhpStorageException If an error occurs while saving.
+     * @throws ReflectionException
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws StreamAccessException
+     * @throws PhpMarshallingException
      */
     public function save($url)
+    {
+        $stream = $this->transformToPhp();
+
+        $exists = file_exists($url);
+        $written = @file_put_contents($url, $stream->getBinary());
+
+        if ($written === false) {
+            throw new PhpStorageException("File located at '${url}' could not be written.");
+        }
+
+        if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
+            opcache_invalidate($url, true);
+        }
+    }
+
+    /**
+     * Convert components to php source
+     *
+     * @return MemoryStream
+     * @throws BeanException
+     * @throws MemoryStreamException
+     * @throws PhpMarshallingException
+     * @throws PhpStorageException
+     * @throws ReflectionException
+     * @throws StreamAccessException
+     */
+    protected function transformToPhp()
     {
         $stack = new SplStack();
         $stack->push($this->getDocumentComponent());
@@ -92,7 +129,8 @@ class PhpDocument extends QtiDocument
                 $getters = array_reverse(array_merge($bodyGetters->getArrayCopy(), $ctorGetters->getArrayCopy()));
 
                 foreach ($getters as $getter) {
-                    $stack->push(call_user_func([$component, $getter->getName()]));
+                    $getterName = $getter->getName();
+                    $stack->push($component->$getterName());
                 }
             } elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
                 // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
@@ -129,7 +167,7 @@ class PhpDocument extends QtiDocument
                 // Leaf node (QtiDatatype or PHP scalar (including the null value)).
                 $marshaller = new PhpScalarMarshaller($ctx, $component);
                 $marshaller->marshall();
-            } elseif (is_array($component) === true) {
+            } elseif (is_array($component)) {
                 // Leaf node array.
                 $marshaller = new PhpArrayMarshaller($ctx, $component);
                 $marshaller->marshall();
@@ -139,16 +177,7 @@ class PhpDocument extends QtiDocument
             }
         }
 
-        $exists = file_exists($url);
-        $written = @file_put_contents($url, $stream->getBinary());
-
-        if ($written === false) {
-            throw new PhpStorageException("File located at '${url}' could not be written.");
-        }
-
-        if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
-            opcache_invalidate($url, true);
-        }
+        return $stream;
     }
 
     /**
@@ -170,25 +199,29 @@ class PhpDocument extends QtiDocument
             $this->setDocumentComponent($rootcomponent);
             $this->setUrl($url);
         } catch (Exception $e) {
-            $msg = "A PHP Runtime Error occured while executing the PHP source code representing the document to be loaded at '${url}'.";
+            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg, PhpStorageException::UNKNOWN, $e);
         }
     }
 
+    /**
+     * @param $object
+     * @return string
+     */
     protected static function getBaseImplementation($object)
     {
         if ($object instanceof ExtendedAssessmentTest) {
-            return "qtism\\data\\ExtendedAssessmentTest";
+            return ExtendedAssessmentTest::class;
         } elseif ($object instanceof AssessmentTest) {
-            return "qtism\\data\\AssessmentTest";
+            return AssessmentTest::class;
         } elseif ($object instanceof AssessmentItem) {
-            return "qtism\\data\\AssessmentItem";
+            return AssessmentItem::class;
         } elseif ($object instanceof ResponseProcessing) {
-            return "qtism\\data\\processing\\ResponseProcessing";
+            return ResponseProcessing::class;
         } elseif ($object instanceof ExtendedAssessmentSection) {
-            return 'qtism\\data\\ExtendedAssessmentSection';
+            return ExtendedAssessmentSection::class;
         } elseif ($object instanceof AssessmentSection) {
-            return "qtism\\data\\AssessmentSection";
+            return AssessmentSection::class;
         } else {
             return get_class($object);
         }

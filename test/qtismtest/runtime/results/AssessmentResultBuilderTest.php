@@ -33,6 +33,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\results\AssessmentResultBuilder;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentResultBuilderTest
+ */
 class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testBasic()

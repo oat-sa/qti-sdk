@@ -41,7 +41,7 @@ class PositionObjectInteractionCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof PositionObjectInteraction) {
-            $msg = "PositionObjectInteractionCollection objects only accept to store PositionObjectInteraction objects.";
+            $msg = 'PositionObjectInteractionCollection objects only accept to store PositionObjectInteraction objects.';
             throw new InvalidArgumentException($msg);
         }
     }

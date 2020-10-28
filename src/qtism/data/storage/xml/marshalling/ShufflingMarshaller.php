@@ -38,6 +38,8 @@ class ShufflingMarshaller extends Marshaller
      *
      * @param QtiComponent $component A Shuffling object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -57,6 +59,7 @@ class ShufflingMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A ShufflingGroup object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -67,19 +70,17 @@ class ShufflingMarshaller extends Marshaller
             if (($c = count($shufflingGroupElts)) === 0) {
                 $msg = "A 'shuffling' element must contain at least 1 'shufflingGroup' element. None given.";
                 throw new UnmarshallingException($msg, $element);
+            } elseif ($c > 2) {
+                $msg = "A 'shuffling' element must contain at most 2 'shufflingGroup' elements. ${c} given.";
+                throw new UnmarshallingException($msg, $element);
             } else {
-                if ($c > 2) {
-                    $msg = "A 'shuffling' element must contain at most 2 'shufflingGroup' elements. ${c} given.";
-                    throw new UnmarshallingException($msg, $element);
-                } else {
-                    $shufflingGroups = new ShufflingGroupCollection();
-                    for ($i = 0; $i < $c; $i++) {
-                        $marshaller = $this->getMarshallerFactory()->createMarshaller($shufflingGroupElts[$i]);
-                        $shufflingGroups[] = $marshaller->unmarshall($shufflingGroupElts[$i]);
-                    }
-
-                    return new Shuffling($responseIdentifier, $shufflingGroups);
+                $shufflingGroups = new ShufflingGroupCollection();
+                for ($i = 0; $i < $c; $i++) {
+                    $marshaller = $this->getMarshallerFactory()->createMarshaller($shufflingGroupElts[$i]);
+                    $shufflingGroups[] = $marshaller->unmarshall($shufflingGroupElts[$i]);
                 }
+
+                return new Shuffling($responseIdentifier, $shufflingGroups);
             }
         } else {
             $msg = "The mandatory attribute 'responseIdentifier' is missing from element '" . $element->localName . "'.";
@@ -88,7 +89,7 @@ class ShufflingMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

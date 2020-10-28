@@ -42,6 +42,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param QtiComponent $component An OutcomeDeclaration object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -105,6 +107,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An OutcomeDeclaration object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
@@ -123,7 +126,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             }
 
             // deal with views.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($views = $this->getDOMElementAttributeAs($element, 'view')) != null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($views = $this->getDOMElementAttributeAs($element, 'view')) !== null) {
                 $viewCollection = new ViewCollection();
                 foreach (explode("\x20", $views) as $viewName) {
                     $viewCollection[] = View::getConstantByName($viewName);
@@ -157,7 +160,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
                 $object->setMasteryValue($masteryValue);
             }
 
-            if (($externalScored = static::getDOMElementAttributeAs($element, 'externalScored')) !== null) {
+            if (($externalScored = $this->getDOMElementAttributeAs($element, 'externalScored')) !== null) {
                 $object->setExternalScored(ExternalScored::getConstantByName($externalScored));
             }
 
@@ -181,13 +184,13 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
 
             return $object;
         } catch (InvalidArgumentException $e) {
-            $msg = "An unexpected error occured while unmarshalling the outcomeDeclaration.";
+            $msg = 'An unexpected error occurred while unmarshalling the outcomeDeclaration.';
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

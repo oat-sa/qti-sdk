@@ -49,7 +49,7 @@ abstract class AbstractSessionManager
     /**
      * Create a new AbstractSessionManager object.
      *
-     * @param FileManager A FileManager object.
+     * @param FileManager $fileManager A FileManager object.
      */
     public function __construct(FileManager $fileManager)
     {
@@ -81,7 +81,7 @@ abstract class AbstractSessionManager
      *
      * @param AssessmentTest $test The AssessmentTest definition.
      * @param Route $route (optional) The Route to be taken.
-     * @param integer $config (optional) The configuration of the AssessmentTestSession object.
+     * @param int $config (optional) The configuration of the AssessmentTestSession object.
      *
      * @return AssessmentTestSession An AssessmentTestSession object.
      */
@@ -94,8 +94,8 @@ abstract class AbstractSessionManager
      * Create an AssessmentItemSession object.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration $submissionMode.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration $submissionMode.
      *
      * @return AssessmentItemSession
      */
@@ -109,7 +109,7 @@ abstract class AbstractSessionManager
      *
      * @param AssessmentTest $test
      * @param Route $route
-     * @param integer $config (optional) The configuration of the AssessmentTestSession object.
+     * @param int $config (optional) The configuration of the AssessmentTestSession object.
      * @return AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
     abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0);
@@ -118,8 +118,8 @@ abstract class AbstractSessionManager
      * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.
      *
      * @param IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @param int $navigationMode A value from the NavigationMode enumeration.
+     * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @return AssessmentItemSession A freshly instantiated AssessmentItemSession.
      */
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
@@ -134,7 +134,7 @@ abstract class AbstractSessionManager
      */
     protected function getRoute(AssessmentTest $test, Route $route = null)
     {
-        return (is_null($route) === true) ? $this->createRoute($test) : $route;
+        return $route ?? $this->createRoute($test);
     }
 
     /**

@@ -15,17 +15,27 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\tests\Utils as TestUtils;
 use qtismtest\QtiSmTestCase;
+use RuntimeException;
 
+/**
+ * Class TestUtilsTest
+ */
 class TestUtilsTest extends QtiSmTestCase
 {
     /**
      * @dataProvider isResponseValidProvider
+     * @param $expected
+     * @param QtiDatatype|null $response
+     * @param ResponseValidityConstraint $constraint
      */
-    public function testIsResponseValid($expected, QtiDatatype $response = null, ResponseValidityConstraint $constraint)
+    public function testIsResponseValid($expected, $response, ResponseValidityConstraint $constraint)
     {
         $this->assertEquals($expected, TestUtils::isResponseValid($response, $constraint));
     }
 
+    /**
+     * @return array
+     */
     public function isResponseValidProvider()
     {
         $tests = [
@@ -102,7 +112,8 @@ class TestUtilsTest extends QtiSmTestCase
 
     public function testIsResponseValidRuntimeException()
     {
-        $this->setExpectedException('\\RuntimeException', "PCRE Engine error");
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('PCRE Engine internal error');
 
         $valid = TestUtils::isResponseValid(
             new QtiString('checkme'),

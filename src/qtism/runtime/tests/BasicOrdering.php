@@ -29,7 +29,7 @@ namespace qtism\runtime\tests;
 class BasicOrdering extends AbstractOrdering
 {
     /**
-     * @see \qtism\runtime\tests\AbstractOrdering::order()
+     * @return SelectableRouteCollection
      */
     public function order()
     {

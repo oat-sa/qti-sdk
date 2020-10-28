@@ -2,18 +2,23 @@
 
 namespace qtismtest\data\state;
 
+use InvalidArgumentException;
 use qtism\data\state\AssociationValidityConstraint;
 use qtism\data\state\AssociationValidityConstraintCollection;
 use qtism\data\state\ResponseValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ResponseValidityConstraintTest
+ */
 class ResponseValidityConstraintTest extends QtiSmTestCase
 {
     /**
      * @dataProvider successfulInstantiationBasicProvider
      *
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
+     * @param string $patternMask
      */
     public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '')
     {
@@ -24,6 +29,9 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
         $this->assertEquals($patternMask, $responseValidityConstraint->getPatternMask());
     }
 
+    /**
+     * @return array
+     */
     public function successfulInstantiationBasicProvider()
     {
         return [
@@ -40,16 +48,21 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      * @dataProvider unsuccessfulInstantiationProvider
      *
      * @param string $responseIdentifier
-     * @param integer $minConstraint
-     * @param integer $maxConstraint
+     * @param int $minConstraint
+     * @param int $maxConstraint
      * @param string $msg
+     * @param string $patternMask
      */
     public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')
     {
-        $this->setExpectedException('\\InvalidArgumentException', $msg);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
         $responseValidityConstraint = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
     }
 
+    /**
+     * @return array
+     */
     public function unsuccessfulInstantiationProvider()
     {
         return [

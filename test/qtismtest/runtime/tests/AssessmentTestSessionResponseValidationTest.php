@@ -15,6 +15,9 @@ use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionResponseValidationTest
+ */
 class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testValidateResponseValidateSkippingAllowedLinearIndividual()

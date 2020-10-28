@@ -42,10 +42,10 @@ class Utils
      * @param State $context A State object from where values will be retrieved prior to formatting, depending on the $identifier argument.
      * @param string $identifier The identifier of the variable to be printed.
      * @param string $format The ISO 9899 format string (see printf).
-     * @param boolean $powerForm Render float values in 'e' or 'E' format.
-     * @param integer|string $base The number base to use when formatting integer variables (can be a variable reference).
-     * @param integer|string $index The index to use when displaying ordered cardinality variables (can be a variable reference).
-     * @param integer $delimiter The delimiter to use between values when displaying ordered, multiple, or record cardinality variables.
+     * @param bool $powerForm Render float values in 'e' or 'E' format.
+     * @param int|string $base The number base to use when formatting integer variables (can be a variable reference).
+     * @param int|string $index The index to use when displaying ordered cardinality variables (can be a variable reference).
+     * @param string $delimiter The delimiter to use between values when displaying ordered, multiple, or record cardinality variables.
      * @param string $field The field specifier to use when displaying variables of record cardinality.
      * @param string $mappingIndicator The mapping indicator to use between field name and field value when displaying record cardinality variables.
      * @return string The formatted variable or an error message.
@@ -69,7 +69,7 @@ class Utils
         } catch (Exception $e) {
             $previous = $e->getMessage();
 
-            return "qtism\\runtime\\rendering\\markup\\Utils::printVariable() method threw an unexpected exception:\n${previous}.";
+            return self::class . "::printVariable() method threw an unexpected exception:\n$previous.";
         }
     }
 }

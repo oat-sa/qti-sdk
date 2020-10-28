@@ -24,7 +24,6 @@
 namespace qtism\common\utils;
 
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * A utility class focusing on Reflection.
@@ -39,12 +38,11 @@ class Reflection
      * @param ReflectionClass $class
      * @param array $args
      * @return mixed An instance of $class
-     * @throws ReflectionException
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
     public static function newInstance(ReflectionClass $class, $args = [])
     {
-        if (empty($args) === true) {
+        if (empty($args)) {
             $fqName = $class->getName();
 
             return new $fqName();
@@ -65,16 +63,16 @@ class Reflection
      * + \my\A -> A
      *
      * @param mixed $object An object or a fully qualified class name.
-     * @return boolean|string A short class name or false if $object is not an object nor a string.
+     * @return bool|string A short class name or false if $object is not an object nor a string.
      */
     public static function shortClassName($object)
     {
         $shortClassName = false;
 
-        if (is_object($object) === true) {
+        if (is_object($object)) {
             $parts = explode("\\", get_class($object));
             $shortClassName = array_pop($parts);
-        } elseif (is_string($object) === true && empty($object) === false) {
+        } elseif (is_string($object) && empty($object) === false) {
             $parts = explode("\\", $object);
             $shortClassName = array_pop($parts);
         }
@@ -89,12 +87,12 @@ class Reflection
      *
      * @param mixed $object The object you want to know it is an instance of $className.
      * @param string $className A class name. It can be fully qualified.
-     * @return boolean
+     * @return bool
      */
     public static function isInstanceOf($object, $className)
     {
         $givenType = get_class($object);
 
-        return $givenType === $className || is_subclass_of($givenType, $className) === true || in_array($className, class_implements($givenType)) === true;
+        return $givenType === $className || is_subclass_of($givenType, $className) === true || in_array($className, class_implements($givenType));
     }
 }

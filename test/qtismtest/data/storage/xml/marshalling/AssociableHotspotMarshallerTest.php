@@ -9,7 +9,11 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class AssociableHotspotMarshallerTest
+ */
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -80,7 +84,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
+        $this->assertInstanceOf(AssociableHotspot::class, $component);
 
         $this->assertEquals('hotspot1', $component->getIdentifier());
         $this->assertEquals(QtiShape::RECT, $component->getShape());
@@ -99,10 +103,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMin="1" id="my-hot"/>
 	    ');
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'"
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'matchMax' is missing from element 'associableHotspot'");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
@@ -156,7 +158,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
+        $this->assertInstanceOf(AssociableHotspot::class, $component);
 
         $this->assertEquals('hotspot1', $component->getIdentifier());
         $this->assertEquals(QtiShape::RECT, $component->getShape());

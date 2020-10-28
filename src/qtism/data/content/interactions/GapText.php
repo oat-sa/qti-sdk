@@ -47,7 +47,7 @@ class GapText extends GapChoice
      * Create a new GapText object.
      *
      * @param string $identifier The identifier of the GapText.
-     * @param integer $matchMax The matchMax attribute.
+     * @param int $matchMax The matchMax attribute.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
@@ -91,7 +91,7 @@ class GapText extends GapChoice
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

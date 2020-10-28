@@ -7,6 +7,9 @@ use qtism\runtime\rendering\markup\xhtml\TextRunRenderer;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TextRunRendererTest
+ */
 class TextRunRendererTest extends QtiSmTestCase
 {
     public function testRender()

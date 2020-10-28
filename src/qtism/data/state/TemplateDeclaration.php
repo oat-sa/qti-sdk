@@ -46,7 +46,7 @@ class TemplateDeclaration extends VariableDeclaration
      * value should be substituted for object parameter values that match its name.
      * See param for more information.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $paramVariable = false;
@@ -58,11 +58,19 @@ class TemplateDeclaration extends VariableDeclaration
      * be substituted for identifiers that match its name in MathML expressions.
      * See Combining Template Variables and MathML for more information.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $mathVariable = false;
 
+    /**
+     * TemplateDeclaration constructor.
+     *
+     * @param $identifier
+     * @param int $baseType
+     * @param int $cardinality
+     * @param DefaultValue|null $defaultValue
+     */
     public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
@@ -72,12 +80,12 @@ class TemplateDeclaration extends VariableDeclaration
      * Set whether or not the template variable's value should be substituted for
      * object parameters.
      *
-     * @param boolean $paramVariable A boolean value.
+     * @param bool $paramVariable A boolean value.
      * @throws InvalidArgumentException If $paramVariable is not a boolean value.
      */
     public function setParamVariable($paramVariable)
     {
-        if (is_bool($paramVariable) === true) {
+        if (is_bool($paramVariable)) {
             $this->paramVariable = $paramVariable;
         } else {
             $msg = "The 'paramVariable' argument must be a boolean value, '" . gettype($paramVariable) . "' given.";
@@ -89,7 +97,7 @@ class TemplateDeclaration extends VariableDeclaration
      * Lets you know whether or not the template variable's value should be substituted for
      * object parameters.
      *
-     * @return boolean
+     * @return bool
      */
     public function isParamVariable()
     {
@@ -100,12 +108,12 @@ class TemplateDeclaration extends VariableDeclaration
      * Set whether or not the template variable's value should be substituted for identifiers
      * that match its name in MathML.
      *
-     * @param boolean $mathVariable A boolean value.
+     * @param bool $mathVariable A boolean value.
      * @throws InvalidArgumentException If $mathVariable is not a boolean value.
      */
     public function setMathVariable($mathVariable)
     {
-        if (is_bool($mathVariable) === true) {
+        if (is_bool($mathVariable)) {
             $this->mathVariable = $mathVariable;
         } else {
             $msg = "The 'mathVariable' argument must be a boolean value, '" . gettype($mathVariable) . "' given.";
@@ -117,7 +125,7 @@ class TemplateDeclaration extends VariableDeclaration
      * Lets you know whether or not the template variable's value should be substitued for identifiers
      * that match its name in MathML.
      *
-     * @return boolean
+     * @return bool
      */
     public function isMathVariable()
     {
@@ -125,7 +133,7 @@ class TemplateDeclaration extends VariableDeclaration
     }
 
     /**
-     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

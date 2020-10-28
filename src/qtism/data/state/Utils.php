@@ -43,7 +43,7 @@ class Utils
      * can be built from the given $interaction object.
      *
      * @param Interaction $interaction
-     * @return Shuffling|boolean
+     * @return Shuffling|bool
      */
     public static function createShufflingFromInteraction(Interaction $interaction)
     {
@@ -60,7 +60,7 @@ class Utils
 
         $returnValue = false;
 
-        if (in_array($className, $shufflableInteractions) === true && $interaction->mustShuffle() === true) {
+        if (in_array($className, $shufflableInteractions) && $interaction->mustShuffle() === true) {
             if ($className === 'choiceInteraction' || $className === 'orderInteraction') {
                 $choices = $interaction->getComponentsByClassName('simpleChoice');
                 $groups[] = ['identifiers' => [], 'fixed' => []];

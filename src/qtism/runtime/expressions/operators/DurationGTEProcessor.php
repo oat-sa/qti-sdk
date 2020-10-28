@@ -56,12 +56,12 @@ class DurationGTEProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The DurationGTE operator only accepts operands with a single cardinality.";
+            $msg = 'The DurationGTE operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyDuration() === false) {
-            $msg = "The DurationGTE operator only accepts operands with a duration baseType.";
+            $msg = 'The DurationGTE operator only accepts operands with a duration baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -69,7 +69,7 @@ class DurationGTEProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

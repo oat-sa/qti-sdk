@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\processing;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -10,6 +11,9 @@ use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\processing\TemplateProcessingEngine;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateProcessingEngineTest
+ */
 class TemplateProcessingEngineTest extends QtiSmTestCase
 {
     public function testWrongInput()
@@ -19,10 +23,8 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
                 <exitTest/>
             </outcomeProcessing>
         ');
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            'The TemplateProcessing class only accepts TemplateProcessing objects to be executed.'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The TemplateProcessing class only accepts TemplateProcessing objects to be executed.');
         $templateProcessing = new TemplateProcessingEngine($component);
     }
 

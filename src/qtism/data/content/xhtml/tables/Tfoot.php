@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\tables;
 
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The Tfoot XHTML class.
@@ -66,7 +67,7 @@ class Tfoot extends BodyElement
         if (count($content) > 0) {
             $this->content = $content;
         } else {
-            $msg = "A Tfoot object must be composed of at least 1 Tr object, none given.";
+            $msg = 'A Tfoot object must be composed of at least 1 Tr object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -82,7 +83,7 @@ class Tfoot extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return TrCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -90,7 +91,7 @@ class Tfoot extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -51,6 +51,9 @@ class OperatorBaseType extends BaseType
      */
     const SAME = 14;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         $values = BaseType::asArray();

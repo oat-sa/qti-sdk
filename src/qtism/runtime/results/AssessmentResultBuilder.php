@@ -24,6 +24,7 @@
 namespace qtism\runtime\results;
 
 use DateTime;
+use Exception;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\AssessmentItemRef;
 use qtism\data\results\AssessmentResult;
@@ -46,6 +47,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
      * Build Result
      *
      * @return AssessmentResult
+     * @throws Exception
      */
     public function buildResult()
     {

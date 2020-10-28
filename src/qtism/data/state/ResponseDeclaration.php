@@ -181,7 +181,7 @@ class ResponseDeclaration extends VariableDeclaration
     }
 
     /**
-     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -189,7 +189,7 @@ class ResponseDeclaration extends VariableDeclaration
     }
 
     /**
-     * @see \qtism\data\state\VariableDeclaration::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

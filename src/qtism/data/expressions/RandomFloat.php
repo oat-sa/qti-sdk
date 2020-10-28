@@ -31,7 +31,7 @@ use qtism\common\utils\Format;
  *
  * Selects a random float from the specified range [min,max].
  */
-class RandomFloat extends Expression implements Pure
+class RandomFloat extends Expression
 {
     /**
      * The min attribute value.
@@ -114,7 +114,7 @@ class RandomFloat extends Expression implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -124,9 +124,7 @@ class RandomFloat extends Expression implements Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

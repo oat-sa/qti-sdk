@@ -53,16 +53,13 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
     }
 
     /**
-     * @see \qtism\data\ExternalQtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'include';
     }
 
-    /**
-     * @see \qtism\data\ExternalQtiComponent::buildTargetNamespace()
-     */
     protected function buildTargetNamespace()
     {
         $this->setTargetNamespace('http://www.w3.org/2001/XInclude');

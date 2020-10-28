@@ -30,7 +30,6 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\runtime\common\VariableCollection;
 
 /**
  * Class ItemResult
@@ -102,7 +101,7 @@ class ItemResult extends QtiComponent
      *
      * Multiplicity [0,*]
      *
-     * @var VariableCollection
+     * @var ItemVariableCollection
      */
     protected $itemVariables;
 
@@ -120,7 +119,7 @@ class ItemResult extends QtiComponent
      *
      * @param QtiIdentifier $identifier
      * @param DateTime $datestamp
-     * @param integer $sessionStatus
+     * @param int $sessionStatus
      * @param ItemVariableCollection|null $itemVariables
      * @param QtiString|null $candidateComment
      * @param QtiInteger|null $sequenceIndex
@@ -239,7 +238,7 @@ class ItemResult extends QtiComponent
      */
     public function hasItemVariables()
     {
-        return !is_null($this->itemVariables);
+        return $this->itemVariables !== null;
     }
 
     /**
@@ -271,7 +270,7 @@ class ItemResult extends QtiComponent
      */
     public function hasSequenceIndex()
     {
-        return !is_null($this->sequenceIndex);
+        return $this->sequenceIndex !== null;
     }
 
     /**
@@ -332,6 +331,6 @@ class ItemResult extends QtiComponent
      */
     public function hasCandidateComment()
     {
-        return !is_null($this->candidateComment);
+        return $this->candidateComment !== null;
     }
 }

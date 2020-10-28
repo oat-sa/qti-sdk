@@ -12,6 +12,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtismtest\QtiSmAssessmentItemTestCase;
 
+/**
+ * Class AssessmentItemSessionTemplateTest
+ */
 class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
 {
     public function testAssigningScoresAndCorrectResponses()

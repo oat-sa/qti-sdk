@@ -85,7 +85,7 @@ class Blockquote extends SimpleBlock
     /**
      * Whether or not a value is defined for the cite attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCite()
     {
@@ -93,7 +93,7 @@ class Blockquote extends SimpleBlock
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

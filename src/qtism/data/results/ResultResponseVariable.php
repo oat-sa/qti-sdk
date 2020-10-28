@@ -165,7 +165,7 @@ class ResultResponseVariable extends ItemVariable
      */
     public function hasCorrectResponse()
     {
-        return !is_null($this->correctResponse);
+        return $this->correctResponse !== null;
     }
 
     /**
@@ -197,6 +197,6 @@ class ResultResponseVariable extends ItemVariable
      */
     public function hasChoiceSequence()
     {
-        return !is_null($this->choiceSequence);
+        return $this->choiceSequence !== null;
     }
 }

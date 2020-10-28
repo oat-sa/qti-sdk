@@ -37,7 +37,7 @@ use RuntimeException;
 class Utils
 {
     /**
-     * Wheter or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
+     * Whether or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
      *
      * Min and Max constraints will be checked first, followed by the patternMask check.
      *
@@ -52,14 +52,14 @@ class Utils
      *
      * @param QtiDatatype $response
      * @param ResponseValidityConstraint $constraint
-     * @return boolean
-     * @throws RuntimeException If An error occured while validating a patternMask.
+     * @return bool
+     * @throws RuntimeException If An error occurred while validating a patternMask.
      */
     public static function isResponseValid(QtiDatatype $response = null, ResponseValidityConstraint $constraint)
     {
         $min = $constraint->getMinConstraint();
         $max = $constraint->getMaxConstraint();
-        $cardinality = (is_null($response) === true) ? Cardinality::SINGLE : $response->getCardinality();
+        $cardinality = ($response === null) ? Cardinality::SINGLE : $response->getCardinality();
 
         if (($isNull = RuntimeUtils::isNull($response)) === true) {
             $count = 0;
@@ -98,7 +98,7 @@ class Utils
         }
 
         // Associations check...
-        if (is_null($response) === false && $cardinality !== Cardinality::RECORD && ($response->getBaseType() === BaseType::PAIR || $response->getBaseType() === BaseType::DIRECTED_PAIR)) {
+        if ($response !== null && $cardinality !== Cardinality::RECORD && ($response->getBaseType() === BaseType::PAIR || $response->getBaseType() === BaseType::DIRECTED_PAIR)) {
             $toCheck = ($cardinality === Cardinality::SINGLE) ? [$response] : $response->getArrayCopy();
 
             foreach ($constraint->getAssociationValidityConstraints() as $associationConstraint) {

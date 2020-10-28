@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
 
 /**
@@ -46,7 +47,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the string interaction is bound to a numeric response variable then the base attribute
      * must be used to set the number base in which to interpret the value entered by the candidate.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $base = 10;
@@ -71,7 +72,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var integer|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLength;
@@ -114,7 +115,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * to control the maximum number of separate strings accepted from the candidate. When
      * multiple strings are accepted, expectedLength applies to each string.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxStrings = -1;
@@ -130,7 +131,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * non-empty string to form a valid response. More complex constraints on the form of
      * the string can be controlled with the patternMask attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minStrings = 0;
@@ -143,7 +144,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Engine should use the value of this attribute to set the size of the response box,
      * where applicable. This is not a validity constraint.
      *
-     * @var integer|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLines;
@@ -156,7 +157,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * interpreted by response processing engines and also controls the way it should be
      * captured in the delivery engine.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $format = TextFormat::PLAIN;
@@ -180,12 +181,12 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the interaction is bound to a numeric response variable, get the number base in which
      * to interpret the value entered by the candidate.
      *
-     * @param integer $base A positive (>= 0) integer.
+     * @param int $base A positive (>= 0) integer.
      * @throws InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base)
     {
-        if (is_int($base) === true && $base >= 0) {
+        if (is_int($base) && $base >= 0) {
             $this->base = $base;
         } else {
             $msg = "The 'base' argument must be a positive (>= 0) integer value, '" . gettype($base) . "' given.";
@@ -197,7 +198,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the interaction is bound to a numeric response variable, get the number base in which
      * to interpret the value entered by the candidate.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getBase()
     {
@@ -214,7 +215,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setStringIdentifier($stringIdentifier)
     {
-        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
+        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier))) {
             $this->stringIdentifier = $stringIdentifier;
         } else {
             $msg = "The 'stringIdentifier' argument must be a valid QTI identifier or an empty string, '" . $stringIdentifier . "' given.";
@@ -237,7 +238,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Whether a value is defined for the stringIdentifier attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasStringIdentifier()
     {
@@ -248,8 +249,8 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected overall length of its
      * response. A null value unsets expectedLength.
      *
-     * @param integer|null $expectedLength A non-negative integer (>=0) or null to unset expectedLength.
-     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer (>= 0) nor null.
+     * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
+     * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength)
     {
@@ -258,7 +259,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
                 ? $expectedLength
                 : gettype($expectedLength);
 
-            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLength" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -266,10 +267,10 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * Get the hint to the candidate about the expected overall length of its response. 
+     * Get the hint to the candidate about the expected overall length of its response.
      * A null return means that no value is defined for the expectedLength attribute.
      *
-     * @return integer|null A non-negative integer (>= 0) or null if undefined.
+     * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLength()
     {
@@ -279,7 +280,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Whether a value is defined for the expectedLength attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasExpectedLength()
     {
@@ -295,7 +296,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setPatternMask($patternMask)
     {
-        if (is_string($patternMask) === true) {
+        if (is_string($patternMask)) {
             $this->patternMask = $patternMask;
         } else {
             $msg = "The 'patternMask' argument must be a string value, '" . gettype($patternMask) . "' given.";
@@ -318,7 +319,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Whether a value is defined for the patternMask attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPatternMask()
     {
@@ -334,7 +335,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function setPlaceholderText($placeholderText)
     {
-        if (is_string($placeholderText) === true) {
+        if (is_string($placeholderText)) {
             $this->placeholderText = $placeholderText;
         } else {
             $msg = "The 'placeholderText' argument must be a string value, '" . gettype($placeholderText) . "' given.";
@@ -356,7 +357,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Whether a value is defined for the placeholderText attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPlaceholderText()
     {
@@ -367,12 +368,12 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the interaction is bound to a numeric response variable, get the number of separate strings
      * accepted from the candidate. If $maxStrings is -1, it means no value is defined for the attribute.
      *
-     * @param integer $maxStrings A strictly positive (> 0) integer or -1.
+     * @param int $maxStrings A strictly positive (> 0) integer or -1.
      * @throws InvalidArgumentException If $maxStrings is not a strictly positive integer nor -1.
      */
     public function setMaxStrings($maxStrings)
     {
-        if (is_int($maxStrings) === true && ($maxStrings > 0 || $maxStrings === -1)) {
+        if (is_int($maxStrings) && ($maxStrings > 0 || $maxStrings === -1)) {
             $this->maxStrings = $maxStrings;
         } else {
             $msg = "The 'maxStrings' argument must be a strictly positive (> 0) integer or -1, '" . gettype($maxStrings) . "' given.";
@@ -384,7 +385,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the interaction is bound to a numeric response variable, get the number of separate strings
      * accepted from the candidate. If the returned value is -1, it means no value is defined for the attribute.
      *
-     * @return integer A strictly positive (> 0) integer or -1.
+     * @return int A strictly positive (> 0) integer or -1.
      */
     public function getMaxStrings()
     {
@@ -394,7 +395,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Whether a value for the maxStrings attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxStrings()
     {
@@ -420,7 +421,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Get the minimum separate (non-empty) strings required from the candidate.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinStrings()
     {
@@ -431,8 +432,8 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected number of lines of its
      * response. A null value unsets expectedLines.
      *
-     * @param integer|null $expectedLines A non-negative integer (>= 0) or null.
-     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer (>= 0) nor null.
+     * @param int|null $expectedLines A non-negative integer (>= 0) or null.
+     * @throws InvalidArgumentException If $expectedLines is not a non-negative integer nor null.
      */
     public function setExpectedLines($expectedLines)
     {
@@ -441,7 +442,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
                 ? $expectedLines
                 : gettype($expectedLines);
 
-            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0), "' . $given . '" given.';
+            $msg = 'The "expectedLines" argument must be a non-negative integer (>= 0) or null, "' . $given . '" given.';
             throw new InvalidArgumentException($msg);
         }
 
@@ -452,7 +453,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Get the hint to the candidate as to the expected number of lines of input required.
      * A null return means that no value is defined for the expectedLines attribute.
      *
-     * @return integer|null A non-negative integer (>= 0) or null if undefined.
+     * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
     public function getExpectedLines()
     {
@@ -462,7 +463,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Whether a value for the expectedLines attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasExpectedLines()
     {
@@ -472,12 +473,12 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Set the format of the text entered by the candidate.
      *
-     * @param integer $format A value from the TextFormat enumeration.
+     * @param int $format A value from the TextFormat enumeration.
      * @throws InvalidArgumentException If $format is not a value from the TextFormat enumeration.
      */
     public function setFormat($format)
     {
-        if (in_array($format, TextFormat::asArray()) === true) {
+        if (in_array($format, TextFormat::asArray())) {
             $this->format = $format;
         } else {
             $msg = "The 'format' argument must be a value from the TextFormat enumeration, '" . gettype($format) . "' given.";
@@ -488,7 +489,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Get the format of the text entered by the candidate.
      *
-     * @return integer A value from the TextFormat enumeration.
+     * @return int A value from the TextFormat enumeration.
      */
     public function getFormat()
     {
@@ -496,7 +497,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
     {
@@ -509,7 +510,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -517,7 +518,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

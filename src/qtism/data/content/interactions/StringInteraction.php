@@ -46,7 +46,7 @@ interface StringInteraction
     /**
      * Set the base attribute of the StringInteraction.
      *
-     * @param integer $base A positive (>= 0) integer.
+     * @param int $base A positive (>= 0) integer.
      * @throws InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base);
@@ -54,7 +54,7 @@ interface StringInteraction
     /**
      * Get the base attribute of the StringInteraction.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getBase();
 
@@ -78,7 +78,7 @@ interface StringInteraction
     /**
      * Whether a value for the stringIdentifier attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasStringIdentifier();
 
@@ -95,14 +95,14 @@ interface StringInteraction
      * Get the expectedLength attribute of the StringInteraction. If the returned value
      * is -1 it means that no expectedLength is defined.
      *
-     * @return integer A strictly positive (> 0) integer or -1.
+     * @return int A strictly positive (> 0) integer or -1.
      */
     public function getExpectedLength();
 
     /**
      * Whether a value is defined for the expectedLength attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasExpectedLength();
 
@@ -126,7 +126,7 @@ interface StringInteraction
     /**
      * Whether a value for the patternMask attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPatternMask();
 
@@ -150,7 +150,7 @@ interface StringInteraction
     /**
      * Whether a value is defined for the placeholderText attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPlaceholderText();
 }

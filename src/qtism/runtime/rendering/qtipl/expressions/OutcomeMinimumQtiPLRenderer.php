@@ -45,22 +45,22 @@ class OutcomeMinimumQtiPLRenderer extends AbstractQtiPLRenderer
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
 
-        if ($something->getSectionIdentifier() != "") {
-            $attributes['sectionIdentifier'] = "\"" . $something->getSectionIdentifier() . "\"";
+        if ($something->getSectionIdentifier() != '') {
+            $attributes['sectionIdentifier'] = '"' . $something->getSectionIdentifier() . '"';
         }
 
-        if ($something->getIncludeCategories() != "") {
-            $attributes['includeCategory'] = "\"" . $something->getIncludeCategories() . "\"";
+        if ($something->getIncludeCategories() != '') {
+            $attributes['includeCategory'] = '"' . $something->getIncludeCategories() . '"';
         }
 
-        if ($something->getExcludeCategories() != "") {
-            $attributes['excludeCategory'] = "\"" . $something->getExcludeCategories() . "\"";
+        if ($something->getExcludeCategories() != '') {
+            $attributes['excludeCategory'] = '"' . $something->getExcludeCategories() . '"';
         }
 
-        $attributes['outcomeIdentifier'] = "\"" . $something->getOutcomeIdentifier() . "\"";
+        $attributes['outcomeIdentifier'] = '"' . $something->getOutcomeIdentifier() . '"';
 
-        if ($something->getWeightIdentifier() != "") {
-            $attributes['weightIdentifier'] = "\"" . $something->getWeightIdentifier() . "\"";
+        if ($something->getWeightIdentifier() != '') {
+            $attributes['weightIdentifier'] = '"' . $something->getWeightIdentifier() . '"';
         }
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

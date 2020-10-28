@@ -61,8 +61,6 @@ class LocalFileResolver extends FileResolver
             throw new ResolutionException($msg);
         }
 
-        $href = $baseDir . '/' . ltrim($url, '/');
-
-        return $href;
+        return $baseDir . '/' . ltrim($url, '/');
     }
 }

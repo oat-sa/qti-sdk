@@ -29,12 +29,12 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\runtime\expressions\ExpressionProcessingException;
+use qtism\data\rules\SetCorrectResponse;
 
 /**
  * From IMS QTI:
  *
  * The response variable to have its correct value set.
- *
  */
 class SetCorrectResponseProcessor extends RuleProcessor
 {
@@ -58,7 +58,7 @@ class SetCorrectResponseProcessor extends RuleProcessor
 
         $var = $state->getVariable($variableIdentifier);
 
-        if (is_null($var) === true) {
+        if ($var === null) {
             $msg = "No variable with identifier '${variableIdentifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof ResponseVariable) {
@@ -77,16 +77,16 @@ class SetCorrectResponseProcessor extends RuleProcessor
             $msg = "Unable to set value ${val} to variable '${variableIdentifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         } catch (ExpressionProcessingException $e) {
-            $msg = "An error occured while processing the expression bound with the 'SetCorrectResponse' rule.";
+            $msg = "An error occurred while processing the expression bound with the 'SetCorrectResponse' rule.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
         }
     }
 
     /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     * @return string
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\SetCorrectResponse';
+        return SetCorrectResponse::class;
     }
 }

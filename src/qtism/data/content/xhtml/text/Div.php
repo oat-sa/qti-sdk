@@ -113,7 +113,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\content\Flow::getXmlBase()
+     * @return string
      */
     public function getXmlBase()
     {
@@ -121,7 +121,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
+     * @return bool
      */
     public function hasXmlBase()
     {
@@ -129,7 +129,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

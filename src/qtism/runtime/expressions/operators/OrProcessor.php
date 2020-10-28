@@ -23,9 +23,9 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\OrOperator;
+use qtism\runtime\common\Container;
 
 /**
  * The OrProcessor class aims at processing OrOperator QTI Data Model Expression objects.
@@ -55,19 +55,15 @@ class OrProcessor extends OperatorProcessor
 
         foreach ($operands as $op) {
             if ($op instanceof Container) {
-                $msg = "The Or Expression only accept operands with single cardinality.";
+                $msg = 'The Or Expression only accept operands with single cardinality.';
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
             } elseif ($op === null) {
                 continue;
-            } else {
-                if (!$op instanceof QtiBoolean) {
-                    $msg = "The Or Expression only accept operands with boolean baseType.";
-                    throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-                } else {
-                    if ($op->getValue() !== false) {
-                        $allFalse = false;
-                    }
-                }
+            } elseif (!$op instanceof QtiBoolean) {
+                $msg = 'The Or Expression only accept operands with boolean baseType.';
+                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+            } elseif ($op->getValue() !== false) {
+                $allFalse = false;
             }
         }
 
@@ -85,7 +81,7 @@ class OrProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

@@ -44,7 +44,6 @@ use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 class ExpressionEngine extends AbstractEngine
 {
     /**
-     *
      * The expression trail.
      *
      * @var array
@@ -68,7 +67,7 @@ class ExpressionEngine extends AbstractEngine
     /**
      * The OperatorProcessorFactory object.
      *
-     * @var OperatorProcessingException
+     * @var OperatorProcessorFactory
      */
     private $operatorProcessorFactory;
 
@@ -106,7 +105,7 @@ class ExpressionEngine extends AbstractEngine
         if ($expression instanceof Expression) {
             parent::setComponent($expression);
         } else {
-            $msg = "The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed.";
+            $msg = 'The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -194,7 +193,7 @@ class ExpressionEngine extends AbstractEngine
      * Whether a given $expression object is already marked as explored.
      *
      * @param Expression $expression An Expression object.
-     * @return boolean Whether $expression is marked as explored.
+     * @return bool Whether $expression is marked as explored.
      */
     protected function isMarked(Expression $expression)
     {

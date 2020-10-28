@@ -34,6 +34,7 @@ class TemplateDefaultCollection extends QtiComponentCollection
     /**
      * Check if a given $value is an instance of TemplateDefault.
      *
+     * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of TemplateDefault.
      */
     protected function checkType($value)

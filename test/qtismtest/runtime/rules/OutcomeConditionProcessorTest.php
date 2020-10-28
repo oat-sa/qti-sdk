@@ -2,24 +2,30 @@
 
 namespace qtismtest\runtime\rules;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\OutcomeConditionProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeConditionProcessorTest
+ */
 class OutcomeConditionProcessorTest extends QtiSmTestCase
 {
     /**
      * @dataProvider testOutcomeConditionComplexProvider
      *
-     * @param integer $t
-     * @param integer $tt
+     * @param int $t
+     * @param int $tt
      * @param string $expectedX
      * @param string $expectedY
      * @param string $expectedZ
+     * @throws MarshallerNotFoundException
      */
     public function testOutcomeConditionComplex($t, $tt, $expectedX, $expectedY, $expectedZ)
     {
@@ -95,6 +101,10 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
         $this->check($expectedZ, $state['z']);
     }
 
+    /**
+     * @param $expected
+     * @param $value
+     */
     protected function check($expected, $value)
     {
         if ($expected === null) {
@@ -120,10 +130,13 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
 			</responseCondition>
 		');
 
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $engine = new OutcomeConditionProcessor($rule);
     }
 
+    /**
+     * @return array
+     */
     public function testOutcomeConditionComplexProvider()
     {
         return [

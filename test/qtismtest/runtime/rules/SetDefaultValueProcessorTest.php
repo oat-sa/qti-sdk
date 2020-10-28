@@ -13,6 +13,9 @@ use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetDefaultValueProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetDefaultValueProcessorTest
+ */
 class SetDefaultValueProcessorTest extends QtiSmTestCase
 {
     public function testDefaultValueOnResponseSimple()
@@ -31,7 +34,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $state->getVariable('RESPONSE')->getDefaultValue());
+        $this->assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getDefaultValue());
         $this->assertEquals('there', $state->getVariable('RESPONSE')->getDefaultValue()->getValue());
     }
 
@@ -66,9 +69,9 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $state = new State();
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "No variable with identifier 'RESPONSE' to be set in the current state.",
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("No variable with identifier 'RESPONSE' to be set in the current state.");
+        $this->expectExceptionCode(
             RuleProcessingException::NONEXISTENT_VARIABLE
         );
 
@@ -88,9 +91,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $state = new State([$response]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException'
-        );
+        $this->expectException(RuleProcessingException::class);
 
         $processor->process();
     }

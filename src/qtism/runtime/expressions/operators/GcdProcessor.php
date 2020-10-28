@@ -47,7 +47,7 @@ class GcdProcessor extends OperatorProcessor
     /**
      * Process the Gcd operator.
      *
-     * @return QtiInteger The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
+     * @return QtiInteger|null The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
     public function process()
@@ -59,12 +59,12 @@ class GcdProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Gcd operator only accepts operands with a cardinality of single, multiple or ordered.";
+            $msg = 'The Gcd operator only accepts operands with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyInteger() === false) {
-            $msg = "The Gcd operator only accepts operands with an integer baseType.";
+            $msg = 'The Gcd operator only accepts operands with an integer baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
@@ -117,7 +117,7 @@ class GcdProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

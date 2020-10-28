@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\tables;
 
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The XHTML colgroup class.
@@ -43,7 +44,7 @@ class Colgroup extends BodyElement
     /**
      * The span attribute.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $span = 1;
@@ -67,7 +68,7 @@ class Colgroup extends BodyElement
     /**
      * Set the value for the span attribute.
      *
-     * @param integer $span A strictly positive (> 0) integer.
+     * @param int $span A strictly positive (> 0) integer.
      * @throws InvalidArgumentException If $span is not a strictly positive integer.
      */
     public function setSpan($span)
@@ -83,7 +84,7 @@ class Colgroup extends BodyElement
     /**
      * Get the value for the span attribute.
      *
-     * @return integer A strictly positive (> 0) integer.
+     * @return int A strictly positive (> 0) integer.
      */
     public function getSpan()
     {
@@ -91,7 +92,7 @@ class Colgroup extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return ColCollection|QtiComponentCollection
      */
     public function getComponents()
     {
@@ -119,7 +120,7 @@ class Colgroup extends BodyElement
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

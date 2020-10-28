@@ -76,13 +76,13 @@ class MatchTable extends LookupTable
         if (count($matchTableEntries) > 0) {
             $this->matchTableEntries = $matchTableEntries;
         } else {
-            $msg = "A MatchTable object must contain at least one MatchTableEntry object.";
+            $msg = 'A MatchTable object must contain at least one MatchTableEntry object.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -90,7 +90,7 @@ class MatchTable extends LookupTable
     }
 
     /**
-     * @inheritDoc
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

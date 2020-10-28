@@ -116,7 +116,7 @@ class ExtendedAssessmentTest extends AssessmentTest
     }
 
     /**
-     * @see \qtism\data\AssessmentTest::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

@@ -10,6 +10,9 @@ use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SimpleMatchSetMarshallerTest
+ */
 class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -39,7 +42,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\SimpleMatchSet', $component);
+        $this->assertInstanceOf(SimpleMatchSet::class, $component);
 
         $choices = $component->getSimpleAssociableChoices();
         $this->assertEquals(2, count($choices));

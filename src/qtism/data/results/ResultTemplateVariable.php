@@ -111,6 +111,6 @@ class ResultTemplateVariable extends ItemVariable
      */
     public function hasValues()
     {
-        return !is_null($this->values);
+        return $this->values !== null;
     }
 }

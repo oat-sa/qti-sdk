@@ -4,9 +4,13 @@ namespace qtismtest\common\utils;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 use qtism\common\utils\Time as TimeUtils;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TimeTest
+ */
 class TimeTest extends QtiSmTestCase
 {
     /**
@@ -14,7 +18,7 @@ class TimeTest extends QtiSmTestCase
      *
      * @param DateTime $time1
      * @param DateTime $time2
-     * @param integer $expectedSeconds
+     * @param int $expectedSeconds
      */
     public function testTimeDiffSeconds(DateTime $time1, DateTime $time2, $expectedSeconds)
     {
@@ -28,6 +32,10 @@ class TimeTest extends QtiSmTestCase
         $this->assertEquals('2014-07-15 14:56:20', $utcTime->format('Y-m-d H:i:s'));
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function timeDiffSecondsProvider()
     {
         $tz = new DateTimeZone('UTC');

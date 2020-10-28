@@ -74,8 +74,8 @@ class ResponseVariable extends Variable
      * the appropriate container will be instantiated interally as the $value argument.
      *
      * @param string $identifier An identifier for the variable.
-     * @param integer $cardinality A value from the Cardinality enumeration.
-     * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
+     * @param int $cardinality A value from the Cardinality enumeration.
+     * @param int $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
@@ -92,14 +92,16 @@ class ResponseVariable extends Variable
      */
     public function setCorrectResponse(QtiDatatype $correctResponse = null)
     {
-        if ($correctResponse === null) {
-            $this->correctResponse = null;
-        } elseif (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true && Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse) === true) {
-            $this->correctResponse = $correctResponse;
-        } else {
-            $msg = "The given correct response is not compliant with the associated response variable.";
+        if ($correctResponse !== null 
+            && (!Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse)
+                || !Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse)
+            )
+        ) {
+            $msg = 'The given correct response is not compliant with the associated response variable.';
             throw new InvalidArgumentException($msg);
         }
+
+        $this->correctResponse = $correctResponse;
     }
 
     /**
@@ -115,11 +117,11 @@ class ResponseVariable extends Variable
     /**
      * Whether the ResponseVariable holds a CorrectResponse object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCorrectResponse()
     {
-        return is_null($this->getCorrectResponse()) === false;
+        return $this->getCorrectResponse() !== null;
     }
 
     /**
@@ -166,7 +168,7 @@ class ResponseVariable extends Variable
      * Whether the value of the ResponseVariable matches its
      * correct response.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCorrect()
     {
@@ -210,14 +212,11 @@ class ResponseVariable extends Variable
 
             return $variable;
         } else {
-            $msg = "ResponseVariable::createFromDataModel only accept 'qtism\\data\\state\\ResponseDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
+            $msg = "ResponseVariable::createFromDataModel only accepts '" . ResponseDeclaration::class . "' objects, '" . get_class($variableDeclaration) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
 
-    /**
-     * @see \qtism\runtime\common\Variable::__clone()
-     */
     public function __clone()
     {
         parent::__clone();

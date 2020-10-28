@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 use qtism\data\ExternalQtiComponent;
 use qtism\data\IExternal;
 use RuntimeException;
@@ -44,7 +43,7 @@ use RuntimeException;
  * are encouraged to share information about their solutions to help determine
  * the best way to achieve this type of processing.
  */
-class CustomOperator extends Operator implements IExternal, Pure
+class CustomOperator extends Operator implements IExternal
 {
     /**
      * @var string
@@ -102,7 +101,7 @@ class CustomOperator extends Operator implements IExternal, Pure
      */
     public function setClass($class)
     {
-        if (is_string($class) === true) {
+        if (is_string($class)) {
             $this->class = $class;
         } else {
             $msg = "The 'class' argument must be a string, '" . gettype($class) . "' given.";
@@ -123,7 +122,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Whether or not a value is defined for the class attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass()
     {
@@ -139,7 +138,7 @@ class CustomOperator extends Operator implements IExternal, Pure
      */
     public function setDefinition($definition)
     {
-        if (is_string($definition) === true) {
+        if (is_string($definition)) {
             $this->definition = $definition;
         } else {
             $msg = "The 'definition' argument must be a string, '" . gettype($definition) . "' given.";
@@ -161,7 +160,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Whether or not a value is defined for the definition attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefinition()
     {
@@ -224,7 +223,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -234,9 +233,7 @@ class CustomOperator extends Operator implements IExternal, Pure
     /**
      * Checks whether this expression is pure.
      *
-     * @see https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
+     * @return bool
      */
     public function isPure()
     {

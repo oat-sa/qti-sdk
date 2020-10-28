@@ -45,7 +45,6 @@ class HotspotMarshaller extends Marshaller
      *
      * @param QtiComponent $component A HotspotChoice/AssociableHotspot object.
      * @return DOMElement The according DOMElement object.
-     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -79,10 +78,8 @@ class HotspotMarshaller extends Marshaller
                 }
             }
 
-            if (Version::compare($version, '2.1.0', '>=') === true) {
-                if ($component->getMatchMin() !== 0) {
-                    $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
-                }
+            if ((Version::compare($version, '2.1.0', '>=') === true) && $component->getMatchMin() !== 0) {
+                $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
             }
         }
 
@@ -126,13 +123,11 @@ class HotspotMarshaller extends Marshaller
 
                     if ($element->localName === 'hotspotChoice') {
                         $component = new HotspotChoice($identifier, $shape, $coords);
+                    } elseif (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+                        $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
                     } else {
-                        if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
-                            $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
-                        } else {
-                            $msg = "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'.";
-                            throw new UnmarshallingException($msg, $element);
-                        }
+                        $msg = "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'.";
+                        throw new UnmarshallingException($msg, $element);
                     }
 
                     if (($hotspotLabel = $this->getDOMElementAttributeAs($element, 'hotspotLabel')) !== null) {
@@ -157,16 +152,12 @@ class HotspotMarshaller extends Marshaller
                     }
 
                     if ($element->localName === 'associableHotspot') {
-                        if (Version::compare($version, '2.1.0', '<') === true) {
-                            if (($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
-                                $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
-                            }
+                        if ((Version::compare($version, '2.1.0', '<') === true) && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                            $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                         }
 
-                        if (Version::compare($version, '2.1.0', '>=') === true) {
-                            if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
-                                $component->setMatchMin($matchMin);
-                            }
+                        if ((Version::compare($version, '2.1.0', '>=') === true) && ($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                            $component->setMatchMin($matchMin);
                         }
                     }
 
@@ -188,7 +179,7 @@ class HotspotMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

@@ -4,10 +4,16 @@ namespace qtismtest\runtime\expressions;
 
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberPresented;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\NumberPresentedProcessor;
+use qtism\runtime\tests\AssessmentItemSessionException;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class NumberPresentedProcessorTest
+ */
 class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
@@ -15,6 +21,9 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
      *
      * @param NumberPresented $expression
      * @param array $expectedResults
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
      */
     public function testNumberPresented(NumberPresented $expression, array $expectedResults)
     {
@@ -38,6 +47,9 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function numberPresentedProvider()
     {
         return [
@@ -52,6 +64,12 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return NumberPresented
+     */
     protected static function getNumberPresented($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $numberPresented = new NumberPresented();

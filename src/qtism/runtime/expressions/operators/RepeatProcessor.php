@@ -23,11 +23,11 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\Repeat;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\Utils as ExprUtils;
@@ -68,13 +68,13 @@ class RepeatProcessor extends OperatorProcessor
         $expression = $this->getExpression();
         $numberRepeats = $expression->getNumberRepeats();
 
-        if (gettype($numberRepeats) === 'string') {
+        if (is_string($numberRepeats)) {
             // Variable reference found.
             $state = $this->getState();
             $varName = ExprUtils::sanitizeVariableRef($numberRepeats);
             $varValue = $state[$varName];
 
-            if (is_null($varValue) === true) {
+            if ($varValue === null) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
             } elseif (!$varValue instanceof QtiInteger) {
@@ -95,13 +95,13 @@ class RepeatProcessor extends OperatorProcessor
 
             foreach ($operands as $operand) {
                 // If null, ignore
-                if (is_null($operand) || ($operand instanceof Container && $operand->isNull())) {
+                if ($operand === null || ($operand instanceof Container && $operand->isNull())) {
                     continue;
                 }
 
                 // Check cardinality.
                 if ($operand->getCardinality() !== Cardinality::SINGLE && $operand->getCardinality() !== Cardinality::ORDERED) {
-                    $msg = "The Repeat operator only accepts operands with a single or ordered cardinality.";
+                    $msg = 'The Repeat operator only accepts operands with a single or ordered cardinality.';
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
                 }
 
@@ -109,9 +109,9 @@ class RepeatProcessor extends OperatorProcessor
                 $currentType = RuntimeUtils::inferBaseType($operand);
 
                 if ($refType !== null && $currentType !== $refType) {
-                    $msg = "The Repeat operator only accepts operands with the same baseType.";
+                    $msg = 'The Repeat operator only accepts operands with the same baseType.';
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-                } elseif (is_null($result)) {
+                } elseif ($result === null) {
                     $refType = $currentType;
                     $result = new OrderedContainer($refType);
                 }
@@ -136,7 +136,7 @@ class RepeatProcessor extends OperatorProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

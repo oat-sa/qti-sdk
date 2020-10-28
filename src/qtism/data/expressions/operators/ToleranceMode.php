@@ -36,6 +36,9 @@ class ToleranceMode implements Enumeration
 
     const RELATIVE = 2;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -45,6 +48,10 @@ class ToleranceMode implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -66,6 +73,10 @@ class ToleranceMode implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

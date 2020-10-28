@@ -2,9 +2,13 @@
 
 namespace qtismtest\common\collections;
 
+use InvalidArgumentException;
 use qtism\common\collections\StringCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StringCollectionTest
+ */
 class StringCollectionTest extends QtiSmTestCase
 {
     /**
@@ -60,7 +64,7 @@ class StringCollectionTest extends QtiSmTestCase
     public function testAddStringWrongType()
     {
         $int = 1;
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->collection[] = $int;
     }
 
@@ -101,18 +105,16 @@ class StringCollectionTest extends QtiSmTestCase
 
     public function testAttachNotObject()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "You can only attach 'objects' into an AbstractCollection, 'string' given"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("You can only attach 'objects' into an AbstractCollection, 'string' given");
         $this->collection->attach('string');
     }
 
     public function testResetKeys()
     {
-        $this->collection[] = "string1";
-        $this->collection[] = "string2";
-        $this->collection[] = "string3";
+        $this->collection[] = 'string1';
+        $this->collection[] = 'string2';
+        $this->collection[] = 'string3';
 
         unset($this->collection[1]);
 

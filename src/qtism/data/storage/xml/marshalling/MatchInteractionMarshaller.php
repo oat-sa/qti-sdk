@@ -36,7 +36,11 @@ use qtism\data\QtiComponentCollection;
 class MatchInteractionMarshaller extends ContentMarshaller
 {
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws MarshallerNotFoundException
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -49,7 +53,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             try {
                 $component = new $fqClass($responseIdentifier, new SimpleMatchSetCollection($children->getArrayCopy()));
             } catch (InvalidArgumentException $e) {
-                $msg = "A matchInteraction element must contain exactly 2 simpleMatchSet elements, " . count($children) . "' given.";
+                $msg = 'A matchInteraction element must contain exactly 2 simpleMatchSet elements, ' . count($children) . "' given.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
@@ -97,7 +101,11 @@ class MatchInteractionMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -141,9 +149,6 @@ class MatchInteractionMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

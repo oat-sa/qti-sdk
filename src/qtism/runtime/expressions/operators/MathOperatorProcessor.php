@@ -77,7 +77,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * Process the MathOperator operator.
      *
-     * @return QtiFloat|integer|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
+     * @return QtiFloat|int|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
      */
     public function process()
     {
@@ -88,18 +88,18 @@ class MathOperatorProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The MathOperator operator only accepts operands with a single cardinality.";
+            $msg = 'The MathOperator operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The MathOperator operator only accepts operands with an integer or float baseType.";
+            $msg = 'The MathOperator operator only accepts operands with an integer or float baseType.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $qtiFuncName = MathFunctions::getNameByConstant($this->getExpression()->getName());
         $methodName = 'process' . ucfirst($qtiFuncName);
-        $result = call_user_func_array([$this, $methodName], []);
+        $result = $this->$methodName();
 
         if ($result instanceof QtiFloat && is_nan($result->getValue()) === true) {
             // outside the domain of the function.
@@ -110,7 +110,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processSin()
@@ -121,7 +120,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processCos()
@@ -132,7 +130,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processTan()
@@ -143,7 +140,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processSec()
@@ -154,7 +150,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processCsc()
@@ -165,7 +160,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat|null
      */
     protected function processCot()
@@ -182,7 +176,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAsin()
@@ -193,7 +186,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAcos()
@@ -204,7 +196,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAtan()
@@ -215,7 +206,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      * @throws OperatorProcessingException
      */
@@ -224,10 +214,10 @@ class MathOperatorProcessor extends OperatorProcessor
         $operands = $this->getOperands();
 
         if (!isset($operands[1])) {
-            $msg = "The atan2 math function of the MathOperator requires 2 operands, 1 operand given.";
+            $msg = 'The atan2 math function of the MathOperator requires 2 operands, 1 operand given.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         } elseif (count($operands) > 2) {
-            $msg = "The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.";
+            $msg = 'The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::TOO_MUCH_OPERANDS);
         }
 
@@ -238,7 +228,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processAsec()
@@ -254,7 +243,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processAcsc()
@@ -270,7 +258,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processAcot()
@@ -286,7 +273,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processSinh()
@@ -297,7 +283,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processCosh()
@@ -308,7 +293,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return QtiFloat
      */
     protected function processTanh()
@@ -319,7 +303,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processSech()
@@ -335,7 +318,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processCsch()
@@ -351,7 +333,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processCoth()
@@ -369,7 +350,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processLog()
@@ -387,7 +367,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processLn()
@@ -405,7 +384,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processExp()
@@ -425,7 +403,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processAbs()
@@ -437,7 +414,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new QtiFloat(floatval(abs($operand->getValue())));
+        return new QtiFloat((float)abs($operand->getValue()));
     }
 
     /**
@@ -462,7 +439,6 @@ class MathOperatorProcessor extends OperatorProcessor
     }
 
     /**
-     *
      * @return null|QtiFloat|QtiInteger
      */
     protected function processFloor()
@@ -478,11 +454,10 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiInteger(intval(floor($operand->getValue())));
+        return new QtiInteger((int)floor($operand->getValue()));
     }
 
     /**
-     *
      * @return null|QtiFloat|QtiInteger
      */
     protected function processCeil()
@@ -498,11 +473,10 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiInteger(intval(ceil($operand->getValue())));
+        return new QtiInteger((int)ceil($operand->getValue()));
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processToDegrees()
@@ -518,11 +492,10 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiFloat(floatval(rad2deg($operand->getValue())));
+        return new QtiFloat((float)rad2deg($operand->getValue()));
     }
 
     /**
-     *
      * @return null|QtiFloat
      */
     protected function processToRadians()
@@ -538,11 +511,11 @@ class MathOperatorProcessor extends OperatorProcessor
             return new QtiFloat(-INF);
         }
 
-        return new QtiFloat(floatval(deg2rad($operand->getValue())));
+        return new QtiFloat((float)deg2rad($operand->getValue()));
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

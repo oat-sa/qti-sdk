@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\data\rules\ExitTest;
+
 /**
  * From IMS QTI:
  *
@@ -39,15 +41,15 @@ class ExitTestProcessor extends RuleProcessor
      */
     public function process()
     {
-        $msg = "Termination of Test.";
+        $msg = 'Termination of Test.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEST);
     }
 
     /**
-     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     * @return string
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\ExitTest';
+        return ExitTest::class;
     }
 }

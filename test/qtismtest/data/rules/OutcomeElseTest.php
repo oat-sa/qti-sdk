@@ -9,6 +9,9 @@ use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OutcomeElseTest
+ */
 class OutcomeElseTest extends QtiSmTestCase
 {
     public function testGetComponents()
@@ -26,6 +29,6 @@ class OutcomeElseTest extends QtiSmTestCase
 
         $components = $outcomeElse->getComponents();
         $this->assertCount(1, $components);
-        $this->assertInstanceOf('qtism\\data\\rules\\SetOutcomeValue', $components[0]);
+        $this->assertInstanceOf(SetOutcomeValue::class, $components[0]);
     }
 }

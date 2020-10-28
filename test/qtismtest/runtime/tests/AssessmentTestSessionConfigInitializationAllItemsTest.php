@@ -6,9 +6,13 @@ use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\OrderingException;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionConfigInitializationAllItemsTest
+ */
 class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessmentTestSessionTestCase
 {
     /**
@@ -34,6 +38,9 @@ class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessm
         );
     }
 
+    /**
+     * @return array
+     */
     public function getBranchingTestCases()
     {
         return [

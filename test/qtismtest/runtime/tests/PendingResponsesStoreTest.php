@@ -13,6 +13,9 @@ use qtism\runtime\tests\PendingResponses;
 use qtism\runtime\tests\PendingResponseStore;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class PendingResponseStoreTest
+ */
 class PendingResponseStoreTest extends QtiSmTestCase
 {
     public function testPendingResponseStore()

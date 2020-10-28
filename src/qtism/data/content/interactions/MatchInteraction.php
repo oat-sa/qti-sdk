@@ -44,7 +44,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -52,7 +52,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxAssociations = 1;
@@ -60,7 +60,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minAssociations = 0;
@@ -73,6 +73,16 @@ class MatchInteraction extends BlockInteraction
      */
     private $simpleMatchSets;
 
+    /**
+     * MatchInteraction constructor.
+     *
+     * @param $responseIdentifier
+     * @param SimpleMatchSetCollection $simpleMatchSets
+     * @param string $id
+     * @param string $class
+     * @param string $lang
+     * @param string $label
+     */
     public function __construct($responseIdentifier, SimpleMatchSetCollection $simpleMatchSets, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -85,12 +95,12 @@ class MatchInteraction extends BlockInteraction
     /**
      * Set whether the delivery engine must randomize the choices.
      *
-     * @param boolean $shuffle A boolean value.
+     * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -101,7 +111,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * Whether the delivery engine must randomize the choices.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -112,12 +122,12 @@ class MatchInteraction extends BlockInteraction
      * Set the maximum number of associations that the candidate is allowed to make. If maxAssociations
      * is 0 then there is no restriction.
      *
-     * @param integer $maxAssociations A positive (>= 0) integer.
+     * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations)
     {
-        if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
+        if (is_int($maxAssociations) && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
         } else {
             $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "' given.";
@@ -129,7 +139,7 @@ class MatchInteraction extends BlockInteraction
      * Get the maximum number of associations that the candidate is allowed to make. If maxAssociations
      * is 0 then there is no restriction.
      *
-     * @return integer A positive (>= 0) integer
+     * @return int A positive (>= 0) integer
      */
     public function getMaxAssociations()
     {
@@ -140,7 +150,7 @@ class MatchInteraction extends BlockInteraction
      * Whether a restriction is imposed on the maximum number of associations a candidate
      * can make.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxAssociations()
     {
@@ -151,12 +161,12 @@ class MatchInteraction extends BlockInteraction
      * Set the minimum number of associations that the candidate is required to make. If minAssociations is 0 then
      * there is no restriction.
      *
-     * @param integer $minAssociations A positive (>= 0) integer.
+     * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or does not respect the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations)
     {
-        if (is_int($minAssociations) === true && $minAssociations >= 0) {
+        if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($this->hasMaxAssociations() === true && $minAssociations > $this->getMaxAssociations()) {
                 $msg = "The 'minAssociations' argument must be less than or equal to the limit imposed by 'maxAssociations'.";
                 throw new InvalidArgumentException($msg);
@@ -173,7 +183,7 @@ class MatchInteraction extends BlockInteraction
      * Get the minimum number of associations that the candidate is required to make. If minAssociations is 0 then
      * there is no restriction.
      *
-     * @return integer A positive (> 0) integer.
+     * @return int A positive (> 0) integer.
      */
     public function getMinAssociations()
     {
@@ -183,7 +193,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * Whether there is a minimum number of associations required.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinAssociations()
     {
@@ -202,7 +212,7 @@ class MatchInteraction extends BlockInteraction
         if (count($simpleMatchSets) === 2) {
             $this->simpleMatchSets = $simpleMatchSets;
         } else {
-            $msg = "A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.";
+            $msg = 'A MatchInteraction object must be composed of exactly two SimpleMatchSet objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -243,7 +253,7 @@ class MatchInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
     {
@@ -267,7 +277,7 @@ class MatchInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -277,7 +287,7 @@ class MatchInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

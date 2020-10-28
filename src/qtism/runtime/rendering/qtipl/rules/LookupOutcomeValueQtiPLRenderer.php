@@ -44,7 +44,7 @@ class LookupOutcomeValueQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['identifier'] = "\"" . $something->getIdentifier() . "\"";
+        $attributes['identifier'] = '"' . $something->getIdentifier() . '"';
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)
             . $renderer->writeChildElement($something->getExpression());

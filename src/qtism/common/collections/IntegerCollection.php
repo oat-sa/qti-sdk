@@ -23,7 +23,7 @@
 
 namespace qtism\common\collections;
 
-use InvalidArgumentException as InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * A collection that aims at storing integer values.

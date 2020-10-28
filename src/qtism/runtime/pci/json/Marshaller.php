@@ -24,6 +24,7 @@
 namespace qtism\runtime\pci\json;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -57,20 +58,19 @@ class Marshaller
     /**
      * Output of marshalling as an array.
      *
-     * @var integer
+     * @var int
      */
     const MARSHALL_ARRAY = 0;
 
     /**
      * Output of marshalling as JSON string.
      *
-     * @var integer
+     * @var int
      */
     const MARSHALL_JSON = 1;
 
     /**
      * Create a new JSON Marshaller object.
-     *
      */
     public function __construct()
     {
@@ -80,14 +80,14 @@ class Marshaller
      * Marshall some QTI data into JSON.
      *
      * @param State|QtiDatatype|null $data The data to be marshalled into JSON.
-     * @param integer How the output will be returned (see class constants). Default is plain JSON string.
+     * @param int How the output will be returned (see class constants). Default is plain JSON string.
      * @return string|array The JSONified data.
      * @throws InvalidArgumentException If $data has not a compliant type.
      * @throws MarshallingException If an error occurs while marshalling $data into JSON.
      */
     public function marshall($data, $output = Marshaller::MARSHALL_JSON)
     {
-        if (is_null($data) === true) {
+        if ($data === null) {
             $json = ['base' => $data];
         } elseif ($data instanceof State) {
             $json = [];
@@ -101,7 +101,7 @@ class Marshaller
             $className = get_class($this);
             $msg = "The '${className}::marshall' method only takes State, QtiDatatype and null values as arguments, '";
 
-            if (is_object($data) === true) {
+            if (is_object($data)) {
                 $msg .= get_class($data);
             } else {
                 $msg .= gettype($data);
@@ -124,7 +124,7 @@ class Marshaller
      */
     protected function marshallUnit($unit)
     {
-        if (is_null($unit) === true) {
+        if ($unit === null) {
             $json = ['base' => null];
         } elseif ($unit instanceof QtiScalar) {
             $json = $this->marshallScalar($unit);
@@ -146,7 +146,7 @@ class Marshaller
                 $jsonEntry = [];
                 $jsonEntry['name'] = $k;
 
-                if (array_key_exists('base', $data) === true) {
+                if (array_key_exists('base', $data)) {
                     // Primitive base type.
                     $jsonEntry['base'] = $data['base'];
                 } else {
@@ -167,12 +167,27 @@ class Marshaller
      * Marshall a single scalar data into a PHP datatype (that can be transformed easilly in JSON
      * later on).
      *
-     * @param null|QtiDatatype $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
+     * @param QtiDatatype|null $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
      * @return array An array representing the JSON data to be encoded later on.
      * @throws MarshallingException
      */
     protected function marshallScalar($scalar)
     {
+        if ($scalar === null) {
+            return null;
+        }
+
+        if (!$scalar instanceof QtiDatatype) {
+            $msg = sprintf("The '%s::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '%s' given.",
+                get_class($this),
+                is_object($scalar)
+                    ? get_class($scalar)
+                    : gettype($scalar)
+            );
+
+            throw new MarshallingException($msg, MarshallingException::NOT_SUPPORTED);
+        }
+
         if ($scalar instanceof QtiBoolean) {
             return $this->marshallBoolean($scalar);
         } elseif ($scalar instanceof QtiInteger) {
@@ -201,6 +216,10 @@ class Marshaller
      */
     protected function marshallComplex(QtiDatatype $complex)
     {
+        if ($complex === null) {
+            return $complex;
+        }
+
         if ($complex instanceof QtiPoint) {
             return $this->marshallPoint($complex);
         } elseif ($complex instanceof QtiDirectedPair) {
@@ -209,10 +228,19 @@ class Marshaller
             return $this->marshallPair($complex);
         } elseif ($complex instanceof QtiDuration) {
             return $this->marshallDuration($complex);
+        } elseif ($complex instanceof FileHash) {
+            return $this->marshallFileHash($complex);
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         } else {
-            throw new MarshallingException('Unknown complex type.', MarshallingException::NOT_SUPPORTED);
+            $msg = sprintf("The '%s::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '%s' given.",
+                get_class($this),
+                is_object($complex)
+                    ? get_class($complex)
+                    : gettype($complex)
+            );
+
+            throw new MarshallingException($msg, MarshallingException::NOT_SUPPORTED);
         }
     }
 
@@ -345,12 +373,34 @@ class Marshaller
      */
     protected function marshallFile(QtiFile $file)
     {
-        $data = ['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]];
+        $data = [
+            'base' => [
+                'file' => [
+                    'mime' => $file->getMimeType(),
+                    'data' => base64_encode($file->getData()),
+                ],
+            ],
+        ];
 
-        if ($file->hasFilename() === true) {
+        if ($file->hasFilename()) {
             $data['base']['file']['name'] = $file->getFilename();
         }
 
         return $data;
+    }
+
+    /**
+     * Marshall a QTI fileHash datatype into its PCI JSON Representation.
+     *
+     * @param FileHash $file
+     * @return array
+     */
+    protected function marshallFileHash(FileHash $file)
+    {
+        return [
+            'base' => [
+                FileHash::FILE_HASH_KEY => $file->jsonSerialize()
+            ],
+        ];
     }
 }

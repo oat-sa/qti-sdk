@@ -2,6 +2,8 @@
 
 namespace qtismtest\runtime\pci\json;
 
+use qtism\common\datatypes\files\FileHash;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
@@ -21,11 +23,18 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\pci\json\Unmarshaller;
+use qtism\runtime\pci\json\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 use stdClass;
 
+/**
+ * Class JsonUnmarshallerTest
+ */
 class JsonUnmarshallerTest extends QtiSmTestCase
 {
+    /**
+     * @return Unmarshaller
+     */
     protected static function createUnmarshaller()
     {
         return new Unmarshaller(new FileSystemFileManager());
@@ -36,6 +45,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      *
      * @param QtiScalar $expectedScalar
      * @param string $json
+     * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json)
     {
@@ -52,6 +63,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      *
      * @param QtiDatatype $expectedComplex
      * @param string $json
+     * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json)
     {
@@ -65,6 +78,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      *
      * @param FileSystemFile $expectedFile
      * @param string $json
+     * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     public function testUnmarshallFile(FileSystemFile $expectedFile, $json)
     {
@@ -77,11 +92,40 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $fileManager->delete($value);
     }
 
+    public function testUnmarshallFileHash()
+    {
+        $id = 'http://some.cloud.storage/path/to/file.txt';
+        $mimeType = 'text/plain';
+        $filename = 'file.txt';
+        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+
+        $expectedFile = new FileHash($id, $mimeType, $filename, $sha256);
+
+        $json = sprintf(
+            '{ "base" : { "%s" : {
+            "mime" : "%s", 
+            "data" : "%s", 
+            "name" : "%s",
+            "id" : "%s" } } }',
+            FileHash::FILE_HASH_KEY,
+            $mimeType,
+            $sha256,
+            $filename,
+            $id
+        );      
+
+        $unmarshaller = self::createUnmarshaller();
+        $value = $unmarshaller->unmarshall($json);
+        $this->assertTrue($expectedFile->equals($value));
+    }
+
     /**
      * @dataProvider unmarshallListProvider
      *
      * @param MultipleContainer $expectedContainer
      * @param string $json
+     * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     public function testUnmarshallList(MultipleContainer $expectedContainer, $json)
     {
@@ -94,6 +138,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      *
      * @param RecordContainer $expectedRecord
      * @param string $json
+     * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     public function testUnmarshallRecord(RecordContainer $expectedRecord, $json)
     {
@@ -105,21 +151,21 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @dataProvider unmarshallInvalidProvider
      *
      * @param mixed $input
+     * @throws UnmarshallingException
+     * @throws FileManagerException
      */
     public function testUnmarshallInvalid($input)
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->setExpectedException('qtism\\runtime\\pci\\json\\UnmarshallingException');
+        $this->expectException(UnmarshallingException::class);
         $unmarshaller->unmarshall($input);
     }
 
     public function testUnmarshallNoAssociative()
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->setExpectedException(
-            'qtism\\runtime\\pci\\json\\UnmarshallingException',
-            "The 'qtism\\runtime\\pci\\json\\Unmarshaller::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The '" . Unmarshaller::class . "::unmarshall' method only accepts a JSON string or a non-empty array as argument, 'boolean' given.");
         $unmarshaller->unmarshall(true);
     }
 
@@ -127,10 +173,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
 
-        $this->setExpectedException(
-            'qtism\\runtime\\pci\\json\\UnmarshallingException',
-            "Unknown QTI baseType 'unknownbasetype'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("Unknown QTI baseType 'unknownbasetype'.");
 
         $unmarshaller->unmarshall('{ "list" : { "unknownbasetype" : ["_id1", "id2", "ID3"] } }');
     }
@@ -139,10 +183,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
 
-        $this->setExpectedException(
-            'qtism\\runtime\\pci\\json\\UnmarshallingException',
-            "A value does not satisfy its baseType."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage('A value does not satisfy its baseType.');
 
         $unmarshaller->unmarshall('{ "list" : { "identifier" : [true, "id2", "ID3"] } }');
     }
@@ -174,6 +216,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $this->assertSame($response4, $state['RESPONSE4']);
     }
 
+    /**
+     * @return array
+     */
     public function unmarshallScalarProvider()
     {
         return [
@@ -191,6 +236,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function unmarshallComplexProvider()
     {
         $returnValue = [];
@@ -203,6 +251,10 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     * @throws FileManagerException
+     */
     public function unmarshallFileProvider()
     {
         $returnValue = [];
@@ -223,6 +275,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function unmarshallListProvider()
     {
         $returnValue = [];
@@ -266,6 +321,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function unmarshallRecordProvider()
     {
         $returnValue = [];
@@ -289,6 +347,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         return $returnValue;
     }
 
+    /**
+     * @return array
+     */
     public function unmarshallInvalidProvider()
     {
         return [

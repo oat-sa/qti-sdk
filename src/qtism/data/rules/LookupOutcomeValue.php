@@ -92,7 +92,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "Identifier must be a vali QTI Identifier.";
+            $msg = 'Identifier must be a vali QTI Identifier.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -118,7 +118,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -126,7 +126,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

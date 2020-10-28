@@ -9,13 +9,19 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MatchProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class MatchProcessorTest
+ */
 class MatchProcessorTest extends QtiSmTestCase
 {
     public function testScalar()
@@ -82,7 +88,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('txt1'), new QtiIdentifier('txt2')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('txt1'), new QtiString('txt2')]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -95,7 +101,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $processor = new MatchProcessor($expression, $operands);
 
         // Unfortunately, INT_OR_IDENTIFIER cannot be considered as compliant with STRING.
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor->process();
     }
 
@@ -106,7 +112,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(15);
         $operands[] = new QtiString('String!');
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -117,7 +123,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10), new QtiInteger(20), new QtiInteger(30), new QtiInteger(40)]);
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0), new QtiFloat(20.0), new QtiFloat(30.0), new QtiFloat(40.0)]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -128,7 +134,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('String!');
         $operands[] = new OrderedContainer(BaseType::FLOAT, [new QtiFloat(10.0), new QtiFloat(20.0)]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -139,7 +145,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('String!');
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('String!')]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -150,7 +156,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('String!')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('String!')]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -161,7 +167,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('String!')]);
         $operands[] = new RecordContainer(['entry1' => new QtiString('String!')]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -169,7 +175,7 @@ class MatchProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(15)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new MatchProcessor($expression, $operands);
     }
 
@@ -177,7 +183,7 @@ class MatchProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(25), new QtiInteger(25), new QtiInteger(25)]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new MatchProcessor($expression, $operands);
     }
 
@@ -199,6 +205,10 @@ class MatchProcessorTest extends QtiSmTestCase
         $this->assertSame(null, $processor->process());
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     private function createFakeExpression()
     {
         return $this->createComponentFromXml('

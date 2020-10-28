@@ -37,7 +37,7 @@ class PromptRenderer extends BodyElementRenderer
     /**
      * Create a new PromptRenderer.
      *
-     * @param AbstractMarkupRenderingEngine $renderingContext
+     * @param AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
@@ -46,7 +46,9 @@ class PromptRenderer extends BodyElementRenderer
     }
 
     /**
-     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     * @param DOMDocumentFragment $fragment
+     * @param QtiComponent $component
+     * @param string $base
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {

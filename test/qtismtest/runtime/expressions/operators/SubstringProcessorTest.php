@@ -6,11 +6,17 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SubstringProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
+/**
+ * Class SubstringProcessorTest
+ */
 class SubstringProcessorTest extends QtiSmTestCase
 {
     public function testCaseSensitive()
@@ -104,7 +110,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('10');
         $operands[] = new QtiInteger(100);
         $processor = new SubstringProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -115,7 +121,7 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('Wrong Cardinality');
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('Wrong'), new QtiString('Cardinality')]);
         $processor = new SubstringProcessor($expression, $operands);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
     }
 
@@ -123,7 +129,7 @@ class SubstringProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(false);
         $operands = new OperandsCollection([new QtiString('only 1 operand')]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new SubstringProcessor($expression, $operands);
     }
 
@@ -131,10 +137,15 @@ class SubstringProcessorTest extends QtiSmTestCase
     {
         $expression = $this->createFakeExpression(false);
         $operands = new OperandsCollection([new QtiString('exactly'), new QtiString('three'), new QtiString('operands')]);
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $processor = new SubstringProcessor($expression, $operands);
     }
 
+    /**
+     * @param bool $caseSensitive
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     public function createFakeExpression($caseSensitive = true)
     {
         $str = ($caseSensitive === true) ? 'true' : 'false';

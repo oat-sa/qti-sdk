@@ -26,7 +26,6 @@ namespace qtism\data\expressions\operators;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -39,12 +38,12 @@ use qtism\data\expressions\Pure;
  * then the result of the index operator is NULL. If n is an identifier, it is the
  * value of n at runtime that is used.
  */
-class Index extends Operator implements Pure
+class Index extends Operator
 {
     /**
      * The index to lookup.
      *
-     * @var integer|string
+     * @var int|string
      * @qtism-bean-property
      */
     private $n;
@@ -53,7 +52,7 @@ class Index extends Operator implements Pure
      * Create a new Index.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param integer $n The index to lookup. It must be an integer or a variable reference.
+     * @param int $n The index to lookup. It must be an integer or a variable reference.
      * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
      */
     public function __construct(ExpressionCollection $expressions, $n)
@@ -65,12 +64,12 @@ class Index extends Operator implements Pure
     /**
      * Set the n attribute.
      *
-     * @param integer|string $n The index to lookup. It must be an integer or a variable reference.
+     * @param int|string $n The index to lookup. It must be an integer or a variable reference.
      * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
      */
     public function setN($n)
     {
-        if (is_int($n) || (gettype($n) === 'string' && Format::isVariableRef($n))) {
+        if (is_int($n) || (is_string($n) && Format::isVariableRef($n))) {
             $this->n = $n;
         } else {
             $msg = "The n attribute must be an integer or a variable reference, '" . gettype($n) . "' given.";
@@ -81,7 +80,7 @@ class Index extends Operator implements Pure
     /**
      * Get the n attribute.
      *
-     * @return string|integer An integer or a variable reference.
+     * @return string|int An integer or a variable reference.
      */
     public function getN()
     {
@@ -89,22 +88,10 @@ class Index extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'index';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

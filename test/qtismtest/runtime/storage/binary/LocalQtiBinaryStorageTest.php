@@ -24,7 +24,13 @@ use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\QtiFile;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 
+/**
+ * Class LocalQtiBinaryStorageTest
+ */
 class LocalQtiBinaryStorageTest extends QtiSmTestCase
 {
     public function testLocalQtiBinaryStorage()
@@ -42,7 +48,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         // it is not persistent yet.
         $this->assertFalse($storage->exists($sessionId));
 
-        $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
+        $this->assertInstanceOf(AssessmentTestSession::class, $session);
         $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
 
         // The candidate begins the test session at 13:00:00.
@@ -83,7 +89,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         }
 
         // S01 -> Q01 - Correct response.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
         $this->assertSame(null, $session['Q01.RESPONSE']);
 
@@ -113,7 +119,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // After the persist, do we still have the correct scores and durations for Q01?.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
         $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
@@ -132,7 +138,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, [new QtiPair('C', 'M')]))]));
 
         // Whate about scores of Q02?
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q02.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q02.SCORE']);
         $this->assertEquals(1.0, $session['Q02.SCORE']->getValue());
 
         // Are the durations correct?
@@ -191,9 +197,14 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // What about score of Q04.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q04.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
+
+        // Check that after persist, the route position is still the same...
+        $this->assertEquals(3, $session->getRoute()->getPosition());
         $storage->persist($session);
+        $this->assertEquals(3, $session->getRoute()->getPosition());
+
         $session = $storage->retrieve($sessionId);
         $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, [new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')])));
 
@@ -363,17 +374,17 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['NCORRECTS01']);
+        $this->assertInstanceOf(QtiInteger::class, $session['NCORRECTS01']);
         $this->assertEquals(1, $session['NCORRECTS01']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['NCORRECTS02']);
+        $this->assertInstanceOf(QtiInteger::class, $session['NCORRECTS02']);
         $this->assertEquals(1, $session['NCORRECTS02']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['NCORRECTS03']);
+        $this->assertInstanceOf(QtiInteger::class, $session['NCORRECTS03']);
         $this->assertEquals(1, $session['NCORRECTS03']->getValue());
         $this->assertEquals(6, $session['NINCORRECT']->getValue());
         $this->assertEquals(6, $session['NRESPONSED']->getValue());
         $this->assertEquals(9, $session['NPRESENTED']->getValue());
         $this->assertEquals(9, $session['NSELECTED']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['PERCENT_CORRECT']);
+        $this->assertInstanceOf(QtiFloat::class, $session['PERCENT_CORRECT']);
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
 
         // -- End of test, are durations correct?
@@ -505,24 +516,24 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // Let's check the overall Assessment Test Session state.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf(QtiIdentifier::class, $session['Q01.RESPONSE']);
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
 
         $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')])));
         $this->assertEquals(4.0, $session['Q02.SCORE']->getValue());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q03.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q03.SCORE']);
         $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q04.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']);
         $this->assertEquals(0.0, $session['Q04.SCORE']->getValue());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q05.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q05.SCORE']);
         $this->assertEquals(0.0, $session['Q05.SCORE']->getValue());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q06.mySc0r3']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q06.mySc0r3']);
         $this->assertEquals(0.0, $session['Q06.mySc0r3']->getValue());
 
         $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
@@ -532,7 +543,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this->assertEquals(1.0, $session['Q07.2.SCORE']->getValue());
 
         $this->assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(30, 13)));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.3.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q07.3.SCORE']);
         $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
 
         $this->assertEquals(2, $session['NCORRECTS01']->getValue());
@@ -593,7 +604,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $filepath = self::samplesDir() . 'datatypes/file/raw/files_1.txt';
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromFile($filepath, 'text/plain', 'text.txt'))]));
         $session->moveNext();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
@@ -602,7 +613,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $storage->persist($session);
         unset($session);
         $session = $storage->retrieve($sessionId);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
@@ -612,7 +623,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $filepath = self::samplesDir() . 'datatypes/file/raw/files_2.txt';
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromFile($filepath, 'text/html'))]));
         $session->moveNext();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
         $this->assertEquals("<img src=\"/qtism/img.png\"/>\n", $session['Q02.RESPONSE']->getData());
@@ -623,12 +634,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // We now test all the collected variables.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
         $this->assertEquals("<img src=\"/qtism/img.png\"/>\n", $session['Q02.RESPONSE']->getData());
@@ -639,7 +650,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromFile($filepath, 'text/plain', 'empty.txt'))]));
         $session->moveNext();
         $this->assertFalse($session->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q02.RESPONSE']);
         $this->assertEquals('empty.txt', $session['Q03.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q03.RESPONSE']->getMimeType());
         $this->assertEquals('', $session['Q03.RESPONSE']->getData());
@@ -649,17 +660,17 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // Final big check.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
         $this->assertEquals("<img src=\"/qtism/img.png\"/>\n", $session['Q02.RESPONSE']->getData());
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf(QtiFile::class, $session['Q02.RESPONSE']);
         $this->assertEquals('empty.txt', $session['Q03.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q03.RESPONSE']->getMimeType());
         $this->assertEquals('', $session['Q03.RESPONSE']->getData());

@@ -6,12 +6,20 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
+use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\ProductProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\expressions\ExpressionProcessingException;
+use qtism\runtime\common\Processable;
+use RuntimeException;
 
+/**
+ * Class ProductProcessorTest
+ */
 class ProductProcessorTest extends QtiSmTestCase
 {
     public function testSimple()
@@ -22,7 +30,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf('qtism\\runtime\\common\\Processable', $productProcessor);
+        $this->assertInstanceOf(Processable::class, $productProcessor);
         $this->assertInstanceOf(QtiInteger::class, $result);
         $this->assertEquals(1, $result->getValue());
     }
@@ -57,7 +65,7 @@ class ProductProcessorTest extends QtiSmTestCase
     {
         $product = $this->createFakeProductComponent();
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
 
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)]);
         $productProcessor = new ProductProcessor($product, $operands);
@@ -71,7 +79,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::BOOLEAN, [new QtiBoolean(true), new QtiBoolean(false)]);
         $productProcessor = new ProductProcessor($product, $operands);
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException(RuntimeException::class);
         $result = $productProcessor->process();
     }
 
@@ -88,10 +96,14 @@ class ProductProcessorTest extends QtiSmTestCase
     {
         $product = $this->createFakeProductComponent();
         $operands = new OperandsCollection();
-        $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+        $this->expectException(ExpressionProcessingException::class);
         $productProcessor = new ProductProcessor($product, $operands);
     }
 
+    /**
+     * @return QtiComponent
+     * @throws MarshallerNotFoundException
+     */
     private function createFakeProductComponent()
     {
         return $this->createComponentFromXml('

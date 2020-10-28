@@ -11,6 +11,9 @@ use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
+/**
+ * Class AssessmentTestSessionPreConditionsTest
+ */
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testInstantiationSample1()
@@ -95,7 +98,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         // Because of the autoforward, the test is finished.
         $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $testSession['Q01.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
         $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q02.SCORE']);
         $this->assertSame(null, $testSession['Q03.SCORE']);

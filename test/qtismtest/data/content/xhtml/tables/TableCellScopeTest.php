@@ -5,13 +5,22 @@ namespace qtismtest\data\content\xhtml\tables;
 use qtism\data\content\xhtml\tables\TableCellScope;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class TableCellScopeTest
+ */
 class TableCellScopeTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return TableCellScope::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -22,6 +31,9 @@ class TableCellScopeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -32,6 +44,9 @@ class TableCellScopeTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

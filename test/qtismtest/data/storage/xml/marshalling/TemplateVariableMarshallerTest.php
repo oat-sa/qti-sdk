@@ -32,6 +32,9 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateVariableMarshallerTest
+ */
 class TemplateVariableMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()

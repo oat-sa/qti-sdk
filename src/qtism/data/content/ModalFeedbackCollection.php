@@ -40,7 +40,7 @@ class ModalFeedbackCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof ModalFeedback) {
-            $msg = "ModalFeedbackCollection only accept to store ModalFeedback objects.";
+            $msg = 'ModalFeedbackCollection only accept to store ModalFeedback objects.';
             throw new InvalidArgumentException($msg);
         }
     }

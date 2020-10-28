@@ -72,7 +72,10 @@ class GapChoiceMarshaller extends ContentMarshaller
     ];
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
@@ -87,7 +90,7 @@ class GapChoiceMarshaller extends ContentMarshaller
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
                     } else {
-                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . " given.";
+                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . ' given.';
                         throw new UnmarshallingException($msg, $element);
                     }
                 } else {
@@ -140,10 +143,8 @@ class GapChoiceMarshaller extends ContentMarshaller
                         }
                     }
                     $component->setContent($content);
-                } else {
-                    if (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
-                        $component->setObjectLabel($objectLabel);
-                    }
+                } elseif (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
+                    $component->setObjectLabel($objectLabel);
                 }
 
                 if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
@@ -164,7 +165,9 @@ class GapChoiceMarshaller extends ContentMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
@@ -198,12 +201,9 @@ class GapChoiceMarshaller extends ContentMarshaller
         foreach ($elements as $e) {
             if ($element->localName === 'gapImg') {
                 $element->appendChild($e);
-            } else {
-                // 'gapText'...
-                if (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
-                    // In QTI 2.0, only plain text is allowed...
-                    $element->appendChild($e);
-                }
+            } elseif (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
+                // In QTI 2.0, only plain text is allowed in gapText...
+                $element->appendChild($e);
             }
         }
 
@@ -217,9 +217,6 @@ class GapChoiceMarshaller extends ContentMarshaller
         return $element;
     }
 
-    /**
-     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
-     */
     protected function setLookupClasses()
     {
         $this->lookupClasses = ["qtism\\data\\content\\interactions"];

@@ -35,6 +35,9 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
 
     const REVIEW = 6;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return array_merge(
@@ -47,6 +50,10 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
         );
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -68,6 +75,10 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

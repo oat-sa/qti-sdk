@@ -81,13 +81,13 @@ class InterpolationTable extends LookupTable
         if (count($interpolationTableEntries) > 0) {
             $this->interpolationTableEntries = $interpolationTableEntries;
         } else {
-            $msg = "An InterpolationTable object must contain at least one InterpolationTableEntry object.";
+            $msg = 'An InterpolationTable object must contain at least one InterpolationTableEntry object.';
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -95,7 +95,7 @@ class InterpolationTable extends LookupTable
     }
 
     /**
-     * @inheritDoc
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

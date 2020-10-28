@@ -32,49 +32,42 @@ use Exception;
 class StorageException extends Exception
 {
     /**
-     * The error code to be used when the nature of the error is unknown. Should be used in absolute necessity. Otherwise, use the appropriate error code.
+     * The error code to be used when the nature of the error is unknown.
+     * Should be used in absolute necessity. Otherwise, use the appropriate
+     * error code.
      *
-     * @var integer
+     * @var int
      */
     const UNKNOWN = 0;
 
     /**
-     * Error code to be used when an error occurs while instantiating an AssessmentTestSession.
+     * Error code to be used when an error occurs while
+     * instantiating an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const INSTANTIATION = 1;
 
     /**
-     * Error code to use when an error occurs while persisting an AssessmentTestSession.
+     * Error code to use when an error occurs while
+     * persisting an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const PERSISTENCE = 2;
 
     /**
-     * Error code to use when an error occurs whilevretrieving an AssessmentTestSession.
+     * Error code to use when an error occurs while
+     * retrieving an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const RETRIEVAL = 3;
 
     /**
      * Error code to use when an error occurs while deleting an AssessmentTestSession.
      *
-     * @var integer
+     * @var int
      */
     const DELETION = 4;
-
-    /**
-     * Create a new StorageException instance.
-     *
-     * @param string $message A human-readable message describing the encountered error.
-     * @param integer $code A code enabling client-code to identify the cause of the error.
-     * @param Exception $previous An optional previous Exception that was thrown and catched.
-     */
-    public function __construct($message, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
 }

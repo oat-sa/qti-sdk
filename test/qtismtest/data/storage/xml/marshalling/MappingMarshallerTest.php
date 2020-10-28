@@ -3,12 +3,16 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MapEntry;
 use qtism\data\state\MapEntryCollection;
 use qtism\data\state\Mapping;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MappingMarshallerTest
+ */
 class MappingMarshallerTest extends QtiSmTestCase
 {
     public function testMarshallMinimal()
@@ -22,7 +26,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('mapping', $element->nodeName);
         $this->assertEquals($defaultValue . '', $element->getAttribute('defaultValue'));
         $this->assertEquals('', $element->getAttribute('lowerBound')); // empty
@@ -51,7 +55,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\state\\Mapping', $component);
+        $this->assertInstanceOf(Mapping::class, $component);
         $this->assertFalse($component->hasLowerBound());
         $this->assertFalse($component->hasUpperBound());
 

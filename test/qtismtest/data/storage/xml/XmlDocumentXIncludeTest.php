@@ -5,7 +5,11 @@ namespace qtismtest\data\storage\xml;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
+use ReflectionException;
 
+/**
+ * Class XmlDocumentXIncludeTest
+ */
 class XmlDocumentXIncludeTest extends QtiSmTestCase
 {
     public function testLoadAndSaveXIncludeNsInTag()
@@ -31,8 +35,12 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
     }
 
     /**
-     * @depends testLoadAndSaveXIncludeNsInTag
+     * @depends      testLoadAndSaveXIncludeNsInTag
      * @dataProvider loadAndResolveXIncludeSameBaseProvider
+     * @param string $file
+     * @param string $filesystem
+     * @throws XmlStorageException
+     * @throws ReflectionException
      */
     public function testLoadAndResolveXIncludeSameBase($file, $filesystem)
     {
@@ -67,6 +75,9 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
         $this->assertEquals('', $imgs[0]->getXmlBase());
     }
 
+    /**
+     * @return array
+     */
     public function loadAndResolveXIncludeSameBaseProvider()
     {
         return [

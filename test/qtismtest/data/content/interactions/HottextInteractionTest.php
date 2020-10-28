@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\interactions;
 
+use InvalidArgumentException;
 use qtism\data\content\BlockStaticCollection;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\interactions\HottextInteraction;
@@ -9,14 +10,15 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class HottextInteractionTest
+ */
 class HottextInteractionTest extends QtiSmTestCase
 {
     public function testCreateNoContent()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "A HottextInteraction object must be composed of at least one BlockStatic object, none given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("A HottextInteraction object must be composed of at least one BlockStatic object, none given.");
 
         new HottextInteraction('RESPONSE', new BlockStaticCollection());
     }
@@ -27,10 +29,8 @@ class HottextInteractionTest extends QtiSmTestCase
         $div->setContent(new FlowCollection([new TextRun('content...')]));
         $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'maxChoices' argument must be a positive (>= 0) integer, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'maxChoices' argument must be a positive (>= 0) integer, 'boolean' given.");
 
         $hottextInteraction->setMaxChoices(true);
     }
@@ -41,10 +41,8 @@ class HottextInteractionTest extends QtiSmTestCase
         $div->setContent(new FlowCollection([new TextRun('content...')]));
         $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'minChoices' argument must be a positive (>= 0) integer value, 'boolean' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minChoices' argument must be a positive (>= 0) integer value, 'boolean' given.");
 
         $hottextInteraction->setMinChoices(true);
     }
@@ -55,10 +53,8 @@ class HottextInteractionTest extends QtiSmTestCase
         $div->setContent(new FlowCollection([new TextRun('content...')]));
         $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'minChoices' argument must respect the limits imposed by 'maxChoices'."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'minChoices' argument must respect the limits imposed by 'maxChoices'.");
 
         $hottextInteraction->setMaxChoices(1);
         $hottextInteraction->setMinChoices(2);

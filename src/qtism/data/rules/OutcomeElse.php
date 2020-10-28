@@ -65,14 +65,20 @@ class OutcomeElse extends QtiComponent
      * Set the OutcomeRule objects to be evaluated.
      *
      * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     * @throws InvalidArgumentException If $outcomeRules is an empty collection.
      */
     public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
     {
+        if (count($outcomeRules) <= 0) {
+            $msg = 'An OutcomeElse object must be bound to at least one OutcomeRule object.';
+            throw new InvalidArgumentException($msg);
+        }
+
         $this->outcomeRules = $outcomeRules;
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -80,7 +86,7 @@ class OutcomeElse extends QtiComponent
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

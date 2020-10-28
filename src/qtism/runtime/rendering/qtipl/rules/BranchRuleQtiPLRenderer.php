@@ -44,7 +44,7 @@ class BranchRuleQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['target'] = "\"" . $something->getTarget() . "\"";
+        $attributes['target'] = '"' . $something->getTarget() . '"';
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)
             . $renderer->writeChildElement($something->getExpression());

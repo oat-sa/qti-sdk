@@ -44,7 +44,7 @@ class AssessmentSection extends SectionPart
     /**
      * If the section is visible to the candidate.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $visible = true;
@@ -52,7 +52,7 @@ class AssessmentSection extends SectionPart
     /**
      * If the items of the section (if invisible) must be kept together or not.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $keepTogether = true;
@@ -97,7 +97,7 @@ class AssessmentSection extends SectionPart
      *
      * @param string $identifier A QTI Identifier.
      * @param string $title A Title.
-     * @param boolean $visible If it is visible or not.
+     * @param bool $visible If it is visible or not.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, $title is not a string, or visible is not a boolean.
      */
     public function __construct($identifier, $title, $visible)
@@ -127,7 +127,7 @@ class AssessmentSection extends SectionPart
      */
     public function setTitle($title)
     {
-        if (gettype($title) === 'string') {
+        if (is_string($title)) {
             $this->title = $title;
         } else {
             $msg = "Title must be a string, '" . gettype($title) . "' given.";
@@ -136,9 +136,9 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-     * Wether the section is visible.
+     * Whether the section is visible.
      *
-     * @return boolean true if the section is visible, false if not.
+     * @return bool true if the section is visible, false if not.
      */
     public function isVisible()
     {
@@ -148,7 +148,7 @@ class AssessmentSection extends SectionPart
     /**
      * Set the visibility of the section.
      *
-     * @param boolean $visible true if it must be visible, false otherwise.
+     * @param bool $visible true if it must be visible, false otherwise.
      * @throws InvalidArgumentException If $visible is not a boolean.
      */
     public function setVisible($visible)
@@ -164,7 +164,7 @@ class AssessmentSection extends SectionPart
     /**
      * Inform you if the items must be kept together if the section is invisible.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustKeepTogether()
     {
@@ -174,7 +174,7 @@ class AssessmentSection extends SectionPart
     /**
      * Set if the items must be kept together if the section is invisible.
      *
-     * @param boolean $keepTogether true if the items must be kept together, false otherwise.
+     * @param bool $keepTogether true if the items must be kept together, false otherwise.
      * @throws InvalidArgumentException If $keepTogether is not a boolean.
      */
     public function setKeepTogether($keepTogether)
@@ -211,11 +211,11 @@ class AssessmentSection extends SectionPart
     /**
      * Whether the AssessmentSection holds a Selection object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSelection()
     {
-        return is_null($this->getSelection()) === false;
+        return $this->getSelection() !== null;
     }
 
     /**
@@ -242,11 +242,11 @@ class AssessmentSection extends SectionPart
     /**
      * Whether the AssessmentSection holds an Ordering object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasOrdering()
     {
-        return is_null($this->getOrdering()) === false;
+        return $this->getOrdering() !== null;
     }
 
     /**
@@ -264,7 +264,7 @@ class AssessmentSection extends SectionPart
      * Set the section rubrics to presented to the candidate with each
      * item contained by the section.
      *
-     * @param RubricBlockCollection A collection of RubricBlock objects.
+     * @param RubricBlockCollection $rubricBlocks A collection of RubricBlock objects.
      */
     public function setRubricBlocks(RubricBlockCollection $rubricBlocks)
     {
@@ -292,7 +292,7 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-     * @see \qtism\data\SectionPart::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -300,7 +300,7 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-     * @see \qtism\data\SectionPart::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {

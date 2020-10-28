@@ -75,7 +75,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     {
         $this->setOutcomeIf($outcomeIf);
         $this->setOutcomeElse($outcomeElse);
-        $this->setOutcomeElseIfs((is_null($outcomeElseIfs)) ? new OutcomeElseIfCollection() : $outcomeElseIfs);
+        $this->setOutcomeElseIfs($outcomeElseIfs ?? new OutcomeElseIfCollection());
     }
 
     /**
@@ -141,7 +141,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     /**
      * Whether or not an OutcomeElse object is defined for the outcome condition.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasOutcomeElse()
     {
@@ -149,7 +149,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
@@ -157,7 +157,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -166,7 +166,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
             $this->getOutcomeElseIfs()->getArrayCopy()
         );
 
-        if (!is_null($this->getOutcomeElse())) {
+        if ($this->getOutcomeElse() !== null) {
             $comp[] = $this->getOutcomeElse();
         }
 

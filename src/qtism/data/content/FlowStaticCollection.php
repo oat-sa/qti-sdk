@@ -40,7 +40,7 @@ class FlowStaticCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof FlowStatic) {
-            $msg = "FlowStaticCollection objects only accept to store FlowStatic objects.";
+            $msg = 'FlowStaticCollection objects only accept to store FlowStatic objects.';
             throw new InvalidArgumentException($msg);
         }
     }

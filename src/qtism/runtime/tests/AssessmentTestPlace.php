@@ -34,31 +34,34 @@ class AssessmentTestPlace implements Enumeration
     /**
      * Represents the concept of TestPart in an AssessmentTest.
      *
-     * @var integer
+     * @var int
      */
     const TEST_PART = 1;
 
     /**
      * Represents the concept of AssessmentSection in an AssessmentTest.
      *
-     * @var integer
+     * @var int
      */
     const ASSESSMENT_SECTION = 2;
 
     /**
      * Represents the concept of AssessmentItem in an AssessmentTest.
      *
-     * @var integer
+     * @var int
      */
     const ASSESSMENT_ITEM = 4;
 
     /**
      * Represents the concept of AssessmentTest (in an AssessmentTest).
      *
-     * @var integer
+     * @var int
      */
     const ASSESSMENT_TEST = 8;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -69,6 +72,10 @@ class AssessmentTestPlace implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -94,6 +101,10 @@ class AssessmentTestPlace implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

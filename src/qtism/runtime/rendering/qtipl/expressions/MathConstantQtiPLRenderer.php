@@ -45,7 +45,7 @@ class MathConstantQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['name'] = "\"" . MathEnumeration::getNameByConstant($something->getName()) . "\"";
+        $attributes['name'] = '"' . MathEnumeration::getNameByConstant($something->getName()) . '"';
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)
             . $renderer->writeChildElements();

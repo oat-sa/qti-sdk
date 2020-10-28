@@ -124,7 +124,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      */
     public function setSummary($summary)
     {
-        if (is_string($summary) === true) {
+        if (is_string($summary)) {
             $this->summary = $summary;
         } else {
             $msg = "The 'summary' argument must be a string, '" . gettype($summary) . "' given.";
@@ -144,9 +144,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Wheter a value for the summary attribute is defined.
+     * Whether a value for the summary attribute is defined.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSummary()
     {
@@ -176,9 +176,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * Wheter the Table contains a Caption object.
+     * Whether the Table contains a Caption object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCaption()
     {
@@ -249,7 +249,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether the Table contains a Thead object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasThead()
     {
@@ -280,7 +280,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Whether the Table contains a Tfoot object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTfoot()
     {
@@ -308,7 +308,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -334,7 +334,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

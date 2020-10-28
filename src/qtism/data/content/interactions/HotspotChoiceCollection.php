@@ -41,7 +41,7 @@ class HotspotChoiceCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof HotspotChoice) {
-            $msg = "HotspotChoiceCollection objects only accept to store HotspotChoice objects.";
+            $msg = 'HotspotChoiceCollection objects only accept to store HotspotChoice objects.';
             throw new InvalidArgumentException($msg);
         }
     }

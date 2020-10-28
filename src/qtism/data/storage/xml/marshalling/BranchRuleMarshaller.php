@@ -37,6 +37,8 @@ class BranchRuleMarshaller extends Marshaller
      *
      * @param QtiComponent $component A BranchRule object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -53,6 +55,7 @@ class BranchRuleMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A BranchRule object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
      */
     protected function unmarshall(DOMElement $element)
@@ -62,9 +65,7 @@ class BranchRuleMarshaller extends Marshaller
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                $object = new BranchRule($marshaller->unmarshall($expressionElt), $target);
-
-                return $object;
+                return new BranchRule($marshaller->unmarshall($expressionElt), $target);
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
@@ -76,7 +77,7 @@ class BranchRuleMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

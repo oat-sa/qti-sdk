@@ -6,6 +6,9 @@ use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\TemplateConstraintProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateConstraintProcessorTest
+ */
 class TemplateConstraintProcessorTest extends QtiSmTestCase
 {
     public function testTemplateConstraintNullResult()
@@ -17,11 +20,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 		');
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }
@@ -36,11 +36,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }
@@ -55,11 +52,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }
@@ -74,11 +68,8 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
 
         $processor = new TemplateConstraintProcessor($rule);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            'Unsatisfied Template Constraint.',
-            RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unsatisfied Template Constraint.');
 
         $processor->process();
     }

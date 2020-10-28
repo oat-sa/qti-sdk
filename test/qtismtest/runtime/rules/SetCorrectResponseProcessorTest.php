@@ -9,8 +9,12 @@ use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetCorrectResponseProcessor;
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\QtiIdentifier;
 
-class SetCorrectValueProcessorTest extends QtiSmTestCase
+/**
+ * Class SetCorrectValueProcessorTest
+ */
+class SetCorrectResponseProcessorTest extends QtiSmTestCase
 {
     public function testSetCorrectResponseSimple()
     {
@@ -26,7 +30,7 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $state->getVariable('RESPONSE')->getCorrectResponse());
+        $this->assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getCorrectResponse());
         $this->assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
     }
 
@@ -43,9 +47,9 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $state = new State([$response]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "No variable with identifier 'RESPONSEXXXX' to be set in the current state.",
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("No variable with identifier 'RESPONSEXXXX' to be set in the current state.");
+        $this->expectExceptionCode(
             RuleProcessingException::NONEXISTENT_VARIABLE
         );
 
@@ -65,9 +69,26 @@ class SetCorrectValueProcessorTest extends QtiSmTestCase
         $state = new State([$response]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException'
-        );
+        $this->expectException(RuleProcessingException::class);
+
+        $processor->process();
+    }
+
+    public function testSetCorrectResponseWrongCardinality()
+    {
+        $rule = $this->createComponentFromXml('
+			<setCorrectResponse identifier="RESPONSE">
+				<baseValue baseType="identifier" >true</baseValue>
+			</setCorrectResponse>
+		');
+
+        $processor = new SetCorrectResponseProcessor($rule);
+        $response = new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER);
+        $state = new State([$response]);
+        $processor->setState($state);
+
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unable to set value true to variable \'RESPONSE\' (cardinality = multiple, baseType = identifier).');
 
         $processor->process();
     }

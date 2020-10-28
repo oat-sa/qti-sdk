@@ -11,12 +11,17 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderedContainerTest
+ */
 class OrderedContainerTest extends QtiSmTestCase
 {
     /**
      * @dataProvider equalsValidProvider
+     * @param OrderedContainer $containerA
+     * @param OrderedContainer $containerB
      */
-    public function testEqualsValid($containerA, $containerB)
+    public function testEqualsValid(OrderedContainer $containerA, OrderedContainer $containerB)
     {
         $this->assertTrue($containerA->equals($containerB));
         $this->assertTrue($containerB->equals($containerA));
@@ -24,8 +29,10 @@ class OrderedContainerTest extends QtiSmTestCase
 
     /**
      * @dataProvider equalsInvalidProvider
+     * @param OrderedContainer $containerA
+     * @param OrderedContainer $containerB
      */
-    public function testEqualsInvalid($containerA, $containerB)
+    public function testEqualsInvalid(OrderedContainer $containerA, OrderedContainer $containerB)
     {
         $this->assertFalse($containerA->equals($containerB));
         $this->assertFalse($containerB->equals($containerA));
@@ -39,6 +46,9 @@ class OrderedContainerTest extends QtiSmTestCase
         $this->assertEquals(Cardinality::ORDERED, $container->getCardinality());
     }
 
+    /**
+     * @return array
+     */
     public function equalsValidProvider()
     {
         return [
@@ -49,6 +59,9 @@ class OrderedContainerTest extends QtiSmTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function equalsInvalidProvider()
     {
         return [

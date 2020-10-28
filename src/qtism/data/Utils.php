@@ -23,6 +23,9 @@
 
 namespace qtism\data;
 
+/**
+ * Class Utils
+ */
 class Utils
 {
     /**
@@ -32,8 +35,8 @@ class Utils
      * set as parameter in its components. If some has, we keep the last section found (to take the
      * closest parent).
      *
-     * @param $component AssessmentSection The section from which we want to find the parent.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
+     * @param AssessmentSection $component The section from which we want to find the parent.
+     * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
      * @return AssessmentSection|null The parent of the AssessmentSection set as parameter, if any.
      */
     private static function checkRecursion($component, $sections)
@@ -60,10 +63,10 @@ class Utils
      * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
      * find the firstItem from another QtiComponent : this is then done iteratively.
      *
-     * @param $test AssessmentTest The AssessmentTest where we are searching the item from where the branch
+     * @param AssessmentTest $test The AssessmentTest where we are searching the item from where the branch
      * comes.
-     * @param $component QtiComponent The QtiComponent targeted by a branch.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
+     * @param QtiComponent $component The QtiComponent targeted by a branch.
+     * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
      * @return AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
      * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
      * has been reached.
@@ -77,17 +80,17 @@ class Utils
             $visitedNodes[] = $currentCmp->getIdentifier();
 
             switch ($currentCmp->getQtiClassName()) {
-                case "assessmentItemRef":
+                case 'assessmentItemRef':
                     return $currentCmp;
                     break;
 
-                case "assessmentSection":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'assessmentSection':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // Check for recursion
 
-                        $sectparent = Utils::checkRecursion($currentCmp, $sections);
+                        $sectparent = self::checkRecursion($currentCmp, $sections);
 
                         if ($sectparent != null) {
                             $nextSectpart = null;
@@ -135,8 +138,8 @@ class Utils
                     }
                     break;
 
-                case "testPart":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'testPart':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // First item of the next testpart
@@ -178,10 +181,10 @@ class Utils
      * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
      * find the lastItem from another QtiComponent : this is then done iteratively.
      *
-     * @param $test AssessmentTest The AssessmentTest where we are searching the item from where the branch
+     * @param AssessmentTest $test The AssessmentTest where we are searching the item from where the branch
      * starts.
-     * @param $component QtiComponent The QtiComponent with a BranchRule.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
+     * @param QtiComponent $component The QtiComponent with a BranchRule.
+     * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
      * @return AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
      * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
      * test has been reached.
@@ -193,17 +196,17 @@ class Utils
 
         while (true) {
             switch ($currentCmp->getQtiClassName()) {
-                case "assessmentItemRef":
+                case 'assessmentItemRef':
                     return $currentCmp;
                     break;
 
-                case "assessmentSection":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'assessmentSection':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // Check for recursion
 
-                        $sectparent = Utils::checkRecursion($currentCmp, $sections);
+                        $sectparent = self::checkRecursion($currentCmp, $sections);
 
                         if ($sectparent != null) {
                             $prevSectPart = null;
@@ -245,8 +248,8 @@ class Utils
                     }
                     break;
 
-                case "testPart":
-                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                case 'testPart':
+                    $items = $currentCmp->getComponentsByClassName('assessmentItemRef')->getArrayCopy();
 
                     if (count($items) == 0) {
                         // First item of the next testpart

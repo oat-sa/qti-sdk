@@ -51,7 +51,7 @@ class Bean
      * Create a new Bean object.
      *
      * @param mixed $object The object to be wrapped as a Bean.
-     * @param boolean $strict Whether the given $object must be a strict Bean.
+     * @param bool $strict Whether the given $object must be a strict Bean.
      * @param string $asInstanceOf The name of the class that should be used for reflection.
      * @throws InvalidArgumentException If $object is not an object.
      * @throws BeanException
@@ -59,8 +59,8 @@ class Bean
      */
     public function __construct($object, $strict = false, $asInstanceOf = '')
     {
-        if (is_object($object) === true) {
-            if (empty($asInstanceOf) === true) {
+        if (is_object($object)) {
+            if (empty($asInstanceOf)) {
                 $this->setClass(new ReflectionClass($object));
             } else {
                 $this->setClass(new ReflectionClass($asInstanceOf));
@@ -111,7 +111,7 @@ class Bean
      */
     public function getGetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -148,7 +148,7 @@ class Bean
      */
     public function hasGetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -161,11 +161,9 @@ class Bean
         $hasGetter = false;
 
         foreach ($getterNames as $possibleGetterName) {
-            if ($this->getClass()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true) {
-                if ($this->getClass()->getMethod($possibleGetterName)->isPublic()) {
-                    $hasGetter = $possibleGetterName;
-                    break;
-                }
+            if ($this->getClass()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true && $this->getClass()->getMethod($possibleGetterName)->isPublic()) {
+                $hasGetter = $possibleGetterName;
+                break;
             }
         }
 
@@ -206,7 +204,7 @@ class Bean
      */
     public function getSetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -237,12 +235,12 @@ class Bean
      * * A valid bean property exists for $propertyName.
      *
      * @param string|BeanProperty $property The name of the property/the BeanProperty object related to the setter to be checked.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     public function hasSetter($property)
     {
-        if (is_string($property) === true) {
+        if (is_string($property)) {
             $propertyName = $property;
         } elseif ($property instanceof BeanProperty) {
             $propertyName = $property->getName();
@@ -292,7 +290,7 @@ class Bean
      * * The property is annotated with @qtism-bean-property.
      *
      * @param string $propertyName The name of the class property to check.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     public function hasProperty($propertyName)
@@ -310,7 +308,7 @@ class Bean
      */
     public function getProperty($propertyName)
     {
-        $className = $className = $this->getClass()->getName();
+        $className = $this->getClass()->getName();
 
         if ($this->hasProperty($propertyName) === true) {
             try {
@@ -420,7 +418,7 @@ class Bean
      * to a valid bean property.
      *
      * @param string $parameterName The name of the parameter.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     public function hasConstructorParameter($parameterName)
@@ -443,7 +441,7 @@ class Bean
      * Whether a given property is annotated with the appropriate bean annotation.
      *
      * @param string $propertyName The name of the property.
-     * @return boolean
+     * @return bool
      * @throws ReflectionException
      */
     protected function isPropertyAnnotated($propertyName)

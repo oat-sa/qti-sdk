@@ -5,13 +5,22 @@ namespace qtismtest\data\expressions;
 use qtism\data\expressions\MathEnumeration;
 use qtismtest\QtiSmEnumTestCase;
 
+/**
+ * Class MathEnumerationTest
+ */
 class MathEnumerationTest extends QtiSmEnumTestCase
 {
+    /**
+     * @return string
+     */
     protected function getEnumerationFqcn()
     {
         return MathEnumeration::class;
     }
 
+    /**
+     * @return array
+     */
     protected function getNames()
     {
         return [
@@ -20,6 +29,9 @@ class MathEnumerationTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getKeys()
     {
         return [
@@ -28,6 +40,9 @@ class MathEnumerationTest extends QtiSmEnumTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getConstants()
     {
         return [

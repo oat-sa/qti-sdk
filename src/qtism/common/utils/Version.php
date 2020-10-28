@@ -26,7 +26,7 @@ namespace qtism\common\utils;
 use InvalidArgumentException;
 
 /**
- * This utility class provides utility classes about Semantic Versionning.
+ * This utility class provides utility classes about Semantic Versioning.
  *
  * @see http://semver.org Semantic Versioning
  */

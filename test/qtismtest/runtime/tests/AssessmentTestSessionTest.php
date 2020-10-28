@@ -4,6 +4,7 @@ namespace qtismtest\runtime\tests;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiFloat;
@@ -15,22 +16,30 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\NavigationMode;
+use qtism\data\storage\php\PhpStorageException;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
+use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
+use qtism\runtime\tests\OrderingException;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
+use qtism\data\state\Weight;
 
+/**
+ * Class AssessmentTestSessionTest
+ */
 class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 {
     protected $state;
@@ -53,6 +62,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         unset($this->state);
     }
 
+    /**
+     * @return AssessmentTestSession
+     */
     public function getState()
     {
         return $this->state;
@@ -88,7 +100,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 
         // test-level outcome variables should be initialized
         // with their default values.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $assessmentTestSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['SCORE']);
         $this->assertEquals(0.0, $assessmentTestSession['SCORE']->getValue());
 
         // No session ID should be set, this is the role of AssessmentTestSession Storage Services.
@@ -103,7 +115,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         for ($i = 1; $i <= 3; $i++) {
             $score = $assessmentTestSession["Q01.${i}.SCORE"];
             $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
-            $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $score);
+            $this->assertInstanceOf(QtiFloat::class, $score);
             $this->assertEquals(0.0, $score->getValue());
             $this->assertSame(null, $response);
         }
@@ -228,23 +240,23 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         // Check the final state of the test session.
         // - Q01
         $this->assertEquals('ChoiceA', $assessmentTestSession['Q01.RESPONSE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $assessmentTestSession['Q01.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['Q01.SCORE']);
         $this->assertEquals(1.0, $assessmentTestSession['Q01.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $assessmentTestSession['Q01.numAttempts']);
+        $this->assertInstanceOf(QtiInteger::class, $assessmentTestSession['Q01.numAttempts']);
         $this->assertEquals(1, $assessmentTestSession['Q01.numAttempts']->getValue());
 
         // - Q02
         $this->assertEquals('ChoiceC', $assessmentTestSession['Q02.RESPONSE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $assessmentTestSession['Q02.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['Q02.SCORE']);
         $this->assertEquals(0.0, $assessmentTestSession['Q02.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $assessmentTestSession['Q02.numAttempts']);
+        $this->assertInstanceOf(QtiInteger::class, $assessmentTestSession['Q02.numAttempts']);
         $this->assertEquals(1, $assessmentTestSession['Q02.numAttempts']->getValue());
 
         // - Q03
         $this->assertEquals('ChoiceC', $assessmentTestSession['Q03.RESPONSE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $assessmentTestSession['Q03.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['Q03.SCORE']);
         $this->assertEquals(1.0, $assessmentTestSession['Q03.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $assessmentTestSession['Q03.numAttempts']);
+        $this->assertInstanceOf(QtiInteger::class, $assessmentTestSession['Q03.numAttempts']);
         $this->assertEquals(1, $assessmentTestSession['Q03.numAttempts']->getValue());
 
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
@@ -321,7 +333,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113))]));
         $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
         $this->assertSame(null, $session['Q07.1.RESPONSE']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.1.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q07.1.SCORE']);
         $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
         $this->assertEquals(7, count($session->getPendingResponses()));
         $session->moveNext();
@@ -378,6 +390,10 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
      *
      * @param array $responses
      * @param array $outcomes
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws XmlStorageException
+     * @throws PhpStorageException
      */
     public function testLinearOutcomeProcessing(array $responses, array $outcomes)
     {
@@ -406,7 +422,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 
         foreach ($outcomes as $outcomeIdentifier => $outcomeValue) {
-            $this->assertInstanceOf(($outcomeValue instanceof QtiInteger) ? 'qtism\\common\\datatypes\\QtiInteger' : 'qtism\\common\\datatypes\\QtiFloat', $assessmentTestSession[$outcomeIdentifier]);
+            $this->assertInstanceOf(($outcomeValue instanceof QtiInteger) ? QtiInteger::class : QtiFloat::class, $assessmentTestSession[$outcomeIdentifier]);
 
             if ($outcomeIdentifier !== 'PERCENT_CORRECT') {
                 $this->assertEquals($outcomeValue->getValue(), $assessmentTestSession[$outcomeIdentifier]->getValue());
@@ -416,6 +432,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function linearOutcomeProcessingProvider()
     {
         $returnValue = [];
@@ -678,15 +697,15 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->moveNext();
 
         // End of test, everything ok?
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q02.SCORE']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q03.SCORE']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q04.SCORE']); // Because auto forward = true, Q04 was selected as eligible after Q03's endAttempt. However, it was never attempted.
+        $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q02.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q03.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']); // Because auto forward = true, Q04 was selected as eligible after Q03's endAttempt. However, it was never attempted.
         $this->assertSame(0.0, $session['Q05.SCORE']->getValue());
         $this->assertSame(0.0, $session['Q06.mySc0r3']->getValue());
         $this->assertSame(0.0, $session['Q07.1.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.2.SCORE']);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.3.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q07.2.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q07.3.SCORE']);
 
         $this->assertEquals(5, $session['NPRESENTED']->getValue());
         $this->assertEquals(9, $session['NSELECTED']->getValue());
@@ -848,7 +867,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->moveNext();
 
         // OutcomeProcessing?
-        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['PERCENT_CORRECT']);
+        $this->assertInstanceOf(QtiFloat::class, $session['PERCENT_CORRECT']);
         $this->assertEquals(0.0, $session['PERCENT_CORRECT']->getValue());
         $this->assertEquals(9, $session['NSELECTED']->getValue());
     }
@@ -959,7 +978,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 
         $v = new VariableIdentifier($identifier);
         $weight = $state->getWeight($v);
-        $this->assertInstanceOf('qtism\\data\\state\\Weight', $weight);
+        $this->assertInstanceOf(Weight::class, $weight);
         $this->assertEquals($v->getVariableName(), $weight->getIdentifier());
         $this->assertEquals($expectedValue, $weight->getValue());
     }
@@ -986,10 +1005,13 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     public function testGetWeightMalformed($identifier)
     {
         $state = $this->getState();
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $state->getWeight($identifier);
     }
 
+    /**
+     * @return array
+     */
     public function getWeightProvider()
     {
         return [
@@ -1000,6 +1022,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getWeightNotFoundProvider()
     {
         return [
@@ -1010,6 +1035,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getWeightMalformed()
     {
         return [
@@ -2020,10 +2048,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
         $assessmentTestSession->beginTestSession();
 
-        $this->setExpectedException(
-            'qtism\\runtime\\tests\\AssessmentTestSessionException',
-            "Jumps are not allowed in LINEAR navigation mode."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Jumps are not allowed in LINEAR navigation mode.");
         $assessmentTestSession->jumpTo(1);
     }
 
@@ -2040,10 +2066,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'sessionId' argument must be a non-empty string."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'sessionId' argument must be a non-empty string.");
 
         $assessmentTestSession->setSessionId('');
     }
@@ -2052,10 +2076,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'sessionId' argument must be a string, 'integer' given."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'sessionId' argument must be a string, 'integer' given.");
 
         $assessmentTestSession->setSessionId(999);
     }
@@ -2064,10 +2086,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The state argument must be a value from the AssessmentTestSessionState enumeration"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The state argument must be a value from the AssessmentTestSessionState enumeration");
 
         $assessmentTestSession->setState(true);
     }
@@ -2078,10 +2098,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession->beginTestSession();
         $assessmentTestSession->endTestSession();
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot end the test session while the state of the test session is INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot end the test session while the state of the test session is INITIAL or CLOSED.");
 
         $assessmentTestSession->endTestSession();
     }
@@ -2090,10 +2108,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.");
 
         $assessmentTestSession->beginAttempt();
     }
@@ -2102,10 +2118,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.");
 
         $assessmentTestSession->endAttempt(new State());
     }
@@ -2114,10 +2128,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot move to the next item while the test session state is INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot move to the next item while the test session state is INITIAL or CLOSED.");
 
         $assessmentTestSession->moveNext();
     }
@@ -2126,10 +2138,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot move to the previous item while the test session state is INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot move to the previous item while the test session state is INITIAL or CLOSED.");
 
         $assessmentTestSession->moveBack();
     }
@@ -2139,9 +2149,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
         $assessmentTestSession->beginTestSession();
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Jumps are not allowed in LINEAR navigation mode.",
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Jumps are not allowed in LINEAR navigation mode.");
+        $this->expectExceptionCode(
             AssessmentTestSessionException::FORBIDDEN_JUMP
         );
 
@@ -2153,9 +2163,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_nonlinear_singlesection.xml');
         $assessmentTestSession->beginTestSession();
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Position '1337' is out of the Route boundaries.",
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Position '1337' is out of the Route boundaries.");
+        $this->expectExceptionCode(
             AssessmentTestSessionException::FORBIDDEN_JUMP
         );
 
@@ -2172,10 +2182,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.");
 
         $assessmentTestSession->isCurrentAssessmentItemAdaptive();
     }
@@ -2184,10 +2192,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            'qtism\runtime\tests\AssessmentTestSessionException',
-            "Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED."
-        );
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage("Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED.");
 
         $assessmentTestSession->isCurrentAssessmentItemInteracting();
     }
@@ -2196,10 +2202,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.");
 
         $assessmentTestSession->whichLastOccurenceUpdate(999);
     }
@@ -2262,10 +2266,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            "The given identifier argument is not a string, nor a VariableIdentifier object."
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The given identifier argument is not a string, nor a VariableIdentifier object.");
 
         $assessmentTestSession->getWeight(999);
     }
@@ -2274,10 +2276,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The variables set to the AssessmentTestSession global scope must have simple variable identifiers. 'TEST.Q01' given."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The variables set to the AssessmentTestSession global scope must have simple variable identifiers. 'TEST.Q01' given.");
 
         $assessmentTestSession->setVariable(new OutcomeVariable('TEST.Q01', Cardinality::SINGLE, BaseType::IDENTIFIER));
     }
@@ -2286,10 +2286,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The identifier '999' of the variable to set is invalid."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The identifier '999' of the variable to set is invalid.");
 
         $assessmentTestSession->setVariable(new OutcomeVariable('999', Cardinality::SINGLE, BaseType::IDENTIFIER));
     }
@@ -2298,10 +2296,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "AssessmentTestSession object addressed with an invalid identifier '999'."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("AssessmentTestSession object addressed with an invalid identifier '999'.");
 
         $assessmentTestSession[999];
     }
@@ -2310,10 +2306,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "An AssessmentTestSession object must be addressed by string."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("An AssessmentTestSession object must be addressed by string.");
 
         $assessmentTestSession[999] = new QtiIdentifier('XXX');
     }
@@ -2322,10 +2316,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "The variable 'abcd' to be set does not exist in the current context."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The variable 'abcd' to be set does not exist in the current context.");
 
         $assessmentTestSession['abcd'] = new QtiIdentifier('XXX');
     }
@@ -2334,10 +2326,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "AssessmentTestSession object addressed with an invalid identifier '---999'."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("AssessmentTestSession object addressed with an invalid identifier '---999'.");
 
         $assessmentTestSession['---999'] = new QtiIdentifier('XXX');
     }
@@ -2355,10 +2345,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The variable identifier '---8888' is not a valid variable identifier."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The variable identifier '---8888' is not a valid variable identifier.");
 
         unset($assessmentTestSession['---8888']);
     }
@@ -2367,10 +2355,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "The variable 'SCOREX' does not exist in the AssessmentTestSession's global scope."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The variable 'SCOREX' does not exist in the AssessmentTestSession's global scope.");
 
         unset($assessmentTestSession['SCOREX']);
     }
@@ -2379,10 +2365,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfBoundsException',
-            "The variable 'SCOREX' does not exist in the AssessmentTestSession's global scope."
-        );
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The variable 'SCOREX' does not exist in the AssessmentTestSession's global scope.");
 
         unset($assessmentTestSession['SCOREX']);
     }
@@ -2397,10 +2381,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "The variable identifier '----989' is not a valid variable identifier."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The variable identifier '----989' is not a valid variable identifier.");
 
         unset($assessmentTestSession['----989']);
     }
@@ -2409,10 +2391,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 
-        $this->setExpectedException(
-            '\\OutOfRangeException',
-            "Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable identifiers (no prefix, no sequence number). 'QX.ITEMVAR' given."
-        );
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable identifiers (no prefix, no sequence number). 'QX.ITEMVAR' given.");
 
         isset($assessmentTestSession['QX.ITEMVAR']);
     }

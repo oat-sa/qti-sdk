@@ -70,7 +70,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * If $minChoices is a negative value, it means it was not specified.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = -1;
@@ -85,7 +85,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * If $maxChoices is a negative value, it means it was not specified.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = -1;
@@ -119,7 +119,7 @@ class GraphicOrderInteraction extends GraphicInteraction
         if (count($hotspotChoices) > 0) {
             $this->hotspotChoices = $hotspotChoices;
         } else {
-            $msg = "A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.";
+            $msg = 'A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -138,7 +138,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Set the minimum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no minChoice is indicated.
      *
-     * @param integer $minChoices A strictly negative or positive integer.
+     * @param int $minChoices A strictly negative or positive integer.
      * @throws InvalidArgumentException If $minChoice is not a strictly negative or positive integer.
      */
     public function setMinChoices($minChoices)
@@ -160,7 +160,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Get the minimum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no minChoice is indicated.
      *
-     * @return integer A strictly negative or positive integer.
+     * @return int A strictly negative or positive integer.
      */
     public function getMinChoices()
     {
@@ -170,7 +170,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * Whether or not a value is defined for the minChoices attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinChoices()
     {
@@ -181,7 +181,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Set the maximum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no maxChoice is indicated.
      *
-     * @param integer $maxChoices A strictly negative or positive integer.
+     * @param int $maxChoices A strictly negative or positive integer.
      * @throws InvalidArgumentException If $maxChoices is not a strictly negative or positive integer.
      */
     public function setMaxChoices($maxChoices)
@@ -203,7 +203,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * Get the maximum number of choices that the candidate must select and order to form a valid response. A negative
      * value means that no maxChoice is indicated.
      *
-     * @return integer A strictly negative or positive integer.
+     * @return int A strictly negative or positive integer.
      */
     public function getMaxChoices()
     {
@@ -213,7 +213,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * Whether or not a value is defined for the maxChoice attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxChoices()
     {
@@ -221,7 +221,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
     {
@@ -233,7 +233,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -241,7 +241,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

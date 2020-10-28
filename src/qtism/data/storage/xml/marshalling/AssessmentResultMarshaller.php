@@ -42,6 +42,7 @@ class AssessmentResultMarshaller extends Marshaller
      *
      * @param QtiComponent|AssessmentResult $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     protected function marshall(QtiComponent $component)
@@ -70,13 +71,14 @@ class AssessmentResultMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
         try {
             /** @var Context $context */
-            $contextElements = self::getChildElementsByTagName($element, 'context');
+            $contextElements = $this->getChildElementsByTagName($element, 'context');
             $contextElement = array_shift($contextElements);
             $context = $this->getMarshallerFactory()->createMarshaller($contextElement)->unmarshall($contextElement);
         } catch (InvalidArgumentException $e) {

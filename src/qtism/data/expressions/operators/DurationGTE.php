@@ -24,7 +24,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -37,7 +36,7 @@ use qtism\data\expressions\Pure;
  *
  * See durationLT for more information about testing the equality of durations.
  */
-class DurationGTE extends Operator implements Pure
+class DurationGTE extends Operator
 {
     /**
      * Create a new DurationGTE object.
@@ -50,22 +49,10 @@ class DurationGTE extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'durationGTE';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

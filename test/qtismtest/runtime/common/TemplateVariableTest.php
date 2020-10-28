@@ -7,6 +7,9 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class TemplateVariableTest
+ */
 class TemplateVariableTest extends QtiSmTestCase
 {
     public function testCreateFromDataModel()
@@ -20,7 +23,7 @@ class TemplateVariableTest extends QtiSmTestCase
         ');
 
         $var = TemplateVariable::createFromDataModel($decl);
-        $this->assertInstanceOf('qtism\\runtime\\common\\TemplateVariable', $var);
+        $this->assertInstanceOf(TemplateVariable::class, $var);
         $this->assertEquals('mytpl1', $var->getIdentifier());
         $this->assertEquals(Cardinality::SINGLE, $var->getCardinality());
         $this->assertEquals(BaseType::IDENTIFIER, $var->getCardinality());

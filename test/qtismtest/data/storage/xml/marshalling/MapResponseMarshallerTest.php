@@ -3,9 +3,13 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\expressions\MapResponse;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class MapResponseMarshallerTest
+ */
 class MapResponseMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -16,7 +20,7 @@ class MapResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('mapResponse', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
     }
@@ -30,7 +34,7 @@ class MapResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\MapResponse', $component);
+        $this->assertInstanceOf(MapResponse::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myMapResponse1');
     }
 }

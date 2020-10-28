@@ -40,7 +40,7 @@ class GapImgCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof GapImg) {
-            $msg = "GapImgCollection objects only accept to store GapImg objects.";
+            $msg = 'GapImgCollection objects only accept to store GapImg objects.';
             throw new InvalidArgumentException($msg);
         }
     }

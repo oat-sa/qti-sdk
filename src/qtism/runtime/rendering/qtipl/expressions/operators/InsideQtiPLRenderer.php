@@ -45,7 +45,7 @@ class InsideQtiPLRenderer extends AbstractQtiPLRenderer
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];
-        $attributes['shape'] = "\"" . QtiShape::getNameByConstant($something->getShape()) . "\"";
+        $attributes['shape'] = '"' . QtiShape::getNameByConstant($something->getShape()) . '"';
         $attributes['coords'] = $something->getCoords();
 
         return $something->getQtiClassName() . $renderer->writeAttributes($attributes)

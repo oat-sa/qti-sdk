@@ -30,7 +30,6 @@ use qtism\data\rules\PreConditionCollection;
 use SplObjectStorage;
 
 /**
- *
  * The TestPart class.
  */
 class TestPart extends QtiComponent implements QtiIdentifiable
@@ -292,11 +291,11 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the TestPart holds an ItemSessionControl object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItemSessionControl()
     {
-        return is_null($this->getItemSessionControl()) === false;
+        return $this->getItemSessionControl() !== null;
     }
 
     /**
@@ -324,11 +323,11 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     /**
      * Whether the TestPart holds a TimeLimits object.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimeLimits()
     {
-        return is_null($this->getTimeLimits()) === false;
+        return $this->getTimeLimits() !== null;
     }
 
     /**
@@ -353,7 +352,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
             // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
             foreach ($assessmentSections as $assessmentSection) {
                 if (!$assessmentSection instanceof AssessmentSection && !$assessmentSection instanceof AssessmentSectionRef) {
-                    $msg = "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.";
+                    $msg = 'A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.';
                     throw new InvalidArgumentException($msg);
                 }
             }
@@ -385,11 +384,17 @@ class TestPart extends QtiComponent implements QtiIdentifiable
         $this->testFeedbacks = $testFeedbacks;
     }
 
+    /**
+     * @return string
+     */
     public function getQtiClassName()
     {
         return 'testPart';
     }
 
+    /**
+     * @return QtiComponentCollection
+     */
     public function getComponents()
     {
         $comp = array_merge(

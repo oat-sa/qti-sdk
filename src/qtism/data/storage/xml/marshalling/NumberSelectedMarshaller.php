@@ -40,9 +40,7 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = parent::marshall($component);
-
-        return $element;
+        return parent::marshall($component);
     }
 
     /**
@@ -63,7 +61,7 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

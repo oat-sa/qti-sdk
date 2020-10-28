@@ -10,13 +10,16 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\OutcomeMaximumProcessor;
 use qtismtest\QtiSmItemSubsetTestCase;
 
+/**
+ * Class OutcomeMaximumProcessorTest
+ */
 class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
      * @dataProvider outcomeMaximumProvider
      *
      * @param OutcomeMaximum $expression
-     * @param integer $expectedResult
+     * @param int $expectedResult
      */
     public function testOutcomeMaximum(OutcomeMaximum $expression, $expectedResult)
     {
@@ -29,12 +32,15 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
         if ($expectedResult === null) {
             $this->assertSame($expectedResult, $result);
         } else {
-            $this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
+            $this->assertInstanceOf(MultipleContainer::class, $result);
             $this->assertEquals(BaseType::FLOAT, $result->getBaseType());
             $this->assertTrue($result->equals($expectedResult));
         }
     }
 
+    /**
+     * @return array
+     */
     public function outcomeMaximumProvider()
     {
         return [
@@ -50,6 +56,14 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
         ];
     }
 
+    /**
+     * @param $outcomeIdentifier
+     * @param string $weightIdentifier
+     * @param string $sectionIdentifier
+     * @param IdentifierCollection|null $includeCategories
+     * @param IdentifierCollection|null $excludeCategories
+     * @return OutcomeMaximum
+     */
     protected static function getOutcomeMaximum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         $outcomeMaximum = new OutcomeMaximum($outcomeIdentifier);

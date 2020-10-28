@@ -3,12 +3,16 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Substring;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SubstringMarshallerTest
+ */
 class SubstringMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -18,7 +22,7 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('substring', $element->nodeName);
         $this->assertEquals('false', $element->getAttribute('caseSensitive'));
 
@@ -47,18 +51,18 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Substring', $component);
+        $this->assertInstanceOf(Substring::class, $component);
         $this->assertTrue($component->isCaseSensitive());
 
         $sub = $component->getExpressions();
         $sub = $sub[0];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $sub);
+        $this->assertInstanceOf(BaseValue::class, $sub);
         $this->assertEquals(BaseType::STRING, $sub->getBaseType());
         $this->assertEquals('Hell', $sub->getValue());
 
         $sub = $component->getExpressions();
         $sub = $sub[1];
-        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $sub);
+        $this->assertInstanceOf(BaseValue::class, $sub);
         $this->assertEquals(BaseType::STRING, $sub->getBaseType());
         $this->assertEquals('Shell', $sub->getValue());
     }

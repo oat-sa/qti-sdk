@@ -45,9 +45,10 @@ trait FlowTrait
     private $xmlBase = '';
 
     /**
-     * setXmlBase method implementation.
+     * Set the base URI of the Object.
      *
-     * @see \qtism\data\content\Flow::setXmlBase()
+     * @param string $xmlBase A URI.
+     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '')
     {
@@ -60,9 +61,9 @@ trait FlowTrait
     }
 
     /**
-     * getXmlBase method implementation.
+     * Get the base URI of the Object.
      *
-     * @see \qtism\data\content\Flow::getXmlBase()
+     * @return string An empty string or a URI.
      */
     public function getXmlBase()
     {
@@ -70,9 +71,8 @@ trait FlowTrait
     }
 
     /**
-     * hasXmlBase method implementation.
-     *
-     * @see \qtism\data\content\Flow::hasXmlBase()
+     * Does the element have a XmlBase?
+     * @return bool
      */
     public function hasXmlBase()
     {

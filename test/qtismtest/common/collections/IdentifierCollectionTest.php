@@ -2,9 +2,13 @@
 
 namespace qtismtest\common\collections;
 
+use InvalidArgumentException;
 use qtism\common\collections\IdentifierCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class IdentifierCollectionTest
+ */
 class IdentifierCollectionTest extends QtiSmTestCase
 {
     /**
@@ -60,14 +64,14 @@ class IdentifierCollectionTest extends QtiSmTestCase
     public function testAddIdentifierWrongFormat()
     {
         $identifier = '.identifier';
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->collection[] = $identifier;
     }
 
     public function testAddIdentifierWrongType()
     {
         $identifier = 999;
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->collection[] = $identifier;
     }
 

@@ -12,6 +12,9 @@ use qtism\data\storage\php\PhpStreamAccess;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
 
+/**
+ * Class PhpMarshallingContextTest
+ */
 class PhpMarshallingContextTest extends QtiSmTestCase
 {
     /**
@@ -21,11 +24,17 @@ class PhpMarshallingContextTest extends QtiSmTestCase
      */
     private $streamAccess;
 
+    /**
+     * @param PhpStreamAccess $streamAccess
+     */
     protected function setStreamAccess(PhpStreamAccess $streamAccess)
     {
         $this->streamAccess = $streamAccess;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getStreamAccess()
     {
         return $this->streamAccess;
@@ -62,7 +71,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         $ctx->pushOnVariableStack(['foo', 'bar']);
         $this->assertEquals(['foo', 'bar'], $ctx->popFromVariableStack(2));
 
-        $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpStreamAccess', $ctx->getStreamAccess());
+        $this->assertInstanceOf(PhpStreamAccess::class, $ctx->getStreamAccess());
     }
 
     public function testPhpMarshallingTooLargeQuantity()
@@ -72,7 +81,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $values = $ctx->popFromVariableStack(4);
-            $this->assertFalse(true, "An exception must be thrown because the requested quantity is too large.");
+            $this->assertFalse(true, 'An exception must be thrown because the requested quantity is too large.');
         } catch (RuntimeException $e) {
             $this->assertTrue(true);
         }
@@ -84,7 +93,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $value = $ctx->popFromVariableStack();
-            $this->assertFalse(true, "An exception must be thrown because the variable names stack is empty.");
+            $this->assertFalse(true, 'An exception must be thrown because the variable names stack is empty.');
         } catch (RuntimeException $e) {
             $this->assertTrue(true);
         }

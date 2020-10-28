@@ -23,11 +23,11 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Min;
+use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 
 /**
@@ -62,7 +62,7 @@ class MinProcessor extends OperatorProcessor
         }
 
         if ($operands->anythingButRecord() === false) {
-            $msg = "The Min operator only accept values with a cardinality of single, multiple or ordered.";
+            $msg = 'The Min operator only accept values with a cardinality of single, multiple or ordered.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
@@ -99,11 +99,11 @@ class MinProcessor extends OperatorProcessor
             }
         }
 
-        return ($integerCount === $valueCount) ? new QtiInteger(intval($min)) : new QtiFloat(floatval($min));
+        return ($integerCount === $valueCount) ? new QtiInteger((int)$min) : new QtiFloat((float)$min);
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

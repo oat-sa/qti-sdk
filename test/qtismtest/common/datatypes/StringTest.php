@@ -2,17 +2,19 @@
 
 namespace qtismtest\common\datatypes;
 
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiString;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class StringTest
+ */
 class StringTest extends QtiSmTestCase
 {
     public function testWrongValue()
     {
-        $this->setExpectedException(
-            '\\InvalidArgumentException',
-            'The String Datatype only accepts to store string values.'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The String Datatype only accepts to store string values.');
         $string = new QtiString(1337);
     }
 
@@ -34,6 +36,9 @@ class StringTest extends QtiSmTestCase
         $this->assertTrue($qtiString->equals($val));
     }
 
+    /**
+     * @return array
+     */
     public function equalProvider()
     {
         return [
@@ -57,6 +62,9 @@ class StringTest extends QtiSmTestCase
         $this->assertFalse($qtiString->equals($val));
     }
 
+    /**
+     * @return array
+     */
     public function notEqualProvider()
     {
         return [

@@ -8,6 +8,9 @@ use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\SelectableRouteCollection;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class BasicSelectionTest
+ */
 class BasicSelectionTest extends QtiSmTestCase
 {
     public function testBasicSelection()
@@ -54,6 +57,11 @@ class BasicSelectionTest extends QtiSmTestCase
         $this->assertTrue($routeCheck1 === true || $routeCheck2 === true);
     }
 
+    /**
+     * @param SelectableRoute $route
+     * @param array $expectedIdentifiers
+     * @return bool
+     */
     private static function isRouteCorrect(SelectableRoute $route, array $expectedIdentifiers)
     {
         $i = 0;

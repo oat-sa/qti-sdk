@@ -71,7 +71,7 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
                 if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
                     $var = $itemSession->getVariable($id);
                     $itemRefIdentifier = $itemSession->getAssessmentItem()->getIdentifier();
-                    $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
+                    $weight = (empty($weightIdentifier)) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
 
                     // Does this OutcomeVariable contain a value for normalMaximum?
                     if (($normalMinimum = $var->getNormalMinimum()) !== false) {
@@ -80,7 +80,7 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
                             $result[] = new QtiFloat($normalMinimum);
                         } else {
                             // A weight has to be applied.
-                            $result[] = new QtiFloat(floatval($normalMinimum *= $weight->getValue()));
+                            $result[] = new QtiFloat((float)$normalMinimum *= $weight->getValue());
                         }
                     }
                     // else ... items with no declared minimum are ignored.
@@ -92,7 +92,7 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

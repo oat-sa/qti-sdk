@@ -25,7 +25,6 @@
 namespace qtism\runtime\storage\binary;
 
 use Exception;
-use InvalidArgumentException;
 use OutOfBoundsException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -74,7 +73,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
         QtiBinaryVersion $version = null
     ) {
         parent::__construct($manager, $test);
-        $this->setSeeker(new BinaryAssessmentTestSeeker($test));
+        $seeker = new BinaryAssessmentTestSeeker($test);
+        $this->setSeeker($seeker);
 
         if ($version === null) {
             $version = new QtiBinaryVersion();
@@ -83,9 +83,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     }
 
     /**
-     * Set the BinaryAssessmentTestSeeker.
+     * Set the BinaryAssessmentTestSeeker object used by this implementation.
      *
-     * @param BinaryAssessmentTestSeeker $seeker
+     * @param BinaryAssessmentTestSeeker $seeker An AssessmentTestSeeker object.
      */
     protected function setSeeker(BinaryAssessmentTestSeeker $seeker)
     {
@@ -93,9 +93,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     }
 
     /**
-     * Get the BinaryAssessmentTestSeeker.
+     * Get the BinaryAssessmentTestSeeker object used by this implementation.
      *
-     * @return BinaryAssessmentTestSeeker
+     * @return BinaryAssessmentTestSeeker An AssessmentTestSeeker object.
      */
     protected function getSeeker()
     {
@@ -105,7 +105,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     /**
      * Instantiate a new AssessmentTestSession.
      *
-     * @param integer $config (optional) The configuration to be taken into account for the instantiated AssessmentTestSession object.
+     * @param int $config (optional) The configuration to be taken into account for the instantiated AssessmentTestSession object.
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
      * @return AssessmentTestSession An AssessmentTestSession object.
      * @throws StorageException
@@ -113,7 +113,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     public function instantiate($config = 0, $sessionId = '')
     {
         // If not provided, generate a session ID.
-        if (empty($sessionId) === true) {
+        if (empty($sessionId)) {
             $sessionId = uniqid('qtism', true);
         }
 
@@ -123,7 +123,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $session;
         } catch (Exception $e) {
-            $msg = "An error occured while instantiating the given AssessmentTest.";
+            $msg = 'An error occurred while instantiating the given AssessmentTest.';
             throw new StorageException($msg, StorageException::INSTANTIATION, $e);
         }
     }
@@ -153,7 +153,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // persist time reference.
             $timeReference = $assessmentTestSession->getTimeReference();
-            if (is_null($timeReference) === true) {
+            if ($timeReference === null) {
                 $access->writeBoolean(false);
             } else {
                 $access->writeBoolean(true);
@@ -177,11 +177,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
+
+            // Preserve route position.
             $oldRoutePosition = $route->getPosition();
 
             $seeker = $this->getSeeker();
-
-            foreach ($route as $routeItem) {
+            $routeItems = $route->getAllRouteItems();
+            foreach ($routeItems as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
 
@@ -205,12 +207,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                         $access->writeBoolean(false);
                     }
                 } catch (OutOfBoundsException $e) {
-                    $access->writeBoolean(false);
                     // No assessmentItemSession for this route item.
-                    continue;
+                    $access->writeBoolean(false);
                 }
             }
 
+            // Reset route position
             $route->setPosition($oldRoutePosition);
 
             // Persist the test-level global scope.
@@ -231,7 +233,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->close();
         } catch (Exception $e) {
             $sessionId = $assessmentTestSession->getSessionId();
-            $msg = "An error occured while persisting AssessmentTestSession with ID '${sessionId}': " . $e->getMessage();
+            $msg = "An error occurred while persisting AssessmentTestSession with ID '${sessionId}': " . $e->getMessage();
             throw new StorageException($msg, StorageException::PERSISTENCE, $e);
         }
     }
@@ -240,7 +242,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * Retrieve an AssessmentTestSession object from storage by $sessionId.
      *
      * @param string $sessionId
-     * @return AssessmentTestSession
+     * @return AssessmentTestSession An AssessmentTestSession object.
      * @throws StorageException If the AssessmentTestSession could not be retrieved from persistent binary storage.
      */
     public function retrieve($sessionId)
@@ -310,7 +312,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             $route->setPosition($currentPosition);
             $manager = $this->getManager();
-            $assessmentTestSession = $manager->createAssessmentTestSession($this->getAssessmentTest(), $route, $config);
+            $test = $this->getAssessmentTest();
+            $assessmentTestSession = $manager->createAssessmentTestSession($test, $route, $config);
             $assessmentTestSession->setAssessmentItemSessionStore($itemSessionStore);
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);
@@ -321,7 +324,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $assessmentTestSession->setPath($path);
 
             // Build the test-level global scope, composed of Outcome Variables.
-            foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {
+            foreach ($test->getOutcomeDeclarations() as $outcomeDeclaration) {
                 $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
                 $access->readVariableValue($outcomeVariable);
                 $assessmentTestSession->setVariable($outcomeVariable);
@@ -329,21 +332,21 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Build the duration store.
             $durationStore = new DurationStore();
-            $durationCount = $access->readShort();
-            for ($i = 0; $i < $durationCount; $i++) {
-                $varName = $access->readString();
-                $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
-                $access->readVariableValue($durationVariable);
-                $durationStore->setVariable($durationVariable);
-            }
+                $durationCount = $access->readShort();
+                for ($i = 0; $i < $durationCount; $i++) {
+                    $varName = $access->readString();
+                    $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
+                    $access->readVariableValue($durationVariable);
+                    $durationStore->setVariable($durationVariable);
+                }
 
-            $assessmentTestSession->setDurationStore($durationStore);
+                $assessmentTestSession->setDurationStore($durationStore);
 
             $stream->close();
 
             return $assessmentTestSession;
         } catch (Exception $e) {
-            $msg = "An error occured while retrieving AssessmentTestSession. " . $e->getMessage();
+            $msg = 'An error occurred while retrieving AssessmentTestSession. ' . $e->getMessage();
             throw new StorageException($msg, StorageException::RETRIEVAL, $e);
         }
     }

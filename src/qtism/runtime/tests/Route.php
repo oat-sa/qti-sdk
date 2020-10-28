@@ -126,7 +126,7 @@ class Route implements Iterator
     /**
      * The current position in the route.
      *
-     * @var integer
+     * @var int
      */
     private $position = 0;
 
@@ -159,7 +159,7 @@ class Route implements Iterator
     /**
      * Get the current index position.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -169,7 +169,7 @@ class Route implements Iterator
     /**
      * Set the current index position.
      *
-     * @param integer $position
+     * @param int $position
      */
     public function setPosition($position)
     {
@@ -424,9 +424,6 @@ class Route implements Iterator
         $this->registerAssessmentSection($routeItem);
     }
 
-    /**
-     * @see Iterator::rewind()
-     */
     public function rewind()
     {
         $this->setPosition(0);
@@ -440,14 +437,18 @@ class Route implements Iterator
     public function current()
     {
         $routeItems = &$this->getRouteItems();
+        $position = $this->getPosition();
+        if (!isset($routeItems[$position])) {
+            throw new OutOfBoundsException('No RouteItem object found at position ' . $position);
+        }
 
-        return $routeItems[$this->getPosition()];
+        return $routeItems[$position];
     }
 
     /**
      * Get the current key corresponding to the current RouteItem object.
      *
-     * @return integer The returned key is the position of the current RouteItem object in the Route.
+     * @return int The returned key is the position of the current RouteItem object in the Route.
      */
     public function key()
     {
@@ -478,7 +479,7 @@ class Route implements Iterator
     /**
      * Whether the Route is still valid while iterating.
      *
-     * @return boolean
+     * @return bool
      */
     public function valid()
     {
@@ -490,7 +491,7 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the last of the route.
      *
-     * @return boolean
+     * @return bool
      */
     public function isLast()
     {
@@ -503,7 +504,7 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the first of the route.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFirst()
     {
@@ -514,7 +515,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in linear
      * navigation mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNavigationLinear()
     {
@@ -525,7 +526,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in non-linear
      * navigation mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNavigationNonLinear()
     {
@@ -536,7 +537,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in individual
      * submission mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSubmissionIndividual()
     {
@@ -547,7 +548,7 @@ class Route implements Iterator
      * Whether the current RouteItem in the route is in simultaneous
      * submission mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSubmissionSimultaneous()
     {
@@ -694,7 +695,7 @@ class Route implements Iterator
      * Get the sequence of identifiers formed by the identifiers of each
      * assessmentItemRef object of the route, in the order they must be taken.
      *
-     * @param boolean $withSequenceNumber Whether to return the sequence number in the identifier or not.
+     * @param bool $withSequenceNumber Whether to return the sequence number in the identifier or not.
      * @return IdentifierCollection
      */
     public function getIdentifierSequence($withSequenceNumber = true)
@@ -723,12 +724,12 @@ class Route implements Iterator
     public function getAssessmentItemRefsByCategory($category)
     {
         $categoryMap = $this->getAssessmentItemRefCategoryMap();
-        $categories = (gettype($category) === 'string') ? [$category] : $category->getArrayCopy();
+        $categories = (is_string($category)) ? [$category] : $category->getArrayCopy();
 
         $result = new AssessmentItemRefCollection();
 
         foreach ($categories as $cat) {
-            if (isset($categoryMap[$cat]) === true) {
+            if (isset($categoryMap[$cat])) {
                 foreach ($categoryMap[$cat] as $item) {
                     $result[] = $item;
                 }
@@ -749,11 +750,7 @@ class Route implements Iterator
     {
         $sectionMap = $this->getAssessmentItemRefSectionMap();
 
-        if (isset($sectionMap[$sectionIdentifier])) {
-            return $sectionMap[$sectionIdentifier];
-        } else {
-            return new AssessmentItemRefCollection();
-        }
+        return $sectionMap[$sectionIdentifier] ?? new AssessmentItemRefCollection();
     }
 
     /**
@@ -767,12 +764,12 @@ class Route implements Iterator
      */
     public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
-        $bySection = (empty($sectionIdentifier) === true) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
+        $bySection = (empty($sectionIdentifier)) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
 
-        if (is_null($includeCategories) === false) {
+        if ($includeCategories !== null) {
             // We will perform the search by category inclusion.
             return $bySection->intersect($this->getAssessmentItemRefsByCategory($includeCategories));
-        } elseif (is_null($excludeCategories) === false) {
+        } elseif ($excludeCategories !== null) {
             // Perform the category by exclusion.
             return $bySection->diff($this->getAssessmentItemRefsByCategory($excludeCategories));
         } else {
@@ -785,22 +782,18 @@ class Route implements Iterator
      * If $assessmentItemRef is not involved in the route, the returned result is 0.
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-     * @return integer The number of occurences found in the route for $assessmentItemRef.
+     * @return int The number of occurences found in the route for $assessmentItemRef.
      */
     public function getOccurenceCount(AssessmentItemRef $assessmentItemRef)
     {
         $occurenceMap = $this->getAssessmentItemRefOccurenceMap();
-        if (isset($occurenceMap[$assessmentItemRef]) === true) {
-            return $occurenceMap[$assessmentItemRef];
-        } else {
-            return 0;
-        }
+        return $occurenceMap[$assessmentItemRef] ?? 0;
     }
 
     /**
      * Get the number of RoutItem objects held by the Route.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
@@ -812,7 +805,7 @@ class Route implements Iterator
      * begins at 0. In other words, the first route item in the sequence will be found at position 0, the second
      * at position 1, ...
      *
-     * @param integer $position The position of the requested RouteItem object in the route sequence.
+     * @param int $position The position of the requested RouteItem object in the route sequence.
      * @return RouteItem The RouteItem found at $position.
      * @throws OutOfBoundsException If no RouteItem is found at $position.
      */
@@ -820,7 +813,7 @@ class Route implements Iterator
     {
         $routeItems = &$this->getRouteItems();
 
-        if (isset($routeItems[$position]) === true) {
+        if (isset($routeItems[$position])) {
             return $routeItems[$position];
         } else {
             $msg = "No RouteItem object found at position '${position}'.";
@@ -840,7 +833,7 @@ class Route implements Iterator
         $routeItemsCount = count($routeItems);
 
         if ($routeItemsCount === 0) {
-            $msg = "Cannot get the last RouteItem of the Route while it is empty.";
+            $msg = 'Cannot get the last RouteItem of the Route while it is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -859,7 +852,7 @@ class Route implements Iterator
         $routeItemsCount = count($routeItems);
 
         if ($routeItemsCount === 0) {
-            $msg = "Cannot get the first RouteItem of the Route while it is empty.";
+            $msg = 'Cannot get the first RouteItem of the Route while it is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -869,14 +862,14 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the last of the current TestPart.
      *
-     * @return boolean
+     * @return bool
      * @throws OutOfBoundsException If the Route is empty.
      */
     public function isLastOfTestPart()
     {
         $count = $this->count();
         if ($count === 0) {
-            $msg = "Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.";
+            $msg = 'Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -895,14 +888,14 @@ class Route implements Iterator
     /**
      * Whether the current RouteItem is the first of the current TestPart.
      *
-     * @return boolean
+     * @return bool
      * @throws OutOfBoundsException If the Route is empty.
      */
     public function isFirstOfTestPart()
     {
         $count = $this->count();
         if ($count === 0) {
-            $msg = "Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.";
+            $msg = 'Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -927,7 +920,7 @@ class Route implements Iterator
     {
         $currentPosition = $this->getPosition();
         if ($currentPosition === 0) {
-            $msg = "The current RouteItem is the first one in the route. There is no previous RouteItem";
+            $msg = 'The current RouteItem is the first one in the route. There is no previous RouteItem';
             throw new OutOfBoundsException($msg);
         }
 
@@ -943,7 +936,7 @@ class Route implements Iterator
     public function getNext()
     {
         if ($this->isLast() === true) {
-            $msg = "The current RouteItem is the last one in the route. There is no next RouteItem.";
+            $msg = 'The current RouteItem is the last one in the route. There is no next RouteItem.';
             throw new OutOfBoundsException($msg);
         }
 
@@ -953,9 +946,9 @@ class Route implements Iterator
     /**
      * Whether the RouteItem at $position in the Route is in the given $testPart.
      *
-     * @param integer $position A position in the Route sequence.
+     * @param int $position A position in the Route sequence.
      * @param TestPart $testPart A TestPart object involved in the Route.
-     * @return boolean
+     * @return bool
      * @throws OutOfBoundsException If $position is out of the Route bounds.
      */
     public function isInTestPart($position, TestPart $testPart)
@@ -991,7 +984,7 @@ class Route implements Iterator
      */
     public function getRouteItemsByTestPart($testPart)
     {
-        if (gettype($testPart) === 'string') {
+        if (is_string($testPart)) {
             $map = $this->getTestPartIdentifierMap();
 
             if (isset($map[$testPart]) === false) {
@@ -1025,7 +1018,7 @@ class Route implements Iterator
      */
     public function getRouteItemsByAssessmentSection($assessmentSection)
     {
-        if (gettype($assessmentSection) === 'string') {
+        if (is_string($assessmentSection)) {
             $map = $this->getAssessmentSectionIdentifierMap();
 
             if (isset($map[$assessmentSection]) === false) {
@@ -1060,7 +1053,7 @@ class Route implements Iterator
      */
     public function getRouteItemsByAssessmentItemRef($assessmentItemRef)
     {
-        if (gettype($assessmentItemRef) === 'string') {
+        if (is_string($assessmentItemRef)) {
             if (($ref = $this->assessmentItemRefs[$assessmentItemRef]) !== null) {
                 return $this->assessmentItemRefMap[$ref];
             } else {
@@ -1110,7 +1103,7 @@ class Route implements Iterator
             $identifier = new VariableIdentifier($identifier);
 
             $id = ($identifier->hasPrefix() === false) ? $identifier->getVariableName() : $identifier->getPrefix();
-            $occurence = ($identifier->hasPrefix() === false) ? 0 : intval($identifier->getVariableName() - 1);
+            $occurence = ($identifier->hasPrefix() === false) ? 0 : ($identifier->getVariableName() - 1);
         } catch (InvalidArgumentException $e) {
             $msg = "The given identifier '${identifier}' is an invalid branching target.";
             throw new OutOfRangeException($msg);
@@ -1118,7 +1111,7 @@ class Route implements Iterator
 
         // Check for an assessmentItemRef.
         $assessmentItemRefs = $this->getAssessmentItemRefs();
-        if (isset($assessmentItemRefs[$id]) === true) {
+        if (isset($assessmentItemRefs[$id])) {
             $assessmentItemRefMap = $this->getAssessmentItemRefMap();
             $targetRouteItems = $assessmentItemRefMap[$assessmentItemRefs[$id]];
 
@@ -1126,7 +1119,7 @@ class Route implements Iterator
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
                 // in the same testPart [...]
-                $msg = "Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.";
+                $msg = 'Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.';
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1137,12 +1130,12 @@ class Route implements Iterator
 
         // Check for an assessmentSection.
         $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
-        if (isset($assessmentSectionIdentifierMap[$id]) === true) {
+        if (isset($assessmentSectionIdentifierMap[$id])) {
             if ($assessmentSectionIdentifierMap[$id][0]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
                 // in the same testPart [...]
-                $msg = "Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.";
+                $msg = 'Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.';
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1154,12 +1147,12 @@ class Route implements Iterator
 
         // Check for a testPart.
         $testPartIdentifierMap = $this->getTestPartIdentifierMap();
-        if (isset($testPartIdentifierMap[$id]) === true) {
+        if (isset($testPartIdentifierMap[$id])) {
             // We branch to the first RouteItem belonging to the testPart.
             if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // For testParts, the target must refer to another testPart.
-                $msg = "Cannot branch to the same testPart.";
+                $msg = 'Cannot branch to the same testPart.';
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1178,7 +1171,7 @@ class Route implements Iterator
      * Get the position of $routeItem in the Route.
      *
      * @param RouteItem $routeItem A RouteItem you want to know the position.
-     * @return integer The position of the routeItem in the Route. The indexes begin at 0.
+     * @return int The position of the routeItem in the Route. The indexes begin at 0.
      * @throws OutOfBoundsException If no such $routeItem is referenced in the Route.
      */
     public function getRouteItemPosition(RouteItem $routeItem)
@@ -1186,7 +1179,7 @@ class Route implements Iterator
         if (($search = array_search($routeItem, $this->getRouteItems(), true)) !== false) {
             return $search;
         } else {
-            $msg = "No such RouteItem object referenced in the Route.";
+            $msg = 'No such RouteItem object referenced in the Route.';
             throw new OutOfBoundsException($msg);
         }
     }

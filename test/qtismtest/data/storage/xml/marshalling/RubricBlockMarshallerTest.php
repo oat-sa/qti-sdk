@@ -14,7 +14,11 @@ use qtism\data\content\xhtml\text\P;
 use qtism\data\View;
 use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class RubricBlockMarshallerTest
+ */
 class RubricBlockMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()
@@ -26,16 +30,16 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
             </rubricBlock>
         ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\RubricBlock', $rubricBlock);
+        $this->assertInstanceOf(RubricBlock::class, $rubricBlock);
         $this->assertEquals('warning', $rubricBlock->getClass());
         $this->assertEquals(2, count($rubricBlock->getViews()));
         $this->assertEquals('/home/jerome', $rubricBlock->getXmlBase());
 
         $rubricBlockContent = $rubricBlock->getContent();
         $this->assertEquals(6, count($rubricBlockContent));
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H3', $rubricBlockContent[1]);
+        $this->assertInstanceOf(H3::class, $rubricBlockContent[1]);
         $this->assertEquals('Be carefull kiddo !', $rubricBlockContent[1]->getContent()[0]->getContent());
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $rubricBlockContent[3]);
+        $this->assertInstanceOf(P::class, $rubricBlockContent[3]);
         $this->assertEquals('Read the instructions twice.', $rubricBlockContent[3]->getContent()[0]->getContent());
         $this->assertEquals('inner text', $rubricBlockContent[2]->getContent());
 
@@ -51,10 +55,8 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallNoViewsAttribute()
     {
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory attribute 'views' is missing."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'views' is missing.");
 
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" xml:base="/home/jerome">
@@ -69,10 +71,8 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshallInvalidContent()
     {
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The 'rubricBlock' cannot contain 'choiceInteraction' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'rubricBlock' cannot contain 'choiceInteraction' elements.");
 
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock view="tutor" class="warning" xml:base="/home/jerome">
@@ -97,7 +97,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
             </rubricBlock>
         ');
 
-        $this->assertInstanceOf('qtism\\data\\content\\RubricBlock', $rubricBlock);
+        $this->assertInstanceOf(RubricBlock::class, $rubricBlock);
     }
 
     public function testMarshall()

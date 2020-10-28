@@ -25,7 +25,6 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\Pure;
 
 /**
  * From IMS QTI:
@@ -40,7 +39,7 @@ use qtism\data\expressions\Pure;
  * If any of the sub-expressions is NULL, the result is NULL. If any of the
  * sub-expressions is not a numerical value, then the result is NULL.
  */
-class Gcd extends Operator implements Pure
+class Gcd extends Operator
 {
     /**
      * Create a new Gcd object.
@@ -53,22 +52,10 @@ class Gcd extends Operator implements Pure
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {
         return 'gcd';
-    }
-
-    /**
-     * Checks whether this expression is pure.
-     *
-     * @link https://en.wikipedia.org/wiki/Pure_function
-     *
-     * @return boolean True if the expression is pure, false otherwise
-     */
-    public function isPure()
-    {
-        return $this->getExpressions()->isPure();
     }
 }

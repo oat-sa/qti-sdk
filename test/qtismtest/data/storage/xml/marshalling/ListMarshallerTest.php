@@ -15,6 +15,9 @@ use qtism\data\content\xhtml\text\P;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ListMarshallerTest
+ */
 class ListMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallUl()
@@ -33,7 +36,7 @@ class ListMarshallerTest extends QtiSmTestCase
 		    </ul>
 		');
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\ul', $ul);
+        $this->assertInstanceOf(Ul::class, $ul);
         $this->assertEquals('my-qti-list', $ul->getClass());
 
         $listItems = $ul->getContent();
@@ -41,40 +44,40 @@ class ListMarshallerTest extends QtiSmTestCase
 
         // Check the first li node.
         $li = $listItems[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\li', $li);
+        $this->assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
         $this->assertEquals(3, count($liContent));
 
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $liContent[0]);
+        $this->assertInstanceOf(TextRun::class, $liContent[0]);
         $this->assertEquals('Simple ', $liContent[0]->getContent());
 
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Strong', $liContent[1]);
+        $this->assertInstanceOf(Strong::class, $liContent[1]);
         $strongContent = $liContent[1]->getContent();
         $this->assertEquals(1, count($strongContent));
         $this->assertEquals('text', $strongContent[0]->getContent());
 
-        $this->assertInstanceOf('qtism\\data\\content\\TextRun', $liContent[2]);
+        $this->assertInstanceOf(TextRun::class, $liContent[2]);
         $this->assertEquals('.', $liContent[2]->getContent());
 
         // Check the second li node.
         $li = $listItems[1];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\li', $li);
+        $this->assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
         $this->assertEquals(3, count($liContent));
         $this->assertEquals(" olé\n                   ", $liContent[0]->getContent());
 
         $ol = $liContent[1];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\ol', $ol);
+        $this->assertInstanceOf(Ol::class, $ol);
         $this->assertEquals('ordered-list', $ol->getId());
 
         $listItems = $ol->getContent();
         $this->assertEquals(1, count($listItems));
         $li = $listItems[0];
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\lists\\li', $li);
+        $this->assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
         $this->assertEquals(5, count($liContent));
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Em', $liContent[1]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $liContent[3]);
+        $this->assertInstanceOf(Em::class, $liContent[1]);
+        $this->assertInstanceOf(P::class, $liContent[3]);
     }
 
     public function testMarshallUl()

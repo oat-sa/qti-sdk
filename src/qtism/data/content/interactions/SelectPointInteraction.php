@@ -51,7 +51,7 @@ class SelectPointInteraction extends GraphicInteraction
      * than 1 (or 0) then the interaction must be bound to a response with
      * multiple cardinality.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = 1;
@@ -64,7 +64,7 @@ class SelectPointInteraction extends GraphicInteraction
      * to select any choices. minChoices must be less than or equal to the limit
      * imposed by maxChoices.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = 0;
@@ -90,7 +90,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Get the maximum number of points that the candidate is allowed to select.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMaxChoices()
     {
@@ -100,12 +100,12 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Set the maximum number of points that the candidate is allowed to select.
      *
-     * @param integer $maxChoices A positive (>= 0) integer.
+     * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices >= 0) {
+        if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         } else {
             $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
@@ -116,7 +116,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Get the minimum number of points that the candidate is allowed to select.
      *
-     * @return integer A positive (>= 0) integer.
+     * @return int A positive (>= 0) integer.
      */
     public function getMinChoices()
     {
@@ -126,12 +126,12 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * Set the minimum number of points that the candidate is allowed to select.
      *
-     * @param integer $minChoices A positive (>= 0) integer.
+     * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer.
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && $minChoices >= 0) {
+        if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
         } else {
             $msg = "The 'minChoices' argument must be a positive (>= 0) integer, '" . gettype($minChoices) . "' given.";
@@ -140,7 +140,7 @@ class SelectPointInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint|null
      */
     public function getResponseValidityConstraint()
     {
@@ -152,7 +152,7 @@ class SelectPointInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -160,7 +160,7 @@ class SelectPointInteraction extends GraphicInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

@@ -69,7 +69,7 @@ class OrderInteraction extends BlockInteraction
      * in which the choices are initially presented, subject to the value of the fixed
      * attribute of each choice.
      *
-     * @var boolean
+     * @var bool
      * @qtism-bean-property
      */
     private $shuffle = false;
@@ -82,7 +82,7 @@ class OrderInteraction extends BlockInteraction
      * exceed the number of choices available. If unspecified, all of the choices must be ordered
      * and maxChoices is ignored.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $minChoices = -1;
@@ -95,7 +95,7 @@ class OrderInteraction extends BlockInteraction
      * than or equal to minChoices and must not exceed the number of choices available. If unspecified,
      * all of the choices may be ordered.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $maxChoices = -1;
@@ -106,7 +106,7 @@ class OrderInteraction extends BlockInteraction
      * The orientation attribute provides a hint to rendering systems that
      * the ordering has an inherent vertical or horizontal interpretation.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $orientation = Orientation::VERTICAL;
@@ -143,7 +143,7 @@ class OrderInteraction extends BlockInteraction
         if (count($simpleChoices) > 0) {
             $this->simpleChoices = $simpleChoices;
         } else {
-            $msg = "An OrderInteraction object must be composed of at lease one SimpleChoice object, none given.";
+            $msg = 'An OrderInteraction object must be composed of at lease one SimpleChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -161,12 +161,12 @@ class OrderInteraction extends BlockInteraction
     /**
      * Set whether the delivery engine must randomize the choices.
      *
-     * @param boolean $shuffle A boolean value.
+     * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle)
     {
-        if (is_bool($shuffle) === true) {
+        if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
         } else {
             $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
@@ -177,7 +177,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * Whether the delivery engine must randomize the choices.
      *
-     * @return boolean
+     * @return bool
      */
     public function mustShuffle()
     {
@@ -187,12 +187,12 @@ class OrderInteraction extends BlockInteraction
     /**
      * Set the minimum number of choices that the candidate may select.
      *
-     * @param integer $minChoices A strictly (> 0) positive integer or -1 if no value is specified for the attribute.
+     * @param int $minChoices A strictly (> 0) positive integer or -1 if no value is specified for the attribute.
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer nor -1.
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) === true && ($minChoices > 0 || $minChoices === -1)) {
+        if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
             if ($minChoices > count($this->getSimpleChoices())) {
                 $msg = "The value of 'minChoices' cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
@@ -208,7 +208,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * Get the minimum number of choices that the candidate may select.
      *
-     * @return integer A strictly positive (> 0) integer.
+     * @return int A strictly positive (> 0) integer.
      */
     public function getMinChoices()
     {
@@ -216,9 +216,9 @@ class OrderInteraction extends BlockInteraction
     }
 
     /**
-     * Wether a value is defined for the minChoices attribute.
+     * Whether a value is defined for the minChoices attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMinChoices()
     {
@@ -228,12 +228,12 @@ class OrderInteraction extends BlockInteraction
     /**
      * Set the maximum number of choices that the candidate may select and order when responding to the interaction.
      *
-     * @param integer $maxChoices A strictly positive (> 0) integer or -1 if no value is specified for the attribuite.
+     * @param int $maxChoices A strictly positive (> 0) integer or -1 if no value is specified for the attribuite.
      * @throws InvalidArgumentException If $maxChoices is not a strictly positive integer nor -1.
      */
     public function setMaxChoices($maxChoices)
     {
-        if (is_int($maxChoices) === true && $maxChoices > 0 || $maxChoices === -1) {
+        if (is_int($maxChoices) && $maxChoices > 0 || $maxChoices === -1) {
             if ($this->hasMinChoices() === true && $maxChoices > count($this->getSimpleChoices())) {
                 $msg = "The 'maxChoices' argument cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
@@ -249,7 +249,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * Get the maximum number of choices that the candidate may select and order when responding to the interaction.
      *
-     * @return integer A strictly positive (> 0) integer or -1 if no value is defined for the maxChoices attribute.
+     * @return int A strictly positive (> 0) integer or -1 if no value is defined for the maxChoices attribute.
      */
     public function getMaxChoices()
     {
@@ -259,7 +259,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * Whether a value is defined for the maxChoices attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMaxChoices()
     {
@@ -269,12 +269,12 @@ class OrderInteraction extends BlockInteraction
     /**
      * Set the orientation of the choices.
      *
-     * @param integer $orientation A value from the Orientation enumeration.
+     * @param int $orientation A value from the Orientation enumeration.
      * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray(), true) === true) {
+        if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration, '" . gettype($orientation) . "' given.";
@@ -285,7 +285,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * Get the orientation of the choices.
      *
-     * @return integer A value from the Orientation enumeration.
+     * @return int A value from the Orientation enumeration.
      */
     public function getOrientation()
     {
@@ -293,7 +293,7 @@ class OrderInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @return ResponseValidityConstraint
      */
     public function getResponseValidityConstraint()
     {
@@ -305,7 +305,7 @@ class OrderInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -315,7 +315,7 @@ class OrderInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

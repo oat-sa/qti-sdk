@@ -57,23 +57,23 @@ class RoundProcessor extends OperatorProcessor
         }
 
         if ($operands->exclusivelySingle() === false) {
-            $msg = "The Round operator only accepts operands with a single cardinality.";
+            $msg = 'The Round operator only accepts operands with a single cardinality.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
         }
 
         if ($operands->exclusivelyNumeric() === false) {
-            $msg = "The Round operator only accepts operands with baseType integer or float.";
+            $msg = 'The Round operator only accepts operands with baseType integer or float.';
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
         $operand = $operands[0];
         $mode = ($operand->getValue() >= 0) ? PHP_ROUND_HALF_UP : PHP_ROUND_HALF_DOWN;
 
-        return new QtiInteger(intval(round($operand->getValue(), 0, $mode)));
+        return new QtiInteger((int)round($operand->getValue(), 0, $mode));
     }
 
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     * @return string
      */
     protected function getExpressionType()
     {

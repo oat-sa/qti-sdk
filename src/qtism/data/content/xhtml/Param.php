@@ -73,7 +73,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * This specification supports the use of DATA and REF but not OBJECT.
      *
-     * @var integer
+     * @var int
      * @qtism-bean-property
      */
     private $valueType = ParamType::DATA;
@@ -93,7 +93,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @param string $name The name of the parameter as interpreted by the object.
      * @param string $value The value to pass to the object named parameter.
-     * @param integer $valueType A value from the ParamType enumeration.
+     * @param int $valueType A value from the ParamType enumeration.
      * @param string $type A mime-type for values valuetype REF.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
@@ -113,7 +113,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setName($name)
     {
-        if (is_string($name) === true) {
+        if (is_string($name)) {
             $this->name = $name;
         } else {
             $msg = "The 'name' argument must be a string, '" . gettype($name) . "' given.";
@@ -139,7 +139,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setValue($value)
     {
-        if (is_string($value) === true) {
+        if (is_string($value)) {
             $this->value = $value;
         } else {
             $msg = "The 'value' argument must be a string, '" . gettype($value) . "' given.";
@@ -160,12 +160,12 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * Set the valueType attribute.
      *
-     * @param integer $valueType A value from the ParamType enumeration.
+     * @param int $valueType A value from the ParamType enumeration.
      * @throws InvalidArgumentException If $valueType is not a value from the ParamType enumeration.
      */
     public function setValueType($valueType)
     {
-        if (in_array($valueType, ParamType::asArray(), true) === true) {
+        if (in_array($valueType, ParamType::asArray(), true)) {
             $this->valueType = $valueType;
         } else {
             $msg = "The 'valueType' argument must be a value from the ParamType enumeration, '" . gettype($valueType) . "' given.";
@@ -176,7 +176,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * Get the valueType attribute.
      *
-     * @return integer A value from the ParamType enumeration.
+     * @return int A value from the ParamType enumeration.
      */
     public function getValueType()
     {
@@ -192,7 +192,7 @@ class Param extends QtiComponent implements ObjectFlow
      */
     public function setType($type)
     {
-        if (is_string($type) === true) {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a string, '" . gettype($type) . "' given.";
@@ -214,7 +214,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * Whether a type is provided for the param.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasType()
     {
@@ -222,7 +222,7 @@ class Param extends QtiComponent implements ObjectFlow
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -230,7 +230,7 @@ class Param extends QtiComponent implements ObjectFlow
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

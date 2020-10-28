@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use DOMElement;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InlineCollection;
@@ -13,7 +14,11 @@ use qtism\data\ShowHide;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
+/**
+ * Class TestFeedbackMarshallerTest
+ */
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
@@ -36,7 +41,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf('\\DOMElement', $element);
+        $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals('testFeedback', $element->nodeName);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
@@ -62,14 +67,14 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\testFeedback', $component);
+        $this->assertInstanceOf(TestFeedback::class, $component);
         $this->assertEquals($component->getIdentifier(), 'myIdentifier1');
         $this->assertEquals($component->getAccess(), TestFeedbackAccess::AT_END);
         $this->assertEquals($component->getShowHide(), ShowHide::SHOW);
         $this->assertEquals($component->getTitle(), 'my title');
 
         $content = $component->getContent();
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $content[1]);
+        $this->assertInstanceOf(P::class, $content[1]);
     }
 
     public function testUnmarshallWrongContent()
@@ -85,10 +90,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "'testFeedback' elements cannot contain 'choiceInteraction' elements."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("'testFeedback' elements cannot contain 'choiceInteraction' elements.");
 
         $marshaller->unmarshall($element);
     }
@@ -104,10 +107,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'access' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'access' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }
@@ -123,10 +124,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'showHide' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'showHide' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }
@@ -142,10 +141,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }
@@ -161,10 +158,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
-        $this->setExpectedException(
-            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
-            "The mandatory 'identifier' attribute is missing from element 'testFeedback'."
-        );
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'testFeedback'.");
 
         $marshaller->unmarshall($element);
     }

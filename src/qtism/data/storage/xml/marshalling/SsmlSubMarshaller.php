@@ -37,7 +37,6 @@ class SsmlSubMarshaller extends Marshaller
      *
      * @param QtiComponent $component An SSML sub object.
      * @return DOMElement The according DOMElement object.
-     * @throws \MarshallingException
      */
     protected function marshall(QtiComponent $component)
     {
@@ -49,7 +48,6 @@ class SsmlSubMarshaller extends Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An SSML sub object.
-     * @throws \UnmarshallingException
      */
     protected function unmarshall(DOMElement $element)
     {
@@ -59,7 +57,7 @@ class SsmlSubMarshaller extends Marshaller
     }
 
     /**
-     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     * @return string
      */
     public function getExpectedQtiClassName()
     {

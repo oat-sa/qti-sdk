@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
+use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -69,7 +70,7 @@ class UploadInteraction extends BlockInteraction
      */
     public function setType($type)
     {
-        if (is_string($type) === true) {
+        if (is_string($type)) {
             $this->type = $type;
         } else {
             $msg = "The 'type' argument must be a string value, '" . gettype($type) . "' given.";
@@ -91,7 +92,7 @@ class UploadInteraction extends BlockInteraction
      * Whether or not a value is defined for the 'type'
      * attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasType()
     {
@@ -99,7 +100,7 @@ class UploadInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     * @return QtiComponentCollection
      */
     public function getComponents()
     {
@@ -107,7 +108,7 @@ class UploadInteraction extends BlockInteraction
     }
 
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @return string
      */
     public function getQtiClassName()
     {

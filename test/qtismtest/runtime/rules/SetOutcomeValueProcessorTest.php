@@ -13,6 +13,9 @@ use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\SetOutcomeValueProcessor;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class SetOutcomeValueProcessorTest
+ */
 class SetOutcomeValueProcessorTest extends QtiSmTestCase
 {
     public function testSetOutcomeValueSimple()
@@ -84,7 +87,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException(RuleProcessingException::class);
+        $this->expectException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -101,7 +104,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException(RuleProcessingException::class);
+        $this->expectException(RuleProcessingException::class);
         $processor->process();
     }
 
@@ -165,10 +168,8 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            RuleProcessingException::class,
-            'Unable to set value hello to variable \'SCORE\' (cardinality = single, baseType = integer).'
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage('Unable to set value hello to variable \'SCORE\' (cardinality = single, baseType = integer).');
         $processor->process();
     }
 
@@ -211,11 +212,9 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$score]);
         $processor->setState($state);
 
-        $this->setExpectedException(
-            'qtism\\runtime\\rules\\RuleProcessingException',
-            "No variable with identifier 'SCOREXXXX' to be set in the current state.",
-            RuleProcessingException::NONEXISTENT_VARIABLE
-        );
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionMessage("No variable with identifier 'SCOREXXXX' to be set in the current state.");
+        $this->expectExceptionCode(RuleProcessingException::NONEXISTENT_VARIABLE);
 
         $processor->process();
     }

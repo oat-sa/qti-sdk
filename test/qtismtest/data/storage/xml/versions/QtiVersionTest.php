@@ -6,6 +6,9 @@ use InvalidArgumentException;
 use qtism\data\storage\xml\versions\QtiVersion;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class QtiVersionTest
+ */
 class QtiVersionTest extends QtiSmTestCase
 {
     public function testVersionCompareValid()

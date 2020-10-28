@@ -33,17 +33,20 @@ class ParamType implements Enumeration
     /**
      * DATA
      *
-     * @var integer
+     * @var int
      */
     const DATA = 0;
 
     /**
      * REF
      *
-     * @var integer
+     * @var int
      */
     const REF = 1;
 
+    /**
+     * @return array
+     */
     public static function asArray()
     {
         return [
@@ -52,6 +55,10 @@ class ParamType implements Enumeration
         ];
     }
 
+    /**
+     * @param false|int $name
+     * @return bool|int
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -69,6 +76,10 @@ class ParamType implements Enumeration
         }
     }
 
+    /**
+     * @param false|string $constant
+     * @return bool|string
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

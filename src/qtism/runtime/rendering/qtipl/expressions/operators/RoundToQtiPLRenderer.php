@@ -47,7 +47,7 @@ class RoundToQtiPLRenderer extends AbstractQtiPLRenderer
         $attributes = [];
 
         if ($something->getRoundingMode() != RoundingMode::SIGNIFICANT_FIGURES) {
-            $attributes['roundingMode'] = "\"" . RoundingMode::getNameByConstant($something->getRoundingMode()) . "\"";
+            $attributes['roundingMode'] = '"' . RoundingMode::getNameByConstant($something->getRoundingMode()) . '"';
         }
 
         $attributes['figures'] = $something->getFigures();

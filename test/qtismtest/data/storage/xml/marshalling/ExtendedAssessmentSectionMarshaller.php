@@ -10,6 +10,9 @@ use qtism\data\SectionPartCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class ExtendedAssessmentSectionMarshallerTest
+ */
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshall()
@@ -25,20 +28,20 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($elt);
 
         $section = $marshaller->unmarshall($elt);
-        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $section);
+        $this->assertInstanceOf(ExtendedAssessmentSection::class, $section);
         $this->assertEquals('S01', $section->getIdentifier());
         $this->assertEquals('Section 01', $section->getTitle());
         $this->assertTrue($section->isVisible());
 
         $sectionParts = $section->getSectionParts();
         $this->assertEquals(1, count($sectionParts));
-        $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['SR01']);
+        $this->assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
         $this->assertEquals('SR01', $sectionParts['SR01']->getIdentifier());
         $this->assertEquals('./SR01.xml', $sectionParts['SR01']->getHref());
 
         $rubricBlockRefs = $section->getRubricBlockRefs();
         $this->assertEquals(1, count($rubricBlockRefs));
-        $this->assertInstanceOf('qtism\\data\\content\\RubricBlockRef', $rubricBlockRefs['R01']);
+        $this->assertInstanceOf(RubricBlockRef::class, $rubricBlockRefs['R01']);
         $this->assertEquals('R01', $rubricBlockRefs['R01']->getIdentifier());
         $this->assertEquals('./R01.xml', $rubricBlockRefs['R01']->getHref());
 

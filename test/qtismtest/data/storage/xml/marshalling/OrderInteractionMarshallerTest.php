@@ -12,6 +12,9 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
 
+/**
+ * Class OrderInteractionMarshallerTest
+ */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall21()
@@ -69,7 +72,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\OrderInteraction', $component);
+        $this->assertInstanceOf(OrderInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertFalse($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
@@ -100,7 +103,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\OrderInteraction', $component);
+        $this->assertInstanceOf(OrderInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertTrue($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
@@ -135,7 +138,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf('qtism\\data\\content\\interactions\\OrderInteraction', $component);
+        $this->assertInstanceOf(OrderInteraction::class, $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertTrue($component->mustShuffle());
         $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());

@@ -49,10 +49,13 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
         }
     }
 
+    /**
+     * @param mixed $value
+     */
     protected function checkType($value)
     {
         if (!$value instanceof QtiIdentifiable) {
-            $msg = "The QtiIdentifiable class only accepts to store QtiIdentifiable objects.";
+            $msg = 'The QtiIdentifiable class only accepts to store QtiIdentifiable objects.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -62,13 +65,13 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * the collection.
      *
      * @param mixed $offset
-     * @return boolean
+     * @return bool
      * @throws OutOfRangeException If the request $offset is not a string or is empty.
      */
     public function offsetExists($offset)
     {
-        if (gettype($offset) !== 'string' && empty($offset) === false) {
-            $msg = "The requested offset must be a string.";
+        if (!is_string($offset) && empty($offset) === false) {
+            $msg = 'The requested offset must be a string.';
             throw new OutOfRangeException($msg);
         }
 
@@ -86,15 +89,15 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      */
     public function offsetGet($offset)
     {
-        if (gettype($offset) !== 'string') {
-            $msg = "The requested offset must be a non-empty string.";
+        if (!is_string($offset)) {
+            $msg = 'The requested offset must be a non-empty string.';
             throw new OutOfRangeException($msg);
         }
 
         $returnValue = null;
         $data = &$this->getDataPlaceHolder();
 
-        if (isset($data[$offset]) === true) {
+        if (isset($data[$offset])) {
             $returnValue = $data[$offset];
         }
 
@@ -116,7 +119,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
         $this->checkType($value);
 
         if ($offset !== null) {
-            $msg = "No specific offset can be set in a QtiIdentifiableCollection. ";
+            $msg = 'No specific offset can be set in a QtiIdentifiableCollection. ';
             $msg .= "The offset is always infered from the 'identifier' attribute of ";
             $msg .= "the given QtiIdentifiable object. Given offset is '${offset}'.";
 
@@ -152,14 +155,14 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      */
     public function offsetUnset($offset)
     {
-        if (gettype($offset) === 'string') {
+        if (is_string($offset)) {
             $data = &$this->getDataPlaceHolder();
             if (isset($data[$offset])) {
                 $data[$offset]->detach($this);
                 unset($data[$offset]);
             }
         } else {
-            $msg = "The requested offset must be a non-empty string.";
+            $msg = 'The requested offset must be a non-empty string.';
             throw new OutOfRangeException($msg);
         }
     }
@@ -201,7 +204,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
             $replacement->attach($this);
             $object->detach($this);
         } else {
-            $msg = "The object you want to replace could not be found.";
+            $msg = 'The object you want to replace could not be found.';
             throw new UnexpectedValueException($msg);
         }
     }

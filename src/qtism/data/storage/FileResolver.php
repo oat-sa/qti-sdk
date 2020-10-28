@@ -57,7 +57,7 @@ abstract class FileResolver implements Resolver
      */
     public function setBasePath($basePath = '')
     {
-        if (gettype($basePath) === 'string') {
+        if (is_string($basePath)) {
             $this->basePath = $basePath;
         } else {
             $msg = "The basePath argument must be a valid string, '" . gettype($basePath) . "' given.";

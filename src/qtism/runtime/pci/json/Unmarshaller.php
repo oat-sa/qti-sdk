@@ -24,6 +24,7 @@
 namespace qtism\runtime\pci\json;
 
 use InvalidArgumentException;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\QtiBoolean;
@@ -67,7 +68,7 @@ class Unmarshaller
     /**
      * Create a new JSON Unmarshaller object.
      *
-     * @param FileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
+     * @param FileManager $fileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
      */
     public function __construct(FileManager $fileManager)
     {
@@ -106,11 +107,11 @@ class Unmarshaller
      */
     public function unmarshall($json)
     {
-        if (is_string($json) === true) {
+        if (is_string($json)) {
             $tmpJson = @json_decode($json, true);
             if ($tmpJson === null) {
-                // An error occured while decoding.
-                $msg = "An error occured while decoding the following JSON data '" . mb_substr($json, 0, 30, 'UTF-8') . "...'.";
+                // An error occurred while decoding.
+                $msg = "An error occurred while decoding the following JSON data '" . mb_substr($json, 0, 30, 'UTF-8') . "...'.";
                 $code = UnmarshallingException::JSON_DECODE;
                 throw new UnmarshallingException($msg, $code);
             }
@@ -120,7 +121,7 @@ class Unmarshaller
 
         if (is_array($json) === false || count($json) === 0) {
             $msg = "The '" . get_class($this) . "::unmarshall' method only accepts a JSON string or a non-empty array as argument, '";
-            if (is_object($json) === true) {
+            if (is_object($json)) {
                 $msg .= get_class($json);
             } else {
                 $msg .= gettype($json);
@@ -141,13 +142,13 @@ class Unmarshaller
         // a base, a list or a record.
         $keys = array_keys($json);
 
-        if (in_array('base', $keys) === true) {
+        if (in_array('base', $keys)) {
             // This is a base.
             return $this->unmarshallUnit($json);
-        } elseif (in_array('list', $keys) === true) {
+        } elseif (in_array('list', $keys)) {
             $keys = array_keys($json['list']);
             if (isset($keys[0]) === false) {
-                $msg = "No baseType provided for list.";
+                $msg = 'No baseType provided for list.';
                 throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
             }
 
@@ -161,17 +162,29 @@ class Unmarshaller
 
             $returnValue = new MultipleContainer($baseType);
 
+            if (!is_array($json['list'][$keys[0]])) {
+                $msg = 'list is not an array';
+                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
+            }
+
             // This is a list.
             foreach ($json['list'][$keys[0]] as $v) {
-                if ($v === null) {
-                    $returnValue[] = $this->unmarshallUnit(['base' => $v]);
-                } else {
-                    $returnValue[] = $this->unmarshallUnit(['base' => [$keys[0] => $v]]);
+                try {
+                    if ($v === null) {
+                        $returnValue[] = $this->unmarshallUnit(['base' => $v]);
+                    } else {
+                        $returnValue[] = $this->unmarshallUnit(['base' => [$keys[0] => $v]]);
+                    }
+                } catch (InvalidArgumentException $e) {
+                    $strBaseType = BaseType::getNameByConstant($baseType);
+                    $msg = "A value is not compliant with the '${strBaseType}' baseType.";
+                    $code = UnmarshallingException::NOT_PCI;
+                    throw new UnmarshallingException($msg, $code);
                 }
             }
 
             return $returnValue;
-        } elseif (in_array('record', $keys) === true) {
+        } elseif (in_array('record', $keys)) {
             // This is a record.
             $returnValue = new RecordContainer();
 
@@ -186,7 +199,7 @@ class Unmarshaller
                     throw new UnmarshallingException($msg, $code);
                 }
 
-                if (isset($v['base']) === true || (array_key_exists('base', $v) && $v['base'] === null)) {
+                if (isset($v['base']) || (array_key_exists('base', $v) && $v['base'] === null)) {
                     $unit = ['base' => $v['base']];
                 } else {
                     // No value found, let's go for a null value.
@@ -213,75 +226,79 @@ class Unmarshaller
      * Unmarshall a unit of data into QTISM runtime model.
      *
      * @param array $unit
-     * @return null|QtiDatatype
+     * @return QtiDatatype|null
      * @throws FileManagerException
      * @throws UnmarshallingException
      */
     protected function unmarshallUnit(array $unit)
     {
-        if (isset($unit['base'])) {
-            // Primitive base type.
-            try {
-                $keys = array_keys($unit['base']);
-                switch ($keys[0]) {
-                    case 'boolean':
-                        return $this->unmarshallBoolean($unit);
-                        break;
-
-                    case 'integer':
-                        return $this->unmarshallInteger($unit);
-                        break;
-
-                    case 'float':
-                        return $this->unmarshallFloat($unit);
-                        break;
-
-                    case 'string':
-                        return $this->unmarshallString($unit);
-                        break;
-
-                    case 'point':
-                        return $this->unmarshallPoint($unit);
-                        break;
-
-                    case 'pair':
-                        return $this->unmarshallPair($unit);
-                        break;
-
-                    case 'directedPair':
-                        return $this->unmarshallDirectedPair($unit);
-                        break;
-
-                    case 'duration':
-                        return $this->unmarshallDuration($unit);
-                        break;
-
-                    case 'file':
-                        return $this->unmarshallFile($unit);
-                        break;
-
-                    case 'uri':
-                        return $this->unmarshallUri($unit);
-                        break;
-
-                    case 'intOrIdentifier':
-                        return $this->unmarshallIntOrIdentifier($unit);
-                        break;
-
-                    case 'identifier':
-                        return $this->unmarshallIdentifier($unit);
-                        break;
-
-                    default:
-                        throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
-                        break;
-                }
-            } catch (InvalidArgumentException $e) {
-                $msg = "A value does not satisfy its baseType.";
-                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
-            }
-        } elseif ($unit['base'] === null) {
+        if ($unit['base'] === null) {
             return null;
+        }
+
+        // Primitive base type.
+        try {
+            $keys = array_keys($unit['base']);
+            switch ($keys[0]) {
+                case 'boolean':
+                    return $this->unmarshallBoolean($unit);
+                    break;
+
+                case 'integer':
+                    return $this->unmarshallInteger($unit);
+                    break;
+
+                case 'float':
+                    return $this->unmarshallFloat($unit);
+                    break;
+
+                case 'string':
+                    return $this->unmarshallString($unit);
+                    break;
+
+                case 'point':
+                    return $this->unmarshallPoint($unit);
+                    break;
+
+                case 'pair':
+                    return $this->unmarshallPair($unit);
+                    break;
+
+                case 'directedPair':
+                    return $this->unmarshallDirectedPair($unit);
+                    break;
+
+                case 'duration':
+                    return $this->unmarshallDuration($unit);
+                    break;
+
+                case 'file':
+                    return $this->unmarshallFile($unit);
+                    break;
+
+                case FileHash::FILE_HASH_KEY:
+                    return $this->unmarshallFileHash($unit);
+                    break;
+
+                case 'uri':
+                    return $this->unmarshallUri($unit);
+                    break;
+
+                case 'intOrIdentifier':
+                    return $this->unmarshallIntOrIdentifier($unit);
+                    break;
+
+                case 'identifier':
+                    return $this->unmarshallIdentifier($unit);
+                    break;
+
+                default:
+                    throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
+                    break;
+            }
+        } catch (InvalidArgumentException $e) {
+            $msg = 'A value does not satisfy its baseType.';
+            throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
         }
     }
 
@@ -317,8 +334,8 @@ class Unmarshaller
     {
         $val = $unit['base']['float'];
 
-        if (is_int($val) === true) {
-            $val = floatval($val);
+        if (is_int($val)) {
+            $val = (float)$val;
         }
 
         return new QtiFloat($val);
@@ -380,7 +397,7 @@ class Unmarshaller
     }
 
     /**
-     * Unmarshall a duration JSON PCI representation.
+     * Unmarshall an uploaded file payload JSON PCI representation.
      *
      * @param array $unit
      * @return QtiFile
@@ -388,13 +405,45 @@ class Unmarshaller
      */
     protected function unmarshallFile(array $unit)
     {
-        $filename = (empty($unit['base']['file']['name']) === true) ? '' : $unit['base']['file']['name'];
-
-        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime'], $filename);
+        $fileArray = $unit['base']['file'];
+        return $this->getFileManager()->createFromData(
+            base64_decode($fileArray['data']),
+            $fileArray['mime'],
+            $fileArray['name'] ?? ''
+        );
     }
 
     /**
-     * Unmarshall a duration JSON PCI representation.
+     * Unmarshall an uploaded file hash JSON PCI representation.
+     *
+     * This is not a standard QTI feature but a convenience to store only
+     * a hash of the file, to avoid storing huge files in the test session.
+     * This suppose the following:
+     * * Payload of the file has been persisted before.
+     * * "id" key contains the persisted file id in the external file store.
+     * * "data" key contains the hash, base64_encoded.
+     *
+     * @param array $unit
+     * @return QtiFile
+     * @throws FileManagerException
+     */
+    protected function unmarshallFileHash(array $unit)
+    {
+        $fileHashArray = $unit['base'][FileHash::FILE_HASH_KEY];
+        if (empty($fileHashArray['id'])) {
+            throw new FileManagerException('To store an uploaded file hash, the file has to be persisted before and the file id provided in the "id" key.');
+        }
+
+        return new FileHash(
+            $fileHashArray['id'],
+            $fileHashArray['mime'],
+            $fileHashArray['name'],
+            $fileHashArray['data']
+        );
+    }
+
+    /**
+     * Unmarshall a URI JSON PCI representation.
      *
      * @param array $unit
      * @return QtiUri
