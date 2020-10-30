@@ -26,7 +26,9 @@ namespace qtism\runtime\storage\binary;
 use Exception;
 use InvalidArgumentException;
 use OutOfBoundsException;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileManager;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFile;
@@ -866,8 +868,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      */
     public function writeFile(QtiFile $file)
     {
+        $toPersist = $file instanceof FileHash
+            ? json_encode($file)
+            : $file->getIdentifier();
+        
         try {
-            $this->writeString($file->getIdentifier());
+            $this->writeString($toPersist);
         } catch (QtiBinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading a QTI File.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
@@ -879,16 +885,23 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @return QtiFile
      * @throws QtiBinaryStreamAccessException
+     * @throws FileManagerException
      */
     public function readFile()
     {
         try {
             $id = $this->readString();
-            return $this->getFileManager()->retrieve($id);
         } catch (Exception $e) {
             $msg = 'An error occurred while writing a QTI File.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
+
+        $decoded = json_decode($id, true);
+        if (is_array($decoded)) {
+            return FileHash::createFromArray($decoded);
+        }
+        
+        return $this->getFileManager()->retrieve($id);
     }
 
     /**
