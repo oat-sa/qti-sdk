@@ -65,7 +65,7 @@ abstract class Marshaller
     private $version;
 
     /**
-     * An array containing the name of classes 
+     * An array containing the name of classes
      * that are allowed to have their 'dir' attribute set.
      *
      * @var string[]
@@ -315,31 +315,39 @@ abstract class Marshaller
      */
     public function __call($method, $args)
     {
-        if ($method == 'marshall' || $method == 'unmarshall') {
-            if (count($args) >= 1) {
-                if ($method == 'marshall') {
-                    $component = $args[0];
-                    if ($component instanceof QtiComponent && ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName()))) {
-                        return $this->marshall($component);
-                    } else {
-                        $componentName = $this->getComponentName($component);
-                        throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
-                    }
-                } else {
-                    $element = $args[0];
-                    if ($element instanceof DOMElement && ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName()))) {
-                        return $this->unmarshall(...$args);
-                    } else {
-                        $nodeName = $this->getElementName($element);
-                        throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
-                    }
-                }
-            } else {
-                throw new RuntimeException("Method '${method}' only accepts a single argument.");
-            }
+        if (count($args) < 1) {
+            throw new RuntimeException("Method '${method}' only accepts a single argument.");
         }
 
-        throw new RuntimeException("Unknown method Marshaller::'${method}'.");
+        switch ($method) {
+            case 'marshall':
+                $component = $args[0];
+                $this->checkMarshallerImplementation($component);
+                return $this->marshall($component);
+
+            case 'unmarshall':
+                $this->checkUnmarshallerImplementation($args[0]);
+                return $this->unmarshall(...$args);
+
+            default:
+                throw new RuntimeException("Unknown method Marshaller::'${method}'.");
+        }
+    }
+
+    protected function checkMarshallerImplementation($component)
+    {
+        if (!$component instanceof QtiComponent || ($this->getExpectedQtiClassName() !== '' && $component->getQtiClassName() !== $this->getExpectedQtiClassName())) {
+            $componentName = $this->getComponentName($component);
+            throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
+        }
+    }
+
+    protected function checkUnmarshallerImplementation($element)
+    {
+        if (!$element instanceof DOMElement || ($this->getExpectedQtiClassName() !== '' && $element->localName !== $this->getExpectedQtiClassName())) {
+            $nodeName = $this->getElementName($element);
+            throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
+        }
     }
 
     /**
@@ -365,7 +373,7 @@ abstract class Marshaller
      */
     protected function getAttributeName(DOMElement $element, $attribute)
     {
-        if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
+        if ($this->isWebComponentFriendly() === true && strpos($element->localName, "qti-") === 0) {
             $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
 
             if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses)) {

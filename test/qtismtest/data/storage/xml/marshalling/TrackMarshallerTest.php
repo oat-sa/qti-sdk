@@ -2,15 +2,12 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use DOMDocument;
 use InvalidArgumentException;
-use qtism\data\content\xhtml\html5\Role;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\content\xhtml\html5\TrackKind;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use RuntimeException;
 
 class TrackMarshallerTest extends Html5ElementMarshallerTest
 {
@@ -18,7 +15,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function testMarshallerDoesNotExistInQti21()
+    public function testMarshallerDoesNotExistInQti21(): void
     {
         $track = new Track('http://example.com/');
         $this->assertHtml5MarshallingOnlyInQti22AndAbove($track, 'track');
@@ -28,34 +25,22 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function testMarshall22()
+    public function testMarshall22(): void
     {
         $src = 'http://example.com/';
         $default = true;
         $kind = 'chapters';
         $srcLang = 'en';
-        $id = 'Identifier';
-        $class = 'a css class';
-        $lang = 'es';
-        $label = 'A label';
-        $title = 'a title';
-        $role = 'note';
 
         $expected = sprintf(
-            '<track src="%s" default="%s" kind="%s" srclang="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            '<track src="%s" default="%s" kind="%s" srclang="%s"/>',
             $src,
             $default ? 'true' : 'false',
             $kind,
-            $srcLang,
-            $id,
-            $class,
-            $lang,
-            $label,
-            $title,
-            $role
+            $srcLang
         );
 
-        $track = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang, $id, $class, $lang, $label, $title, Role::getConstantByName($role));
+        $track = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang);
 
         $this->assertMarshalling($expected, $track);
     }
@@ -64,7 +49,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function testMarshall22WithDefaultValues()
+    public function testMarshall22WithDefaultValues(): void
     {
         $src = 'http://example.com/';
 
@@ -77,7 +62,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     /**
      * @throws MarshallerNotFoundException
      */
-    public function testUnMarshallerDoesNotExistInQti21()
+    public function testUnMarshallerDoesNotExistInQti21(): void
     {
         $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<track/>', 'track');
     }
@@ -85,97 +70,38 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     /**
      * @throws MarshallerNotFoundException
      */
-    public function testUnmarshall22()
+    public function testUnmarshall22(): void
     {
         $src = 'http://example.com/';
         $default = true;
         $kind = 'chapters';
         $srcLang = 'en';
-        $id = 'Identifier';
-        $class = 'a css class';
-        $lang = 'es';
-        $label = 'A label';
-        $title = '';
-        $role = null;
 
         $xml = sprintf(
-            '<track src="%s" default="%s" kind="%s" srclang="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            '<track src="%s" default="%s" kind="%s" srclang="%s"/>',
             $src,
             $default ? 'true' : 'false',
             $kind,
-            $srcLang,
-            $id,
-            $class,
-            $lang,
-            $label,
-            $title,
-            $role
+            $srcLang
         );
 
-        $element = $this->createDOMElement($xml);
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-        $track = $marshaller->unmarshall($element);
+        $expected = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang);
 
-        $this->assertInstanceOf(Track::class, $track);
-        $this->assertEquals($src, $track->getSrc());
-        $this->assertEquals($default, $track->getDefault());
-        $this->assertSame($kind, TrackKind::getNameByConstant($track->getKind()));
-        $this->assertEquals($srcLang, $track->getSrcLang());
-        $this->assertEquals($id, $track->getId());
-        $this->assertEquals($class, $track->getClass());
-        $this->assertEquals($lang, $track->getLang());
-        $this->assertEquals($label, $track->getLabel());
-        $this->assertEquals($title, $track->getTitle());
-        $this->assertEquals($role, Role::getNameByConstant($track->getRole()));
+        $this->assertUnmarshalling($expected, $xml);
     }
 
     /**
      * @throws MarshallerNotFoundException
      */
-    public function testUnmarshall22WithDefaultValues()
+    public function testUnmarshall22WithDefaultValues(): void
     {
         $src = 'http://example.com/';
-        $default = false;
-        $kind = 'subtitles';
-        $srcLang = '';
-        $id = '';
-        $class = '';
-        $lang = '';
-        $label = '';
-        $title = '';
-        $role = null;
 
         $xml = sprintf('<track src="%s"/>', $src);
 
-        $element = $this->createDOMElement($xml);
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-        $track = $marshaller->unmarshall($element);
+        $expected = new Track($src);
 
-        $this->assertInstanceOf(Track::class, $track);
-        $this->assertEquals($src, $track->getSrc());
-        $this->assertEquals($default, $track->getDefault());
-        $this->assertSame($kind, TrackKind::getNameByConstant($track->getKind()));
-        $this->assertEquals($srcLang, $track->getSrcLang());
-        $this->assertEquals($id, $track->getId());
-        $this->assertEquals($class, $track->getClass());
-        $this->assertEquals($lang, $track->getLang());
-        $this->assertEquals($label, $track->getLabel());
-        $this->assertEquals($title, $track->getTitle());
-        $this->assertEquals($role, $track->getRole());
-    }
-
-    /**
-     * @throws MarshallerNotFoundException
-     */
-    public function testUnmarshallMissingSrc()
-    {
-        $element = $this->createDOMElement('<track/>');
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-
-        $this->expectException(UnmarshallingException::class);
-        $this->expectExceptionMessage('The required attribute "src" is missing from element "track".');
-
-        $marshaller->unmarshall($element);
+        $this->assertUnmarshalling($expected, $xml);
     }
 
     /**
@@ -185,15 +111,9 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
      * @param string $message
      * @throws MarshallerNotFoundException
      */
-    public function testUnmarshallWithWrongTypesOrValues(string $xml, string $exception, string $message)
+    public function testUnmarshallingExceptions(string $xml, string $exception, string $message): void
     {
-        $element = $this->createDOMElement($xml);
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-
-        $this->expectException($exception);
-        $this->expectExceptionMessage($message);
-
-        $marshaller->unmarshall($element);
+        $this->assertUnmarshallingException($xml, $exception, $message);
     }
 
     public function WrongXmlToUnmarshall(): array
@@ -202,6 +122,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
             // TODO: fix Format::isUri because a relative path is a valid URI but not an empty string.
             // ['<track src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
+            ['<track/>', UnmarshallingException::class, 'The required attribute "src" is missing from element "track".'],
             ['<track src=""/>', UnmarshallingException::class, 'The required attribute "src" is missing from element "track".'],
             ['<track src="http://example.com/" default="blah"/>', InvalidArgumentException::class, 'String value "true" or "false" expected, "blah" given.'],
             ['<track src="http://example.com/" kind="blah"/>', InvalidArgumentException::class, 'The "kind" argument must be a value from the TrackKind enumeration, "boolean" given.'],

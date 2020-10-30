@@ -2,156 +2,87 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use DOMDocument;
 use InvalidArgumentException;
-use qtism\data\content\xhtml\html5\Role;
 use qtism\data\content\xhtml\html5\Source;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
-use qtismtest\QtiSmTestCase;
-use RuntimeException;
 
-class SourceMarshallerTest extends QtiSmTestCase
+class SourceMarshallerTest extends Html5ElementMarshallerTest
 {
-    public function testMarshallerDoesNotExistInQti21()
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testMarshallerDoesNotExistInQti21(): void
     {
         $source = new Source('http://example.com/');
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No marshaller implementation found while marshalling component \'source\'.');
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($source);
-        $marshaller->marshall($source);
+        $this->assertHtml5MarshallingOnlyInQti22AndAbove($source, 'source');
     }
 
-    public function testMarshall22()
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testMarshall22(): void
     {
         $src = 'http://example.com/';
         $type = 'text/plain';
-        $id = 'Identifier';
-        $class = 'a css class';
-        $lang = 'es';
-        $label = 'A label';
-        $title = 'a title';
-        $role = 'note';
 
-        $expected = sprintf(
-            '<source src="%s" type="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
-            $src,
-            $type,
-            $id,
-            $class,
-            $lang,
-            $label,
-            $title,
-            $role
-        );
+        $expected = sprintf('<source src="%s" type="%s"/>', $src, $type);
+        $source = new Source($src, $type);
 
-        $source = new Source($src, $type, $id, $class, $lang, $label, $title, Role::getConstantByName($role));
-
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($source);
-        $element = $marshaller->marshall($source);
-
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $element = $dom->importNode($element, true);
-        $this->assertEquals($expected, $dom->saveXML($element));
+        $this->assertMarshalling($expected, $source);
     }
 
-    public function testMarshall22WithDefaultValues()
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testMarshall22WithDefaultValues(): void
     {
         $src = 'http://example.com/';
 
         $expected = sprintf('<source src="%s"/>', $src);
-
         $source = new Source($src);
 
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($source);
-        $element = $marshaller->marshall($source);
-
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $element = $dom->importNode($element, true);
-        $this->assertEquals($expected, $dom->saveXML($element));
+        $this->assertMarshalling($expected, $source);
     }
 
-    public function testUnMarshallerDoesNotExistInQti21()
+    /**
+     * @throws MarshallerNotFoundException
+     */
+    public function testUnMarshallerDoesNotExistInQti21(): void
     {
-        $element = $this->createDOMElement('<source src="http://example.com/"/>');
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No Marshaller implementation found while unmarshalling element \'source\'.');
-        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
-        $marshaller->unmarshall($element);
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<source/>', 'source');
     }
 
-    public function testUnmarshall22()
+    /**
+     * @throws MarshallerNotFoundException
+     */
+    public function testUnmarshall22(): void
     {
         $src = 'http://example.com/';
         $type = 'text/plain';
-        $id = 'Identifier';
-        $class = 'a css class';
-        $lang = 'es';
-        $label = 'A label';
-        $title = 'a title';
-        $role = 'note';
 
-        $xml = sprintf(
-            '<source src="%s" type="%s" id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
-            $src,
-            $type,
-            $id,
-            $class,
-            $lang,
-            $label,
-            $title,
-            $role
-        );
+        $xml = sprintf('<source src="%s" type="%s"/>', $src, $type);
 
-        $element = $this->createDOMElement($xml);
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-        $source = $marshaller->unmarshall($element);
-
-        $this->assertInstanceOf(Source::class, $source);
-        $this->assertEquals($src, $source->getSrc());
-        $this->assertEquals($type, $source->getType());
-        $this->assertEquals($id, $source->getId());
-        $this->assertEquals($class, $source->getClass());
-        $this->assertEquals($lang, $source->getLang());
-        $this->assertEquals($label, $source->getLabel());
-        $this->assertEquals($title, $source->getTitle());
-        $this->assertEquals($role, Role::getNameByConstant($source->getRole()));
+        $expected = new Source($src, $type);
+        $this->assertUnmarshalling($expected, $xml);
     }
 
-    public function testUnmarshall22WithDefaultValues()
+    /**
+     * @throws MarshallerNotFoundException
+     */
+    public function testUnmarshall22WithDefaultValues(): void
     {
         $src = 'http://example.com/';
-        $type = '';
-        $id = '';
-        $class = '';
-        $lang = '';
-        $label = '';
 
         $xml = sprintf('<source src="%s"/>', $src);
 
-        $element = $this->createDOMElement($xml);
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-        $source = $marshaller->unmarshall($element);
+        $expected = new Source($src);
 
-        $this->assertInstanceOf(Source::class, $source);
-        $this->assertEquals($src, $source->getSrc());
-        $this->assertEquals($type, $source->getType());
-        $this->assertEquals($id, $source->getId());
-        $this->assertEquals($class, $source->getClass());
-        $this->assertEquals($lang, $source->getLang());
-        $this->assertEquals($label, $source->getLabel());
-    }
-
-    public function testUnmarshallMissingSrc()
-    {
-        $element = $this->createDOMElement('<source/>');
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-
-        $this->expectException(UnmarshallingException::class);
-        $this->expectExceptionMessage('The required attribute "src" is missing from element "source".');
-
-        $marshaller->unmarshall($element);
+        $this->assertUnmarshalling($expected, $xml);
     }
 
     /**
@@ -159,16 +90,11 @@ class SourceMarshallerTest extends QtiSmTestCase
      * @param string $xml
      * @param string $exception
      * @param string $message
+     * @throws MarshallerNotFoundException
      */
-    public function testUnmarshallWithWrongTypesOrValues(string $xml, string $exception, string $message)
+    public function testUnmarshallingExceptions(string $xml, string $exception, string $message): void
     {
-        $element = $this->createDOMElement($xml);
-        $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
-
-        $this->expectException($exception);
-        $this->expectExceptionMessage($message);
-
-        $marshaller->unmarshall($element);
+        $this->assertUnmarshallingException($xml, $exception, $message);
     }
 
     public function WrongXmlToUnmarshall(): array
@@ -177,6 +103,7 @@ class SourceMarshallerTest extends QtiSmTestCase
             // TODO: fix Format::isUri because a relative path is a valid URI but not an empty string.
             // ['<source src="^"/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
+            ['<source/>', UnmarshallingException::class, 'The required attribute "src" is missing from element "source".'],
             ['<source src=""/>', UnmarshallingException::class, 'The required attribute "src" is missing from element "source".'],
             ['<source src="http://example.com/" type="blah"/>', InvalidArgumentException::class, 'The "type" argument must be a valid Mime type, "blah" given.'],
         ];
