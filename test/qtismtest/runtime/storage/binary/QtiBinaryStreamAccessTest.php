@@ -4,6 +4,7 @@ namespace qtismtest\runtime\storage\binary;
 
 use qtism\common\Comparable;
 use qtism\common\datatypes\files\DefaultFileManager;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
@@ -220,6 +221,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $returnValue[] = [new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER), "\x00" . "\x00" . pack('S', 0), new MultipleContainer(BaseType::INT_OR_IDENTIFIER)];
         $returnValue[] = [new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, [new QtiIntOrIdentifier(1)])), "\x01", null];
 
+        // Files
         $returnValue[] = [new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x01", null];
         $path = self::samplesDir() . 'datatypes/file/text-plain_text_data.txt';
         $returnValue[] = [new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x00" . "\x01" . pack('S', strlen($path)) . $path, FileSystemFile::retrieveFile($path)];
@@ -470,7 +472,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
             [new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, [new QtiIntOrIdentifier(0), null, new QtiIntOrIdentifier(1), null, new QtiIntOrIdentifier(200000)]))],
             [new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, [new QtiIntOrIdentifier(0), null, new QtiIntOrIdentifier('Q01'), null, new QtiIntOrIdentifier(200000)]))],
 
-            [new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'))],
+            // Files
+            [new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'))],
             [
                 new OutcomeVariable(
                     'VAR',
@@ -480,6 +483,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
                 ),
             ],
 
+            // FileHash
+            [new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FILE, new FileHash('id', 'text/plain', 'my_file.txt', 'AA025C4DB95A39A2CB8525F83F1387C1A2B13595C8E4C337CDF9AD7B043518A3'))],
+
+            // Records
             [new OutcomeVariable('VAR', Cardinality::RECORD)],
             [new OutcomeVariable('VAR', Cardinality::RECORD, -1, new RecordContainer(['key1' => null]))],
             [new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(['key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true)]))],
