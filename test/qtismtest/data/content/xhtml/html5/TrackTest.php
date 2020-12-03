@@ -9,7 +9,7 @@ use qtismtest\QtiSmTestCase;
 
 class TrackTest extends QtiSmTestCase
 {
-    public function testCreateWithValues()
+    public function testCreateWithValues(): void
     {
         $src = 'http://example.com/';
         $default = true;
@@ -18,25 +18,25 @@ class TrackTest extends QtiSmTestCase
 
         $subject = new Track($src, $default, $kind, $srcLang);
 
-        $this->assertEquals($src, $subject->getSrc());
-        $this->assertEquals($default, $subject->getDefault());
-        $this->assertEquals($kind, $subject->getKind());
-        $this->assertEquals($srcLang, $subject->getSrcLang());
+        self::assertEquals($src, $subject->getSrc());
+        self::assertEquals($default, $subject->getDefault());
+        self::assertEquals($kind, $subject->getKind());
+        self::assertEquals($srcLang, $subject->getSrcLang());
     }
 
-    public function testCreateWithDefaultValues()
+    public function testCreateWithDefaultValues(): void
     {
         $src = 'http://example.com/';
 
         $subject = new Track($src);
 
-        $this->assertEquals($src, $subject->getSrc());
-        $this->assertFalse($subject->getDefault());
-        $this->assertEquals(TrackKind::SUBTITLES, $subject->getKind());
-        $this->assertEquals('', $subject->getSrcLang());
+        self::assertEquals($src, $subject->getSrc());
+        self::assertFalse($subject->getDefault());
+        self::assertEquals(TrackKind::SUBTITLES, $subject->getKind());
+        self::assertEquals('en', $subject->getSrcLang());
     }
 
-    public function testHasNonDefaultValues()
+    public function testHasNonDefaultValues(): void
     {
         $src = 'http://example.com/';
         $default = true;
@@ -45,25 +45,25 @@ class TrackTest extends QtiSmTestCase
 
         $subject = new Track($src, $default, $kind, $srcLang);
 
-        $this->assertTrue($subject->hasDefault());
-        $this->assertEquals($default, $subject->getDefault());
-        $this->assertTrue($subject->hasKind());
-        $this->assertEquals($kind, $subject->getKind());
-        $this->assertTrue($subject->hasSrcLang());
-        $this->assertEquals($srcLang, $subject->getSrcLang());
+        self::assertTrue($subject->hasDefault());
+        self::assertEquals($default, $subject->getDefault());
+        self::assertTrue($subject->hasKind());
+        self::assertEquals($kind, $subject->getKind());
+        self::assertTrue($subject->hasSrcLang());
+        self::assertEquals($srcLang, $subject->getSrcLang());
     }
 
     /**
      * @dataProvider kindsOfTracks
      * @param int $kind
      */
-    public function testCreateWithValidKind(int $kind)
+    public function testCreateWithValidKind(int $kind): void
     {
         $subject = new Track('http://example.com/', false, $kind);
-        $this->assertEquals($kind, $subject->getKind());
+        self::assertEquals($kind, $subject->getKind());
     }
 
-    public function kindsOfTracks()
+    public function kindsOfTracks(): array
     {
         return [
             [TrackKind::SUBTITLES],
@@ -74,7 +74,7 @@ class TrackTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateWithInvalidSrc()
+    public function testCreateWithInvalidSrc(): void
     {
         $wrongSrc = 12;
 
@@ -84,7 +84,7 @@ class TrackTest extends QtiSmTestCase
         new Track($wrongSrc);
     }
 
-    public function testCreateWithNonUriSrc()
+    public function testCreateWithNonUriSrc(): void
     {
         $wrongSrc = '';
 
@@ -94,7 +94,7 @@ class TrackTest extends QtiSmTestCase
         new Track($wrongSrc);
     }
 
-    public function testCreateWithInvalidDefault()
+    public function testCreateWithInvalidDefault(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "default" argument must be a boolean, "string" given.');
@@ -102,7 +102,7 @@ class TrackTest extends QtiSmTestCase
         new Track('http://example.com/', 'blah');
     }
 
-    public function testCreateWithNonIntegerKind()
+    public function testCreateWithNonIntegerKind(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "kind" argument must be a value from the TrackKind enumeration, "string" given.');
@@ -110,7 +110,7 @@ class TrackTest extends QtiSmTestCase
         new Track('http://example.com/', false, 'blah');
     }
 
-    public function testCreateWithInvalidKind()
+    public function testCreateWithInvalidKind(): void
     {
         $wrongKind = 1012;
         $this->expectException(InvalidArgumentException::class);
@@ -119,18 +119,18 @@ class TrackTest extends QtiSmTestCase
         new Track('http://example.com/', false, $wrongKind);
     }
 
-    public function testCreateWithInvalidSrcLang()
+    public function testCreateWithInvalidSrcLang(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "srclang" argument must be a string, "integer" given.');
+        $this->expectExceptionMessage('The "srclang" argument must be a valid BCP 47 language code, "12" given.');
 
         new Track('http://example.com/', false, TrackKind::SUBTITLES, 12);
     }
 
-    public function testGetQtiClassName()
+    public function testGetQtiClassName(): void
     {
         $subject = new Track('http://example.com/');
-        
-        $this->assertEquals('track', $subject->getQtiClassName());
+
+        self::assertEquals('track', $subject->getQtiClassName());
     }
 }

@@ -53,7 +53,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     {
         $src = 'http://example.com/';
 
-        $expected = sprintf('<track src="%s"/>', $src);
+        $expected = sprintf('<track src="%s" srclang="en"/>', $src);
         $track = new Track($src);
 
         $this->assertMarshalling($expected, $track);

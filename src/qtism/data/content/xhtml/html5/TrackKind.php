@@ -30,14 +30,44 @@ use qtism\common\enums\Enumeration;
  */
 class TrackKind implements Enumeration
 {
+    /**
+     * Transcription or translation of the dialogue, suitable for when the
+     * sound is available but not understood (e.g. because the user does not
+     * understand the language of the media resource's audio track).
+     * Overlaid on the video.
+     * This is the default value for the track element.
+     */
     const SUBTITLES = 0;
 
+    /**
+     * Transcription or translation of the dialogue, sound effects, relevant
+     * musical cues, and other relevant audio information, suitable for when
+     * sound is unavailable or not clearly audible (e.g. because it is muted,
+     * drowned-out by ambient noise, or because the user is deaf).
+     * Overlaid on the video; labeled as appropriate for the hard-of-hearing.
+     */
     const CAPTIONS = 1;
 
+    /**
+     * Tracks intended for use from script. Not displayed by the user agent.
+     */
     const DESCRIPTIONS = 2;
 
+    /**
+     * Chapter titles, intended to be used for navigating the media resource.
+     * Displayed as an interactive (potentially nested) list in the user
+     * agent's interface.
+     */
     const CHAPTERS = 3;
 
+    /**
+     * Textual descriptions of the video component of the media resource,
+     * intended for audio synthesis when the visual component is obscured,
+     * unavailable, or not usable (e.g. because the user is interacting with
+     * the application without a screen while driving, or because the user is
+     * blind).
+     * Synthesized as audio.
+     */
     const METADATA = 4;
 
     public static function asArray()
