@@ -4,6 +4,8 @@ namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\Utils;
 use qtismtest\QtiSmTestCase;
 
@@ -248,7 +250,7 @@ class XmlUtilsTest extends QtiSmTestCase
     public function getDOMElementAttributeAsProvider()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true"/>');
+        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
         $elt = $dom->documentElement;
 
         return [
@@ -257,6 +259,10 @@ class XmlUtilsTest extends QtiSmTestCase
             [$elt, 'float', 'float', 1.1],
             [$elt, 'double', 'double', 1.1],
             [$elt, 'boolean', 'boolean', true],
+            [$elt, 'not-existing', '', null],
+            [$elt, 'baseType', BaseType::class, BaseType::DURATION],
+            [$elt, 'wrongEnumValue', BaseType::class, 'blah'],
+            [$elt, 'cardinality', Cardinality::class, null],
         ];
     }
 

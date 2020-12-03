@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;
+use qtism\common\enums\Enumeration;
 use SplStack;
 
 /**
@@ -272,36 +273,43 @@ class Utils
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
-    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    public static function getDOMElementAttributeAs(DOMElement $element, string $attribute, $datatype = 'string')
     {
         $attr = $element->getAttribute($attribute);
 
-        if ($attr !== '') {
-            switch ($datatype) {
-                case 'string':
-                    return $attr;
-                    break;
-
-                case 'integer':
-                    return (int)$attr;
-                    break;
-
-                case 'double':
-                case 'float':
-                    return (float)$attr;
-                    break;
-
-                case 'boolean':
-                    return $attr === 'true';
-                    break;
-
-                default:
-                    throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
-                    break;
-            }
-        } else {
+        if ($attr === '') {
             return null;
         }
+
+        switch ($datatype) {
+            case 'string':
+                return $attr;
+
+            case 'integer':
+                return (int)$attr;
+
+            case 'double':
+            case 'float':
+                return (float)$attr;
+
+            case 'boolean':
+                return $attr === 'true';
+        }
+
+        if (in_array(Enumeration::class, class_implements($datatype), true)){
+            if ($attr !== null) {
+                $constant = $datatype::getConstantByName($attr);
+                // Returns the original value when it's unknown in the enumeration.
+                if ($constant === false) {
+                    return $attr;
+                }
+                $attr = $constant;
+            }
+
+            return $attr;
+        }
+
+        throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
     }
 
     /**
