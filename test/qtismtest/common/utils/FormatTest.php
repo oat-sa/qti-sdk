@@ -85,6 +85,24 @@ class FormatTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider validBCP47LanguagesProvider
+     * @param string $string
+     */
+    public function testValidBCP47LanguageFormat($string)
+    {
+        $this->assertTrue(Format::isBCP47Lang($string));
+    }
+
+    /**
+     * @dataProvider invalidBCP47LanguagesProvider
+     * @param string $string
+     */
+    public function testInvalidBCP47LanguageFormat($string)
+    {
+        $this->assertFalse(Format::isBCP47Lang($string));
+    }
+
+    /**
      * @dataProvider validClassFormatProvider
      * @param string $string
      */
@@ -339,6 +357,36 @@ class FormatTest extends QtiSmTestCase
             [12],
             [true],
             [['key' => 'value']],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function validBCP47LanguagesProvider()
+    {
+        return [
+            ['en'],
+            ['en-US'],
+            ['es-419'],
+            ['rm-sursilv'],
+            ['gsw-u-sd-chzh'],
+            ['nan-Hant-TW'],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidBCP47LanguagesProvider()
+    {
+        return [
+            [12],
+            [['key' => 'value']],
+            [true],
+            [''],
+            ['^'],
+            ['"\'_-(/\\"'],
         ];
     }
 
@@ -651,9 +699,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testIsNormalizedString(bool $expected, $string)
     {
-        for ($i = 0; $i< 100000; $i++) {
-            $this->assertEquals($expected, Format::isNormalizedString($string));
-        }
+        $this->assertEquals($expected, Format::isNormalizedString($string));
     }
 
     public function isNormalizedStringProvider(): array

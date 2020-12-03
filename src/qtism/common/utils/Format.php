@@ -201,6 +201,22 @@ class Format
     }
 
     /**
+     * Whether a given $string is a valid BCP 47 language code.
+     *
+     * @param string $string A string value.
+     * @return bool Whether $string is a valid BCP 47 language code.
+     *
+     * @see https://en.wikipedia.org/wiki/IETF_language_tag
+     * @see https://stackoverflow.com/questions/7035825/regular-expression-for-a-language-tag-as-defined-by-bcp47#7036171 for the regex
+     */
+    public static function isBCP47Lang($string)
+    {
+        $pattern = "/^(?<grandfathered>(?:en-GB-oed|i-(?:ami|bnn|default|enochian|hak|klingon|lux|mingo|navajo|pwn|t(?:a[oy]|su))|sgn-(?:BE-(?:FR|NL)|CH-DE))|(?:art-lojban|cel-gaulish|no-(?:bok|nyn)|zh-(?:guoyu|hakka|min(?:-nan)?|xiang)))|(?:(?<language>(?:[A-Za-z]{2,3}(?:-(?<extlang>[A-Za-z]{3}(?:-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(?:-(?<script>[A-Za-z]{4}))?(?:-(?<region>[A-Za-z]{2}|[0-9]{3}))?(?:-(?<variant>[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-(?<extension>[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+))*)(?:-(?<privateUse>x(?:-[A-Za-z0-9]{1,8})+))?$/Di";
+
+        return is_string($string) && preg_match($pattern, $string) === 1;
+    }
+
+    /**
      * Whether a given $string can be cast into an integer value.
      *
      * @param string $string A string value.
