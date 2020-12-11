@@ -2,7 +2,6 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
-use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\content\xhtml\html5\TrackKind;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
@@ -122,10 +121,9 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
             // TODO: fix Format::isUri because a relative path is a valid URI but not an empty string.
             // ['<track src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
-            ['<track/>', UnmarshallingException::class, 'The required attribute "src" is missing from element "track".'],
-            ['<track src=""/>', UnmarshallingException::class, 'The required attribute "src" is missing from element "track".'],
-            ['<track src="http://example.com/" default="blah"/>', InvalidArgumentException::class, 'String value "true" or "false" expected, "blah" given.'],
-            ['<track src="http://example.com/" kind="blah"/>', InvalidArgumentException::class, 'The "kind" argument must be a value from the TrackKind enumeration, "boolean" given.'],
+            ['<track/>', UnmarshallingException::class, 'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.'],
+            ['<track src=""/>', UnmarshallingException::class, 'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.'],
+            ['<track src="http://example.com/" kind="blah"/>', UnmarshallingException::class, 'Error while unmarshalling element "track": The "kind" argument must be a value from the TrackKind enumeration, "blah" given.'],
         ];
     }
 }

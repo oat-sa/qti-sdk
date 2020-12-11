@@ -24,6 +24,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\xhtml\html5\Source;
 use qtism\data\QtiComponent;
@@ -63,16 +64,13 @@ class SourceMarshaller extends Html5ElementMarshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($src = $this->getDOMElementAttributeAs($element, 'src')) === null) {
-            $msg = 'The required attribute "src" is missing from element "source".';
-            throw new UnmarshallingException($msg, $element);
-        }
+        $src = $this->getDOMElementAttributeAs($element, 'src');
+        $type = $this->getDOMElementAttributeAs($element, 'type');
 
-        $component = new Source($src);
-
-        $srcLang = $this->getDOMElementAttributeAs($element, 'type');
-        if ($srcLang !== null) {
-            $component->setType($srcLang);
+        try {
+            $component = new Source($src, $type);
+        } catch (InvalidArgumentException $exception) {
+            throw UnmarshallingException::createFromInvalidArgumentException($element, $exception);
         }
 
         $this->fillBodyElement($component, $element);

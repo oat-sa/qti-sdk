@@ -24,11 +24,10 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\common\utils\Format;
+use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\content\xhtml\html5\TrackKind;
-use qtism\data\content\xhtml\Img;
 use qtism\data\QtiComponent;
 
 /**
@@ -74,26 +73,15 @@ class TrackMarshaller extends Html5ElementMarshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($src = $this->getDOMElementAttributeAs($element, 'src')) === null) {
-            $msg = 'The required attribute "src" is missing from element "track".';
-            throw new UnmarshallingException($msg, $element);
-        }
-
-        $component = new Track($src);
-
-        $default = $this->getDOMElementAttributeAs($element, 'default');
-        if ($default !== null) {
-            $component->setDefault(Format::stringToBoolean($default));
-        }
-
-        $kind = $this->getDOMElementAttributeAs($element, 'kind');
-        if ($kind !== null) {
-            $component->setKind(TrackKind::getConstantByName($kind));
-        }
-
+        $src = $this->getDOMElementAttributeAs($element, 'src');
+        $default = $this->getDOMElementAttributeAs($element, 'default', 'boolean');
+        $kind = $this->getDOMElementAttributeAs($element, 'kind', TrackKind::class);
         $srcLang = $this->getDOMElementAttributeAs($element, 'srclang');
-        if ($srcLang !== null) {
-            $component->setSrcLang($srcLang);
+
+        try {
+            $component = new Track($src, $default, $kind, $srcLang);
+        } catch (InvalidArgumentException $exception) {
+            throw UnmarshallingException::createFromInvalidArgumentException($element, $exception);
         }
 
         $this->fillBodyElement($component, $element);
