@@ -100,7 +100,7 @@ class Html5ElementTest extends QtiSmTestCase
     public function testCreateWithNonIntegerRole()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "role" argument must be a value from the Role enumeration, "string" given.');
+        $this->expectExceptionMessage('The "role" argument must be a value from the Role enumeration, "foo" given.');
 
         (new FakeHtml5Element())->setRole('foo');
     }

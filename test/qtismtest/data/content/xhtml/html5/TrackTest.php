@@ -105,7 +105,7 @@ class TrackTest extends QtiSmTestCase
     public function testCreateWithNonIntegerKind(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "kind" argument must be a value from the TrackKind enumeration, "string" given.');
+        $this->expectExceptionMessage('The "kind" argument must be a value from the TrackKind enumeration, "blah" given.');
 
         new Track('http://example.com/', false, 'blah');
     }

@@ -81,7 +81,7 @@ class Track extends Html5EmptyElement
      * @var string
      * @qtism-bean-property
      */
-    private $srcLang = '';
+    private $srcLang = 'en';
 
     /**
      * Create a new Track object.
@@ -99,14 +99,14 @@ class Track extends Html5EmptyElement
      */
     public function __construct(
         $src,
-        $default = false,
-        $kind = TrackKind::SUBTITLES,
-        $srcLang = 'en',
-        $id = '',
-        $class = '',
-        $lang = '',
-        $label = '',
-        $title = '',
+        $default = null,
+        $kind = null,
+        $srcLang = null,
+        $id = null,
+        $class = null,
+        $lang = null,
+        $label = null,
+        $title = null,
         $role = null
     ) {
         parent::__construct($id, $class, $lang, $label, $title, $role);
@@ -122,7 +122,7 @@ class Track extends Html5EmptyElement
      * @param string $src A URI.
      * @throws InvalidArgumentException If $src is not a valid URI.
      */
-    public function setSrc($src): void
+    public function setSrc($src)
     {
         if (!Format::isUri($src)) {
             $given = is_string($src)
@@ -153,12 +153,12 @@ class Track extends Html5EmptyElement
     /**
      * Set the alt attribute.
      *
-     * @param bool $default Is this track the default for the related media?
+     * @param bool|null $default Is this track the default for the related media?
      * @throws InvalidArgumentException If $default is not a boolean.
      */
-    public function setDefault($default): void
+    public function setDefault($default = null)
     {
-        if (!is_bool($default)) {
+        if ($default !== null && !is_bool($default)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'The "default" argument must be a boolean, "%s" given.',
@@ -167,13 +167,11 @@ class Track extends Html5EmptyElement
             );
         }
 
-        $this->default = $default;
+        $this->default = $default ?? false;
     }
 
     /**
      * Get the value of the default attribute.
-     *
-     * @return bool
      */
     public function getDefault(): bool
     {
@@ -182,8 +180,6 @@ class Track extends Html5EmptyElement
 
     /**
      * Get the value of the default attribute.
-     *
-     * @return bool
      */
     public function hasDefault(): bool
     {
@@ -193,24 +189,20 @@ class Track extends Html5EmptyElement
     /**
      * Sets the kind of track.
      *
-     * @param int $kind One of the TrackKind constants.
+     * @param int|bool|null $kind One of the TrackKind constants.
      */
-    public function setKind($kind): void
+    public function setKind($kind = null)
     {
-        if (!in_array($kind, TrackKind::asArray(), true)) {
-            $given = is_int($kind)
-                ? $kind
-                : gettype($kind);
-
+        if ($kind !== null && !in_array($kind, TrackKind::asArray(), true)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'The "kind" argument must be a value from the TrackKind enumeration, "%s" given.',
-                    $given
+                    $kind
                 )
             );
         }
 
-        $this->kind = $kind;
+        $this->kind = $kind ?? TrackKind::SUBTITLES;
 
         // srcLang attribute is required if kind="subtitles" => revalidate srcLang.
         if ($kind === TrackKind::SUBTITLES) {
@@ -218,9 +210,6 @@ class Track extends Html5EmptyElement
         }
     }
 
-    /**
-     * @return int
-     */
     public function getKind(): int
     {
         return $this->kind;
@@ -228,8 +217,6 @@ class Track extends Html5EmptyElement
 
     /**
      * Has the kind attribute a non-default value?
-     *
-     * @return bool
      */
     public function hasKind(): bool
     {
@@ -238,8 +225,6 @@ class Track extends Html5EmptyElement
 
     /**
      * Has the kind attribute the default value?
-     *
-     * @return bool
      */
     public function isKindSubtitles(): bool
     {
@@ -247,10 +232,12 @@ class Track extends Html5EmptyElement
     }
 
     /**
-     * @param string $srcLang
+     * @param string|null $srcLang
      */
-    public function setSrcLang(string $srcLang): void
+    public function setSrcLang(string $srcLang = null)
     {
+        $srcLang = $srcLang ?? '';
+
         if ($srcLang === '' && $this->isKindSubtitles()) {
             $srcLang = 'en';
         }
@@ -267,25 +254,16 @@ class Track extends Html5EmptyElement
         $this->srcLang = $srcLang;
     }
 
-    /**
-     * @return string
-     */
     public function getSrcLang(): string
     {
         return $this->srcLang;
     }
 
-    /**
-     * @return bool
-     */
     public function hasSrcLang(): bool
     {
         return $this->srcLang !== '';
     }
 
-    /**
-     * @return string
-     */
     public function getQtiClassName(): string
     {
         return 'track';

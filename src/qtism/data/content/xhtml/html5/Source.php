@@ -63,11 +63,11 @@ class Source extends Html5EmptyElement
     public function __construct(
         $src,
         $type = null,
-        $id = '',
-        $class = '',
-        $lang = '',
-        $label = '',
-        $title = '',
+        $id = null,
+        $class = null,
+        $lang = null,
+        $label = null,
+        $title = null,
         $role = null
     ) {
         parent::__construct($id, $class, $lang, $label, $title, $role);
@@ -133,17 +133,11 @@ class Source extends Html5EmptyElement
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return bool
-     */
     public function hasType(): bool
     {
         return $this->type !== '';
@@ -152,7 +146,7 @@ class Source extends Html5EmptyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'source';
     }

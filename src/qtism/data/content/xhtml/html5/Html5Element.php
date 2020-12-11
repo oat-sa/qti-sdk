@@ -41,35 +41,36 @@ abstract class Html5Element extends BodyElement
     /**
      * Role of the Html5 element.
      *
-     * @var int
+     * @var int|null
      */
     private $role;
 
     /**
      * Create a new Html5 element.
      *
-     * @param string $id A QTI identifier.
-     * @param string $class One or more class names separated by spaces.
-     * @param string $lang An RFC3066 language.
-     * @param string $label A label that does not exceed 256 characters.
-     * @param string $title A title in the sense of Html title attribute
+     * For the reason why using null instead of default values, see:
+     *
+     * @see https://stackoverflow.com/questions/45320353/php-7-1-nullable-default-function-parameter#45320694
+     *
+     * @param string|null $id A QTI identifier.
+     * @param string|null $class One or more class names separated by spaces.
+     * @param string|null $lang An RFC3066 language.
+     * @param string|null $label A label that does not exceed 256 characters.
+     * @param string|null $title A title in the sense of Html title attribute
      * @param int|null $role A role taken in the Role constants.
      */
     public function __construct(
-        $id = '',
-        $class = '',
-        $lang = '',
-        $label = '',
-        $title = '',
-        $role = null
+        string $id = null,
+        string $class = null,
+        string $lang = null,
+        string $label = null,
+        string $title = null,
+        int $role = null
     ) {
-        parent::__construct($id, $class, $lang, $label);
-        if ($title !== '') {
-            $this->setTitle($title);
-        }
-        if ($role !== null) {
-            $this->setRole($role);
-        }
+        parent::__construct($id ?? '', $class ?? '', $lang ?? '', $label ?? '');
+
+        $this->setTitle($title ?? '');
+        $this->setRole($role);
     }
 
     /**
@@ -89,38 +90,27 @@ abstract class Html5Element extends BodyElement
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return bool
-     */
     public function hasTitle(): bool
     {
         return $this->title !== '';
     }
 
     /**
-     * Sets the role of the html5 element.
-     *
-     * @param int $role One of the Role constants.
+     * @param int|null $role One of the Role constants.
+     * @throws InvalidArgumentException when $role parameter is not one of Role constants.
      */
-    public function setRole($role)
+    public function setRole($role = null)
     {
-        if (!in_array($role, Role::asArray(), true)) {
-            $given = is_int($role)
-                ? $role
-                : gettype($role);
-
+        if ($role !== null && !in_array($role, Role::asArray(), true)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'The "role" argument must be a value from the Role enumeration, "%s" given.',
-                    $given
+                    $role
                 )
             );
         }
@@ -136,9 +126,6 @@ abstract class Html5Element extends BodyElement
         return $this->role;
     }
 
-    /**
-     * @return bool
-     */
     public function hasRole(): bool
     {
         return $this->role !== null;
