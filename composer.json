@@ -30,7 +30,8 @@
 		"ext-json": "*",
 		"ext-date": "*",
 		"wp-cli/php-cli-tools": "0.10.3",
-		"league/flysystem": "^1.0"
+		"league/flysystem": "^1.0",
+		"oat-sa/lib-beeme": "0.2.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~5.0",
@@ -43,6 +44,9 @@
 	"autoload": {
 		"psr-0": {
 			"qtism": "src"
+		},
+		"psr-4": {
+			"qti\\customOperators\\": "src/qtism/runtime/expressions/operators/custom/"
 		}
 	},
 	"autoload-dev": {
