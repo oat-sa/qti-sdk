@@ -23,56 +23,60 @@
 
 namespace qtismtest\runtime\expressions\operators\custom\math\fraction;
 
-use qtism\common\enums\BaseType;
+use qti\customOperators\math\fraction\Numerator;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
-use qtism\data\expressions\operators\CustomOperator;
-use qtism\data\expressions\ExpressionCollection;
+use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\operators\CustomOperator;
 use qtism\runtime\expressions\operators\OperandsCollection;
-use qti\customOperators\math\fraction\Numerator;
 use qtismtest\QtiSmTestCase;
 
 /**
  * Tests for Numerator custom operator.
  */
-class NumeratorTest extends QtiSmTestCase {
-	
-    public function testSimple() {
+class NumeratorTest extends QtiSmTestCase
+{
+    public function testSimple()
+    {
         $baseValue = new BaseValue(BaseType::STRING, '1/2');
         $customOperator = new CustomOperator(
-            new ExpressionCollection(array($baseValue)),
+            new ExpressionCollection([$baseValue]),
             '<customOperator class="qti.customOperators.math.Numerator"><baseValue baseType="string">1/2</baseValue></customOperator>'
         );
-        $operands = new OperandsCollection(array(new QtiString('1/2')));
+        $operands = new OperandsCollection([new QtiString('1/2')]);
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
-        
+
         $this->assertEquals($result->getValue(), 1);
     }
-    
-    public function testReturnsNullOne() {
+
+    public function testReturnsNullOne()
+    {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
-            new ExpressionCollection(array($baseValue)),
+            new ExpressionCollection([$baseValue]),
             '<customOperator class="qti.customOperators.math.Numerator"><baseValue baseType="boolean">false</baseValue></customOperator>'
         );
-        $operands = new OperandsCollection(array(new QtiBoolean(false)));
+        $operands = new OperandsCollection([new QtiBoolean(false)]);
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
-        
+
         $this->assertSame(null, $result);
     }
-    public function testReturnsNullTwo() {
+
+    public function testReturnsNullTwo()
+    {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
-            new ExpressionCollection(array($baseValue)),
+            new ExpressionCollection([$baseValue]),
             '<customOperator class="qti.customOperators.math.Numerator"><baseValue baseType="string">bla</baseValue></customOperator>'
         );
-        $operands = new OperandsCollection(array(new QtiBoolean(false)));
+        $operands = new OperandsCollection([new QtiBoolean(false)]);
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
-        
-        $this->assertSame(null, $result);
+
+        $this->assertNull($result);
     }
 }

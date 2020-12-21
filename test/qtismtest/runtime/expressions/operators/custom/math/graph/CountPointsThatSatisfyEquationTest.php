@@ -69,7 +69,19 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="point">0 0</baseValue><baseValue baseType="point">1 1</baseValue><baseValue baseType="point">2 4</baseValue><baseValue baseType="point">3 9</baseValue><baseValue baseType="point">4 16</baseValue><baseValue baseType="point">5 25</baseValue><baseValue baseType="point">6 36</baseValue><baseValue baseType="point">7 49</baseValue></multiple><baseValue baseType="string">y = x ^ 2</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="point">0 0</baseValue>
+                    <baseValue baseType="point">1 1</baseValue>
+                    <baseValue baseType="point">2 4</baseValue>
+                    <baseValue baseType="point">3 9</baseValue>
+                    <baseValue baseType="point">4 16</baseValue>
+                    <baseValue baseType="point">5 25</baseValue>
+                    <baseValue baseType="point">6 36</baseValue>
+                    <baseValue baseType="point">7 49</baseValue>
+                </multiple>
+                <baseValue baseType="string">y = x ^ 2</baseValue>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -94,7 +106,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertEquals(8, $result->getValue());
+        $this->assertEquals(8, $result->getValue());
     }
 
     public function testSimpleOneWithStrings()
@@ -123,7 +135,19 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="string">0 0</baseValue><baseValue baseType="string">1 1</baseValue><baseValue baseType="string">2 4</baseValue><baseValue baseType="string">3 9</baseValue><baseValue baseType="string">4 16</baseValue><baseValue baseType="string">5 25</baseValue><baseValue baseType="string">6 36</baseValue><baseValue baseType="string">7 49</baseValue></multiple><baseValue baseType="string">y = x ^ 2</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="string">0 0</baseValue>
+                    <baseValue baseType="string">1 1</baseValue>
+                    <baseValue baseType="string">2 4</baseValue>
+                    <baseValue baseType="string">3 9</baseValue>
+                    <baseValue baseType="string">4 16</baseValue>
+                    <baseValue baseType="string">5 25</baseValue>
+                    <baseValue baseType="string">6 36</baseValue>
+                    <baseValue baseType="string">7 49</baseValue>
+                </multiple>
+                <baseValue baseType="string">y = x ^ 2</baseValue>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -148,7 +172,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertEquals(8, $result->getValue());
+        $this->assertEquals(8, $result->getValue());
     }
 
     public function testSimpleTwo()
@@ -177,7 +201,19 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="point">0 0</baseValue><baseValue baseType="point">-1 1</baseValue><baseValue baseType="point">2 4</baseValue><baseValue baseType="point">3 9</baseValue><baseValue baseType="point">4 16</baseValue><baseValue baseType="point">5 25</baseValue><baseValue baseType="point">14 35</baseValue><baseValue baseType="point">-5 49</baseValue></multiple><baseValue baseType="string">y = x ^ 2</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="point">0 0</baseValue>
+                    <baseValue baseType="point">-1 1</baseValue>
+                    <baseValue baseType="point">2 4</baseValue>
+                    <baseValue baseType="point">3 9</baseValue>
+                    <baseValue baseType="point">4 16</baseValue>
+                    <baseValue baseType="point">5 25</baseValue>
+                    <baseValue baseType="point">14 35</baseValue>
+                    <baseValue baseType="point">-5 49</baseValue>
+                </multiple>
+                <baseValue baseType="string">y = x ^ 2</baseValue>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -202,7 +238,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertEquals(6, $result->getValue());
+        $this->assertEquals(6, $result->getValue());
     }
 
     public function testInvalidEquation()
@@ -231,7 +267,19 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="point">0 0</baseValue><baseValue baseType="point">-1 1</baseValue><baseValue baseType="point">2 4</baseValue><baseValue baseType="point">3 9</baseValue><baseValue baseType="point">4 16</baseValue><baseValue baseType="point">5 25</baseValue><baseValue baseType="point">14 35</baseValue><baseValue baseType="point">-5 49</baseValue></multiple><baseValue baseType="string">y = x ^^^^^^ 4 \ vli 2</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="point">0 0</baseValue>
+                    <baseValue baseType="point">-1 1</baseValue>
+                    <baseValue baseType="point">2 4</baseValue>
+                    <baseValue baseType="point">3 9</baseValue>
+                    <baseValue baseType="point">4 16</baseValue>
+                    <baseValue baseType="point">5 25</baseValue>
+                    <baseValue baseType="point">14 35</baseValue>
+                    <baseValue baseType="point">-5 49</baseValue>
+                </multiple>
+                <baseValue baseType="string">y = x ^^^^^^ 4 \ vli 2</baseValue>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -256,7 +304,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertNull($result);
+        $this->assertNull($result);
     }
 
     public function testWrongEquationType()
@@ -278,7 +326,12 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="point">0 0</baseValue></multiple><baseValue baseType="integer">3</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="point">0 0</baseValue>
+                </multiple>
+                <baseValue baseType="integer">3</baseValue>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -296,7 +349,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertNull($result);
+        $this->assertNull($result);
     }
 
     public function testNullEquation()
@@ -318,7 +371,12 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="point">0 0</baseValue></multiple></null></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="point">0 0</baseValue>
+                </multiple>
+                </null>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -336,7 +394,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertNull($result);
+        $this->assertNull($result);
     }
 
     public function testWrongPointsType()
@@ -358,7 +416,12 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
                     $equation,
                 ]
             ),
-            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><multiple><baseValue baseType="point">0 0</baseValue></multiple><baseValue baseType="string">x = y</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation">
+                <multiple>
+                    <baseValue baseType="point">0 0</baseValue>
+                </multiple>
+                <baseValue baseType="string">x = y</baseValue>
+            </customOperator>'
         );
 
         // --- Build Runtime Operands for PHP Runtime Model.
@@ -376,6 +439,6 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        self::assertNull($result);
+        $this->assertNull($result);
     }
 }

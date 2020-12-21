@@ -23,56 +23,60 @@
 
 namespace qtismtest\runtime\expressions\operators\custom\math\fraction;
 
-use qtism\common\enums\BaseType;
+use qti\customOperators\math\fraction\Denominator;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
-use qtism\data\expressions\operators\CustomOperator;
-use qtism\data\expressions\ExpressionCollection;
+use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\operators\CustomOperator;
 use qtism\runtime\expressions\operators\OperandsCollection;
-use qti\customOperators\math\fraction\Denominator;
 use qtismtest\QtiSmTestCase;
 
 /**
  * Tests for Denominator custom operator.
  */
-class DenominatorTest extends QtiSmTestCase {
-	
-    public function testSimple() {
+class DenominatorTest extends QtiSmTestCase
+{
+    public function testSimple()
+    {
         $baseValue = new BaseValue(BaseType::STRING, '1/2');
         $customOperator = new CustomOperator(
-            new ExpressionCollection(array($baseValue)),
+            new ExpressionCollection([$baseValue]),
             '<customOperator class="qti.customOperators.math.Denominator"><baseValue baseType="string">1/2</baseValue></customOperator>'
         );
-        $operands = new OperandsCollection(array(new QtiString('1/2')));
+        $operands = new OperandsCollection([new QtiString('1/2')]);
         $operator = new Denominator($customOperator, $operands);
         $result = $operator->process();
-        
-        self::assertEquals(2, $result->getValue());
+
+        $this->assertEquals(2, $result->getValue());
     }
-    
-    public function testReturnsNullOne() {
+
+    public function testReturnsNullOne()
+    {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
-            new ExpressionCollection(array($baseValue)),
+            new ExpressionCollection([$baseValue]),
             '<customOperator class="qti.customOperators.math.Denominator"><baseValue baseType="boolean">false</baseValue></customOperator>'
         );
-        $operands = new OperandsCollection(array(new QtiBoolean(false)));
+        $operands = new OperandsCollection([new QtiBoolean(false)]);
         $operator = new Denominator($customOperator, $operands);
         $result = $operator->process();
-        
-        self::assertNull($result);
+
+        $this->assertNull($result);
     }
-    public function testReturnsNullTwo() {
+
+    public function testReturnsNullTwo()
+    {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
-            new ExpressionCollection(array($baseValue)),
+            new ExpressionCollection([$baseValue]),
             '<customOperator class="qti.customOperators.math.Denominator"><baseValue baseType="string">bla</baseValue></customOperator>'
         );
-        $operands = new OperandsCollection(array(new QtiBoolean(false)));
+        $operands = new OperandsCollection([new QtiBoolean(false)]);
         $operator = new Denominator($customOperator, $operands);
         $result = $operator->process();
-        
-        self::assertNull($result);
+
+        $this->assertNull($result);
     }
 }

@@ -42,38 +42,44 @@ class StringToNumberTest extends QtiSmTestCase {
         $baseValue = new BaseValue(BaseType::STRING, '13,37');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
-            '<customOperator class="qti.customOperators.text.StringToNumber"><baseValue baseType="string">13,37</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.text.StringToNumber">
+                <baseValue baseType="string">13,37</baseValue>
+            </customOperator>'
         );
         $operands = new OperandsCollection(array(new QtiString('13,37')));
         $operator = new StringToNumber($customOperator, $operands);
         $result = $operator->process();
         
-        self::assertEquals($result->getValue(), (float)1337);
+        $this->assertEquals($result->getValue(), (float)1337);
     }
     
     public function testSimpleTwo() {
         $baseValue = new BaseValue(BaseType::STRING, '13.37');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
-            '<customOperator class="qti.customOperators.text.StringToNumber"><baseValue baseType="string">13.37</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.text.StringToNumber">
+                <baseValue baseType="string">13.37</baseValue>
+            </customOperator>'
         );
         $operands = new OperandsCollection(array(new QtiString('13.37')));
         $operator = new StringToNumber($customOperator, $operands);
         $result = $operator->process();
-        
-        self::assertEquals(round($result->getValue(), 2), round(13.37, 2));
+
+        $this->assertEquals(round($result->getValue(), 2), round(13.37, 2));
     }
     
     public function testReturnsNull() {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
-            '<customOperator class="qti.customOperators.text.StringToNumber"><baseValue baseType="boolean">false</baseValue></customOperator>'
+            '<customOperator class="qti.customOperators.text.StringToNumber">
+                <baseValue baseType="boolean">false</baseValue>
+            </customOperator>'
         );
         $operands = new OperandsCollection(array(new QtiBoolean(false)));
         $operator = new StringToNumber($customOperator, $operands);
         $result = $operator->process();
-        
-        self::assertNull($result);
+
+        $this->assertNull($result);
     }
 }
