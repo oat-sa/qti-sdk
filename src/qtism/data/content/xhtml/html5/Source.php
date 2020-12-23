@@ -27,13 +27,15 @@ use InvalidArgumentException;
 use qtism\common\utils\Format;
 
 /**
- * Html 5 media source class.
+ * Html 5 media source class to allows authors to specify multiple alternative
+ * media resources for media elements.
  */
 class Source extends Html5EmptyElement
 {
     /**
-     * The required src attribute specifies the URL of the track file.
-     * Tracks are formatted in WebVTT format (.vtt files).
+     * The 'src' characteristic gives the address of the media resource.
+     * It must be a valid non-empty URL potentially surrounded by spaces.
+     * This characteristic must be present.
      *
      * @var string
      * @qtism-bean-property
@@ -41,7 +43,9 @@ class Source extends Html5EmptyElement
     private $src;
 
     /**
-     * Mime type of the source file.
+     * The 'type' characteristic gives the type of the media resource, to help
+     * the user agent determine if it can play this media resource before
+     * fetching it. If specified, its value must be a valid MIME type.
      *
      * @var string
      * @qtism-bean-property

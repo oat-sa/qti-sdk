@@ -23,12 +23,12 @@
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\common\enums\Enumeration;
+use qtism\common\enums\AbstractEnumeration;
 
 /**
  * The track kind enumeration.
  */
-class TrackKind implements Enumeration
+class TrackKind extends AbstractEnumeration
 {
     /**
      * Transcription or translation of the dialogue, suitable for when the
@@ -70,7 +70,7 @@ class TrackKind implements Enumeration
      */
     const METADATA = 4;
 
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'subtitles' => self::SUBTITLES,
@@ -79,17 +79,5 @@ class TrackKind implements Enumeration
             'chapters' => self::CHAPTERS,
             'metadata' => self::METADATA,
         ];
-    }
-
-    public static function getConstantByName($name)
-    {
-        return self::asArray()[$name] ?? false;
-    }
-
-    public static function getNameByConstant($constant)
-    {
-        $constants = array_flip(self::asArray());
-
-        return $constants[$constant] ?? false;
     }
 }

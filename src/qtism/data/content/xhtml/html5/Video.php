@@ -27,7 +27,8 @@ use InvalidArgumentException;
 use qtism\common\utils\Format;
 
 /**
- * Html 5 Video element.
+ * Html 5 Video element used for playing videos or movies, and audio files with
+ * captions.
  */
 class Video extends Media
 {
@@ -39,7 +40,10 @@ class Video extends Media
     private $preload = Preload::METADATA;
 
     /**
-     * Preview image to display before the video loads.
+     * The 'poster' characteristic gives the address of an image file that the
+     * user agent can show while no video data is available. The characteristic,
+     * if present, must contain a valid non-empty URL potentially surrounded by
+     * spaces.
      *
      * @var string
      * @qtism-bean-property
@@ -47,7 +51,7 @@ class Video extends Media
     private $poster = '';
 
     /**
-     * Height of the video.
+     * Height of the video content in CSS pixels.
      *
      * @var int
      * @qtism-bean-property
@@ -55,7 +59,7 @@ class Video extends Media
     private $height = 0;
 
     /**
-     * Width of the video.
+     * Width of the video content in CSS pixels.
      *
      * @var int
      * @qtism-bean-property

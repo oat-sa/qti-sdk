@@ -21,35 +21,25 @@
  * @license GPLv2
  */
 
-namespace qtism\data\content\xhtml\html5;
+namespace qtism\common\enums;
 
 /**
- * Html 5 Audio element.
- * An audio element represents a sound or audio stream. User agents should not
- * show this content to the user; it is intended for older Web browsers which
- * do not support audio, so that legacy audio plugins can be tried, or to show
- * text to the users of these older browsers informing them of how to access
- * the audio contents.
+ * Abstract enumeration automatizes the translation from constant name to
+ * value and from value to name.
  */
-class Audio extends Media
+abstract class AbstractEnumeration implements Enumeration
 {
-    /**
-     * Preload type. For Audio, this parameter is fixed, so no setter.
-     *
-     * @var int
-     */
-    private $preload = Preload::METADATA;
+    abstract public static function asArray(): array;
 
-    /**
-     * @return int
-     */
-    public function getPreload(): int
+    public static function getConstantByName($name)
     {
-        return $this->preload;
+        return static::asArray()[$name] ?? false;
     }
 
-    public function getQtiClassName()
+    public static function getNameByConstant($constant)
     {
-        return 'audio';
+        $constants = array_flip(static::asArray());
+
+        return $constants[$constant] ?? false;
     }
 }

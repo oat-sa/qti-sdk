@@ -23,34 +23,32 @@
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\common\enums\Enumeration;
+use qtism\common\enums\AbstractEnumeration;
 
 /**
  * The html5 media CrossOrigin enumeration.
+ * The crossorigin content characteristic on media tags is a CORS settings
+ * attribute.
  */
-class CrossOrigin implements Enumeration
+class CrossOrigin extends AbstractEnumeration
 {
+    /**
+     * Cross-origin CORS requests for the element will have the omit
+     * credentials flag set.
+     */
     const ANONYMOUS = 0;
 
+    /**
+     * Cross-origin CORS requests for the element will not have the omit
+     * credentials flag set.
+     */
     const USE_CREDENTIALS = 1;
 
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'anonymous' => self::ANONYMOUS,
             'use-credentials' => self::USE_CREDENTIALS,
         ];
-    }
-
-    public static function getConstantByName($name)
-    {
-        return self::asArray()[$name] ?? false;
-    }
-
-    public static function getNameByConstant($constant)
-    {
-        $constants = array_flip(self::asArray());
-
-        return $constants[$constant] ?? false;
     }
 }

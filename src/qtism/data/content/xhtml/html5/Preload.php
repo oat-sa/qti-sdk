@@ -23,37 +23,50 @@
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\common\enums\Enumeration;
+use qtism\common\enums\AbstractEnumeration;
 
 /**
  * The html5 media Preload enumeration.
  */
-class Preload implements Enumeration
+class Preload extends AbstractEnumeration
 {
+    /**
+     * Hints to the user agent that either the author does not expect the user
+     * to need the media resource, or that the server wants to minimize
+     * unnecessary traffic. This state does not provide a hint regarding how
+     * aggressively to actually download the media resource if buffering starts
+     * anyway (e.g. once the user hits 'play').
+     */
     const NONE = 0;
 
+    /**
+     * Hints to the user agent that the user agent can put the user's needs
+     * first without risk to the server, up to and including optimistically
+     * downloading the entire resource.
+     */
     const AUTO = 1;
 
+    /**
+     * Hints to the user agent that the author does not expect the user to need
+     * the media resource, but that fetching the resource metadata (dimensions,
+     * track list, duration, etc), and maybe even the first few frames, is
+     * reasonable. If the user agent precisely fetches no more than the
+     * metadata, then the media element will end up with its readyState
+     * attribute set to HAVE_METADATA; typically though, some frames will be
+     * obtained as well and it will probably be HAVE_CURRENT_DATA or
+     * HAVE_FUTURE_DATA. When the media resource is playing, hints to the user
+     * agent that bandwidth is to be considered scarce, e.g. suggesting
+     * throttling the download so that the media data is obtained at the
+     * slowest possible rate that still maintains consistent playback.
+     */
     const METADATA = 2;
 
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'none' => self::NONE,
             'auto' => self::AUTO,
             'metadata' => self::METADATA,
         ];
-    }
-
-    public static function getConstantByName($name)
-    {
-        return self::asArray()[$name] ?? false;
-    }
-
-    public static function getNameByConstant($constant)
-    {
-        $constants = array_flip(self::asArray());
-
-        return $constants[$constant] ?? false;
     }
 }
