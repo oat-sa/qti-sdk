@@ -1,6 +1,6 @@
 {
 	"name": "qtism/qtism",
-	"description": "OAT QTI Software Module Library",
+	"description": "OAT IMS QTI Software Module Library",
 	"type": "library",
 	"authors": [
 		{
