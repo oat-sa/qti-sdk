@@ -1,6 +1,6 @@
 {
 	"name": "qtism/qtism",
-	"description": "OAT IMS QTI Software Module Library",
+	"description": "OAT QTI Software Module Library",
 	"type": "library",
 	"authors": [
 		{
@@ -24,7 +24,7 @@
 		"GPL-2.0-only"
 	],
 	"require" : {
-		"php" : "~7.0",
+		"php" : ">7.0",
 		"oat-sa/lib-tao-dtms" :  "1.0.0",
 		"ext-dom": "*",
 		"ext-json": "*",
