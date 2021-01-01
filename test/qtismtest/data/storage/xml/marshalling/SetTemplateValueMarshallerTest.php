@@ -6,7 +6,7 @@ use DOMDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\operators\Match;
+use qtism\data\expressions\operators\MatchOperator;
 use qtism\data\expressions\Variable;
 use qtism\data\rules\SetTemplateValue;
 use qtismtest\QtiSmTestCase;
@@ -20,7 +20,7 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
     {
         $variableExpr = new Variable('var1');
         $boolExpr = new BaseValue(BaseType::BOOLEAN, true);
-        $matchExpr = new Match(new ExpressionCollection([$variableExpr, $boolExpr]));
+        $matchExpr = new MatchOperator(new ExpressionCollection([$variableExpr, $boolExpr]));
 
         $setTemplateValue = new SetTemplateValue('tpl1', $matchExpr);
 
@@ -45,6 +45,6 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
         $setTemplateValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(SetTemplateValue::class, $setTemplateValue);
         $this->assertEquals('tpl1', $setTemplateValue->getIdentifier());
-        $this->assertInstanceOf(Match::class, $setTemplateValue->getExpression());
+        $this->assertInstanceOf(MatchOperator::class, $setTemplateValue->getExpression());
     }
 }
