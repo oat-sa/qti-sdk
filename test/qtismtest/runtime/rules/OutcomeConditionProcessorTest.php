@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
 class OutcomeConditionProcessorTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider testOutcomeConditionComplexProvider
+     * @dataProvider outcomeConditionComplexProvider
      *
      * @param int $t
      * @param int $tt
@@ -135,7 +135,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testOutcomeConditionComplexProvider()
+    public function outcomeConditionComplexProvider()
     {
         return [
             [new QtiInteger(1), new QtiInteger(1), 'A', 'C', null],
