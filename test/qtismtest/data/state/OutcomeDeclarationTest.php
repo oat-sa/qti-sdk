@@ -34,7 +34,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     /** @var OutcomeDeclaration */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new OutcomeDeclaration('id');
     }

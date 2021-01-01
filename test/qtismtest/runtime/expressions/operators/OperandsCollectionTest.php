@@ -23,13 +23,13 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase
 {
     private $operands = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->operands = new OperandsCollection();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->operands);

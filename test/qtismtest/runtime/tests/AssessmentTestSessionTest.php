@@ -40,7 +40,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 {
     protected $state;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,7 +52,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $this->state['OUTCOME1'] = new QtiString('String!');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->state);
