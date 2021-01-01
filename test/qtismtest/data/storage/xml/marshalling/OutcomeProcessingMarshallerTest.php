@@ -67,11 +67,11 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
         $this->assertEquals('output2', $outcomeRules[1]->getIdentifier());
 
         $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertInternalType('float', $outcomeRules[0]->getExpression()->getValue());
+        $this->assertIsFloat($outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(24.3, $outcomeRules[0]->getExpression()->getValue());
 
         $this->assertInstanceOf(BaseValue::class, $outcomeRules[1]->getExpression());
-        $this->assertInternalType('boolean', $outcomeRules[1]->getExpression()->getValue());
+        $this->assertIsBool($outcomeRules[1]->getExpression()->getValue());
         $this->assertTrue($outcomeRules[1]->getExpression()->getValue());
     }
 }

@@ -48,15 +48,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
 
         $reader = new BinaryStreamAccess($stream);
         $tinyInt = $reader->readTinyInt();
-        $this->assertInternalType('integer', $tinyInt);
+        $this->assertIsInt($tinyInt);
         $this->assertEquals(0, $tinyInt);
 
         $tinyInt = $reader->readTinyInt();
-        $this->assertInternalType('integer', $tinyInt);
+        $this->assertIsInt($tinyInt);
         $this->assertEquals(1, $tinyInt);
 
         $tinyInt = $reader->readTinyInt();
-        $this->assertInternalType('integer', $tinyInt);
+        $this->assertIsInt($tinyInt);
         $this->assertEquals(10, $tinyInt);
 
         try {
@@ -80,15 +80,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $reader = new BinaryStreamAccess($stream);
 
         $val = $reader->readTinyInt();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(0, $val);
 
         $val = $reader->readTinyInt();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(1, $val);
 
         $val = $reader->readTinyInt();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(255, $val);
     }
 
@@ -130,15 +130,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $reader = new BinaryStreamAccess($stream);
 
         $short = $reader->readShort();
-        $this->assertInternalType('integer', $short);
+        $this->assertIsInt($short);
         $this->assertEquals(0, $short);
 
         $short = $reader->readShort();
-        $this->assertInternalType('integer', $short);
+        $this->assertIsInt($short);
         $this->assertEquals(1, $short);
 
         $short = $reader->readShort();
-        $this->assertInternalType('integer', $short);
+        $this->assertIsInt($short);
         $this->assertEquals(65535, $short);
 
         // go beyond EOF.
@@ -172,15 +172,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         $val = $access->readShort();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(0, $val);
 
         $val = $access->readShort();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(1, $val);
 
         $val = $access->readShort();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(65535, $val);
     }
 
@@ -191,23 +191,23 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $reader = new BinaryStreamAccess($stream);
 
         $int = $reader->readInteger();
-        $this->assertInternalType('integer', $int);
+        $this->assertIsInt($int);
         $this->assertEquals(0, $int);
 
         $int = $reader->readInteger();
-        $this->assertInternalType('integer', $int);
+        $this->assertIsInt($int);
         $this->assertEquals(1, $int);
 
         $int = $reader->readInteger();
-        $this->assertInternalType('integer', $int);
+        $this->assertIsInt($int);
         $this->assertEquals(-1, $int);
 
         $int = $reader->readInteger();
-        $this->assertInternalType('integer', $int);
+        $this->assertIsInt($int);
         $this->assertEquals(2147483647, $int);
 
         $int = $reader->readInteger();
-        $this->assertInternalType('integer', $int);
+        $this->assertIsInt($int);
         $this->assertEquals(-2147483648, $int);
 
         // reach EOF.
@@ -232,23 +232,23 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         $val = $access->readInteger();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(0, $val);
 
         $val = $access->readInteger();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(1, $val);
 
         $val = $access->readInteger();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(-1, $val);
 
         $val = $access->readInteger();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(2147483647, $val);
 
         $val = $access->readInteger();
-        $this->assertInternalType('integer', $val);
+        $this->assertIsInt($val);
         $this->assertEquals(-2147483648, $val);
     }
 
@@ -259,11 +259,11 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $reader = new BinaryStreamAccess($stream);
 
         $bool = $reader->readBoolean();
-        $this->assertInternalType('boolean', $bool);
+        $this->assertIsBool($bool);
         $this->assertFalse($bool);
 
         $bool = $reader->readBoolean();
-        $this->assertInternalType('boolean', $bool);
+        $this->assertIsBool($bool);
         $this->assertTrue($bool);
 
         try {
@@ -284,11 +284,11 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         $val = $access->readBoolean();
-        $this->assertInternalType('boolean', $val);
+        $this->assertIsBool($val);
         $this->assertTrue($val);
 
         $val = $access->readBoolean();
-        $this->assertInternalType('boolean', $val);
+        $this->assertIsBool($val);
         $this->assertFalse($val);
     }
 
@@ -299,15 +299,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $reader = new BinaryStreamAccess($stream);
 
         $string = $reader->readString();
-        $this->assertInternalType('string', $string);
+        $this->assertIsString($string);
         $this->assertEquals('', $string);
 
         $string = $reader->readString();
-        $this->assertInternalType('string', $string);
+        $this->assertIsString($string);
         $this->assertEquals('A', $string);
 
         $string = $reader->readString();
-        $this->assertInternalType('string', $string);
+        $this->assertIsString($string);
         $this->assertEquals('binary', $string);
 
         try {
@@ -329,15 +329,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         $val = $access->readString();
-        $this->assertInternalType('string', $val);
+        $this->assertIsString($val);
         $this->assertEquals('', $val);
 
         $val = $access->readString();
-        $this->assertInternalType('string', $val);
+        $this->assertIsString($val);
         $this->assertEquals('A', $val);
 
         $val = $access->readString();
-        $this->assertInternalType('string', $val);
+        $this->assertIsString($val);
         $this->assertEquals('binary', $val);
     }
 
@@ -348,15 +348,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $reader = new BinaryStreamAccess($stream);
 
         $float = $reader->readFloat();
-        $this->assertInternalType('float', $float);
+        $this->assertIsFloat($float);
         $this->assertEquals(round(0.0, 3), round($float, 3));
 
         $float = $reader->readFloat();
-        $this->assertInternalType('float', $float);
+        $this->assertIsFloat($float);
         $this->assertEquals(round(-M_PI, 3), round($float, 3));
 
         $float = $reader->readFloat();
-        $this->assertInternalType('float', $float);
+        $this->assertIsFloat($float);
         $this->assertEquals(round(M_2_PI, 3), round($float, 3));
 
         try {
@@ -377,15 +377,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         $val = $access->readFloat();
-        $this->assertInternalType('float', $val);
+        $this->assertIsFloat($val);
         $this->assertEquals(round(0.0, 3), round($val, 3));
 
         $val = $access->readFloat();
-        $this->assertInternalType('float', $val);
+        $this->assertIsFloat($val);
         $this->assertEquals(round(-M_PI, 3), round($val, 3));
 
         $val = $access->readFloat();
-        $this->assertInternalType('float', $val);
+        $this->assertIsFloat($val);
         $this->assertEquals(round(M_2_PI, 3), round($val, 3));
     }
 

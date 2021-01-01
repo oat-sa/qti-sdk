@@ -46,7 +46,7 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(LookupOutcomeValue::class, $component);
         $this->assertInstanceOf(BaseValue::class, $component->getExpression());
-        $this->assertInternalType('string', $component->getExpression()->getValue());
+        $this->assertIsString($component->getExpression()->getValue());
         $this->assertEquals('a value', $component->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $component->getExpression()->getBaseType());
     }

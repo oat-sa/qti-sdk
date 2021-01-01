@@ -324,14 +324,14 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $entries = $matchTable->getMatchTableEntries();
         $this->assertEquals(2, count($entries));
 
-        $this->assertInternalType('integer', $entries[0]->getSourceValue());
+        $this->assertIsInt($entries[0]->getSourceValue());
         $this->assertEquals(1, $entries[0]->getSourceValue());
-        $this->assertInternalType('float', $entries[0]->getTargetValue());
+        $this->assertIsFloat($entries[0]->getTargetValue());
         $this->assertEquals(1.5, $entries[0]->getTargetValue());
 
-        $this->assertInternalType('integer', $entries[0]->getSourceValue());
+        $this->assertIsInt($entries[0]->getSourceValue());
         $this->assertEquals(2, $entries[1]->getSourceValue());
-        $this->assertInternalType('float', $entries[0]->getTargetValue());
+        $this->assertIsFloat($entries[0]->getTargetValue());
         $this->assertEquals(2.5, $entries[1]->getTargetValue());
     }
 }

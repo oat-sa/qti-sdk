@@ -74,7 +74,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $sub11 = $sub1->getExpressions();
         $sub11 = $sub11[0];
         $this->assertInstanceOf(BaseValue::class, $sub11);
-        $this->assertInternalType('float', $sub11->getValue());
+        $this->assertIsFloat($sub11->getValue());
         $this->assertEquals(23.545, $sub11->getValue());
         $this->assertEquals(BaseType::FLOAT, $sub11->getBaseType());
 
@@ -86,7 +86,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $sub21 = $sub2->getExpressions();
         $sub21 = $sub21[0];
         $this->assertInstanceOf(BaseValue::class, $sub21);
-        $this->assertInternalType('float', $sub21->getValue());
+        $this->assertIsFloat($sub21->getValue());
         $this->assertEquals(1.68, $sub21->getValue());
         $this->assertEquals(BaseType::FLOAT, $sub21->getBaseType());
     }

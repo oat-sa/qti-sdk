@@ -21,7 +21,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function testGcd($a, $b, $expected)
     {
         $result = OperatorsUtils::gcd($a, $b);
-        $this->assertInternalType('integer', $result);
+        $this->assertIsInt($result);
         $this->assertSame($expected, $result);
     }
 
@@ -35,7 +35,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function testLcm($a, $b, $expected)
     {
         $result = OperatorsUtils::lcm($a, $b);
-        $this->assertInternalType('integer', $result);
+        $this->assertIsInt($result);
         $this->assertSame($expected, $expected);
     }
 

@@ -37,11 +37,11 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MapEntry::class, $component);
-        $this->assertInternalType('integer', $component->getMapKey());
+        $this->assertIsInt($component->getMapKey());
         $this->assertEquals(1337, $component->getMapKey());
-        $this->assertInternalType('float', $component->getMappedValue());
+        $this->assertIsFloat($component->getMappedValue());
         $this->assertEquals(1.377, $component->getMappedValue());
-        $this->assertInternalType('boolean', $component->isCaseSensitive());
+        $this->assertIsBool($component->isCaseSensitive());
         $this->assertEquals(true, $component->isCaseSensitive());
     }
 }

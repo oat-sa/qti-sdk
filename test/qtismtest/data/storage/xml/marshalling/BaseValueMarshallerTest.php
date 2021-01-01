@@ -39,7 +39,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(BaseValue::class, $component);
         $this->assertEquals($component->getBaseType(), BaseType::FLOAT);
-        $this->assertInternalType('float', $component->getValue());
+        $this->assertIsFloat($component->getValue());
         $this->assertEquals($component->getValue(), 27.11);
     }
 

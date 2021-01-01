@@ -16,7 +16,7 @@ class BaseTypeTest extends QtiSmTestCase
      */
     public function testGetConstantByNameValidBaseType($baseType)
     {
-        $this->assertInternalType('integer', BaseType::getConstantByName($baseType));
+        $this->assertIsInt(BaseType::getConstantByName($baseType));
     }
 
     /**
