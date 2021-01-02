@@ -5,7 +5,7 @@ namespace qtismtest\data\state;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
-use qtism\data\expressions\operators\Match;
+use qtism\data\expressions\operators\MatchOperator;
 use qtism\data\rules\OutcomeCondition;
 use qtism\data\rules\OutcomeElse;
 use qtism\data\rules\OutcomeIf;
@@ -21,7 +21,7 @@ class OutcomeConditionTest extends QtiSmTestCase
     public function testHasOutcomeElseGetComponents()
     {
         $outcomeIf = new OutcomeIf(
-            new Match(
+            new MatchOperator(
                 new ExpressionCollection(
                     [
                         new BaseValue(BaseType::BOOLEAN, true),

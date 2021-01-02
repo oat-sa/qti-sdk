@@ -7,7 +7,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Lte;
-use qtism\data\expressions\operators\Match;
+use qtism\data\expressions\operators\MatchOperator;
 use qtism\data\expressions\Variable;
 use qtism\data\rules\ExitTemplate;
 use qtism\data\rules\SetCorrectResponse;
@@ -338,7 +338,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateIf = $templateCondition->getTemplateIf();
         $this->assertInstanceOf(TemplateIf::class, $templateIf);
         $expression = $templateIf->getExpression();
-        $this->assertInstanceOf(Match::class, $expression);
+        $this->assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
         $this->assertEquals(2, count($subExpressions));
         $this->assertInstanceOf(Variable::class, $subExpressions[0]);
@@ -355,7 +355,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateElseIf = $templateElseIfs[0];
         $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $expression = $templateElseIf->getExpression();
-        $this->assertInstanceOf(Match::class, $expression);
+        $this->assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
         $this->assertEquals(2, count($subExpressions));
         $this->assertInstanceOf(Variable::class, $subExpressions[0]);
@@ -400,7 +400,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateIf = $templateCondition->getTemplateIf();
         $this->assertInstanceOf(TemplateIf::class, $templateIf);
         $expression = $templateIf->getExpression();
-        $this->assertInstanceOf(Match::class, $expression);
+        $this->assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
         $this->assertEquals(2, count($subExpressions));
         $this->assertInstanceOf(Variable::class, $subExpressions[0]);
@@ -418,7 +418,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateElseIf = $templateElseIfs[0];
         $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $expression = $templateElseIf->getExpression();
-        $this->assertInstanceOf(Match::class, $expression);
+        $this->assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
         $this->assertEquals(2, count($subExpressions));
         $this->assertInstanceOf(Variable::class, $subExpressions[0]);
@@ -434,7 +434,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateElseIf = $templateElseIfs[1];
         $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $expression = $templateElseIf->getExpression();
-        $this->assertInstanceOf(Match::class, $expression);
+        $this->assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
         $this->assertEquals(2, count($subExpressions));
         $this->assertInstanceOf(Variable::class, $subExpressions[0]);
@@ -480,11 +480,11 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         // Same structure as testUnmarshallUnleashTheBeast.
 
         // Building sub branch (var <= 2 -----> var = 0)
-        $expression = new Match(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 0)]));
+        $expression = new MatchOperator(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 0)]));
         $templateIf = new TemplateIf($expression, new TemplateRuleCollection([new SetTemplateValue('tpl', new BaseValue(BaseType::STRING, 'var is 0'))]));
 
         // building sub branch (var <= 2 -----> var = 1)
-        $expression = new Match(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 1)]));
+        $expression = new MatchOperator(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 1)]));
         $templateElseIf = new TemplateElseIf($expression, new TemplateRuleCollection([new SetTemplateValue('tpl', new BaseValue(BaseType::STRING, 'var is 1'))]));
 
         // building sub branch (var <= 2 -----> else)
@@ -495,15 +495,15 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $mainTemplateIf = new TemplateIf($expression, new TemplateRuleCollection([new TemplateCondition($templateIf, new TemplateElseIfCollection([$templateElseIf]), $templateElse)]));
 
         // Building sub branch (var <= 5 -----> var = 3)
-        $expression = new Match(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 3)]));
+        $expression = new MatchOperator(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 3)]));
         $templateIf = new TemplateIf($expression, new TemplateRuleCollection([new SetCorrectResponse('RESPONSE', new BaseValue(BaseType::STRING, 'jerome'))]));
 
         // Build sub branch (var <= 5 -----> var = 4)
-        $expression = new Match(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 4)]));
+        $expression = new MatchOperator(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 4)]));
         $templateElseIf1 = new TemplateElseIf($expression, new TemplateRuleCollection([new SetDefaultValue('RESPONSE', new BaseValue(BaseType::STRING, 'qtism'))]));
 
         // Building sub branch (var <= 5 -----> var = 5)
-        $expression = new Match(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 5)]));
+        $expression = new MatchOperator(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 5)]));
         $templateElseIf2 = new TemplateElseIf($expression, new TemplateRuleCollection([new TemplateConstraint(new BaseValue(BaseType::BOOLEAN, false)), new TemplateConstraint(new BaseValue(BaseType::BOOLEAN, true))]));
 
         // Building branch (var <= 5)
