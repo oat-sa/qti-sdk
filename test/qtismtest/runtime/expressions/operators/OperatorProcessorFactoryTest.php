@@ -21,14 +21,14 @@ require_once(dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
  */
 class OperatorProcessorFactoryTest extends QtiSmTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         // register testing custom operators autoloader.
         spl_autoload_register('custom_operator_autoloader');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         // unregister testing custom operators autoloader.

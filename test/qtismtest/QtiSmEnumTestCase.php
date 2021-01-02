@@ -7,12 +7,12 @@ namespace qtismtest;
  */
 abstract class QtiSmEnumTestCase extends QtiSmTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

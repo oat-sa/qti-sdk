@@ -31,14 +31,14 @@ class BinaryStreamTest extends QtiSmTestCase
         return $this->emptyStream;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->basicStream = new MemoryStream('binary-data');
         $this->emptyStream = new MemoryStream();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->basicStream);

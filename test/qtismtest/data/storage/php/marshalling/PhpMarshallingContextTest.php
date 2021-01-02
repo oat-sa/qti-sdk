@@ -40,7 +40,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         return $this->streamAccess;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         $this->setStreamAccess(new PhpStreamAccess($stream));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

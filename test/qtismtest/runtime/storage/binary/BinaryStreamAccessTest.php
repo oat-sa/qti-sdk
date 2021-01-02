@@ -16,7 +16,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
 {
     private $emptyStream;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -24,7 +24,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this->emptyStream->open();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

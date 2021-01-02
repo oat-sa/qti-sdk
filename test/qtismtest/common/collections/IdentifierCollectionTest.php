@@ -18,13 +18,13 @@ class IdentifierCollectionTest extends QtiSmTestCase
      */
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->collection = new IdentifierCollection();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->collection);
