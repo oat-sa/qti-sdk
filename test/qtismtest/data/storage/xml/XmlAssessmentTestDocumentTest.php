@@ -172,7 +172,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider testIncludeAssessmentSectionRefsMixedProvider
+     * @dataProvider includeAssessmentSectionRefsMixedProvider
      * @param string $file
      * @param bool $filesystem
      * @throws XmlStorageException
@@ -224,7 +224,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testIncludeAssessmentSectionRefsMixedProvider()
+    public function includeAssessmentSectionRefsMixedProvider()
     {
         return [
             [self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml', false],

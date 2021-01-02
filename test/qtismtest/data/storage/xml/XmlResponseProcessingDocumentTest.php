@@ -46,7 +46,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider testLoadProvider
+     * @dataProvider loadProvider
      *
      * @param string $url
      * @throws XmlStorageException
@@ -71,7 +71,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testLoadProvider()
+    public function loadProvider()
     {
         return [
             [self::getTemplatesPath() . '2_1/match_correct.xml'],

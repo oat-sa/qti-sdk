@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
 class GoldilocksRenderingEngineTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider testRenderingProvider
+     * @dataProvider renderingProvider
      * @param $file
      * @param $expectedFile
      * @param $renderingMode
@@ -47,7 +47,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testRenderingProvider()
+    public function renderingProvider()
     {
         return [
             // choiceInteraction-0

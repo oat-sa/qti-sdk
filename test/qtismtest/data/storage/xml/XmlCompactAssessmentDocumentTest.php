@@ -90,7 +90,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider testSchemaValidateProvider
+     * @dataProvider schemaValidateProvider
      * @param string $path
      */
     public function testSchemaValidate($path)
@@ -105,7 +105,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testSchemaValidateProvider(): array
+    public function schemaValidateProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml'],

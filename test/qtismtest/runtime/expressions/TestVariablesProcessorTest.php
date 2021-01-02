@@ -26,7 +26,7 @@ use qtismtest\QtiSmItemSubsetTestCase;
 class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
 {
     /**
-     * @dataProvider testVariablesProvider
+     * @dataProvider variablesProvider
      *
      * @param TestVariables $expression
      * @param int $expectedResult
@@ -121,7 +121,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
     /**
      * @return array
      */
-    public function testVariablesProvider()
+    public function variablesProvider()
     {
         return [
             [self::getTestVariables('SCORE'), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0), new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)])],
