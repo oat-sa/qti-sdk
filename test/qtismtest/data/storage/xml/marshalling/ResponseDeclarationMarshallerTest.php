@@ -115,13 +115,13 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 
         $entry = $entries->item(0);
         $this->assertEquals('mapEntry', $entry->nodeName);
-        $this->assertEquals('1.0', $entry->getAttribute('mapKey'));
-        $this->assertEquals('1.1', $entry->getAttribute('mappedValue'));
+        $this->assertEquals(1.0, $entry->getAttribute('mapKey'));
+        $this->assertEquals(1.1, $entry->getAttribute('mappedValue'));
 
         $entry = $entries->item(1);
         $this->assertEquals('mapEntry', $entry->nodeName);
-        $this->assertEquals('1.1', $entry->getAttribute('mapKey'));
-        $this->assertEquals('1.2', $entry->getAttribute('mappedValue'));
+        $this->assertEquals(1.1, $entry->getAttribute('mapKey'));
+        $this->assertEquals(1.2, $entry->getAttribute('mappedValue'));
     }
 
     public function testUnmarshallMinimal()
