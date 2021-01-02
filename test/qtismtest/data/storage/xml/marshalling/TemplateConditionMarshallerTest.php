@@ -512,7 +512,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         // Building branch (var <= 8)
         $expression = new Lte(new ExpressionCollection([new Variable('var'), new BaseValue(BaseType::INTEGER, 8)]));
-        $mainTemplateElseIf2 = new TemplateElseIf($expression, new TemplateRuleCollection([new SetCorrectResponse('RESPONSE', new BaseValue('RESPONSE', 'var is <= 8'))]));
+        $mainTemplateElseIf2 = new TemplateElseIf($expression, new TemplateRuleCollection([new SetCorrectResponse('RESPONSE', new BaseValue(BaseType::IDENTIFIER, 'var is <= 8'))]));
 
         // Build branch (else)
         $mainTemplateElse = new TemplateElse(new TemplateRuleCollection([new TemplateConstraint(new BaseValue(BaseType::BOOLEAN, true))]));
