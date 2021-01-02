@@ -55,6 +55,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     {
         $xml = new XmlDocument();
         $xml->load($url, true);
+        $this::assertTrue(true);
     }
 
     /**

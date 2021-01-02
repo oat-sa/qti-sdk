@@ -18,6 +18,7 @@ class RandomFloatMarshallerTest extends QtiSmTestCase
         $component = new RandomFloat($min, $max);
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
+        $this::assertTrue(true);
     }
 
     public function testUnmarshall()
