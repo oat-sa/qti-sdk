@@ -250,7 +250,10 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $expectedMsg = '/^An internal error occurred while parsing QTI-XML:' . "\n"
             . 'Fatal Error: (' . $libMxl2_9_10_Message . '|' . $libMxl2_9_other_Message . ') at 1\\:17\\.$/';
-        $this->expectExceptionMessageRegExp($expectedMsg);
+        $assertionMethod = method_exists($this, 'expectExceptionMessageMatches')
+            ? 'expectExceptionMessageMatches'
+            : 'expectExceptionMessageRegExp';
+        $this->$assertionMethod($expectedMsg);
 
         $doc->loadFromString('<assessmentItem>');
     }
