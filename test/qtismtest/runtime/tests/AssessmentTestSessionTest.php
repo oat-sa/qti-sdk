@@ -92,9 +92,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals('P01', $assessmentTestSession->getCurrentTestPart()->getIdentifier());
         $this->assertEquals('S01', $assessmentTestSession->getCurrentAssessmentSection()->getIdentifier());
         $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
-        $this->assertInternalType('integer', $assessmentTestSession->getCurrentNavigationMode());
+        $this->assertIsInt($assessmentTestSession->getCurrentNavigationMode());
         $this->assertEquals(NavigationMode::LINEAR, $assessmentTestSession->getCurrentNavigationMode());
-        $this->assertInternalType('integer', $assessmentTestSession->getCurrentSubmissionMode());
+        $this->assertIsInt($assessmentTestSession->getCurrentSubmissionMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $assessmentTestSession->getCurrentSubmissionMode());
         $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 
@@ -993,7 +993,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $state = $this->getState();
 
         $weight = $state->getWeight($identifier);
-        $this->assertInternalType('boolean', $weight);
+        $this->assertIsBool($weight);
         $this->assertSame(false, $weight);
     }
 

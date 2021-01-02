@@ -64,7 +64,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $this->assertEquals(BaseType::BOOLEAN, $templateIf->getExpression()->getBaseType());
-        $this->assertInternalType('boolean', $templateIf->getExpression()->getValue());
+        $this->assertIsBool($templateIf->getExpression()->getValue());
         $this->assertTrue($templateIf->getExpression()->getValue());
 
         $templateRules = $templateIf->getTemplateRules();
@@ -126,7 +126,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $this->assertEquals(BaseType::BOOLEAN, $templateIf->getExpression()->getBaseType());
-        $this->assertInternalType('boolean', $templateIf->getExpression()->getValue());
+        $this->assertIsBool($templateIf->getExpression()->getValue());
         $this->assertTrue($templateIf->getExpression()->getValue());
 
         $templateRules = $templateIf->getTemplateRules();
@@ -143,7 +143,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $this->assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
         $this->assertEquals(BaseType::BOOLEAN, $templateElseIf->getExpression()->getBaseType());
-        $this->assertInternalType('boolean', $templateElseIf->getExpression()->getValue());
+        $this->assertIsBool($templateElseIf->getExpression()->getValue());
         $this->assertFalse($templateElseIf->getExpression()->getValue());
 
         $templateRules = $templateElseIf->getTemplateRules();
@@ -200,7 +200,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $this->assertEquals(BaseType::BOOLEAN, $templateIf->getExpression()->getBaseType());
-        $this->assertInternalType('boolean', $templateIf->getExpression()->getValue());
+        $this->assertIsBool($templateIf->getExpression()->getValue());
         $this->assertTrue($templateIf->getExpression()->getValue());
 
         $templateRules = $templateIf->getTemplateRules();
@@ -471,7 +471,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateRules = $templateElse->getTemplateRules();
         $this->assertEquals(1, count($templateRules));
         $this->assertInstanceOf(TemplateConstraint::class, $templateRules[0]);
-        $this->assertInternalType('boolean', $templateRules[0]->getExpression()->getValue());
+        $this->assertIsBool($templateRules[0]->getExpression()->getValue());
         $this->assertTrue($templateRules[0]->getExpression()->getValue());
     }
 

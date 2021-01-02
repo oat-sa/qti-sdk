@@ -53,7 +53,7 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(EqualRounded::class, $component);
-        $this->assertInternalType('integer', $component->getFigures());
+        $this->assertIsInt($component->getFigures());
         $this->assertEquals(3, $component->getFigures());
         $this->assertEquals(RoundingMode::SIGNIFICANT_FIGURES, $component->getRoundingMode());
         $this->assertEquals(2, count($component->getExpressions()));

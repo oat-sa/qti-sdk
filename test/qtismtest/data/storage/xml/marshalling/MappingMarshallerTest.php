@@ -61,9 +61,9 @@ class MappingMarshallerTest extends QtiSmTestCase
 
         $mapEntries = $component->getMapEntries();
         $this->assertEquals(1, count($mapEntries));
-        $this->assertInternalType('integer', $mapEntries[0]->getMapKey());
+        $this->assertIsInt($mapEntries[0]->getMapKey());
         $this->assertEquals(1337, $mapEntries[0]->getMapKey());
-        $this->assertInternalType('float', $mapEntries[0]->getMappedValue());
+        $this->assertIsFloat($mapEntries[0]->getMappedValue());
         $this->assertEquals(1.337, $mapEntries[0]->getMappedValue());
         $this->assertFalse($mapEntries[0]->isCaseSensitive());
     }

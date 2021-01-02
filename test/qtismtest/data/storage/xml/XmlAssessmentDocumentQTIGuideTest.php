@@ -168,7 +168,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this->assertEquals(1, count($values));
         $value = $values[0];
         $this->assertInstanceOf(Value::class, $value);
-        $this->assertInternalType('float', $value->getValue());
+        $this->assertIsFloat($value->getValue());
         $this->assertEquals(0.0, $value->getValue());
 
         $outcomeDeclaration = $outcomeDeclarations['MAXSCORE'];
@@ -182,7 +182,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this->assertEquals(1, count($values));
         $value = $values[0];
         $this->assertInstanceOf(Value::class, $value);
-        $this->assertInternalType('float', $value->getValue());
+        $this->assertIsFloat($value->getValue());
         $this->assertEquals(18.0, $value->getValue());
 
         // -- TestParts

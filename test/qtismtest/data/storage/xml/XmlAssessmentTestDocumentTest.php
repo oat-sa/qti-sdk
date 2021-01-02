@@ -46,7 +46,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
             $doc->load($uri);
             $this->assertFalse(true); // An exception must have been thrown.
         } catch (XmlStorageException $e) {
-            $this->assertInternalType('string', $e->getMessage());
+            $this->assertIsString($e->getMessage());
             $this->assertInstanceOf(LibXmlErrorCollection::class, $e->getErrors());
             $this->assertGreaterThan(0, count($e->getErrors()));
         }
@@ -58,7 +58,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
         $testParts = $doc->getDocumentComponent()->getTestParts();
         $this->assertTrue($testParts['testPartId']->hasItemSessionControl());
-        $this->assertInternalType('integer', 0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+        $this->assertIsInt($testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
         $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
     }
 
@@ -73,7 +73,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc->load($file);
         $testParts = $doc->getDocumentComponent()->getTestParts();
         $this->assertTrue($testParts['testPartId']->hasItemSessionControl());
-        $this->assertInternalType('integer', 0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+        $this->assertIsInt($testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
         $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
 
         unlink($file);
