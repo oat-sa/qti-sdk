@@ -115,13 +115,13 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 
         $entry = $entries->item(0);
         $this->assertEquals('mapEntry', $entry->nodeName);
-        $this->assertEquals('1.0', $entry->getAttribute('mapKey'));
-        $this->assertEquals('1.1', $entry->getAttribute('mappedValue'));
+        $this->assertEquals(1.0, $entry->getAttribute('mapKey'));
+        $this->assertEquals(1.1, $entry->getAttribute('mappedValue'));
 
         $entry = $entries->item(1);
         $this->assertEquals('mapEntry', $entry->nodeName);
-        $this->assertEquals('1.1', $entry->getAttribute('mapKey'));
-        $this->assertEquals('1.2', $entry->getAttribute('mappedValue'));
+        $this->assertEquals(1.1, $entry->getAttribute('mapKey'));
+        $this->assertEquals(1.2, $entry->getAttribute('mappedValue'));
     }
 
     public function testUnmarshallMinimal()
@@ -200,14 +200,14 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $entries = $matchTable->getMatchTableEntries();
         $this->assertEquals(2, count($entries));
 
-        $this->assertInternalType('integer', $entries[0]->getSourceValue());
+        $this->assertIsInt($entries[0]->getSourceValue());
         $this->assertEquals(1, $entries[0]->getSourceValue());
-        $this->assertInternalType('float', $entries[0]->getTargetValue());
+        $this->assertIsFloat($entries[0]->getTargetValue());
         $this->assertEquals(1.5, $entries[0]->getTargetValue());
 
-        $this->assertInternalType('integer', $entries[0]->getSourceValue());
+        $this->assertIsInt($entries[0]->getSourceValue());
         $this->assertEquals(2, $entries[1]->getSourceValue());
-        $this->assertInternalType('float', $entries[0]->getTargetValue());
+        $this->assertIsFloat($entries[0]->getTargetValue());
         $this->assertEquals(2.5, $entries[1]->getTargetValue());
     }
 }

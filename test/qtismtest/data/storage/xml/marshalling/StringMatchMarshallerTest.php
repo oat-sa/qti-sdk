@@ -49,9 +49,9 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(StringMatch::class, $component);
-        $this->assertInternalType('boolean', $component->isCaseSensitive());
+        $this->assertIsBool($component->isCaseSensitive());
         $this->assertTrue($component->isCaseSensitive());
-        $this->assertInternalType('boolean', $component->mustSubstring());
+        $this->assertIsBool($component->mustSubstring());
         $this->assertFalse($component->mustSubstring());
     }
 }

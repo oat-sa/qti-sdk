@@ -31,14 +31,14 @@ class BinaryStreamTest extends QtiSmTestCase
         return $this->emptyStream;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->basicStream = new MemoryStream('binary-data');
         $this->emptyStream = new MemoryStream();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->basicStream);
@@ -52,7 +52,7 @@ class BinaryStreamTest extends QtiSmTestCase
 
         $this->assertEquals('binary-data', $stream->getBinary());
         $this->assertFalse($stream->isOpen());
-        $this->assertInternalType('integer', $stream->getPosition());
+        $this->assertIsInt($stream->getPosition());
         $this->assertEquals(0, $stream->getPosition());
         $this->assertEquals(strlen('binary-data'), $stream->getLength());
     }
@@ -105,7 +105,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream->open();
 
         $data = $stream->read(0);
-        $this->assertInternalType('string', $data);
+        $this->assertIsString($data);
         $this->assertEquals('', $data);
         $this->assertFalse($stream->eof());
 
@@ -141,7 +141,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream = $this->getEmptyStream();
         $stream->open();
 
-        $this->assertInternalType('string', $stream->getBinary());
+        $this->assertIsString($stream->getBinary());
         $this->assertEquals('', $stream->getBinary());
 
         $toWrite = 'binary';

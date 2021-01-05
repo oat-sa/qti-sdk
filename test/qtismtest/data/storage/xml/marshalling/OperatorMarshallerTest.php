@@ -49,16 +49,16 @@ class OperatorMarshallerTest extends QtiSmTestCase
         $sub1Expressions = $sub1->getExpressions();
         $sub11 = $sub1Expressions[0];
         $sub12 = $sub1Expressions[1];
-        $this->assertInternalType('integer', $sub11->getValue());
-        $this->assertInternalType('integer', $sub12->getValue());
+        $this->assertIsInt($sub11->getValue());
+        $this->assertIsInt($sub12->getValue());
         $this->assertEquals(1, $sub11->getValue());
         $this->assertEquals(2, $sub12->getValue());
 
         $sub2Expressions = $sub2->getExpressions();
         $sub21 = $sub2Expressions[0];
         $sub22 = $sub2Expressions[1];
-        $this->assertInternalType('integer', $sub21->getValue());
-        $this->assertInternalType('integer', $sub21->getValue());
+        $this->assertIsInt($sub21->getValue());
+        $this->assertIsInt($sub21->getValue());
         $this->assertEquals(3, $sub21->getValue());
         $this->assertEquals(4, $sub22->getValue());
     }

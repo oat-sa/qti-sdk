@@ -105,7 +105,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider testClassSelectionProvider
+     * @dataProvider classSelectionProvider
      *
      * @param string $file
      * @param int $iterations
@@ -137,7 +137,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testClassSelectionProvider()
+    public function classSelectionProvider()
     {
         $dir = self::samplesDir();
 

@@ -332,6 +332,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $responses = new State();
         $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD')));
         $itemSession->endAttempt($responses);
+        $this::assertTrue(true);
     }
 
     public function testIsCorrect()

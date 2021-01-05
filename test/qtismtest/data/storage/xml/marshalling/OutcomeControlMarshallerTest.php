@@ -120,7 +120,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $outcomeRules = $component->getOutcomeRules();
         $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertInternalType('string', $outcomeRules[0]->getExpression()->getValue());
+        $this->assertIsString($outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
@@ -150,7 +150,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $outcomeRules = $component->getOutcomeRules();
         $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertInternalType('string', $outcomeRules[0]->getExpression()->getValue());
+        $this->assertIsString($outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
@@ -178,7 +178,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $outcomeRules = $component->getOutcomeRules();
         $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
         $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertInternalType('string', $outcomeRules[0]->getExpression()->getValue());
+        $this->assertIsString($outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
         $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
