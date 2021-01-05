@@ -26,6 +26,7 @@ namespace qtism\common\utils;
 use DateInterval;
 use Exception;
 use qtism\common\utils\data\CharacterMap;
+use ValueError;
 
 /**
  * A utility class focusing on string format checks.
@@ -552,6 +553,46 @@ class Format
         }
 
         return $isoFormat;
+    }
+
+    /**
+     * Performs a failsafe sprintf with the same behavior in PHP 7 and 8.
+     * In PHP 7, when encountering an invalid format specifier, sprintf just
+     * returns an empty string and concatenates is with the rest of the format.
+     * In PHP 8, when encountering an invalid format specifier, sprintf throws
+     * a ValueError.
+     * When run under PHP 8, this methods simulates PHP 7 behavior by removing
+     * the invalid specifier from the format string and tries to perform the
+     * sprintf call again.
+     *
+     * NB: this is probably overkill but kept to ensure backward compatibility
+     * for any user-provided format.
+     *
+     * @param string $format
+     * @param float $value
+     * @return mixed|string
+     */
+    public static function permissiveSprintf(string $format, float $value)
+    {
+        $format = self::printfFormatIsoToPhp($format);
+        try {
+            // Php 7 only runs this line.
+            return sprintf($format, $value);
+        } catch (ValueError $exception) {
+            // Php 8 runs this when invalid format is found.
+            $result = false;
+            while ($result === false) {
+                if (!preg_match('/^Unknown format specifier "([A-Za-z])"$/', $exception->getMessage(), $matches)) {
+                    throw $exception;
+                }
+                $format = preg_replace('/%(?:[0-9]+\$)?-?(?:\.[0-9]+)?' . $matches[1] . '/', '', $format);
+                try {
+                    $result = sprintf($format, $value);
+                } catch (ValueError $exception) {
+                }
+            }
+            return $result;
+        }
     }
 
     /**
