@@ -24,7 +24,7 @@
 		"GPL-2.0-only"
 	],
 	"require" : {
-		"php" : "~7.1",
+		"php" : ">=7.1",
 		"oat-sa/lib-tao-dtms" :  "1.0.0",
 		"ext-dom": "*",
 		"ext-json": "*",
