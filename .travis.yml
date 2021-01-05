@@ -7,9 +7,9 @@ php:
   - 7.3
   - 7.4
   - 8.0
-  
-before_install: phpenv config-add travis-cfg.ini
 
+before_install: phpenv config-add travis-cfg.ini
+  
 before_script:
   - composer self-update && composer install --no-interaction
 

@@ -26,6 +26,7 @@
 	"require" : {
 		"php" : ">=7.1",
 		"oat-sa/lib-tao-dtms" :  "1.0.0",
+		"oat-sa/lib-beeme" :  "0.2.0",
 		"ext-dom": "*",
 		"ext-json": "*",
 		"ext-libxml": "*"
@@ -37,6 +38,9 @@
 	"autoload": {
 		"psr-0": {
 			"qtism\\": "."
+		},
+		"psr-4": {
+			"qti\\customOperators\\": "qtism/runtime/expressions/operators/custom/"
 		}
 	},
 	"autoload-dev": {
