@@ -4,7 +4,7 @@ namespace qtismtest;
 
 use DOMDocument;
 use DOMElement;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
@@ -22,12 +22,12 @@ use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
  */
 abstract class QtiSmTestCase extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

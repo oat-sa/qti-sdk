@@ -44,7 +44,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         return $this->stream;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -53,7 +53,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
         $this->setStream($stream);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

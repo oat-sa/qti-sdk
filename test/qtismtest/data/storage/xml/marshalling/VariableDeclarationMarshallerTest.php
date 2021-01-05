@@ -63,6 +63,6 @@ class VariableDeclarationMarshallerTest extends QtiSmTestCase
 
         $values = $component->getDefaultValue()->getValues();
         $this->assertEquals(1, count($values));
-        $this->assertInternalType('integer', $values[0]->getValue());
+        $this->assertIsInt($values[0]->getValue());
     }
 }

@@ -29,6 +29,7 @@ use qtism\common\utils\Reflection;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\AndOperator;
 use qtism\data\expressions\operators\CustomOperator;
+use qtism\data\expressions\operators\MatchOperator;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\expressions\operators\OrOperator;
 use qtism\data\QtiComponent;
@@ -148,6 +149,8 @@ class OperatorMarshaller extends RecursiveMarshaller
             $className = AndOperator::class;
         } elseif ($element->localName === 'or') {
             $className = OrOperator::class;
+        } elseif ($element->localName === 'match') {
+            $className = MatchOperator::class;
         } else {
             $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
         }

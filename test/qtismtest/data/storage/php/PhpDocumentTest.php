@@ -58,6 +58,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc->save($file);
 
         unlink($file);
+        $this->assertTrue(true);
     }
 
     public function testSimpleSaveToString()

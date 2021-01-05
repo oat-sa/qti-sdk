@@ -36,5 +36,6 @@ class CompactMarshallerFactoryTest extends QtiSmTestCase
     public function testFromComponent()
     {
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+        $this->assertTrue(true);
     }
 }

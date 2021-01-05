@@ -42,8 +42,8 @@ class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(InterpolationTableEntry::class, $component);
         $this->assertEquals(243.3, $component->getSourceValue());
-        $this->assertInternalType('float', $component->getSourceValue());
-        $this->assertInternalType('integer', $component->getTargetValue());
+        $this->assertIsFloat($component->getSourceValue());
+        $this->assertIsInt($component->getTargetValue());
         $this->assertEquals(1, $component->getTargetValue());
     }
 }

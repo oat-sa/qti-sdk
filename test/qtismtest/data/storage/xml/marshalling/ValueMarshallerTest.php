@@ -68,7 +68,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Value::class, $component);
-        $this->assertInternalType('string', $component->getValue());
+        $this->assertIsString($component->getValue());
         $this->assertEquals($component->getValue(), 'A B');
     }
 
@@ -99,7 +99,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Value::class, $component);
-        $this->assertInternalType('string', $component->getValue());
+        $this->assertIsString($component->getValue());
         $this->assertSame('Hello <b>bold</b>', $component->getValue());
     }
 

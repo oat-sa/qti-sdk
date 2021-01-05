@@ -86,6 +86,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $shufflables[] = new SimpleChoice('blu');
 
         Utils::shuffle($dom->documentElement, $shufflables);
+        $this->assertTrue(true);
     }
 
     public function testHasClass()

@@ -364,6 +364,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
+        $this->assertTrue(true);
     }
 
     public function testFiles()

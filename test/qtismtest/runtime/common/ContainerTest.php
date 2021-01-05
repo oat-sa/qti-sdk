@@ -45,13 +45,13 @@ class ContainerTest extends QtiSmTestCase
         return $this->container;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->container = new Container();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->container);

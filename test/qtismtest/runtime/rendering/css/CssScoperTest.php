@@ -13,7 +13,7 @@ use qtism\runtime\rendering\RenderingException;
 class CssScoperTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider testOutputProvider
+     * @dataProvider outputProvider
      *
      * @param string $inputFile
      * @param string $outputFile
@@ -33,7 +33,7 @@ class CssScoperTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testOutputProvider()
+    public function outputProvider()
     {
         return [
             [self::samplesDir() . 'rendering/css/css_input1.css', self::samplesDir() . 'rendering/css/css_output1.css', 'myId'],

@@ -202,6 +202,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new QtiDuration('PT1S')));
         sleep(1);
         $itemSession->updateDuration();
+        // TODO: test with Carbon. The next assertion was false randomly.
         $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new QtiDuration('PT0S')));
         sleep(1);
         $itemSession->updateDuration();

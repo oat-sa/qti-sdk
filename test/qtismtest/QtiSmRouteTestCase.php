@@ -16,12 +16,12 @@ use qtism\runtime\tests\Route;
  */
 abstract class QtiSmRouteTestCase extends QtiSmTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

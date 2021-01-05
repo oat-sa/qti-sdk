@@ -594,7 +594,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S01', $routeItem->getAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
-        $this->assertInternalType('integer', $routeItem->getOccurence());
+        $this->assertIsInt($routeItem->getOccurence());
         $this->assertEquals(0, $routeItem->getOccurence());
         $this->assertEquals(0, count($routeItem->getBranchRules()));
         $this->assertEquals(0, count($routeItem->getPreConditions()));
@@ -625,7 +625,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S01', $routeItem->getAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
-        $this->assertInternalType('integer', $routeItem->getOccurence());
+        $this->assertIsInt($routeItem->getOccurence());
         $this->assertEquals(0, $routeItem->getOccurence());
         $this->assertEquals(0, count($routeItem->getBranchRules()));
         $this->assertEquals(0, count($routeItem->getPreConditions()));
@@ -658,7 +658,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals('Q01', $itemRef->getIdentifier());
 
         $this->assertEquals(0, $pendingResponses->getOccurence());
-        $this->assertInternalType('integer', $pendingResponses->getOccurence());
+        $this->assertIsInt($pendingResponses->getOccurence());
     }
 
     public function testWritePendingResponses()
@@ -689,7 +689,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this->assertEquals('ChoiceB', $state['RESPONSE']->getValue());
         $this->assertEquals('Q01', $pendingResponses->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals(0, $pendingResponses->getOccurence());
-        $this->assertInternalType('integer', $pendingResponses->getOccurence());
+        $this->assertIsInt($pendingResponses->getOccurence());
     }
 
     /**
