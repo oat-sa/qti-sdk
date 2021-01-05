@@ -7,7 +7,7 @@ use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\Correct;
 use qtism\data\expressions\Variable;
-use qtism\data\expressions\operators\Match;
+use qtism\data\expressions\operators\MatchOperator;
 use qtism\data\rules\ResponseCondition;
 use qtism\data\processing\ResponseProcessing;
 
@@ -32,7 +32,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
 
         $responseIf = $responseCondition->getResponseIf();
         $match = $responseIf->getExpression();
-        $this->assertInstanceOf(Match::class, $match);
+        $this->assertInstanceOf(MatchOperator::class, $match);
 
         $matchExpressions = $match->getExpressions();
         $this->assertEquals(2, count($matchExpressions));
@@ -46,7 +46,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider testLoadProvider
+     * @dataProvider loadProvider
      *
      * @param string $url
      * @throws XmlStorageException
@@ -55,6 +55,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     {
         $xml = new XmlDocument();
         $xml->load($url, true);
+        $this::assertTrue(true);
     }
 
     /**
@@ -71,7 +72,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function testLoadProvider()
+    public function loadProvider()
     {
         return [
             [self::getTemplatesPath() . '2_1/match_correct.xml'],

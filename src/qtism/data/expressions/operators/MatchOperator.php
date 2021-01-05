@@ -38,7 +38,7 @@ use qtism\data\expressions\ExpressionCollection;
  * compare subexpressions with base-types of float and must not be used on
  * sub-expressions with a base-type of duration.
  */
-class Match extends Operator
+class MatchOperator extends Operator
 {
     /**
      * Create a new Match object.

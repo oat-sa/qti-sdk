@@ -52,7 +52,7 @@ class InsideMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(Inside::class, $component);
         $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
-        $this->assertInternalType('integer', $component->getShape());
+        $this->assertIsInt($component->getShape());
         $this->assertEquals(QtiShape::RECT, $component->getShape());
         $this->assertEquals(1, count($component->getExpressions()));
     }

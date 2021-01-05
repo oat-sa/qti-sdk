@@ -98,7 +98,7 @@ class PrintedVariableEngine extends AbstractEngine
      * Processes the encapsulated PrintedVariable object into a formatted
      * string, depending on the PrintedVariable object and the current context.
      *
-     * * If the value to format is an OrderedContainer, and no 'index' attribue value is given, the whole container is displayed.
+     * * If the value to format is an OrderedContainer, and no 'index' attribute value is given, the whole container is displayed.
      * * If no specific precision is given for a float display, the precision will be by default 6.
      *
      * @return string A processed PrintedVariable as a string or the NULL value if the variable's value is NULL.
@@ -238,9 +238,7 @@ class PrintedVariableEngine extends AbstractEngine
             $format = $printedVariable->getFormat();
 
             if (empty($format) === false) {
-                $format = Format::printfFormatIsoToPhp($format);
-
-                return sprintf($format, $value->getValue());
+                return Format::permissiveSprintf($format, $value->getValue());
             } elseif ($baseType === BaseType::FLOAT && $printedVariable->mustPowerForm() === true) {
                 return Format::scale10($value->getValue(), 'x');
             } elseif ($baseType === BaseType::FLOAT) {

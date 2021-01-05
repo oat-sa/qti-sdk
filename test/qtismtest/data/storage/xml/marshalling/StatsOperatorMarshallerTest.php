@@ -55,7 +55,7 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         $subExpr = $component->getExpressions();
         $this->assertEquals(1, count($subExpr));
         $this->assertInstanceOf(BaseValue::class, $subExpr[0]);
-        $this->assertInternalType('float', $subExpr[0]->getValue());
+        $this->assertIsFloat($subExpr[0]->getValue());
         $this->assertEquals(12.5468, $subExpr[0]->getValue());
         $this->assertEquals(BaseType::FLOAT, $subExpr[0]->getBaseType());
     }

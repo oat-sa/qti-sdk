@@ -18,13 +18,13 @@ class StringCollectionTest extends QtiSmTestCase
      */
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->collection = new StringCollection();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->collection);

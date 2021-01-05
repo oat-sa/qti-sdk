@@ -45,7 +45,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
         $this->assertEquals([0, 20, 100, 0], $component->getCoords()->getArrayCopy());
         $this->assertEquals(QtiShape::RECT, $component->getShape());
-        $this->assertInternalType('float', $component->getMappedValue());
+        $this->assertIsFloat($component->getMappedValue());
         $this->assertEquals(1.337, $component->getMappedValue());
     }
 

@@ -59,8 +59,8 @@ class EqualMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Equal::class, $component);
-        $this->assertInternalType('boolean', $component->doesIncludeLowerBound());
-        $this->assertInternalType('boolean', $component->doesIncludeUpperBound());
+        $this->assertIsBool($component->doesIncludeLowerBound());
+        $this->assertIsBool($component->doesIncludeUpperBound());
         $this->assertFalse($component->doesIncludeLowerBound());
         $this->assertTrue($component->doesIncludeUpperBound());
         $this->assertEquals(2, count($component->getExpressions()));

@@ -273,9 +273,13 @@ class PrintedVariableEngineTest extends QtiSmTestCase
             ['', 'recordEmpty', $state],
             ['a=-3;b=null;c=true', 'recordContainsNull', $state],
 
-            // -- Funny format tests.
+            // -- Wrong formats.
             ['bla', 'positiveInteger', $state, 'bla'],
             [' yeah', 'positiveInteger', $state, '%-P yeah'],
+            [' yeah', 'positiveInteger', $state, '%1$-.3w yeah'],
+            ['  yeah', 'positiveInteger', $state, '%-P %1$-.3w yeah'],
+            ['25  yeah', 'positiveInteger', $state, '%-d %1$-.3w yeah'],
+            [' 25 yeah', 'positiveInteger', $state, '%1$-.3w %d yeah'],
 
             // -- Real tests with format.
             ['25', 'positiveInteger', $state, '%s'],

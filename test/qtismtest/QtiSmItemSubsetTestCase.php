@@ -19,7 +19,7 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
      */
     private $testSession;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -33,7 +33,7 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
         $this->setTestSession($testSession);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

@@ -44,7 +44,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $this->assertEquals('2.5', $entry->getAttribute('sourceValue'));
         $this->assertEquals('false', $entry->getAttribute('includeBoundary'));
 
-        $this->assertEquals('2.0', $element->getAttribute('defaultValue'));
+        $this->assertEquals(2.0, $element->getAttribute('defaultValue'));
     }
 
     public function testUnmarshall()

@@ -29,7 +29,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToInteger($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
-        $this->assertInternalType('integer', $value);
+        $this->assertIsInt($value);
         $this->assertTrue($value === $expected);
     }
 
@@ -51,7 +51,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToFloatValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
-        $this->assertInternalType('float', $value);
+        $this->assertIsFloat($value);
         $this->assertTrue($value === $expected);
     }
 
@@ -73,7 +73,7 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToBooleanValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
-        $this->assertInternalType('boolean', $value);
+        $this->assertIsBool($value);
         $this->assertTrue($expected === $value);
     }
 
@@ -87,7 +87,7 @@ class UtilsTest extends QtiSmTestCase
     public function testIntOrIdentifierValid($string, $expected, $type)
     {
         $value = Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
-        $this->assertInternalType('string', $type);
+        $this->assertIsString($type);
         $this->assertTrue($expected === $value);
     }
 
@@ -119,8 +119,8 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToPointValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::POINT);
-        $this->assertInternalType('integer', $value->getX());
-        $this->assertInternalType('integer', $value->getY());
+        $this->assertIsInt($value->getX());
+        $this->assertIsInt($value->getY());
         $this->assertEquals($expected->getX(), $value->getX());
         $this->assertEquals($expected->getY(), $value->getY());
     }
