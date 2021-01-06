@@ -139,6 +139,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         }
 
         // The total duration should have taken 5 seconds, the rest of the time was in SUSPENDED state.
+        // TODO: This randomly fails. Use Carbon for time testing.
         $this->assertEquals(5, $itemSession['duration']->round()->getSeconds(true));
 
         // one more and we get an exception... :)
