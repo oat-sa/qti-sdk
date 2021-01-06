@@ -1074,10 +1074,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      */
     public function writeFile(QtiFile $file)
     {
-        $toPersist = $file->getIdentifier();
-        if ($file instanceof FileHash) {
-            $toPersist = json_encode($file);
-        }
+        $toPersist = $file instanceof FileHash
+            ? json_encode($file)
+            : $file->getIdentifier();
 
         try {
             $this->writeString($toPersist);
