@@ -29,7 +29,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $visible = true;
 
         $component = new AssessmentSection($identifier, $title, $visible);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -74,7 +74,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $component->setItemSessionControl($itemSessionControl);
         $component->setSectionParts($sectionParts);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -147,7 +147,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $root = new AssessmentSection($identifier, $title, $visible);
         $root->setSectionParts(new SectionPartCollection([$sub1, $sub2]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($root);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($root);
         $element = $marshaller->marshall($root);
 
         $this->assertInstanceOf(AssessmentSection::class, $root);
@@ -181,7 +181,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentSection::class, $component);
@@ -213,7 +213,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentSection::class, $component);
@@ -275,7 +275,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentSection::class, $component);
@@ -317,7 +317,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentSection::class, $component);

@@ -55,7 +55,7 @@ class ItemBodyMarshallerTest extends QtiSmTestCase
         $itemBody = new ItemBody('my-body');
         $itemBody->setContent(new BlockCollection([$h1, $div]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($itemBody)->marshall($itemBody);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($itemBody)->marshall($itemBody);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);

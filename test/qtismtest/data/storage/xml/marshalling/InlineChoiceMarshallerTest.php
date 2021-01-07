@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class InlineChoiceMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $choice = new InlineChoice('choice1', 'my-choice1');
         $choice->setContent(new TextOrVariableCollection([new PrintedVariable('pr1')]));
@@ -22,17 +22,17 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $choice->setTemplateIdentifier('tpl1');
         $choice->setShowHide(ShowHide::HIDE);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($choice)->marshall($choice);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($choice)->marshall($choice);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InlineChoice::class, $component);
         $this->assertEquals('my-choice1', $component->getId());

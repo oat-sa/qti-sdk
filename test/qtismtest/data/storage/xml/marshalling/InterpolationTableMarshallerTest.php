@@ -23,7 +23,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $entries[] = new InterpolationTableEntry(2.5, 'false', false);
 
         $component = new InterpolationTable($entries);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [$baseType]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -56,7 +56,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $baseType = BaseType::BOOLEAN; // Theoretical variableDeclaration's baseType.
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [$baseType]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(InterpolationTable::class, $component);

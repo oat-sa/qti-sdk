@@ -17,12 +17,12 @@ use qtism\data\content\xhtml\text\Strong;
  */
 class GapTextMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $gapText = new GapText('gapText1', 1);
         $gapText->setContent(new FlowStaticCollection([new TextRun('My var is '), new PrintedVariable('var1')]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($gapText);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapText);
         $element = $marshaller->marshall($gapText);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -30,13 +30,13 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this->assertEquals('<gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(GapText::class, $gapText);
@@ -77,6 +77,6 @@ class GapTextMarshallerTest extends QtiSmTestCase
 	        <gapText identifier="gapText1" matchMax="1">My var is <div>invalid</div>!</gapText>
 	    ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 }

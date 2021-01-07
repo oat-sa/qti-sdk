@@ -31,7 +31,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $baseType = BaseType::INTEGER;
 
         $component = new ResponseDeclaration($identifier, $baseType, $cardinality);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -48,7 +48,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $baseType = BaseType::DURATION;
 
         $component = new ResponseDeclaration($identifier, $baseType, $cardinality);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 
         $values = new ValueCollection();
         $values[] = new Value('P2D', $baseType); // 2 days
@@ -96,7 +96,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $mapping = new Mapping($entries, 0.0);
         $component->setMapping($mapping);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -130,7 +130,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="responseDeclaration1" cardinality="single" baseType="integer"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ResponseDeclaration::class, $component);
@@ -154,7 +154,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ResponseDeclaration::class, $component);
@@ -191,7 +191,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);

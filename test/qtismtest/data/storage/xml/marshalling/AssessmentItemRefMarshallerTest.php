@@ -34,7 +34,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $href = '../../question1.xml';
 
         $component = new AssessmentItemRef($identifier, $href);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -86,7 +86,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $component->setVariableMappings($variableMappings);
         $component->setTemplateDefaults($templateDefaults);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -125,7 +125,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="question1" href="../../question1.xml"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentItemRef::class, $component);
@@ -166,7 +166,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentItemRef::class, $component);

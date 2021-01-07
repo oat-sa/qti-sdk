@@ -22,7 +22,7 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         $subs[] = new BaseValue(BaseType::STRING, 'hello');
 
         $component = new StringMatch($subs, false);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -45,7 +45,7 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(StringMatch::class, $component);

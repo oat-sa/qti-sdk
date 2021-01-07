@@ -18,7 +18,7 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $href = 'http://www.rdfabout.com';
 
         $component = new AssessmentSectionRef($identifier, $href);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -33,7 +33,7 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<assessmentSectionRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="mySectionRef" href="http://www.rdfabout.com"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentSectionRef::class, $component);

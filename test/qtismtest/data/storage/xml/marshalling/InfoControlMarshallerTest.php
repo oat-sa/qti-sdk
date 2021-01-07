@@ -19,7 +19,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
     public function testMarshallMinimal()
     {
         $component = new InfoControl();
-        $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals(0, $element->childNodes->length);
@@ -32,7 +32,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
     public function testMarshallMinimalWithAttributes()
     {
         $component = new InfoControl('myControl', 'myInfo elt', 'en-US', 'A label...');
-        $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
         $this->assertEquals(0, $element->childNodes->length);
@@ -45,7 +45,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMinimal()
     {
         $element = $this->createDOMElement('<infoControl/>');
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
         $this->assertEquals(0, count($component->getComponents()));
@@ -58,7 +58,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
     public function testUnmarshallMinimalWithAttributes()
     {
         $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
         $this->assertEquals(0, count($component->getComponents()));
@@ -75,7 +75,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 	            This is <em>gooood</em> !
 	        </infoControl>
 	    ');
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(InfoControl::class, $component);
         $this->assertEquals('controlMePlease', $component->getId());
@@ -103,7 +103,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $em->setContent(new InlineCollection([new TextRun('gooood')]));
 
         $component->setContent(new FlowStaticCollection([new TextRun('This is '), $em, new TextRun(' !')]));
-        $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);

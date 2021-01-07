@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\content\PrintedVariable;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -15,12 +16,17 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class PrintedVariableMarshallerTest extends QtiSmTestCase
 {
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
     public function testMarshall21()
     {
         $component = new PrintedVariable('PRID');
         $component->setIndex(0);
         $component->setField('field');
         $component->setXmlBase('/home/jerome');
+
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
@@ -33,6 +39,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
     }
 
     /**
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     public function testMarshall22()
@@ -64,6 +71,9 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         $this->assertEquals('/home/jerome', $component->getXmlBase());
     }
 
+    /**
+     * @throws MarshallerNotFoundException
+     */
     public function testUnmarshall22()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -79,6 +89,9 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         $this->assertFalse($component->hasAriaOrientation());
     }
 
+    /**
+     * @depends testUnmarshall21
+     */
     public function testUnmarshallNoIdentifier()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');

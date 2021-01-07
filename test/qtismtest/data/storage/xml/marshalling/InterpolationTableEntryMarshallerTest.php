@@ -21,7 +21,7 @@ class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
         $targetValue = $value;
 
         $component = new InterpolationTableEntry($sourceValue, $targetValue);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [$baseType]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -37,7 +37,7 @@ class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<interpolationTableEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sourceValue="243.3" targetValue="1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::INTEGER]); // With fake variableDeclaration baseType.
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]); // With fake variableDeclaration baseType.
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(InterpolationTableEntry::class, $component);

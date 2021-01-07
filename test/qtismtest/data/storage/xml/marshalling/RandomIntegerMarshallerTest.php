@@ -18,7 +18,7 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $max = '{tplVariable1}';
         $step = 2;
         $component = new RandomInteger($min, $max, $step);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -33,7 +33,7 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<randomInteger xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" min="3" max="{tplVariable1}" step="2"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(RandomInteger::class, $component);

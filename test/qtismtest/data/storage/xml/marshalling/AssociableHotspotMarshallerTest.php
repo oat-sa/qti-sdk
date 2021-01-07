@@ -16,7 +16,7 @@ use qtism\data\content\interactions\Hotspot;
  */
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $shape = QtiShape::RECT;
         $coords = new QtiCoords($shape, [92, 19, 261, 66]);
@@ -30,20 +30,20 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
         $associableHotspot->setFixed($fixed);
         $associableHotspot->setShowHide($showHide);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($associableHotspot)->marshall($associableHotspot);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($associableHotspot)->marshall($associableHotspot);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>
 	    ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(AssociableHotspot::class, $component);
         $this->assertInstanceOf(Hotspot::class, $component);
         $this->assertInstanceOf(Choice::class, $component);

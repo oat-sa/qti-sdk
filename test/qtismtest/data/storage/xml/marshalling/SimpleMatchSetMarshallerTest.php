@@ -25,7 +25,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 
         $simpleMatchSet = new SimpleMatchSet(new SimpleAssociableChoiceCollection([$associableChoice1, $associableChoice2]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($simpleMatchSet);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($simpleMatchSet);
         $element = $marshaller->marshall($simpleMatchSet);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -39,7 +39,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 	        <simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(SimpleMatchSet::class, $component);

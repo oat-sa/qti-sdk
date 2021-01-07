@@ -25,7 +25,7 @@ class InsideMarshallerTest extends QtiSmTestCase
         $coords = new QtiCoords($shape, [0, 0, 100, 20]);
 
         $component = new Inside($subs, $shape, $coords);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -47,7 +47,7 @@ class InsideMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Inside::class, $component);

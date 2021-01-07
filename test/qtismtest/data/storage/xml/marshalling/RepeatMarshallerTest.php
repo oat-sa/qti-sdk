@@ -24,7 +24,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $sub2 = new MathOperator(new ExpressionCollection([$sub21]), MathFunctions::SIN);
 
         $component = new Repeat(new ExpressionCollection([$sub1, $sub2]), 2);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -60,7 +60,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Repeat::class, $component);

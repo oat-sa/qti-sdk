@@ -32,7 +32,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $assessmentItem->setToolName($toolName);
         $assessmentItem->setToolVersion($toolVersion);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($assessmentItem);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($assessmentItem);
         $element = $marshaller->marshall($assessmentItem);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -59,7 +59,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentItem::class, $component);
@@ -97,7 +97,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $item->setResponseDeclarations($responseDeclarations);
         $item->setOutcomeDeclarations($outcomeDeclarations);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($item);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($item);
         $element = $marshaller->marshall($item);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -137,7 +137,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentItem::class, $component);

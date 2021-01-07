@@ -19,7 +19,7 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         $target = 'target1';
 
         $component = new BranchRule(new BaseValue(BaseType::BOOLEAN, true), $target);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -40,7 +40,7 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(BranchRule::class, $component);

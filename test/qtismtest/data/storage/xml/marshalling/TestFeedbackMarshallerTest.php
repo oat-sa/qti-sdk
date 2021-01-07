@@ -29,7 +29,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $component->setAccess($access);
         $component->setShowHide($showHide);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -48,18 +48,20 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title"><p>Have a nice test!</p></testFeedback>');
+        $dom->loadXML(
+            '<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title"><p>Have a nice test!</p></testFeedback>'
+        );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(TestFeedback::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'myIdentifier1');
-        $this->assertEquals($component->getAccess(), TestFeedbackAccess::AT_END);
-        $this->assertEquals($component->getShowHide(), ShowHide::SHOW);
-        $this->assertEquals($component->getTitle(), 'my title');
-        $this->assertEquals($component->getContent(), '<p>Have a nice test!</p>');
+        $this->assertEquals('myIdentifier1', $component->getIdentifier());
+        $this->assertEquals(TestFeedbackAccess::AT_END, $component->getAccess());
+        $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this->assertEquals('my title', $component->getTitle());
+        $this->assertEquals('<p>Have a nice test!</p>', $component->getContent());
     }
 
     /**

@@ -24,7 +24,7 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
         $outcomeRules[] = new SetOutcomeValue('output2', new BaseValue(BaseType::BOOLEAN, true));
 
         $component = new OutcomeProcessing($outcomeRules);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -55,7 +55,7 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeProcessing::class, $component);

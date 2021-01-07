@@ -24,7 +24,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         $values = new ValueCollection();
         $values[] = new Value($pair);
         $component = new DefaultValue($values, $interpretation);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -51,7 +51,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::INTEGER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(DefaultValue::class, $component);
@@ -77,7 +77,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::DIRECTED_PAIR]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::DIRECTED_PAIR]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(DefaultValue::class, $component);
@@ -107,7 +107,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::IDENTIFIER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::IDENTIFIER]);
         $component = $marshaller->unmarshall($element);
 
         $valuesCollection = $component->getValues();

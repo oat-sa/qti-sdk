@@ -19,7 +19,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $content = new FlowStaticCollection([new TextRun('Please show me!')]);
         $modalFeedback = new ModalFeedback('outcome1', 'hello', $content, 'Modal Feedback Example');
 
-        $element = $this->getMarshallerFactory()->createMarshaller($modalFeedback)->marshall($modalFeedback);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($modalFeedback)->marshall($modalFeedback);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -33,7 +33,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>
 	    ');
 
-        $modalFeedback = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $modalFeedback = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(ModalFeedback::class, $modalFeedback);
         $this->assertEquals('outcome1', $modalFeedback->getOutcomeIdentifier());
         $this->assertEquals('hello', $modalFeedback->getIdentifier());

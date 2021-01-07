@@ -82,14 +82,14 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     public function qtiVersionsToTestForExternalScored(): array
     {
         return [
-            ['2.0', ExternalScored::HUMAN,  ''],
-            ['2.0', ExternalScored::EXTERNAL_MACHINE,  ''],
-            ['2.1.0', ExternalScored::HUMAN,  ''],
+            ['2.0', ExternalScored::HUMAN, ''],
+            ['2.0', ExternalScored::EXTERNAL_MACHINE, ''],
+            ['2.1.0', ExternalScored::HUMAN, ''],
             ['2.1.0', ExternalScored::EXTERNAL_MACHINE, ''],
-            ['2.2.0', ExternalScored::HUMAN,  'human'],
-            ['2.2.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
-            ['3.0.0', ExternalScored::HUMAN,  'human'],
-            ['3.0.0', ExternalScored::EXTERNAL_MACHINE,  'externalMachine'],
+            ['2.2.0', ExternalScored::HUMAN, 'human'],
+            ['2.2.0', ExternalScored::EXTERNAL_MACHINE, 'externalMachine'],
+            ['3.0.0', ExternalScored::HUMAN, 'human'],
+            ['3.0.0', ExternalScored::EXTERNAL_MACHINE, 'externalMachine'],
         ];
     }
 
@@ -111,14 +111,14 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals('outcome1', $element->getAttribute('identifier'));
     }
 
-    public function testMarshallDefaultValue()
+    public function testMarshallDefaultValue21()
     {
         $identifier = 'outcome2';
         $cardinality = Cardinality::MULTIPLE;
         $baseType = BaseType::DURATION;
 
         $component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 
         $values = new ValueCollection();
         $values[] = new Value('P2D', $baseType); // 2 days
@@ -152,7 +152,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals('', $value->getAttribute('baseType'));
     }
 
-    public function testMarshallMatchTable()
+    public function testMarshallMatchTable21()
     {
         $identifier = 'outcome3';
         $cardinality = Cardinality::SINGLE;
@@ -166,7 +166,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $matchTable = new MatchTable($entries);
         $component->setLookupTable($matchTable);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -200,7 +200,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);
@@ -209,7 +209,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals($component->getBaseType(), BaseType::INTEGER);
     }
 
-    public function testUnmarshallDefaultValue()
+    public function testUnmarshallDefaultValue21()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -224,7 +224,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);
@@ -246,7 +246,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertInstanceOf(QtiDuration::class, $values[1]->getValue());
     }
 
-    public function testUnmarshallRecord()
+    public function testUnmarshallRecord21()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -262,7 +262,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);
@@ -300,7 +300,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this->assertEquals(1.11, $values[2]->getValue());
     }
 
-    public function testUnmarshallMatchTable()
+    public function testUnmarshallMatchTable21()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -315,7 +315,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);

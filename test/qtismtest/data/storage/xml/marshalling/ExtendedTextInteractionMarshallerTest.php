@@ -12,17 +12,17 @@ use qtismtest\QtiSmTestCase;
  */
 class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal21()
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
-        $element = $this->getMarshallerFactory()->createMarshaller($extendedTextInteraction)->marshall($extendedTextInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($extendedTextInteraction)->marshall($extendedTextInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<extendedTextInteraction responseIdentifier="RESPONSE"/>', $dom->saveXML($element));
     }
 
-    public function testMarshallMaximal()
+    public function testMarshallMaximal21()
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
         $extendedTextInteraction->setBase(2);
@@ -34,17 +34,17 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $extendedTextInteraction->setMaxStrings(10);
         $extendedTextInteraction->setExpectedLines(1);
         $extendedTextInteraction->setFormat(TextFormat::PRE_FORMATTED);
-        $element = $this->getMarshallerFactory()->createMarshaller($extendedTextInteraction)->marshall($extendedTextInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($extendedTextInteraction)->marshall($extendedTextInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal21()
     {
         $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE"/>');
-        $extendedTextInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $extendedTextInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(ExtendedTextInteraction::class, $extendedTextInteraction);
         $this->assertEquals('RESPONSE', $extendedTextInteraction->getResponseIdentifier());
@@ -55,10 +55,10 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $this->assertFalse($extendedTextInteraction->hasPlaceholderText());
     }
 
-    public function testUnmarshallMaximal()
+    public function testUnmarshallMaximal21()
     {
         $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>');
-        $extendedTextInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $extendedTextInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(ExtendedTextInteraction::class, $extendedTextInteraction);
         $this->assertEquals('RESPONSE', $extendedTextInteraction->getResponseIdentifier());

@@ -18,7 +18,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $weightIdentifier = 'myWeight1';
 
         $component = new Variable($identifier, $weightIdentifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -32,7 +32,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $identifier = 'myVariable1';
 
         $component = new Variable($identifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -47,7 +47,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<variable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myVariable1" weightIdentifier="myWeight1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Variable::class, $component);
@@ -61,7 +61,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<variable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myVariable1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Variable::class, $component);

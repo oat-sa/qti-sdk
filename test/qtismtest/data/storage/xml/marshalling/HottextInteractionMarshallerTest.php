@@ -19,13 +19,17 @@ use qtismtest\QtiSmTestCase;
  */
 class HottextInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $hottext = new Hottext('hottext1');
         $hottext->setContent(new InlineStaticCollection([new TextRun('hot')]));
 
         $div = new Div();
-        $div->setContent(new FlowCollection([new TextRun('This is a '), new Hottext('hot1'), new TextRun(' text...')]));
+        $div->setContent(new FlowCollection([
+            new TextRun('This is a '),
+            new Hottext('hot1'),
+            new TextRun(' text...'),
+        ]));
         $content = new BlockStaticCollection([$div]);
         $hottextInteraction = new HottextInteraction('RESPONSE', $content);
 
@@ -33,14 +37,17 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $hottextInteraction->setPrompt($prompt);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($hottextInteraction)->marshall($hottextInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($hottextInteraction)->marshall($hottextInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<hottextInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>', $dom->saveXML($element));
+        $this->assertEquals(
+            '<hottextInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>',
+            $dom->saveXML($element)
+        );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
             <hottextInteraction responseIdentifier="RESPONSE">
@@ -49,7 +56,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
             </hottextInteraction>
         ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(HottextInteraction::class, $component);
         $this->assertEquals(1, $component->getMaxChoices());
         $this->assertEquals(0, $component->getMinChoices());

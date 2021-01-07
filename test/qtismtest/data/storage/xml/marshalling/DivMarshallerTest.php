@@ -151,7 +151,7 @@ class DivMarshallerTest extends QtiSmTestCase
         $divContainer = new Div('main-container', 'ui-pane');
         $divContainer->setContent(new FlowCollection([$divMenu, $divContent]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($divContainer)->marshall($divContainer);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($divContainer)->marshall($divContainer);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);

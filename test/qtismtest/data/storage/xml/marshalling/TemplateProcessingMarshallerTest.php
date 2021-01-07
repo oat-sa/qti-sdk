@@ -27,7 +27,7 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
         $exitTemplate = new ExitTemplate();
         $templateProcessing = new TemplateProcessing(new TemplateRuleCollection([$templateConstraint, $templateCondition, $exitTemplate]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateProcessing)->marshall($templateProcessing);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateProcessing)->marshall($templateProcessing);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -56,7 +56,7 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
 	        </templateProcessing>
 	    ');
 
-        $templateProcessing = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateProcessing = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateProcessing::class, $templateProcessing);
         $templateRules = $templateProcessing->getTemplateRules();
         $this->assertEquals(3, count($templateRules));

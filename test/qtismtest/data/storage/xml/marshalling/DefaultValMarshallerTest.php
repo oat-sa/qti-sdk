@@ -17,7 +17,7 @@ class DefaultValMarshallerTest extends QtiSmTestCase
         $identifier = 'myDefault1';
 
         $component = new DefaultVal($identifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -31,7 +31,7 @@ class DefaultValMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<default xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myDefault1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(DefaultVal::class, $component);

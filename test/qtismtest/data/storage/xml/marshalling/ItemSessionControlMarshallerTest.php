@@ -19,7 +19,7 @@ class ItemSessionControlMarshallerTest extends QtiSmTestCase
         $component->setMaxAttempts(2);
         $component->setValidateResponses(false);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -38,7 +38,7 @@ class ItemSessionControlMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSessionControl xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" validateResponses="true" showFeedback="false" allowReview="true" showSolution="true" allowComment="true" allowSkipping="false"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ItemSessionControl::class, $component);

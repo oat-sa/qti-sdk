@@ -21,7 +21,7 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         $subExpr = new ExpressionCollection([new BaseValue(BaseType::FLOAT, 12.5468)]);
         $name = Statistics::POP_VARIANCE;
         $component = new StatsOperator($subExpr, $name);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -46,7 +46,7 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(StatsOperator::class, $component);

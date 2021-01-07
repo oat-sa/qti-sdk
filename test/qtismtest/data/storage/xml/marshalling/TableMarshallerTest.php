@@ -78,7 +78,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $table->setCaption($caption);
         $table->setCols($cols);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($table);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($table);
         $element = $marshaller->marshall($table);
 
         $dom = new DOMDocument('1.0', 'UTF-8');

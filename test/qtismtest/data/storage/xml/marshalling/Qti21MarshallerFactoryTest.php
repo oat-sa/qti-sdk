@@ -13,9 +13,9 @@ use stdClass;
 use qtism\data\storage\xml\marshalling\AreaMapEntryMarshaller;
 
 /**
- * Class MarshallerFactyoryTest
+ * Class Qti21MarshallerFactyoryTest
  */
-class MarshallerFactyoryTest extends QtiSmTestCase
+class Qti21MarshallerFactyoryTest extends QtiSmTestCase
 {
     public function testFromDomElement()
     {

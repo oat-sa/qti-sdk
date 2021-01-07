@@ -4,9 +4,9 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\content\ObjectFlowCollection;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
-use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 
 /**
@@ -63,7 +63,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $object = new ObjectElement('http://mywebsite.com/movie.swf', 'application/x-shockwave-flash', 'flash-movie');
         $object->setContent(new ObjectFlowCollection([$param1, $param2]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($object)->marshall($object);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($object)->marshall($object);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
@@ -73,7 +73,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
     public function testMarshallNoDataAttributeValue()
     {
         $object = new ObjectElement('', 'application/x-shockwave-flash', 'flash-movie');
-        $element = $this->getMarshallerFactory()->createMarshaller($object)->marshall($object);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($object)->marshall($object);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 

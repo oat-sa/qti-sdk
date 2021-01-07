@@ -17,7 +17,7 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $shuffle = true;
         $component = new Ordering($shuffle);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -30,7 +30,7 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<ordering xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shuffle="false"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Ordering::class, $component);

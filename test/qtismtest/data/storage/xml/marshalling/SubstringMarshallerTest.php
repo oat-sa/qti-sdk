@@ -19,7 +19,7 @@ class SubstringMarshallerTest extends QtiSmTestCase
     {
         $expr = [new BaseValue(BaseType::STRING, 'Hell'), new BaseValue(BaseType::STRING, 'Shell')];
         $component = new Substring(new ExpressionCollection($expr), false);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -48,7 +48,7 @@ class SubstringMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Substring::class, $component);

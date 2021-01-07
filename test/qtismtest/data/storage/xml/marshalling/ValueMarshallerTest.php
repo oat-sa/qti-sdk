@@ -23,7 +23,7 @@ class ValueMarshallerTest extends QtiSmTestCase
 
         $component = new Value($value, $baseType, $fieldIdentifier);
         $component->setPartOfRecord(true); // to get the baseType written in output.
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -40,7 +40,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $value = false;
 
         $component = new Value($value, $baseType, $fieldIdentifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -52,7 +52,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $value = new QtiPair('id1', 'id2');
 
         $component = new Value($value);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertEquals('id1 id2', $element->nodeValue);
@@ -64,7 +64,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">A B</value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Value::class, $component);
@@ -80,7 +80,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">A B</value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::PAIR]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::PAIR]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Value::class, $component);
@@ -95,7 +95,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">Hello &lt;b&gt;bold&lt;/b&gt;</value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::STRING]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Value::class, $component);
@@ -109,7 +109,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $baseType = BaseType::STRING;
         $component = new Value($value, $baseType);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertSame('<value>Hello &lt;b&gt;bold&lt;/b&gt;</value>', $element->ownerDocument->saveXML($element));
@@ -122,7 +122,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::STRING]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
         $component = $marshaller->unmarshall($element);
         $this->assertEquals('', $component->getValue());
 
@@ -131,7 +131,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"><![CDATA[]]></value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
         $this->assertEquals('', $component->getValue());
     }
@@ -143,7 +143,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::INTEGER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
         $this->assertEquals('', $component->getValue());
     }
@@ -154,7 +154,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="pair" fieldIdentifier="fieldIdentifier1">A B</value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Value::class, $component);

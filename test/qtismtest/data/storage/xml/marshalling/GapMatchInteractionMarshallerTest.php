@@ -37,7 +37,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
         $gapMatch = new GapMatchInteraction('RESPONSE', new GapChoiceCollection([$gapText, $gapImg]), new BlockStaticCollection([$p]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($gapMatch);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapMatch);
         $element = $marshaller->marshall($gapMatch);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -54,7 +54,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
             <gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
         ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapMatch = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(GapMatchInteraction::class, $gapMatch);

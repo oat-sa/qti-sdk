@@ -18,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MatchInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $choice1A = new SimpleAssociableChoice('choice1A', 1);
         $choice1A->setContent(new FlowStaticCollection([new TextRun('choice1A')]));
@@ -39,7 +39,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $matchInteraction->setPrompt($prompt);
         $matchInteraction->setShuffle(true);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($matchInteraction);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($matchInteraction);
         $element = $marshaller->marshall($matchInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -51,13 +51,23 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <matchInteraction responseIdentifier="RESPONSE" shuffle="true"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>
+            <matchInteraction responseIdentifier="RESPONSE" shuffle="true">
+              <prompt>Prompt...</prompt>
+              <simpleMatchSet>
+                <simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice>
+              </simpleMatchSet>
+              <simpleMatchSet>
+                <simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice>
+              </simpleMatchSet>
+            </matchInteraction>
         ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MatchInteraction::class, $component);

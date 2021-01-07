@@ -23,7 +23,7 @@ class MappingMarshallerTest extends QtiSmTestCase
 
         $component = new Mapping($mapEntries, $defaultValue);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [BaseType::INTEGER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -52,7 +52,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::INTEGER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Mapping::class, $component);

@@ -19,7 +19,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
 
         $component = new ItemSubset();
         $component->setSectionIdentifier($sectionIdentifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -35,7 +35,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $component = new ItemSubset();
         $component->setSectionIdentifier($sectionIdentifier);
         $component->setIncludeCategories($includeCategories);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -54,7 +54,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $component->setSectionIdentifier($sectionIdentifier);
         $component->setIncludeCategories($includeCategories);
         $component->setExcludeCategories($excludeCategories);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -70,7 +70,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ItemSubset::class, $component);
@@ -83,7 +83,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1 cat2"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ItemSubset::class, $component);
@@ -97,7 +97,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1 cat2" excludeCategory="cat3"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ItemSubset::class, $component);

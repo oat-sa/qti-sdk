@@ -27,7 +27,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
         $stageObject = new ObjectElement('country.jpg', 'image/jpeg');
         $positionObjectStage = new PositionObjectStage($stageObject, new PositionObjectInteractionCollection([$interaction]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($positionObjectStage)->marshall($positionObjectStage);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($positionObjectStage)->marshall($positionObjectStage);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -48,7 +48,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
             </positionObjectStage>
         ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(PositionObjectStage::class, $component);
 
         $object = $component->getObject();

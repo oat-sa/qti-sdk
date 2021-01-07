@@ -18,7 +18,7 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $name = MathEnumeration::PI;
 
         $component = new MathConstant($name);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -32,7 +32,7 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<mathConstant xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" name="pi"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MathConstant::class, $component);

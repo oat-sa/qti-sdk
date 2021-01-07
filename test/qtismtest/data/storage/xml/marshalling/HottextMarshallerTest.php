@@ -22,7 +22,7 @@ class HottextMarshallerTest extends QtiSmTestCase
         $hottext->setTemplateIdentifier('tpl1');
         $hottext->setContent(new InlineStaticCollection([new TextRun('Choice1')]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($hottext)->marshall($hottext);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($hottext)->marshall($hottext);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -35,7 +35,7 @@ class HottextMarshallerTest extends QtiSmTestCase
 	        <hottext id="my-hottext1" class="so hot" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">Choice1</hottext>
 	    ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(Hottext::class, $component);
         $this->assertEquals('my-hottext1', $component->getId());
         $this->assertEquals('so hot', $component->getClass());

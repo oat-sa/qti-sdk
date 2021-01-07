@@ -15,7 +15,7 @@ class MathMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $math = new Math('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"><m:mrow><m:mi>E</m:mi><m:mo>=</m:mo><m:mi>m</m:mi><m:msup><m:mi>c</m:mi><m:mn>2</m:mn></m:msup></m:mrow></m:math>');
-        $element = $this->getMarshallerFactory()->createMarshaller($math)->marshall($math);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($math)->marshall($math);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -37,7 +37,7 @@ class MathMarshallerTest extends QtiSmTestCase
                 </m:mrow>
             </m:math>');
 
-        $math = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $math = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(Math::class, $math);
         $xml = $math->getXml();
         $this->assertInstanceOf(DOMDocument::class, $xml);
@@ -58,7 +58,7 @@ class MathMarshallerTest extends QtiSmTestCase
                 </m:mrow>
             </m:math>');
 
-        $math = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $math = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->expectException(RuntimeException::class);
         $xml = $math->getXml();
     }

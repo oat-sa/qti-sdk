@@ -80,7 +80,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
         $rubricBlock->setContent(new FlowStaticCollection(([$h3, $p])));
         $rubricBlock->setStylesheets(new StylesheetCollection([$stylesheet]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($rubricBlock)->marshall($rubricBlock);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($rubricBlock)->marshall($rubricBlock);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 

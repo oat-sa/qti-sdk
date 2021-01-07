@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $choice1 = new SimpleAssociableChoice('choice_1', 1);
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -31,7 +31,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $component->setPrompt($prompt);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -42,13 +42,13 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>
         ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssociateInteraction::class, $component);

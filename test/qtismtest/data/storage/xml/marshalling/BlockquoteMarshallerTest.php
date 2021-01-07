@@ -63,7 +63,7 @@ class BlockquoteMarshallerTest extends QtiSmTestCase
         $blockquote->setXmlBase('/home/jerome');
         $blockquote->setContent(new BlockCollection([$h4, $div]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($blockquote)->marshall($blockquote);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($blockquote)->marshall($blockquote);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 

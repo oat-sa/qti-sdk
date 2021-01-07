@@ -24,7 +24,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $component->setMedia($media);
         $component->setTitle($title);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -41,7 +41,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
 
         $component = new Stylesheet($uri);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -58,7 +58,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<stylesheet xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" media="screen" href="http://myuri.com" type="text/css" title="A pure stylesheet"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Stylesheet::class, $component);

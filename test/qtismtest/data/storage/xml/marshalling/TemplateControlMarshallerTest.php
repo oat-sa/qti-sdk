@@ -23,7 +23,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
         $templateIf = new TemplateIf($true, new TemplateRuleCollection([$setTemplateValue]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateIf)->marshall($templateIf);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateIf)->marshall($templateIf);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -41,7 +41,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	        </templateIf>
 	    ');
 
-        $templateIf = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateIf = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateIf::class, $templateIf);
         $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $templateRules = $templateIf->getTemplateRules();
@@ -57,7 +57,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $setTemplateValue2 = new SetTemplateValue('tpl2', new BaseValue(BaseType::INTEGER, 1338));
         $templateIf = new TemplateIf($true, new TemplateRuleCollection([$setTemplateValue1, $setTemplateValue2]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateIf)->marshall($templateIf);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateIf)->marshall($templateIf);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -81,7 +81,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	        </templateIf>
 	    ');
 
-        $templateIf = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateIf = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateIf::class, $templateIf);
         $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
 
@@ -105,7 +105,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
         $templateElseIf = new TemplateElseIf($true, new TemplateRuleCollection([$setTemplateValue]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateElseIf)->marshall($templateElseIf);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateElseIf)->marshall($templateElseIf);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -123,7 +123,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	        </templateElseIf>
 	    ');
 
-        $templateElseIf = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateElseIf = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $this->assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
         $templateRules = $templateElseIf->getTemplateRules();
@@ -137,7 +137,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
         $templateIf = new TemplateElse(new TemplateRuleCollection([$setTemplateValue]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateIf)->marshall($templateIf);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateIf)->marshall($templateIf);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -154,7 +154,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	        </templateElse>
 	    ');
 
-        $templateElse = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateElse = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateElse::class, $templateElse);
         $templateRules = $templateElse->getTemplateRules();
         $this->assertEquals(1, count($templateRules));
@@ -168,7 +168,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $setTemplateValue2 = new SetTemplateValue('tpl2', new BaseValue(BaseType::INTEGER, 1338));
         $templateElse = new TemplateElse(new TemplateRuleCollection([$setTemplateValue1, $setTemplateValue2]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateElse)->marshall($templateElse);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateElse)->marshall($templateElse);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);

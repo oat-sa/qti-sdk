@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SimpleChoiceMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $simpleChoice = new SimpleChoice('choice_1');
         $simpleChoice->setClass('qti-simpleChoice');
@@ -23,7 +23,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $strong->setContent(new InlineCollection([new TextRun('strong')]));
         $simpleChoice->setContent(new FlowStaticCollection([new TextRun('This is ... '), $strong, new TextRun('!')]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($simpleChoice);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($simpleChoice);
         $element = $marshaller->marshall($simpleChoice);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -31,13 +31,13 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $this->assertEquals('<simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
 	        <simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(SimpleChoice::class, $component);

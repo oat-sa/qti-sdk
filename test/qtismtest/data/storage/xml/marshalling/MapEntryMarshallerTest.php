@@ -13,11 +13,11 @@ use qtismtest\QtiSmTestCase;
  */
 class MapEntryMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $component = new MapEntry(1337, 1.377, true);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component, [BaseType::INTEGER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -27,13 +27,13 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this->assertEquals('true', $element->getAttribute('caseSensitive'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" mapKey="1337" mappedValue="1.377" caseSensitive="true"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element, [BaseType::INTEGER]);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MapEntry::class, $component);

@@ -34,7 +34,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateIf = new TemplateIf($true, new TemplateRuleCollection([$setTemplateValue]));
         $templateCondition = new TemplateCondition($templateIf);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -54,7 +54,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
             </templateCondition>
 	    ');
 
-        $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
         $this->assertEquals(0, count($templateCondition->getTemplateElseIfs()));
         $this->assertFalse($templateCondition->hasTemplateElse());
@@ -88,7 +88,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateElseIf = new TemplateElseIf($false, new TemplateRuleCollection([$exitTemplate]));
         $templateCondition->setTemplateElseIfs(new TemplateElseIfCollection([$templateElseIf]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -115,9 +115,9 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
             </templateCondition>
 	    ');
 
-        $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
         $this->assertFalse($templateCondition->hasTemplateElse());
 
@@ -162,7 +162,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateElse = new TemplateElse(new TemplateRuleCollection([$setCorrectResponse]));
         $templateCondition->setTemplateElse($templateElse);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -191,7 +191,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
             </templateCondition>
 	    ');
 
-        $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
         $this->assertEquals(0, count($templateCondition->getTemplateElseIfs()));
 
@@ -316,7 +316,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 	        </templateCondition>
 	    ');
 
-        $root = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $root = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $templateCondition = $root;
         $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
 
@@ -519,7 +519,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         $templateCondition = new TemplateCondition($mainTemplateIf, new TemplateElseIfCollection([$mainTemplateElseIf1, $mainTemplateElseIf2]), $mainTemplateElse);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this->assertEquals(

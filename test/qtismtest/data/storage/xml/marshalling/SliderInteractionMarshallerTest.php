@@ -27,7 +27,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $sliderInteraction->setPrompt($prompt);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($sliderInteraction)->marshall($sliderInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($sliderInteraction)->marshall($sliderInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -45,7 +45,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
             </sliderInteraction>
         ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(SliderInteraction::class, $component);
         $this->assertEquals('my-slider', $component->getId());
         $this->assertEquals('slide-it', $component->getClass());

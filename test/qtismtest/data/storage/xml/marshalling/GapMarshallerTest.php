@@ -12,27 +12,30 @@ use qtismtest\QtiSmTestCase;
  */
 class GapMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $gap = new Gap('gap1', true, 'my-gap', 'gaps');
         $gap->setFixed(false);
         $gap->setTemplateIdentifier('tpl-gap');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($gap);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gap);
         $element = $marshaller->marshall($gap);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps"/>', $dom->saveXML($element));
+        $this->assertEquals(
+            '<gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps"/>',
+            $dom->saveXML($element)
+        );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
 	        <gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps" showHide="hide"/>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Gap::class, $gap);

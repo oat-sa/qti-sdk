@@ -25,7 +25,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
 
         $component = new OutcomeIf($baseValue, new OutcomeRuleCollection([$setOutcomeValue]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -53,7 +53,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
 
         $component = new OutcomeElseIf($baseValue, new OutcomeRuleCollection([$setOutcomeValue]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -79,7 +79,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $setOutcomeValue = new SetOutcomeValue('myStringVar', new BaseValue(BaseType::STRING, 'Tested!'));
         $component = new OutcomeElse(new OutcomeRuleCollection([$setOutcomeValue]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -110,7 +110,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeIf::class, $component);
@@ -140,7 +140,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeElseIf::class, $component);
@@ -169,7 +169,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeElse::class, $component);

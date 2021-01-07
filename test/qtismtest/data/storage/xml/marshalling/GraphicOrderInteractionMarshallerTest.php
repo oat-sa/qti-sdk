@@ -19,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -36,7 +36,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $graphicOrderInteraction->setMinChoices(2);
         $graphicOrderInteraction->setMaxChoices(3);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($graphicOrderInteraction)->marshall($graphicOrderInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($graphicOrderInteraction)->marshall($graphicOrderInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -46,13 +46,13 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
 	            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>
          ');
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(GraphicOrderInteraction::class, $component);
         $this->assertEquals('my-graphicOrder', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());

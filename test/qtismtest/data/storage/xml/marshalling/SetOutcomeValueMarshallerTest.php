@@ -19,7 +19,7 @@ class SetOutcomeValueMarshallerTest extends QtiSmTestCase
         $identifier = 'variable1';
 
         $component = new SetOutcomeValue($identifier, new BaseValue(BaseType::BOOLEAN, true));
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this->assertInstanceOf(DOMElement::class, $element);
@@ -40,7 +40,7 @@ class SetOutcomeValueMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(SetOutcomeValue::class, $component);
