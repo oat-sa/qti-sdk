@@ -42,42 +42,57 @@ abstract class Media extends Html5Element
     private $components;
 
     /**
-     * Must the media start automatically?
+     * The 'autoplay' characteristic is a boolean. When present, the user agent
+     * (as described in the algorithm described herein) will automatically
+     * begin playback of the media resource as soon as it can do so without
+     * stopping.
      *
      * @var bool
      */
     private $autoPlay = false;
 
     /**
-     * Do we display controls?
+     * The 'controls' characteristic is a boolean. If present, it indicates
+     * that the author has not provided a scripted controller and would like
+     * the user agent to provide its own set of controls.
      *
      * @var bool
      */
     private $controls = false;
 
     /**
-     * CORS setting.
+     * The crossorigin content characteristic on media tags is a CORS settings
+     * attribute.
      *
      * @var int|null
      */
     private $crossOrigin;
 
     /**
-     * Do we loop?
+     * The 'loop' characteristic is a boolean that, if specified, indicates
+     * that the media tag is to seek back to the start of the media resource
+     * upon reaching the end.
      *
      * @var bool
      */
     private $loop = false;
 
     /**
-     * Media group
+     * The 'mediagroup' content characteristic on media elements can be used to
+     * link multiple media tags together by implicitly creating a
+     * MediaController. The value is text; media tags with the same value are
+     * automatically linked by the user agent.
      *
      * @var string
      */
     private $mediaGroup = '';
 
     /**
-     * Is the media muted?
+     * The 'muted' characteristic on media tags is a boolean that controls the
+     * default state of the audio output of the media resource, potentially
+     * overriding user preferences. When a media tag is created, if it has a
+     * muted characteristic specified, the user agent must mute the media tag's
+     * audio output, overriding any user preference.
      *
      * @var bool
      */
