@@ -17,11 +17,11 @@
  *
  * Copyright (c) 2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Julien Sébire <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
-namespace qtism\data\content\xhtml\html5;
+namespace qtism\data\content\enums;
 
 use qtism\common\enums\AbstractEnumeration;
 
@@ -36,13 +36,13 @@ class CrossOrigin extends AbstractEnumeration
      * Cross-origin CORS requests for the element will have the omit
      * credentials flag set.
      */
-    const ANONYMOUS = 0;
+    private const ANONYMOUS = 0;
 
     /**
      * Cross-origin CORS requests for the element will not have the omit
      * credentials flag set.
      */
-    const USE_CREDENTIALS = 1;
+    private const USE_CREDENTIALS = 1;
 
     public static function asArray(): array
     {
@@ -50,5 +50,10 @@ class CrossOrigin extends AbstractEnumeration
             'anonymous' => self::ANONYMOUS,
             'use-credentials' => self::USE_CREDENTIALS,
         ];
+    }
+
+    public static function getDefault(): ?int
+    {
+        return null;
     }
 }

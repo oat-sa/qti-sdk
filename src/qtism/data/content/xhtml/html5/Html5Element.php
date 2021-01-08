@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\BodyElement;
+use qtism\data\content\enums\Role;
 
 /**
  * The base Html 5 element.

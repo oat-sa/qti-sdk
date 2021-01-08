@@ -1,8 +1,8 @@
 <?php
 
-namespace qtismtest\data\content\xhtml;
+namespace qtismtest\data\content\enums;
 
-use qtism\data\content\xhtml\html5\TrackKind;
+use qtism\data\content\enums\TrackKind;
 use qtismtest\QtiSmEnumTestCase;
 
 class TrackKindTest extends QtiSmEnumTestCase
@@ -25,23 +25,14 @@ class TrackKindTest extends QtiSmEnumTestCase
 
     protected function getKeys()
     {
-        return [
-            'subtitles',
-            'captions',
-            'descriptions',
-            'chapters',
-            'metadata',
-        ];
+        return $this->getNames();
     }
 
     protected function getConstants()
     {
-        return [
-            TrackKind::SUBTITLES,
-            TrackKind::CAPTIONS,
-            TrackKind::DESCRIPTIONS,
-            TrackKind::CHAPTERS,
-            TrackKind::METADATA,
-        ];
+        return array_map(
+            [TrackKind::class, 'getConstantByName'],
+            $this->getNames()
+        );
     }
 }

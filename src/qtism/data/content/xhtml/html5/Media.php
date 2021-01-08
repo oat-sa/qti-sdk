@@ -25,6 +25,8 @@ namespace qtism\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\content\enums\CrossOrigin;
+use qtism\data\content\enums\Preload;
 use qtism\data\QtiComponentCollection;
 
 /**
@@ -56,9 +58,9 @@ abstract class Media extends Html5Element
     /**
      * CORS setting.
      *
-     * @var int
+     * @var int|null
      */
-    private $crossOrigin = CrossOrigin::ANONYMOUS;
+    private $crossOrigin;
 
     /**
      * Do we loop?
@@ -90,7 +92,7 @@ abstract class Media extends Html5Element
      * @var int
      * @qtism-bean-property
      */
-    private $preload = Preload::METADATA;
+    private $preload;
 
     /**
      * Source URI.

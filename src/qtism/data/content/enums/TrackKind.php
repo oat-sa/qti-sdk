@@ -21,7 +21,7 @@
  * @license GPLv2
  */
 
-namespace qtism\data\content\xhtml\html5;
+namespace qtism\data\content\enums;
 
 use qtism\common\enums\AbstractEnumeration;
 
@@ -37,7 +37,7 @@ class TrackKind extends AbstractEnumeration
      * Overlaid on the video.
      * This is the default value for the track element.
      */
-    const SUBTITLES = 0;
+    private const SUBTITLES = 0;
 
     /**
      * Transcription or translation of the dialogue, sound effects, relevant
@@ -46,19 +46,19 @@ class TrackKind extends AbstractEnumeration
      * drowned-out by ambient noise, or because the user is deaf).
      * Overlaid on the video; labeled as appropriate for the hard-of-hearing.
      */
-    const CAPTIONS = 1;
+    private const CAPTIONS = 1;
 
     /**
      * Tracks intended for use from script. Not displayed by the user agent.
      */
-    const DESCRIPTIONS = 2;
+    private const DESCRIPTIONS = 2;
 
     /**
      * Chapter titles, intended to be used for navigating the media resource.
      * Displayed as an interactive (potentially nested) list in the user
      * agent's interface.
      */
-    const CHAPTERS = 3;
+    private const CHAPTERS = 3;
 
     /**
      * Textual descriptions of the video component of the media resource,
@@ -68,7 +68,7 @@ class TrackKind extends AbstractEnumeration
      * blind).
      * Synthesized as audio.
      */
-    const METADATA = 4;
+    private const METADATA = 4;
 
     public static function asArray(): array
     {
@@ -79,5 +79,10 @@ class TrackKind extends AbstractEnumeration
             'chapters' => self::CHAPTERS,
             'metadata' => self::METADATA,
         ];
+    }
+
+    public static function getDefault(): ?int
+    {
+        return self::SUBTITLES;
     }
 }

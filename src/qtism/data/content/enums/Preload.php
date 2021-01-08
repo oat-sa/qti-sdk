@@ -17,11 +17,11 @@
  *
  * Copyright (c) 2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Julien Sébire <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
-namespace qtism\data\content\xhtml\html5;
+namespace qtism\data\content\enums;
 
 use qtism\common\enums\AbstractEnumeration;
 
@@ -37,14 +37,14 @@ class Preload extends AbstractEnumeration
      * aggressively to actually download the media resource if buffering starts
      * anyway (e.g. once the user hits 'play').
      */
-    const NONE = 0;
+    private const NONE = 0;
 
     /**
      * Hints to the user agent that the user agent can put the user's needs
      * first without risk to the server, up to and including optimistically
      * downloading the entire resource.
      */
-    const AUTO = 1;
+    private const AUTO = 1;
 
     /**
      * Hints to the user agent that the author does not expect the user to need
@@ -59,7 +59,7 @@ class Preload extends AbstractEnumeration
      * throttling the download so that the media data is obtained at the
      * slowest possible rate that still maintains consistent playback.
      */
-    const METADATA = 2;
+    private const METADATA = 2;
 
     public static function asArray(): array
     {
@@ -68,5 +68,10 @@ class Preload extends AbstractEnumeration
             'auto' => self::AUTO,
             'metadata' => self::METADATA,
         ];
+    }
+
+    public static function getDefault(): ?int
+    {
+        return self::METADATA;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace qtismtest\data\content\xhtml;
+namespace qtismtest\data\content\enums;
 
-use qtism\data\content\xhtml\html5\CrossOrigin;
+use qtism\data\content\enums\CrossOrigin;
 use qtismtest\QtiSmEnumTestCase;
 
 class CrossOriginTest extends QtiSmEnumTestCase
@@ -22,17 +22,14 @@ class CrossOriginTest extends QtiSmEnumTestCase
 
     protected function getKeys()
     {
-        return [
-            'anonymous',
-            'use-credentials',
-        ];
+        return $this->getNames();
     }
 
     protected function getConstants()
     {
-        return [
-            CrossOrigin::ANONYMOUS,
-            CrossOrigin::USE_CREDENTIALS,
-        ];
+        return array_map(
+            [CrossOrigin::class, 'getConstantByName'],
+            $this->getNames()
+        );
     }
 }

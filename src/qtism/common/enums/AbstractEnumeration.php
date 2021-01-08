@@ -23,6 +23,8 @@
 
 namespace qtism\common\enums;
 
+use InvalidArgumentException;
+
 /**
  * Abstract enumeration automatizes the translation from constant name to
  * value and from value to name.
@@ -41,5 +43,39 @@ abstract class AbstractEnumeration implements Enumeration
         $constants = array_flip(static::asArray());
 
         return $constants[$constant] ?? false;
+    }
+
+    /**
+     * Returns the default constant for the enumeration.
+     *
+     * @return int|null
+     */
+    abstract public static function getDefault(): ?int;
+
+    /**
+     * Checks that the given value is null or one of the enumeration constants.
+     *
+     * @param int|string|null $value
+     * @param string $argumentName
+     * @return int|null
+     * @throws InvalidArgumentException when $value is not in the enumeration.
+     */
+    public static function accept($value, string $argumentName): ?int
+    {
+        if ($value !== null
+            && !array_key_exists($value, static::asArray())
+            && !in_array($value, static::asArray(), true)
+        ) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be a value from the %s enumeration, "%s" given.',
+                    $argumentName,
+                    basename(str_replace('\\', '/', static::class)),
+                    $value
+                )
+            );
+        }
+        
+        return $value ?? static::getDefault();
     }
 }

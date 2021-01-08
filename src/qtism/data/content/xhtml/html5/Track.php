@@ -25,6 +25,7 @@ namespace qtism\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\common\utils\Format;
+use qtism\data\content\enums\TrackKind;
 
 /**
  * Html 5 media track class.
@@ -60,7 +61,7 @@ class Track extends Html5EmptyElement
      * @var integer
      * @qtism-bean-property
      */
-    private $kind = TrackKind::SUBTITLES;
+    private $kind;
 
     /**
      * From QTI spec:

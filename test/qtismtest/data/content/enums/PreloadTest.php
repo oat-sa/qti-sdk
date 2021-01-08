@@ -1,8 +1,8 @@
 <?php
 
-namespace qtismtest\data\content\xhtml;
+namespace qtismtest\data\content\enums;
 
-use qtism\data\content\xhtml\html5\Preload;
+use qtism\data\content\enums\Preload;
 use qtismtest\QtiSmEnumTestCase;
 
 class PreloadTest extends QtiSmEnumTestCase
@@ -23,19 +23,14 @@ class PreloadTest extends QtiSmEnumTestCase
 
     protected function getKeys()
     {
-        return [
-            'none',
-            'auto',
-            'metadata',
-        ];
+        return $this->getNames();
     }
 
     protected function getConstants()
     {
-        return [
-            Preload::NONE,
-            Preload::AUTO,
-            Preload::METADATA,
-        ];
+        return array_map(
+            [Preload::class, 'getConstantByName'],
+            $this->getNames()
+        );
     }
 }
