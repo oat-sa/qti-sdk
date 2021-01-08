@@ -4,7 +4,7 @@ namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Track;
-use qtism\data\content\xhtml\html5\TrackKind;
+use qtism\data\content\enums\TrackKind;
 use qtismtest\QtiSmTestCase;
 
 class TrackTest extends QtiSmTestCase
@@ -13,7 +13,7 @@ class TrackTest extends QtiSmTestCase
     {
         $src = 'http://example.com/';
         $default = true;
-        $kind = TrackKind::CHAPTERS;
+        $kind = TrackKind::getConstantByName('chapters');
         $srcLang = 'en';
 
         $subject = new Track($src, $default, $kind, $srcLang);
@@ -32,7 +32,7 @@ class TrackTest extends QtiSmTestCase
 
         self::assertEquals($src, $subject->getSrc());
         self::assertFalse($subject->getDefault());
-        self::assertEquals(TrackKind::SUBTITLES, $subject->getKind());
+        self::assertEquals(TrackKind::getDefault(), $subject->getKind());
         self::assertEquals('en', $subject->getSrcLang());
     }
 
@@ -40,7 +40,7 @@ class TrackTest extends QtiSmTestCase
     {
         $src = 'http://example.com/';
         $default = true;
-        $kind = TrackKind::CHAPTERS;
+        $kind = TrackKind::getConstantByName('chapters');
         $srcLang = 'en';
 
         $subject = new Track($src, $default, $kind, $srcLang);
@@ -66,11 +66,11 @@ class TrackTest extends QtiSmTestCase
     public function kindsOfTracks(): array
     {
         return [
-            [TrackKind::SUBTITLES],
-            [TrackKind::CAPTIONS],
-            [TrackKind::DESCRIPTIONS],
-            [TrackKind::CHAPTERS],
-            [TrackKind::METADATA],
+            [TrackKind::getConstantByName('subtitles')],
+            [TrackKind::getConstantByName('captions')],
+            [TrackKind::getConstantByName('descriptions')],
+            [TrackKind::getConstantByName('chapters')],
+            [TrackKind::getConstantByName('metadata')],
         ];
     }
 
@@ -124,7 +124,7 @@ class TrackTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "srclang" argument must be a valid BCP 47 language code, "12" given.');
 
-        new Track('http://example.com/', false, TrackKind::SUBTITLES, 12);
+        new Track('http://example.com/', false, null, 12);
     }
 
     public function testGetQtiClassName(): void

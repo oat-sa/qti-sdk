@@ -190,23 +190,14 @@ class Track extends Html5EmptyElement
     /**
      * Sets the kind of track.
      *
-     * @param int|bool|null $kind One of the TrackKind constants.
+     * @param int|string|null $kind One of the TrackKind constants.
      */
-    public function setKind($kind = null)
+    public function setKind($kind = null): void
     {
-        if ($kind !== null && !in_array($kind, TrackKind::asArray(), true)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "kind" argument must be a value from the TrackKind enumeration, "%s" given.',
-                    $kind
-                )
-            );
-        }
-
-        $this->kind = $kind ?? TrackKind::SUBTITLES;
+        $this->kind = TrackKind::accept($kind, 'kind');
 
         // srcLang attribute is required if kind="subtitles" => revalidate srcLang.
-        if ($kind === TrackKind::SUBTITLES) {
+        if ($kind === TrackKind::getConstantByName('subtitles')) {
             $this->setSrcLang($this->getSrcLang());
         }
     }
@@ -229,7 +220,7 @@ class Track extends Html5EmptyElement
      */
     public function isKindSubtitles(): bool
     {
-        return $this->kind === TrackKind::SUBTITLES;
+        return $this->kind === TrackKind::getConstantByName('subtitles');
     }
 
     /**

@@ -4,8 +4,9 @@ namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Html5Element;
-use qtism\data\content\xhtml\html5\Role;
+use qtism\data\content\enums\Role;
 use qtismtest\QtiSmTestCase;
+use TypeError;
 
 class Html5ElementTest extends QtiSmTestCase
 {
@@ -56,44 +57,44 @@ class Html5ElementTest extends QtiSmTestCase
     public function rolesToTest(): array
     {
         return [
-            [Role::ARTICLE],
-            [Role::BUTTON],
-            [Role::CHECKBOX],
-            [Role::COLUMN_HEADER],
-            [Role::COMPLEMENTARY],
-            [Role::CONTENT_INFO],
-            [Role::DEFINITION],
-            [Role::DIRECTORY],
-            [Role::DOCUMENT],
-            [Role::GRID_CELL],
-            [Role::GROUP],
-            [Role::HEADING],
-            [Role::IMG],
-            [Role::LINK],
-            [Role::LIST],
-            [Role::LIST_BOX],
-            [Role::LIST_ITEM],
-            [Role::LOG],
-            [Role::MATH],
-            [Role::NOTE],
-            [Role::OPTION],
-            [Role::PRESENTATION],
-            [Role::RADIO],
-            [Role::RADIO_GROUP],
-            [Role::REGION],
-            [Role::ROW],
-            [Role::ROW_GROUP],
-            [Role::ROW_HEADER],
-            [Role::SEPARATOR],
-            [Role::SLIDER],
-            [Role::SPIN_BUTTON],
-            [Role::STATUS],
-            [Role::TAB],
-            [Role::TAB_LIST],
-            [Role::TAB_PANEL],
-            [Role::TEXT_BOX],
-            [Role::TIMER],
-            [Role::TOOLBAR],
+            [Role::getConstantByName('article')],
+            [Role::getConstantByName('button')],
+            [Role::getConstantByName('checkbox')],
+            [Role::getConstantByName('columnheader')],
+            [Role::getConstantByName('complementary')],
+            [Role::getConstantByName('contentinfo')],
+            [Role::getConstantByName('definition')],
+            [Role::getConstantByName('directory')],
+            [Role::getConstantByName('document')],
+            [Role::getConstantByName('gridcell')],
+            [Role::getConstantByName('group')],
+            [Role::getConstantByName('heading')],
+            [Role::getConstantByName('img')],
+            [Role::getConstantByName('link')],
+            [Role::getConstantByName('list')],
+            [Role::getConstantByName('listbox')],
+            [Role::getConstantByName('listitem')],
+            [Role::getConstantByName('log')],
+            [Role::getConstantByName('math')],
+            [Role::getConstantByName('note')],
+            [Role::getConstantByName('option')],
+            [Role::getConstantByName('presentation')],
+            [Role::getConstantByName('radio')],
+            [Role::getConstantByName('radiogroup')],
+            [Role::getConstantByName('region')],
+            [Role::getConstantByName('row')],
+            [Role::getConstantByName('rowgroup')],
+            [Role::getConstantByName('rowheader')],
+            [Role::getConstantByName('separator')],
+            [Role::getConstantByName('slider')],
+            [Role::getConstantByName('spinbutton')],
+            [Role::getConstantByName('status')],
+            [Role::getConstantByName('tab')],
+            [Role::getConstantByName('tablist')],
+            [Role::getConstantByName('tabpanel')],
+            [Role::getConstantByName('textbox')],
+            [Role::getConstantByName('timer')],
+            [Role::getConstantByName('toolbar')],
         ];
     }
 

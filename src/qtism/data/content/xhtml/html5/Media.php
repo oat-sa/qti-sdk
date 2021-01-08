@@ -233,40 +233,21 @@ abstract class Media extends Html5Element
     }
 
     /**
-     * @return int
+     * @param int|string|null $crossOrigin
      */
-    public function getCrossOrigin(): int
+    public function setCrossOrigin($crossOrigin = null): void
+    {
+        $this->crossOrigin = CrossOrigin::accept($crossOrigin, 'crossorigin');
+    }
+
+    public function getCrossOrigin(): ?int
     {
         return $this->crossOrigin;
     }
 
-    /**
-     * @param int $crossOrigin
-     */
-    public function setCrossOrigin($crossOrigin)
-    {
-        if (!in_array($crossOrigin, CrossOrigin::asArray(), true)) {
-            $given = is_int($crossOrigin)
-                ? $crossOrigin
-                : gettype($crossOrigin);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "crossorigin" argument must be a value from the CrossOrigin enumeration, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->crossOrigin = $crossOrigin;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasCrossOrigin(): bool
     {
-        return $this->crossOrigin !== CrossOrigin::ANONYMOUS;
+        return $this->crossOrigin !== CrossOrigin::getDefault();
     }
 
     /**
@@ -373,25 +354,11 @@ abstract class Media extends Html5Element
     }
 
     /**
-     * Sets the preload type.
-     * @param int $preload One of the Preload constants.
+     * @param int|string|null $preload
      */
-    public function setPreload($preload)
+    public function setPreload($preload = null): void
     {
-        if (!in_array($preload, Preload::asArray(), true)) {
-            $given = is_int($preload)
-                ? $preload
-                : gettype($preload);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "preload" argument must be a value from the Preload enumeration, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->preload = $preload;
+        $this->preload = Preload::accept($preload, 'preload');
     }
 
     public function getPreload(): int
@@ -401,7 +368,7 @@ abstract class Media extends Html5Element
 
     public function hasPreload(): bool
     {
-        return $this->preload !== Preload::METADATA;
+        return $this->preload !== Preload::getDefault();
     }
 
     /**

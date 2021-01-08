@@ -53,7 +53,7 @@ abstract class Html5Element extends BodyElement
      * role is, concepts behind it, and what instances the role can or must
      * contain.
      *
-     * @var int|null
+     * @var ?int
      */
     private $role;
 
@@ -113,27 +113,15 @@ abstract class Html5Element extends BodyElement
     }
 
     /**
-     * @param int|null $role One of the Role constants.
+     * @param int|string|null $role One of the Role constants.
      * @throws InvalidArgumentException when $role parameter is not one of Role constants.
      */
-    public function setRole($role = null)
+    public function setRole($role = null): void
     {
-        if ($role !== null && !in_array($role, Role::asArray(), true)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "role" argument must be a value from the Role enumeration, "%s" given.',
-                    $role
-                )
-            );
-        }
-
-        $this->role = $role;
+        $this->role = Role::accept($role, 'role');
     }
 
-    /**
-     * @return int|null
-     */
-    public function getRole()
+    public function getRole(): ?int
     {
         return $this->role;
     }

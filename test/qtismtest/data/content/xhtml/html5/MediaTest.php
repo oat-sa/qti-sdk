@@ -4,8 +4,9 @@ namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Audio;
-use qtism\data\content\xhtml\html5\CrossOrigin;
+use qtism\data\content\enums\CrossOrigin;
 use qtism\data\content\xhtml\html5\Media;
+use qtism\data\content\enums\Preload;
 use qtism\data\content\xhtml\html5\Source;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\QtiComponentCollection;
@@ -80,7 +81,7 @@ class MediaTest extends QtiSmTestCase
     {
         $autoplay = true;
         $controls = true;
-        $crossOrigin = CrossOrigin::USE_CREDENTIALS;
+        $crossOrigin = CrossOrigin::getConstantByName('use-credentials');
         $loop = true;
         $mediaGroup = 'any normalized string';
         $muted = true;
@@ -142,8 +143,8 @@ class MediaTest extends QtiSmTestCase
     public function crossOriginsToTest(): array
     {
         return [
-            [CrossOrigin::ANONYMOUS],
-            [CrossOrigin::USE_CREDENTIALS],
+            [CrossOrigin::getConstantByName('anonymous')],
+            [CrossOrigin::getConstantByName('use-credentials')],
         ];
     }
 
