@@ -198,6 +198,50 @@ class MediaTest extends QtiSmTestCase
 
         (new FakeMedia())->setSrc($wrongSrc);
     }
+
+    public function testGetPreload(): void
+    {
+        $subject = new FakeMedia();
+
+        self::assertEquals(Preload::getDefault(), $subject->getPreload());
+    }
+
+    public function testGetDefaultPreload()
+    {
+        $subject = new FakeMedia();
+
+        self::assertFalse($subject->hasPreload());
+        self::assertEquals(Preload::getConstantByName('metadata'), $subject->getPreload());
+    }
+
+    public function testSetPreload()
+    {
+        $preload = Preload::getConstantByName('auto');
+        $subject = new FakeMedia();
+        $subject->setPreload($preload);
+
+        self::assertTrue($subject->hasPreload());
+        self::assertEquals($preload, $subject->getPreload());
+    }
+
+    public function testSetPreloadWithNonIntegerValue()
+    {
+        $wrongPreload = 'foo';
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "preload" argument must be a value from the Preload enumeration, "' . $wrongPreload . '" given.');
+
+        (new FakeMedia())->setPreload($wrongPreload);
+    }
+
+    public function testSetPreloadWithInvalidPreload()
+    {
+        $wrongPreload = 1012;
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "preload" argument must be a value from the Preload enumeration, "' . $wrongPreload . '" given.');
+
+        (new FakeMedia())->setPreload($wrongPreload);
+    }
+
 }
 
 class FakeMedia extends Media

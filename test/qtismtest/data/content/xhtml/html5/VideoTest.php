@@ -1,49 +1,14 @@
 <?php
 
-namespace qtismtest\data\content\xhtml;
+namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Video;
-use qtism\data\content\xhtml\html5\Preload;
+use qtism\data\content\enums\Preload;
 use qtismtest\QtiSmTestCase;
 
 class VideoTest extends QtiSmTestCase
 {
-    public function testGetDefaultPreload()
-    {
-        $subject = new Video();
-
-        $this->assertFalse($subject->hasPreload());
-        $this->assertEquals(Preload::METADATA, $subject->getPreload());
-    }
-
-    public function testSetPreload()
-    {
-        $preload = Preload::AUTO;
-        $subject = new Video();
-        $subject->setPreload($preload);
-
-        $this->assertTrue($subject->hasPreload());
-        $this->assertEquals($preload, $subject->getPreload());
-    }
-
-    public function testSetPreloadWithNonIntegerValue()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "preload" argument must be a value from the Preload enumeration, "string" given.');
-
-        (new Video())->setPreload('foo');
-    }
-
-    public function testSetPreloadWithInvalidPreload()
-    {
-        $wrongPreload = 1012;
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "preload" argument must be a value from the Preload enumeration, "' . $wrongPreload . '" given.');
-
-        (new Video())->setPreload($wrongPreload);
-    }
-
     public function testSetPoster()
     {
         $poster = 'http://example.com/poster.jpg';
