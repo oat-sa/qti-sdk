@@ -82,6 +82,17 @@ abstract class Media extends Html5Element
     private $muted = false;
 
     /**
+     * The preload characteristic is an enumerated value. The attribute can be
+     * changed even once the media resource is being buffered or played; the
+     * descriptions in the table below are to be interpreted with that in mind.
+     * Preload type. Defaults to "metadata".
+     *
+     * @var int
+     * @qtism-bean-property
+     */
+    private $preload = Preload::METADATA;
+
+    /**
      * Source URI.
      *
      * @var string
@@ -345,11 +356,35 @@ abstract class Media extends Html5Element
     }
 
     /**
-     * @return string
+     * Sets the preload type.
+     * @param int $preload One of the Preload constants.
      */
-    public function getSrc(): string
+    public function setPreload($preload)
     {
-        return $this->src;
+        if (!in_array($preload, Preload::asArray(), true)) {
+            $given = is_int($preload)
+                ? $preload
+                : gettype($preload);
+
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "preload" argument must be a value from the Preload enumeration, "%s" given.',
+                    $given
+                )
+            );
+        }
+
+        $this->preload = $preload;
+    }
+
+    public function getPreload(): int
+    {
+        return $this->preload;
+    }
+
+    public function hasPreload(): bool
+    {
+        return $this->preload !== Preload::METADATA;
     }
 
     /**

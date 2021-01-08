@@ -33,13 +33,6 @@ use qtism\common\utils\Format;
 class Video extends Media
 {
     /**
-     * Preload type. Defaults to "metadata".
-     *
-     * @var int
-     */
-    private $preload = Preload::METADATA;
-
-    /**
      * The 'poster' characteristic gives the address of an image file that the
      * user agent can show while no video data is available. The characteristic,
      * if present, must contain a valid non-empty URL potentially surrounded by
@@ -67,44 +60,6 @@ class Video extends Media
     private $width = 0;
 
     /**
-     * Sets the preload type.
-     * @param int $preload One of the Preload constants.
-     */
-    public function setPreload($preload)
-    {
-        if (!in_array($preload, Preload::asArray(), true)) {
-            $given = is_int($preload)
-                ? $preload
-                : gettype($preload);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "preload" argument must be a value from the Preload enumeration, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->preload = $preload;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPreload(): int
-    {
-        return $this->preload;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasPreload(): bool
-    {
-        return $this->preload !== Preload::METADATA;
-    }
-    
-    /**
      * Set the poster attribute.
      *
      * @param string $poster A URI.
@@ -128,19 +83,11 @@ class Video extends Media
         $this->poster = $poster;
     }
 
-    /**
-     * Get the src attribute.
-     *
-     * @return string A URI.
-     */
     public function getPoster(): string
     {
         return $this->poster;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPoster(): bool
     {
         return $this->poster !== '';
@@ -170,19 +117,11 @@ class Video extends Media
         $this->height = $height;
     }
 
-    /**
-     * Get the height attribute.
-     *
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * @return bool
-     */
     public function hasHeight(): bool
     {
         return $this->height !== 0;
@@ -212,25 +151,17 @@ class Video extends Media
         $this->width = $width;
     }
 
-    /**
-     * Get the width attribute.
-     *
-     * @return int
-     */
     public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * @return bool
-     */
     public function hasWidth(): bool
     {
         return $this->width !== 0;
     }
 
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'video';
     }

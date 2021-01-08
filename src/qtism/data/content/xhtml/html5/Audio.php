@@ -33,22 +33,7 @@ namespace qtism\data\content\xhtml\html5;
  */
 class Audio extends Media
 {
-    /**
-     * Preload type. For Audio, this parameter is fixed, so no setter.
-     *
-     * @var int
-     */
-    private $preload = Preload::METADATA;
-
-    /**
-     * @return int
-     */
-    public function getPreload(): int
-    {
-        return $this->preload;
-    }
-
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'audio';
     }
