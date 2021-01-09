@@ -8,10 +8,10 @@ use qtism\runtime\common\State;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load(dirname(__FILE__) . '/../samples/rendering/math_3.xml');
+$doc->load(__DIR__ . '/../samples/rendering/math_3.xml');
 
 $tpl_E = new TemplateVariable('TPL_E', Cardinality::SINGLE, BaseType::STRING, new QtiString('E'));
 $tpl_m = new TemplateVariable('TPL_m', Cardinality::SINGLE, BaseType::STRING, new QtiString('m'));

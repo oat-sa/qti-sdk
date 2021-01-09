@@ -3,7 +3,7 @@
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 /**
  * @param array $files
@@ -122,7 +122,7 @@ function spentTime($start, $end)
     return ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 }
 
-define('SAMPLES_DIR', dirname(__FILE__) . '/../samples/');
+define('SAMPLES_DIR', __DIR__ . '/../samples/');
 
 $items = [
     SAMPLES_DIR . 'ims/items/2_0/adaptive_template.xml',

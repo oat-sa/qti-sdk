@@ -111,8 +111,8 @@ class MarkupPostRendererTest extends QtiSmTestCase
         file_put_contents($filename, $output);
 
         $file = file($filename);
-        $this->assertEquals('<?php include(dirname(__FILE__) . "/0-" . $qtismState->getShuffledChoiceIdentifierAt(0, 0) . ".phtml"); ?>', trim($file[4]));
-        $this->assertEquals('<?php include(dirname(__FILE__) . "/0-" . $qtismState->getShuffledChoiceIdentifierAt(0, 2) . ".phtml"); ?>', trim($file[6]));
+        $this->assertEquals('<?php include(__DIR__ . "/0-" . $qtismState->getShuffledChoiceIdentifierAt(0, 0) . ".phtml"); ?>', trim($file[4]));
+        $this->assertEquals('<?php include(__DIR__ . "/0-" . $qtismState->getShuffledChoiceIdentifierAt(0, 2) . ".phtml"); ?>', trim($file[6]));
 
         $fragments = $renderer->getFragments();
         $this->assertEquals($fragments[0]['path'], '0-red.phtml');

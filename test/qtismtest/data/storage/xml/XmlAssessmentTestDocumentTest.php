@@ -19,7 +19,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {
     public function testLoad()
     {
-        $uri = dirname(__FILE__) . '/../../../../samples/ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
+        $uri = __DIR__ . '/../../../../samples/ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
 
@@ -30,7 +30,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     public function testLoadFileDoesNotExist()
     {
         // This file does not exist.
-        $uri = dirname(__FILE__) . '/../../../../samples/invalid/abcd.xml';
+        $uri = __DIR__ . '/../../../../samples/invalid/abcd.xml';
         $doc = new XmlDocument('2.1');
         $this->expectException(XmlStorageException::class);
         $doc->load($uri);
@@ -39,7 +39,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     public function testLoadFileMalformed()
     {
         // This file contains malformed xml markup.
-        $uri = dirname(__FILE__) . '/../../../../samples/invalid/malformed.xml';
+        $uri = __DIR__ . '/../../../../samples/invalid/malformed.xml';
         $doc = new XmlDocument('2.1');
 
         try {
@@ -81,7 +81,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
     public function testFullyQualified()
     {
-        $uri = dirname(__FILE__) . '/../../../../samples/custom/fully_qualified_assessmenttest.xml';
+        $uri = __DIR__ . '/../../../../samples/custom/fully_qualified_assessmenttest.xml';
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
         $doc->schemaValidate();
@@ -240,6 +240,6 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
      */
     private static function decorateUri($uri)
     {
-        return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;
+        return __DIR__ . '/../../../../samples/ims/tests/' . $uri;
     }
 }

@@ -9,7 +9,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSession;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $itemDoc = new XmlDocument('2.1');
 $itemDoc->load(__DIR__ . '/../samples/ims/items/2_1/choice_multiple.xml');

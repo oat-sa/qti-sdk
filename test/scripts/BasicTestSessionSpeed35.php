@@ -18,7 +18,7 @@ use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\SessionManager;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 date_default_timezone_set('UTC');
 
@@ -32,7 +32,7 @@ function loadTestDefinition(array &$average = null)
     $start = microtime();
 
     $phpDoc = new PhpDocument();
-    $phpDoc->load(dirname(__FILE__) . '/../../test/samples/custom/php/linear_35_items.php');
+    $phpDoc->load(__DIR__ . '/../../test/samples/custom/php/linear_35_items.php');
 
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);

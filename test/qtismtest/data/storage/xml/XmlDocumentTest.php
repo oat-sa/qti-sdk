@@ -61,7 +61,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $valid = false;
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
+        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
         $this->assertTrue($valid, 'Even if the content of the rubricBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
@@ -101,7 +101,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/paper_vs_xsd/templateblock_other_content_than_block.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
+        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
         $this->assertTrue($valid, 'Even if the content of the templateBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
@@ -145,7 +145,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/paper_vs_xsd/feedbackblock_other_content_than_block.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
+        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
         $this->assertTrue($valid, 'Even if the content of the feedbackBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
@@ -185,7 +185,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/paper_vs_xsd/prompt_other_content_than_inlinestatic.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
+        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
         $this->assertTrue($valid, 'Even if the content of the prompt is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);

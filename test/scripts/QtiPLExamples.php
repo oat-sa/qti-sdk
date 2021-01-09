@@ -5,7 +5,7 @@ use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;
 use qtismtest\QtiSmTestCase;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
 $doc = new XmlDocument();
