@@ -3,7 +3,7 @@
 				xmlns:pci="http://www.imsglobal.org/xsd/portableCustomInteraction"
 				xmlns:xhtml="http://www.w3.org/1999/xhtml"
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-				xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd"
+				xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
 				identifier="SimpleExample" title="Example" adaptive="false" timeDependent="false">
 	<responseDeclaration baseType="point" cardinality="single" identifier="RESPONSE" />
 	<templateDeclaration baseType="integer" cardinality="single" identifier="X">
