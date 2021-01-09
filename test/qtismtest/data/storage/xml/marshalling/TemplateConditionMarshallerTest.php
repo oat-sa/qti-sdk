@@ -116,8 +116,6 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-
-        $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
         $this->assertFalse($templateCondition->hasTemplateElse());
 
