@@ -43,7 +43,7 @@ class NumberPresentedMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(NumberPresented::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
+        $this->assertEquals('mySection1', $component->getSectionIdentifier());
         $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
         $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
     }

@@ -35,6 +35,6 @@ class CorrectMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Correct::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'myCorrect1');
+        $this->assertEquals('myCorrect1', $component->getIdentifier());
     }
 }

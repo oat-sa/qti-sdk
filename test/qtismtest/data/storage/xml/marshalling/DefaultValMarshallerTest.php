@@ -35,6 +35,6 @@ class DefaultValMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(DefaultVal::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'myDefault1');
+        $this->assertEquals('myDefault1', $component->getIdentifier());
     }
 }

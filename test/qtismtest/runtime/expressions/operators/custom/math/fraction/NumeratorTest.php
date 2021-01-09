@@ -49,7 +49,7 @@ class NumeratorTest extends QtiSmTestCase
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals($result->getValue(), 1);
+        $this->assertEquals(1, $result->getValue());
     }
 
     public function testReturnsNullOne()

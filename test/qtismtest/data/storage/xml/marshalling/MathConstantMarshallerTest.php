@@ -36,6 +36,6 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MathConstant::class, $component);
-        $this->assertEquals($component->getName(), MathEnumeration::PI);
+        $this->assertEquals(MathEnumeration::PI, $component->getName());
     }
 }

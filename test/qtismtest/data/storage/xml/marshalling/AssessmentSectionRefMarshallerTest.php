@@ -37,7 +37,7 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentSectionRef::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'mySectionRef');
-        $this->assertEquals($component->getHref(), 'http://www.rdfabout.com');
+        $this->assertEquals('mySectionRef', $component->getIdentifier());
+        $this->assertEquals('http://www.rdfabout.com', $component->getHref());
     }
 }

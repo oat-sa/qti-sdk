@@ -403,7 +403,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         // There must be 8 outcome variables to be checked:
         // NCORRECTS01, NCORRECTS02, NCORRECTS03, NINCORRECT, NRESPONDED
         // NPRESENTED, NSELECTED, PERCENT_CORRECT.
-        $this->assertEquals(array_keys($outcomes), ['NCORRECTS01', 'NCORRECTS02', 'NCORRECTS03', 'NINCORRECT', 'NRESPONSED', 'NPRESENTED', 'NSELECTED', 'PERCENT_CORRECT']);
+        $this->assertEquals(['NCORRECTS01', 'NCORRECTS02', 'NCORRECTS03', 'NINCORRECT', 'NRESPONSED', 'NPRESENTED', 'NSELECTED', 'PERCENT_CORRECT'], array_keys($outcomes));
 
         // The selection of items for the test is 9.
         $this->assertEquals(9, count($responses));

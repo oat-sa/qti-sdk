@@ -373,7 +373,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
         $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
-        $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
+        $this->assertEquals('PT0S', $itemSession['duration']->__toString());
 
         $this->assertTrue($itemSession->isAttemptable());
         $itemSession->beginAttempt();
@@ -382,7 +382,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
         // End session while attempting (brutal x))
         $itemSession->endItemSession();
-        $this->assertEquals($itemSession['duration']->__toString(), 'PT1S');
+        $this->assertEquals('PT1S', $itemSession['duration']->__toString());
     }
 
     public function testRemainingTimeOne()

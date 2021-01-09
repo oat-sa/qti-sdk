@@ -50,15 +50,17 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $this->assertEquals('show', $element->getAttribute('showHide'));
 
         $content = $element->getElementsByTagName('div');
-        $this->assertEquals($content->length, 1);
-        $this->assertEquals($content->item(0)->getElementsByTagName('p')->length, 1);
+        $this->assertEquals(1, $content->length);
+        $this->assertEquals(1, $content->item(0)->getElementsByTagName('p')->length);
     }
 
     public function testUnmarshall()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
-            '<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title"><p>Have a nice test!</p></testFeedback>'
+            '<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title">
+                <p>Have a nice test!</p>
+            </testFeedback>'
         );
         $element = $dom->documentElement;
 

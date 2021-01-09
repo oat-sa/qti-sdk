@@ -37,12 +37,12 @@ class StateTest extends QtiSmTestCase
         $state = new State($varsArray);
         $this->assertEquals(2, count($state));
         $this->assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
-        $this->assertEquals($state->getVariable('RESPONSE')->getBaseType(), BaseType::INTEGER);
+        $this->assertEquals(BaseType::INTEGER, $state->getVariable('RESPONSE')->getBaseType());
 
         // replace a variable.
         $var = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FLOAT);
         $state->setVariable($var);
-        $this->assertEquals($state->getVariable('RESPONSE')->getBaseType(), BaseType::FLOAT);
+        $this->assertEquals(BaseType::FLOAT, $state->getVariable('RESPONSE')->getBaseType());
 
         // unset a variable.
         unset($state['RESPONSE']);

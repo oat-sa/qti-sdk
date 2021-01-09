@@ -50,9 +50,9 @@ class TestVariablesMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(TestVariables::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
-        $this->assertEquals($component->getVariableIdentifier(), 'myVariable1');
-        $this->assertEquals($component->getWeightIdentifier(), 'myWeight1');
+        $this->assertEquals('mySection1', $component->getSectionIdentifier());
+        $this->assertEquals('myVariable1', $component->getVariableIdentifier());
+        $this->assertEquals('myWeight1', $component->getWeightIdentifier());
         $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
         $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
         $this->assertEquals(BaseType::INTEGER, $component->getBaseType());

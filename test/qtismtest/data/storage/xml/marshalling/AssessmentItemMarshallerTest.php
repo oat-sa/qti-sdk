@@ -40,7 +40,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, title, label, toolName, toolVersion
-        $this->assertEquals($element->attributes->length, 7);
+        $this->assertEquals(7, $element->attributes->length);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($title, $element->getAttribute('title'));
         $this->assertEquals('false', $element->getAttribute('timeDependent'));
@@ -105,7 +105,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this->assertEquals('assessmentItem', $element->nodeName);
 
         // adaptive, timeDependent, identifier, lang, title
-        $this->assertEquals($element->attributes->length, 5);
+        $this->assertEquals(5, $element->attributes->length);
         $this->assertEquals($identifier, $element->getAttribute('identifier'));
         $this->assertEquals($title, $element->getAttribute('title'));
         $this->assertEquals('true', $element->getAttribute('timeDependent'));

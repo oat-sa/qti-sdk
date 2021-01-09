@@ -170,8 +170,8 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(AssessmentItemRef::class, $component);
-        $this->assertEquals($component->getHref(), '../../question1.xml');
-        $this->assertEquals(implode("\x20", $component->getCategories()->getArrayCopy()), 'cat1 cat2');
+        $this->assertEquals('../../question1.xml', $component->getHref());
+        $this->assertEquals('cat1 cat2', implode("\x20", $component->getCategories()->getArrayCopy()));
         $this->assertTrue($component->isFixed());
         $this->assertTrue($component->isRequired());
 

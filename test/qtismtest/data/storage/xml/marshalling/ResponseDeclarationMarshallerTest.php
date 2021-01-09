@@ -134,9 +134,9 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ResponseDeclaration::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'responseDeclaration1');
-        $this->assertEquals($component->getCardinality(), Cardinality::SINGLE);
-        $this->assertEquals($component->getBaseType(), BaseType::INTEGER);
+        $this->assertEquals('responseDeclaration1', $component->getIdentifier());
+        $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
+        $this->assertEquals(BaseType::INTEGER, $component->getBaseType());
     }
 
     public function testUnmarshallCorrectResponse()
@@ -158,9 +158,9 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(ResponseDeclaration::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'responseDeclaration2');
-        $this->assertEquals($component->getCardinality(), Cardinality::MULTIPLE);
-        $this->assertEquals($component->getBaseType(), BaseType::DURATION);
+        $this->assertEquals('responseDeclaration2', $component->getIdentifier());
+        $this->assertEquals(Cardinality::MULTIPLE, $component->getCardinality());
+        $this->assertEquals(BaseType::DURATION, $component->getBaseType());
 
         $correctResponse = $component->getCorrectResponse();
         $this->assertInstanceOf(CorrectResponse::class, $correctResponse);

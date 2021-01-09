@@ -35,6 +35,6 @@ class MapResponsePointMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MapResponsePoint::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'myMapResponsePoint1');
+        $this->assertEquals('myMapResponsePoint1', $component->getIdentifier());
     }
 }

@@ -38,8 +38,8 @@ class WeightMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Weight::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'myWeight1');
-        $this->assertEquals($component->getValue(), 3.45);
+        $this->assertEquals('myWeight1', $component->getIdentifier());
+        $this->assertEquals(3.45, $component->getValue());
     }
 
     public function testUnmarshallWrongIdentifier()

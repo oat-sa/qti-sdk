@@ -101,7 +101,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
             $iterations++;
         }
 
-        $this->assertEquals($iterations, 4);
+        $this->assertEquals(4, $iterations);
     }
 
     /**

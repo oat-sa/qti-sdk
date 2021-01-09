@@ -95,7 +95,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $this->assertEquals('gooood', $emContent[0]->getContent());
 
         $this->assertInstanceOf(TextRun::class, $content[2]);
-        $this->assertEquals(rtrim($content[2]->getContent()), ' !');
+        $this->assertEquals(' !', rtrim($content[2]->getContent()));
     }
 
     public function testMarshallComplex()

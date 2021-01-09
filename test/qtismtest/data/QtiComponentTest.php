@@ -36,13 +36,13 @@ class QtiComponentTest extends QtiSmTestCase
 
         // -- search by QTI class name.
         $search = $assessmentSection->getComponentsByClassName('correct');
-        $this->assertEquals(count($search), 0);
+        $this->assertEquals(0, count($search));
 
         $search = $assessmentSection->getComponentsByClassName('assessmentItemRef');
-        $this->assertEquals(count($search), 4);
+        $this->assertEquals(4, count($search));
 
         $search = $assessmentSection->getComponentsByClassName(['assessmentItemRef', 'correct', 'sum'], false);
-        $this->assertEquals(count($search), 4);
+        $this->assertEquals(4, count($search));
     }
 
     public function testGetComponentByIdOrClassNameComplex()

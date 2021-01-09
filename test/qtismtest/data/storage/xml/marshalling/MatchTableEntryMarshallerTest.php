@@ -38,7 +38,7 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MatchTableEntry::class, $component);
-        $this->assertEquals($component->getSourceValue(), 2);
-        $this->assertEquals($component->getTargetValue(), 'http://www.mysite.com');
+        $this->assertEquals(2, $component->getSourceValue());
+        $this->assertEquals('http://www.mysite.com', $component->getTargetValue());
     }
 }
